@@ -12,17 +12,17 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    private IEnumerator it;
+    private IEnumerator _it;
     // Start is called before the first frame update
     void Start()
     {
-        it = ContinueTurn();
+        _it = ContinueTurn();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(it.Current);
-        it.MoveNext();
+        Debug.Log(_it.Current);
+        _it.MoveNext();
     }
 }

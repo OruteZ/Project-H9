@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour
     
     [SerializeField] private Material highlightedMaterial;
     [SerializeField] private Material normalMaterial;
+    [SerializeField] private Material blackMaterial;
 
     public bool reachable;
     private void Awake()
@@ -33,7 +34,7 @@ public class Tile : MonoBehaviour
     {
         if (reachable == false)
         {
-            transform.localScale = new Vector3(1.5f, 2,1.5f);
+            Black = true;
         }
     }
 
@@ -46,5 +47,11 @@ public class Tile : MonoBehaviour
     {
         get => _meshRenderer.material == highlightedMaterial;
         set =>  _meshRenderer.material = value ? highlightedMaterial : normalMaterial;
+    }
+
+    public bool Black
+    {
+        get => _meshRenderer.material == blackMaterial;
+        set => _meshRenderer.material = value ? blackMaterial : normalMaterial;
     }
 }

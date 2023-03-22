@@ -1,8 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// 각종 기능 테스트를 위한 콘솔 대용 오브젝트입니다.
+/// </summary>
 public class ConsoleForTest : MonoBehaviour
 {
     [Header("LineDraw Inspector")]
@@ -26,23 +31,48 @@ public class ConsoleForTest : MonoBehaviour
     public Vector3Int start1;
     public int range;
     public WorldMap world;
-    public Material black;
     [ContextMenu("Get Range")]
     void GetRange()
     {
         var tiles = world.GetReachableTiles(start1, range);
-        foreach(var t in tiles)
-        {
-            t.GetComponent<MeshRenderer>().material = black;
-        }
+        world.HighLightOn(tiles);
     }
 
-    private void OnValidate()
+    [Header("Find Path Tester")]
+    public Vector3Int startPoint;
+    public Vector3Int destPoint;
+
+    [ContextMenu("Find Path")]
+    void FindPath()
     {
-        startMarker.position = start;
-        endMarker.position = end;
+        world.GetTile(startPoint).Highlight = true;
+        world.GetTile(destPoint).Highlight = true;
         
-        startMarker.OnValidate();
-        endMarker.OnValidate();
+        var path = world.FindPath(startPoint, destPoint);
+        Debug.Log(path);
+        world.HighLightOn(path);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log(Input.mousePosition);
+            
+            RaycastHit hit; 
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                startPoint = hit.transform.GetComponent<HexTransform>().position;
+            }
+        }
+        
+        RaycastHit hit2; 
+        var ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray2, out hit2))
+        {
+            var path = world.FindPath(startPoint, hit2.transform.GetComponent<HexTransform>().position);
+            world.HighLightOn(path);
+        }
     }
 }

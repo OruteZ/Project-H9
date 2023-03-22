@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
 using UnityEngine;
 // ReSharper disable InconsistentNaming
 
@@ -13,10 +14,10 @@ public static class Hex
     /// </summary>
     /// <param name="position">Cube 표현방식의 Hex좌표입니다.</param>
     /// <returns>Wolrd의 좌표계</returns>
-    public static Vector3 Hex2World(Vector3 position)
+    public static Vector3 Hex2World(Vector3Int position)
     {
-        var y = Radius * (position.y * 1.3f);
-        var x = Radius * (0.707f) * (position.x - position.z);
+        var x = Radius * (Mathf.Sqrt(3) * (position.x) + Mathf.Sqrt(3) * 0.5f * position.y);
+        var y = -position.y * 1.5f;
 
         return new Vector3(x, 0, y);
     }

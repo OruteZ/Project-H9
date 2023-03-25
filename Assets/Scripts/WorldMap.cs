@@ -29,7 +29,7 @@ public class WorldMap : MonoBehaviour
     {
         var tile = Instantiate(tileObject, transform).GetComponent<Tile>();
         tile.hexTransform.position = position;
-        tile.reachable = reachable;
+        tile.walkable = reachable;
         _tiles.Add(position, tile);
     }
 
@@ -65,7 +65,7 @@ public class WorldMap : MonoBehaviour
                     
                     var tile = GetTile(next);
                     if (tile == null) continue;
-                    if (!tile.reachable) continue;
+                    if (!tile.walkable) continue;
                     
                     result.Add(GetTile(next));
                     container.Enqueue(next);
@@ -77,7 +77,7 @@ public class WorldMap : MonoBehaviour
         return result;
     }
 
-    //todo: findpath함수 최적화 (모든 타일에 class생성은 상당히 비합리적) from 배열 하나 생성해서 처리하는 작업이 필요할 것으로 보임
+    //todo: findpath함수 최적화 visited, from 전부 배열 생성해서 최종적으로 PathNode클래스 사용하지 않도록 처리하는 작업이 필요할 것으로 보임
 
     /// <summary>
     /// start지점에서 destination 까지의 경로를 연결리스트에 저장하여 반환합니다.
@@ -122,7 +122,7 @@ public class WorldMap : MonoBehaviour
                     
                     var tile = GetTile(next);
                     if (tile == null) continue;
-                    if (!tile.reachable) continue;
+                    if (!tile.walkable) continue;
                     
                     container.Enqueue(new PathNode(next, from:current));
                     visited.Add(next);
@@ -204,6 +204,28 @@ public class WorldMap : MonoBehaviour
     //     return null;
     // }
 
+    /// <summary>
+    /// start 지점에서 target까지 Ray를 발사합니다.
+    /// </summary>
+    /// <param name="start">시작점의 좌표</param>
+    /// <param name="target">목적지의 좌표</param>
+    /// <param name="ret">만약 가로막는 타일이 있을 경우, ret에 해당 타일을 반환합니다.</param>
+    /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
+    public bool RayCast(Vector3Int start, Vector3Int target, out Tile ret)
+    { 
+        var line = Hex.LineDraw(start, target);
+        
+        foreach (var pos in line)
+        {
+            ret = GetTile(pos);
+            if (ret == null) return true;
+            if (!ret.passable) return false;
+        }
+
+        ret = null;
+        return true;
+    }
+    
     public void HighLightOn(IEnumerable<Tile> tiles)
     {
         if (tiles == null) return;
@@ -266,5 +288,5 @@ internal class PathNode
     public int F => G + H;
 
     public Vector3Int pos;
-    public PathNode from;
+    public readonly PathNode from;
 }

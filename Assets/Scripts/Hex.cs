@@ -13,8 +13,8 @@ public static class Hex
     /// Hex좌표를 인게임 World 직교좌표계로 변환합니다.
     /// </summary>
     /// <param name="position">Cube 표현방식의 Hex좌표입니다.</param>
-    /// <returns>Wolrd의 좌표계</returns>
-    public static Vector3 Hex2World(Vector3Int position)
+    /// <returns>World의 좌표계</returns>
+    public static Vector3 Hex2World(Vector3 position)
     {
         var x = Radius * (Mathf.Sqrt(3) * (position.x) + Mathf.Sqrt(3) * 0.5f * position.y);
         var y = -position.y * 1.5f;

@@ -17,7 +17,8 @@ public class Tile : MonoBehaviour
     [SerializeField] private Material normalMaterial;
     [SerializeField] private Material blackMaterial;
 
-    public bool reachable;
+    public bool walkable;
+    public bool passable;
     private void Awake()
     {
         hexTransform = GetComponent<HexTransform>();
@@ -32,7 +33,7 @@ public class Tile : MonoBehaviour
 
     private void Update()
     {
-        if (reachable == false)
+        if (walkable == false)
         {
             Black = true;
         }

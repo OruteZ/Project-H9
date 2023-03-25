@@ -10,23 +10,6 @@ using UnityEngine;
 /// </summary>
 public class ConsoleForTest : MonoBehaviour
 {
-    [Header("LineDraw Inspector")]
-    public Vector3Int start;
-    public Vector3Int end;
-    public GameObject markerPrefab;
-    public HexTransform startMarker;
-    public HexTransform endMarker;
-    [ContextMenu("LineDraw Test")]
-    void LineDrawTest()
-    {
-        var line = Hex.LineDraw(start, end);
-        foreach (var l in line)
-        {
-            Debug.Log(l);
-            Instantiate(markerPrefab, Hex.Hex2World(l), Quaternion.identity);
-        }
-    }
-
     [Header("Get Range Inspector")]
     public Vector3Int start1;
     public int range;
@@ -67,12 +50,21 @@ public class ConsoleForTest : MonoBehaviour
             }
         }
         
-        RaycastHit hit2; 
-        var ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray2, out hit2))
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            var path = world.FindPath(startPoint, hit2.transform.GetComponent<HexTransform>().position);
-            world.HighLightOn(path);
+            RaycastHit hit2; 
+            var ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray2, out hit2))
+            {
+                var path = world.FindPath(startPoint, 
+                    hit2.transform.GetComponent<HexTransform>().position);
+                world.HighLightOn(path);
+            } 
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            
         }
     }
 }

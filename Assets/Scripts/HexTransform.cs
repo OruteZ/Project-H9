@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HexTransform : MonoBehaviour
 {
+    [SerializeField]
     private Vector3Int _position;
     // ReSharper disable once InconsistentNaming
     public Vector3Int position { get => _position; set => SetPosition(value); }

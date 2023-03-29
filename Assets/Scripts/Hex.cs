@@ -9,6 +9,9 @@ public static class Hex
     //육각형 타일 하나의 반지름 크기를 의미합니다.
     public const float Radius = 1f;
     
+    //루트 3 상수입니다.
+    private static readonly float Sqrt3 = Mathf.Sqrt(3);
+
     /// <summary>
     /// Hex좌표를 인게임 World 직교좌표계로 변환합니다.
     /// </summary>
@@ -16,7 +19,7 @@ public static class Hex
     /// <returns>World의 좌표계</returns>
     public static Vector3 Hex2World(Vector3 position)
     {
-        var x = Radius * (Mathf.Sqrt(3) * (position.x) + Mathf.Sqrt(3) * 0.5f * position.y);
+        var x = Radius * (Sqrt3 * position.x + Sqrt3 * 0.5f * position.y);
         var y = -position.y * 1.5f;
 
         return new Vector3(x, 0, y);
@@ -43,10 +46,32 @@ public static class Hex
     public static List<Vector3Int> LineDraw(Vector3Int start, Vector3Int end)
     {
         var dist = Distance(start, end);
+
+        var start_nudge = new Vector3((float)(start.x + 1e-6), (float)(start.y + 1e-6), (float)(start.z - 2e-6));
+        var end_nudge = new Vector3((float)(end.x + 1e-6), (float)(end.y + 1e-6), (float)(end.z - 2e-6));
+        
         var results = new List<Vector3Int>();
         for (var i = 0; i <= dist; i++)
         {
-            results.Add(Round(Vector3.Lerp(start, end, 1.0f / dist * i)));
+            results.Add(Round(Vector3.Lerp(start_nudge, end_nudge, 1.0f / dist * i)));
+            //results.Add(Round(Vector3.Lerp(start, end, 1.0f / dist * i)));
+        }
+
+        return results;
+    }
+    
+    public static List<Vector3Int> LineDraw_(Vector3Int start, Vector3Int end)
+    {
+        var dist = Distance(start, end);
+
+        var start_nudge = new Vector3((float)(start.x - 1e-6), (float)(start.y - 1e-6), (float)(start.z + 2e-6));
+        var end_nudge = new Vector3((float)(end.x - 1e-6), (float)(end.y - 1e-6), (float)(end.z + 2e-6));
+        
+        var results = new List<Vector3Int>();
+        for (var i = 0; i <= dist; i++)
+        {
+            results.Add(Round(Vector3.Lerp(start_nudge, end_nudge, 1.0f / dist * i)));
+            //results.Add(Round(Vector3.Lerp(start, end, 1.0f / dist * i)));
         }
 
         return results;
@@ -101,7 +126,6 @@ public static class Hex
             }
         }
         return results;
-        
     }
 
     public static Vector3Int upLeft => new Vector3Int(-1, 1, 0);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(HexTransform))]
-public class Unit : MonoBehaviour
+public class TileObject : MonoBehaviour
 {
     public HexTransform hexTransform;
     protected Tile tile;

@@ -11,7 +11,7 @@ public class Tile : MonoBehaviour
 
     private MeshRenderer _meshRenderer;
     
-    private List<Unit> _units;
+    private List<TileObject> _units;
     
     [SerializeField] private Material highlightedMaterial;
     [SerializeField] private Material normalMaterial;
@@ -23,7 +23,7 @@ public class Tile : MonoBehaviour
     {
         hexTransform = GetComponent<HexTransform>();
         _meshRenderer = GetComponent<MeshRenderer>();
-        _units = new List<Unit>();
+        _units = new List<TileObject>();
     }
 
     private void Start()
@@ -39,7 +39,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void AddUnit(Unit u)
+    public void AddUnit(TileObject u)
     {
         _units.Add(u);
     }

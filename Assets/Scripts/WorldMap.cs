@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using Random = UnityEngine.Random;
@@ -25,11 +26,12 @@ public class WorldMap : MonoBehaviour
         _tiles.TryAdd(tile.hexTransform.position, tile);
     }
 
-    public void AddTile(Vector3Int position, bool reachable = true)
+    public void AddTile(Vector3Int position, bool reachable = true, bool passable = true)
     {
         var tile = Instantiate(tileObject, transform).GetComponent<Tile>();
         tile.hexTransform.position = position;
         tile.walkable = reachable;
+        tile.passable = passable;
         _tiles.Add(position, tile);
     }
 
@@ -76,8 +78,6 @@ public class WorldMap : MonoBehaviour
 
         return result;
     }
-
-    //todo: findpath함수 최적화 visited, from 전부 배열 생성해서 최종적으로 PathNode클래스 사용하지 않도록 처리하는 작업이 필요할 것으로 보임
 
     /// <summary>
     /// start지점에서 destination 까지의 경로를 연결리스트에 저장하여 반환합니다.
@@ -211,19 +211,34 @@ public class WorldMap : MonoBehaviour
     /// <param name="target">목적지의 좌표</param>
     /// <param name="ret">만약 가로막는 타일이 있을 경우, ret에 해당 타일을 반환합니다.</param>
     /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
-    public bool RayCast(Vector3Int start, Vector3Int target, out Tile ret)
+    public bool RayCast(Vector3Int start, Vector3Int target)
     { 
-        var line = Hex.LineDraw(start, target);
-        
-        foreach (var pos in line)
+        var line1 = Hex.LineDraw(start, target);
+        var line2 = Hex.LineDraw_(start, target);
+
+        bool result1 = true, result2 = true;
+        Tile ret1, ret2;
+
+        foreach (var pos in line1)
         {
-            ret = GetTile(pos);
-            if (ret == null) return true;
-            if (!ret.passable) return false;
+            ret1 = GetTile(pos);
+            if (ret1 == null) continue;
+            if (!ret1.passable)
+            {
+                result1 = false;
+            }
         }
 
-        ret = null;
-        return true;
+        foreach (var pos in line2)
+        {
+            ret2 = GetTile(pos);
+            if (ret2 == null) continue;
+            if (!ret2.passable)
+            {
+                result2 = false;
+            }
+        }
+        return result1 || result2;
     }
     
     public void HighLightOn(IEnumerable<Tile> tiles)
@@ -245,18 +260,37 @@ public class WorldMap : MonoBehaviour
             tile.Highlight = false;
         }
     }
+
+    public void HighLightOn(Tile tile)
+    {
+        if (tile == null) return;
+        
+        HighLightOff();
+        _highlightQueue.Enqueue(tile);
+    }
     
     //demo code : 간단한 맵 생성용
     [Header("Creating Demo World Inspector")]
     public int range;
     
-    [ContextMenu("Create World")]
+    [ContextMenu("Create World With Wall")]
     private void CreateDemoWorld()
     {
         var positions = Hex.GetGridsWithRange(range, Hex.zero);
         foreach (var pos in positions)
         {
-            AddTile(pos, reachable: Random.Range(0, 2) == 1);
+            var isWall = Random.Range(0, 2) == 1;
+            AddTile(pos, reachable : isWall, passable : isWall);
+        }
+    }
+    
+    [ContextMenu("Create World no wall")]
+    private void CreateDemoWorld2()
+    {
+        var positions = Hex.GetGridsWithRange(range, Hex.zero);
+        foreach (var pos in positions)
+        {
+            AddTile(pos);
         }
     }
 

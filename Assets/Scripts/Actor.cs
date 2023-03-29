@@ -1,40 +1,111 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Unity.VisualScripting;
+using UnityEditor.Search;
 using UnityEngine;
 
-public class Actor : Unit
+public class Actor : TileObject
 {
     //한칸을 이동하는데 걸리는 시간입니다.
     public float oneTileMoveTime;
+    public WorldMap world;
+
+    [Header("For Debug")]
+    [SerializeField] private ActorState state;
+
+    [Header("Control Inspector")] 
+    [SerializeField] private int speed;
+    
+    
     private void Awake()
     {
         Init();
     }
 
-    private void MoveOnce(Vector3Int destination)
+    private void Start()
     {
-        //이 예외처리는 빌드를 뽑기 전에는 최적화를 위해 제거됨
-        if (Hex.Distance(hexTransform.position, destination) != 1)
-        {
-            Debug.Log("MoveOnce 함수는 한칸을 움직일때만 호출됩니다.");
-            return;
-        }
-
-        
+        hexTransform.position = Vector3Int.zero;
+        state = ActorState.ReadyToAct;
     }
 
-    //todo : Move Coroutine 함수 완성
-    private IEnumerator MoveCoroutine(Vector3 start, Vector3 end)
+    private void Move(Vector3Int destination)
     {
-        var totalTime = Vector3.Distance(start, end) *  oneTileMoveTime / (2 * Hex.Radius);
+        var route = world.FindPath(hexTransform.position, destination);
+        if (route == null) return;
+        
+        StartCoroutine(MoveCoroutine(route));
+    }
+    private IEnumerator MoveCoroutine(IEnumerable<Tile> route)
+    {
+        state = ActorState.Busy;
+        var oneDivTileMoveTime = 1 / oneTileMoveTime;
 
-        while (totalTime > 0)
+        foreach (var dest in route)
         {
-            totalTime -= Time.deltaTime;
+            if (dest.hexTransform.position == hexTransform.position) continue;
             
+            var start = Hex.Hex2World(hexTransform.position);
+            var end = Hex.Hex2World(dest.hexTransform.position);
+            var time = 0f;
+            while (time <= oneTileMoveTime)
+            {
+                time += Time.deltaTime;
+                transform.position = Vector3.Lerp(start, end, time * oneDivTileMoveTime);
+                yield return null;
+            }
 
-            yield return null;
+            hexTransform.position = dest.hexTransform.position;
+        }
+
+        state = ActorState.ReadyToAct;
+    }
+    private IEnumerator MoveCoroutine(IEnumerable<Vector3Int> route)
+    {
+        var oneDivTileMoveTime = 1 / oneTileMoveTime;
+
+        foreach (var dest in route)
+        {
+            if (dest == hexTransform.position) continue;
+            
+            var start = Hex.Hex2World(hexTransform.position);
+            var end = Hex.Hex2World(dest);
+            var time = 0f;
+            while (time <= oneTileMoveTime)
+            {
+                time += Time.deltaTime;
+                transform.position = Vector3.Lerp(start, end, time * oneDivTileMoveTime);
+                yield return null;
+            }
+
+            hexTransform.position = dest;
+        }
+    }
+
+    private void Update()
+    {
+        if (state == ActorState.Busy) return;
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            RaycastHit hit; 
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                var dest = hit.transform.GetComponent<HexTransform>().position;
+                Move(dest);
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            RaycastHit hit; 
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                var dest = hit.transform.GetComponent<HexTransform>().position;
+                Move(dest);
+            }
         }
     }
 }
@@ -42,5 +113,6 @@ public class Actor : Unit
 public enum ActorState
 {
     Busy,
-    ReadyToAct
+    ReadyToAct,
+    Moving,
 }

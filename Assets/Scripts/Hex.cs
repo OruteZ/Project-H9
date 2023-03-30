@@ -7,7 +7,7 @@ using UnityEngine;
 public static class Hex
 {
     //육각형 타일 하나의 반지름 크기를 의미합니다.
-    public const float Radius = 1f;
+    private const float Radius = 1f;
     
     //루트 3 상수입니다.
     private static readonly float Sqrt3 = Mathf.Sqrt(3);
@@ -136,7 +136,7 @@ public static class Hex
     public static Vector3Int downLeft => new Vector3Int(0, -1, 1);
     public static Vector3Int zero => new Vector3Int(0, 0, 0);
 
-    public static IEnumerable<Vector3Int> directions => new Vector3Int[6]
+    public static IEnumerable<Vector3Int> directions => new[]
     {
         upLeft,
         upRight,

@@ -15,7 +15,7 @@ public class TileObject : MonoBehaviour
 
     public void SetTile(Tile t)
     {
-        t.AddUnit(this);
+        t.AddObject(this);
         tile = t;
 
         hexTransform.position = t.hexTransform.position;

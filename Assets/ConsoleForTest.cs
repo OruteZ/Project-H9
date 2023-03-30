@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,6 +13,12 @@ using UnityEngine;
 /// </summary>
 public class ConsoleForTest : MonoBehaviour
 {
+    private IEnumerator _testK;
+    void Awake()
+    {
+        _testK = EnumeratorTest();
+    }
+    
     [Header("Get Range Inspector")]
     public Vector3Int start1;
     public int range;
@@ -149,6 +156,22 @@ public class ConsoleForTest : MonoBehaviour
                 rayEnd = hit.transform.GetComponent<HexTransform>().position;
                 RayCastTest();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log(_testK.Current);
+            _testK.MoveNext();
+        }
+    }
+
+    private IEnumerator EnumeratorTest()
+    {
+        yield return 100;
+
+        for (int i = 0; i < 100; i++)
+        {
+            yield return i;
         }
     }
 }

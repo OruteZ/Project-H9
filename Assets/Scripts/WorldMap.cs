@@ -32,7 +32,7 @@ public class WorldMap : MonoBehaviour
         tile.hexTransform.position = position;
         tile.walkable = reachable;
         tile.passable = passable;
-        _tiles.Add(position, tile);
+        _tiles.TryAdd(position, tile);
     }
 
     public Tile GetTile(Vector3Int position)
@@ -132,77 +132,6 @@ public class WorldMap : MonoBehaviour
 
         return null;
     }
-    // public IEnumerable<Tile> FindPath(Vector3Int start, Vector3Int destination, int maxLength=3)
-    // {
-    //     var toSearch = new List<PathNode>()
-    //     {
-    //         new(0, Hex.Distance(start, destination), start)
-    //     };
-    //     var processed = new List<PathNode>();
-    //
-    //     while (toSearch.Count > 0)
-    //     {
-    //         var current = toSearch[0];
-    //         foreach (var node in toSearch)
-    //         {
-    //             if (node.F < current.F) current = node;
-    //             else if (current.F == node.F && node.H < current.H) current = node;
-    //         }
-    //         processed.Add(current);
-    //         toSearch.Remove(current);
-    //
-    //         if (current.pos == destination)
-    //         {
-    //             var path = new List<Tile>();
-    //             while (current.from != null)
-    //             {
-    //                 path.Add(GetTile(current.pos));
-    //                 current = current.from;
-    //             }
-    //             path.Add(GetTile(start));
-    //             return path;
-    //         }
-    //
-    //         foreach (var dir in Hex.directions)
-    //         {
-    //             var nextPosition = current.pos + dir;
-    //             Debug.Log("next pos = " + nextPosition);
-    //             if (processed.Any(n => n.pos == nextPosition)) continue;
-    //             if (GetTile(nextPosition) == null) continue;
-    //             if (GetTile(nextPosition).reachable == false) continue;
-    //             
-    //             PathNode nextNode = null;
-    //             foreach (var node in toSearch)
-    //             {
-    //                 if (node.pos == nextPosition)
-    //                 {
-    //                     nextNode = node;
-    //                     break;
-    //                 }
-    //             }
-    //             bool inSearch = nextNode != null;
-    //             int costToNext = current.G + 1;
-    //
-    //             if (!inSearch)
-    //             {
-    //                 nextNode = new PathNode(
-    //                     costToNext, 
-    //                     Hex.Distance(nextPosition, destination),
-    //                     nextPosition
-    //                 ).from = current;
-    //             }
-    //             else if (costToNext < nextNode.G)
-    //             {
-    //                 nextNode.G = costToNext;
-    //                 nextNode.from = current;
-    //             }
-    //             
-    //             if(!inSearch && nextNode.F <= maxLength)
-    //                 toSearch.Add(nextNode);
-    //         }
-    //     }
-    //     return null;
-    // }
 
     /// <summary>
     /// start 지점에서 target까지 Ray를 발사합니다.
@@ -216,29 +145,21 @@ public class WorldMap : MonoBehaviour
         var line1 = Hex.LineDraw(start, target);
         var line2 = Hex.LineDraw_(start, target);
 
-        bool result1 = true, result2 = true;
+        bool result = true;
         Tile ret1, ret2;
-
-        foreach (var pos in line1)
+        
+        for (int i = 0; i < line1.Count; i++)
         {
-            ret1 = GetTile(pos);
-            if (ret1 == null) continue;
-            if (!ret1.passable)
+            ret1 = GetTile(line1[i]);
+            ret2 = GetTile(line2[i]);
+            if (ret1 == null && ret2 == null) continue;
+            if (!ret1.passable && !ret2.passable)
             {
-                result1 = false;
+                result = false;
             }
         }
 
-        foreach (var pos in line2)
-        {
-            ret2 = GetTile(pos);
-            if (ret2 == null) continue;
-            if (!ret2.passable)
-            {
-                result2 = false;
-            }
-        }
-        return result1 || result2;
+        return result;
     }
     
     public void HighLightOn(IEnumerable<Tile> tiles)

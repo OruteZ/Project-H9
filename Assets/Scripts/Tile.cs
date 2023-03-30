@@ -19,6 +19,8 @@ public class Tile : MonoBehaviour
 
     public bool walkable;
     public bool passable;
+    public bool visible;
+    public bool fogOfWar;
     private void Awake()
     {
         hexTransform = GetComponent<HexTransform>();
@@ -39,7 +41,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void AddUnit(TileObject u)
+    public void AddObject(TileObject u)
     {
         _units.Add(u);
     }

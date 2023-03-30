@@ -4,25 +4,44 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    private IEnumerator ContinueTurn()
+    private bool _waiting = false;
+    private IEnumerator _turnSystem;
+    public Actor player;
+
+    private void Awake()
     {
-        for (int i = 0; i < 10; i++)
-        {
-            yield return i;
-        }
+        _turnSystem = TurnPlay();
     }
 
-    private IEnumerator _it;
     // Start is called before the first frame update
     void Start()
     {
-        _it = ContinueTurn();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(_it.Current);
-        _it.MoveNext();
+        if (_waiting) return;
+        _turnSystem.MoveNext();
+    }
+    
+    private IEnumerator TurnPlay()
+    {
+        while (true)
+        {
+            _waiting = true;
+            PlayerTurn();
+            yield return null;
+        }
+    }
+
+    private void PlayerTurn()
+    {
+        player.StartTurn();
+    }
+
+    public void ContinueTurn()
+    {
+        _waiting = false;
     }
 }

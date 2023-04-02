@@ -22,11 +22,11 @@ public class ConsoleForTest : MonoBehaviour
     [Header("Get Range Inspector")]
     public Vector3Int start1;
     public int range;
-    public WorldMap world;
+    public Map world;
     [ContextMenu("Get Range")]
     void GetRange()
     {
-        var tiles = world.GetReachableTiles(start1, range);
+        var tiles = world.GetWalkableTiles(start1, range);
         world.HighLightOn(tiles);
     }
 

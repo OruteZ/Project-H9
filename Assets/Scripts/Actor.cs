@@ -12,7 +12,7 @@ public abstract class Actor : MonoBehaviour
     public HexTransform hexTransform;
     ///<value>한칸을 이동하는데 걸리는 시간(초)입니다.</value>
     public float oneTileMoveTime;
-    public WorldMap world;
+    public Map world;
 
     [Header("For Debug")]
     [SerializeField] private ActorState state;

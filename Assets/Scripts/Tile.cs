@@ -8,32 +8,32 @@ public class Tile : MonoBehaviour
 {
     [HideInInspector]
     public HexTransform hexTransform;
-
+    
+    protected List<TileObject> _objects;
+    
+    [Header("차후 제거할 요소들")]
     private MeshRenderer _meshRenderer;
-    
-    private List<TileObject> _units;
-    
     [SerializeField] private Material highlightedMaterial;
     [SerializeField] private Material normalMaterial;
     [SerializeField] private Material blackMaterial;
 
+    [Header("타일 속성")]
     public bool walkable;
-    public bool passable;
     public bool visible;
-    public bool fogOfWar;
-    private void Awake()
+    public bool rayThroughable;
+    protected void Awake()
     {
         hexTransform = GetComponent<HexTransform>();
         _meshRenderer = GetComponent<MeshRenderer>();
-        _units = new List<TileObject>();
+        _objects = new List<TileObject>();
     }
 
-    private void Start()
+    protected void Start()
     {
         _meshRenderer.material = normalMaterial;
     }
 
-    private void Update()
+    protected void Update()
     {
         if (walkable == false)
         {
@@ -43,7 +43,7 @@ public class Tile : MonoBehaviour
 
     public void AddObject(TileObject u)
     {
-        _units.Add(u);
+        _objects.Add(u);
     }
     
     public bool Highlight

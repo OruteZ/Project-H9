@@ -239,7 +239,7 @@ public class Map : MonoBehaviour
         foreach (var pos in positions)
         {
             var isWall = Random.Range(0, 2) == 1;
-            AddTile(pos, walkable : isWall, visible : isWall);
+            AddTile(pos, walkable : isWall, visible : isWall, rayThroughable: isWall);
         }
     }
     

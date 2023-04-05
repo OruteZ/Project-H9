@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Generic
@@ -27,6 +28,13 @@ namespace Generic
 
         private void Awake()
         {
+#if UNITY_EDITOR
+            if (_instance != null)
+            {
+                Debug.LogError("Singleton 2회 생성");
+                Destroy(gameObject);
+            }
+#endif
             if (transform.parent != null && transform.root != null)
             {
                 DontDestroyOnLoad(transform.root.gameObject);
@@ -35,6 +43,12 @@ namespace Generic
             {
                 DontDestroyOnLoad(gameObject);
             }
+        }
+
+        [RuntimeInitializeOnLoadMethod]
+        private static void RuntimeInitializeOnLoad()
+        {
+            _instance = null;
         }
     }
 }

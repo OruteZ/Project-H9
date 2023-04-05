@@ -92,17 +92,13 @@ public class ConsoleForTest : MonoBehaviour
                 startPoint = hit.transform.GetComponent<HexTransform>().position;
             }
         }
-        
-        if (Input.GetKeyDown(KeyCode.S))
+        RaycastHit hit2; 
+        var ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray2, out hit2))
         {
-            RaycastHit hit2; 
-            var ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray2, out hit2))
-            {
-                var path = world.FindPath(startPoint, 
-                    hit2.transform.GetComponent<HexTransform>().position);
-                world.HighLightOn(path);
-            } 
+            var path = world.FindPath(startPoint, 
+                hit2.transform.GetComponent<HexTransform>().position);
+            world.HighLightOn(path);
         }
 
         if (Input.GetKeyDown(KeyCode.Z))

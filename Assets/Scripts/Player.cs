@@ -5,29 +5,40 @@ using UnityEngine;
 public class Player : Unit
 {
     //private State<Player>[] _states;
-    private StateMachine<Unit> _stateMachine;
+    private StateMachine<Player> _stateMachine;
+    [HideInInspector] public Tile target;
 
-    public override void Setup(string newName)
+    [Header("Status")]
+    public int speed;
+
+    public int actionPoint;
+    public override void SetUp(string newName)
     {
-        base.Setup(newName);
+        base.SetUp(newName);
 
-        ChangeState(new WaitState());
+        ChangeState(new PlayerState.WaitState());
         
-        _stateMachine = new StateMachine<Unit>();
-        _stateMachine.SetUp(this, new WaitState());
+        _stateMachine = new StateMachine<Player>();
+        _stateMachine.SetUp(this, new PlayerState.WaitState());
     }
     public override void Updated()
     {
         _stateMachine.Execute();
     }
 
-    public void ChangeState(State<Unit> state)
+    public void ChangeState(State<Player> state)
     {
         _stateMachine.ChangeState(state);
     }
 
     public override void StartTurn()
     {
-        _stateMachine.ChangeState(new SelectState());
+        actionPoint = 100; //todo : 공식 가져와서 행동력 계산하기
+        _stateMachine.ChangeState(new PlayerState.SelectState());
+    }
+
+    public int CalculateMobility()
+    {
+        return speed / 10;
     }
 }

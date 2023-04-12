@@ -23,12 +23,19 @@ public abstract class Unit : MonoBehaviour
             _iNextValidID++;
         }
     }
+    
+    [HideInInspector]
+    public HexTransform hexTransform;
 
+    // ReSharper disable once InconsistentNaming
+    public Vector3Int position => hexTransform.position;
+    
     public string unitName;
-    public virtual void Setup(string newName)
+    public virtual void SetUp(string newName)
     {
         ID = _iNextValidID;
         unitName = newName;
+        hexTransform = GetComponent<HexTransform>();
     }
     
     public abstract void Updated();

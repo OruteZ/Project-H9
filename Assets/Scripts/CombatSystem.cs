@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CombatManager : MonoBehaviour
+public class CombatSystem : MonoBehaviour
 {
-    [SerializeField] private string[] unitNamesArray;
+    [SerializeField] private string[] unitInfo;
     [SerializeField] private GameObject unitPrefab;
 
     private List<Unit> _units;
@@ -15,18 +15,18 @@ public class CombatManager : MonoBehaviour
     {
         _units = new List<Unit>();
 
-        foreach (var unitName  in unitNamesArray)
+        foreach (var unitName  in unitInfo)
         {
             Unit unit = Instantiate(unitPrefab).GetComponent<Unit>();
             
-            unit.Setup(unitName);
+            unit.SetUp(unitName);
             _units.Add(unit);
         }
     }
 
     private void Update()
     {
-        foreach (Unit unit in _units) unit.Updated();
+        foreach (var unit in _units) unit.Updated();
     }
     
     public void EndTurn()

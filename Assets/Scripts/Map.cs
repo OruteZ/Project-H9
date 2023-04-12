@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class Map : MonoBehaviour
@@ -90,8 +91,17 @@ public class Map : MonoBehaviour
         return result;
     }
 
+    public IEnumerable<Tile> GetTilesInRange(Vector3Int start, int range)
+    {
+        var list = Hex.GetGridsWithRange(range, start);
+        var ret = new List<Tile>(list.Count);
+        ret.AddRange(list.Select(GetTile));
+
+        return ret;
+    }
+
     /// <summary>
-    /// start지점에서 destination 까지의 경로를 연결리스트에 저장하여 반환합니다.
+    /// start지점에서 destination 까지의 경로를 리스트에 저장하여 반환합니다.
     /// 시작점과 도착지점을 포함한 경로를 반환합니다.
     /// maxLength로 입력되는 최대 길이 이상의 길은 탐색할 수 없습니다.
     ///
@@ -238,7 +248,7 @@ public class Map : MonoBehaviour
         var positions = Hex.GetGridsWithRange(range, Hex.zero);
         foreach (var pos in positions)
         {
-            var isWall = Random.Range(0, 2) == 1;
+                var isWall = Random.Range(0, 2) == 1;
             AddTile(pos, walkable : isWall, visible : isWall, rayThroughable: isWall);
         }
     }
@@ -263,6 +273,26 @@ public class Map : MonoBehaviour
         }
         _tiles.Clear();
     }
+
+    [Header("World to combat Test")] 
+    public Vector3Int playerPosition;
+    public Scene combatScene;
+
+    [ContextMenu("World to Combat")]
+    private void ChangeToCombatScene()
+    {
+        DontDestroyOnLoad(gameObject);
+        SceneManager.LoadScene("CombatScene");
+        gameObject.SetActive(false);
+    }
+
+    [ContextMenu("Combat to World")]
+    private void CombatSceneToThis()
+    {
+        SceneManager.LoadScene("WorldScene");
+        gameObject.SetActive(true);
+    }
+    
     //demo end
 }
 

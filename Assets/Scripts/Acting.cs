@@ -39,8 +39,6 @@
 //
 //                 unit.hexTransform.position = dest.hexTransform.position;
 //             }
-//
-//             isActFinished = true;
 //         }
 //         
 //         var route = unit.world.FindPath(unit.hexTransform.position, target.hexTransform.position);

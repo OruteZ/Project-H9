@@ -8,8 +8,11 @@ public class Tile : MonoBehaviour
 {
     [HideInInspector]
     public HexTransform hexTransform;
-    
-    protected List<TileObject> _objects;
+
+    // ReSharper disable once InconsistentNaming
+    public Vector3Int position => hexTransform.position;
+
+    private List<TileObject> objects;
     
     [Header("차후 제거할 요소들")]
     private MeshRenderer _meshRenderer;
@@ -21,11 +24,27 @@ public class Tile : MonoBehaviour
     public bool walkable;
     public bool visible;
     public bool rayThroughable;
+
+    private GameObject _curEffect;
+    public GameObject Effect
+    {
+        get => _curEffect;
+        set
+        {
+            if (_curEffect != null)
+            {
+                Destroy(_curEffect);
+            }
+            
+            Instantiate(value, transform);
+            _curEffect = Effect;
+        }
+    }
     protected void Awake()
     {
         hexTransform = GetComponent<HexTransform>();
         _meshRenderer = GetComponent<MeshRenderer>();
-        _objects = new List<TileObject>();
+        objects = new List<TileObject>();
     }
 
     protected void Start()
@@ -43,7 +62,7 @@ public class Tile : MonoBehaviour
 
     public void AddObject(TileObject u)
     {
-        _objects.Add(u);
+        objects.Add(u);
     }
     
     public bool Highlight

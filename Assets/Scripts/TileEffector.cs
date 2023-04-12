@@ -9,10 +9,17 @@ using Generic;
 /// </summary>
 public class TileEffector : Singleton<TileEffector>
 {
+    public GameObject friendlyEffect;
+    public GameObject hostileEffect;
+    public GameObject normalEffect;
+    public GameObject impossibleEffect;
+    public GameObject invisibleEffect;
+    public GameObject fogOfWarEffect;
+    
     /// <summary>
     /// 타일에 우호적인 이펙트를 적용합니다.
     /// </summary>
-    public void FriendlyEffect(IEnumerator<Tile> tiles)
+    public void FriendlyEffect(IEnumerable<Tile> tiles)
     {
         throw new NotImplementedException();
     }
@@ -20,7 +27,7 @@ public class TileEffector : Singleton<TileEffector>
     /// <summary>
     /// 타일들에 적대적인 이펙트를 적용합니다. 
     /// </summary>
-    public void HostileEffect(IEnumerator<Tile> tiles)
+    public void HostileEffect(IEnumerable<Tile> tiles)
     {
         throw new NotImplementedException();
     }
@@ -28,7 +35,7 @@ public class TileEffector : Singleton<TileEffector>
     /// <summary>
     /// 타일들에 일반적인 하이라이팅 이펙트를 적용합니다.
     /// </summary>
-    public void NormalEffect(IEnumerator<Tile> tiles)
+    public void NormalEffect(IEnumerable<Tile> tiles)
     {
         throw new NotImplementedException();
     }
@@ -36,7 +43,7 @@ public class TileEffector : Singleton<TileEffector>
     /// <summary>
     /// 타일들에 뭔가 불가능해보이는 이펙트를 적용합니다.
     /// </summary>
-    public void ImpossibleEffect(IEnumerator<Tile> tiles)
+    public void ImpossibleEffect(IEnumerable<Tile> tiles)
     {
         throw new NotImplementedException();
     }
@@ -44,7 +51,7 @@ public class TileEffector : Singleton<TileEffector>
     /// <summary>
     /// 타일들에 Invisible 이펙트를 적용합니다.
     /// </summary>
-    public void InvisibleEffect(IEnumerator<Tile> tiles)
+    public void InvisibleEffect(IEnumerable<Tile> tiles)
     {
         throw new NotImplementedException();
     }
@@ -53,7 +60,7 @@ public class TileEffector : Singleton<TileEffector>
     /// 타일들에 전장의 안개 이펙트를 적용합니다.
     /// </summary>
     /// <param name="tiles"></param>
-    public void FogOfWarEffect(IEnumerator<Tile> tiles)
+    public void FogOfWarEffect(IEnumerable<Tile> tiles)
     {
         throw new NotImplementedException();
     }

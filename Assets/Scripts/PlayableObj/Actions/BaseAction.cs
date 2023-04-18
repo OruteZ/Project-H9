@@ -8,7 +8,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 {
     public abstract ActionType GetActionType();
     public abstract bool CanExecute(Vector3Int target);
-    public abstract void Execute(Vector3Int targetPos, Action onActionComplete);
+    public abstract void Execute(Vector3Int targetPos, Action _onActionComplete);
     public int GetCost() => 1; //todo : cost db 만들어서 수정
 
     public UnityEvent onActionStarted;

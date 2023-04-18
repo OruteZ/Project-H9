@@ -20,6 +20,8 @@ public class Map : MonoBehaviour
         
         //차후 삭제할 코드
         _highlightQueue = new Queue<Tile>();
+        
+        CreateDemoWorld();
     }
 
     /// <summary>
@@ -111,7 +113,7 @@ public class Map : MonoBehaviour
     /// <param name="destination">도착지점</param>
     /// <param name="maxLength">최대 길이, 기본값은 100</param>
     /// <returns>경로를 담은 리스트</returns>
-    public IEnumerable<Tile> FindPath(Vector3Int start, Vector3Int destination, int maxLength = 100)
+    public List<Tile> FindPath(Vector3Int start, Vector3Int destination, int maxLength = 100)
     {
         var visited = new HashSet<Vector3Int> { start };
         var container = new Queue<PathNode>();
@@ -155,7 +157,7 @@ public class Map : MonoBehaviour
     }
 
     /// <summary>
-    /// start 지점에서 target까지 Ray를 발사합니다. 가로막히는 벽의 기준은 ray-troughable 변수입니다.
+    /// start 지점에서 target까지 Ray를 발사합니다. 가로막히는 벽의 기준은 ray-throughable 변수입니다.
     /// </summary>
     /// <param name="start">시작점의 좌표</param>
     /// <param name="target">목적지의 좌표</param>
@@ -274,24 +276,24 @@ public class Map : MonoBehaviour
         _tiles.Clear();
     }
 
-    [Header("World to combat Test")] 
-    public Vector3Int playerPosition;
-    public Scene combatScene;
-
-    [ContextMenu("World to Combat")]
-    private void ChangeToCombatScene()
-    {
-        DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene("CombatScene");
-        gameObject.SetActive(false);
-    }
-
-    [ContextMenu("Combat to World")]
-    private void CombatSceneToThis()
-    {
-        SceneManager.LoadScene("WorldScene");
-        gameObject.SetActive(true);
-    }
+    // [Header("World to combat Test")] 
+    // public Vector3Int playerPosition;
+    // public Scene combatScene;
+    //
+    // [ContextMenu("World to Combat")]
+    // private void ChangeToCombatScene()
+    // {
+    //     DontDestroyOnLoad(gameObject);
+    //     SceneManager.LoadScene("CombatScene");
+    //     gameObject.SetActive(false);
+    // }
+    //
+    // [ContextMenu("Combat to World")]
+    // private void CombatSceneToThis()
+    // {
+    //     SceneManager.LoadScene("WorldScene");
+    //     gameObject.SetActive(true);
+    // }
     
     //demo end
 }

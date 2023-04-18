@@ -27,12 +27,14 @@ public abstract class Unit : MonoBehaviour
         set => hexTransform.position = value;
     }
     private int _actionPoints;
-    protected int speed;
+    public int speed;
 
     public string unitName; 
     public CombatSystem system;
+    public Map map;
     public virtual void SetUp(string newName, CombatSystem _system)
     {
+        map = _system.map;
         system = _system;
         unitName = newName;
     }   

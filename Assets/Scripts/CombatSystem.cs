@@ -7,22 +7,28 @@ using UnityEngine.Events;
 
 public class CombatSystem : MonoBehaviour
 {
+    [Serializable]
     private struct UnitInfo
     {
         public string unitName;
         public UnitType type;
+        public Vector3Int position;
     }
     
     [SerializeField] private UnityEvent onTurnChanged;
     [SerializeField] private UnitInfo[] _unitInfo;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private int turnNumber;
     private List<Unit> _units;
 
     public Unit turnOwner;
 
+    public Map map;
+
     private void Awake()
-    {    
+    {
+        map = GetComponent<Map>();
         _units = new List<Unit>();
 
         foreach (var info  in _unitInfo)
@@ -44,11 +50,19 @@ public class CombatSystem : MonoBehaviour
             unit.SetUp(info.unitName, this);
             _units.Add(unit);
         }
+
+        turnNumber = 0;
+        onTurnChanged.AddListener(() => { turnNumber++;});
     }
 
     private void Update()
     {
         foreach (var unit in _units) unit.Updated();
+    }
+
+    private void Start()
+    {
+        EndTurn();
     }
     
     public void EndTurn()

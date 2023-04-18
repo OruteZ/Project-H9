@@ -6,48 +6,74 @@ using UnityEngine.Events;
 
 public class Player : Unit
 {
-    private bool isBusy;
+    private bool _isBusy;
+    public bool IsBusy
+    {
+        get => _isBusy;
+        set
+        {
+            if (_isBusy != value)
+            {
+                _isBusy = value;
+                onBusyChanged.Invoke();
+            }
+        }
+    }
+
     private IUnitAction selectedAction;
 
     public UnityEvent onSelectedChanged;
     public UnityEvent onBusyChanged;
+    public UnityEvent onCostChanged;
 
     [HideInInspector] public Tile target;
 
     [Header("Status")]
     public int actionPoint;
-    
-    
+
     public override void SetUp(string newName, CombatSystem system)
     {
         base.SetUp(newName, system);
     }
     public override void Updated()
     {
-        if (isBusy) return;
+        if (IsBusy) return;
         if (system.turnOwner != this) return;
 
-        if (Input.GetMouseButton(0)) // todo : UI에 마우스가 올라가있지 않는가 조건 추가
+        if (Input.GetMouseButtonDown(0) && !UIManager.Instance.IsMouseOverUI())
         {
             var targetTile = GetMouseOverTile();
-            if (targetTile == null) return;
+            if (targetTile == null)
+            {
+#if true
+                Debug.Log("Target tile is null");
+#endif
+                return;
+            }
 
             if (selectedAction.CanExecute(targetTile.position) && actionPoint >= selectedAction.GetCost())
             {
                 SetBusy();
-                selectedAction.Execute(target.position, ClearBusy);
+                selectedAction.Execute(targetTile.position, FinishAction);
             }
         }   
     }
 
     public override void StartTurn()
     {
-        actionPoint = 100; //todo : 공식 가져와서 행동력 계산하기
+#if UNITY_EDITOR
+        Debug.Log("Player Turn Started");
+#endif 
+        actionPoint = 1; //todo : 공식 가져와서 행동력 계산하기
         SelectAction(GetAction<MoveAction>()); 
     }
 
     private void SelectAction(IUnitAction action)
     {
+#if UNITY_EDITOR
+        Debug.Log("Select Action : " + action);
+#endif
+        
         if (selectedAction == action) return;
 
         selectedAction = action;
@@ -61,19 +87,22 @@ public class Player : Unit
 
     private void SetBusy()
     {
-        isBusy = true;
-        onBusyChanged.Invoke();
+        IsBusy = true;
     }
 
     private void ClearBusy()
     {
-        isBusy = false;
-        onBusyChanged.Invoke();
+        IsBusy = false;
     }
-
-    public bool IsBusy()
+    private void FinishAction()
     {
-        return isBusy;
+        ClearBusy();
+        actionPoint -= selectedAction.GetCost();
+        onCostChanged.Invoke();
+        if (actionPoint <= 0)
+        {
+            system.EndTurn();
+        }
     }
 
     public Tile GetMouseOverTile()

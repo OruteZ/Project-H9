@@ -56,7 +56,7 @@ public class Skill
     private int[] InitIntArrayValue(string _string) 
     {
         char SPLIT_CHAR = '$';
-        if (!_string.Contains(SPLIT_CHAR)) return new int[] { 0 };
+        if (_string.Equals("0")) return new int[] { 0 };
 
         string[] splitString = _string.Split(SPLIT_CHAR);
 
@@ -74,7 +74,7 @@ public class Skill
     {
         isLearned = false;
         skillLevel = 1;
-        CheckIsLearnable();
+        InitIsLearnable();
     }
 
 
@@ -91,6 +91,11 @@ public class Skill
     {
         return description;
     }
+    public int GetAoP() 
+    {
+        return aop;
+    }
+
     public bool GetIsLearned()
     {
         return isLearned;
@@ -99,13 +104,26 @@ public class Skill
     {
         return isLearnable;
     }
-    private bool CheckIsLearnable() 
+    public bool IsEnoughSkillPoint(int point) 
     {
-        if (preced[0] == 0) return true;
-        return false;
+        return point >= aop;
+    }
+    private void InitIsLearnable() 
+    {
+        if (preced[0] == 0) isLearnable = true;
+        else isLearnable = false;
     }
     public void UpdateIsLearnable(List<Skill> _skills)
     {
+        if (isLearned) 
+        {
+            if (skillLevel > repeat)
+            {
+                isLearnable = false;
+                return;
+            }
+        }
+
         int cnt = 0;
         for (int i = 0; i < _skills.Count; i++) 
         {
@@ -127,10 +145,10 @@ public class Skill
     {
         isLearned = true;
     }
-    public void LevelUpSkill() 
+    public void LevelUpSkill()
     {
+        if (skillLevel > repeat) { Debug.Log("스킬 레벨 비정상적 상승"); return; }
         skillLevel++;
-        if (skillLevel > repeat + 1) Debug.Log("스킬 레벨 비정상적 상승");
     }
 }
 
@@ -139,23 +157,15 @@ public class SkillManager : MonoBehaviour
     private List<List<string>> skillTable;
     private List<Skill> skills;
 
+    private int skillPoint;
+
     private void Awake()
     {
-        SetSkills();
-
+        InitSkills();
+        skillPoint = 10;
     }
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
-    void SetSkills()
+    void InitSkills()
     {
         skillTable = SkillRead.Read("SkillTable");
         if (skillTable == null)
@@ -171,13 +181,17 @@ public class SkillManager : MonoBehaviour
         }
 
 
-        for (int i = 0; i < skills.Count; i++)
-        {
-            Debug.Log(skills[i].GetIndex());
-        }
+        //for (int i = 0; i < skills.Count; i++)
+        //{
+        //    Debug.Log(skills[i].GetIndex());
+        //}
     }
 
-    public Skill GetSkills(int index) 
+    public List<Skill> GetAllSkills() 
+    {
+        return skills;
+    }
+    public Skill GetSkill(int index) 
     {
         for (int i = 0; i < skills.Count; i++) 
         {
@@ -188,5 +202,39 @@ public class SkillManager : MonoBehaviour
         }
         Debug.Log("해당 인덱스의 스킬을 찾지 못했습니다. 인덱스: " + index);
         return null;
+    }
+
+    public bool LearnSkill(int index) 
+    {
+        for (int i = 0; i < skills.Count; i++) 
+        {
+            if (skills[i].GetIndex() == index) 
+            {
+                if (!skills[i].GetIsLearnable()) { Debug.Log("습득 조건이 충족되지 않은 스킬입니다."); return false; }
+                if (skillPoint < skills[i].GetAoP()) { Debug.Log("스킬 포인트가 부족합니다."); return false; }
+
+                skillPoint -= skills[i].GetAoP();
+                if (skills[i].GetIsLearned())
+                {
+                    skills[i].LevelUpSkill();
+                }
+                else 
+                {
+                    skills[i].LearnSkill();
+                }
+                break;
+            }
+        }
+        for (int i = 0; i < skills.Count; i++)
+        {
+            skills[i].UpdateIsLearnable(skills);
+        }
+
+        return true;
+    }
+
+    public int GetSkillPoint() 
+    {
+        return skillPoint;
     }
 }

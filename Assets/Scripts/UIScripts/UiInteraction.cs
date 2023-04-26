@@ -28,4 +28,8 @@ public class UiInteraction : MonoBehaviour
     {
         _uiManager.CloseSkillTooltip();
     }
+    public void OnSkillTooltipLearnBtnClick()
+    {
+        _uiManager.ClickLearnSkill();
+    }
 }

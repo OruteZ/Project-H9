@@ -12,8 +12,10 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas SkillCanvas;
     [SerializeField] private Canvas OptionCanvas;
 
-    [SerializeField] private SkillManager SkillManager;
+    [SerializeField] private SkillManager _SkillManager;
+    [SerializeField] private GameObject SkillWindow;
     [SerializeField] private GameObject SkillTooltipWindow;
+    [SerializeField] private GameObject SkillPointText;
     private int currentSkillIndex;
     // Start is called before the first frame update
     void Start()
@@ -30,15 +32,16 @@ public class UiManager : MonoBehaviour
     {
         CharacterCanvas.enabled = !CharacterCanvas.enabled;
 
-        if (CharacterCanvas.enabled) 
+        if (CharacterCanvas.enabled)
         {
-            SkillCanvas.enabled = false;
+            CloseSkillCanvas();
             OptionCanvas.enabled = false;
         }
     }
     public void OnOffSkillWindow()
     {
         SkillCanvas.enabled = !SkillCanvas.enabled;
+        UpdateSkillUiImage();
 
         if (SkillCanvas.enabled)
         {
@@ -52,34 +55,95 @@ public class UiManager : MonoBehaviour
 
         if (OptionCanvas.enabled)
         {
-            CharacterCanvas.enabled = false;
-            SkillCanvas.enabled = false;
+            CharacterCanvas.enabled = false; 
+            CloseSkillCanvas();
         }
     }
 
-    public void ClickSkillUiButton(GameObject _gameObject, int btnIndex) 
+    private void CloseSkillCanvas()
     {
-        SkillTooltipWindow.transform.position = _gameObject.transform.position;
+        SkillCanvas.enabled = false;
+        CloseSkillTooltip();
+    }
+
+    public void ClickSkillUiButton(Transform _transform, int btnIndex) 
+    {
+        SkillTooltipWindow.transform.position = _transform.position;
         SetTooltipWindow(btnIndex);
         SkillTooltipWindow.SetActive(true);
     }
     private void SetTooltipWindow(int index) 
     {
-        Skill currentSkill = SkillManager.GetSkills(index);
+        Skill currentSkill = _SkillManager.GetSkill(index);
         currentSkillIndex = index;
         SkillTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentSkill.GetName();
         SkillTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = currentSkill.GetDescription();
+
+        TextMeshProUGUI buttonText = SkillTooltipWindow.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
         if (currentSkill.GetIsLearnable())
         {
-            SkillTooltipWindow.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "½Àµæ";
+            if (currentSkill.IsEnoughSkillPoint(_SkillManager.GetSkillPoint()))
+            {
+                buttonText.text = "½Àµæ";
+            }
+            else
+            {
+                buttonText.text = "½ºÅ³ Æ÷ÀÎÆ® ºÎÁ·";
+            }
         }
         else
         {
-            SkillTooltipWindow.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "½Àµæ ºÒ°¡";
+            if (currentSkill.GetIsLearned())
+            {
+                buttonText.text = "½Àµæ ¿Ï·á";
+            }
+            else
+            {
+                buttonText.text = "½Àµæ ºÒ°¡";
+            }
         }
     }
     public void CloseSkillTooltip()
     {
         SkillTooltipWindow.SetActive(false);
+    }
+    public void ClickLearnSkill() 
+    {
+        Debug.Log(currentSkillIndex);
+        if (_SkillManager.LearnSkill(currentSkillIndex))
+        {
+            UpdateSkillUiImage();
+        }
+        SetTooltipWindow(currentSkillIndex);
+    }
+
+    enum LearnState { };
+    private void UpdateSkillUiImage() 
+    {
+        UpdateSkillPointUi();
+        for (int i = 0; i < SkillWindow.transform.childCount - 3; i++) 
+        {
+            SkillUI _skillUi = SkillWindow.transform.GetChild(i + 1).GetComponent<SkillUI>();
+            Skill _skill = _SkillManager.GetSkill(_skillUi.GetIndex());
+
+            const int NOT_LEARN = 0;
+            const int LEARNABLE = 1;
+            const int ALREADLY_LEARNED = 2;
+
+            int state = NOT_LEARN;
+            if (_skill.GetIsLearned()) 
+            {
+                state = ALREADLY_LEARNED;
+            }
+            if (_skill.GetIsLearnable())
+            {
+                state = LEARNABLE;
+            }
+            _skillUi.SetSkillButtonEffect(state);
+        }
+    }
+    private void UpdateSkillPointUi() 
+    {
+        SkillPointText.GetComponent<TextMeshProUGUI>().text = "SP: " + _SkillManager.GetSkillPoint().ToString();
     }
 }

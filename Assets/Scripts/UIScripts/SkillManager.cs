@@ -4,26 +4,31 @@ using UnityEngine;
 
 public class Skill
 {
-    public int index {get; set;}
-    private string icon { get; set; }
-    private string name { get; set; }
-    private string description { get; set; }
-    private int category { get; set; }
-    private int aop { get; set; }   //aop??
-    private int[] preced { get; set; }
-    private int repeat { get; set; }
-    private int[] stat { get; set; }
-    private int activeType { get; set; }
-    private int upgSkill { get; set; }
-    private int[] amount { get; set; }
-    private int range { get; set; }
-    private int width { get; set; }
+    private int index;
+    private string icon;
+    private string name;
+    private string description;
+    private int category;
+    private int aop;    //aop??
+    private int[] preced;
+    private int repeat;
+    private int[] stat;
+    private int activeType;
+    private int upgSkill;
+    private int[] amount;
+    private int range;
+    private int width;
+
+    private bool isLearned;
+    private bool isLearnable;
+    private int skillLevel;
 
     public Skill(List<string> _list) 
     {
-        InitValues(_list);
+        InitInfomationValues(_list);
+        InitStatusValues();
     }
-    private void InitValues(List<string> _list) 
+    private void InitInfomationValues(List<string> _list) 
     {
         for (int i = 0; i < _list.Count; i++) 
         {
@@ -50,9 +55,10 @@ public class Skill
     }
     private int[] InitIntArrayValue(string _string) 
     {
-        if (_string.Length == 0) return new int[] { 0 };
+        char SPLIT_CHAR = '$';
+        if (!_string.Contains(SPLIT_CHAR)) return new int[] { 0 };
 
-        string[] splitString = _string.Split('$');
+        string[] splitString = _string.Split(SPLIT_CHAR);
 
         int[] result = new int[splitString.Length];
 
@@ -62,7 +68,70 @@ public class Skill
         }
 
         return result;
-    } 
+    }
+
+    private void InitStatusValues()
+    {
+        isLearned = false;
+        skillLevel = 1;
+        CheckIsLearnable();
+    }
+
+
+
+    public int GetIndex() 
+    {
+        return index;
+    }
+    public string GetName()
+    {
+        return name;
+    }
+    public string GetDescription()
+    {
+        return description;
+    }
+    public bool GetIsLearned()
+    {
+        return isLearned;
+    }
+    public bool GetIsLearnable()
+    {
+        return isLearnable;
+    }
+    private bool CheckIsLearnable() 
+    {
+        if (preced[0] == 0) return true;
+        return false;
+    }
+    public void UpdateIsLearnable(List<Skill> _skills)
+    {
+        int cnt = 0;
+        for (int i = 0; i < _skills.Count; i++) 
+        {
+            for (int j = 0; j < preced.Length; j++) 
+            {
+                bool isPrecedSkill = (_skills[i].GetIndex() == preced[j]);
+                bool isLearnedPrecedSkill = (_skills[i].GetIsLearned() == true);
+                if (isPrecedSkill && isLearnedPrecedSkill) 
+                {
+                    cnt++;
+                } 
+            }
+        }
+
+        if (cnt == preced.Length) isLearnable = true;
+    }
+
+    public void LearnSkill() 
+    {
+        isLearned = true;
+    }
+    public void LevelUpSkill() 
+    {
+        skillLevel++;
+        if (skillLevel > repeat + 1) Debug.Log("스킬 레벨 비정상적 상승");
+    }
 }
 
 public class SkillManager : MonoBehaviour
@@ -104,8 +173,20 @@ public class SkillManager : MonoBehaviour
 
         for (int i = 0; i < skills.Count; i++)
         {
-            Debug.Log(skills[i].index);
-
+            Debug.Log(skills[i].GetIndex());
         }
+    }
+
+    public Skill GetSkills(int index) 
+    {
+        for (int i = 0; i < skills.Count; i++) 
+        {
+            if (skills[i].GetIndex() == index) 
+            {
+                return skills[i];
+            }
+        }
+        Debug.Log("해당 인덱스의 스킬을 찾지 못했습니다. 인덱스: " + index);
+        return null;
     }
 }

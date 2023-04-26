@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UiManager : MonoBehaviour
 {
@@ -11,10 +12,12 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas SkillCanvas;
     [SerializeField] private Canvas OptionCanvas;
 
+    [SerializeField] private SkillManager SkillManager;
+    [SerializeField] private GameObject SkillTooltipWindow;
+    private int currentSkillIndex;
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -23,28 +26,60 @@ public class UiManager : MonoBehaviour
         
     }
 
-    public void OpenCharacterWindow() 
+    public void OnOffCharacterWindow() 
     {
-        CharacterCanvas.enabled = true;
+        CharacterCanvas.enabled = !CharacterCanvas.enabled;
+
+        if (CharacterCanvas.enabled) 
+        {
+            SkillCanvas.enabled = false;
+            OptionCanvas.enabled = false;
+        }
     }
-    public void CloseCharacterWindow()
+    public void OnOffSkillWindow()
     {
-        CharacterCanvas.enabled = false;
+        SkillCanvas.enabled = !SkillCanvas.enabled;
+
+        if (SkillCanvas.enabled)
+        {
+            CharacterCanvas.enabled = false;
+            OptionCanvas.enabled = false;
+        }
     }
-    public void OpenSkillWindow()
+    public void OnOffOptionWindow()
     {
-        SkillCanvas.enabled = true;
+        OptionCanvas.enabled = !OptionCanvas.enabled;
+
+        if (OptionCanvas.enabled)
+        {
+            CharacterCanvas.enabled = false;
+            SkillCanvas.enabled = false;
+        }
     }
-    public void CloseSkillWindow()
+
+    public void ClickSkillUiButton(GameObject _gameObject, int btnIndex) 
     {
-        SkillCanvas.enabled = false;
+        SkillTooltipWindow.transform.position = _gameObject.transform.position;
+        SetTooltipWindow(btnIndex);
+        SkillTooltipWindow.SetActive(true);
     }
-    public void OpenOptionWindow()
+    private void SetTooltipWindow(int index) 
     {
-        OptionCanvas.enabled = true;
+        Skill currentSkill = SkillManager.GetSkills(index);
+        currentSkillIndex = index;
+        SkillTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentSkill.GetName();
+        SkillTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = currentSkill.GetDescription();
+        if (currentSkill.GetIsLearnable())
+        {
+            SkillTooltipWindow.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "½Àµæ";
+        }
+        else
+        {
+            SkillTooltipWindow.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = "½Àµæ ºÒ°¡";
+        }
     }
-    public void CloseOptionWindow()
+    public void CloseSkillTooltip()
     {
-        OptionCanvas.enabled = false;
+        SkillTooltipWindow.SetActive(false);
     }
 }

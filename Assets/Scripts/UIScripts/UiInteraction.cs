@@ -13,14 +13,19 @@ public class UiInteraction : MonoBehaviour
     }
     public void OnCharacterBtnClick() 
     {
-        _uiManager.OpenCharacterWindow();
+        _uiManager.OnOffCharacterWindow();
     }
     public void OnSkillBtnClick()
     {
-        _uiManager.OpenSkillWindow();
+        _uiManager.OnOffSkillWindow();
     }
     public void OnOptionBtnClick()
     {
-        _uiManager.OpenOptionWindow();
+        _uiManager.OnOffOptionWindow();
+    }
+
+    public void OnSkillTooltipCloseBtnClick()
+    {
+        _uiManager.CloseSkillTooltip();
     }
 }

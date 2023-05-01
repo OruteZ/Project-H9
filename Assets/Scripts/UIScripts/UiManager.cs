@@ -17,6 +17,8 @@ public class UiManager : MonoBehaviour
     [SerializeField] private GameObject SkillTooltipWindow;
     [SerializeField] private GameObject SkillPointText;
     private int currentSkillIndex;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,13 +78,13 @@ public class UiManager : MonoBehaviour
     {
         Skill currentSkill = _SkillManager.GetSkill(index);
         currentSkillIndex = index;
-        SkillTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentSkill.GetName();
-        SkillTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = currentSkill.GetDescription();
+        SkillTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentSkill.name;
+        SkillTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = currentSkill.description;
 
         TextMeshProUGUI buttonText = SkillTooltipWindow.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
         if (currentSkill.GetIsLearnable())
         {
-            if (currentSkill.IsEnoughSkillPoint(_SkillManager.GetSkillPoint()))
+            if (_SkillManager.IsEnoughSkillPoint())
             {
                 buttonText.text = "½Àµæ";
             }

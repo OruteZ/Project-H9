@@ -78,11 +78,11 @@ public class UiManager : MonoBehaviour
     {
         Skill currentSkill = _SkillManager.GetSkill(index);
         currentSkillIndex = index;
-        SkillTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentSkill.name;
-        SkillTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = currentSkill.description;
+        SkillTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentSkill.skillInfo.name;
+        SkillTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = currentSkill.skillInfo.description;
 
         TextMeshProUGUI buttonText = SkillTooltipWindow.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
-        if (currentSkill.GetIsLearnable())
+        if (currentSkill.isLearnable)
         {
             if (_SkillManager.IsEnoughSkillPoint())
             {
@@ -95,7 +95,7 @@ public class UiManager : MonoBehaviour
         }
         else
         {
-            if (currentSkill.GetIsLearned())
+            if (currentSkill.isLearned)
             {
                 buttonText.text = "½Àµæ ¿Ï·á";
             }
@@ -119,7 +119,12 @@ public class UiManager : MonoBehaviour
         SetTooltipWindow(currentSkillIndex);
     }
 
-    enum LearnState { };
+    enum LearnState 
+    {
+        NOT_LEARNED,
+        LEARNABLE,
+        ALREADLY_LEARNED
+    };
     private void UpdateSkillUiImage() 
     {
         UpdateSkillPointUi();
@@ -128,20 +133,16 @@ public class UiManager : MonoBehaviour
             SkillUI _skillUi = SkillWindow.transform.GetChild(i + 1).GetComponent<SkillUI>();
             Skill _skill = _SkillManager.GetSkill(_skillUi.GetIndex());
 
-            const int NOT_LEARN = 0;
-            const int LEARNABLE = 1;
-            const int ALREADLY_LEARNED = 2;
-
-            int state = NOT_LEARN;
-            if (_skill.GetIsLearned()) 
+            LearnState state = LearnState.NOT_LEARNED;
+            if (_skill.isLearned) 
             {
-                state = ALREADLY_LEARNED;
+                state = LearnState.ALREADLY_LEARNED;
             }
-            if (_skill.GetIsLearnable())
+            if (_skill.isLearnable)
             {
-                state = LEARNABLE;
+                state = LearnState.LEARNABLE;
             }
-            _skillUi.SetSkillButtonEffect(state);
+            _skillUi.SetSkillButtonEffect((int)state);
         }
     }
     private void UpdateSkillPointUi() 

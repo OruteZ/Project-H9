@@ -14,6 +14,7 @@ public class UiManager : MonoBehaviour
 
     [SerializeField] private SkillManager _SkillManager;
     [SerializeField] private GameObject SkillWindow;
+    [SerializeField] private GameObject SkillUiButtons;
     [SerializeField] private GameObject SkillTooltipWindow;
     [SerializeField] private GameObject SkillPointText;
     private int currentSkillIndex;
@@ -28,44 +29,26 @@ public class UiManager : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void OnOffCharacterWindow() 
+    }  
+    public void OnOffCharacterCanvas(bool isOn)
     {
-        CharacterCanvas.enabled = !CharacterCanvas.enabled;
+        if (isOn && CharacterCanvas.enabled) isOn = false;
+        CharacterCanvas.enabled = isOn;
+    }
+    public void OnOffSkillCanvas(bool isOn)
+    {
+        if (isOn && SkillCanvas.enabled) isOn = false;
+        SkillCanvas.enabled = isOn;
 
-        if (CharacterCanvas.enabled)
+        if (!SkillCanvas.enabled)
         {
-            CloseSkillCanvas();
-            OptionCanvas.enabled = false;
+            CloseSkillTooltip();
         }
     }
-    public void OnOffSkillWindow()
+    public void OnOffOptionCanvas(bool isOn)
     {
-        SkillCanvas.enabled = !SkillCanvas.enabled;
-        UpdateSkillUiImage();
-
-        if (SkillCanvas.enabled)
-        {
-            CharacterCanvas.enabled = false;
-            OptionCanvas.enabled = false;
-        }
-    }
-    public void OnOffOptionWindow()
-    {
-        OptionCanvas.enabled = !OptionCanvas.enabled;
-
-        if (OptionCanvas.enabled)
-        {
-            CharacterCanvas.enabled = false; 
-            CloseSkillCanvas();
-        }
-    }
-
-    private void CloseSkillCanvas()
-    {
-        SkillCanvas.enabled = false;
-        CloseSkillTooltip();
+        if (isOn && OptionCanvas.enabled) isOn = false;
+        OptionCanvas.enabled = isOn;
     }
 
     public void ClickSkillUiButton(Transform _transform, int btnIndex) 
@@ -119,7 +102,7 @@ public class UiManager : MonoBehaviour
         SetTooltipWindow(currentSkillIndex);
     }
 
-    enum LearnState 
+    public enum LearnState 
     {
         NOT_LEARNED,
         LEARNABLE,
@@ -128,10 +111,10 @@ public class UiManager : MonoBehaviour
     private void UpdateSkillUiImage() 
     {
         UpdateSkillPointUi();
-        for (int i = 0; i < SkillWindow.transform.childCount - 3; i++) 
+        for (int i = 0; i < SkillUiButtons.transform.childCount; i++) 
         {
-            SkillUI _skillUi = SkillWindow.transform.GetChild(i + 1).GetComponent<SkillUI>();
-            Skill _skill = _SkillManager.GetSkill(_skillUi.GetIndex());
+            SkillUI _skillUi = SkillUiButtons.transform.GetChild(i).GetComponent<SkillUI>();
+            Skill _skill = _SkillManager.GetSkill(_skillUi.GetSkillUiIndex());
 
             LearnState state = LearnState.NOT_LEARNED;
             if (_skill.isLearned) 
@@ -143,6 +126,11 @@ public class UiManager : MonoBehaviour
                 state = LearnState.LEARNABLE;
             }
             _skillUi.SetSkillButtonEffect((int)state);
+
+            if (_skill.skillLevel > 0)  
+            {
+                _skillUi.SetSkillArrow();
+            }
         }
     }
     private void UpdateSkillPointUi() 

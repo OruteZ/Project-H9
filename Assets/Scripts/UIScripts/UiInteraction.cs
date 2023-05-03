@@ -13,17 +13,28 @@ public class UiInteraction : MonoBehaviour
     }
     public void OnCharacterBtnClick() 
     {
-        _uiManager.OnOffCharacterWindow();
+        _uiManager.OnOffCharacterCanvas(true);
+        _uiManager.OnOffSkillCanvas(false);
+        _uiManager.OnOffOptionCanvas(false);
     }
     public void OnSkillBtnClick()
     {
-        _uiManager.OnOffSkillWindow();
+        _uiManager.OnOffCharacterCanvas(false);
+        _uiManager.OnOffSkillCanvas(true);
+        _uiManager.OnOffOptionCanvas(false);
     }
     public void OnOptionBtnClick()
     {
-        _uiManager.OnOffOptionWindow();
+        _uiManager.OnOffCharacterCanvas(false);
+        _uiManager.OnOffSkillCanvas(false);
+        _uiManager.OnOffOptionCanvas(true);
     }
-
+    public void OnBackgroundBtnClick()
+    {
+        _uiManager.OnOffCharacterCanvas(false);
+        _uiManager.OnOffSkillCanvas(false);
+        _uiManager.OnOffOptionCanvas(false);
+    }
     public void OnSkillTooltipCloseBtnClick()
     {
         _uiManager.CloseSkillTooltip();

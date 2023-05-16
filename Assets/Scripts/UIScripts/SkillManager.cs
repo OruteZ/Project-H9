@@ -198,7 +198,7 @@ public class Skill
     }
 }
 
-public class SkillManager : MonoBehaviour
+public class SkillManager : Generic.Singleton<SkillManager>
 {
     const int REQUIRED_SKILL_POINT = 1;
 

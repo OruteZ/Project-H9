@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillUI : MonoBehaviour
+public class SkillUI : Generic.Singleton<SkillUI>
 {
     [SerializeField] private int buttonIndex;
-    [SerializeField] private GameObject _uiManager;
+    [SerializeField] private UiManager _uiManager;
 
     //test : 1==½ÀµæºÒ°¡, 2==½Àµæ°¡´É, 3==½Àµæ¿Ï·á
     [SerializeField] private Sprite[] Effect = new Sprite[3];
@@ -22,7 +22,7 @@ public class SkillUI : MonoBehaviour
 
     public void OnSkillUiButtonClick()
     {
-        _uiManager.GetComponent<UiManager>().ClickSkillUiButton(this.gameObject.transform, buttonIndex);
+        _uiManager.ClickSkillUiButton(this.gameObject.transform, buttonIndex);
     }
 
     public void SetSkillButtonEffect(int state) 

@@ -15,25 +15,25 @@ public class UiInteraction : MonoBehaviour
     {
         _uiManager.OnOffCharacterCanvas(true);
         _uiManager.OnOffSkillCanvas(false);
-        _uiManager.OnOffOptionCanvas(false);
+        _uiManager.OnOffPauseMenuCanvas(false);
     }
     public void OnSkillBtnClick()
     {
         _uiManager.OnOffCharacterCanvas(false);
         _uiManager.OnOffSkillCanvas(true);
-        _uiManager.OnOffOptionCanvas(false);
+        _uiManager.OnOffPauseMenuCanvas(false);
     }
-    public void OnOptionBtnClick()
+    public void OnPauseMenuBtnClick()
     {
         _uiManager.OnOffCharacterCanvas(false);
         _uiManager.OnOffSkillCanvas(false);
-        _uiManager.OnOffOptionCanvas(true);
+        _uiManager.OnOffPauseMenuCanvas(true);
     }
     public void OnBackgroundBtnClick()
     {
         _uiManager.OnOffCharacterCanvas(false);
         _uiManager.OnOffSkillCanvas(false);
-        _uiManager.OnOffOptionCanvas(false);
+        _uiManager.OnOffPauseMenuCanvas(false);
     }
     public void OnSkillTooltipCloseBtnClick()
     {
@@ -42,5 +42,14 @@ public class UiInteraction : MonoBehaviour
     public void OnSkillTooltipLearnBtnClick()
     {
         _uiManager.ClickLearnSkill();
+    }
+
+    public void OnExitBtnClick()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

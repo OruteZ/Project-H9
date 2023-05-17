@@ -10,7 +10,7 @@ public class UiManager : Generic.Singleton<UiManager>
     [SerializeField] private Canvas BattleCanvas;
     [SerializeField] private Canvas CharacterCanvas;
     [SerializeField] private Canvas SkillCanvas;
-    [SerializeField] private Canvas OptionCanvas;
+    [SerializeField] private Canvas PauseMenuCanvas;
 
     [SerializeField] private SkillManager _SkillManager;
     [SerializeField] private GameObject SkillWindow;
@@ -46,10 +46,10 @@ public class UiManager : Generic.Singleton<UiManager>
             CloseSkillTooltip();
         }
     }
-    public void OnOffOptionCanvas(bool isOn)
+    public void OnOffPauseMenuCanvas(bool isOn)
     {
-        if (isOn && OptionCanvas.enabled) isOn = false;
-        OptionCanvas.enabled = isOn;
+        if (isOn && PauseMenuCanvas.enabled) isOn = false;
+        PauseMenuCanvas.enabled = isOn;
     }
 
     public void ClickSkillUiButton(Transform _transform, int btnIndex) 

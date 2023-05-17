@@ -7,7 +7,7 @@ public class SkillRead : MonoBehaviour
 {
 	static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))"; //regular expression
 	static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
-	static char[] TRIM_CHARS = { '\"' };
+	static char[] TRIM_CHARS = { ' ' };
 
 	public static List<List<string>> Read(string file)
 	{
@@ -27,7 +27,7 @@ public class SkillRead : MonoBehaviour
             return null;
         }
 
-        string[] header = Regex.Split(lines[0], SPLIT_RE);
+        //string[] header = Regex.Split(lines[0], SPLIT_RE);    //for test
         for (int i = 1; i < lines.Length; i++)
         {
             string[] values = Regex.Split(lines[i], SPLIT_RE);
@@ -37,7 +37,8 @@ public class SkillRead : MonoBehaviour
             for (int j = 0; j < values.Length; j++)
             {
                 string value = values[j];
-                //value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
+                //공백 제거
+                value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS);
                 string finalvalue = value;
                 columnList.Add(finalvalue);
             }

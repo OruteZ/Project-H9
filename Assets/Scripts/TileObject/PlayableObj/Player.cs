@@ -19,12 +19,10 @@ public class Player : Unit
             }
         }
     }
-
-    private IUnitAction selectedAction;
-
-    public UnityEvent onSelectedChanged;
-    public UnityEvent onBusyChanged;
-    public UnityEvent onCostChanged;
+    
+    [HideInInspector] public UnityEvent onSelectedChanged;
+    [HideInInspector] public UnityEvent onBusyChanged;
+    [HideInInspector] public UnityEvent onCostChanged;
 
     [HideInInspector] public Tile target;
 
@@ -39,11 +37,14 @@ public class Player : Unit
     {
         if (IsBusy) return;
         if (system.turnOwner != this) return;
+        
+        // if (Input.GetKeyDown(KeyCode.A)) SelectAction(GetAction<MoveAction>());
+        // if (Input.GetKeyDown(KeyCode.D)) SelectAction(GetAction<AttackAction>());
 
-        if (Input.GetMouseButtonDown(0) && !UIManager.Instance.IsMouseOverUI())
+        if (Input.GetMouseButtonDown(0) && !UIManager.Instance.isMouseOverUI)
         {
-            var targetTile = GetMouseOverTile();
-            if (targetTile == null)
+            target = GetMouseOverTile();
+            if (target == null)
             {
 #if true
                 Debug.Log("Target tile is null");
@@ -51,10 +52,10 @@ public class Player : Unit
                 return;
             }
 
-            if (selectedAction.CanExecute(targetTile.position) && actionPoint >= selectedAction.GetCost())
+            if (activeUnitAction.CanExecute(target.position) && actionPoint >= activeUnitAction.GetCost())
             {
                 SetBusy();
-                selectedAction.Execute(targetTile.position, FinishAction);
+                activeUnitAction.Execute(target.position, FinishAction);
             }
         }   
     }
@@ -64,25 +65,27 @@ public class Player : Unit
 #if UNITY_EDITOR
         Debug.Log("Player Turn Started");
 #endif 
-        actionPoint = 1; //todo : 공식 가져와서 행동력 계산하기
+        actionPoint = 10; //todo : 공식 가져와서 행동력 계산하기
+
+        activeUnitAction = null;
         SelectAction(GetAction<MoveAction>()); 
     }
 
-    private void SelectAction(IUnitAction action)
+    public void SelectAction(IUnitAction action)
     {
 #if UNITY_EDITOR
         Debug.Log("Select Action : " + action);
 #endif
         
-        if (selectedAction == action) return;
+        if (activeUnitAction == action) return;
 
-        selectedAction = action;
+        activeUnitAction = action;
         onSelectedChanged.Invoke();
     }
 
     public IUnitAction GetSelectedAction()
     {
-        return selectedAction;
+        return activeUnitAction;
     }
 
     private void SetBusy()
@@ -97,12 +100,8 @@ public class Player : Unit
     private void FinishAction()
     {
         ClearBusy();
-        actionPoint -= selectedAction.GetCost();
+        actionPoint -= activeUnitAction.GetCost();
         onCostChanged.Invoke();
-        if (actionPoint <= 0)
-        {
-            system.EndTurn();
-        }
     }
 
     public Tile GetMouseOverTile()
@@ -115,5 +114,9 @@ public class Player : Unit
         }
 
         return null;
+    }
+
+    public override void OnHit(int damage)
+    {
     }
 }

@@ -6,9 +6,6 @@ using Generic;
 public class UIManager : Singleton<UIManager>
 {
     public CombatUI combatUI;
-    
-    public bool IsMouseOverUI()
-    {
-        return false; 
-    }
+
+    public bool isMouseOverUI;
 }

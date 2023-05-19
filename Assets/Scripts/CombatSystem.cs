@@ -1,22 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CombatSystem : MonoBehaviour
+public class CombatSystem : Generic.Singleton<CombatSystem>
 {
     [Serializable]
     private struct UnitInfo
     {
         public string unitName;
         public UnitType type;
-        public Vector3Int position;
+        public Vector3Int spawnPosition;
     }
-    
-    [SerializeField] private UnityEvent onTurnChanged;
-    [SerializeField] private UnitInfo[] _unitInfo;
+
+    public UnityEvent onTurnChanged;
+    [SerializeField] private UnitInfo[] unitInfo;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private int turnNumber;
@@ -26,12 +27,32 @@ public class CombatSystem : MonoBehaviour
 
     public Map map;
 
+    public Player Player
+    {
+        get
+        {
+            foreach (var unit in _units)
+            {
+                if (unit is Player u)
+                    return u;
+            }
+
+            return null;
+        }
+    }
+
+    public bool IsPlayerTurn()
+    {
+        return Player == turnOwner;
+    }
     private void Awake()
     {
+        base.Awake();
+        
         map = GetComponent<Map>();
         _units = new List<Unit>();
 
-        foreach (var info  in _unitInfo)
+        foreach (var info  in unitInfo)
         {
             Unit unit;
 
@@ -39,9 +60,11 @@ public class CombatSystem : MonoBehaviour
             {
                 case UnitType.Player:
                     unit = Instantiate(playerPrefab).GetComponent<Unit>();
+                    unit.Position = info.spawnPosition;
                     break;
                 case UnitType.Enemy:
                     unit = Instantiate(enemyPrefab).GetComponent<Unit>();
+                    unit.Position = info.spawnPosition;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -83,5 +106,10 @@ public class CombatSystem : MonoBehaviour
     public void CalculateTarget()
     {
         turnOwner = _units[0];
+    }
+
+    public Unit GetUnit(Vector3Int position)
+    {
+        return _units.FirstOrDefault(unit => unit.Position == position);
     }
 }

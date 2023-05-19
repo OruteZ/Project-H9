@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 public class Map : MonoBehaviour
 {
     public GameObject tilePrefab;
+    
     private Dictionary<Vector3Int, Tile> _tiles;
 
     private void Awake()
@@ -250,8 +251,12 @@ public class Map : MonoBehaviour
         var positions = Hex.GetGridsWithRange(range, Hex.zero);
         foreach (var pos in positions)
         {
-                var isWall = Random.Range(0, 2) == 1;
-            AddTile(pos, walkable : isWall, visible : isWall, rayThroughable: isWall);
+            var isWall = Random.Range(0, 2) == 1;
+            
+            
+            isWall = false;
+            
+            AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
         }
     }
     

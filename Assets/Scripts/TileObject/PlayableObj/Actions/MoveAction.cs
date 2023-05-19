@@ -11,21 +11,32 @@ public class MoveAction : BaseAction
     private List<Tile> _path;
     private int _currentPositionIndex;
 
-    private const float RotationSpeed = 10f;
-    private const float MoveSpeed = 4f;
+    public float rotationSpeed;
+    public float moveSpeed;
 
-    private void Awake()
+    public override int GetCost()
     {
-        _currentPositionIndex = -1;
+        return _currentPositionIndex < 0 ? 0 : _currentPositionIndex - 1;
     }
 
     public override bool CanExecute(Vector3Int targetPos)
     {
+        if (unit.system.GetUnit(targetPos) != null) return false;
+        
         _path = unit.map.FindPath(unit.Position, targetPos, MaxMoveDistance);
-#if UNITY_EDITOR
-        if(_path == null) Debug.Log("impossible path");
-#endif
-        return (_path != null);
+        if (_path == null)
+        {
+            Debug.Log("impossible path");
+            return false;
+        }
+
+        if (_path.Count <= 1)
+        {
+            Debug.Log("제자리");
+            return false;
+        }
+
+        return true;
     }
 
     // ReSharper disable once InconsistentNaming
@@ -34,7 +45,16 @@ public class MoveAction : BaseAction
         StartAction(_onActionComplete);
 
         //_path = unit.hexTransform.Map.FindPath(unit.Position, targetPos, _maxMoveDistance) as List<Vector3Int>;
-        _currentPositionIndex = 0;  
+        _currentPositionIndex = 1;  
+        transform.forward =
+            (Hex.Hex2World(_path[_currentPositionIndex].position)
+            - transform.position)
+            .normalized;
+    }
+
+    private void Awake()
+    {
+        _currentPositionIndex = -1;
     }
 
     private void Update()
@@ -44,10 +64,8 @@ public class MoveAction : BaseAction
         Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].position);
         Vector3 moveDirection = (targetPos - transform.position).normalized;
         
-        //todo : look at dest
-
-        transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * RotationSpeed);
-        transform.position += moveDirection * (MoveSpeed * Time.deltaTime);
+        transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
+        transform.position += moveDirection * (moveSpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, targetPos) < 0.1f)
         {

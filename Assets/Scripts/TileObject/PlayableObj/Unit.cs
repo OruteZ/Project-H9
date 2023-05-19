@@ -20,18 +20,20 @@ public abstract class Unit : MonoBehaviour
     public HexTransform hexTransform;
     
     private IUnitAction[] _unitActionArray; // All Unit Actions attached to this Unit
-    private IUnitAction _activeUnitAction; // Currently active action
+    public IUnitAction activeUnitAction; // Currently active action
+
+    public string unitName;
+    private int _actionPoints;
+    public Weapon weapon;
+ 
+    public CombatSystem system;
+    public Map map;
+    public int speed;  
     public Vector3Int Position
     {
         get => hexTransform.position;
         set => hexTransform.position = value;
     }
-    private int _actionPoints;
-    public int speed;
-
-    public string unitName; 
-    public CombatSystem system;
-    public Map map;
     public virtual void SetUp(string newName, CombatSystem _system)
     {
         map = _system.map;
@@ -52,11 +54,6 @@ public abstract class Unit : MonoBehaviour
             action.Setup(this);
         }
     }
-
-    public void SetActiveUnitAction(IUnitAction action)
-    {
-        _activeUnitAction = action;
-    }
     
     public T GetAction<T>() {
         foreach (IUnitAction unitAction in _unitActionArray) {
@@ -73,5 +70,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     public int Mobility => speed / 10;
+
+    public abstract void OnHit(int damage);
 }
 

@@ -26,12 +26,12 @@ namespace Generic
             }
         }
 
-        private void Awake()
+        protected void Awake()
         {
 #if UNITY_EDITOR
             if (_instance != null)
             {
-                Debug.LogError("Singleton 2회 생성");
+                Debug.LogError("Singleton 2회 생성" + nameof(T));
                 Destroy(gameObject);
             }
 #endif

@@ -112,11 +112,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  highlightedMaterial: {fileID: 2100000, guid: f2897110a69e9b24e97a1999209becd8, type: 2}
-  normalMaterial: {fileID: 2100000, guid: f80973647f3c9af4a9df7af61a6a6c89, type: 2}
-  blackMaterial: {fileID: 2100000, guid: 6653050ac87d57c4f972f7b51ea558f3, type: 2}
   walkable: 0
-  passable: 0
+  visible: 0
+  rayThroughable: 0
+  inSight: 0
 --- !u!136 &5163813435192017621
 CapsuleCollider:
   m_ObjectHideFlags: 0

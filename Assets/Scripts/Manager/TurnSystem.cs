@@ -15,11 +15,6 @@ public class TurnSystem : MonoBehaviour
         turnNumber = 0;
         onTurnChanged.AddListener(() => { turnNumber++;});
     }
-    
-    private void Start()
-    {
-        EndTurn();
-    }
 
     public void EndTurn()
     {
@@ -29,8 +24,8 @@ public class TurnSystem : MonoBehaviour
         CalculateTurnOwner();
         StartTurn();
     }
-    
-    public void StartTurn()
+
+    private void StartTurn()
     {
         turnOwner.StartTurn();
         onTurnChanged.Invoke();

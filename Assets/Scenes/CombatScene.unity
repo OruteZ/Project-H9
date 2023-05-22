@@ -560,6 +560,57 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &835294046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 835294048}
+  - component: {fileID: 835294047}
+  m_Layer: 0
+  m_Name: TileEffector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &835294047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835294046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48c1910c0f0c8b1499d9cf5a4e848685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  friendlyEffect: {fileID: 0}
+  hostileEffect: {fileID: 0}
+  normalEffect: {fileID: -3033667219593020291, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd,
+    type: 3}
+  impossibleEffect: {fileID: 2100000, guid: 6653050ac87d57c4f972f7b51ea558f3, type: 2}
+  invisibleEffect: {fileID: 2100000, guid: f2897110a69e9b24e97a1999209becd8, type: 2}
+  fogOfWarEffect: {fileID: 0}
+--- !u!4 &835294048
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835294046}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &836290311
 GameObject:
   m_ObjectHideFlags: 0
@@ -2017,6 +2068,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973d2c69f9a20354684279d00c635fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onAnyUnitMoved:
+    m_PersistentCalls:
+      m_Calls: []
   unitInfo:
   - unitName: Player
     type: 0
@@ -2087,7 +2141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7022448b3c234064ca73dfececaf2d01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 0}
+  tileSystem: {fileID: 0}
   turnSystem: {fileID: 0}
   unitSystem: {fileID: 0}
 --- !u!1 &1919371912

@@ -20,10 +20,6 @@ public class TileSystem : MonoBehaviour
         
     }
 
-    private void Start()
-    {
-        CreateDemoWorld();
-    }
 
     public List<Tile> GetAllTiles()
     {
@@ -40,7 +36,8 @@ public class TileSystem : MonoBehaviour
     /// <param name="walkable">타일의 walkable(이동가능) 속성입니다.</param>
     /// <param name="visible">타일의 visible(시야가 보임) 속성입니다.</param>
     /// <param name="rayThroughable">타일의 rayThroughable(ray가 통과 가능함) 속성입니다.</param>
-    private void AddTile(Vector3Int position, bool walkable = true, bool visible = true, bool rayThroughable = true)
+    /// <returns> 추가된 Tile을 반환합니다. </returns>
+    private Tile AddTile(Vector3Int position, bool walkable = true, bool visible = true, bool rayThroughable = true)
     {
         var tile = Instantiate(tilePrefab, transform).GetComponent<Tile>();
         tile.hexTransform.position = position;
@@ -51,6 +48,8 @@ public class TileSystem : MonoBehaviour
         {
             throw new Exception("Tile 추가에 실패했습니다.");
         }
+
+        return tile;
     }
 
     /// <summary>
@@ -206,7 +205,7 @@ public class TileSystem : MonoBehaviour
 
         var result = true;
 
-        for (int i = 0; i < line1.Count; i++)
+        for (int i = 0; i < line1.Count - 1; i++)
         {
             var ret1 = GetTile(line1[i]);
             var ret2 = GetTile(line2[i]);
@@ -225,17 +224,19 @@ public class TileSystem : MonoBehaviour
     public int range;
     
     [ContextMenu("Create World With Wall")]
-    private void CreateDemoWorld()
+    public void CreateDemoWorld()
     {
         var positions = Hex.GetGridsWithRange(range, Hex.zero);
         foreach (var pos in positions)
         {
             var isWall = Random.Range(0, 2) == 1;
             
+            if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
+                isWall = false;
             
-            isWall = false;
+            var tile = AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
             
-            AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
+            TileEffector.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
         }
     }
     

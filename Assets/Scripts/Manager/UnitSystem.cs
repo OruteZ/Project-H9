@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class UnitSystem : MonoBehaviour
 {
     private List<Unit> _units;
+    public UnityEvent<Unit> onAnyUnitMoved;
     
     [Serializable]
     private struct UnitInfo
@@ -20,10 +21,51 @@ public class UnitSystem : MonoBehaviour
     [SerializeField] private UnitInfo[] unitInfo;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject enemyPrefab;
-    void Awake()
-    {
-        _units = new List<Unit>();
 
+    private void Awake()
+    {
+        
+        _units = new List<Unit>();
+    }
+
+    private void Update()
+    {
+            foreach (var unit in _units) unit.Updated();
+    }
+
+    public Player GetPlayer()
+    {
+        foreach (var unit in _units)
+        {
+            if (unit is Player u) return u;
+        }
+        return null;
+    }
+    
+
+    public Unit GetUnit(Vector3Int position)
+    {
+        return _units.FirstOrDefault(unit => unit.Position == position);
+    }
+
+    private void OnUnitMoved(Unit unit)
+    {
+        onAnyUnitMoved?.Invoke(unit);
+    }
+
+    private void OnUnitDead(Unit unit)
+    {
+        RemoveUnit(unit);
+    }
+
+    private void RemoveUnit(Unit unit)
+    {
+        _units.Remove(unit);
+        unit.onMoved.RemoveListener(OnUnitMoved);
+    }
+
+    public void SpawnUnits()
+    {
         foreach (var info  in unitInfo)
         {
             Unit unit;
@@ -44,26 +86,7 @@ public class UnitSystem : MonoBehaviour
 
             unit.SetUp(info.unitName);
             _units.Add(unit);
+            unit.onDead.AddListener(OnUnitDead);
         }
-        
-    }
-    private void Update()
-    {
-            foreach (var unit in _units) unit.Updated();
-    }
-
-    public Player GetPlayer()
-    {
-        foreach (var unit in _units)
-        {
-            if (unit is Player u) return u;
-        }
-        return null;
-    }
-    
-
-    public Unit GetUnit(Vector3Int position)
-    {
-        return _units.FirstOrDefault(unit => unit.Position == position);
     }
 }

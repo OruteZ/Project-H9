@@ -10,6 +10,7 @@ public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance { get; private set; }
 
+    
     public TileSystem tileSystem;
     public TurnSystem turnSystem;
     public UnitSystem unitSystem;
@@ -26,5 +27,12 @@ public class CombatManager : MonoBehaviour
         tileSystem = GetComponent<TileSystem>();
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();
+    }
+
+    private void Start()
+    {
+        tileSystem.CreateDemoWorld();
+        unitSystem.SpawnUnits();
+        turnSystem.EndTurn();
     }
 }

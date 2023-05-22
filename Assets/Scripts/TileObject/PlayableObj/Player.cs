@@ -21,17 +21,20 @@ public class Player : Unit
     }
     
     [HideInInspector] public UnityEvent onSelectedChanged;
-    [HideInInspector] public UnityEvent onBusyChanged;
-    [HideInInspector] public UnityEvent onCostChanged;
 
     [HideInInspector] public Tile target;
 
     [Header("Status")]
     public int actionPoint;
 
-    public void SetUp(string newName, CombatManager manager)
+    public override void SetUp(string newName)
     {
         base.SetUp(newName);
+        
+        UnitSystem.
+            onAnyUnitMoved.
+            AddListener(OnAnyUnitMoved);
+        onMoved.AddListener(OnMoved);
     }
     public override void Updated()
     {
@@ -68,7 +71,8 @@ public class Player : Unit
         actionPoint = 10; //todo : 공식 가져와서 행동력 계산하기
 
         activeUnitAction = null;
-        SelectAction(GetAction<MoveAction>()); 
+        SelectAction(GetAction<MoveAction>());
+        ReloadSight();
     }
 
     public void SelectAction(IUnitAction action)
@@ -101,7 +105,7 @@ public class Player : Unit
     {
         ClearBusy();
         actionPoint -= activeUnitAction.GetCost();
-        onCostChanged.Invoke();
+        onCostChanged.Invoke(actionPoint);
     }
 
     public Tile GetMouseOverTile()
@@ -116,7 +120,33 @@ public class Player : Unit
         return null;
     }
 
+    private void ReloadSight()
+    {
+        var allTile = TileSystem.GetAllTiles();
+
+        foreach (var tile in allTile)
+        {
+            tile.InSight = 
+                TileSystem.VisionCast(hexTransform.position, tile.Position) &&
+                Hex.Distance(hexTransform.position, tile.Position) <= sightRange;
+        }
+    }
+    
     public override void OnHit(int damage)
     {
+    }
+
+    private void OnAnyUnitMoved(Unit unit)
+    {
+        if(unit != this)
+        {
+            unit.IsVisible = TileSystem.VisionCast(Position, unit.Position) &&
+                             Hex.Distance(hexTransform.position, unit.Position) <= sightRange;
+        }
+    }
+
+    private void OnMoved(Unit unit)
+    {
+        ReloadSight();
     }
 }

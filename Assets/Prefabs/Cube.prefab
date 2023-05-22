@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f80973647f3c9af4a9df7af61a6a6c89, type: 2}
+  - {fileID: -3033667219593020291, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,18 +128,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  unitName: 
-  weapon: {fileID: 11400000, guid: 1c4f70809340b934fba669ec3f41cdda, type: 2}
-  system: {fileID: 0}
-  map: {fileID: 0}
-  speed: 100
-  onSelectedChanged:
+  visual: {fileID: 0}
+  onActionCompleted:
     m_PersistentCalls:
       m_Calls: []
   onBusyChanged:
     m_PersistentCalls:
       m_Calls: []
   onCostChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoved:
+    m_PersistentCalls:
+      m_Calls: []
+  onDead:
+    m_PersistentCalls:
+      m_Calls: []
+  unitName: 
+  weapon: {fileID: 11400000, guid: 1c4f70809340b934fba669ec3f41cdda, type: 2}
+  speed: 100
+  sightRange: 2
+  onSelectedChanged:
     m_PersistentCalls:
       m_Calls: []
   target: {fileID: 0}

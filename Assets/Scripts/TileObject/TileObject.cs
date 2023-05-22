@@ -36,4 +36,6 @@ public class TileObject : MonoBehaviour
         gObject.GetComponent<TileObject>().Init();
         gObject.GetComponent<TileObject>().SetTile(tile);
     }
+
+    public bool IsVisible;
 }

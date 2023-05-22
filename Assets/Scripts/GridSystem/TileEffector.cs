@@ -6,13 +6,13 @@ using Generic;
 
 public enum EffectType
 {
-    None,
-    Normal,
-    Friendly,
-    Hostile,
-    Impossible,
-    Invisible,
-    FogOfWar,
+    None = 0,
+    Normal = 1,
+    Friendly = 2,
+    Hostile = 3,
+    Impossible = 4,
+    Invisible = 5,
+    FogOfWar = 6,
 }
 
 /// <summary>
@@ -47,6 +47,11 @@ public class TileEffector : Singleton<TileEffector>
             tile.Effect = effect;
         }
     }
+
+    public static void SetEffect(Tile tile, EffectType type)
+    {
+        tile.Effect = Instance.GetEffect(type);
+    }
     
     private Material GetEffect(EffectType type)
     {
@@ -60,5 +65,16 @@ public class TileEffector : Singleton<TileEffector>
             EffectType.FogOfWar => fogOfWarEffect,
             _ => null
         };
+    }
+
+    private EffectType GetEffectType(Material effect)
+    {
+        if (effect == friendlyEffect) return EffectType.Friendly;
+        if (effect == hostileEffect) return EffectType.Hostile;
+        if (effect == impossibleEffect) return EffectType.Impossible;
+        if (effect == invisibleEffect) return EffectType.Invisible;
+        if (effect == fogOfWarEffect) return EffectType.FogOfWar;
+        if (effect == normalEffect) return EffectType.Normal;
+        return EffectType.None;
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4788089146559635720}
   - component: {fileID: 2559124822345895538}
   - component: {fileID: 4919934806050797634}
+  - component: {fileID: 8292009833466838523}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5356862990189776642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: -3033667219593020291, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,3 +111,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6265ef9ddce6343bf0ed5943c27c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hexTransform: {fileID: 0}
+  visual: {fileID: 0}
+  onActionCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  onBusyChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onCostChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoved:
+    m_PersistentCalls:
+      m_Calls: []
+  onDead:
+    m_PersistentCalls:
+      m_Calls: []
+  unitName: 
+  weapon: {fileID: 0}
+  speed: 0
+  sightRange: 0
+--- !u!114 &8292009833466838523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5356862990189776642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbeaa462d604364fb36744bf008da9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _position: {x: 0, y: 0, z: 0}

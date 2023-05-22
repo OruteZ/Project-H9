@@ -27,9 +27,9 @@ public class TileObject : MonoBehaviour
         hexTransform.position = t.hexTransform.position;
     }
     
-    public static void Spawn(Map map, Vector3Int pos, GameObject obj)
+    public static void Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
     {
-        var tile = map.GetTile(pos);
+        var tile = tileSystem.GetTile(pos);
         if (tile == null) return;
 
         var gObject = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity);

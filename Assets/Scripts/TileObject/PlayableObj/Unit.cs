@@ -16,6 +16,9 @@ public enum UnitType
 [RequireComponent(typeof(HexTransform))]
 public abstract class Unit : MonoBehaviour
 {
+    protected TurnSystem TurnSystem => CombatManager.Instance.turnSystem;
+    protected UnitSystem UnitSystem => CombatManager.Instance.unitSystem;
+    
     [HideInInspector]
     public HexTransform hexTransform;
     
@@ -26,23 +29,20 @@ public abstract class Unit : MonoBehaviour
     private int _actionPoints;
     public Weapon weapon;
  
-    public CombatSystem system;
-    public Map map;
     public int speed;  
     public Vector3Int Position
     {
         get => hexTransform.position;
         set => hexTransform.position = value;
     }
-    public virtual void SetUp(string newName, CombatSystem _system)
+    public virtual void SetUp(string newName)
     {
-        map = _system.map;
-        system = _system;
         unitName = newName;
     }   
     
     public abstract void Updated();
     public abstract void StartTurn();
+    public abstract void OnHit(int damage);
 
     private void Awake()
     {
@@ -71,6 +71,5 @@ public abstract class Unit : MonoBehaviour
 
     public int Mobility => speed / 10;
 
-    public abstract void OnHit(int damage);
 }
 

@@ -4,64 +4,61 @@ using System.Collections.Generic;
 using UnityEngine;
 using Generic;
 
+public enum EffectType
+{
+    None,
+    Normal,
+    Friendly,
+    Hostile,
+    Impossible,
+    Invisible,
+    FogOfWar,
+}
+
 /// <summary>
 /// 타일을 넘겨받으면 원하는 이펙트를 타일에 적용시켜주는 클래스
 /// </summary>
 public class TileEffector : Singleton<TileEffector>
 {
-    public GameObject friendlyEffect;
-    public GameObject hostileEffect;
-    public GameObject normalEffect;
-    public GameObject impossibleEffect;
-    public GameObject invisibleEffect;
-    public GameObject fogOfWarEffect;
+    [SerializeField] private Material friendlyEffect;
+    [SerializeField] private Material hostileEffect;
+    [SerializeField] private Material normalEffect;
+    [SerializeField] private Material impossibleEffect;
+    [SerializeField] private Material invisibleEffect;
+    [SerializeField] private Material fogOfWarEffect;
+
+    /// <summary>
+    /// 모든 이펙트를 초기화 합니다.
+    /// </summary>
+    public static void ClearEffect()
+    {
+        var tiles = CombatManager.Instance.tileSystem.GetAllTiles();
+        foreach (var tile in tiles) tile.Effect = null;
+    }
+
+    /// <summary>
+    /// 타일에 이펙트를 적용합니다.
+    /// </summary>
+    public static void SetEffect(IEnumerable<Tile> tiles, EffectType type)
+    {
+        var effect = Instance.GetEffect(type);
+        foreach (var tile in tiles)
+        {
+            tile.Effect = effect;
+        }
+    }
     
-    /// <summary>
-    /// 타일에 우호적인 이펙트를 적용합니다.
-    /// </summary>
-    public void FriendlyEffect(IEnumerable<Tile> tiles)
+    private Material GetEffect(EffectType type)
     {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// 타일들에 적대적인 이펙트를 적용합니다. 
-    /// </summary>
-    public void HostileEffect(IEnumerable<Tile> tiles)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// 타일들에 일반적인 하이라이팅 이펙트를 적용합니다.
-    /// </summary>
-    public void NormalEffect(IEnumerable<Tile> tiles)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// 타일들에 뭔가 불가능해보이는 이펙트를 적용합니다.
-    /// </summary>
-    public void ImpossibleEffect(IEnumerable<Tile> tiles)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// 타일들에 Invisible 이펙트를 적용합니다.
-    /// </summary>
-    public void InvisibleEffect(IEnumerable<Tile> tiles)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// 타일들에 전장의 안개 이펙트를 적용합니다.
-    /// </summary>
-    /// <param name="tiles"></param>
-    public void FogOfWarEffect(IEnumerable<Tile> tiles)
-    {
-        throw new NotImplementedException();
+        return type switch
+        {
+            EffectType.Friendly => friendlyEffect,
+            EffectType.Hostile => hostileEffect,
+            EffectType.Normal => normalEffect,
+            EffectType.Impossible => impossibleEffect,
+            EffectType.Invisible => invisibleEffect,
+            EffectType.FogOfWar => fogOfWarEffect,
+            _ => null
+        };
     }
 }

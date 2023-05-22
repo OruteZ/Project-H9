@@ -11,7 +11,7 @@ public class Enemy : Unit
 
     public override void StartTurn()
     {
-        system.EndTurn();
+        TurnSystem.EndTurn();
     }
 
     public override void OnHit(int damage)

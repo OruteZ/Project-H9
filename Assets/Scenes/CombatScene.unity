@@ -319,7 +319,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978a385a086911546b708cefedffcf61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  system: {fileID: 1721865040}
   playerActionButtonsUI: {fileID: 1041268472}
   actionArray:
   - {fileID: 1919371915}
@@ -734,7 +733,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1721865040}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CombatSystem, Assembly-CSharp
         m_MethodName: EndTurn
         m_Mode: 1
@@ -1203,7 +1202,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &1035118596
 MonoBehaviour:
@@ -1986,7 +1985,7 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
---- !u!1 &1721865037
+--- !u!1 &1916379890
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1994,23 +1993,65 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1721865039}
-  - component: {fileID: 1721865038}
-  - component: {fileID: 1721865040}
+  - component: {fileID: 1916379894}
+  - component: {fileID: 1916379895}
+  - component: {fileID: 1916379893}
+  - component: {fileID: 1916379892}
+  - component: {fileID: 1916379891}
   m_Layer: 0
-  m_Name: System
+  m_Name: Systems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1721865038
+--- !u!114 &1916379891
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1721865037}
+  m_GameObject: {fileID: 1916379890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 973d2c69f9a20354684279d00c635fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitInfo:
+  - unitName: Player
+    type: 0
+    spawnPosition: {x: 0, y: 0, z: 0}
+  - unitName: Enemy
+    type: 1
+    spawnPosition: {x: 0, y: 1, z: -1}
+  playerPrefab: {fileID: 4781930735724047366, guid: 03140bcb1a97ab143ba7ec946ecc2508,
+    type: 3}
+  enemyPrefab: {fileID: 5356862990189776642, guid: 0a36d714af98b21469a6cfea75c7bf37,
+    type: 3}
+--- !u!114 &1916379892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916379890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a1b34a972f1ec24e8b84a29a8753e3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTurnChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  turnOwner: {fileID: 0}
+  turnNumber: 0
+--- !u!114 &1916379893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916379890}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2f6d6e83eb63264c9d9eb9b09b31351, type: 3}
@@ -2019,50 +2060,36 @@ MonoBehaviour:
   tilePrefab: {fileID: 7055767354360999130, guid: 2b4c0590199488d4fae5ab62e5bca496,
     type: 3}
   range: 5
---- !u!4 &1721865039
+--- !u!4 &1916379894
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1721865037}
+  m_GameObject: {fileID: 1916379890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1721865040
+--- !u!114 &1916379895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1721865037}
+  m_GameObject: {fileID: 1916379890}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7022448b3c234064ca73dfececaf2d01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTurnChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  unitInfo:
-  - unitName: Player
-    type: 0
-    spawnPosition: {x: 0, y: 0, z: 0}
-  - unitName: Enemy
-    type: 1
-    spawnPosition: {x: 1, y: 0, z: -1}
-  playerPrefab: {fileID: 4781930735724047366, guid: 03140bcb1a97ab143ba7ec946ecc2508,
-    type: 3}
-  enemyPrefab: {fileID: 5356862990189776642, guid: 0a36d714af98b21469a6cfea75c7bf37,
-    type: 3}
-  turnNumber: 0
-  turnOwner: {fileID: 0}
   map: {fileID: 0}
+  turnSystem: {fileID: 0}
+  unitSystem: {fileID: 0}
 --- !u!1 &1919371912
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,7 +2336,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!114 &2010015937
 MonoBehaviour:

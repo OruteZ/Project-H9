@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class Map : MonoBehaviour
+public class TileSystem : MonoBehaviour
 {
     public GameObject tilePrefab;
     
@@ -18,11 +18,19 @@ public class Map : MonoBehaviour
     {
         _tiles = new Dictionary<Vector3Int, Tile>();
         
-        
-        //차후 삭제할 코드
-        _highlightQueue = new Queue<Tile>();
-        
+    }
+
+    private void Start()
+    {
         CreateDemoWorld();
+    }
+
+    public List<Tile> GetAllTiles()
+    {
+        var result = new List<Tile>();
+        result.AddRange(_tiles.Values);
+
+        return result;
     }
 
     /// <summary>
@@ -211,35 +219,6 @@ public class Map : MonoBehaviour
 
         return result;
     }
-    //-----------이 아래는 차후 기능이 다른 class에 위임되거나, 삭제될 테스트용 더미코드입니다.-----------------
-    private Queue<Tile> _highlightQueue;
-    public void HighLightOn(IEnumerable<Tile> tiles)
-    {
-        if (tiles == null) return;
-        
-        HighLightOff();
-        foreach (var tile in tiles)
-        {
-            tile.Highlight = true;
-            _highlightQueue.Enqueue(tile);
-        }
-    }
-
-    private void HighLightOff()
-    {
-        while (_highlightQueue.TryDequeue(out var tile))
-        {
-            tile.Highlight = false;
-        }
-    }
-
-    public void HighLightOn(Tile tile)
-    {
-        if (tile == null) return;
-        
-        HighLightOff();
-        _highlightQueue.Enqueue(tile);
-    }
     
     //demo code : 간단한 맵 생성용
     [Header("Creating Demo World Inspector")]
@@ -273,7 +252,6 @@ public class Map : MonoBehaviour
     [ContextMenu("Remove Demo World")]
     private void RemoveDemoWorld()
     {
-        _highlightQueue.Clear();
         foreach (var tile in _tiles)
         {
             DestroyImmediate(tile.Value.gameObject);

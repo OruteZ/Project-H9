@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CombatSystem : Generic.Singleton<CombatSystem>
+public class UnitSystem : MonoBehaviour
 {
+    private List<Unit> _units;
+    
     [Serializable]
     private struct UnitInfo
     {
@@ -15,41 +16,12 @@ public class CombatSystem : Generic.Singleton<CombatSystem>
         public UnitType type;
         public Vector3Int spawnPosition;
     }
-
-    public UnityEvent onTurnChanged;
+    ;
     [SerializeField] private UnitInfo[] unitInfo;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private int turnNumber;
-    private List<Unit> _units;
-
-    public Unit turnOwner;
-
-    public Map map;
-
-    public Player Player
+    void Awake()
     {
-        get
-        {
-            foreach (var unit in _units)
-            {
-                if (unit is Player u)
-                    return u;
-            }
-
-            return null;
-        }
-    }
-
-    public bool IsPlayerTurn()
-    {
-        return Player == turnOwner;
-    }
-    private void Awake()
-    {
-        base.Awake();
-        
-        map = GetComponent<Map>();
         _units = new List<Unit>();
 
         foreach (var info  in unitInfo)
@@ -70,43 +42,25 @@ public class CombatSystem : Generic.Singleton<CombatSystem>
                     throw new ArgumentOutOfRangeException();
             }
 
-            unit.SetUp(info.unitName, this);
+            unit.SetUp(info.unitName);
             _units.Add(unit);
         }
-
-        turnNumber = 0;
-        onTurnChanged.AddListener(() => { turnNumber++;});
+        
     }
-
     private void Update()
     {
-        foreach (var unit in _units) unit.Updated();
+            foreach (var unit in _units) unit.Updated();
     }
 
-    private void Start()
+    public Player GetPlayer()
     {
-        EndTurn();
+        foreach (var unit in _units)
+        {
+            if (unit is Player u) return u;
+        }
+        return null;
     }
     
-    public void EndTurn()
-    {
-        //todo : if combat has finished, End Combat Scene
-        //else
-
-        CalculateTarget();
-        StartTurn();
-    }
-    
-    public void StartTurn()
-    {
-        turnOwner.StartTurn();
-        onTurnChanged.Invoke();
-    }
-
-    public void CalculateTarget()
-    {
-        turnOwner = _units[0];
-    }
 
     public Unit GetUnit(Vector3Int position)
     {

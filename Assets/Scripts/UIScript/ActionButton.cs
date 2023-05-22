@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ActionButton : MonoBehaviour
 {
     private Outline _outline;
-
+    private Player _player => CombatManager.Instance.unitSystem.GetPlayer();
     private Outline OutLine
     {
         get
@@ -28,10 +28,7 @@ public class ActionButton : MonoBehaviour
 
     private void Start()
     {
-        CombatSystem.
-            Instance.
-            Player.
-            onSelectedChanged.
+        _player.onSelectedChanged.
             AddListener(CheckActiveAction);
     }
 
@@ -52,23 +49,18 @@ public class ActionButton : MonoBehaviour
         #if UNITY_EDITOR
         Debug.Log(gameObject.name + " " + "Check Active");
         Debug.Log(unitAction.GetActionType());
-        Debug.Log(CombatSystem.
-            Instance.
-            Player.GetSelectedAction().GetActionType());
+        Debug.Log(
+            _player.GetSelectedAction().GetActionType());
         #endif
         OutLine.enabled = 
             unitAction.GetActionType() 
             == 
-            CombatSystem.
-            Instance.
-            Player.GetSelectedAction().GetActionType();
+            _player.GetSelectedAction().GetActionType();
     }
 
     public void Select()
     {
-        CombatSystem.
-            Instance.
-            Player.SelectAction(unitAction);
+        _player.SelectAction(unitAction);
     }
 
     public void OnMouseEnter()

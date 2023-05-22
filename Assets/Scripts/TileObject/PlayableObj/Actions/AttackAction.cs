@@ -37,7 +37,7 @@ public class AttackAction : BaseAction
     public override bool CanExecute(Vector3Int targetPos)
     {
         weapon = unit.weapon;
-        _target = unit.system.GetUnit(targetPos);
+        _target = CombatManager.Instance.unitSystem.GetUnit(targetPos);
         #if UNITY_EDITOR
         Debug.Log("Attack Target : " + _target);
         #endif
@@ -58,7 +58,7 @@ public class AttackAction : BaseAction
             return false;
         }
 
-        if (!unit.map.RayCast(unit.Position, targetPos))
+        if (!CombatManager.Instance.tileSystem.RayCast(unit.Position, targetPos))
         {
 #if UNITY_EDITOR
             Debug.Log("There is wall between target and player. attack failed");

@@ -29,14 +29,14 @@ public class Player : Unit
     [Header("Status")]
     public int actionPoint;
 
-    public override void SetUp(string newName, CombatSystem system)
+    public void SetUp(string newName, CombatManager manager)
     {
-        base.SetUp(newName, system);
+        base.SetUp(newName);
     }
     public override void Updated()
     {
         if (IsBusy) return;
-        if (system.turnOwner != this) return;
+        if (!CombatManager.Instance.IsPlayerTurn()) return;
         
         // if (Input.GetKeyDown(KeyCode.A)) SelectAction(GetAction<MoveAction>());
         // if (Input.GetKeyDown(KeyCode.D)) SelectAction(GetAction<AttackAction>());
@@ -52,10 +52,10 @@ public class Player : Unit
                 return;
             }
 
-            if (activeUnitAction.CanExecute(target.position) && actionPoint >= activeUnitAction.GetCost())
+            if (activeUnitAction.CanExecute(target.Position) && actionPoint >= activeUnitAction.GetCost())
             {
                 SetBusy();
-                activeUnitAction.Execute(target.position, FinishAction);
+                activeUnitAction.Execute(target.Position, FinishAction);
             }
         }   
     }

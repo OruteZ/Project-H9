@@ -21,9 +21,9 @@ public class MoveAction : BaseAction
 
     public override bool CanExecute(Vector3Int targetPos)
     {
-        if (unit.system.GetUnit(targetPos) != null) return false;
+        if (CombatManager.Instance.unitSystem.GetUnit(targetPos) != null) return false;
         
-        _path = unit.map.FindPath(unit.Position, targetPos, MaxMoveDistance);
+        _path = CombatManager.Instance.tileSystem.FindPath(unit.Position, targetPos, MaxMoveDistance);
         if (_path == null)
         {
             Debug.Log("impossible path");
@@ -47,7 +47,7 @@ public class MoveAction : BaseAction
         //_path = unit.hexTransform.Map.FindPath(unit.Position, targetPos, _maxMoveDistance) as List<Vector3Int>;
         _currentPositionIndex = 1;  
         transform.forward =
-            (Hex.Hex2World(_path[_currentPositionIndex].position)
+            (Hex.Hex2World(_path[_currentPositionIndex].Position)
             - transform.position)
             .normalized;
     }
@@ -61,7 +61,7 @@ public class MoveAction : BaseAction
     {
         if (!isActive) return;
 
-        Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].position);
+        Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].Position);
         Vector3 moveDirection = (targetPos - transform.position).normalized;
         
         transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
@@ -69,7 +69,7 @@ public class MoveAction : BaseAction
 
         if (Vector3.Distance(transform.position, targetPos) < 0.1f)
         {
-            unit.Position = _path[_currentPositionIndex].position;
+            unit.Position = _path[_currentPositionIndex].Position;
             
             _currentPositionIndex++;
             if (_currentPositionIndex >= _path.Count)

@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class CombatUI : MonoBehaviour
 {
-    public CombatSystem system;
+    private TurnSystem TurnSystem => CombatManager.Instance.turnSystem;
+    private UnitSystem UnitSystem => CombatManager.Instance.unitSystem;
 
     public GameObject playerActionButtonsUI;
     public ActionButton[] actionArray;
@@ -15,18 +16,21 @@ public class CombatUI : MonoBehaviour
     void Awake()
     {
         UIManager.Instance.combatUI = this;
+    }
 
-        system.onTurnChanged.AddListener(System_OnTurnChanged);
+    void Start()
+    {
+        TurnSystem.onTurnChanged.AddListener(System_OnTurnChanged);
     }
 
     public void EndTurnCall()
     {
-        system.EndTurn();
+        TurnSystem.EndTurn();
     }
 
     private void System_OnTurnChanged()
     {
-        if (system.IsPlayerTurn())
+        if (CombatManager.Instance.IsPlayerTurn())
         {
             TurnOnPlayerActionUI();
         }
@@ -40,7 +44,7 @@ public class CombatUI : MonoBehaviour
     {
         playerActionButtonsUI.SetActive(true);
 
-        var actions = system.Player.GetUnitActionArray();
+        var actions = UnitSystem.GetPlayer().GetUnitActionArray();
 
         int index = 0;
         foreach (var act in actions)

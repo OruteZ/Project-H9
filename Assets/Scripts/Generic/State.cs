@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Generic
 {
     public abstract class State<T> where T : class
@@ -18,6 +20,15 @@ namespace Generic
             _currentState = null;
 
             ChangeState(entryState);
+
+            string value = "1234";
+            switch (value)
+            {
+                case "1234" :
+                    Debug.Log("됨");
+                    break;
+                
+            }
         }
 
         public void Execute()

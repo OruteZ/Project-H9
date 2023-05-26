@@ -11,7 +11,7 @@ public class CombatUI : MonoBehaviour
     public GameObject playerActionButtonsUI;
     public ActionButton[] actionArray;
 
-    private ActionButton[] ActionButtons => actionArray ??= GetComponentsInChildren<ActionButton>();
+    private ActionButton[] actionButtons => actionArray ??= GetComponentsInChildren<ActionButton>();
 
     void Awake()
     {
@@ -49,8 +49,8 @@ public class CombatUI : MonoBehaviour
         int index = 0;
         foreach (var act in actions)
         {
-            ActionButtons[index].SetAction(act);
-            ActionButtons[index].gameObject.SetActive(true);
+            actionButtons[index].SetAction(act);
+            actionButtons[index].gameObject.SetActive(true);
 
             index++;
         }

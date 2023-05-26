@@ -50,15 +50,15 @@ public class AttackAction : BaseAction
             return false;
         }
 
-        if (Hex.Distance(unit.Position, targetPos) > weapon.range)
-        {
-#if UNITY_EDITOR
-            Debug.Log("Target position is so far. attack failed");
-#endif
-            return false;
-        }
+//        if (Hex.Distance(unit.position, targetPos) > weapon.baseRange)
+//        {
+//#if UNITY_EDITOR
+//            Debug.Log("Target position is so far. attack failed");
+//#endif
+//            return false;
+//        }
 
-        if (!CombatManager.Instance.tileSystem.RayCast(unit.Position, targetPos))
+        if (!CombatManager.Instance.tileSystem.RayCast(unit.position, targetPos))
         {
 #if UNITY_EDITOR
             Debug.Log("There is wall between target and player. attack failed");
@@ -77,7 +77,7 @@ public class AttackAction : BaseAction
         {
             default:
             case State.Aiming:
-                Vector3 aimDirection = (Hex.Hex2World(_target.Position) - transform.position).normalized;
+                Vector3 aimDirection = (Hex.Hex2World(_target.position) - transform.position).normalized;
 
                 float rotationSpeed = 10f;
                 transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * rotationSpeed);
@@ -88,13 +88,16 @@ public class AttackAction : BaseAction
                     _state = State.Shooting;
                     _stateTimer = .5f;
 
-                    bool hit = true;
-                    //todo : 명중률 가져와서 명중여부 계산
+                    bool hit = weapon.GetHitRate(_target) > UnityEngine.Random.value;
                     //todo : OnShoot 이벤트 호출
+
+                    #if UNITY_EDITOR
+                    Debug.Log(hit ? "뱅" : "빗나감");
+                    #endif
 
                     if (hit)
                     {
-                        weapon.Attack(_target);
+                        weapon.Attack(_target, out var isHeadShot);
                     }
                 }
                 break;

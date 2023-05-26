@@ -33,7 +33,7 @@ public class TileEffector : Singleton<TileEffector>
     public static void ClearEffect()
     {
         var tiles = CombatManager.Instance.tileSystem.GetAllTiles();
-        foreach (var tile in tiles) tile.Effect = null;
+        foreach (var tile in tiles) tile.effect = null;
     }
 
     /// <summary>
@@ -44,13 +44,13 @@ public class TileEffector : Singleton<TileEffector>
         var effect = Instance.GetEffect(type);
         foreach (var tile in tiles)
         {
-            tile.Effect = effect;
+            tile.effect = effect;
         }
     }
 
     public static void SetEffect(Tile tile, EffectType type)
     {
-        tile.Effect = Instance.GetEffect(type);
+        tile.effect = Instance.GetEffect(type);
     }
     
     private Material GetEffect(EffectType type)

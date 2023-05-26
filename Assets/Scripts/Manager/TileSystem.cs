@@ -234,6 +234,7 @@ public class TileSystem : MonoBehaviour
             if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
                 isWall = false;
             
+            isWall = false;
             var tile = AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
             
             TileEffector.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);

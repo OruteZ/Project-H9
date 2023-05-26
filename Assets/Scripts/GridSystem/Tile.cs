@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour
 {
     [HideInInspector] public HexTransform hexTransform;
 
-    public Vector3Int Position => hexTransform.position;
+    public Vector3Int position => hexTransform.position;
 
     private List<TileObject> _objects;
     private MeshRenderer _meshRenderer;
@@ -17,11 +17,11 @@ public class Tile : MonoBehaviour
     public bool visible;
     public bool rayThroughable;
 
-    [Header("플레이어 시야")] [SerializeField] private bool inSight;
+    [Header("플레이어 시야")] [SerializeField] private bool _inSight;
 
     private Material _curEffect;
 
-    public Material Effect
+    public Material effect
     {
         get => _curEffect;
         set => _meshRenderer.material = value;
@@ -41,29 +41,26 @@ public class Tile : MonoBehaviour
 
     private void ReloadEffect()
     {
-        if(!inSight) TileEffector.SetEffect(this, EffectType.Invisible);
-        else if(!visible) TileEffector.SetEffect(this, EffectType.Impossible);
+        if (!visible) TileEffector.SetEffect(this, EffectType.Impossible);
         else TileEffector.SetEffect(this, EffectType.Normal);
     }
 
-    public bool InSight
+    public bool inSight
     {
-        get => inSight;
+        get => _inSight;
         set
         {
-            inSight = value;
+            _inSight = value;
             if (value)
             {
                 foreach (var obj in _objects)
                 {
-                    obj.IsVisible = true;
+                    obj.isVisible = true;
                 }
             }
             
-            var unit = CombatManager.Instance.unitSystem.GetUnit(Position);
-            if (unit != null) unit.IsVisible = value;
-
-            ReloadEffect();
+            var unit = CombatManager.Instance.unitSystem.GetUnit(position);
+            if (unit != null) unit.isVisible = value;
         }
     }
 }

@@ -10,7 +10,6 @@ public class SkillUI : Generic.Singleton<SkillUI>
 
     //test : 1==½ÀµæºÒ°¡, 2==½Àµæ°¡´É, 3==½Àµæ¿Ï·á
     [SerializeField] private Sprite[] Effect = new Sprite[3];
-
     [SerializeField] private GameObject[] PrecedenceLine;
     private void Start()
     {

@@ -24,17 +24,16 @@ public class Player : Unit
 
     [HideInInspector] public Tile target;
 
-    [Header("Status")]
-    public int actionPoint;
-
     public override void SetUp(string newName)
     {
         base.SetUp(newName);
         
-        UnitSystem.
+        unitSystem.
             onAnyUnitMoved.
             AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);
+
+        weapon = Weapon.Clone(WeaponDataBase.Instance.weaponList[0], unit : this);
     }
     public override void Updated()
     {
@@ -55,10 +54,10 @@ public class Player : Unit
                 return;
             }
 
-            if (activeUnitAction.CanExecute(target.Position) && actionPoint >= activeUnitAction.GetCost())
+            if (activeUnitAction.CanExecute(target.position) && currentActionPoint >= activeUnitAction.GetCost())
             {
                 SetBusy();
-                activeUnitAction.Execute(target.Position, FinishAction);
+                activeUnitAction.Execute(target.position, FinishAction);
             }
         }   
     }
@@ -67,8 +66,8 @@ public class Player : Unit
     {
 #if UNITY_EDITOR
         Debug.Log("Player Turn Started");
-#endif 
-        actionPoint = 10; //todo : 공식 가져와서 행동력 계산하기
+#endif
+        currentActionPoint = concentration;
 
         activeUnitAction = null;
         SelectAction(GetAction<MoveAction>());
@@ -104,8 +103,8 @@ public class Player : Unit
     private void FinishAction()
     {
         ClearBusy();
-        actionPoint -= activeUnitAction.GetCost();
-        onCostChanged.Invoke(actionPoint);
+        currentActionPoint -= activeUnitAction.GetCost();
+        onCostChanged.Invoke(currentActionPoint);
     }
 
     public Tile GetMouseOverTile()
@@ -122,13 +121,13 @@ public class Player : Unit
 
     private void ReloadSight()
     {
-        var allTile = TileSystem.GetAllTiles();
+        var allTile = tileSystem.GetAllTiles();
 
         foreach (var tile in allTile)
         {
-            tile.InSight = 
-                TileSystem.VisionCast(hexTransform.position, tile.Position) &&
-                Hex.Distance(hexTransform.position, tile.Position) <= sightRange;
+            tile.inSight = 
+                tileSystem.VisionCast(hexTransform.position, tile.position) &&
+                Hex.Distance(hexTransform.position, tile.position) <= sightRange;
         }
     }
     
@@ -140,8 +139,8 @@ public class Player : Unit
     {
         if(unit != this)
         {
-            unit.IsVisible = TileSystem.VisionCast(Position, unit.Position) &&
-                             Hex.Distance(hexTransform.position, unit.Position) <= sightRange;
+            unit.isVisible = tileSystem.VisionCast(position, unit.position) &&
+                             Hex.Distance(hexTransform.position, unit.position) <= sightRange;
         }
     }
 

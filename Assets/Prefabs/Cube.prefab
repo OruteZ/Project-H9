@@ -129,6 +129,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
   visual: {fileID: 0}
+  hp: 5
+  concentration: 60
+  sightRange: 3
+  speed: 10
+  actionPoint: 60
+  additionalHitRate: 0
+  criticalChance: 0
+  revolverAdditionalDamage: 0
+  repeaterAdditionalDamage: 0
+  shotgunAdditionalDamage: 0
+  revolverAdditionalRange: 0
+  repeaterAdditionalRange: 0
+  shotgunAdditionalRange: 0
+  revolverCriticalDamage: 0
+  shotgunCriticalDamage: 0
+  repeaterCriticalDamage: 0
   onActionCompleted:
     m_PersistentCalls:
       m_Calls: []
@@ -145,14 +161,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unitName: 
+  currentActionPoint: 0
   weapon: {fileID: 11400000, guid: 1c4f70809340b934fba669ec3f41cdda, type: 2}
-  speed: 100
-  sightRange: 2
   onSelectedChanged:
     m_PersistentCalls:
       m_Calls: []
   target: {fileID: 0}
-  actionPoint: 10
 --- !u!114 &8599004468379498759
 MonoBehaviour:
   m_ObjectHideFlags: 0

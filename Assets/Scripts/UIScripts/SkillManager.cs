@@ -210,6 +210,8 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
     private void Awake()
     {
+        base.Awake();
+        
         InitSkills();
         skillPoint = 10;    //test
     }

@@ -7,7 +7,7 @@ public class TileObject : MonoBehaviour
 {
     public HexTransform hexTransform;
 
-    public Vector3Int Position
+    public Vector3Int position
     {
         get => hexTransform.position;
         set => hexTransform.position = value;
@@ -37,5 +37,5 @@ public class TileObject : MonoBehaviour
         gObject.GetComponent<TileObject>().SetTile(tile);
     }
 
-    public bool IsVisible;
+    public bool isVisible;
 }

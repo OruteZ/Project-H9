@@ -46,12 +46,6 @@ public class ActionButton : MonoBehaviour
 
     private void CheckActiveAction()
     {
-        #if UNITY_EDITOR
-        Debug.Log(gameObject.name + " " + "Check Active");
-        Debug.Log(unitAction.GetActionType());
-        Debug.Log(
-            _player.GetSelectedAction().GetActionType());
-        #endif
         OutLine.enabled = 
             unitAction.GetActionType() 
             == 

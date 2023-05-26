@@ -45,7 +45,7 @@ public class UnitSystem : MonoBehaviour
 
     public Unit GetUnit(Vector3Int position)
     {
-        return _units.FirstOrDefault(unit => unit.Position == position);
+        return _units.FirstOrDefault(unit => unit.position == position);
     }
 
     private void OnUnitMoved(Unit unit)
@@ -74,11 +74,11 @@ public class UnitSystem : MonoBehaviour
             {
                 case UnitType.Player:
                     unit = Instantiate(playerPrefab).GetComponent<Unit>();
-                    unit.Position = info.spawnPosition;
+                    unit.position = info.spawnPosition;
                     break;
                 case UnitType.Enemy:
                     unit = Instantiate(enemyPrefab).GetComponent<Unit>();
-                    unit.Position = info.spawnPosition;
+                    unit.position = info.spawnPosition;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

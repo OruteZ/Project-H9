@@ -9,7 +9,7 @@ public class UiInteraction : MonoBehaviour
 
     private void Awake()
     {
-        _uiManager = this.gameObject.GetComponent<UiManager>();
+        _uiManager = gameObject.GetComponent<UiManager>();
     }
     public void OnCharacterBtnClick() 
     {

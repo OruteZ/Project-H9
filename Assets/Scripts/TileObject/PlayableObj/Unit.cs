@@ -17,16 +17,33 @@ public enum UnitType
 [RequireComponent(typeof(HexTransform))]
 public abstract class Unit : MonoBehaviour
 {
-    protected TurnSystem TurnSystem => CombatManager.Instance.turnSystem;
-    protected UnitSystem UnitSystem => CombatManager.Instance.unitSystem;
-    protected TileSystem TileSystem => CombatManager.Instance.tileSystem;
+    protected TurnSystem turnSystem => CombatManager.Instance.turnSystem;
+    protected UnitSystem unitSystem => CombatManager.Instance.unitSystem;
+    protected TileSystem tileSystem => CombatManager.Instance.tileSystem;
     
     [HideInInspector] 
     public HexTransform hexTransform;
 
     //차후에 Skinned Mesh Renderer로 변경하면 됨
     public MeshRenderer visual;
-
+    
+    [Header("Status")]
+    public int hp;
+    public int concentration; 
+    public int sightRange; 
+    public int speed;
+    public int actionPoint;
+    public float additionalHitRate;
+    public float criticalChance;
+    public int revolverAdditionalDamage;
+    public int repeaterAdditionalDamage;
+    public int shotgunAdditionalDamage;
+    public int revolverAdditionalRange;
+    public int repeaterAdditionalRange;
+    public int shotgunAdditionalRange;
+    public float revolverCriticalDamage;
+    public float shotgunCriticalDamage;
+    public float repeaterCriticalDamage;
     
     [HideInInspector] public UnityEvent<IUnitAction> onActionCompleted;
     [HideInInspector] public UnityEvent onBusyChanged;
@@ -38,12 +55,9 @@ public abstract class Unit : MonoBehaviour
     public IUnitAction activeUnitAction; // Currently active action
 
     public string unitName;
-    private int _actionPoints;
+    public int currentActionPoint;
     public Weapon weapon;
- 
-    public int speed;
-    public int sightRange;
-    public Vector3Int Position
+    public Vector3Int position
     {
         get => hexTransform.position;
         set
@@ -67,17 +81,23 @@ public abstract class Unit : MonoBehaviour
     {
         hexTransform = GetComponent<HexTransform>();
         visual = GetComponent<MeshRenderer>();
-
         _unitActionArray = GetComponents<IUnitAction>();
+    }
+
+    private void Start()
+    {
         foreach (IUnitAction action in _unitActionArray)
         {
             action.Setup(this);
         }
     }
     
-    public T GetAction<T>() {
-        foreach (IUnitAction unitAction in _unitActionArray) {
-            if (unitAction is T action) {
+    public T GetAction<T>()
+    {
+        foreach (IUnitAction unitAction in _unitActionArray)
+        {
+            if (unitAction is T action)
+            {
                 return action;
             }
         }
@@ -85,16 +105,15 @@ public abstract class Unit : MonoBehaviour
         return default;
     }
     
-    public IUnitAction[] GetUnitActionArray() {
+    public IUnitAction[] GetUnitActionArray() 
+    {
         return _unitActionArray;
     }
 
-    public int Mobility => speed / 10;
-
-    public bool IsVisible
+    public bool isVisible
     {
         get => visual.enabled;
         set => visual.enabled = value;
-    } 
+    }
 }
 

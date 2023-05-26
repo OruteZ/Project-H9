@@ -5,39 +5,39 @@ using UnityEngine.UI;
 
 public class SkillUI : Generic.Singleton<SkillUI>
 {
-    [SerializeField] private int buttonIndex;
+    [SerializeField] private int _buttonIndex;
     [SerializeField] private UiManager _uiManager;
 
     //test : 1==½ÀµæºÒ°¡, 2==½Àµæ°¡´É, 3==½Àµæ¿Ï·á
-    [SerializeField] private Sprite[] Effect = new Sprite[3];
+    [SerializeField] private Sprite[] _effect = new Sprite[3];
 
-    [SerializeField] private GameObject[] PrecedenceLine;
+    [SerializeField] private GameObject[] _precedenceLine;
     private void Start()
     {
-        for (int i = 0; i < PrecedenceLine.Length; i++)
+        for (int i = 0; i < _precedenceLine.Length; i++)
         {
-            PrecedenceLine[i].GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+            _precedenceLine[i].GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
         }
     }
 
     public void OnSkillUiButtonClick()
     {
-        _uiManager.ClickSkillUiButton(this.gameObject.transform, buttonIndex);
+        _uiManager.ClickSkillUiButton(this.gameObject.transform, _buttonIndex);
     }
 
     public void SetSkillButtonEffect(int state) 
     {
-        this.GetComponent<Image>().sprite = Effect[state];
+        this.GetComponent<Image>().sprite = _effect[state];
     }
     public void SetSkillArrow()
     {
-        for (int i = 0; i < PrecedenceLine.Length; i++)
+        for (int i = 0; i < _precedenceLine.Length; i++)
         {
-            PrecedenceLine[i].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            _precedenceLine[i].GetComponent<Image>().color = new Color(1, 1, 1, 1);
         }
     }
     public int GetSkillUiIndex() 
     {
-        return buttonIndex;
+        return _buttonIndex;
     }
 }

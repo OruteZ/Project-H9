@@ -52,4 +52,17 @@ public class UiInteraction : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    public void OnWeaponItemUIBtnClick() 
+    {
+        _uiManager.ChangeItemUIStatus(UiManager.ItemUIStatus.Weapon);
+    }
+    public void OnUsableItemUIBtnClick()
+    {
+        _uiManager.ChangeItemUIStatus(UiManager.ItemUIStatus.Usable);
+    }
+    public void OnOtherItemUIBtnClick()
+    {
+        _uiManager.ChangeItemUIStatus(UiManager.ItemUIStatus.Other);
+    }
 }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ActionButton : MonoBehaviour
 {
     private Outline _outline;
-    private Player _player => CombatManager.Instance.unitSystem.GetPlayer();
+    private Player _player => CombatSystem.instance.unitSystem.GetPlayer();
     private Outline OutLine
     {
         get

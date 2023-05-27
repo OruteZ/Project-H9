@@ -17,7 +17,6 @@ public class TileSystem : MonoBehaviour
     private void Awake()
     {
         _tiles = new Dictionary<Vector3Int, Tile>();
-        
     }
 
 
@@ -237,7 +236,7 @@ public class TileSystem : MonoBehaviour
             isWall = false;
             var tile = AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
             
-            TileEffector.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
+            TileEffectManager.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
         }
     }
     

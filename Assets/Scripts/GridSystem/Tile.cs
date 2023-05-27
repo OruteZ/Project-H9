@@ -41,8 +41,8 @@ public class Tile : MonoBehaviour
 
     private void ReloadEffect()
     {
-        if (!visible) TileEffector.SetEffect(this, EffectType.Impossible);
-        else TileEffector.SetEffect(this, EffectType.Normal);
+        if (!visible) TileEffectManager.SetEffect(this, EffectType.Impossible);
+        else TileEffectManager.SetEffect(this, EffectType.Normal);
     }
 
     public bool inSight
@@ -59,7 +59,7 @@ public class Tile : MonoBehaviour
                 }
             }
             
-            var unit = CombatManager.Instance.unitSystem.GetUnit(position);
+            var unit = CombatSystem.instance.unitSystem.GetUnit(position);
             if (unit != null) unit.isVisible = value;
         }
     }

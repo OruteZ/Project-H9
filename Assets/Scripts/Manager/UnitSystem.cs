@@ -18,9 +18,9 @@ public class UnitSystem : MonoBehaviour
         public Vector3Int spawnPosition;
     }
     ;
-    [SerializeField] private UnitInfo[] unitInfo;
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private UnitInfo[] _unitInfo;
+    [SerializeField] private GameObject _playerPrefab;
+    [SerializeField] private GameObject _enemyPrefab;
 
     private void Awake()
     {
@@ -66,18 +66,18 @@ public class UnitSystem : MonoBehaviour
 
     public void SpawnUnits()
     {
-        foreach (var info  in unitInfo)
+        foreach (var info  in _unitInfo)
         {
             Unit unit;
 
             switch (info.type)
             {
                 case UnitType.Player:
-                    unit = Instantiate(playerPrefab).GetComponent<Unit>();
+                    unit = Instantiate(_playerPrefab).GetComponent<Unit>();
                     unit.position = info.spawnPosition;
                     break;
                 case UnitType.Enemy:
-                    unit = Instantiate(enemyPrefab).GetComponent<Unit>();
+                    unit = Instantiate(_enemyPrefab).GetComponent<Unit>();
                     unit.position = info.spawnPosition;
                     break;
                 default:

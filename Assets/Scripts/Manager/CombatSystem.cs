@@ -6,10 +6,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CombatManager : MonoBehaviour
+public class CombatSystem : MonoBehaviour
 {
-    public static CombatManager Instance { get; private set; }
-
+    public static CombatSystem instance { get; private set; }
     
     public TileSystem tileSystem;
     public TurnSystem turnSystem;
@@ -22,7 +21,7 @@ public class CombatManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        instance = this;
 
         tileSystem = GetComponent<TileSystem>();
         turnSystem = GetComponent<TurnSystem>();

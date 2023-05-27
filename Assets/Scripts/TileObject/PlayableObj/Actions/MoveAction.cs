@@ -21,9 +21,9 @@ public class MoveAction : BaseAction
 
     public override bool CanExecute(Vector3Int targetPos)
     {
-        if (CombatManager.Instance.unitSystem.GetUnit(targetPos) != null) return false;
+        if (CombatSystem.instance.unitSystem.GetUnit(targetPos) != null) return false;
         
-        _path = CombatManager.Instance.tileSystem.FindPath(unit.position, targetPos, maxMoveDistance);
+        _path = CombatSystem.instance.tileSystem.FindPath(unit.position, targetPos, maxMoveDistance);
         if (_path == null)
         {
             Debug.Log("impossible path");

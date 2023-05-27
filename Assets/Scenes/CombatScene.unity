@@ -571,7 +571,7 @@ GameObject:
   - component: {fileID: 835294048}
   - component: {fileID: 835294047}
   m_Layer: 0
-  m_Name: TileEffector
+  m_Name: TileEffectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -589,13 +589,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48c1910c0f0c8b1499d9cf5a4e848685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  friendlyEffect: {fileID: 0}
-  hostileEffect: {fileID: 0}
-  normalEffect: {fileID: -3033667219593020291, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd,
-    type: 3}
-  impossibleEffect: {fileID: 2100000, guid: 6653050ac87d57c4f972f7b51ea558f3, type: 2}
-  invisibleEffect: {fileID: 2100000, guid: f2897110a69e9b24e97a1999209becd8, type: 2}
-  fogOfWarEffect: {fileID: 0}
+  _friendlyEffect: {fileID: 0}
+  _hostileEffect: {fileID: 0}
+  _normalEffect: {fileID: 0}
+  _impossibleEffect: {fileID: 0}
+  _invisibleEffect: {fileID: 0}
+  _fogOfWarEffect: {fileID: 0}
 --- !u!4 &835294048
 Transform:
   m_ObjectHideFlags: 0
@@ -2071,17 +2070,9 @@ MonoBehaviour:
   onAnyUnitMoved:
     m_PersistentCalls:
       m_Calls: []
-  unitInfo:
-  - unitName: Player
-    type: 0
-    spawnPosition: {x: 0, y: 0, z: 0}
-  - unitName: Enemy
-    type: 1
-    spawnPosition: {x: 0, y: 1, z: -1}
-  playerPrefab: {fileID: 4781930735724047366, guid: 03140bcb1a97ab143ba7ec946ecc2508,
-    type: 3}
-  enemyPrefab: {fileID: 5356862990189776642, guid: 0a36d714af98b21469a6cfea75c7bf37,
-    type: 3}
+  _unitInfo: []
+  _playerPrefab: {fileID: 0}
+  _enemyPrefab: {fileID: 0}
 --- !u!114 &1916379892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2436,7 +2427,7 @@ GameObject:
   - component: {fileID: 2027628728}
   - component: {fileID: 2027628727}
   m_Layer: 0
-  m_Name: WeaponDB
+  m_Name: WeaponManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2460,7 +2451,13 @@ MonoBehaviour:
     type: 0
     baseDamage: 10
     baseRange: 4
-    gimmicks: 00000000
+    gimmicks: 0000000000000000
+  - weaponName: 
+    weaponModel: {fileID: 1919371912}
+    type: 0
+    baseDamage: 10
+    baseRange: 4
+    gimmicks: 0000000000000000
 --- !u!4 &2027628728
 Transform:
   m_ObjectHideFlags: 0

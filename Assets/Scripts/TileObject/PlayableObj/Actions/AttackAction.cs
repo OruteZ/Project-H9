@@ -15,7 +15,7 @@ public class AttackAction : BaseAction
         CoolOff
     }
 
-    public Weapon weapon;
+    private Weapon _weapon;
     private Unit _target;
     private State _state;
     private float _stateTimer;
@@ -36,8 +36,8 @@ public class AttackAction : BaseAction
 
     public override bool CanExecute(Vector3Int targetPos)
     {
-        weapon = unit.weapon;
-        _target = CombatManager.Instance.unitSystem.GetUnit(targetPos);
+        _weapon = unit.weapon;
+        _target = CombatSystem.instance.unitSystem.GetUnit(targetPos);
         #if UNITY_EDITOR
         Debug.Log("Attack Target : " + _target);
         #endif
@@ -58,7 +58,7 @@ public class AttackAction : BaseAction
 //            return false;
 //        }
 
-        if (!CombatManager.Instance.tileSystem.RayCast(unit.position, targetPos))
+        if (!CombatSystem.instance.tileSystem.RayCast(unit.position, targetPos))
         {
 #if UNITY_EDITOR
             Debug.Log("There is wall between target and player. attack failed");
@@ -88,7 +88,7 @@ public class AttackAction : BaseAction
                     _state = State.Shooting;
                     _stateTimer = .5f;
 
-                    bool hit = weapon.GetHitRate(_target) > UnityEngine.Random.value;
+                    bool hit = _weapon.GetHitRate(_target) > UnityEngine.Random.value;
                     //todo : OnShoot 이벤트 호출
 
                     #if UNITY_EDITOR
@@ -97,7 +97,7 @@ public class AttackAction : BaseAction
 
                     if (hit)
                     {
-                        weapon.Attack(_target, out var isHeadShot);
+                        _weapon.Attack(_target, out var isHeadShot);
                     }
                 }
                 break;

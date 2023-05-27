@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponDataBase : Generic.Singleton<WeaponDataBase>
+public class WeaponManager : Generic.Singleton<WeaponManager>
 {
     public List<WeaponData> weaponList;
 }

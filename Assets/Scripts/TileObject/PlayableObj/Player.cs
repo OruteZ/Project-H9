@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class Player : Unit
 {
     private bool _isBusy;
-    public bool IsBusy
+    public bool isBusy
     {
         get => _isBusy;
         set
@@ -33,17 +33,17 @@ public class Player : Unit
             AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);
 
-        weapon = Weapon.Clone(WeaponDataBase.Instance.weaponList[0], unit : this);
+        weapon = Weapon.Clone(WeaponManager.instance.weaponList[0], unit : this);
     }
     public override void Updated()
     {
-        if (IsBusy) return;
-        if (!CombatManager.Instance.IsPlayerTurn()) return;
+        if (isBusy) return;
+        if (!CombatSystem.instance.IsPlayerTurn()) return;
         
         // if (Input.GetKeyDown(KeyCode.A)) SelectAction(GetAction<MoveAction>());
         // if (Input.GetKeyDown(KeyCode.D)) SelectAction(GetAction<AttackAction>());
 
-        if (Input.GetMouseButtonDown(0) && !UIManager.Instance.isMouseOverUI)
+        if (Input.GetMouseButtonDown(0) && !UIManager.instance.isMouseOverUI)
         {
             target = GetMouseOverTile();
             if (target == null)
@@ -93,12 +93,12 @@ public class Player : Unit
 
     private void SetBusy()
     {
-        IsBusy = true;
+        isBusy = true;
     }
 
     private void ClearBusy()
     {
-        IsBusy = false;
+        isBusy = false;
     }
     private void FinishAction()
     {

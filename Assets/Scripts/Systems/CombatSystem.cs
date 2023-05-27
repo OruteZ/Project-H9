@@ -14,6 +14,8 @@ public class CombatSystem : MonoBehaviour
     public TurnSystem turnSystem;
     public UnitSystem unitSystem;
 
+    public GameState mapState;
+
     public bool IsPlayerTurn()
     {
         return unitSystem.GetPlayer() == turnSystem.turnOwner;
@@ -23,6 +25,7 @@ public class CombatSystem : MonoBehaviour
     {
         instance = this;
 
+        GameManager.instance.ChangeState(mapState);
         tileSystem = GetComponent<TileSystem>();
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();
@@ -30,8 +33,8 @@ public class CombatSystem : MonoBehaviour
 
     private void Start()
     {
-        tileSystem.CreateDemoWorld();
-        unitSystem.SpawnUnits();
+        tileSystem.SetUpTilesAndObjects();
+        unitSystem.SetUpUnits();
         turnSystem.EndTurn();
     }
 }

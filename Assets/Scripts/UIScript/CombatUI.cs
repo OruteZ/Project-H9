@@ -15,7 +15,6 @@ public class CombatUI : MonoBehaviour
 
     void Awake()
     {
-        UIManager.instance.combatUI = this;
     }
 
     void Start()
@@ -64,15 +63,5 @@ public class CombatUI : MonoBehaviour
         }
         
         playerActionButtonsUI.SetActive(false);
-    }
-
-    public void OnMouseEnter()
-    {
-        UIManager.instance.isMouseOverUI = true;
-    }
-
-    public void OnMouseExit()
-    {
-        UIManager.instance.isMouseOverUI = false;
     }
 }

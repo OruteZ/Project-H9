@@ -8,9 +8,12 @@ public class Tile : MonoBehaviour
 {
     [HideInInspector] public HexTransform hexTransform;
 
-    public Vector3Int position => hexTransform.position;
+    public Vector3Int position
+    {
+        get => hexTransform.position;
+        set => hexTransform.position = value;
+    } 
 
-    private List<TileObject> _objects;
     private MeshRenderer _meshRenderer;
 
     [Header("타일 속성")] public bool walkable;
@@ -27,18 +30,22 @@ public class Tile : MonoBehaviour
         set => _meshRenderer.material = value;
     }
 
+    public List<TileObject> objects;
     protected void Awake()
     {
         hexTransform = GetComponent<HexTransform>();
         _meshRenderer = GetComponent<MeshRenderer>();
-        _objects = new List<TileObject>();
     }
 
     public void AddObject(TileObject u)
     {
-        _objects.Add(u);
+        objects.Add(u);
     }
 
+    public void RemoveObject(TileObject u)
+    {
+        objects.Remove(u);
+    }
     private void ReloadEffect()
     {
         if (!visible) TileEffectManager.SetEffect(this, EffectType.Impossible);
@@ -53,7 +60,7 @@ public class Tile : MonoBehaviour
             _inSight = value;
             if (value)
             {
-                foreach (var obj in _objects)
+                foreach (var obj in objects)
                 {
                     obj.isVisible = true;
                 }
@@ -63,4 +70,6 @@ public class Tile : MonoBehaviour
             if (unit != null) unit.isVisible = value;
         }
     }
+
+    
 }

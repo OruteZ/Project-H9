@@ -24,26 +24,25 @@ public class Player : Unit
 
     [HideInInspector] public Tile target;
 
-    public override void SetUp(string newName)
+    public override void SetUp(string newName, UnitStat unitStat, int weaponIndex)
     {
-        base.SetUp(newName);
+        base.SetUp(newName, unitStat, weaponIndex);
         
         unitSystem.
             onAnyUnitMoved.
             AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);
-
-        weapon = Weapon.Clone(WeaponManager.instance.weaponList[0], unit : this);
     }
     public override void Updated()
     {
         if (isBusy) return;
-        if (!CombatSystem.instance.IsPlayerTurn()) return;
+        if (!IsMyTurn()) return;
         
         // if (Input.GetKeyDown(KeyCode.A)) SelectAction(GetAction<MoveAction>());
         // if (Input.GetKeyDown(KeyCode.D)) SelectAction(GetAction<AttackAction>());
 
-        if (Input.GetMouseButtonDown(0) && !UIManager.instance.isMouseOverUI)
+        
+        if (Input.GetMouseButtonDown(0)) //todo : UIManager.Instance.IsMouseOverUI;
         {
             target = GetMouseOverTile();
             if (target == null)
@@ -67,7 +66,7 @@ public class Player : Unit
 #if UNITY_EDITOR
         Debug.Log("Player Turn Started");
 #endif
-        currentActionPoint = concentration;
+        currentActionPoint = stat.concentration;
 
         activeUnitAction = null;
         SelectAction(GetAction<MoveAction>());
@@ -113,7 +112,8 @@ public class Player : Unit
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
         {
-            return hit.collider.GetComponent<Tile>();
+            var tile = hit.collider.GetComponent<Tile>();
+            if (tile.inSight) return tile;
         }
 
         return null;
@@ -127,11 +127,11 @@ public class Player : Unit
         {
             tile.inSight = 
                 tileSystem.VisionCast(hexTransform.position, tile.position) &&
-                Hex.Distance(hexTransform.position, tile.position) <= sightRange;
+                Hex.Distance(hexTransform.position, tile.position) <= stat.sightRange;
         }
     }
     
-    public override void OnHit(int damage)
+    public override void GetDamage(int damage)
     {
     }
 
@@ -140,12 +140,18 @@ public class Player : Unit
         if(unit != this)
         {
             unit.isVisible = tileSystem.VisionCast(position, unit.position) &&
-                             Hex.Distance(hexTransform.position, unit.position) <= sightRange;
+                             Hex.Distance(hexTransform.position, unit.position) <= stat.sightRange;
         }
+        
+        Debug.Log("On Any Unit Moved : Invoke");
     }
 
     private void OnMoved(Unit unit)
     {
         ReloadSight();
+        foreach (var obj in tileSystem.GetTile(position).objects) 
+        { 
+            obj.OnCollision(unit);
+        }
     }
 }

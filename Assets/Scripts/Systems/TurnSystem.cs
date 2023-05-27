@@ -33,6 +33,7 @@ public class TurnSystem : MonoBehaviour
 
     private void CalculateTurnOwner()
     {
+        // todo : 추후 수정
         turnOwner = CombatSystem.instance.unitSystem.GetPlayer();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,29 +14,35 @@ public class TileObject : MonoBehaviour
         set => hexTransform.position = value;
     } 
     protected Tile tile;
-    
-    protected void Init()
+
+    public void Init()
     {
         hexTransform = GetComponent<HexTransform>();
+        
+        tile = CombatSystem.instance.tileSystem.GetTile(position);
+        if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
+        
+        SetTile(tile);
     }
 
     public void SetTile(Tile t)
     {
         t.AddObject(this);
         tile = t;
-
-        hexTransform.position = t.hexTransform.position;
     }
+
+    public virtual void OnCollision(Unit other)
+    { }
     
     public static void Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
     {
         var tile = tileSystem.GetTile(pos);
         if (tile == null) return;
 
-        var gObject = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity);
-        gObject.GetComponent<TileObject>().Init();
-        gObject.GetComponent<TileObject>().SetTile(tile);
+        var tileObj = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity).GetComponent<TileObject>();
+        tileObj.position = pos;
     }
 
     public bool isVisible;
+
 }

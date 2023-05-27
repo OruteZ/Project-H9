@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class TileSystem : MonoBehaviour
@@ -13,12 +14,13 @@ public class TileSystem : MonoBehaviour
     public GameObject tilePrefab;
     
     private Dictionary<Vector3Int, Tile> _tiles;
+    public List<TileObject> objects;
 
     private void Awake()
     {
         _tiles = new Dictionary<Vector3Int, Tile>();
+        objects = GetComponentsInChildren<TileObject>().ToList();
     }
-
 
     public List<Tile> GetAllTiles()
     {
@@ -26,6 +28,21 @@ public class TileSystem : MonoBehaviour
         result.AddRange(_tiles.Values);
 
         return result;
+    }
+
+    public void SetUpTilesAndObjects()
+    {
+        var tilesInChildren = GetComponentsInChildren<Tile>();
+        foreach (Tile t in tilesInChildren)
+        {
+            AddTile(t);
+            TileEffectManager.SetEffect(t, !t.walkable ? EffectType.Impossible : EffectType.Normal);
+        }
+
+        foreach (TileObject obj in objects)
+        {
+            obj.Init();
+        }
     }
 
     /// <summary>
@@ -48,6 +65,20 @@ public class TileSystem : MonoBehaviour
             throw new Exception("Tile 추가에 실패했습니다.");
         }
 
+        return tile;
+    }
+    /// <summary>
+    /// 지정된 좌표에 타일을 생성합니다. walkable, visible, rayThroughable속성을 설정할 수 있습니다.
+    /// </summary>
+    /// <param name="tile">타일 class입니다.</param>
+    /// <returns> 추가된 Tile을 반환합니다. </returns>
+    private Tile AddTile(Tile tile)
+    {
+        if (!_tiles.TryAdd(tile.position, tile))
+        {
+            throw new Exception("Tile 추가에 실패했습니다.");
+        }
+        
         return tile;
     }
 
@@ -113,8 +144,6 @@ public class TileSystem : MonoBehaviour
     /// start지점에서 destination 까지의 경로를 리스트에 저장하여 반환합니다.
     /// 시작점과 도착지점을 포함한 경로를 반환합니다.
     /// maxLength로 입력되는 최대 길이 이상의 길은 탐색할 수 없습니다.
-    ///
-    /// A*로 구현하고싶었으나 실패하여 BFS로 구현된 상태입니다.
     /// </summary>
     /// <param name="start">시작지점</param>
     /// <param name="destination">도착지점</param>
@@ -222,33 +251,33 @@ public class TileSystem : MonoBehaviour
     [Header("Creating Demo World Inspector")]
     public int range;
     
-    [ContextMenu("Create World With Wall")]
+    [ContextMenu("Create World")]
     public void CreateDemoWorld()
     {
         var positions = Hex.GetGridsWithRange(range, Hex.zero);
         foreach (var pos in positions)
         {
-            var isWall = Random.Range(0, 2) == 1;
-            
-            if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
-                isWall = false;
-            
-            isWall = false;
-            var tile = AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
-            
-            TileEffectManager.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
+            var tile = Instantiate(tilePrefab, transform).GetComponent<HexTransform>();
+            tile.position = pos;
+            // if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
+            //     isWall = false;
+            //
+            // isWall = false;
+            // var tile = AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
+            //
+            // TileEffectManager.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
         }
     }
-    
-    [ContextMenu("Create World no wall")]
-    private void CreateDemoWorld2()
-    {
-        var positions = Hex.GetGridsWithRange(range, Hex.zero);
-        foreach (var pos in positions)
-        {
-            AddTile(pos);
-        }
-    }
+    //
+    // [ContextMenu("Create World no wall")]
+    // private void CreateDemoWorld2()
+    // {
+    //     var positions = Hex.GetGridsWithRange(range, Hex.zero);
+    //     foreach (var pos in positions)
+    //     {
+    //         AddTile(pos);
+    //     }
+    // }
 
     [ContextMenu("Remove Demo World")]
     private void RemoveDemoWorld()

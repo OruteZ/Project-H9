@@ -12,13 +12,12 @@ public class Revolver : Weapon
     
     public override void Attack(Unit target, out bool critical)
     {
-        critical = Random.value < unit.criticalChance;
-        
         Debug.Log("Weapon attack Call" + " : " + weaponName);
-
+        
+        critical = Random.value < unit.stat.criticalChance;
         int dmg = critical ? GetFinalCriticalDamage() : GetFinalDamage();
         
-        target.OnHit(dmg);
+        target.GetDamage(dmg);
         
         onSuccessAttack.Invoke(target, dmg);
         if (critical)
@@ -30,23 +29,23 @@ public class Revolver : Weapon
 
     public override int GetFinalDamage()
     {
-        return Mathf.RoundToInt(baseDamage + unit.revolverAdditionalDamage);
+        return Mathf.RoundToInt(baseDamage + unit.stat.revolverAdditionalDamage);
     }
 
     public override int GetFinalCriticalDamage()
     {
-        float dmg = baseDamage + unit.revolverAdditionalDamage;
-        dmg += dmg * unit.revolverCriticalDamage;
+        float dmg = baseDamage + unit.stat.revolverAdditionalDamage;
+        dmg += dmg * unit.stat.revolverCriticalDamage;
 
         return Mathf.RoundToInt(dmg);
     }
 
     public override float GetHitRate(Unit target)
     {
-        int range = baseRange + unit.revolverAdditionalRange;
+        int range = baseRange + unit.stat.revolverAdditionalRange;
         int distance = Hex.Distance(unit.position, target.position);
 
-        float hitRate = unit.concentration * (100 - distance * GetDistancePenalty() *
+        float hitRate = unit.stat.concentration * (100 - distance * GetDistancePenalty() *
             (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1)
             ) * 0.01f;
 

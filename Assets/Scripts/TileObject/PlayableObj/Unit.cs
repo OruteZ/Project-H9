@@ -26,30 +26,17 @@ public abstract class Unit : MonoBehaviour
 
     //차후에 Skinned Mesh Renderer로 변경하면 됨
     public MeshRenderer visual;
+
+    [Header("Status")] 
+    public UnitStat stat;
     
-    [Header("Status")]
-    public int hp;
-    public int concentration; 
-    public int sightRange; 
-    public int speed;
-    public int actionPoint;
-    public float additionalHitRate;
-    public float criticalChance;
-    public int revolverAdditionalDamage;
-    public int repeaterAdditionalDamage;
-    public int shotgunAdditionalDamage;
-    public int revolverAdditionalRange;
-    public int repeaterAdditionalRange;
-    public int shotgunAdditionalRange;
-    public float revolverCriticalDamage;
-    public float shotgunCriticalDamage;
-    public float repeaterCriticalDamage;
     
     [HideInInspector] public UnityEvent<IUnitAction> onActionCompleted;
     [HideInInspector] public UnityEvent onBusyChanged;
     [HideInInspector] public UnityEvent<int> onCostChanged;
     [HideInInspector] public UnityEvent<Unit> onMoved;
     [HideInInspector] public UnityEvent<Unit> onDead;
+    [HideInInspector] public UnityEvent<Unit, int> onHit;
 
     private IUnitAction[] _unitActionArray; // All Unit Actions attached to this Unit
     public IUnitAction activeUnitAction; // Currently active action
@@ -57,6 +44,11 @@ public abstract class Unit : MonoBehaviour
     public string unitName;
     public int currentActionPoint;
     public Weapon weapon;
+    
+    public abstract void Updated();
+    public abstract void StartTurn();
+    public abstract void GetDamage(int damage);
+
     public Vector3Int position
     {
         get => hexTransform.position;
@@ -68,14 +60,13 @@ public abstract class Unit : MonoBehaviour
             if(hasMoved) onMoved?.Invoke(this);
         }
     }
-    public virtual void SetUp(string newName)
+    public virtual void SetUp(string newName, UnitStat unitStat, int weaponIndex)
     {
         unitName = newName;
+        stat = unitStat;
+        WeaponData newWeaponData = WeaponManager.GetWeaponData(weaponIndex);
+        weapon = Weapon.Clone(newWeaponData, unit : this);
     }   
-    
-    public abstract void Updated();
-    public abstract void StartTurn();
-    public abstract void OnHit(int damage);
 
     private void Awake()
     {
@@ -115,5 +106,31 @@ public abstract class Unit : MonoBehaviour
         get => visual.enabled;
         set => visual.enabled = value;
     }
+
+    public bool IsMyTurn()
+    {
+        return turnSystem.turnOwner == this;
+    }
+}
+
+[Serializable]
+public struct UnitStat
+{
+    public int hp;
+    public int concentration; 
+    public int sightRange; 
+    public int speed;
+    public int actionPoint;
+    public float additionalHitRate;
+    public float criticalChance;
+    public int revolverAdditionalDamage;
+    public int repeaterAdditionalDamage;
+    public int shotgunAdditionalDamage;
+    public int revolverAdditionalRange;
+    public int repeaterAdditionalRange;
+    public int shotgunAdditionalRange;
+    public float revolverCriticalDamage;
+    public float shotgunCriticalDamage;
+    public float repeaterCriticalDamage;
 }
 

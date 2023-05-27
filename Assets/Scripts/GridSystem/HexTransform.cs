@@ -16,6 +16,7 @@ public class HexTransform : MonoBehaviour
     /// <summary> hex좌표를 의미합니다. 이 값을 변경할 경우 그에 알맞은 transform으로 실제 좌표가 변경됩니다. </summary>
     public Vector3Int position { get => _position; set => SetPosition(value); }
 
+    [ExecuteInEditMode]
     private void SetPosition(Vector3Int pos)
     {
         _position = pos;

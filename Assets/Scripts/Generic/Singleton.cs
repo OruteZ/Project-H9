@@ -32,7 +32,7 @@ namespace Generic
             if (_instance != null)
             {
                 Debug.LogError("Singleton 2회 생성" + nameof(T));
-                Destroy(gameObject);
+                // Destroy(gameObject);
             }
 #endif
             if (transform.parent != null && transform.root != null)

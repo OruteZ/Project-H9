@@ -14,7 +14,7 @@ public class Enemy : Unit
         turnSystem.EndTurn();
     }
 
-    public override void OnHit(int damage)
+    public override void GetDamage(int damage)
     {
         Debug.Log(damage + " 데미지 받음");
     }

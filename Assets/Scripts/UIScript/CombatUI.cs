@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class CombatUI : MonoBehaviour
 {
-    private TurnSystem TurnSystem => CombatSystem.instance.turnSystem;
-    private UnitSystem UnitSystem => CombatSystem.instance.unitSystem;
+    public TurnSystem turnSystem => CombatSystem.instance.turnSystem;
+    public UnitSystem unitSystem => CombatSystem.instance.unitSystem;
 
     public GameObject playerActionButtonsUI;
     public ActionButton[] actionArray;
 
-    private ActionButton[] actionButtons => actionArray ??= GetComponentsInChildren<ActionButton>();
+    private ActionButton[] _actionButtons => actionArray ??= GetComponentsInChildren<ActionButton>();
 
     void Awake()
     {
@@ -19,12 +19,12 @@ public class CombatUI : MonoBehaviour
 
     void Start()
     {
-        TurnSystem.onTurnChanged.AddListener(System_OnTurnChanged);
+        turnSystem.onTurnChanged.AddListener(System_OnTurnChanged);
     }
 
     public void EndTurnCall()
     {
-        TurnSystem.EndTurn();
+        turnSystem.EndTurn();
     }
 
     private void System_OnTurnChanged()
@@ -43,13 +43,13 @@ public class CombatUI : MonoBehaviour
     {
         playerActionButtonsUI.SetActive(true);
 
-        var actions = UnitSystem.GetPlayer().GetUnitActionArray();
+        var actions = unitSystem.GetPlayer().GetUnitActionArray();
 
         int index = 0;
         foreach (var act in actions)
         {
-            actionButtons[index].SetAction(act);
-            actionButtons[index].gameObject.SetActive(true);
+            _actionButtons[index].SetAction(act);
+            _actionButtons[index].gameObject.SetActive(true);
 
             index++;
         }

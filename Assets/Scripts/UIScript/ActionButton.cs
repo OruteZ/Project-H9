@@ -8,7 +8,7 @@ public class ActionButton : MonoBehaviour
 {
     private Outline _outline;
     private Player _player => CombatSystem.instance.unitSystem.GetPlayer();
-    private Outline OutLine
+    public Outline outLine
     {
         get
         {
@@ -46,7 +46,7 @@ public class ActionButton : MonoBehaviour
 
     private void CheckActiveAction()
     {
-        OutLine.enabled = 
+        outLine.enabled = 
             unitAction.GetActionType() 
             == 
             _player.GetSelectedAction().GetActionType();

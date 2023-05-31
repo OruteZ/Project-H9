@@ -241,6 +241,16 @@ public class SkillManager : Generic.Singleton<SkillManager>
     {
         return _skills;
     }
+    public List<Skill> GetAllLearnedSkills()
+    {
+        List<Skill> learnedSkills = new List<Skill>();
+        for (int i = 0; i < _skills.Count; i++)
+        {
+            if (!_skills[i].isLearned) continue;
+            learnedSkills.Add(_skills[i]);
+        }
+        return learnedSkills;
+    }
     public Skill GetSkill(int index) 
     {
         for (int i = 0; i < _skills.Count; i++) 

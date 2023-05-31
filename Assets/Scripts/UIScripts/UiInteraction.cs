@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UiInteraction : MonoBehaviour
+public class UIInteraction : MonoBehaviour
 {
 
     private UiManager _uiManager;
@@ -37,11 +37,11 @@ public class UiInteraction : MonoBehaviour
     }
     public void OnSkillTooltipCloseBtnClick()
     {
-        _uiManager.CloseSkillTooltip();
+        _uiManager._skillUI.CloseSkillTooltip();
     }
     public void OnSkillTooltipLearnBtnClick()
     {
-        _uiManager.ClickLearnSkill();
+        _uiManager._skillUI.ClickLearnSkill();
     }
 
     public void OnExitBtnClick()
@@ -51,5 +51,18 @@ public class UiInteraction : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public void OnWeaponItemUIBtnClick() 
+    {
+        _uiManager._characterUI.ChangeItemUIStatus(CharacterUI.ItemUIStatus.Weapon);
+    }
+    public void OnUsableItemUIBtnClick()
+    {
+        _uiManager._characterUI.ChangeItemUIStatus(CharacterUI.ItemUIStatus.Usable);
+    }
+    public void OnOtherItemUIBtnClick()
+    {
+        _uiManager._characterUI.ChangeItemUIStatus(CharacterUI.ItemUIStatus.Other);
     }
 }

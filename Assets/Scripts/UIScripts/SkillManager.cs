@@ -4,43 +4,43 @@ using UnityEngine;
 
 enum SkillCategory
 {
-    NULL,
-    CHARACTER,
-    REVOLVER,
-    REPEATER,
-    SHOTGUN
+    Null,
+    Character,
+    Revoler,
+    Repeater,
+    Shotgun
 }
 enum SkillActiveOrPassive 
 {
-    NULL,
-    ACTIVE,
-    PASSIVE
+    Null,
+    Active,
+    Passive
 }
 enum Stat
 {
-    NULL,
+    Null,
     HP,
-    CONCENTRATION,
-    SPEED,
-    FINAL_HIT_RATE,
-    SIGHT_DISTANCE,
-    FINAL_MOBILITY,
-    FINAL_DAMAGE_PERCENT,
-    FINAL_DAMAGE_INTEGER,
-    HP_RECOVERY,
-    ACTIVE_SKILL_DAMAGE_INTEGER,
-    SKILL_DISTANCE,
-    SKILL_USE_COUNT,
-    UP_HIT_RATE,
-    UP_DISTANCE,
-    SKILL_DAMAGE_INTEGER
+    Concentration,
+    Speed,
+    FinalHitRate,
+    Sight_Distance,
+    Final_Mobility,
+    FinalDamagePercent,
+    FinalDamageInteger,
+    HPRecovery,
+    ActiveSkillDamageInteger,
+    SkillDistance,
+    SkillUseCount,
+    UpHitRate,
+    UpDistance,
+    SkillDamageInteger
 }
 enum SkillActiveType 
 {
-    NULL,
-    DAMAGE,
-    EXPLODE,
-    HEAL
+    Null,
+    Damage,
+    Explode,
+    Heal
 }
 
 public class SkillInfo
@@ -61,38 +61,38 @@ public class SkillInfo
     public int range { get; private set; }
     public int width { get; private set; }
 
-    public SkillInfo(List<string> _list)
+    public SkillInfo(List<string> list)
     {
-        for (int i = 0; i < _list.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
-            if (_list[i].Equals(""))
+            if (list[i].Equals(""))
             {
-                _list[i] = "0";
+                list[i] = "0";
             }
         }
 
-        index = int.Parse(_list[0]);
-        iconNumber = int.Parse(_list[1]);
-        name = _list[2];
-        description = _list[3];
-        category = int.Parse(_list[4]);
-        activeOrPassive = int.Parse(_list[5]);
-        precedenceIndex = InitIntArrayValue(_list[6]);
-        repeatCount = int.Parse(_list[7]);
+        index = int.Parse(list[0]);
+        iconNumber = int.Parse(list[1]);
+        name = list[2];
+        description = list[3];
+        category = int.Parse(list[4]);
+        activeOrPassive = int.Parse(list[5]);
+        precedenceIndex = InitIntArrayValue(list[6]);
+        repeatCount = int.Parse(list[7]);
         if (repeatCount == 0) repeatCount = 1;  //table issue
-        stat = InitIntArrayValue(_list[8]);
-        activeType = int.Parse(_list[9]);
-        upgradeSkill = int.Parse(_list[10]);
-        amount = InitIntArrayValue(_list[11]);
-        range = int.Parse(_list[12]);
-        width = int.Parse(_list[13]);
+        stat = InitIntArrayValue(list[8]);
+        activeType = int.Parse(list[9]);
+        upgradeSkill = int.Parse(list[10]);
+        amount = InitIntArrayValue(list[11]);
+        range = int.Parse(list[12]);
+        width = int.Parse(list[13]);
     }
-    private int[] InitIntArrayValue(string _string) 
+    private int[] InitIntArrayValue(string str) 
     {
-        char SPLIT_CHAR = '$';
-        if (_string.Equals("0")) return new int[] { 0 };
+        const char SPLIT_CHAR = '$';
+        if (str.Equals("0")) return new int[] { 0 };
 
-        string[] splitString = _string.Split(SPLIT_CHAR);
+        string[] splitString = str.Split(SPLIT_CHAR);
 
         int[] result = new int[splitString.Length];
 
@@ -106,7 +106,7 @@ public class SkillInfo
 
     public bool IsActive() 
     {
-        if (activeOrPassive.Equals(SkillActiveOrPassive.ACTIVE)) 
+        if (activeOrPassive.Equals(SkillActiveOrPassive.Active)) 
         {
             return true;
         }
@@ -124,9 +124,9 @@ public class Skill
     public bool[] isLearnedPrecedeSkill { get; private set; }
 
 
-    public Skill(SkillInfo _skillInfo) 
+    public Skill(SkillInfo info) 
     {
-        skillInfo = _skillInfo;
+        this.skillInfo = info;
 
         isLearned = false;
         InitIsLearnable();
@@ -151,7 +151,7 @@ public class Skill
             isLearnedPrecedeSkill[0] = true;
         }
     }
-    public void UpdateIsLearnable(List<Skill> _skills)
+    public void UpdateIsLearnable(List<Skill> skills)
     {
 
         if (skillLevel >= skillInfo.repeatCount)
@@ -160,19 +160,19 @@ public class Skill
             return;
         }
 
-        CheckPrecedenceSkill(_skills);
+        CheckPrecedenceSkill(skills);
         if (IsLearnedAllPrecedenceSkills()) isLearnable = true;
     }
-    private void CheckPrecedenceSkill(List<Skill> _skills)
+    private void CheckPrecedenceSkill(List<Skill> skills)
     {
-        for (int i = 0; i < _skills.Count; i++)
+        for (int i = 0; i < skills.Count; i++)
         {
             for (int j = 0; j < skillInfo.precedenceIndex.Length; j++)
             {
-                bool isPrecedenceSkill = (_skills[i].skillInfo.index == skillInfo.precedenceIndex[j]);
+                bool isPrecedenceSkill = (skills[i].skillInfo.index == skillInfo.precedenceIndex[j]);
                 if (isPrecedenceSkill)
                 {
-                    isLearnedPrecedeSkill[j] = _skills[i].isLearned;
+                    isLearnedPrecedeSkill[j] = skills[i].isLearned;
                 }
             }
         }
@@ -202,54 +202,64 @@ public class SkillManager : Generic.Singleton<SkillManager>
 {
     const int REQUIRED_SKILL_POINT = 1;
 
-    private List<List<string>> skillTable;
-    private List<SkillInfo> skillInformations;
-    private List<Skill> skills;
+    private List<List<string>> _skillTable;
+    private List<SkillInfo> _skillInformations;
+    private List<Skill> _skills;
 
-    private int skillPoint;
+    private int _skillPoint;
 
     private void Awake()
     {
         base.Awake();
         
         InitSkills();
-        skillPoint = 10;    //test
+        _skillPoint = 10;    //test
     }
 
     void InitSkills()
     {
-        skillTable = SkillRead.Read("SkillTable");
-        if (skillTable == null)
+        _skillTable = SkillRead.Read("SkillTable");
+        if (_skillTable == null)
         {
             Debug.Log("skill table을 읽어오지 못했습니다.");
         }
 
-        skillInformations = new List<SkillInfo>();
-        for (int i = 0; i < skillTable.Count; i++)
+        _skillInformations = new List<SkillInfo>();
+        for (int i = 0; i < _skillTable.Count; i++)
         {
-            SkillInfo _skillInfo = new SkillInfo(skillTable[i]);
-            skillInformations.Add(_skillInfo);
+            SkillInfo _skillInfo = new SkillInfo(_skillTable[i]);
+            _skillInformations.Add(_skillInfo);
         }
 
-        skills = new List<Skill>();
-        for (int i = 0; i < skillInformations.Count; i++)
+        _skills = new List<Skill>();
+        for (int i = 0; i < _skillInformations.Count; i++)
         {
-            Skill _skill = new Skill(skillInformations[i]);
-            skills.Add(_skill);
+            Skill _skill = new Skill(_skillInformations[i]);
+            _skills.Add(_skill);
         }
     }
 
     public List<Skill> GetAllSkills() 
     {
-        return skills;
+        return _skills;
+    }
+    public List<Skill> GetAllLearnedSkills()
+    {
+        List<Skill> learnedSkills = new List<Skill>();
+        for (int i = 0; i < _skills.Count; i++)
+        {
+            if (!_skills[i].isLearned) continue;
+            learnedSkills.Add(_skills[i]);
+        }
+        return learnedSkills;
     }
     public Skill GetSkill(int index) 
     {
-        for (int i = 0; i < skills.Count; i++) 
+        for (int i = 0; i < _skills.Count; i++) 
         {
-            if (skills[i].skillInfo.index == index) 
+            if (_skills[i].skillInfo.index == index) 
             {
-                return skills[i];
+                return _skills[i];
             }
         }
         Debug.Log("해당 인덱스의 스킬을 찾지 못했습니다. 인덱스: " + index);
@@ -258,21 +268,21 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
     public bool LearnSkill(int index) 
     {
-        for (int i = 0; i < skills.Count; i++) 
+        for (int i = 0; i < _skills.Count; i++) 
         {
-            if (skills[i].skillInfo.index == index) 
+            if (_skills[i].skillInfo.index == index) 
             {
-                if (!skills[i].isLearnable) { Debug.Log("습득 조건이 충족되지 않은 스킬입니다."); return false; }
-                if (skillPoint < REQUIRED_SKILL_POINT) { Debug.Log("스킬 포인트가 부족합니다."); return false; }
+                if (!_skills[i].isLearnable) { Debug.Log("습득 조건이 충족되지 않은 스킬입니다."); return false; }
+                if (_skillPoint < REQUIRED_SKILL_POINT) { Debug.Log("스킬 포인트가 부족합니다."); return false; }
 
-                skillPoint -= REQUIRED_SKILL_POINT;
-                skills[i].LearnSkill();
+                _skillPoint -= REQUIRED_SKILL_POINT;
+                _skills[i].LearnSkill();
                 break;
             }
         }
-        for (int i = 0; i < skills.Count; i++)
+        for (int i = 0; i < _skills.Count; i++)
         {
-            skills[i].UpdateIsLearnable(skills);
+            _skills[i].UpdateIsLearnable(_skills);
         }
 
         return true;
@@ -280,10 +290,10 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
     public int GetSkillPoint() 
     {
-        return skillPoint;
+        return _skillPoint;
     }
     public bool IsEnoughSkillPoint()
     {
-        return REQUIRED_SKILL_POINT <= skillPoint;
+        return REQUIRED_SKILL_POINT <= _skillPoint;
     }
 }

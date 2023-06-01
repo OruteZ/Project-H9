@@ -32,7 +32,7 @@ public class TileSystem : MonoBehaviour
 
     public void SetUpTilesAndObjects()
     {
-        var tilesInChildren = GetComponentsInChildren<Tile>();
+        var tilesInChildren = GetComponentsInChildren<Tile>();  
         foreach (Tile t in tilesInChildren)
         {
             AddTile(t);

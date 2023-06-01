@@ -47,7 +47,12 @@ public class UnitSystem : MonoBehaviour
 
     public Unit GetUnit(Vector3Int position)
     {
-        return units.FirstOrDefault(unit => unit.position == position);
+        foreach (var unit in units)
+        {
+            if (unit.position == position) return unit;
+        }
+
+        return null;
     }
 
     private void OnUnitMoved(Unit unit)
@@ -91,7 +96,7 @@ public class UnitSystem : MonoBehaviour
             }
             else
             {
-                unit.SetUp("EEEEEnemy", new UnitStat(), 0);
+                unit.SetUp("EEEEEnemy", GameManager.instance.playerStat, 0);
             }
             unit.onDead.AddListener(OnUnitDead);
         }

@@ -110,7 +110,7 @@ public class Player : Unit
     {
         RaycastHit hit; 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 100f ,layerMask : LayerMask.GetMask("Tile")))
         {
             var tile = hit.collider.GetComponent<Tile>();
             if (tile.inSight) return tile;

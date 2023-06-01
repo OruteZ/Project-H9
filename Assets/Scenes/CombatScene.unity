@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 11603684}
   - component: {fileID: 11603683}
   - component: {fileID: 11603682}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -152,12 +152,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11603680}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7320508, y: 0, z: -3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 3.4641016, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 26
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &11603682
 CapsuleCollider:
@@ -186,10 +186,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &11603684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,7 +268,7 @@ GameObject:
   - component: {fileID: 14827463}
   - component: {fileID: 14827462}
   - component: {fileID: 14827461}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -282,12 +283,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14827459}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.0621777, y: 0, z: -4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 8.6602545, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 69
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 68
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &14827461
 CapsuleCollider:
@@ -316,10 +317,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &14827463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,7 +399,7 @@ GameObject:
   - component: {fileID: 40787876}
   - component: {fileID: 40787875}
   - component: {fileID: 40787874}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -412,12 +414,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 40787872}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.598076, y: 0, z: -1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.8867512, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 25
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &40787874
 CapsuleCollider:
@@ -446,10 +448,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &40787876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,7 +530,7 @@ GameObject:
   - component: {fileID: 54290733}
   - component: {fileID: 54290732}
   - component: {fileID: 54290731}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -542,12 +545,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54290729}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.598076, y: 0, z: -7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.350853, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 39
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 38
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &54290731
 CapsuleCollider:
@@ -576,10 +579,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &54290733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,7 +661,7 @@ GameObject:
   - component: {fileID: 98253597}
   - component: {fileID: 98253596}
   - component: {fileID: 98253595}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -672,12 +676,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 98253593}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8660254, y: 0, z: 4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.041452, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 53
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 52
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &98253595
 CapsuleCollider:
@@ -706,10 +710,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &98253597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -787,7 +792,7 @@ GameObject:
   - component: {fileID: 107075840}
   - component: {fileID: 107075839}
   - component: {fileID: 107075838}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -802,12 +807,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107075836}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.196152, y: 0, z: 3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 8.082904, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 81
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 80
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &107075838
 CapsuleCollider:
@@ -836,10 +841,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &107075840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,7 +923,7 @@ GameObject:
   - component: {fileID: 120934629}
   - component: {fileID: 120934628}
   - component: {fileID: 120934627}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -932,12 +938,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120934625}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.330127, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.7320509, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 23
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &120934627
 CapsuleCollider:
@@ -966,10 +972,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &120934629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,7 +1054,7 @@ GameObject:
   - component: {fileID: 122739529}
   - component: {fileID: 122739528}
   - component: {fileID: 122739527}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -1062,11 +1069,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122739525}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.330127, y: 0, z: -7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.7320509, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
+  m_Father: {fileID: 1015869329}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &122739527
@@ -1096,10 +1103,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &122739529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1177,7 +1185,7 @@ GameObject:
   - component: {fileID: 124342429}
   - component: {fileID: 124342428}
   - component: {fileID: 124342427}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -1192,12 +1200,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124342425}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7320508, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.7735023, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 56
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 55
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &124342427
 CapsuleCollider:
@@ -1226,10 +1234,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &124342429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1307,7 +1316,7 @@ GameObject:
   - component: {fileID: 143686605}
   - component: {fileID: 143686604}
   - component: {fileID: 143686603}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -1322,12 +1331,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143686601}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7320508, y: 0, z: 3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.7735023, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 64
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 63
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &143686603
 CapsuleCollider:
@@ -1356,10 +1365,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &143686605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1437,7 +1447,7 @@ GameObject:
   - component: {fileID: 156037241}
   - component: {fileID: 156037240}
   - component: {fileID: 156037239}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -1452,12 +1462,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156037237}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.928203, y: 0, z: 3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 9.237604, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 88
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 87
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &156037239
 CapsuleCollider:
@@ -1486,10 +1496,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &156037241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1567,7 +1578,7 @@ GameObject:
   - component: {fileID: 189039520}
   - component: {fileID: 189039519}
   - component: {fileID: 189039518}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -1582,12 +1593,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189039516}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.4641016, y: 0, z: -6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.309401, y: 0, z: -4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 11
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &189039518
 CapsuleCollider:
@@ -1616,10 +1627,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &189039520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1697,7 +1709,7 @@ GameObject:
   - component: {fileID: 197135787}
   - component: {fileID: 197135786}
   - component: {fileID: 197135785}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -1712,12 +1724,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197135783}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8660254, y: 0, z: -1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.1961527, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 46
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 45
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &197135785
 CapsuleCollider:
@@ -1746,10 +1758,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &197135787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1827,7 +1840,7 @@ GameObject:
   - component: {fileID: 226392268}
   - component: {fileID: 226392267}
   - component: {fileID: 226392266}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -1842,12 +1855,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226392264}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4641016, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.928203, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 66
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 65
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &226392266
 CapsuleCollider:
@@ -1876,10 +1889,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &226392268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1957,7 +1971,7 @@ GameObject:
   - component: {fileID: 259758317}
   - component: {fileID: 259758316}
   - component: {fileID: 259758315}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -1972,12 +1986,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259758313}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.196152, y: 0, z: 3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.1547006, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 22
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &259758315
 CapsuleCollider:
@@ -2006,10 +2020,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &259758317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2087,7 +2102,7 @@ GameObject:
   - component: {fileID: 285558648}
   - component: {fileID: 285558647}
   - component: {fileID: 285558646}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -2102,12 +2117,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 285558644}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.598076, y: 0, z: -4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.8867512, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 18
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &285558646
 CapsuleCollider:
@@ -2136,10 +2151,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &285558648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2217,7 +2233,7 @@ GameObject:
   - component: {fileID: 301842528}
   - component: {fileID: 301842527}
   - component: {fileID: 301842526}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -2232,11 +2248,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 301842524}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.0621777, y: 0, z: -4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 0.5773503, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
+  m_Father: {fileID: 1015869329}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &301842526
@@ -2266,10 +2282,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &301842528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2347,7 +2364,7 @@ GameObject:
   - component: {fileID: 308070954}
   - component: {fileID: 308070953}
   - component: {fileID: 308070952}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -2362,12 +2379,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 308070950}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.928203, y: 0, z: 3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 13
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &308070952
 CapsuleCollider:
@@ -2396,10 +2413,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &308070954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2477,7 +2495,7 @@ GameObject:
   - component: {fileID: 314310775}
   - component: {fileID: 314310774}
   - component: {fileID: 314310773}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -2492,12 +2510,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 314310771}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.196152, y: 0, z: 6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.1547006, y: 0, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 30
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &314310773
 CapsuleCollider:
@@ -2526,10 +2544,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &314310775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2607,7 +2626,7 @@ GameObject:
   - component: {fileID: 315355166}
   - component: {fileID: 315355165}
   - component: {fileID: 315355164}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -2622,12 +2641,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315355162}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.0621777, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 8.6602545, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 82
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 81
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &315355164
 CapsuleCollider:
@@ -2656,10 +2675,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &315355166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2737,7 +2757,7 @@ GameObject:
   - component: {fileID: 322045502}
   - component: {fileID: 322045501}
   - component: {fileID: 322045500}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -2752,12 +2772,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322045498}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.330127, y: 0, z: 4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.7320509, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 31
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &322045500
 CapsuleCollider:
@@ -2786,10 +2806,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &322045502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2867,7 +2888,7 @@ GameObject:
   - component: {fileID: 324970235}
   - component: {fileID: 324970234}
   - component: {fileID: 324970233}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -2882,12 +2903,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 324970231}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4641016, y: 0, z: 6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.928203, y: 0, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 79
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 78
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &324970233
 CapsuleCollider:
@@ -2916,10 +2937,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &324970235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2997,7 +3019,7 @@ GameObject:
   - component: {fileID: 335267348}
   - component: {fileID: 335267347}
   - component: {fileID: 335267346}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -3012,12 +3034,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335267344}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.0621777, y: 0, z: -1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 0.5773503, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 8
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &335267346
 CapsuleCollider:
@@ -3046,10 +3068,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &335267348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3127,7 +3150,7 @@ GameObject:
   - component: {fileID: 341869490}
   - component: {fileID: 341869489}
   - component: {fileID: 341869488}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -3142,12 +3165,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341869486}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.4641016, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.309401, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 24
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &341869488
 CapsuleCollider:
@@ -3176,10 +3199,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &341869490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3257,7 +3281,7 @@ GameObject:
   - component: {fileID: 354003655}
   - component: {fileID: 354003654}
   - component: {fileID: 354003653}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -3272,12 +3296,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354003651}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.618802, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 54
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 53
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &354003653
 CapsuleCollider:
@@ -3306,10 +3330,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &354003655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3387,7 +3412,7 @@ GameObject:
   - component: {fileID: 411446547}
   - component: {fileID: 411446546}
   - component: {fileID: 411446545}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -3402,12 +3427,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411446543}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.4641016, y: 0, z: 3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.309401, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 32
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &411446545
 CapsuleCollider:
@@ -3436,10 +3461,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &411446547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3517,7 +3543,7 @@ GameObject:
   - component: {fileID: 449105515}
   - component: {fileID: 449105514}
   - component: {fileID: 449105513}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -3532,12 +3558,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 449105511}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.4641016, y: 0, z: 6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.309401, y: 0, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 41
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 40
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &449105513
 CapsuleCollider:
@@ -3566,10 +3592,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &449105515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3647,7 +3674,7 @@ GameObject:
   - component: {fileID: 485708423}
   - component: {fileID: 485708422}
   - component: {fileID: 485708421}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -3662,12 +3689,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 485708419}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.598076, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.350853, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 65
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 64
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &485708421
 CapsuleCollider:
@@ -3696,10 +3723,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &485708423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3777,7 +3805,7 @@ GameObject:
   - component: {fileID: 498458926}
   - component: {fileID: 498458925}
   - component: {fileID: 498458924}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -3792,12 +3820,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498458922}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8660254, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.1961527, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 55
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 54
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &498458924
 CapsuleCollider:
@@ -3826,10 +3854,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &498458926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3907,7 +3936,7 @@ GameObject:
   - component: {fileID: 510794350}
   - component: {fileID: 510794349}
   - component: {fileID: 510794348}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -3922,12 +3951,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510794346}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8660254, y: 0, z: 4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.1961527, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 63
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 62
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &510794348
 CapsuleCollider:
@@ -3956,10 +3985,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &510794350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4117,7 +4147,7 @@ GameObject:
   - component: {fileID: 529328209}
   - component: {fileID: 529328208}
   - component: {fileID: 529328207}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -4132,12 +4162,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529328205}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.618802, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 45
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 44
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &529328207
 CapsuleCollider:
@@ -4166,10 +4196,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &529328209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4247,7 +4278,7 @@ GameObject:
   - component: {fileID: 529611945}
   - component: {fileID: 529611944}
   - component: {fileID: 529611943}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -4262,12 +4293,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529611941}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.330127, y: 0, z: -1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 7.5055532, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 67
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 66
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &529611943
 CapsuleCollider:
@@ -4296,10 +4327,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &529611945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4377,7 +4409,7 @@ GameObject:
   - component: {fileID: 541951773}
   - component: {fileID: 541951772}
   - component: {fileID: 541951771}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -4392,12 +4424,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541951769}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.598076, y: 0, z: 4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.350853, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 72
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 71
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &541951771
 CapsuleCollider:
@@ -4426,10 +4458,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &541951773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4507,7 +4540,7 @@ GameObject:
   - component: {fileID: 543517415}
   - component: {fileID: 543517414}
   - component: {fileID: 543517413}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -4522,12 +4555,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543517411}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.330127, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 7.5055532, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 74
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 73
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &543517413
 CapsuleCollider:
@@ -4556,10 +4589,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &543517415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4763,7 +4797,7 @@ GameObject:
   - component: {fileID: 550296157}
   - component: {fileID: 550296156}
   - component: {fileID: 550296155}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -4778,12 +4812,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550296153}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.330127, y: 0, z: -4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.7320509, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 10
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &550296155
 CapsuleCollider:
@@ -4812,10 +4846,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &550296157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4893,7 +4928,7 @@ GameObject:
   - component: {fileID: 553308753}
   - component: {fileID: 553308752}
   - component: {fileID: 553308751}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -4908,12 +4943,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553308749}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.7942286, y: 0, z: -1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 9.814955, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 84
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 83
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &553308751
 CapsuleCollider:
@@ -4942,10 +4977,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &553308753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5023,7 +5059,7 @@ GameObject:
   - component: {fileID: 576890892}
   - component: {fileID: 576890891}
   - component: {fileID: 576890890}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -5038,12 +5074,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576890888}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.330127, y: 0, z: -7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 7.5055532, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 50
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 49
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &576890890
 CapsuleCollider:
@@ -5072,10 +5108,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &576890892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5149,12 +5186,12 @@ PrefabInstance:
     - target: {fileID: 1996636143466995333, guid: 0a36d714af98b21469a6cfea75c7bf37,
         type: 3}
       propertyPath: m_RootOrder
-      value: 91
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1996636143466995333, guid: 0a36d714af98b21469a6cfea75c7bf37,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.7320508
+      value: 0.8660254
       objectReference: {fileID: 0}
     - target: {fileID: 1996636143466995333, guid: 0a36d714af98b21469a6cfea75c7bf37,
         type: 3}
@@ -5164,7 +5201,7 @@ PrefabInstance:
     - target: {fileID: 1996636143466995333, guid: 0a36d714af98b21469a6cfea75c7bf37,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1996636143466995333, guid: 0a36d714af98b21469a6cfea75c7bf37,
         type: 3}
@@ -5211,6 +5248,11 @@ PrefabInstance:
       propertyPath: _position.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8292009833466838523, guid: 0a36d714af98b21469a6cfea75c7bf37,
+        type: 3}
+      propertyPath: _position.y
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a36d714af98b21469a6cfea75c7bf37, type: 3}
 --- !u!4 &653147725 stripped
@@ -5233,7 +5275,7 @@ GameObject:
   - component: {fileID: 655965074}
   - component: {fileID: 655965073}
   - component: {fileID: 655965072}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -5248,12 +5290,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655965070}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.660254, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 10.392305, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 90
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 89
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &655965072
 CapsuleCollider:
@@ -5282,10 +5324,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &655965074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5363,7 +5406,7 @@ GameObject:
   - component: {fileID: 663090231}
   - component: {fileID: 663090230}
   - component: {fileID: 663090229}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -5378,12 +5421,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663090227}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4641016, y: 0, z: -3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.928203, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 58
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 57
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &663090229
 CapsuleCollider:
@@ -5412,10 +5455,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &663090231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5493,7 +5537,7 @@ GameObject:
   - component: {fileID: 747601700}
   - component: {fileID: 747601699}
   - component: {fileID: 747601698}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -5508,12 +5552,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747601696}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.4641016, y: 0, z: -3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.309401, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 17
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &747601698
 CapsuleCollider:
@@ -5542,10 +5586,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &747601700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5786,7 +5831,7 @@ GameObject:
   - component: {fileID: 808199775}
   - component: {fileID: 808199774}
   - component: {fileID: 808199773}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -5801,12 +5846,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808199771}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.196152, y: 0, z: 6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 8.082904, y: 0, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 86
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 85
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &808199773
 CapsuleCollider:
@@ -5835,10 +5880,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &808199775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6257,7 +6303,7 @@ GameObject:
   - component: {fileID: 886487864}
   - component: {fileID: 886487863}
   - component: {fileID: 886487862}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -6272,12 +6318,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886487860}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7320508, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 3.4641016, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 34
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &886487862
 CapsuleCollider:
@@ -6306,10 +6352,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &886487864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6387,7 +6434,7 @@ GameObject:
   - component: {fileID: 896421114}
   - component: {fileID: 896421113}
   - component: {fileID: 896421112}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -6402,12 +6449,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896421110}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.598076, y: 0, z: -7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.8867512, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 12
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &896421112
 CapsuleCollider:
@@ -6436,10 +6483,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &896421114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6517,7 +6565,7 @@ GameObject:
   - component: {fileID: 902071937}
   - component: {fileID: 902071936}
   - component: {fileID: 902071935}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -6532,11 +6580,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902071933}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.660254, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: -1.1547003, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
+  m_Father: {fileID: 1015869329}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &902071935
@@ -6566,10 +6614,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &902071937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6810,7 +6859,7 @@ GameObject:
   - component: {fileID: 953694133}
   - component: {fileID: 953694132}
   - component: {fileID: 953694131}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -6825,12 +6874,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953694129}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.196152, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 8.082904, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 75
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 74
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &953694131
 CapsuleCollider:
@@ -6859,10 +6908,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &953694133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7103,7 +7153,7 @@ GameObject:
   - component: {fileID: 1012256977}
   - component: {fileID: 1012256976}
   - component: {fileID: 1012256975}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -7118,12 +7168,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1012256973}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7320508, y: 0, z: -3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.7735023, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 47
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 46
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1012256975
 CapsuleCollider:
@@ -7152,10 +7202,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1012256977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7233,7 +7284,7 @@ GameObject:
   - component: {fileID: 1015869332}
   - component: {fileID: 1015869331}
   - component: {fileID: 1015869330}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -7251,9 +7302,99 @@ Transform:
   m_LocalPosition: {x: -6.928203, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 902071934}
+  - {fileID: 1298002082}
+  - {fileID: 1289130126}
+  - {fileID: 301842525}
+  - {fileID: 1255556858}
+  - {fileID: 122739526}
+  - {fileID: 2052387915}
+  - {fileID: 335267345}
+  - {fileID: 1412774301}
+  - {fileID: 550296154}
+  - {fileID: 189039517}
+  - {fileID: 896421111}
+  - {fileID: 308070951}
+  - {fileID: 1165872087}
+  - {fileID: 2121801099}
+  - {fileID: 1838760331}
+  - {fileID: 747601697}
+  - {fileID: 285558645}
+  - {fileID: 1122640657}
+  - {fileID: 1878381656}
+  - {fileID: 2140685818}
+  - {fileID: 259758314}
+  - {fileID: 120934626}
+  - {fileID: 341869487}
+  - {fileID: 40787873}
+  - {fileID: 11603681}
+  - {fileID: 1929131861}
+  - {fileID: 1912405128}
+  - {fileID: 1480285403}
+  - {fileID: 314310772}
+  - {fileID: 322045499}
+  - {fileID: 411446544}
+  - {fileID: 1502772206}
+  - {fileID: 886487861}
+  - {fileID: 1057392435}
+  - {fileID: 1595132121}
+  - {fileID: 1230278573}
+  - {fileID: 1969209495}
+  - {fileID: 54290730}
+  - {fileID: 1248560978}
+  - {fileID: 449105512}
+  - {fileID: 1660062965}
+  - {fileID: 1767119181}
+  - {fileID: 2073394508}
+  - {fileID: 529328206}
+  - {fileID: 197135784}
+  - {fileID: 1012256974}
+  - {fileID: 1814109069}
+  - {fileID: 2126335151}
+  - {fileID: 576890889}
+  - {fileID: 2054507064}
+  - {fileID: 1216040612}
+  - {fileID: 98253594}
+  - {fileID: 354003652}
+  - {fileID: 498458923}
+  - {fileID: 124342426}
+  - {fileID: 1826591145}
+  - {fileID: 663090228}
+  - {fileID: 1665089322}
+  - {fileID: 1838205372}
+  - {fileID: 1716893836}
+  - {fileID: 1622444373}
+  - {fileID: 510794347}
+  - {fileID: 143686602}
+  - {fileID: 485708420}
+  - {fileID: 226392265}
+  - {fileID: 529611942}
+  - {fileID: 1289426314}
+  - {fileID: 14827460}
+  - {fileID: 1390940838}
+  - {fileID: 1498503455}
+  - {fileID: 541951770}
+  - {fileID: 1143131989}
+  - {fileID: 543517412}
+  - {fileID: 953694130}
+  - {fileID: 1591171971}
+  - {fileID: 1450597034}
+  - {fileID: 1582882727}
+  - {fileID: 324970232}
+  - {fileID: 1895766728}
+  - {fileID: 107075837}
+  - {fileID: 315355163}
+  - {fileID: 1124337888}
+  - {fileID: 553308750}
+  - {fileID: 1314606252}
+  - {fileID: 808199772}
+  - {fileID: 1585951567}
+  - {fileID: 156037238}
+  - {fileID: 1898050817}
+  - {fileID: 655965071}
   m_Father: {fileID: 1916379894}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1015869330
 CapsuleCollider:
@@ -7282,10 +7423,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1015869332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7587,7 +7729,7 @@ GameObject:
   - component: {fileID: 1057392438}
   - component: {fileID: 1057392437}
   - component: {fileID: 1057392436}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -7602,12 +7744,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1057392434}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8660254, y: 0, z: -1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.041452, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 35
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1057392436
 CapsuleCollider:
@@ -7636,10 +7778,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1057392438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7880,7 +8023,7 @@ GameObject:
   - component: {fileID: 1122640660}
   - component: {fileID: 1122640659}
   - component: {fileID: 1122640658}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -7895,12 +8038,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122640656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7320508, y: 0, z: -6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 3.4641016, y: 0, z: -4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 19
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1122640658
 CapsuleCollider:
@@ -7929,10 +8072,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1122640660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8010,7 +8154,7 @@ GameObject:
   - component: {fileID: 1124337891}
   - component: {fileID: 1124337890}
   - component: {fileID: 1124337889}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -8025,12 +8169,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1124337887}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.928203, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 9.237604, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 83
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 82
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1124337889
 CapsuleCollider:
@@ -8059,10 +8203,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1124337891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8140,7 +8285,7 @@ GameObject:
   - component: {fileID: 1143131992}
   - component: {fileID: 1143131991}
   - component: {fileID: 1143131990}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -8155,12 +8300,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143131988}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4641016, y: 0, z: 3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.928203, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 73
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 72
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1143131990
 CapsuleCollider:
@@ -8189,10 +8334,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1143131992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8270,7 +8416,7 @@ GameObject:
   - component: {fileID: 1165872090}
   - component: {fileID: 1165872089}
   - component: {fileID: 1165872088}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -8285,12 +8431,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165872086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.0621777, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 0.5773503, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 14
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1165872088
 CapsuleCollider:
@@ -8319,10 +8465,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1165872090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8400,7 +8547,7 @@ GameObject:
   - component: {fileID: 1216040615}
   - component: {fileID: 1216040614}
   - component: {fileID: 1216040613}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -8415,12 +8562,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216040611}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7320508, y: 0, z: 6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 3.4641016, y: 0, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 52
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 51
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1216040613
 CapsuleCollider:
@@ -8449,10 +8596,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1216040615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8530,7 +8678,7 @@ GameObject:
   - component: {fileID: 1230278576}
   - component: {fileID: 1230278575}
   - component: {fileID: 1230278574}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -8545,12 +8693,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1230278572}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8660254, y: 0, z: -4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.1961527, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 37
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1230278574
 CapsuleCollider:
@@ -8579,10 +8727,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1230278576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8660,7 +8809,7 @@ GameObject:
   - component: {fileID: 1248560981}
   - component: {fileID: 1248560980}
   - component: {fileID: 1248560979}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -8675,12 +8824,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248560977}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.330127, y: 0, z: 7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.7320509, y: 0, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 40
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 39
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1248560979
 CapsuleCollider:
@@ -8709,10 +8858,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1248560981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8790,7 +8940,7 @@ GameObject:
   - component: {fileID: 1255556861}
   - component: {fileID: 1255556860}
   - component: {fileID: 1255556859}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -8805,11 +8955,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255556857}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.196152, y: 0, z: -6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.1547006, y: 0, z: -4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
+  m_Father: {fileID: 1015869329}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1255556859
@@ -8839,10 +8989,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1255556861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8920,7 +9071,7 @@ GameObject:
   - component: {fileID: 1289130129}
   - component: {fileID: 1289130128}
   - component: {fileID: 1289130127}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -8935,11 +9086,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289130125}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.928203, y: 0, z: -3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
+  m_Father: {fileID: 1015869329}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1289130127
@@ -8969,10 +9120,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1289130129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9050,7 +9202,7 @@ GameObject:
   - component: {fileID: 1289426317}
   - component: {fileID: 1289426316}
   - component: {fileID: 1289426315}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -9065,12 +9217,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289426313}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.196152, y: 0, z: -3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 8.082904, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 68
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 67
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1289426315
 CapsuleCollider:
@@ -9099,10 +9251,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1289426317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9180,7 +9333,7 @@ GameObject:
   - component: {fileID: 1298002085}
   - component: {fileID: 1298002084}
   - component: {fileID: 1298002083}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -9195,11 +9348,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298002081}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.7942286, y: 0, z: -1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: -0.5773503, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
+  m_Father: {fileID: 1015869329}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1298002083
@@ -9229,10 +9382,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1298002085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9310,7 +9464,7 @@ GameObject:
   - component: {fileID: 1314606255}
   - component: {fileID: 1314606254}
   - component: {fileID: 1314606253}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -9325,12 +9479,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314606251}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.330127, y: 0, z: 7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 7.5055532, y: 0, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 85
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 84
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1314606253
 CapsuleCollider:
@@ -9359,10 +9513,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1314606255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9603,7 +9758,7 @@ GameObject:
   - component: {fileID: 1390940841}
   - component: {fileID: 1390940840}
   - component: {fileID: 1390940839}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -9618,12 +9773,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390940837}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8660254, y: 0, z: 7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.1961527, y: 0, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 70
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 69
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1390940839
 CapsuleCollider:
@@ -9652,10 +9807,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1390940841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9733,7 +9889,7 @@ GameObject:
   - component: {fileID: 1412774304}
   - component: {fileID: 1412774303}
   - component: {fileID: 1412774302}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -9748,12 +9904,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412774300}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.196152, y: 0, z: -3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.1547006, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 9
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1412774302
 CapsuleCollider:
@@ -9782,10 +9938,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1412774304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9863,7 +10020,7 @@ GameObject:
   - component: {fileID: 1450597037}
   - component: {fileID: 1450597036}
   - component: {fileID: 1450597035}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -9878,12 +10035,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450597033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.928203, y: 0, z: -3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 9.237604, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 77
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 76
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1450597035
 CapsuleCollider:
@@ -9912,10 +10069,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1450597037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10156,7 +10314,7 @@ GameObject:
   - component: {fileID: 1480285406}
   - component: {fileID: 1480285405}
   - component: {fileID: 1480285404}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -10171,12 +10329,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480285402}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8660254, y: 0, z: -7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.1961527, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 29
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1480285404
 CapsuleCollider:
@@ -10205,10 +10363,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1480285406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10286,7 +10445,7 @@ GameObject:
   - component: {fileID: 1498503458}
   - component: {fileID: 1498503457}
   - component: {fileID: 1498503456}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -10301,12 +10460,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498503454}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7320508, y: 0, z: 6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.7735023, y: 0, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 71
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 70
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1498503456
 CapsuleCollider:
@@ -10335,10 +10494,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1498503458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10416,7 +10576,7 @@ GameObject:
   - component: {fileID: 1502772209}
   - component: {fileID: 1502772208}
   - component: {fileID: 1502772207}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -10431,12 +10591,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1502772205}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.598076, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.8867512, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 33
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1502772207
 CapsuleCollider:
@@ -10465,10 +10625,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1502772209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10709,7 +10870,7 @@ GameObject:
   - component: {fileID: 1582882730}
   - component: {fileID: 1582882729}
   - component: {fileID: 1582882728}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -10724,12 +10885,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582882726}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.598076, y: 0, z: 7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.350853, y: 0, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 78
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 77
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1582882728
 CapsuleCollider:
@@ -10758,10 +10919,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1582882730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10839,7 +11001,7 @@ GameObject:
   - component: {fileID: 1585951570}
   - component: {fileID: 1585951569}
   - component: {fileID: 1585951568}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -10854,12 +11016,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585951566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.0621777, y: 0, z: 4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 8.6602545, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 87
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 86
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1585951568
 CapsuleCollider:
@@ -10888,10 +11050,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1585951570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10969,7 +11132,7 @@ GameObject:
   - component: {fileID: 1591171974}
   - component: {fileID: 1591171973}
   - component: {fileID: 1591171972}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -10984,12 +11147,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1591171970}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.0621777, y: 0, z: -1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 8.6602545, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 76
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 75
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1591171972
 CapsuleCollider:
@@ -11018,10 +11181,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1591171974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11099,7 +11263,7 @@ GameObject:
   - component: {fileID: 1595132124}
   - component: {fileID: 1595132123}
   - component: {fileID: 1595132122}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -11114,12 +11278,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1595132120}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.618802, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 36
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1595132122
 CapsuleCollider:
@@ -11148,10 +11312,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1595132124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11229,7 +11394,7 @@ GameObject:
   - component: {fileID: 1622444376}
   - component: {fileID: 1622444375}
   - component: {fileID: 1622444374}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -11244,12 +11409,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622444372}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.618802, y: 0, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 62
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 61
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1622444374
 CapsuleCollider:
@@ -11278,10 +11443,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1622444376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11359,7 +11525,7 @@ GameObject:
   - component: {fileID: 1660062968}
   - component: {fileID: 1660062967}
   - component: {fileID: 1660062966}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -11374,12 +11540,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1660062964}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.598076, y: 0, z: 4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.8867512, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 42
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 41
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1660062966
 CapsuleCollider:
@@ -11408,10 +11574,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1660062968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11564,7 +11731,7 @@ GameObject:
   - component: {fileID: 1665089325}
   - component: {fileID: 1665089324}
   - component: {fileID: 1665089323}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -11579,12 +11746,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1665089321}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.330127, y: 0, z: -4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 7.5055532, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 59
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 58
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1665089323
 CapsuleCollider:
@@ -11613,10 +11780,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1665089325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11694,7 +11862,7 @@ GameObject:
   - component: {fileID: 1716893839}
   - component: {fileID: 1716893838}
   - component: {fileID: 1716893837}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -11709,12 +11877,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716893835}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8660254, y: 0, z: 7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.041452, y: 0, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 61
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 60
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1716893837
 CapsuleCollider:
@@ -11743,10 +11911,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1716893839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11824,7 +11993,7 @@ GameObject:
   - component: {fileID: 1767119184}
   - component: {fileID: 1767119183}
   - component: {fileID: 1767119182}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -11839,12 +12008,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767119180}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7320508, y: 0, z: 3}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 3.4641016, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 43
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 42
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1767119182
 CapsuleCollider:
@@ -11873,10 +12042,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1767119184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11954,7 +12124,7 @@ GameObject:
   - component: {fileID: 1814109072}
   - component: {fileID: 1814109071}
   - component: {fileID: 1814109070}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -11969,12 +12139,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814109068}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.598076, y: 0, z: -4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.350853, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 48
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 47
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1814109070
 CapsuleCollider:
@@ -12003,10 +12173,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1814109072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12084,7 +12255,7 @@ GameObject:
   - component: {fileID: 1826591148}
   - component: {fileID: 1826591147}
   - component: {fileID: 1826591146}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -12099,12 +12270,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826591144}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.598076, y: 0, z: -1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.350853, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 57
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 56
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1826591146
 CapsuleCollider:
@@ -12133,10 +12304,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1826591148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12214,7 +12386,7 @@ GameObject:
   - component: {fileID: 1838205375}
   - component: {fileID: 1838205374}
   - component: {fileID: 1838205373}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -12229,12 +12401,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838205371}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.196152, y: 0, z: -6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 8.082904, y: 0, z: -4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 60
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 59
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1838205373
 CapsuleCollider:
@@ -12263,10 +12435,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1838205375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12344,7 +12517,7 @@ GameObject:
   - component: {fileID: 1838760334}
   - component: {fileID: 1838760333}
   - component: {fileID: 1838760332}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -12359,12 +12532,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838760330}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.330127, y: 0, z: -1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.7320509, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 16
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1838760332
 CapsuleCollider:
@@ -12393,10 +12566,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1838760334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12474,7 +12648,7 @@ GameObject:
   - component: {fileID: 1878381659}
   - component: {fileID: 1878381658}
   - component: {fileID: 1878381657}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -12489,12 +12663,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878381655}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8660254, y: 0, z: -7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.041452, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 20
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1878381657
 CapsuleCollider:
@@ -12523,10 +12697,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1878381659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12604,7 +12779,7 @@ GameObject:
   - component: {fileID: 1895766731}
   - component: {fileID: 1895766730}
   - component: {fileID: 1895766729}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -12619,12 +12794,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895766727}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.330127, y: 0, z: 4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 7.5055532, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 80
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 79
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1895766729
 CapsuleCollider:
@@ -12653,10 +12828,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1895766731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12734,7 +12910,7 @@ GameObject:
   - component: {fileID: 1898050820}
   - component: {fileID: 1898050819}
   - component: {fileID: 1898050818}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -12749,12 +12925,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1898050816}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.7942286, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 9.814955, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 89
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 88
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1898050818
 CapsuleCollider:
@@ -12783,10 +12959,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1898050820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12864,7 +13041,7 @@ GameObject:
   - component: {fileID: 1912405131}
   - component: {fileID: 1912405130}
   - component: {fileID: 1912405129}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -12879,12 +13056,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912405127}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.618802, y: 0, z: -4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 28
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1912405129
 CapsuleCollider:
@@ -12913,10 +13090,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1912405131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13047,6 +13225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 7055767354360999130, guid: 2b4c0590199488d4fae5ab62e5bca496,
     type: 3}
+  objects: []
   range: 5
 --- !u!4 &1916379894
 Transform:
@@ -13060,97 +13239,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 902071934}
-  - {fileID: 1298002082}
-  - {fileID: 1289130126}
-  - {fileID: 301842525}
-  - {fileID: 1255556858}
-  - {fileID: 122739526}
-  - {fileID: 2052387915}
   - {fileID: 1015869329}
-  - {fileID: 335267345}
-  - {fileID: 1412774301}
-  - {fileID: 550296154}
-  - {fileID: 189039517}
-  - {fileID: 896421111}
-  - {fileID: 308070951}
-  - {fileID: 1165872087}
-  - {fileID: 2121801099}
-  - {fileID: 1838760331}
-  - {fileID: 747601697}
-  - {fileID: 285558645}
-  - {fileID: 1122640657}
-  - {fileID: 1878381656}
-  - {fileID: 2140685818}
-  - {fileID: 259758314}
-  - {fileID: 120934626}
-  - {fileID: 341869487}
-  - {fileID: 40787873}
-  - {fileID: 11603681}
-  - {fileID: 1929131861}
-  - {fileID: 1912405128}
-  - {fileID: 1480285403}
-  - {fileID: 314310772}
-  - {fileID: 322045499}
-  - {fileID: 411446544}
-  - {fileID: 1502772206}
-  - {fileID: 886487861}
-  - {fileID: 1057392435}
-  - {fileID: 1595132121}
-  - {fileID: 1230278573}
-  - {fileID: 1969209495}
-  - {fileID: 54290730}
-  - {fileID: 1248560978}
-  - {fileID: 449105512}
-  - {fileID: 1660062965}
-  - {fileID: 1767119181}
-  - {fileID: 2073394508}
-  - {fileID: 529328206}
-  - {fileID: 197135784}
-  - {fileID: 1012256974}
-  - {fileID: 1814109069}
-  - {fileID: 2126335151}
-  - {fileID: 576890889}
-  - {fileID: 2054507064}
-  - {fileID: 1216040612}
-  - {fileID: 98253594}
-  - {fileID: 354003652}
-  - {fileID: 498458923}
-  - {fileID: 124342426}
-  - {fileID: 1826591145}
-  - {fileID: 663090228}
-  - {fileID: 1665089322}
-  - {fileID: 1838205372}
-  - {fileID: 1716893836}
-  - {fileID: 1622444373}
-  - {fileID: 510794347}
-  - {fileID: 143686602}
-  - {fileID: 485708420}
-  - {fileID: 226392265}
-  - {fileID: 529611942}
-  - {fileID: 1289426314}
-  - {fileID: 14827460}
-  - {fileID: 1390940838}
-  - {fileID: 1498503455}
-  - {fileID: 541951770}
-  - {fileID: 1143131989}
-  - {fileID: 543517412}
-  - {fileID: 953694130}
-  - {fileID: 1591171971}
-  - {fileID: 1450597034}
-  - {fileID: 1582882727}
-  - {fileID: 324970232}
-  - {fileID: 1895766728}
-  - {fileID: 107075837}
-  - {fileID: 315355163}
-  - {fileID: 1124337888}
-  - {fileID: 553308750}
-  - {fileID: 1314606252}
-  - {fileID: 808199772}
-  - {fileID: 1585951567}
-  - {fileID: 156037238}
-  - {fileID: 1898050817}
-  - {fileID: 655965071}
   - {fileID: 653147725}
   - {fileID: 1663268576}
   m_Father: {fileID: 0}
@@ -13171,6 +13260,7 @@ MonoBehaviour:
   tileSystem: {fileID: 0}
   turnSystem: {fileID: 0}
   unitSystem: {fileID: 0}
+  mapState: 0
 --- !u!1 &1919371912
 GameObject:
   m_ObjectHideFlags: 0
@@ -13348,7 +13438,7 @@ GameObject:
   - component: {fileID: 1929131864}
   - component: {fileID: 1929131863}
   - component: {fileID: 1929131862}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -13363,12 +13453,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929131860}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8660254, y: 0, z: -4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.041452, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 27
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1929131862
 CapsuleCollider:
@@ -13397,10 +13487,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1929131864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13478,7 +13569,7 @@ GameObject:
   - component: {fileID: 1969209498}
   - component: {fileID: 1969209497}
   - component: {fileID: 1969209496}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -13493,12 +13584,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969209494}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7320508, y: 0, z: -6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 5.7735023, y: 0, z: -4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 38
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1969209496
 CapsuleCollider:
@@ -13527,10 +13618,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &1969209498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13783,7 +13875,7 @@ GameObject:
   - component: {fileID: 2052387918}
   - component: {fileID: 2052387917}
   - component: {fileID: 2052387916}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -13798,11 +13890,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052387914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.7942286, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: -0.5773503, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
+  m_Father: {fileID: 1015869329}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2052387916
@@ -13832,10 +13924,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &2052387918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13913,7 +14006,7 @@ GameObject:
   - component: {fileID: 2054507067}
   - component: {fileID: 2054507066}
   - component: {fileID: 2054507065}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -13928,12 +14021,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2054507063}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.598076, y: 0, z: 7.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 2.8867512, y: 0, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 51
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 50
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2054507065
 CapsuleCollider:
@@ -13962,10 +14055,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &2054507067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14043,7 +14137,7 @@ GameObject:
   - component: {fileID: 2073394511}
   - component: {fileID: 2073394510}
   - component: {fileID: 2073394509}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -14058,12 +14152,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073394507}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8660254, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 4.041452, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 44
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 43
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2073394509
 CapsuleCollider:
@@ -14092,10 +14186,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &2073394511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14173,7 +14268,7 @@ GameObject:
   - component: {fileID: 2121801102}
   - component: {fileID: 2121801101}
   - component: {fileID: 2121801100}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -14188,12 +14283,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121801098}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.196152, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 1.1547006, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 15
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2121801100
 CapsuleCollider:
@@ -14222,10 +14317,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &2121801102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14303,7 +14399,7 @@ GameObject:
   - component: {fileID: 2126335154}
   - component: {fileID: 2126335153}
   - component: {fileID: 2126335152}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -14318,12 +14414,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126335150}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4641016, y: 0, z: -6}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 6.928203, y: 0, z: -4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 49
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 48
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2126335152
 CapsuleCollider:
@@ -14352,10 +14448,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &2126335154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14433,7 +14530,7 @@ GameObject:
   - component: {fileID: 2140685821}
   - component: {fileID: 2140685820}
   - component: {fileID: 2140685819}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile(Clone)
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -14448,12 +14545,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140685817}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.0621777, y: 0, z: 4.5}
-  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
+  m_LocalPosition: {x: 0.5773503, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1916379894}
-  m_RootOrder: 21
+  m_Father: {fileID: 1015869329}
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2140685819
 CapsuleCollider:
@@ -14482,10 +14579,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
-  walkable: 0
-  visible: 0
-  rayThroughable: 0
+  walkable: 1
+  visible: 1
+  rayThroughable: 1
   _inSight: 0
+  objects: []
 --- !u!114 &2140685821
 MonoBehaviour:
   m_ObjectHideFlags: 0

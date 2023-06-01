@@ -45,7 +45,7 @@ public class AttackAction : BaseAction
         if (_target == null)
         {
 #if UNITY_EDITOR
-            Debug.Log("There is no tile. attack failed");
+            Debug.Log("There is no target. attack failed");
 #endif
             return false;
         }

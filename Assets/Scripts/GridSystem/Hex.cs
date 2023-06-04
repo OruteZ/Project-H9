@@ -114,7 +114,7 @@ public static class Hex
     /// <param name="range">직선거리</param>
     /// <param name="center">중심점의 Hex좌표</param>
     /// <returns>범위 내부 Hex좌표들의 List</returns>
-    public static List<Vector3Int> GetGridsWithRange(int range, Vector3Int center)
+    public static List<Vector3Int> GetCircleGridList(int range, Vector3Int center)
     {
         var results = new List<Vector3Int>();
         for (var x = -range; x <= range; x++)
@@ -125,6 +125,28 @@ public static class Hex
                 results.Add(center + new Vector3Int(x, y, z));
             }
         }
+        return results;
+    }
+
+    /// <summary>
+    /// 가로 세로가 주어진 직사각형 모양의 Grid List를 반환합니다.
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns></returns>
+    public static List<Vector3Int> GetSquareGridList(int width, int height)
+    {
+        var results = new List<Vector3Int>();
+        
+        for (int h = 0; h < height; h++)
+        {
+            int start = -(h / 2);
+            for (int w = start; w < start + width; w++)
+            {
+                results.Add(new Vector3Int(w, h, -(w + h)));
+            }
+        }
+
         return results;
     }
 

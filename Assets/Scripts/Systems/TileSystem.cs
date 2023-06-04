@@ -16,6 +16,8 @@ public class TileSystem : MonoBehaviour
     private Dictionary<Vector3Int, Tile> _tiles;
     public List<TileObject> objects;
 
+    public GameObject map;
+
     private void Awake()
     {
         _tiles = new Dictionary<Vector3Int, Tile>();
@@ -133,7 +135,7 @@ public class TileSystem : MonoBehaviour
 
     public IEnumerable<Tile> GetTilesInRange(Vector3Int start, int range)
     {
-        var list = Hex.GetGridsWithRange(range, start);
+        var list = Hex.GetCircleGridList(range, start);
         var ret = new List<Tile>(list.Count);
         ret.AddRange(list.Select(GetTile));
 
@@ -200,24 +202,22 @@ public class TileSystem : MonoBehaviour
     /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
     public bool RayCast(Vector3Int start, Vector3Int target)
     { 
-        var line1 = Hex.LineDraw(start, target);
+        var line1 = Hex.LineDraw (start, target);
         var line2 = Hex.LineDraw_(start, target);
 
         bool result = true;
-        Tile ret1, ret2;
-        
+
         for (int i = 0; i < line1.Count; i++)
         {
-            ret1 = GetTile(line1[i]);
-            ret2 = GetTile(line2[i]);
-            if (ret1 == null && ret2 == null) continue;
-            if (!ret1.rayThroughable && !ret2.rayThroughable)
-            {
-                result = false;
-            }
+            var ret1 = GetTile(line1[i]);
+            var ret2 = GetTile(line2[i]);
+            if (ret1 is null || ret2 is null) continue;
+            if (ret1.rayThroughable || ret2.rayThroughable) continue;
+
+            return false;
         }
 
-        return result;
+        return true;
     }
     
     /// <summary>
@@ -231,33 +231,53 @@ public class TileSystem : MonoBehaviour
         var line1 = Hex.LineDraw(start, target);
         var line2 = Hex.LineDraw_(start, target);
 
-        var result = true;
-
         for (int i = 0; i < line1.Count - 1; i++)
         {
             var ret1 = GetTile(line1[i]);
             var ret2 = GetTile(line2[i]);
-            if (ret1 == null && ret2 == null) continue;
-            if (!ret1.visible && !ret2.visible)
-            {
-                result = false;
-            }
+            if (ret1 is null || ret2 is null) continue;
+            if (ret1.visible || ret2.visible) continue;
+            return false;
         }
 
-        return result;
+        return true;
     }
     
     //demo code : 간단한 맵 생성용
-    [Header("Creating Demo World Inspector")]
+    [Header("Hex World Inspector")]
     public int range;
+
+    [Header("Square World Inspector")] 
+    public int width;
+    public int height;
     
-    [ContextMenu("Create World")]
+    [ContextMenu("Create Hex World")]
     public void CreateDemoWorld()
     {
-        var positions = Hex.GetGridsWithRange(range, Hex.zero);
+        var positions = Hex.GetCircleGridList(range, Hex.zero);
+        Debug.Log(positions.Count);
         foreach (var pos in positions)
         {
-            var tile = Instantiate(tilePrefab, transform).GetComponent<HexTransform>();
+            var tile = Instantiate(tilePrefab, map.transform).GetComponent<HexTransform>();
+            tile.position = pos;
+            // if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
+            //     isWall = false;
+            //
+            // isWall = false;
+            // var tile = AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
+            //
+            // TileEffectManager.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
+        }
+    }
+
+    [ContextMenu("Create Rect World")]
+    public void CreateRectWorld()
+    {
+        var positions = Hex.GetSquareGridList(width, height);
+        Debug.Log(positions.Count);
+        foreach (var pos in positions)
+        {
+            var tile = Instantiate(tilePrefab, map.transform).GetComponent<HexTransform>();
             tile.position = pos;
             // if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
             //     isWall = false;
@@ -282,11 +302,11 @@ public class TileSystem : MonoBehaviour
     [ContextMenu("Remove Demo World")]
     private void RemoveDemoWorld()
     {
-        foreach (var tile in _tiles)
+        var tiles = GetComponentsInChildren<Tile>();
+        foreach (var tile in tiles)
         {
-            DestroyImmediate(tile.Value.gameObject);
+            DestroyImmediate(tile.gameObject);
         }
-        _tiles.Clear();
     }
 
     // [Header("World to combat Test")] 

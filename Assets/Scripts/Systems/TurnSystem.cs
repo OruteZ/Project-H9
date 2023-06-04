@@ -21,15 +21,15 @@ public class TurnSystem : MonoBehaviour
 
     private void Update()
     {
-        switch (_curState)
-        {
-            case TurnState.PassedInitiative:
-            case TurnState.NotStarted:
-                return;
-            case TurnState.GetInitiative:
-                StartTurn();
-                break;
-        }
+        // switch (_curState)
+        // {
+        //     case TurnState.PassedInitiative:
+        //     case TurnState.NotStarted:
+        //         return;
+        //     case TurnState.GetInitiative:
+        //         StartTurn();
+        //         break;
+        // }
     }
 
     private void StartGame()
@@ -52,6 +52,8 @@ public class TurnSystem : MonoBehaviour
 
         Debug.Log("Finish Turn Call");
         _curState = TurnState.GetInitiative;
+
+        StartTurn();
     }
 
     private void StartTurn()

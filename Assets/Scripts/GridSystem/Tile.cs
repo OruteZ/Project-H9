@@ -58,16 +58,13 @@ public class Tile : MonoBehaviour
         set
         {
             _inSight = value;
-            if (value)
-            {
-                foreach (var obj in objects)
-                {
-                    obj.isVisible = true;
-                }
+            foreach (var obj in objects)
+            { 
+                obj.isVisible = value;
             }
             
             var unit = CombatSystem.instance.unitSystem.GetUnit(position);
-            if (unit != null) unit.isVisible = value;
+            if (unit is not null) unit.isVisible = value;
         }
     }
 

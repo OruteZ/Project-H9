@@ -7,6 +7,7 @@ using UnityEngine;
 public class TileObject : MonoBehaviour
 {
     public HexTransform hexTransform;
+    public MeshRenderer meshRenderer;
 
     public Vector3Int position
     {
@@ -15,10 +16,14 @@ public class TileObject : MonoBehaviour
     } 
     protected Tile tile;
 
-    public void Init()
+    private void Awake()
     {
         hexTransform = GetComponent<HexTransform>();
-        
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
+    
+    public void Init()
+    {
         tile = CombatSystem.instance.tileSystem.GetTile(position);
         if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
         
@@ -43,6 +48,15 @@ public class TileObject : MonoBehaviour
         tileObj.position = pos;
     }
 
-    public bool isVisible;
+    [SerializeField] private bool vision;
+    public bool isVisible
+    {
+        get => meshRenderer.enabled;
+        set
+        {
+            meshRenderer.enabled = value;
+            vision = value;
+        }
+    }
 
 }

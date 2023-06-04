@@ -19,7 +19,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     protected Unit unit;
     protected bool isActive;
     protected Action onActionComplete;
-    public void Setup(Unit unit)
+    public void SetUp(Unit unit)
     {
         this.unit = unit;
     }

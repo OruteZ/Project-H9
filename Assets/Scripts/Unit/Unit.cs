@@ -79,7 +79,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         foreach (IUnitAction action in _unitActionArray)
         {
-            action.Setup(this);
+            action.SetUp(this);
         }
     }
     
@@ -146,7 +146,6 @@ public abstract class Unit : MonoBehaviour, IUnit
         if (activeUnitAction.CanExecute() is not true) return false;
         
         activeUnitAction.Execute(onActionFinish);
-
         return true;
     }
     

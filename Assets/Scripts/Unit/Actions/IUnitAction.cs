@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface IUnitAction {
     ActionType GetActionType();
-    void Setup(Unit unit);
+    void SetUp(Unit unit);
     Unit GetUnit();
     bool IsActive();
     void SetTarget(Vector3Int targetPos);

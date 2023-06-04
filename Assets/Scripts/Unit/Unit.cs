@@ -15,7 +15,7 @@ public enum UnitType
 }
 
 [RequireComponent(typeof(HexTransform))]
-public abstract class Unit : MonoBehaviour
+public abstract class Unit : MonoBehaviour, IUnit
 {
     protected static TurnSystem turnSystem => CombatSystem.instance.turnSystem;
     protected static UnitSystem unitSystem => CombatSystem.instance.unitSystem;
@@ -28,8 +28,7 @@ public abstract class Unit : MonoBehaviour
     public MeshRenderer visual;
 
     [Header("Status")] 
-    public UnitStat stat;
-    
+    [SerializeField] protected UnitStat stat;
     
     [HideInInspector] public UnityEvent<IUnitAction> onActionCompleted;
     [HideInInspector] public UnityEvent onBusyChanged;
@@ -39,20 +38,8 @@ public abstract class Unit : MonoBehaviour
     [HideInInspector] public UnityEvent<Unit, int> onHit;
 
     private IUnitAction[] _unitActionArray; // All Unit Actions attached to this Unit
-    public IUnitAction activeUnitAction; // Currently active action
+    protected IUnitAction activeUnitAction; // Currently active action
     private bool _isBusy;
-    public bool isBusy
-    {
-        get => _isBusy;
-        set
-        {
-            if (_isBusy != value)
-            {
-                _isBusy = value;
-                onBusyChanged.Invoke();
-            }
-        }
-    }
     
     public string unitName;
     public int currentActionPoint;
@@ -78,10 +65,10 @@ public abstract class Unit : MonoBehaviour
         unitName = newName;
         stat = unitStat;
         WeaponData newWeaponData = WeaponManager.GetWeaponData(weaponIndex);
-        weapon = Weapon.Clone(newWeaponData, unit : this);
+        weapon = Weapon.Clone(newWeaponData, owner : this);
     }   
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         hexTransform = GetComponent<HexTransform>();
         visual = GetComponent<MeshRenderer>();
@@ -114,15 +101,58 @@ public abstract class Unit : MonoBehaviour
         return _unitActionArray;
     }
 
+    public UnitStat GetStat()
+    {
+        return stat;
+    }
+
     public bool isVisible
     {
         get => visual.enabled;
         set => visual.enabled = value;
     }
 
-    public bool IsMyTurn()
+    protected bool IsMyTurn()
     {
         return turnSystem.turnOwner == this;
+    }
+
+    protected void SetBusy()
+    {
+        bool hasChanged = _isBusy is false;
+        _isBusy = true;
+        
+        if(hasChanged) onBusyChanged.Invoke();
+    }
+
+    protected void ClearBusy()
+    {
+        bool hasChanged = _isBusy is false;
+        _isBusy = false;
+        
+        if(hasChanged) onBusyChanged.Invoke();
+    }
+
+    protected bool IsBusy()
+    {
+        return _isBusy;
+    }
+
+    protected bool TryExecuteUnitAction(Vector3Int targetPosition, Action onActionFinish)
+    {
+        activeUnitAction.SetTarget(targetPosition);
+
+        if (activeUnitAction.GetCost() > currentActionPoint) return false;
+        if (activeUnitAction.CanExecute() is not true) return false;
+        
+        activeUnitAction.Execute(onActionFinish);
+
+        return true;
+    }
+    
+    public IUnitAction GetSelectedAction()
+    {
+        return activeUnitAction;
     }
 }
 

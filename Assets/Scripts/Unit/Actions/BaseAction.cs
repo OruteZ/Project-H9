@@ -7,8 +7,10 @@ using UnityEngine.Events;
 public abstract class BaseAction : MonoBehaviour, IUnitAction
 {
     public abstract ActionType GetActionType();
-    public abstract bool CanExecute(Vector3Int target);
-    public abstract void Execute(Vector3Int targetPos, Action _onActionComplete);
+    public abstract bool CanExecute();
+    public abstract void Execute(Action onActionComplete);
+    public abstract void SetTarget(Vector3Int targetPos);
+
     public abstract int GetCost();
 
     public UnityEvent onActionStarted;
@@ -27,7 +29,6 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     protected void StartAction(Action onActionComplete)
     {
         this.onActionComplete = onActionComplete;
-        unit.activeUnitAction = this;
         isActive = true;
         
         onActionStarted.Invoke();

@@ -79,7 +79,7 @@ public class TurnSystem : MonoBehaviour
             var unit = units[i - 1];
             
             //누적합 생성
-            values.Add(unit.stat.speed);
+            values.Add(unit.GetStat().speed);
             total += values[i];
             values[i] += values[i - 1];
 
@@ -90,7 +90,7 @@ public class TurnSystem : MonoBehaviour
             Debug.Log(v);
         }
 
-        int result = UnityEngine.Random.Range(0, total);
+        int result = Random.Range(0, total);
         for (int i = 1; i < values.Count; i++)
         {
             if (values[i - 1] <= result && result < values[i])

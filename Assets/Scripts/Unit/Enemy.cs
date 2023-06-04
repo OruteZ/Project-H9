@@ -7,7 +7,7 @@ public class Enemy : Unit
 {
     private EnemyAI _ai;
 
-    protected void Awake()
+    protected override void Awake()
     {
         base.Awake();
         
@@ -21,25 +21,25 @@ public class Enemy : Unit
     
     public override void Updated()
     {
-        if (isBusy) return;
+        if (IsBusy()) return;
         if (!IsMyTurn()) return;
 
         activeUnitAction = _ai.SelectAction(out var target);
         
-        if (activeUnitAction.CanExecute(target.position) && currentActionPoint >= activeUnitAction.GetCost())
+        if (TryExecuteUnitAction(target, FinishAction))
         {
-            #if UNITY_EDITOR
-            Debug.Log("Active Action of " + gameObject + " = " + activeUnitAction.GetActionType());
-            #endif 
-            isBusy = true;
-            activeUnitAction.Execute(target.position, FinishAction);
+            SetBusy();
         }
-        
-        
-        if (currentActionPoint == 0)
-        {
-            turnSystem.EndTurn();
-        }
+
+        // activeUnitAction.SetTarget(target.position);
+        // if (activeUnitAction.CanExecute() && currentActionPoint >= activeUnitAction.GetCost())
+        // {
+        //     #if UNITY_EDITOR
+        //     Debug.Log("Active Action of " + gameObject + " = " + activeUnitAction.GetActionType());
+        //     #endif 
+        //     isBusy = true;
+        //     activeUnitAction.Execute(FinishAction);
+        // }
     }
 
     public override void StartTurn()
@@ -59,8 +59,13 @@ public class Enemy : Unit
     
     private void FinishAction()
     {
-        isBusy = false;
+        ClearBusy();
         currentActionPoint -= activeUnitAction.GetCost();
         onCostChanged.Invoke(currentActionPoint);
+        
+        if (currentActionPoint == 0)
+        {
+            turnSystem.EndTurn();
+        }
     }
 }

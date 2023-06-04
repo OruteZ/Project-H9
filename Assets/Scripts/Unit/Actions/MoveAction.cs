@@ -14,25 +14,31 @@ public class MoveAction : BaseAction
     public float rotationSpeed;
     public float moveSpeed;
 
+    private Vector3Int _startPosition;
+    private Vector3Int _destinationPosition;
+
     public override int GetCost()
     {
         return _currentPositionIndex < 0 ? 0 : _currentPositionIndex - 1;
     }
 
-    public override bool CanExecute(Vector3Int targetPos)
+    public override void SetTarget(Vector3Int targetPos)
     {
-        if (CombatSystem.instance.unitSystem.GetUnit(targetPos) != null) return false;
+        _startPosition = unit.position;
+        _destinationPosition = targetPos;
+    }
+
+    public override bool CanExecute()
+    {
+        if (CombatSystem.instance.unitSystem.GetUnit(_destinationPosition) != null) return false;
         
-        _path = CombatSystem.instance.tileSystem.FindPath(unit.position, targetPos, maxMoveDistance);
+        _path = CombatSystem.instance.tileSystem.FindPath(_startPosition, _destinationPosition, maxMoveDistance);
         if (_path == null)
         {
-            Debug.Log("impossible path");
             return false;
         }
-
         if (_path.Count <= 1)
         {
-            Debug.Log("제자리");
             return false;
         }
 
@@ -40,16 +46,15 @@ public class MoveAction : BaseAction
     }
 
     // ReSharper disable once InconsistentNaming
-    public override void Execute(Vector3Int targetPos, Action _onActionComplete)
+    public override void Execute(Action onActionComplete)
     {
-        StartAction(_onActionComplete);
+        StartAction(onActionComplete);
 
         //_path = unit.hexTransform.Map.FindPath(unit.Position, targetPos, _maxMoveDistance) as List<Vector3Int>;
         _currentPositionIndex = 1;  
         transform.forward =
             (Hex.Hex2World(_path[_currentPositionIndex].position)
-            - transform.position)
-            .normalized;
+            - transform.position).normalized;
     }
 
     private void Awake()
@@ -77,5 +82,10 @@ public class MoveAction : BaseAction
                 FinishAction();
             }
         }
+    }
+
+    private Tile GetNextTile()
+    {
+        return _path[_currentPositionIndex];
     }
 }

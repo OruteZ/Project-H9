@@ -20,8 +20,9 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
     }
-    public IUnitAction SelectAction(out Tile target)
+    public IUnitAction SelectAction(out Vector3Int targetPosition)
     {
+        Tile target;
         if (!IsPlayerInSight())
         {
             if (_enemy.position == _playerPosMemory)
@@ -29,6 +30,7 @@ public class EnemyAI : MonoBehaviour
                 Debug.LogError("어디를 가라는거야");
             }
             target = CombatSystem.instance.tileSystem.FindPath(_enemy.position, _playerPosMemory)[1];
+            targetPosition = target.position;
 
             return _enemy.GetAction<MoveAction>();
         }
@@ -37,10 +39,12 @@ public class EnemyAI : MonoBehaviour
         if (hitRate <= 0.5f)
         {
             target = CombatSystem.instance.tileSystem.FindPath(_enemy.position, _playerPosMemory)[1];
+            targetPosition = target.position;
             return _enemy.GetAction<MoveAction>();
         }
 
         target = CombatSystem.instance.tileSystem.GetTile(_playerPosMemory);
+        targetPosition = target.position;
         return _enemy.GetAction<AttackAction>();
     }
 

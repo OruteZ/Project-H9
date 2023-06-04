@@ -6,12 +6,7 @@ using UnityEngine.Events;
 
 public class Player : Unit
 {
-    
-    
     [HideInInspector] public UnityEvent onSelectedChanged;
-
-    //[HideInInspector] public Tile target;
-
     public override void SetUp(string newName, UnitStat unitStat, int weaponIndex)
     {
         base.SetUp(newName, unitStat, weaponIndex);
@@ -21,29 +16,19 @@ public class Player : Unit
     }
     public override void Updated()
     {
-        if (isBusy) return;
+        if (IsBusy()) return;
         if (!IsMyTurn()) return;
+        
+        //todo : UIManager.Instance.IsMouseOverUI : return;
         
         // if (Input.GetKeyDown(KeyCode.A)) SelectAction(GetAction<MoveAction>());
         // if (Input.GetKeyDown(KeyCode.D)) SelectAction(GetAction<AttackAction>());
 
         
-        if (Input.GetMouseButtonDown(0)) //todo : UIManager.Instance.IsMouseOverUI;
+        if (Input.GetMouseButtonDown(0) && TryGetMouseOverTilePos(out var targetPos)) 
         {
-            var target = GetMouseOverTile();
-            if (target == null)
-            {
-#if true
-                Debug.Log("Target tile is null");
-#endif
-                return;
-            }
-
-            if (activeUnitAction.CanExecute(target.position) && currentActionPoint >= activeUnitAction.GetCost())
-            {
-                SetBusy();
-                activeUnitAction.Execute(target.position, FinishAction);
-            }
+            var actionSuccess = TryExecuteUnitAction(targetPos, FinishAction);
+            if (actionSuccess) SetBusy();
         }   
     }
 
@@ -53,38 +38,21 @@ public class Player : Unit
         Debug.Log("Player Turn Started");
 #endif
         currentActionPoint = stat.actionPoint;
-
-        activeUnitAction = null;
         SelectAction(GetAction<MoveAction>());
         ReloadSight();
     }
-
+    
     public void SelectAction(IUnitAction action)
     {
 #if UNITY_EDITOR
         Debug.Log("Select Action : " + action);
 #endif
-        
         if (activeUnitAction == action) return;
 
         activeUnitAction = action;
         onSelectedChanged.Invoke();
     }
 
-    public IUnitAction GetSelectedAction()
-    {
-        return activeUnitAction;
-    }
-
-    private void SetBusy()
-    {
-        isBusy = true;
-    }
-
-    private void ClearBusy()
-    {
-        isBusy = false;
-    }
     private void FinishAction()
     {
         ClearBusy();
@@ -92,17 +60,23 @@ public class Player : Unit
         onCostChanged.Invoke(currentActionPoint);
     }
 
-    public Tile GetMouseOverTile()
+    // ReSharper disable Unity.PerformanceAnalysis
+    private static bool TryGetMouseOverTilePos(out Vector3Int pos)
     {
         RaycastHit hit; 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 100f ,layerMask : LayerMask.GetMask("Tile")))
         {
             var tile = hit.collider.GetComponent<Tile>();
-            if (tile.inSight) return tile;
+            if (tile.inSight)
+            {
+                pos = tile.position;
+                return true;
+            }
         }
 
-        return null;
+        pos = Vector3Int.zero;
+        return false;
     }
 
     private void ReloadSight()
@@ -123,7 +97,7 @@ public class Player : Unit
 
     private void OnAnyUnitMoved(Unit unit)
     {
-        if(unit != this)
+        if(unit is not Player)
         {
             unit.isVisible = tileSystem.VisionCast(position, unit.position) &&
                              Hex.Distance(hexTransform.position, unit.position) <= stat.sightRange;

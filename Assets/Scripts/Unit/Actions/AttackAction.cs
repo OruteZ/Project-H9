@@ -20,10 +20,10 @@ public class AttackAction : BaseAction
     private State _state;
     private float _stateTimer;
 
-    public override void Execute(Vector3Int targetPos, Action _onActionComplete)
+    public override void Execute(Action onActionComplete)
     {
         Debug.Log("Attack Action call");
-        StartAction(_onActionComplete);
+        StartAction(onActionComplete);
 
         _state = State.Aiming;
         _stateTimer = 1f;
@@ -34,39 +34,24 @@ public class AttackAction : BaseAction
         return 1;
     }
 
-    public override bool CanExecute(Vector3Int targetPos)
+    public override void SetTarget(Vector3Int targetPos)
     {
         _weapon = unit.weapon;
         _target = CombatSystem.instance.unitSystem.GetUnit(targetPos);
-        #if UNITY_EDITOR
         Debug.Log("Attack Target : " + _target);
-        #endif
+    }
 
-        if (_target == null)
-        {
-#if UNITY_EDITOR
-            Debug.Log("There is no target. attack failed");
-#endif
-            return false;
-        }
-
-//        if (Hex.Distance(unit.position, targetPos) > weapon.baseRange)
-//        {
-//#if UNITY_EDITOR
-//            Debug.Log("Target position is so far. attack failed");
-//#endif
-//            return false;
-//        }
-
-        if (!CombatSystem.instance.tileSystem.RayCast(unit.position, targetPos))
-        {
-#if UNITY_EDITOR
-            Debug.Log("There is wall between target and player. attack failed");
-#endif
-            return false;
-        }
-
+    public override bool CanExecute()
+    {
+        if (_target == null) return false;
+        if (IsThereWallBetweenUnitAnd(_target.position)) return false;
+        
         return true;
+    }
+
+    private bool IsThereWallBetweenUnitAnd(Vector3Int targetPos)
+    {
+        return !CombatSystem.instance.tileSystem.RayCast(unit.position, targetPos);
     }
 
     private void Update()

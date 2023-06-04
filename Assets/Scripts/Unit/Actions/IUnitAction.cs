@@ -8,9 +8,10 @@ public interface IUnitAction {
     void Setup(Unit unit);
     Unit GetUnit();
     bool IsActive();
-    bool CanExecute(Vector3Int target);
+    void SetTarget(Vector3Int targetPos);
+    bool CanExecute();
+    void Execute(Action onActionComplete);
     int GetCost();
-    void Execute(Vector3Int targetPos, Action _onActionComplete);
 }
 
 public enum ActionType {

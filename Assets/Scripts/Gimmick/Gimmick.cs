@@ -29,7 +29,8 @@ public class Gimmick
         return gimmickType switch
         {
             GimmickType.CriticalDoubleTab => new CriticalDoubleTab(),
-            _ => throw new ArgumentOutOfRangeException(nameof(gimmickType), gimmickType, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(gimmickType), gimmickType, 
+                $"There is no Gimmick that {gimmickType}")
         };
     }
 }

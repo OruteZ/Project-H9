@@ -21,13 +21,15 @@ public class TurnSystem : MonoBehaviour
 
     private void Update()
     {
-        if (_curState == TurnState.PassedInitiative) return;
-        if (_curState == TurnState.NotStarted) return;
-        if (_curState == TurnState.GetInitiative)
+        switch (_curState)
         {
-            StartTurn();
+            case TurnState.PassedInitiative:
+            case TurnState.NotStarted:
+                return;
+            case TurnState.GetInitiative:
+                StartTurn();
+                break;
         }
-        
     }
 
     private void StartGame()
@@ -39,6 +41,7 @@ public class TurnSystem : MonoBehaviour
             return;
         }
         #endif
+        
         _curState = TurnState.GetInitiative;
     }
 
@@ -47,7 +50,7 @@ public class TurnSystem : MonoBehaviour
         //todo : if combat has finished, End Combat Scene
         //else
 
-        Debug.Log("FinishTurn Call");
+        Debug.Log("Finish Turn Call");
         _curState = TurnState.GetInitiative;
     }
 
@@ -71,9 +74,8 @@ public class TurnSystem : MonoBehaviour
 
         int total = 0;
 
-        List<int> values = new List<int>();
-        values.Add(0);
-        
+        List<int> values = new List<int> { 0 };
+
         for(int i = 1; i < units.Count + 1; i++)
         {
             var unit = units[i - 1];

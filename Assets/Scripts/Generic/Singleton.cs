@@ -26,7 +26,7 @@ namespace Generic
             }
         }
 
-        protected void Awake()
+        protected virtual void Awake()
         {
 #if UNITY_EDITOR
             if (_instance != null)

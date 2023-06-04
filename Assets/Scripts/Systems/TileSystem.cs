@@ -118,7 +118,7 @@ public class TileSystem : MonoBehaviour
                     if (visited.Contains(next)) continue;
                     
                     var tile = GetTile(next);
-                    if (tile == null) continue;
+                    if (tile is null) continue;
                     if (!tile.walkable) continue;
                     
                     result.Add(GetTile(next));
@@ -164,7 +164,7 @@ public class TileSystem : MonoBehaviour
                 if (current.position == destination)
                 {
                     var result = new List<Tile>();
-                    while (current.from != null)
+                    while (current.from is not null)
                     {
                         result.Add(GetTile(current.position));
                         current = current.from;
@@ -180,7 +180,7 @@ public class TileSystem : MonoBehaviour
                     if (visited.Any(n => n == next)) continue;
                     
                     var tile = GetTile(next);
-                    if (tile == null) continue;
+                    if (tile is null) continue;
                     if (!tile.walkable) continue;
                     
                     container.Enqueue(new PathNode(next, from:current));

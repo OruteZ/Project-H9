@@ -30,9 +30,9 @@ public class MoveAction : BaseAction
 
     public override bool CanExecute()
     {
-        if (CombatSystem.instance.unitSystem.GetUnit(_destinationPosition) != null) return false;
+        if (MainSystem.instance.unitSystem.GetUnit(_destinationPosition) != null) return false;
         
-        _path = CombatSystem.instance.tileSystem.FindPath(_startPosition, _destinationPosition, maxMoveDistance);
+        _path = MainSystem.instance.tileSystem.FindPath(_startPosition, _destinationPosition, maxMoveDistance);
         if (_path == null)
         {
             return false;

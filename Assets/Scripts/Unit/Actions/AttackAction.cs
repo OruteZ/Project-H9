@@ -37,7 +37,7 @@ public class AttackAction : BaseAction
     public override void SetTarget(Vector3Int targetPos)
     {
         _weapon = unit.weapon;
-        _target = CombatSystem.instance.unitSystem.GetUnit(targetPos);
+        _target = MainSystem.instance.unitSystem.GetUnit(targetPos);
         Debug.Log("Attack Target : " + _target);
     }
 
@@ -51,7 +51,7 @@ public class AttackAction : BaseAction
 
     private bool IsThereWallBetweenUnitAnd(Vector3Int targetPos)
     {
-        return !CombatSystem.instance.tileSystem.RayCast(unit.position, targetPos);
+        return !MainSystem.instance.tileSystem.RayCast(unit.position, targetPos);
     }
 
     private void Update()

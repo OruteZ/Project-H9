@@ -63,7 +63,7 @@ public class Tile : MonoBehaviour
                 obj.isVisible = value;
             }
             
-            var unit = CombatSystem.instance.unitSystem.GetUnit(position);
+            var unit = MainSystem.instance.unitSystem.GetUnit(position);
             if (unit is not null) unit.isVisible = value;
         }
     }

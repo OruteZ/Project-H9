@@ -32,7 +32,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
     /// </summary>
     public static void ClearEffect()
     {
-        var tiles = CombatSystem.instance.tileSystem.GetAllTiles();
+        var tiles = MainSystem.instance.tileSystem.GetAllTiles();
         foreach (var tile in tiles) tile.effect = null;
     }
 

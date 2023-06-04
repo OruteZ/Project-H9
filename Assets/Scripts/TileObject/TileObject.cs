@@ -24,7 +24,7 @@ public class TileObject : MonoBehaviour
     
     public void Init()
     {
-        tile = CombatSystem.instance.tileSystem.GetTile(position);
+        tile = MainSystem.instance.tileSystem.GetTile(position);
         if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
         
         SetTile(tile);

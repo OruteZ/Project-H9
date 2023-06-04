@@ -7,7 +7,7 @@ public class EnemyAI : MonoBehaviour
     private HexTransform _hexTransform;
     private Enemy _enemy;
 
-    private Player player  => CombatSystem.instance.unitSystem.GetPlayer();
+    private Player player  => MainSystem.instance.unitSystem.GetPlayer();
 
     private Vector3Int _playerPosMemory;
 
@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
             {
                 Debug.LogError("어디를 가라는거야");
             }
-            target = CombatSystem.instance.tileSystem.FindPath(_enemy.position, _playerPosMemory)[1];
+            target = MainSystem.instance.tileSystem.FindPath(_enemy.position, _playerPosMemory)[1];
             targetPosition = target.position;
 
             return _enemy.GetAction<MoveAction>();
@@ -38,12 +38,12 @@ public class EnemyAI : MonoBehaviour
         float hitRate = _enemy.weapon.GetHitRate(player);
         if (hitRate <= 0.5f)
         {
-            target = CombatSystem.instance.tileSystem.FindPath(_enemy.position, _playerPosMemory)[1];
+            target = MainSystem.instance.tileSystem.FindPath(_enemy.position, _playerPosMemory)[1];
             targetPosition = target.position;
             return _enemy.GetAction<MoveAction>();
         }
 
-        target = CombatSystem.instance.tileSystem.GetTile(_playerPosMemory);
+        target = MainSystem.instance.tileSystem.GetTile(_playerPosMemory);
         targetPosition = target.position;
         return _enemy.GetAction<AttackAction>();
     }
@@ -51,7 +51,7 @@ public class EnemyAI : MonoBehaviour
     private bool IsPlayerInSight()
     {
         var curPlayerPos = player.position;
-        if (CombatSystem.instance.tileSystem.VisionCast(_enemy.position, curPlayerPos))
+        if (MainSystem.instance.tileSystem.VisionCast(_enemy.position, curPlayerPos))
         {
             _playerPosMemory = curPlayerPos;
             return true;

@@ -17,9 +17,9 @@ public enum UnitType
 [RequireComponent(typeof(HexTransform))]
 public abstract class Unit : MonoBehaviour, IUnit
 {
-    protected static TurnSystem turnSystem => CombatSystem.instance.turnSystem;
-    protected static UnitSystem unitSystem => CombatSystem.instance.unitSystem;
-    protected static TileSystem tileSystem => CombatSystem.instance.tileSystem;
+    protected static TurnSystem turnSystem => MainSystem.instance.turnSystem;
+    protected static UnitSystem unitSystem => MainSystem.instance.unitSystem;
+    protected static TileSystem tileSystem => MainSystem.instance.tileSystem;
     
     [HideInInspector] 
     public HexTransform hexTransform;

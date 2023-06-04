@@ -6,9 +6,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CombatSystem : MonoBehaviour
+public class MainSystem : MonoBehaviour
 {
-    public static CombatSystem instance { get; private set; }
+    public static MainSystem instance { get; private set; }
     public TileSystem tileSystem;
     public TurnSystem turnSystem;
     public UnitSystem unitSystem;

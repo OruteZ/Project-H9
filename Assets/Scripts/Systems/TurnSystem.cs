@@ -69,10 +69,10 @@ public class TurnSystem : MonoBehaviour
     {
         if (GameManager.instance.currentState == GameState.World)
         {
-            turnOwner = CombatSystem.instance.unitSystem.GetPlayer();
+            turnOwner = MainSystem.instance.unitSystem.GetPlayer();
         }
         
-        var units = CombatSystem.instance.unitSystem.units;
+        var units = MainSystem.instance.unitSystem.units;
 
         int total = 0;
 

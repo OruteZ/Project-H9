@@ -6,12 +6,20 @@ using UnityEngine;
 [RequireComponent(typeof(HexTransform))]
 public class Tile : MonoBehaviour
 {
-    [HideInInspector] public HexTransform hexTransform;
+    private HexTransform _hexTransform;
 
     public Vector3Int position
     {
-        get => hexTransform.position;
-        set => hexTransform.position = value;
+        get
+        {
+            if (_hexTransform is null) _hexTransform = GetComponent<HexTransform>();
+            return _hexTransform.position;
+        }
+        set
+        {
+            if (_hexTransform is null) _hexTransform = GetComponent<HexTransform>();
+            _hexTransform.position = value;
+        } 
     } 
 
     private MeshRenderer _meshRenderer;
@@ -33,7 +41,7 @@ public class Tile : MonoBehaviour
     public List<TileObject> objects;
     protected void Awake()
     {
-        hexTransform = GetComponent<HexTransform>();
+        _hexTransform = GetComponent<HexTransform>();
         _meshRenderer = GetComponent<MeshRenderer>();
     }
 

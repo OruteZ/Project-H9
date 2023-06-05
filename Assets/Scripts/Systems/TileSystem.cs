@@ -58,7 +58,7 @@ public class TileSystem : MonoBehaviour
     private Tile AddTile(Vector3Int position, bool walkable = true, bool visible = true, bool rayThroughable = true)
     {
         var tile = Instantiate(tilePrefab, transform).GetComponent<Tile>();
-        tile.hexTransform.position = position;
+        tile.position = position;
         tile.walkable = walkable;
         tile.visible = visible;
         tile.rayThroughable = rayThroughable;
@@ -252,14 +252,15 @@ public class TileSystem : MonoBehaviour
     public int height;
     
     [ContextMenu("Create Hex World")]
-    public void CreateDemoWorld()
+    public void CreateHexWorld()
     {
         var positions = Hex.GetCircleGridList(range, Hex.zero);
         Debug.Log(positions.Count);
         foreach (var pos in positions)
         {
-            var tile = Instantiate(tilePrefab, map.transform).GetComponent<HexTransform>();
+            var tile = Instantiate(tilePrefab, map.transform).GetComponent<Tile>();
             tile.position = pos;
+            tile.visible = tile.walkable = tile.rayThroughable = true;
             // if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
             //     isWall = false;
             //
@@ -277,8 +278,9 @@ public class TileSystem : MonoBehaviour
         Debug.Log(positions.Count);
         foreach (var pos in positions)
         {
-            var tile = Instantiate(tilePrefab, map.transform).GetComponent<HexTransform>();
+            var tile = Instantiate(tilePrefab, map.transform).GetComponent<Tile>();
             tile.position = pos;
+            tile.visible = tile.walkable = tile.rayThroughable = true;
             // if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
             //     isWall = false;
             //

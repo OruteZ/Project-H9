@@ -19,5 +19,5 @@ public enum ActionType {
     Spin,
     Attack,
     Dynamite,
-    FinishTurn,
+    None,
 }

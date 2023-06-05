@@ -25,6 +25,7 @@ public class Enemy : Unit
         if (!IsMyTurn()) return;
 
         activeUnitAction = _ai.SelectAction(out var target);
+        if (activeUnitAction is NoneAction) FinishAction();
         
         if (TryExecuteUnitAction(target, FinishAction))
         {

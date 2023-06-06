@@ -5,11 +5,11 @@ using UnityEngine;
 public class UIInteraction : MonoBehaviour
 {
 
-    private UiManager _uiManager;
+    private UIManager _uiManager;
 
     private void Awake()
     {
-        _uiManager = gameObject.GetComponent<UiManager>();
+        _uiManager = this.gameObject.GetComponent<UIManager>();
     }
     public void OnCharacterBtnClick() 
     {

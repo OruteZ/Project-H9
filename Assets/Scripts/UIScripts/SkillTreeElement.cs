@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SkillTreeElement : Generic.Singleton<SkillTreeElement>
 {
     public int skillIndex;
-    public UiManager _uiManager;
+    public UIManager _uiManager;
 
     //test : 1==½ÀµæºÒ°¡, 2==½Àµæ°¡´É, 3==½Àµæ¿Ï·á
     [SerializeField] private Sprite[] _effect = new Sprite[3];

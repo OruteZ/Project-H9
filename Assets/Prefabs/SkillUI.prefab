@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4898608753034365752}
   - component: {fileID: 8561000848125878494}
   - component: {fileID: 1438744710299128481}
+  - component: {fileID: 7443952202532886731}
   m_Layer: 5
   m_Name: SkillUI
   m_TagString: Untagged
@@ -153,3 +154,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0029170d14ce6c04c9f45c22cdae5559, type: 3}
   - {fileID: 21300000, guid: 36e6970b84831434a9eac79abd03700b, type: 3}
   _precedenceLine: []
+--- !u!114 &7443952202532886731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4898608753034365758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe76c5187b9d78d448f88a32bde74a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiManager: {fileID: 0}

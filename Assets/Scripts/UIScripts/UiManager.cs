@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class UiManager : Generic.Singleton<UiManager>
+public class UIManager : Generic.Singleton<UIManager>
 {
     public SkillUI _skillUI { get; private set; }
     public CharacterUI _characterUI { get; private set; }
@@ -28,10 +28,7 @@ public class UiManager : Generic.Singleton<UiManager>
     }
     void Update()
     {
-        if (Input.GetMouseButtonUp(0))
-        {
-            isMouseOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
-        }
+        isMouseOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
     }
 
     public void OnOffCharacterCanvas(bool isOn)
@@ -41,7 +38,11 @@ public class UiManager : Generic.Singleton<UiManager>
 
         if (_characterCanvas.enabled)
         {
-            _characterUI.SetLearnedSkiilInfoUI();
+            _characterUI.OpenCharacterUI();
+        }
+        else 
+        {
+
         }
         
         OnOffBackgroundBtn();
@@ -51,7 +52,10 @@ public class UiManager : Generic.Singleton<UiManager>
         if (isOn && _skillCanvas.enabled) isOn = false;
         _skillCanvas.enabled = isOn;
 
-        if (!_skillCanvas.enabled)
+        if (_skillCanvas.enabled)
+        {
+        }
+        else
         {
             _skillUI.CloseSkillTooltip();
         }
@@ -62,6 +66,13 @@ public class UiManager : Generic.Singleton<UiManager>
     {
         if (isOn && _pauseMenuCanvas.enabled) isOn = false;
         _pauseMenuCanvas.enabled = isOn;
+
+        if (_pauseMenuCanvas.enabled)
+        {
+        }
+        else
+        {
+        }
 
         OnOffBackgroundBtn();
     }

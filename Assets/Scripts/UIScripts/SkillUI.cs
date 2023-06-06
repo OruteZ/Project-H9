@@ -42,22 +42,22 @@ public class SkillUI : MonoBehaviour
         {
             if (_skillManager.IsEnoughSkillPoint())
             {
-                buttonText.text = "����";
+                buttonText.text = "습득";
             }
             else
             {
-                buttonText.text = "��ų ����Ʈ ����";
+                buttonText.text = "스킬 포인트 부족";
             }
         }
         else
         {
             if (currentSkill.isLearned)
             {
-                buttonText.text = "���� �Ϸ�";
+                buttonText.text = "습득 완료";
             }
             else
             {
-                buttonText.text = "���� �Ұ�";
+                buttonText.text = "습득 불가";
             }
         }
     }

@@ -55,14 +55,14 @@ public class UIInteraction : MonoBehaviour
 
     public void OnWeaponItemUIBtnClick() 
     {
-        _uiManager._characterUI.ChangeItemUIStatus(CharacterUI.ItemUIStatus.Weapon);
+        _uiManager._characterUI.ChangeItemUIStatus(ItemManager.ItemCategory.Weapon);
     }
     public void OnUsableItemUIBtnClick()
     {
-        _uiManager._characterUI.ChangeItemUIStatus(CharacterUI.ItemUIStatus.Usable);
+        _uiManager._characterUI.ChangeItemUIStatus(ItemManager.ItemCategory.Usable);
     }
     public void OnOtherItemUIBtnClick()
     {
-        _uiManager._characterUI.ChangeItemUIStatus(CharacterUI.ItemUIStatus.Other);
+        _uiManager._characterUI.ChangeItemUIStatus(ItemManager.ItemCategory.Other);
     }
 }

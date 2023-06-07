@@ -202,8 +202,6 @@ public class SkillManager : Generic.Singleton<SkillManager>
 {
     const int REQUIRED_SKILL_POINT = 1;
 
-    private List<List<string>> _skillTable;
-    private List<SkillInfo> _skillInformations;
     private List<Skill> _skills;
 
     private int _skillPoint;
@@ -218,13 +216,14 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
     void InitSkills()
     {
-        _skillTable = SkillRead.Read("SkillTable");
+        List<List<string>> _skillTable = SkillRead.Read("SkillTable");
         if (_skillTable == null)
         {
             Debug.Log("skill table을 읽어오지 못했습니다.");
+            return;
         }
 
-        _skillInformations = new List<SkillInfo>();
+        List<SkillInfo> _skillInformations = new List<SkillInfo>();
         for (int i = 0; i < _skillTable.Count; i++)
         {
             SkillInfo _skillInfo = new SkillInfo(_skillTable[i]);

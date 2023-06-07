@@ -29,13 +29,8 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private GameObject _usableItemPanel;
     [SerializeField] private GameObject _otherItemPanel;
 
-    private ItemUIStatus _currentItemUIStatus = ItemUIStatus.Weapon;
-    public enum ItemUIStatus
-    {
-        Weapon,
-        Usable,
-        Other
-    };
+    private ItemManager.ItemCategory _currentItemUIStatus = ItemManager.ItemCategory.Weapon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -138,19 +133,19 @@ public class CharacterUI : MonoBehaviour
         _iconScrollContents.GetComponent<RectTransform>().sizeDelta = new Vector2(cnt * 100 + 25, 100);
     }
 
-    public void ChangeItemUIStatus(ItemUIStatus status)
+    public void ChangeItemUIStatus(ItemManager.ItemCategory status)
     {
         if (_currentItemUIStatus != status)
         {
-            if (status == ItemUIStatus.Weapon)
+            if (status == ItemManager.ItemCategory.Weapon)
             {
                 ShowWeaponItems();
             }
-            else if (status == ItemUIStatus.Usable)
+            else if (status == ItemManager.ItemCategory.Usable)
             {
                 ShowUsableItems();
             }
-            else if (status == ItemUIStatus.Other)
+            else if (status == ItemManager.ItemCategory.Other)
             {
                 ShowOtherItems();
             }

@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class CharacterUI : MonoBehaviour
+public class CharacterUI : Generic.Singleton<CharacterUI>
 {
     //Character Stat
     [Header("Character Stat UI")]
@@ -25,11 +25,12 @@ public class CharacterUI : MonoBehaviour
 
     //Item UI
     [Header("Item UI")]
+    [SerializeField] private ItemManager itemManager;
     [SerializeField] private GameObject _weaponItemPanel;
     [SerializeField] private GameObject _usableItemPanel;
     [SerializeField] private GameObject _otherItemPanel;
 
-    private ItemManager.ItemCategory _currentItemUIStatus = ItemManager.ItemCategory.Weapon;
+    private ItemInfo.ItemCategory _currentItemUIStatus = ItemInfo.ItemCategory.Weapon;
 
     // Start is called before the first frame update
     void Start()
@@ -133,19 +134,19 @@ public class CharacterUI : MonoBehaviour
         _iconScrollContents.GetComponent<RectTransform>().sizeDelta = new Vector2(cnt * 100 + 25, 100);
     }
 
-    public void ChangeItemUIStatus(ItemManager.ItemCategory status)
+    public void ChangeItemUIStatus(ItemInfo.ItemCategory status)
     {
         if (_currentItemUIStatus != status)
         {
-            if (status == ItemManager.ItemCategory.Weapon)
+            if (status == ItemInfo.ItemCategory.Weapon)
             {
                 ShowWeaponItems();
             }
-            else if (status == ItemManager.ItemCategory.Usable)
+            else if (status == ItemInfo.ItemCategory.Usable)
             {
                 ShowUsableItems();
             }
-            else if (status == ItemManager.ItemCategory.Other)
+            else if (status == ItemInfo.ItemCategory.Other)
             {
                 ShowOtherItems();
             }

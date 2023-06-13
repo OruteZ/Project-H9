@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using System.Text.RegularExpressions;
 
-public class SkillRead : MonoBehaviour
+public class FileRead : MonoBehaviour
 {
 	static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))"; //regular expression
 	static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";

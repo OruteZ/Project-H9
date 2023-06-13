@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIInteraction : MonoBehaviour
+public class UIInteraction : Generic.Singleton<UIInteraction>
 {
 
     private UIManager _uiManager;
 
-    private void Awake()
+    private void Start()
     {
         _uiManager = this.gameObject.GetComponent<UIManager>();
     }
@@ -55,14 +55,14 @@ public class UIInteraction : MonoBehaviour
 
     public void OnWeaponItemUIBtnClick() 
     {
-        _uiManager._characterUI.ChangeItemUIStatus(ItemManager.ItemCategory.Weapon);
+        _uiManager._characterUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Weapon);
     }
     public void OnUsableItemUIBtnClick()
     {
-        _uiManager._characterUI.ChangeItemUIStatus(ItemManager.ItemCategory.Usable);
+        _uiManager._characterUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Usable);
     }
     public void OnOtherItemUIBtnClick()
     {
-        _uiManager._characterUI.ChangeItemUIStatus(ItemManager.ItemCategory.Other);
+        _uiManager._characterUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Other);
     }
 }

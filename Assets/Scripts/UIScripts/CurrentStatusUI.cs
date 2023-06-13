@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CurrentStatusUI : MonoBehaviour
+public class CurrentStatusUI : Generic.Singleton<CurrentStatusUI>
 {
     [SerializeField] private GameObject _actionPointText;
     [SerializeField] private GameObject _healthPointText;

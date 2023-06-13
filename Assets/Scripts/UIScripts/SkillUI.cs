@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
-public class SkillUI : MonoBehaviour
+public class SkillUI : Generic.Singleton<SkillUI>
 {
     public enum LearnState
     {

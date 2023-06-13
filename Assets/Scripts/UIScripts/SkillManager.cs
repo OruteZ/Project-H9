@@ -216,7 +216,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
     void InitSkills()
     {
-        List<List<string>> _skillTable = SkillRead.Read("SkillTable");
+        List<List<string>> _skillTable = FileRead.Read("SkillTable");
         if (_skillTable == null)
         {
             Debug.Log("skill table을 읽어오지 못했습니다.");

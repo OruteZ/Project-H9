@@ -18,19 +18,29 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
     [Header("Learned Skill UI")]
     [SerializeField] private SkillManager _skillManager;
     public GameObject skillIconPrefab;
-    private List<GameObject> skillIconUIs = new List<GameObject>();
+    private List<GameObject> _skillIconUIs = new List<GameObject>();
     [SerializeField] private GameObject _iconScrollContents;
     private Vector3 ICON_INIT_POSITION = new Vector3(235, 280, 0);
     private float ICON_INTERVAL = 100;
 
     //Item UI
     [Header("Item UI")]
-    [SerializeField] private ItemManager itemManager;
+    [SerializeField] private GameObject _ItemPanel;
     [SerializeField] private GameObject _weaponItemPanel;
     [SerializeField] private GameObject _usableItemPanel;
     [SerializeField] private GameObject _otherItemPanel;
+    [SerializeField] private ItemManager _itemManager;
+    public GameObject ItemListPrefab;
+    private List<GameObject> _itemLists = new List<GameObject>();
+    [SerializeField] private GameObject _weaponItemListScrollContents;
+    [SerializeField] private GameObject _usableItemListScrollContents;
+    [SerializeField] private GameObject _otherItemListScrollContents;
+    public const int ITEM_LIST_INIT_COUNT = 20;
+    private Vector3 ITEM_LIST_INIT_POSITION = new Vector3(1347.5f, 690, 0);
+    private float ITEM_LIST_INTERVAL = 100;
 
     private ItemInfo.ItemCategory _currentItemUIStatus = ItemInfo.ItemCategory.Weapon;
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,14 +55,18 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
             skillIcon.transform.SetParent(_iconScrollContents.transform);
 
             skillIcon.SetActive(false);
-            skillIconUIs.Add(skillIcon);
+            _skillIconUIs.Add(skillIcon);
         }
+
+        //Item list object pooling
+        ExpandItemLists();
     }
 
     public void OpenCharacterUI() 
     {
         SetStatText();
         SetLearnedSkiilInfoUI();
+        SetItemLists();
     }
 
     private void SetStatText()
@@ -87,22 +101,22 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
             case WeaponType.Repeater: 
                 {
                     text += playerStat.repeaterAdditionalDamage.ToString() + '\n' +
-                            playerStat.repeaterAdditionalRange + '\n' +
-                            playerStat.repeaterCriticalDamage;
+                            playerStat.repeaterAdditionalRange.ToString() + '\n' +
+                            playerStat.repeaterCriticalDamage.ToString();
                     break;
                 }
             case WeaponType.Revolver:
                 {
-                    text += playerStat.revolverAdditionalDamage + '\n' +
-                            playerStat.revolverAdditionalRange + '\n' +
-                            playerStat.revolverCriticalDamage;
+                    text += playerStat.revolverAdditionalDamage.ToString() + '\n' +
+                            playerStat.revolverAdditionalRange.ToString() + '\n' +
+                            playerStat.revolverCriticalDamage.ToString();
                     break;
                 }
             case WeaponType.Shotgun:
                 {
-                    text += playerStat.shotgunAdditionalDamage + '\n' +
-                            playerStat.shotgunAdditionalRange + '\n' +
-                            playerStat.shotgunCriticalDamage;
+                    text += playerStat.shotgunAdditionalDamage.ToString() + '\n' +
+                            playerStat.shotgunAdditionalRange.ToString() + '\n' +
+                            playerStat.shotgunCriticalDamage.ToString();
                     break; 
                 }
         }
@@ -112,9 +126,9 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
 
     public void SetLearnedSkiilInfoUI()
     {
-        for (int i = 0; i < skillIconUIs.Count; i++)
+        for (int i = 0; i < _skillIconUIs.Count; i++)
         {
-            skillIconUIs[i].SetActive(false);
+            _skillIconUIs[i].SetActive(false);
         }
 
         List<Skill> _skills = _skillManager.GetAllSkills();
@@ -125,13 +139,13 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
             {
                 Vector3 pos = ICON_INIT_POSITION;
                 pos.x += cnt * ICON_INTERVAL;
-                skillIconUIs[i].transform.position = pos;
-                skillIconUIs[i].SetActive(true);
+                _skillIconUIs[i].transform.position = pos;
+                _skillIconUIs[i].SetActive(true);
 
                 cnt++;
             }
         }
-        _iconScrollContents.GetComponent<RectTransform>().sizeDelta = new Vector2(cnt * 100 + 25, 100);
+        _iconScrollContents.GetComponent<RectTransform>().sizeDelta = new Vector2(cnt * ICON_INTERVAL + 25, 100);
     }
 
     public void ChangeItemUIStatus(ItemInfo.ItemCategory status)
@@ -155,20 +169,85 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
     }
     private void ShowWeaponItems()
     {
-        _weaponItemPanel.GetComponent<Image>().enabled = true;
-        _usableItemPanel.GetComponent<Image>().enabled = false;
-        _otherItemPanel.GetComponent<Image>().enabled = false;
+        _weaponItemPanel.SetActive(true);
+        _usableItemPanel.SetActive(false);
+        _otherItemPanel.SetActive(false);
     }
     private void ShowUsableItems()
     {
-        _weaponItemPanel.GetComponent<Image>().enabled = false;
-        _usableItemPanel.GetComponent<Image>().enabled = true;
-        _otherItemPanel.GetComponent<Image>().enabled = false;
+        _weaponItemPanel.SetActive(false);
+        _usableItemPanel.SetActive(true);
+        _otherItemPanel.SetActive(false);
     }
     private void ShowOtherItems()
     {
-        _weaponItemPanel.GetComponent<Image>().enabled = false;
-        _usableItemPanel.GetComponent<Image>().enabled = false;
-        _otherItemPanel.GetComponent<Image>().enabled = true;
+        _weaponItemPanel.SetActive(false);
+        _usableItemPanel.SetActive(false);
+        _otherItemPanel.SetActive(true);
+    }
+
+    private void SetItemLists()
+    {
+        for (int i = 0; i < _itemLists.Count; i++)
+        {
+            _itemLists[i].SetActive(false);
+            _itemLists[i].transform.SetParent(_ItemPanel.transform);
+        }
+        int itemListCount = 0;
+        Inventory inventory = _itemManager.GetInventory();
+
+        SetEachItemList(itemListCount, inventory.weaponItems, _weaponItemListScrollContents);
+        itemListCount += inventory.weaponItems.Count;
+        SetEachItemList(itemListCount, inventory.usableItems, _usableItemListScrollContents);
+        itemListCount += inventory.usableItems.Count;
+        SetEachItemList(itemListCount, inventory.otherItems, _otherItemListScrollContents);
+
+
+    }
+    private void SetEachItemList(int cnt, List<Item> items, GameObject scrollContents)
+    {
+        int itemListCount = cnt;
+        for (int i = 0; i < items.Count; i++)
+        {
+            Vector3 pos = ITEM_LIST_INIT_POSITION;
+            pos.y -= i * ITEM_LIST_INTERVAL;
+            SetItemList(itemListCount, pos, scrollContents, items[i]);
+            itemListCount++;
+        }
+        if (scrollContents == null) return;
+        scrollContents.GetComponent<RectTransform>().sizeDelta = new Vector2(0, items.Count * ITEM_LIST_INTERVAL);
+    }
+
+    private void SetItemList(int index, Vector3 pos, GameObject parents, Item item)
+    {
+        if (index >= _itemLists.Count) 
+        {
+            ExpandItemLists();
+        }
+        _itemLists[index].SetActive(true);
+        _itemLists[index].transform.position = pos;
+        _itemLists[index].transform.SetParent(parents.transform);
+        _itemLists[index].GetComponent<ItemListElement>().SetItemListElement(item);
+
+    }
+    private void ExpandItemLists() 
+    {
+        for (int i = 0; i < ITEM_LIST_INIT_COUNT; i++)
+        {
+            Vector3 pos = ITEM_LIST_INIT_POSITION;
+            GameObject itemList = Instantiate(ItemListPrefab, pos, Quaternion.identity);
+            itemList.transform.SetParent(_ItemPanel.transform);
+
+            itemList.SetActive(false);
+            _itemLists.Add(itemList);
+        }
+    }
+
+
+    public void OnClickTestBtn(int i)
+    {
+        //for test
+        _itemManager.AddItem(i);
+        SetItemLists();
     }
 }

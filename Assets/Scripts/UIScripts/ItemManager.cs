@@ -118,7 +118,7 @@ public class ItemManager : Generic.Singleton<ItemManager>
 {
 
     private List<ItemInfo> _itemInformations;
-    public Inventory inventory { get; private set; }
+    private Inventory _inventory;
     public int money { get; private set; }
 
     void Start()
@@ -142,7 +142,7 @@ public class ItemManager : Generic.Singleton<ItemManager>
             _itemInformations.Add(_itemInfo);
         }
 
-        inventory = new Inventory();
+        _inventory = new Inventory();
     }
     private int FindItemInfoByIndex(int index)
     {
@@ -167,7 +167,8 @@ public class ItemManager : Generic.Singleton<ItemManager>
         }
 
         Item item = new Item(_itemInformations[foundIndex]);
-        inventory.AddItem(item);
+        _inventory.AddItem(item);
+
 
     }
     public void DeleteItem(int index)
@@ -179,16 +180,16 @@ public class ItemManager : Generic.Singleton<ItemManager>
             return;
         }
 
-        inventory.DeleteItem(foundIndex);
+        _inventory.DeleteItem(foundIndex);
     }
     public List<Item> GetItem(int index)
     {
         List<Item> findItems = new List<Item>();
-        for (int i = 0; i < inventory.items.Count; i++)
+        for (int i = 0; i < _inventory.items.Count; i++)
         {
-            if (inventory.items[i].itemInfo.index == index)
+            if (_inventory.items[i].itemInfo.index == index)
             {
-                findItems.Add(inventory.items[i]);
+                findItems.Add(_inventory.items[i]);
             }
         }
 
@@ -200,12 +201,29 @@ public class ItemManager : Generic.Singleton<ItemManager>
         return null;
     }
 
-
-
-
-
-    public void OnClickTestBtn(int i) 
+    public Inventory GetInventory() 
     {
-        AddItem(i);
+        //Debug.Log("inventory test");
+        //Debug.Log(_inventory.items.Count);
+        //foreach (Item item in _inventory.items) 
+        //{
+        //    Debug.Log(item.itemInfo.index);
+        //}
+        //Debug.Log(_inventory.weaponItems.Count);
+        //foreach (Item item in _inventory.weaponItems)
+        //{
+        //    Debug.Log(item.itemInfo.index);
+        //}
+        //Debug.Log(_inventory.usableItems.Count);
+        //foreach (Item item in _inventory.usableItems)
+        //{
+        //    Debug.Log(item.itemInfo.index);
+        //}
+        //Debug.Log(_inventory.otherItems.Count);
+        //foreach (Item item in _inventory.otherItems)
+        //{
+        //    Debug.Log(item.itemInfo.index);
+        //}
+        return _inventory;
     }
 }

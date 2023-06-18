@@ -15,6 +15,7 @@ public class ItemInfo
     public string name { get; private set; }
     public string description { get; private set; }
     public ItemCategory category { get; private set; }
+    public int price { get; private set; }
     public ItemInfo(List<string> list) 
     {
         for (int i = 0; i < list.Count; i++)
@@ -30,6 +31,7 @@ public class ItemInfo
         name = list[2];
         description = list[3];
         category = (ItemCategory)int.Parse(list[4]);
+        price = 5;//test
     }
 }
 public class Item
@@ -84,14 +86,17 @@ public class Inventory
         itemCategory = DeleteItemAtEachCategory(items, index);
         if (itemCategory == ItemInfo.ItemCategory.Weapon)
         {
+            Debug.Log("w");
             DeleteItemAtEachCategory(weaponItems, index);
         }
         else if (itemCategory == ItemInfo.ItemCategory.Usable)
         {
+            Debug.Log("u");
             DeleteItemAtEachCategory(usableItems, index);
         }
         else if (itemCategory == ItemInfo.ItemCategory.Other)
         {
+            Debug.Log("o");
             DeleteItemAtEachCategory(otherItems, index);
         }
         else
@@ -124,7 +129,7 @@ public class ItemManager : Generic.Singleton<ItemManager>
     void Start()
     {
         InitItems();
-        money = 0;
+        money = 10;
     }
     void InitItems()
     {
@@ -180,7 +185,7 @@ public class ItemManager : Generic.Singleton<ItemManager>
             return;
         }
 
-        _inventory.DeleteItem(foundIndex);
+        _inventory.DeleteItem(index);
     }
     public List<Item> GetItem(int index)
     {
@@ -201,29 +206,76 @@ public class ItemManager : Generic.Singleton<ItemManager>
         return null;
     }
 
-    public Inventory GetInventory() 
+    public Inventory GetInventory()
     {
         //Debug.Log("inventory test");
-        //Debug.Log(_inventory.items.Count);
-        //foreach (Item item in _inventory.items) 
+        //Debug.Log("전체 아이템 개수:" + _inventory.items.Count);
+        //foreach (Item item in _inventory.items)
         //{
         //    Debug.Log(item.itemInfo.index);
         //}
-        //Debug.Log(_inventory.weaponItems.Count);
+        //Debug.Log("웨폰 아이템 개수:" + _inventory.weaponItems.Count);
         //foreach (Item item in _inventory.weaponItems)
         //{
         //    Debug.Log(item.itemInfo.index);
         //}
-        //Debug.Log(_inventory.usableItems.Count);
+        //Debug.Log("소비 아이템 개수:" + _inventory.usableItems.Count);
         //foreach (Item item in _inventory.usableItems)
         //{
         //    Debug.Log(item.itemInfo.index);
         //}
-        //Debug.Log(_inventory.otherItems.Count);
+        //Debug.Log("기타 아이템 개수:" + _inventory.otherItems.Count);
         //foreach (Item item in _inventory.otherItems)
         //{
         //    Debug.Log(item.itemInfo.index);
         //}
         return _inventory;
+    }
+    public ItemInfo GetItemInfo(int index) 
+    {
+        foreach (ItemInfo info in _itemInformations) 
+        {
+            if (info.index == index) 
+            {
+                return info;
+            }
+        }
+        Debug.Log("해당 인덱스의 아이템 정보를 찾을 수 없습니다. index: " + index);
+        return null;
+    }
+    public void UseItem(int index)
+    {
+        List<Item> item = GetItem(index);
+        if (item[0].itemInfo.category == ItemInfo.ItemCategory.Weapon) 
+        {
+            EquipWeaponItem(item[0]);
+        }
+        else if (item[0].itemInfo.category == ItemInfo.ItemCategory.Usable)
+        {
+            UseUsableItem(item[0]);
+        }
+        else
+        {
+        }
+    }
+    private void EquipWeaponItem(Item item) 
+    {
+        //Item currentWeapon = GetCurrnetWeapon();
+        //EquipWeapon(item);
+        //AddItem(currentWeapon);
+    }
+    private void UseUsableItem(Item item)
+    {
+    }
+    public void SellItem(int index)
+    {
+        GetInventory();
+        List<Item> item = GetItem(index);
+        money += item[0].itemInfo.price;
+        DeleteItem(index);
+    }
+    public void DiscardItem(int index)
+    {
+        DeleteItem(index);
     }
 }

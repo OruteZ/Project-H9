@@ -125,7 +125,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1438744710299128481}
         m_TargetAssemblyTypeName: SkillTreeElement, Assembly-CSharp
-        m_MethodName: OnSkillUIButtonClick
+        m_MethodName: OnSkillUIBtnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -147,13 +147,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992a76074a6f9ed4d97f7bafc19df8cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillIndex: 0
+  skillIndex: 1001
   _uiManager: {fileID: 0}
   _effect:
   - {fileID: 21300000, guid: affeade9874cf2347abb155e8d0db4d8, type: 3}
   - {fileID: 21300000, guid: 0029170d14ce6c04c9f45c22cdae5559, type: 3}
   - {fileID: 21300000, guid: 36e6970b84831434a9eac79abd03700b, type: 3}
-  _precedenceLine: []
+  _precedenceLine:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &7443952202532886731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,3 +169,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiManager: {fileID: 0}
+  _skillManager: {fileID: 0}

@@ -20,8 +20,8 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
     public GameObject skillIconPrefab;
     private List<GameObject> _skillIconUIs = new List<GameObject>();
     [SerializeField] private GameObject _iconScrollContents;
-    private Vector3 ICON_INIT_POSITION = new Vector3(235, 280, 0);
-    private float ICON_INTERVAL = 100;
+    private readonly Vector3 ICON_INIT_POSITION = new Vector3(235, 280, 0);
+    private const float ICON_INTERVAL = 100;
 
     //Item UI
     [Header("Item UI")]
@@ -36,11 +36,15 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
     [SerializeField] private GameObject _usableItemListScrollContents;
     [SerializeField] private GameObject _otherItemListScrollContents;
     public const int ITEM_LIST_INIT_COUNT = 20;
-    private Vector3 ITEM_LIST_INIT_POSITION = new Vector3(1347.5f, 690, 0);
-    private float ITEM_LIST_INTERVAL = 100;
+    private readonly Vector3 ITEM_LIST_INIT_POSITION = new Vector3(1347.5f, 690, 0);
+    private const float ITEM_LIST_INTERVAL = 100;
+
+    [SerializeField] private GameObject _itemUseWindow;
+    private int _currentItemIndex;
 
     private ItemInfo.ItemCategory _currentItemUIStatus = ItemInfo.ItemCategory.Weapon;
 
+    [SerializeField] private GameObject _moneyText;
 
     // Start is called before the first frame update
     void Start()
@@ -58,8 +62,12 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
             _skillIconUIs.Add(skillIcon);
         }
 
+        SetMoneyText();
+        ShowWeaponItems();
         //Item list object pooling
         ExpandItemLists();
+
+        _currentItemIndex = -1;
     }
 
     public void OpenCharacterUI() 
@@ -227,7 +235,7 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
         _itemLists[index].SetActive(true);
         _itemLists[index].transform.position = pos;
         _itemLists[index].transform.SetParent(parents.transform);
-        _itemLists[index].GetComponent<ItemListElement>().SetItemListElement(item);
+        _itemLists[index].GetComponent<ItemListElement>().SetItemListElement(item, this);
 
     }
     private void ExpandItemLists() 
@@ -243,11 +251,71 @@ public class CharacterUI : Generic.Singleton<CharacterUI>
         }
     }
 
+    public void ClickCharacterUIButton(int index) 
+    {
+        //Debug.Log("클릭한 아이템 인덱스: " + index);
+        if (!_itemUseWindow.activeSelf)
+        {
+            SetItemUseWindow(index);
+        }
+        else 
+        {
+            CloseItemUseWindow();
+        }
+    }
+    private void SetItemUseWindow(int index)
+    {
+        _itemUseWindow.transform.position = Input.mousePosition;
+        ItemInfo itemInfo = _itemManager.GetItemInfo(index);
+        if (itemInfo.category == ItemInfo.ItemCategory.Weapon)
+        {
+        }
+        else if (itemInfo.category == ItemInfo.ItemCategory.Usable)
+        {
+        }
+        else
+        {
+        }
+
+        _currentItemIndex = index;
+        _itemUseWindow.SetActive(true);
+    }
+
+    public void CloseItemUseWindow() 
+    {
+        _currentItemIndex = -1;
+        _itemUseWindow.SetActive(false);
+    }
 
     public void OnClickTestBtn(int i)
     {
         //for test
         _itemManager.AddItem(i);
         SetItemLists();
+    }
+    public void UseItem() 
+    {
+        _itemManager.UseItem(_currentItemIndex);
+        SetItemLists();
+        CloseItemUseWindow();
+    }
+    public void SellItem()
+    {
+        _itemManager.SellItem(_currentItemIndex);
+        SetItemLists();
+        CloseItemUseWindow();
+
+        SetMoneyText();
+    }
+    public void DiscardItem()
+    {
+        _itemManager.DiscardItem(_currentItemIndex);
+        SetItemLists();
+        CloseItemUseWindow();
+    }
+
+    private void SetMoneyText() 
+    {
+        _moneyText.GetComponent<TextMeshProUGUI>().text = "Money: " + _itemManager.money.ToString() + "$";
     }
 }

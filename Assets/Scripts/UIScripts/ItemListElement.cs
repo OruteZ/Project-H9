@@ -6,21 +6,30 @@ using TMPro;
 
 public class ItemListElement : MonoBehaviour
 {
-    private Image ItemIcon;
-    private TextMeshProUGUI ItemName;
+    private Image _ItemIcon;
+    private TextMeshProUGUI _ItemName;
+    private int _itemIndex;
+    private CharacterUI _characterUI;
     // Start is called before the first frame update
     void Awake()
     {
-        ItemIcon = this.transform.GetChild(0).GetComponent<Image>();
-        ItemName = this.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        _ItemIcon = this.transform.GetChild(0).GetComponent<Image>();
+        _ItemName = this.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
-    public void SetItemListElement(Item item)
+    public void SetItemListElement(Item item, CharacterUI characterUI)
     {
+        _itemIndex = item.itemInfo.index;
         /*
         Sprite sprite = Resources.Load("Images/" + item.itemInfo.iconNumber) as Sprite;
         ItemIcon.sprite = sprite;
         */
-        ItemName.text = item.itemInfo.name;
+        _ItemName.text = item.itemInfo.name;
+        _characterUI = characterUI;
+    }
+
+    public void OnItemUIBtnClick()
+    {
+        _characterUI.ClickCharacterUIButton(_itemIndex);
     }
 }

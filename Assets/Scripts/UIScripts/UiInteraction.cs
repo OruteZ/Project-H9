@@ -11,7 +11,7 @@ public class UIInteraction : Generic.Singleton<UIInteraction>
     {
         _uiManager = this.gameObject.GetComponent<UIManager>();
     }
-    public void OnCharacterBtnClick() 
+    public void OnCharacterBtnClick()
     {
         _uiManager.OnOffCharacterCanvas(true);
         _uiManager.OnOffSkillCanvas(false);
@@ -53,7 +53,7 @@ public class UIInteraction : Generic.Singleton<UIInteraction>
 #endif
     }
 
-    public void OnWeaponItemUIBtnClick() 
+    public void OnWeaponItemUIBtnClick()
     {
         _uiManager._characterUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Weapon);
     }
@@ -64,5 +64,18 @@ public class UIInteraction : Generic.Singleton<UIInteraction>
     public void OnOtherItemUIBtnClick()
     {
         _uiManager._characterUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Other);
+    }
+
+    public void OnItemUseBtnClick()
+    {
+        _uiManager._characterUI.UseItem();
+    }
+    public void OnItemSellBtnClick()
+    {
+        _uiManager._characterUI.SellItem();
+    }
+    public void OnItemDiscardBtnClick()
+    {
+        _uiManager._characterUI.DiscardItem();
     }
 }

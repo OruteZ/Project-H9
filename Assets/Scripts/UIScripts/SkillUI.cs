@@ -12,7 +12,7 @@ public class SkillUI : Generic.Singleton<SkillUI>
     };
 
     [SerializeField] private SkillManager _skillManager;
-    [SerializeField] private GameObject _skillWindow;
+    [SerializeField] private GameObject _skillWindow;//?
     [SerializeField] private GameObject _skillUIButtons;
     [SerializeField] private GameObject _skillTooltipWindow;
     [SerializeField] private GameObject _skillPointText;

@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CurrentStatusUI : Generic.Singleton<CurrentStatusUI>
 {
+    public GameManager gameManager;
+
     [SerializeField] private GameObject _actionPointText;
     [SerializeField] private GameObject _healthPointText;
     [SerializeField] private GameObject _ConcentrationText;
@@ -13,12 +16,14 @@ public class CurrentStatusUI : Generic.Singleton<CurrentStatusUI>
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetCurrentStatusUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetCurrentStatusUI() 
     {
-        
+        _actionPointText.GetComponent<TextMeshProUGUI>().text = gameManager.playerStat.actionPoint.ToString();
+        _healthPointText.GetComponent<TextMeshProUGUI>().text = gameManager.playerStat.hp.ToString();
+        _ConcentrationText.GetComponent<TextMeshProUGUI>().text = gameManager.playerStat.concentration.ToString() + "/ 100";
+        _ConcentrationSlider.GetComponent<Slider>().value = gameManager.playerStat.concentration / 100.0f;
     }
 }

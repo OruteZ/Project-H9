@@ -1979,6 +1979,7 @@ RectTransform:
   - {fileID: 944451797}
   - {fileID: 1655619466}
   - {fileID: 736138492}
+  - {fileID: 481690669}
   - {fileID: 785106036}
   m_Father: {fileID: 1314877595}
   m_RootOrder: 5
@@ -2035,6 +2036,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255195965}
+  - component: {fileID: 255195969}
   - component: {fileID: 255195968}
   - component: {fileID: 255195967}
   - component: {fileID: 255195966}
@@ -2125,8 +2127,24 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!114 &255195969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255195964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfc58efd70c39d547b57652502b83250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillWindow: {fileID: 2007053677}
+  _skillUIButtons: {fileID: 920775998}
+  _skillTooltipWindow: {fileID: 1059515236}
+  _skillPointText: {fileID: 1441773884}
 --- !u!1 &266488304
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,7 +2353,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1 &273174304
 GameObject:
@@ -3319,7 +3337,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1793688804}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3362,6 +3380,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450059808}
   m_CullTransparentMesh: 1
+--- !u!1 &481690668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 481690669}
+  m_Layer: 5
+  m_Name: ItemList Prefabs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &481690669
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481690668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 254233023}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &482162149
 GameObject:
   m_ObjectHideFlags: 0
@@ -3954,9 +4008,6 @@ GameObject:
   - component: {fileID: 533023981}
   - component: {fileID: 533023983}
   - component: {fileID: 533023982}
-  - component: {fileID: 533023986}
-  - component: {fileID: 533023985}
-  - component: {fileID: 533023984}
   m_Layer: 0
   m_Name: UI Manager
   m_TagString: Untagged
@@ -4009,6 +4060,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea08eb84e6ae224cb5b9e4a3160c26c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skillManager: {fileID: 535104438}
+  _itemManager: {fileID: 1752680491}
   _worldCanvas: {fileID: 1897178611}
   _battleCanvas: {fileID: 267033789}
   _characterCanvas: {fileID: 981271866}
@@ -4016,73 +4069,6 @@ MonoBehaviour:
   _pauseMenuCanvas: {fileID: 1388183976}
   _backgroundButton: {fileID: 2135565866}
   isMouseOverUI: 0
---- !u!114 &533023984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533023980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfc58efd70c39d547b57652502b83250, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillManager: {fileID: 535104438}
-  _skillWindow: {fileID: 2007053677}
-  _skillUIButtons: {fileID: 920775998}
-  _skillTooltipWindow: {fileID: 1059515236}
-  _skillPointText: {fileID: 1441773884}
---- !u!114 &533023985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533023980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3abf47d64c48a344b96a3a5f959371c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 446826048}
-  _characterStatText: {fileID: 1571440212}
-  _weaponStatText: {fileID: 217953244}
-  _characterImage: {fileID: 0}
-  _weaponImage: {fileID: 0}
-  _skillManager: {fileID: 535104438}
-  skillIconPrefab: {fileID: 4898608753034365758, guid: 51259a029f390ce4e80033b83935ccf2,
-    type: 3}
-  _iconScrollContents: {fileID: 1681517750}
-  _ItemPanel: {fileID: 254233022}
-  _weaponItemPanel: {fileID: 944451796}
-  _usableItemPanel: {fileID: 1655619465}
-  _otherItemPanel: {fileID: 736138491}
-  _itemManager: {fileID: 1752680491}
-  ItemListPrefab: {fileID: 2160492693776063615, guid: 9e7cb55e85933b04f94cacb7c891ba01,
-    type: 3}
-  _weaponItemListScrollContents: {fileID: 841174158}
-  _usableItemListScrollContents: {fileID: 1804200175}
-  _otherItemListScrollContents: {fileID: 1759953155}
-  _itemUseWindow: {fileID: 785106033}
-  _moneyText: {fileID: 2009193721}
---- !u!114 &533023986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533023980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16ad0e923a59f7446af0194b01e21ef0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 446826048}
-  _actionPointText: {fileID: 1498641400}
-  _healthPointText: {fileID: 107318575}
-  _ConcentrationText: {fileID: 1618587701}
-  _ConcentrationSlider: {fileID: 1572224565}
 --- !u!1 &535104437
 GameObject:
   m_ObjectHideFlags: 0
@@ -5973,7 +5959,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &736138492
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6286,7 +6272,7 @@ GameObject:
   - component: {fileID: 785106035}
   - component: {fileID: 785106034}
   m_Layer: 5
-  m_Name: Item Use Window
+  m_Name: Item Tooltip Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6346,7 +6332,7 @@ RectTransform:
   - {fileID: 1289935857}
   - {fileID: 608647489}
   m_Father: {fileID: 254233023}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -6656,7 +6642,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000029451472}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 455.75}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &870626261 stripped
@@ -8097,6 +8083,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 981271863}
+  - component: {fileID: 981271867}
+  - component: {fileID: 981271870}
+  - component: {fileID: 981271869}
+  - component: {fileID: 981271868}
   - component: {fileID: 981271866}
   - component: {fileID: 981271865}
   - component: {fileID: 981271864}
@@ -8187,8 +8177,74 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!114 &981271867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981271862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3abf47d64c48a344b96a3a5f959371c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moneyText: {fileID: 2009193721}
+--- !u!114 &981271868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981271862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 849ff317ae260b843bf88fe0d765527b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemListPrefab: {fileID: 2160492693776063615, guid: 9e7cb55e85933b04f94cacb7c891ba01,
+    type: 3}
+  _ItemListPrefabs: {fileID: 481690668}
+  _weaponItemPanel: {fileID: 944451796}
+  _usableItemPanel: {fileID: 1655619465}
+  _otherItemPanel: {fileID: 736138491}
+  _weaponItemListScrollContents: {fileID: 841174158}
+  _usableItemListScrollContents: {fileID: 1804200175}
+  _otherItemListScrollContents: {fileID: 1759953155}
+  _itemTooltipWindow: {fileID: 785106033}
+--- !u!114 &981271869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981271862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9faab333ad4e9a046a435b3bd1839fd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillIconPrefab: {fileID: 4898608753034365758, guid: 51259a029f390ce4e80033b83935ccf2,
+    type: 3}
+  _iconScrollContents: {fileID: 1681517750}
+--- !u!114 &981271870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981271862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1805d52a2e4507c4fa88dbdc84aa8f67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterStatText: {fileID: 1571440212}
+  _weaponStatText: {fileID: 217953244}
+  _characterImage: {fileID: 0}
+  _weaponImage: {fileID: 0}
 --- !u!1 &1042188263
 GameObject:
   m_ObjectHideFlags: 0
@@ -9544,8 +9600,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 533023985}
-        m_TargetAssemblyTypeName: CharacterUI, Assembly-CSharp
+      - m_Target: {fileID: 981271868}
+        m_TargetAssemblyTypeName: ItemListUI, Assembly-CSharp
         m_MethodName: OnClickTestBtn
         m_Mode: 3
         m_Arguments:
@@ -9807,7 +9863,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10010,6 +10066,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1388183973}
+  - component: {fileID: 1388183977}
   - component: {fileID: 1388183976}
   - component: {fileID: 1388183975}
   - component: {fileID: 1388183974}
@@ -10100,8 +10157,20 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_TargetDisplay: 0
+--- !u!114 &1388183977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388183972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48490226096aa3b43bf3efb381a44768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1410170495
 GameObject:
   m_ObjectHideFlags: 0
@@ -12774,7 +12843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1655619466
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13300,7 +13369,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0}
+  m_AnchoredPosition: {x: -0.000011120097, y: 0}
   m_SizeDelta: {x: 25, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1727319066 stripped
@@ -13521,7 +13590,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1319238192}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13692,8 +13761,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 533023985}
-        m_TargetAssemblyTypeName: CharacterUI, Assembly-CSharp
+      - m_Target: {fileID: 981271868}
+        m_TargetAssemblyTypeName: ItemListUI, Assembly-CSharp
         m_MethodName: OnClickTestBtn
         m_Mode: 3
         m_Arguments:
@@ -13775,7 +13844,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000029451472}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 455.75}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1769680377
@@ -14118,7 +14187,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14330,7 +14399,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000029451472}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 455.75}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1804907994
@@ -14999,6 +15068,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1897178612}
+  - component: {fileID: 1897178613}
   - component: {fileID: 1897178611}
   - component: {fileID: 1897178610}
   - component: {fileID: 1897178609}
@@ -15095,6 +15165,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1897178613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897178608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad0e923a59f7446af0194b01e21ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 446826048}
+  _actionPointText: {fileID: 1498641400}
+  _healthPointText: {fileID: 107318575}
+  _ConcentrationText: {fileID: 1618587701}
+  _ConcentrationSlider: {fileID: 1572224565}
 --- !u!224 &1933794758 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4898608753034365753, guid: 7552baf1c30645f4e851aef9cdeeb0bb,
@@ -15464,8 +15551,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 533023985}
-        m_TargetAssemblyTypeName: CharacterUI, Assembly-CSharp
+      - m_Target: {fileID: 981271868}
+        m_TargetAssemblyTypeName: ItemListUI, Assembly-CSharp
         m_MethodName: OnClickTestBtn
         m_Mode: 3
         m_Arguments:

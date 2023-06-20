@@ -9,7 +9,7 @@ public class ItemListElement : MonoBehaviour
     private Image _ItemIcon;
     private TextMeshProUGUI _ItemName;
     private int _itemIndex;
-    private CharacterUI _characterUI;
+    private ItemListUI _itemListUI;
     // Start is called before the first frame update
     void Awake()
     {
@@ -17,7 +17,7 @@ public class ItemListElement : MonoBehaviour
         _ItemName = this.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
-    public void SetItemListElement(Item item, CharacterUI characterUI)
+    public void SetItemListElement(Item item, ItemListUI itemUI)
     {
         _itemIndex = item.itemInfo.index;
         /*
@@ -25,11 +25,11 @@ public class ItemListElement : MonoBehaviour
         ItemIcon.sprite = sprite;
         */
         _ItemName.text = item.itemInfo.name;
-        _characterUI = characterUI;
+        _itemListUI = itemUI;
     }
 
     public void OnItemUIBtnClick()
     {
-        _characterUI.ClickCharacterUIButton(_itemIndex);
+        _itemListUI.ClickCharacterUIButton(_itemIndex);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class CurrentStatusUI : Generic.Singleton<CurrentStatusUI>
+public class CurrentStatusUI : UISystem
 {
     public GameManager gameManager;
 
@@ -17,6 +17,13 @@ public class CurrentStatusUI : Generic.Singleton<CurrentStatusUI>
     void Start()
     {
         SetCurrentStatusUI();
+    }
+
+    public override void OpenUI()
+    {
+    }
+    public override void CloseUI()
+    {
     }
 
     public void SetCurrentStatusUI() 

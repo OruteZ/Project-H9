@@ -2,26 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class SkillUI : Generic.Singleton<SkillUI>
+public class SkillUI : UISystem
 {
-    public enum LearnState
+    public enum LearnStatus
     {
         NotLearned,
         Learnable,
         AlreadyLearned
     };
 
-    [SerializeField] private SkillManager _skillManager;
+    private SkillManager _skillManager;
+    private int _currentSkillIndex;
+
+    [Header("Skill UIs")]
     [SerializeField] private GameObject _skillWindow;//?
     [SerializeField] private GameObject _skillUIButtons;
     [SerializeField] private GameObject _skillTooltipWindow;
     [SerializeField] private GameObject _skillPointText;
-    private int _currentSkillIndex;
 
     void Start()
     {
+        _skillManager = UIManager.instance._skillManager;
         //GetComponent<Image>().sprite = ;
         UpdateSkillUIImage();
+    }
+    public override void OpenUI() 
+    {
+        UpdateSkillPointUI();
+    }
+    public override void CloseUI()
+    {
+        CloseSkillTooltip();
     }
     public void ClickSkillUIButton(Transform _transform, int btnIndex)
     {
@@ -81,14 +92,14 @@ public class SkillUI : Generic.Singleton<SkillUI>
             SkillTreeElement _skillElement = _skillUIButtons.transform.GetChild(i).GetComponent<SkillTreeElement>();
             Skill _skill = _skillManager.GetSkill(_skillElement.GetSkillUIIndex());
 
-            LearnState state = LearnState.NotLearned;
+            LearnStatus state = LearnStatus.NotLearned;
             if (_skill.isLearned)
             {
-                state = LearnState.AlreadyLearned;
+                state = LearnStatus.AlreadyLearned;
             }
             if (_skill.isLearnable)
             {
-                state = LearnState.Learnable;
+                state = LearnStatus.Learnable;
             }
             _skillElement.SetSkillButtonEffect((int)state);
 

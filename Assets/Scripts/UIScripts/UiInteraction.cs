@@ -5,11 +5,11 @@ using UnityEngine;
 public class UIInteraction : Generic.Singleton<UIInteraction>
 {
 
-    private UIManager _uiManager;
+    private static UIManager _uiManager;
 
     private void Start()
     {
-        _uiManager = this.gameObject.GetComponent<UIManager>();
+        _uiManager = UIManager.instance;
     }
     public void OnCharacterBtnClick()
     {
@@ -55,27 +55,27 @@ public class UIInteraction : Generic.Singleton<UIInteraction>
 
     public void OnWeaponItemUIBtnClick()
     {
-        _uiManager._characterUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Weapon);
+        _uiManager._characterUI._itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Weapon);
     }
     public void OnUsableItemUIBtnClick()
     {
-        _uiManager._characterUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Usable);
+        _uiManager._characterUI._itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Usable);
     }
     public void OnOtherItemUIBtnClick()
     {
-        _uiManager._characterUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Other);
+        _uiManager._characterUI._itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Other);
     }
 
     public void OnItemUseBtnClick()
     {
-        _uiManager._characterUI.UseItem();
+        _uiManager._characterUI._itemListUI.ClickUseItem();
     }
     public void OnItemSellBtnClick()
     {
-        _uiManager._characterUI.SellItem();
+        _uiManager._characterUI._itemListUI.ClickSellItem();
     }
     public void OnItemDiscardBtnClick()
     {
-        _uiManager._characterUI.DiscardItem();
+        _uiManager._characterUI._itemListUI.ClickDiscardItem();
     }
 }

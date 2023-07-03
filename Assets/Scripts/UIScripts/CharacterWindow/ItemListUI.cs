@@ -88,7 +88,7 @@ public class ItemListUI : UISystem
             _itemLists[i].SetActive(false);
             _itemLists[i].transform.SetParent(_ItemListPrefabs.transform);
         }
-        int itemListCount = 0;
+        int itemListCount = 0;  //static?
         Inventory inventory = _itemManager.GetInventory();
 
         SetEachItemList(itemListCount, inventory.weaponItems, _weaponItemListScrollContents);
@@ -166,6 +166,8 @@ public class ItemListUI : UISystem
         }
 
         _currentItemIndex = index;
+
+        UIManager.instance.previousLayer = 3;
         _itemTooltipWindow.SetActive(true);
     }
 

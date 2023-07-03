@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UIManager : Generic.Singleton<UIManager>
 {
@@ -30,6 +31,7 @@ public class UIManager : Generic.Singleton<UIManager>
     
     //[HideInInspector]
     public bool isMouseOverUI;
+    public int previousLayer = 1;
 
     void Start()
     {
@@ -43,6 +45,26 @@ public class UIManager : Generic.Singleton<UIManager>
     void Update()
     {
         isMouseOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+        if (Input.GetMouseButtonDown(0))
+        {
+            int currentLayer = GetPointerOverUILayer();
+            if (previousLayer > currentLayer)
+            {
+                if (currentLayer <= 1)
+                {
+                    OnOffCharacterCanvas(false);
+                    OnOffSkillCanvas(false);
+                    OnOffPauseMenuCanvas(false);
+                }
+                else if (currentLayer == 2) 
+                {
+                    _characterUI.ClosePopupWindow();
+                    _skillUI.ClosePopupWindow();
+                }
+            }
+
+            previousLayer = currentLayer;
+        }
     }
 
     public void OnOffCanvas(Canvas canvas, UISystem uiSys, bool isOn)
@@ -59,7 +81,7 @@ public class UIManager : Generic.Singleton<UIManager>
                 canvas.enabled = isOn;
                 uiSys.OpenUI();
             }
-            else 
+            else
             {
                 uiSys.CloseUI();
                 canvas.enabled = isOn;
@@ -85,7 +107,36 @@ public class UIManager : Generic.Singleton<UIManager>
         if (_characterCanvas.enabled) isActiveSomeWindow = true;
         if (_skillCanvas.enabled) isActiveSomeWindow = true;
 
-        _backgroundButton.SetActive(isActiveSomeWindow);
+        //_backgroundButton.SetActive(isActiveSomeWindow);
     }
-    
+
+    private int GetPointerOverUILayer() 
+    {
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, results);
+        foreach (RaycastResult result in results) 
+        {
+            if (result.gameObject.layer == LayerMask.NameToLayer("UI")) 
+            {
+                return 0;
+            }
+            else if (result.gameObject.layer == LayerMask.NameToLayer("UI1"))
+            {
+                return 1;
+            }
+            else if (result.gameObject.layer == LayerMask.NameToLayer("UI2"))
+            {
+                return 2;
+            }
+            else if (result.gameObject.layer == LayerMask.NameToLayer("UI3"))
+            {
+                return 3;
+            }
+        }
+
+        return -1;
+    }
 }

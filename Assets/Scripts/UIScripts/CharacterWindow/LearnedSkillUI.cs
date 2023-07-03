@@ -20,8 +20,8 @@ public class LearnedSkillUI : UISystem
         _skillManager = UIManager.instance._skillManager;
 
         //Skill icon object pooling
-        List<Skill> _skills = _skillManager.GetAllSkills();
-        for (int i = 0; i < _skills.Count; i++)
+        int skillCount = _skillManager.GetAllSkills().Count;
+        for (int i = 0; i < skillCount; i++)
         {
             Vector3 pos = ICON_INIT_POSITION;
             pos.x += i * ICON_INTERVAL;

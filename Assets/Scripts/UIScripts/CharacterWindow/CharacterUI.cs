@@ -37,4 +37,10 @@ public class CharacterUI : UISystem
     {
         _moneyText.GetComponent<TextMeshProUGUI>().text = "Money: " + UIManager.instance._itemManager.money.ToString() + "$";
     }
+
+    public override void ClosePopupWindow()
+    {
+        UIManager.instance.previousLayer = 2;
+        _itemListUI.CloseItemUseWindow();
+    }
 }

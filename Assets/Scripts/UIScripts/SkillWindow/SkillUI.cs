@@ -34,10 +34,17 @@ public class SkillUI : UISystem
     {
         CloseSkillTooltip();
     }
+    public override void ClosePopupWindow()
+    {
+        UIManager.instance.previousLayer = 2;
+        CloseSkillTooltip();
+    }
     public void ClickSkillUIButton(Transform _transform, int btnIndex)
     {
         _skillTooltipWindow.transform.position = _transform.position;
         SetTooltipWindow(btnIndex);
+
+        UIManager.instance.previousLayer = 3;
         _skillTooltipWindow.SetActive(true);
     }
     private void SetTooltipWindow(int index)

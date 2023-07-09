@@ -13,6 +13,7 @@ public class Player : Unit
         
         unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);
+        TileEffectManager.instance.SetPlayer(this);
     }
     public override void Updated()
     {
@@ -47,7 +48,7 @@ public class Player : Unit
 #if UNITY_EDITOR
         Debug.Log("Select Action : " + action);
 #endif
-        if (activeUnitAction == action) return;
+        //if (activeUnitAction == action) return;
 
         activeUnitAction = action;
         onSelectedChanged.Invoke();
@@ -55,22 +56,29 @@ public class Player : Unit
 
     private void FinishAction()
     {
-        ClearBusy();
         currentActionPoint -= activeUnitAction.GetCost();
         onCostChanged.Invoke(currentActionPoint);
+        
+        ClearBusy();
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
-    private static bool TryGetMouseOverTilePos(out Vector3Int pos)
+    public static bool TryGetMouseOverTilePos(out Vector3Int pos)
     {
-        RaycastHit hit; 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100f ,layerMask : LayerMask.GetMask("Tile")))
+        if (Physics.Raycast(ray, out var hit, float.MaxValue ,layerMask : LayerMask.GetMask("Tile")))
         {
             var tile = hit.collider.GetComponent<Tile>();
+
+            if (tile is null)
+            {
+                pos = Vector3Int.zero;
+                return false;
+            }
+            
             if (tile.inSight)
             {
-                pos = tile.position;
+                pos = tile.hexPosition;
                 return true;
             }
         }
@@ -81,13 +89,13 @@ public class Player : Unit
 
     private void ReloadSight()
     {
-        var allTile = tileSystem.GetAllTiles();
+        var allTile = tileSystem.GetTilesInRange(hexPosition, stat.sightRange);
 
         foreach (var tile in allTile)
         {
             tile.inSight = 
-                tileSystem.VisionCast(hexTransform.position, tile.position) &&
-                Hex.Distance(hexTransform.position, tile.position) <= stat.sightRange;
+                tileSystem.VisionCast(hexTransform.position, tile.hexPosition) &&
+                Hex.Distance(hexTransform.position, tile.hexPosition) <= stat.sightRange;
         }
     }
     
@@ -99,8 +107,8 @@ public class Player : Unit
     {
         if(unit is not Player)
         {
-            unit.isVisible = tileSystem.VisionCast(position, unit.position) &&
-                             Hex.Distance(hexTransform.position, unit.position) <= stat.sightRange;
+            unit.isVisible = tileSystem.VisionCast(hexPosition, unit.hexPosition) &&
+                             Hex.Distance(hexTransform.position, unit.hexPosition) <= stat.sightRange;
         }
         
         Debug.Log("On Any Unit Moved : Invoke");
@@ -109,7 +117,7 @@ public class Player : Unit
     private void OnMoved(Unit unit)
     {
         ReloadSight();
-        foreach (var obj in tileSystem.GetTile(position).objects) 
+        foreach (var obj in tileSystem.GetTile(hexPosition).objects) 
         { 
             obj.OnCollision(unit);
         }

@@ -6,9 +6,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MainSystem : MonoBehaviour
+public class CombatSystem : MonoBehaviour
 {
-    public static MainSystem instance { get; private set; }
+    public static CombatSystem instance { get; private set; }
     public TileSystem tileSystem;
     public TurnSystem turnSystem;
     public UnitSystem unitSystem;
@@ -29,7 +29,7 @@ public class MainSystem : MonoBehaviour
     {
         tileSystem.SetUpTilesAndObjects();
         unitSystem.SetUpUnits();
-        turnSystem.EndTurn();
+        turnSystem.StartCombat();
     }
 
     public bool IsPlayerTurn()
@@ -37,5 +37,8 @@ public class MainSystem : MonoBehaviour
         return unitSystem.GetPlayer() == turnSystem.turnOwner;
     }
 
-    
+    public List<Unit> GetUnitList()
+    {
+        return unitSystem.units;
+    }
 }

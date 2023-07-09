@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class CombatUI : MonoBehaviour
 {
-    public TurnSystem turnSystem => MainSystem.instance.turnSystem;
-    public UnitSystem unitSystem => MainSystem.instance.unitSystem;
+    public TurnSystem turnSystem => CombatSystem.instance.turnSystem;
+    public UnitSystem unitSystem => CombatSystem.instance.unitSystem;
 
     public GameObject playerActionButtonsUI;
     public ActionButton[] actionButtonArray;
@@ -28,7 +28,7 @@ public class CombatUI : MonoBehaviour
 
     private void System_OnTurnChanged()
     {
-        if (MainSystem.instance.IsPlayerTurn())
+        if (CombatSystem.instance.IsPlayerTurn())
         {
             TurnOnPlayerActionUI();
         }

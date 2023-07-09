@@ -42,3 +42,25 @@ public interface IUnit
     /// <returns>UnitAction의 배열</returns>
     IUnitAction[] GetUnitActionArray();
 }
+
+[System.Serializable]
+public struct UnitStat
+{
+    public int maxHp;
+    public int curHp;
+    public int concentration; 
+    public int sightRange; 
+    public int speed;
+    public int actionPoint;
+    public float additionalHitRate;
+    public float criticalChance;
+    public int revolverAdditionalDamage;
+    public int repeaterAdditionalDamage;
+    public int shotgunAdditionalDamage;
+    public int revolverAdditionalRange;
+    public int repeaterAdditionalRange;
+    public int shotgunAdditionalRange;
+    public float revolverCriticalDamage;
+    public float shotgunCriticalDamage;
+    public float repeaterCriticalDamage;
+}

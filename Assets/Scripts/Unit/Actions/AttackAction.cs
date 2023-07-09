@@ -37,21 +37,21 @@ public class AttackAction : BaseAction
     public override void SetTarget(Vector3Int targetPos)
     {
         _weapon = unit.weapon;
-        _target = MainSystem.instance.unitSystem.GetUnit(targetPos);
+        _target = CombatSystem.instance.unitSystem.GetUnit(targetPos);
         Debug.Log("Attack Target : " + _target);
     }
 
     public override bool CanExecute()
     {
         if (_target == null) return false;
-        if (IsThereWallBetweenUnitAnd(_target.position)) return false;
+        if (IsThereWallBetweenUnitAnd(_target.hexPosition)) return false;
         
         return true;
     }
 
     private bool IsThereWallBetweenUnitAnd(Vector3Int targetPos)
     {
-        return !MainSystem.instance.tileSystem.RayCast(unit.position, targetPos);
+        return !CombatSystem.instance.tileSystem.RayCast(unit.hexPosition, targetPos);
     }
 
     private void Update()
@@ -62,7 +62,7 @@ public class AttackAction : BaseAction
         {
             default:
             case State.Aiming:
-                Vector3 aimDirection = (Hex.Hex2World(_target.position) - transform.position).normalized;
+                Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - transform.position).normalized;
 
                 float rotationSpeed = 10f;
                 transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * rotationSpeed);

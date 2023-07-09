@@ -9,7 +9,7 @@ public class TileObject : MonoBehaviour
     public HexTransform hexTransform;
     public MeshRenderer meshRenderer;
 
-    public Vector3Int position
+    public Vector3Int hexPosition
     {
         get => hexTransform.position;
         set => hexTransform.position = value;
@@ -18,13 +18,13 @@ public class TileObject : MonoBehaviour
 
     private void Awake()
     {
-        hexTransform = GetComponent<HexTransform>();
-        meshRenderer = GetComponent<MeshRenderer>();
+        hexTransform ??= GetComponent<HexTransform>();
+        meshRenderer ??= GetComponent<MeshRenderer>();
     }
     
-    public void Init()
+    public void SetUp()
     {
-        tile = MainSystem.instance.tileSystem.GetTile(position);
+        tile = CombatSystem.instance.tileSystem.GetTile(hexPosition);
         if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
         
         SetTile(tile);
@@ -37,26 +37,34 @@ public class TileObject : MonoBehaviour
     }
 
     public virtual void OnCollision(Unit other)
-    { }
-    
-    public static void Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
     {
-        var tile = tileSystem.GetTile(pos);
-        if (tile == null) return;
-
-        var tileObj = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity).GetComponent<TileObject>();
-        tileObj.position = pos;
+        
     }
+    
+    // public static void Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
+    // {
+    //     var tile = tileSystem.GetTile(pos);
+    //     if (tile == null) return;
+    //
+    //     var tileObj = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity).GetComponent<TileObject>();
+    //     tileObj.position = pos;
+    // }
 
     [SerializeField] private bool vision;
-    public bool isVisible
+    public bool IsVisible()
     {
-        get => meshRenderer.enabled;
-        set
-        {
-            meshRenderer.enabled = value;
-            vision = value;
-        }
+        return meshRenderer.enabled;
     }
 
+    public void SetVisible(bool value)
+    {
+        meshRenderer.enabled = value;
+        vision = value;
+    }
+
+    protected virtual void RemoveSelf()
+    {
+        tile.RemoveObject(this);
+        Destroy(gameObject);
+    }
 }

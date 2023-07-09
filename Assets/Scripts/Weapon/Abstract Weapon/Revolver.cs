@@ -41,7 +41,7 @@ public class Revolver : Weapon
     public override float GetHitRate(Unit target)
     {
         int range = baseRange + unitStat.revolverAdditionalRange;
-        int distance = Hex.Distance(unit.position, target.position);
+        int distance = Hex.Distance(unit.hexPosition, target.hexPosition);
 
         float hitRate = unitStat.concentration * (100 - distance * GetDistancePenalty() *
             (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1)

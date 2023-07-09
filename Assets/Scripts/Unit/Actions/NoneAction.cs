@@ -13,7 +13,7 @@ public class NoneAction : BaseAction
     public override void SetTarget(Vector3Int targetPos)
     {
         Debug.LogError("None action doesn't have SetTarget func");
-        throw new NotImplementedException();
+        throw new FieldAccessException();
     }
 
     public override int GetCost()
@@ -24,12 +24,12 @@ public class NoneAction : BaseAction
     public override bool CanExecute()
     {
         Debug.LogError("None action doesn't have CanExecute func");
-        throw new NotImplementedException();
+        throw new FieldAccessException();
     }
 
     public override void Execute(Action onActionComplete)
     {
         Debug.LogError("None action doesn't have Execute func");
-        throw new NotImplementedException();
+        throw new FieldAccessException();
     }
 }

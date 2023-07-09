@@ -7,10 +7,10 @@ using UnityEngine;
 public static class Hex
 {
     //육각형 타일 하나의 반지름 크기를 의미합니다.
-    private const float Radius = 1f;
+    public const float Radius = 1f;
     
     //루트 3 상수입니다.
-    private static readonly float Sqrt3 = Mathf.Sqrt(3);
+    public static readonly float Sqrt3 = Mathf.Sqrt(3);
 
     /// <summary>
     /// Hex좌표를 인게임 World 직교좌표계로 변환합니다.

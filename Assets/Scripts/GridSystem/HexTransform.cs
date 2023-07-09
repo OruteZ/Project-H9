@@ -19,12 +19,13 @@ public class HexTransform : MonoBehaviour
     [ExecuteInEditMode]
     private void SetPosition(Vector3Int pos)
     {
+        Transform tsf = transform;
         _position = pos;
-        transform.position = Hex.Hex2World(_position);
+        tsf.position = Hex.Hex2World(_position) + new Vector3(0, tsf.position.y, 0);
     }
 
     public void OnValidate()
     {
-        transform.position = Hex.Hex2World(_position);
+        SetPosition(_position);
     }
 }

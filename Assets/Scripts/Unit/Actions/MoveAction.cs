@@ -24,21 +24,28 @@ public class MoveAction : BaseAction
 
     public override void SetTarget(Vector3Int targetPos)
     {
-        _startPosition = unit.position;
+        _startPosition = unit.hexPosition;
         _destinationPosition = targetPos;
+        _currentPositionIndex = 1;  
     }
 
     public override bool CanExecute()
     {
-        if (MainSystem.instance.unitSystem.GetUnit(_destinationPosition) != null) return false;
-        
-        _path = MainSystem.instance.tileSystem.FindPath(_startPosition, _destinationPosition, maxMoveDistance);
-        if (_path == null)
+        if (CombatSystem.instance.unitSystem.GetUnit(_destinationPosition) != null)
         {
+            Debug.Log("there is unit, cant move");
             return false;
         }
-        if (_path.Count <= 1)
+        
+        _path = CombatSystem.instance.tileSystem.FindPath(_startPosition, _destinationPosition, maxMoveDistance);
+        if (_path == null)
         {
+            Debug.Log("There is no path");
+            return false;
+        }
+        if (_path.Count < 1)
+        {
+            Debug.Log("제자리");
             return false;
         }
 
@@ -51,9 +58,8 @@ public class MoveAction : BaseAction
         StartAction(onActionComplete);
 
         //_path = unit.hexTransform.Map.FindPath(unit.Position, targetPos, _maxMoveDistance) as List<Vector3Int>;
-        _currentPositionIndex = 1;  
         transform.forward =
-            (Hex.Hex2World(_path[_currentPositionIndex].position)
+            (Hex.Hex2World(_path[_currentPositionIndex].hexPosition)
             - transform.position).normalized;
     }
 
@@ -66,15 +72,21 @@ public class MoveAction : BaseAction
     {
         if (!isActive) return;
 
-        Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].position);
-        Vector3 moveDirection = (targetPos - transform.position).normalized;
+        Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].hexPosition);
+        targetPos.y = transform.position.y;
         
-        transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
+        Vector3 moveDirection = (targetPos - transform.position).normalized;
+
+        Vector2 forwardVec2 = Vector2.Lerp(new Vector2(transform.forward.x, transform.forward.z),
+            new Vector2(moveDirection.x, moveDirection.z), Time.deltaTime * rotationSpeed);
+
+        transform.forward = new Vector3(forwardVec2.x, 0, forwardVec2.y);
+
         transform.position += moveDirection * (moveSpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, targetPos) < 0.1f)
         {
-            unit.position = _path[_currentPositionIndex].position;
+            unit.hexPosition = _path[_currentPositionIndex].hexPosition;
             
             _currentPositionIndex++;
             if (_currentPositionIndex >= _path.Count)

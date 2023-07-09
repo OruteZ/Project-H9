@@ -18,6 +18,7 @@ public abstract class Weapon
         };
 
         weapon.unit = owner;
+        // ReSharper disable once MergeConditionalExpression
         weapon.unitStat = weapon.unit is null ? new UnitStat() : weapon.unit.GetStat();
         
         weapon.SetUpData(data);

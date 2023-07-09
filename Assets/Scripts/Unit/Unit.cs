@@ -17,9 +17,9 @@ public enum UnitType
 [RequireComponent(typeof(HexTransform))]
 public abstract class Unit : MonoBehaviour, IUnit
 {
-    protected static TurnSystem turnSystem => MainSystem.instance.turnSystem;
-    protected static UnitSystem unitSystem => MainSystem.instance.unitSystem;
-    protected static TileSystem tileSystem => MainSystem.instance.tileSystem;
+    protected static TurnSystem turnSystem => CombatSystem.instance.turnSystem;
+    protected static UnitSystem unitSystem => CombatSystem.instance.unitSystem;
+    protected static TileSystem tileSystem => CombatSystem.instance.tileSystem;
     
     [HideInInspector] 
     public HexTransform hexTransform;
@@ -49,7 +49,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     public abstract void StartTurn();
     public abstract void GetDamage(int damage);
 
-    public Vector3Int position
+    public Vector3Int hexPosition
     {
         get => hexTransform.position;
         set
@@ -64,6 +64,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         unitName = newName;
         stat = unitStat;
+        stat.curHp = stat.maxHp;
         WeaponData newWeaponData = WeaponManager.GetWeaponData(weaponIndex);
         weapon = Weapon.Clone(newWeaponData, owner : this);
     }   
@@ -127,13 +128,13 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     protected void ClearBusy()
     {
-        bool hasChanged = _isBusy is false;
+        bool hasChanged = _isBusy is true;
         _isBusy = false;
         
         if(hasChanged) onBusyChanged.Invoke();
     }
 
-    protected bool IsBusy()
+    public bool IsBusy()
     {
         return _isBusy;
     }
@@ -142,8 +143,17 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         activeUnitAction.SetTarget(targetPosition);
 
-        if (activeUnitAction.GetCost() > currentActionPoint) return false;
-        if (activeUnitAction.CanExecute() is not true) return false;
+        if (activeUnitAction.GetCost() > currentActionPoint)
+        {  
+            Debug.Log("Cost is loss, Cost is " + activeUnitAction.GetCost());
+            return false;
+        }
+
+        if (activeUnitAction.CanExecute() is not true)
+        {
+            Debug.Log("Can't Execute");
+            return false;
+        }
         
         activeUnitAction.Execute(onActionFinish);
         return true;
@@ -153,26 +163,5 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         return activeUnitAction;
     }
-}
-
-[Serializable]
-public struct UnitStat
-{
-    public int hp;
-    public int concentration; 
-    public int sightRange; 
-    public int speed;
-    public int actionPoint;
-    public float additionalHitRate;
-    public float criticalChance;
-    public int revolverAdditionalDamage;
-    public int repeaterAdditionalDamage;
-    public int shotgunAdditionalDamage;
-    public int revolverAdditionalRange;
-    public int repeaterAdditionalRange;
-    public int shotgunAdditionalRange;
-    public float revolverCriticalDamage;
-    public float shotgunCriticalDamage;
-    public float repeaterCriticalDamage;
 }
 

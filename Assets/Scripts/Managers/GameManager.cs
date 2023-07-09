@@ -10,22 +10,43 @@ public enum GameState
 }
 public class GameManager : Generic.Singleton<GameManager>
 {
-    public GameState currentState;
+    private GameState _currentState;
 
     [Header("Player Info")] 
     public Vector3Int playerWorldPos;
     public UnitStat playerStat;
     public Weapon playerWeapon;
 
+    [Header("World Scene Name")] 
+    public string worldSceneName; 
+
     public void ChangeState(GameState state)
     {
-        if (currentState == state) return;
+        if(CompareState(state)) return;
 
-        currentState = state;
+        _currentState = state;
     }
 
-    public void ChangeMap(string sceneName)
+    private void ChangeMap(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void StartCombat(string combatSceneName)
+    {
+        playerWorldPos = CombatSystem.instance.unitSystem.GetPlayer().hexPosition;
+        ChangeMap(combatSceneName);
+        ChangeState(GameState.Combat);
+    }
+
+    public void FinishCombat()
+    {
+        ChangeMap(worldSceneName);
+        ChangeState(GameState.World);
+    }
+
+    public bool CompareState(GameState state)
+    {
+        return _currentState == state;
     }
 }

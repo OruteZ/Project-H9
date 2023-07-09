@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class SkillIcon : MonoBehaviour
 {
-    [SerializeField] private UIManager _uiManager;
-    [SerializeField] private SkillManager _skillManager;
+    private UIManager _uiManager;
+    private SkillManager _skillManager;
     private int skillIndex;
     public void GetSkillIndex(int index) 
     {
+        _uiManager = UIManager.instance;
+        _skillManager = SkillManager.instance;
+
         skillIndex = index;
         //FindIconImage();
     }

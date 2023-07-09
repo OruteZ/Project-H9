@@ -35,7 +35,8 @@ public class CharacterUI : UISystem
 
     public void SetMoneyText()
     {
-        _moneyText.GetComponent<TextMeshProUGUI>().text = "Money: " + UIManager.instance._itemManager.money.ToString() + "$";
+        string moneyText = ItemManager.instance.money.ToString();
+        _moneyText.GetComponent<TextMeshProUGUI>().text = "Money: " + moneyText + "$";
     }
 
     public override void ClosePopupWindow()

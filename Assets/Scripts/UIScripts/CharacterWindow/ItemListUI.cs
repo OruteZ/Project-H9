@@ -11,9 +11,8 @@ public class ItemListUI : UISystem
 
     private List<GameObject> _itemLists = new List<GameObject>();
     private const int ITEM_LIST_INIT_COUNT = 20;
-    private readonly Vector3 ITEM_LIST_INIT_POSITION = new Vector3(1347.5f, 690, 0);
+    private readonly Vector3 ITEM_LIST_INIT_POSITION = new Vector3(364, -60, 0);
     private const float ITEM_LIST_INTERVAL = 100;
-    private float initContentsYPosition;
 
     public GameObject ItemListPrefab;
     [SerializeField] private GameObject _ItemListPrefabs;
@@ -28,9 +27,8 @@ public class ItemListUI : UISystem
     // Start is called before the first frame update
     void Start()
     {
-        _itemManager = UIManager.instance._itemManager;
+        _itemManager = ItemManager.instance;
         _currentItemIndex = -1;
-        initContentsYPosition = _weaponItemListScrollContents.transform.localPosition.y;
 
         ShowWeaponItems();
         ExpandItemLists();
@@ -102,11 +100,10 @@ public class ItemListUI : UISystem
     private void SetEachItemList(int cnt, List<Item> items, GameObject scrollContents)
     {
         int itemListCount = cnt;
-        float currentContentsYPosition = scrollContents.transform.localPosition.y;
         for (int i = 0; i < items.Count; i++)
         {
             Vector3 pos = ITEM_LIST_INIT_POSITION;
-            pos.y -= i * ITEM_LIST_INTERVAL + (initContentsYPosition - currentContentsYPosition);
+            pos.y -= i * ITEM_LIST_INTERVAL;
             SetItemList(itemListCount, pos, scrollContents, items[i]);
             itemListCount++;
         }
@@ -121,8 +118,8 @@ public class ItemListUI : UISystem
             ExpandItemLists();
         }
         _itemLists[index].SetActive(true);
-        _itemLists[index].transform.position = pos;
         _itemLists[index].transform.SetParent(parents.transform);
+        _itemLists[index].transform.localPosition = pos;
         _itemLists[index].GetComponent<ItemListElement>().SetItemListElement(item, this);
 
     }
@@ -130,9 +127,7 @@ public class ItemListUI : UISystem
     {
         for (int i = 0; i < ITEM_LIST_INIT_COUNT; i++)
         {
-            Vector3 pos = ITEM_LIST_INIT_POSITION;
-            GameObject itemList = Instantiate(ItemListPrefab, pos, Quaternion.identity);
-            itemList.transform.SetParent(_ItemListPrefabs.transform);
+            GameObject itemList = Instantiate(ItemListPrefab, ITEM_LIST_INIT_POSITION, Quaternion.identity, _ItemListPrefabs.transform);
 
             itemList.SetActive(false);
             _itemLists.Add(itemList);

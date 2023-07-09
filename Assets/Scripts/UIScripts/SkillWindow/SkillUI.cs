@@ -22,7 +22,7 @@ public class SkillUI : UISystem
 
     void Start()
     {
-        _skillManager = UIManager.instance._skillManager;
+        _skillManager = SkillManager.instance;
         //GetComponent<Image>().sprite = ;
         UpdateSkillUIImage();
     }

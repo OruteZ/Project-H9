@@ -17,16 +17,13 @@ public class LearnedSkillUI : UISystem
     // Start is called before the first frame update
     void Start()
     {
-        _skillManager = UIManager.instance._skillManager;
+        _skillManager = SkillManager.instance;
 
         //Skill icon object pooling
         int skillCount = _skillManager.GetAllSkills().Count;
         for (int i = 0; i < skillCount; i++)
         {
-            Vector3 pos = ICON_INIT_POSITION;
-            pos.x += i * ICON_INTERVAL;
-            GameObject skillIcon = Instantiate(skillIconPrefab, pos, Quaternion.identity);
-            skillIcon.transform.SetParent(_iconScrollContents.transform);
+            GameObject skillIcon = Instantiate(skillIconPrefab, ICON_INIT_POSITION, Quaternion.identity, _iconScrollContents.transform);
 
             skillIcon.SetActive(false);
             _skillIconUIs.Add(skillIcon);

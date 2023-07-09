@@ -15,10 +15,6 @@ public class UIManager : Generic.Singleton<UIManager>
     public SkillUI _skillUI { get; private set; }
     public PauseMenuUI _pauseMenuUI { get; private set; }
 
-    [Header("Managers")]
-    public SkillManager _skillManager;
-    public ItemManager _itemManager;
-
     [Header("Canvases")]
     [SerializeField] private Canvas _worldCanvas;
     [SerializeField] private Canvas _battleCanvas;
@@ -41,6 +37,10 @@ public class UIManager : Generic.Singleton<UIManager>
         _characterUI = _characterCanvas.GetComponent<CharacterUI>();
         _skillUI = _skillCanvas.GetComponent<SkillUI>();
         _pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
+
+        OnOffCanvas(_characterCanvas, _characterUI, false);
+        OnOffCanvas(_skillCanvas, _skillUI, false);
+        OnOffCanvas(_pauseMenuCanvas, _pauseMenuUI, false);
     }
     void Update()
     {

@@ -21,9 +21,6 @@ public class UIManager : Generic.Singleton<UIManager>
     [SerializeField] private Canvas _characterCanvas;
     [SerializeField] private Canvas _skillCanvas;
     [SerializeField] private Canvas _pauseMenuCanvas;
-
-    [Header("Others")]
-    [SerializeField] private GameObject _backgroundButton;
     
     //[HideInInspector]
     public bool isMouseOverUI;
@@ -32,8 +29,8 @@ public class UIManager : Generic.Singleton<UIManager>
     void Start()
     {
         _currentStatusUI = _worldCanvas.GetComponent<CurrentStatusUI>();
-        _timingUI = GetComponent<TimingUI>();
-        _questUI = GetComponent<QuestUI>();
+        _timingUI = _worldCanvas.GetComponent<TimingUI>();
+        _questUI = _worldCanvas.GetComponent<QuestUI>();
         _characterUI = _characterCanvas.GetComponent<CharacterUI>();
         _skillUI = _skillCanvas.GetComponent<SkillUI>();
         _pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
@@ -86,7 +83,6 @@ public class UIManager : Generic.Singleton<UIManager>
                 uiSys.CloseUI();
                 canvas.enabled = isOn;
             }
-            OnOffBackgroundBtn();
         }
     }
     public void OnOffCharacterCanvas(bool isOn)
@@ -100,14 +96,6 @@ public class UIManager : Generic.Singleton<UIManager>
     public void OnOffPauseMenuCanvas(bool isOn)
     {
         OnOffCanvas(_pauseMenuCanvas, _pauseMenuUI, isOn);
-    }
-    private void OnOffBackgroundBtn()
-    {
-        bool isActiveSomeWindow = false;
-        if (_characterCanvas.enabled) isActiveSomeWindow = true;
-        if (_skillCanvas.enabled) isActiveSomeWindow = true;
-
-        //_backgroundButton.SetActive(isActiveSomeWindow);
     }
 
     private int GetPointerOverUILayer() 

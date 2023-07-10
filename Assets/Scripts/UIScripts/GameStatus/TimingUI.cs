@@ -9,18 +9,6 @@ public class TimingUI : UISystem
 
     public TurnSystem turnSystem;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        SetTurnText(turnSystem.turnNumber);
-    }
-
     public void SetTurnText(int currentTurn) 
     {
         TurnText.GetComponent<TextMeshProUGUI>().text = "Current Turn: " + currentTurn.ToString();

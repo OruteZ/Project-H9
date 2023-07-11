@@ -77,6 +77,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         var tiles = CombatSystem.instance.tileSystem.GetWalkableTiles(start, range);
         foreach (var tile in tiles)
         {
+            if (Hex.Distance(tile.hexPosition, _player.hexPosition) > _player.GetStat().sightRange) continue;
             SetEffectBase(tile.hexPosition, EffectType.Normal);
         }
 

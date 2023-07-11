@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
-[System.Serializable]
+[Serializable]
 public class Gimmick
 {
+
     public string gimmickName;
 
     public void Setup(Weapon weapon)

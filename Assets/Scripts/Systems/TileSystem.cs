@@ -20,6 +20,8 @@ public class TileSystem : MonoBehaviour
     public GameObject map;
     private HexGridLayout _gridLayout;
 
+    private HexGridLayout gridLayout => _gridLayout ??= map.GetComponent<HexGridLayout>();
+
     private void Awake()
     {
         _tiles = new Dictionary<Vector3Int, Tile>();
@@ -50,10 +52,10 @@ public class TileSystem : MonoBehaviour
             AddTile(t);
             if (GameManager.instance.CompareState(GameState.World))
             {
-                var fow = Instantiate(fogOfWarPrefab, fogs).GetComponent<FogOfWar>();
+                var fow = Instantiate(fogOfWarPrefab, fogs).GetComponent<FogOfWar>(); 
                 fow.hexPosition = t.hexPosition;
             }
-//            TileEffectManager.instance.SetEffect(t.position, !t.walkable ? EffectType.Impossible : EffectType.Normal);
+            
         }
 
         var objects = GetComponentsInChildren<TileObject>().ToList();
@@ -152,9 +154,9 @@ public class TileSystem : MonoBehaviour
         return result;
     }
 
-    public IEnumerable<Tile> GetTilesInRange(Vector3Int start, int range)
+    public IEnumerable<Tile> GetTilesInRange(Vector3Int start, int range_)
     {
-        var list = Hex.GetCircleGridList(range, start);
+        var list = Hex.GetCircleGridList(range_, start);
         var ret = new List<Tile>();
 
         foreach (var t in list)
@@ -293,6 +295,8 @@ public class TileSystem : MonoBehaviour
             //
             // TileEffectManager.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
         }
+        
+        gridLayout.LayoutGrid();
     }
 
     [ContextMenu("Create Rect World")]
@@ -313,6 +317,8 @@ public class TileSystem : MonoBehaviour
             //
             // TileEffectManager.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
         }
+
+        gridLayout.LayoutGrid();
     }
     //
     // [ContextMenu("Create World no wall")]
@@ -333,6 +339,8 @@ public class TileSystem : MonoBehaviour
         {
             DestroyImmediate(tile.gameObject);
         }
+
+        gridLayout.ClearGrid();
     }
 
     // [Header("World to combat Test")] 

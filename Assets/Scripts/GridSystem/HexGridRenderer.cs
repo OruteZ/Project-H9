@@ -19,9 +19,13 @@ public class HexGridRenderer : MonoBehaviour
     public float outerSize;
     public float height;
     public bool isFlatTopped;
-    
-    
+
     private void Awake()
+    {
+        SetUp();
+    }
+    
+    public void SetUp()
     {
         _meshFilter = GetComponent<MeshFilter>();
         _meshRenderer = GetComponent<MeshRenderer>();
@@ -49,7 +53,7 @@ public class HexGridRenderer : MonoBehaviour
     
     // private void OnValidate()
     // {
-    //     Awake();
+    //     SetUp();
     //     DrawMesh();
     // }
 

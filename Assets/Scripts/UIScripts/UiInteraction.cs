@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIInteraction : MonoBehaviour
+public class UIInteraction : Generic.Singleton<UIInteraction>
 {
 
-    private UiManager _uiManager;
+    private static UIManager _uiManager;
 
-    private void Awake()
+    private void Start()
     {
-        _uiManager = gameObject.GetComponent<UiManager>();
+        _uiManager = UIManager.instance;
     }
-    public void OnCharacterBtnClick() 
+    public void OnCharacterBtnClick()
     {
         _uiManager.OnOffCharacterCanvas(true);
         _uiManager.OnOffSkillCanvas(false);
@@ -53,16 +53,29 @@ public class UIInteraction : MonoBehaviour
 #endif
     }
 
-    public void OnWeaponItemUIBtnClick() 
+    public void OnWeaponItemUIBtnClick()
     {
-        _uiManager._characterUI.ChangeItemUIStatus(CharacterUI.ItemUIStatus.Weapon);
+        _uiManager._characterUI._itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Weapon);
     }
     public void OnUsableItemUIBtnClick()
     {
-        _uiManager._characterUI.ChangeItemUIStatus(CharacterUI.ItemUIStatus.Usable);
+        _uiManager._characterUI._itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Usable);
     }
     public void OnOtherItemUIBtnClick()
     {
-        _uiManager._characterUI.ChangeItemUIStatus(CharacterUI.ItemUIStatus.Other);
+        _uiManager._characterUI._itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Other);
+    }
+
+    public void OnItemUseBtnClick()
+    {
+        _uiManager._characterUI._itemListUI.ClickUseItem();
+    }
+    public void OnItemSellBtnClick()
+    {
+        _uiManager._characterUI._itemListUI.ClickSellItem();
+    }
+    public void OnItemDiscardBtnClick()
+    {
+        _uiManager._characterUI._itemListUI.ClickDiscardItem();
     }
 }

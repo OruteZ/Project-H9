@@ -4,11 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using System.Text.RegularExpressions;
 
-public class SkillRead : MonoBehaviour
+public class FileRead : MonoBehaviour
 {
-	static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))"; //regular expression
-	static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
-	static char[] TRIM_CHARS = { ' ' };
+	static readonly string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))"; //regular expression
+	static readonly string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
+	static readonly char[] TRIM_CHARS = { ' ' };
 
 	public static List<List<string>> Read(string file)
 	{

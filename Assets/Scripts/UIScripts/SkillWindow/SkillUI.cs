@@ -2,32 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
-public class SkillUI : MonoBehaviour
+public class SkillUI : UISystem
 {
-    public enum LearnState
+    public enum LearnStatus
     {
         NotLearned,
         Learnable,
         AlreadyLearned
     };
 
-    [SerializeField] private SkillManager _skillManager;
-    [SerializeField] private GameObject _skillWindow;
+    private SkillManager _skillManager;
+    private int _currentSkillIndex;
+
+    [Header("Skill UIs")]
+    [SerializeField] private GameObject _skillWindow;//?
     [SerializeField] private GameObject _skillUIButtons;
     [SerializeField] private GameObject _skillTooltipWindow;
     [SerializeField] private GameObject _skillPointText;
-    private int _currentSkillIndex;
 
     void Start()
     {
+        _skillManager = SkillManager.instance;
         //GetComponent<Image>().sprite = ;
         UpdateSkillUIImage();
+    }
+    public override void OpenUI() 
+    {
+        UpdateSkillPointUI();
+    }
+    public override void CloseUI()
+    {
+        CloseSkillTooltip();
+    }
+    public override void ClosePopupWindow()
+    {
+        UIManager.instance.previousLayer = 2;
+        CloseSkillTooltip();
     }
     public void ClickSkillUIButton(Transform _transform, int btnIndex)
     {
         _skillTooltipWindow.transform.position = _transform.position;
         SetTooltipWindow(btnIndex);
+
+        UIManager.instance.previousLayer = 3;
         _skillTooltipWindow.SetActive(true);
     }
     private void SetTooltipWindow(int index)
@@ -42,22 +59,22 @@ public class SkillUI : MonoBehaviour
         {
             if (_skillManager.IsEnoughSkillPoint())
             {
-                buttonText.text = "����";
+                buttonText.text = "습득";
             }
             else
             {
-                buttonText.text = "��ų ����Ʈ ����";
+                buttonText.text = "스킬 포인트 부족";
             }
         }
         else
         {
             if (currentSkill.isLearned)
             {
-                buttonText.text = "���� �Ϸ�";
+                buttonText.text = "습득 완료";
             }
             else
             {
-                buttonText.text = "���� �Ұ�";
+                buttonText.text = "습득 불가";
             }
         }
     }
@@ -82,14 +99,14 @@ public class SkillUI : MonoBehaviour
             SkillTreeElement _skillElement = _skillUIButtons.transform.GetChild(i).GetComponent<SkillTreeElement>();
             Skill _skill = _skillManager.GetSkill(_skillElement.GetSkillUIIndex());
 
-            LearnState state = LearnState.NotLearned;
+            LearnStatus state = LearnStatus.NotLearned;
             if (_skill.isLearned)
             {
-                state = LearnState.AlreadyLearned;
+                state = LearnStatus.AlreadyLearned;
             }
             if (_skill.isLearnable)
             {
-                state = LearnState.Learnable;
+                state = LearnStatus.Learnable;
             }
             _skillElement.SetSkillButtonEffect((int)state);
 

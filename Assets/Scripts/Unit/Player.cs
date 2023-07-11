@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class Player : Unit
 {
@@ -65,6 +66,13 @@ public class Player : Unit
     // ReSharper disable Unity.PerformanceAnalysis
     public static bool TryGetMouseOverTilePos(out Vector3Int pos)
     {
+
+        if (UIManager.instance.isMouseOverUI)
+        {
+            pos = Vector3Int.zero;
+            return false;
+        }
+        
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit, float.MaxValue ,layerMask : LayerMask.GetMask("Tile")))
         {

@@ -30,7 +30,7 @@ public class CurrentStatusUI : UISystem
     public void SetCurrentStatusUI() 
     {
         _actionPointText.GetComponent<TextMeshProUGUI>().text = _gameManager.playerStat.actionPoint.ToString();
-        _healthPointText.GetComponent<TextMeshProUGUI>().text = _gameManager.playerStat.hp.ToString();
+        _healthPointText.GetComponent<TextMeshProUGUI>().text = _gameManager.playerStat.curHp.ToString();
         _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _gameManager.playerStat.concentration.ToString() + "/ 100";
         _ConcentrationSlider.GetComponent<Slider>().value = _gameManager.playerStat.concentration / 100.0f;
     }

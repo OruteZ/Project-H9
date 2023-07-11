@@ -34,7 +34,7 @@ public class CharacterStatUI : UISystem
     }
     private void SetCharacterStatText(UnitStat playerStat)
     {
-        string text = playerStat.hp.ToString() + '\n' +
+        string text = playerStat.maxHp.ToString() + '\n' +
                       playerStat.concentration.ToString() + '\n' +
                       playerStat.sightRange.ToString() + '\n' +
                       playerStat.speed.ToString() + '\n' +

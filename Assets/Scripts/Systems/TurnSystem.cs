@@ -64,6 +64,7 @@ public class TurnSystem : MonoBehaviour
 
     private void StartTurn()
     {
+        UIManager.instance._timingUI.SetTurnText(turnNumber);
         CalculateTurnOwner();
         turnOwner.StartTurn();
         onTurnChanged.Invoke();

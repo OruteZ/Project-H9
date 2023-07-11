@@ -7,19 +7,24 @@ using UnityEngine;
 public class TileObject : MonoBehaviour
 {
     public HexTransform hexTransform;
+    public MeshRenderer meshRenderer;
 
-    public Vector3Int position
+    public Vector3Int hexPosition
     {
         get => hexTransform.position;
         set => hexTransform.position = value;
     } 
     protected Tile tile;
 
-    public void Init()
+    private void Awake()
     {
-        hexTransform = GetComponent<HexTransform>();
-        
-        tile = CombatSystem.instance.tileSystem.GetTile(position);
+        hexTransform ??= GetComponent<HexTransform>();
+        meshRenderer ??= GetComponent<MeshRenderer>();
+    }
+    
+    public void SetUp()
+    {
+        tile = CombatSystem.instance.tileSystem.GetTile(hexPosition);
         if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
         
         SetTile(tile);
@@ -32,17 +37,34 @@ public class TileObject : MonoBehaviour
     }
 
     public virtual void OnCollision(Unit other)
-    { }
-    
-    public static void Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
     {
-        var tile = tileSystem.GetTile(pos);
-        if (tile == null) return;
+        
+    }
+    
+    // public static void Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
+    // {
+    //     var tile = tileSystem.GetTile(pos);
+    //     if (tile == null) return;
+    //
+    //     var tileObj = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity).GetComponent<TileObject>();
+    //     tileObj.position = pos;
+    // }
 
-        var tileObj = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity).GetComponent<TileObject>();
-        tileObj.position = pos;
+    [SerializeField] private bool vision;
+    public bool IsVisible()
+    {
+        return meshRenderer.enabled;
     }
 
-    public bool isVisible;
+    public void SetVisible(bool value)
+    {
+        meshRenderer.enabled = value;
+        vision = value;
+    }
 
+    protected virtual void RemoveSelf()
+    {
+        tile.RemoveObject(this);
+        Destroy(gameObject);
+    }
 }

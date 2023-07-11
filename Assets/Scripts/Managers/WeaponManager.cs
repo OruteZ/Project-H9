@@ -12,9 +12,8 @@ public class WeaponManager : Generic.Singleton<WeaponManager>
     {
         if (index < instance.weaponList.Count) return instance.weaponList[index];
         
-        Debug.LogError("there are " + instance.weaponList.Count + " weapons, thers is no " + index + " index");
+        Debug.LogError("there are " + instance.weaponList.Count + " weapons, there is no " + index + " index");
         return null;
-
     }
 
     public static int GetWeaponIndex(Weapon weapon)
@@ -23,7 +22,7 @@ public class WeaponManager : Generic.Singleton<WeaponManager>
         {
             if (instance.weaponList[i].weaponName == weapon.weaponName) return i;
         }
-
+        
         return -1;
     }
 }

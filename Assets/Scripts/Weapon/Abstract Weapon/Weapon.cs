@@ -6,38 +6,25 @@ using UnityEngine.Events;
 [System.Serializable]
 public abstract class Weapon
 {
-    public static Weapon Clone(WeaponData data, Unit unit = null)
+    protected UnitStat unitStat;
+    public static Weapon Clone(WeaponData data, Unit owner = null)
     {
-        Weapon result = data.type switch
+        Weapon weapon = data.type switch
         {
             WeaponType.Revolver => new Revolver(),
             WeaponType.Repeater => new Repeater(),
             WeaponType.Shotgun => new Shotgun(),
             _ => throw new System.ArgumentOutOfRangeException()
         };
-        
-        
-        result.weaponName = data.weaponName;
-        result.weaponModel = data.weaponModel;
-        result.baseDamage = data.baseDamage;
-        result.baseRange = data.baseRange;
-        result.unit = unit;
 
-        result.onSuccessAttack = new UnityEvent<Unit, int>();
-        result.onCriticalAttack = new UnityEvent<Unit, int>();
-
-        result.gimmicks = new List<Gimmick>();
-        foreach (var gimmickType in data.gimmicks)
-        {
-            result.gimmicks.Add(Gimmick.Clone(gimmickType));    
-        }
+        weapon.unit = owner;
+        // ReSharper disable once MergeConditionalExpression
+        weapon.unitStat = weapon.unit is null ? new UnitStat() : weapon.unit.GetStat();
         
-        foreach (var gimmick in result.gimmicks)
-        {
-            gimmick.Setup(result);
-        }
-
-        return result;
+        weapon.SetUpData(data);
+        weapon.SetUpGimmicks();
+        
+        return weapon;
     }
     
     protected const float SHOTGUN_OVER_RANGE_PENALTY = 3f;
@@ -54,7 +41,31 @@ public abstract class Weapon
 
     [HideInInspector] public UnityEvent<Unit, int> onSuccessAttack;
     [HideInInspector] public UnityEvent<Unit, int> onCriticalAttack;
-    public abstract void Attack(Unit target, out bool critical);
+
+    private void SetUpData(WeaponData data)
+    {
+        weaponName = data.weaponName;
+        weaponModel = data.weaponModel;
+        baseDamage = data.baseDamage;
+        baseRange = data.baseRange;
+
+        onSuccessAttack = new UnityEvent<Unit, int>();
+        onCriticalAttack = new UnityEvent<Unit, int>();
+        
+        gimmicks = new List<Gimmick>();
+        foreach (var gimmickType in data.gimmicks)
+        {
+            gimmicks.Add(Gimmick.Clone(gimmickType));    
+        }
+    }
+    private void SetUpGimmicks()
+    {
+        foreach (var gimmick in gimmicks)
+        {
+            gimmick.Setup(this);
+        }
+    }
+    public abstract void Attack(Unit target, out bool isCritical);
     public abstract WeaponType GetWeaponType();
     public abstract int GetFinalDamage();
     public abstract int GetFinalCriticalDamage();

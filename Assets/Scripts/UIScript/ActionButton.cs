@@ -32,10 +32,10 @@ public class ActionButton : MonoBehaviour
             AddListener(CheckActiveAction);
     }
 
-    public void SetAction(IUnitAction unitAction)
+    public void SetAction(IUnitAction newAction)
     {
-        this.unitAction = unitAction;
-        actionName = unitAction.GetActionType().ToString();
+        this.unitAction = newAction;
+        actionName = newAction.ToString();
         CheckActiveAction();
     }
 
@@ -47,9 +47,7 @@ public class ActionButton : MonoBehaviour
     private void CheckActiveAction()
     {
         outLine.enabled = 
-            unitAction.GetActionType() 
-            == 
-            _player.GetSelectedAction().GetActionType();
+            unitAction.GetActionType() == _player.GetSelectedAction().GetActionType();
     }
 
     public void Select()

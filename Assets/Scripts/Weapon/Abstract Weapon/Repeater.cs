@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Repeater : Weapon
 {
-    public override void Attack(Unit target, out bool critical)
+    public override void Attack(Unit target, out bool isCritical)
     {
         throw new System.NotImplementedException();
     }

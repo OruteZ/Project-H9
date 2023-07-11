@@ -7,10 +7,10 @@ using UnityEngine;
 public static class Hex
 {
     //육각형 타일 하나의 반지름 크기를 의미합니다.
-    private const float Radius = 1f;
+    public const float Radius = 1f;
     
     //루트 3 상수입니다.
-    private static readonly float Sqrt3 = Mathf.Sqrt(3);
+    public static readonly float Sqrt3 = Mathf.Sqrt(3);
 
     /// <summary>
     /// Hex좌표를 인게임 World 직교좌표계로 변환합니다.
@@ -114,7 +114,7 @@ public static class Hex
     /// <param name="range">직선거리</param>
     /// <param name="center">중심점의 Hex좌표</param>
     /// <returns>범위 내부 Hex좌표들의 List</returns>
-    public static List<Vector3Int> GetGridsWithRange(int range, Vector3Int center)
+    public static List<Vector3Int> GetCircleGridList(int range, Vector3Int center)
     {
         var results = new List<Vector3Int>();
         for (var x = -range; x <= range; x++)
@@ -125,6 +125,28 @@ public static class Hex
                 results.Add(center + new Vector3Int(x, y, z));
             }
         }
+        return results;
+    }
+
+    /// <summary>
+    /// 가로 세로가 주어진 직사각형 모양의 Grid List를 반환합니다.
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns></returns>
+    public static List<Vector3Int> GetSquareGridList(int width, int height)
+    {
+        var results = new List<Vector3Int>();
+        
+        for (int h = 0; h < height; h++)
+        {
+            int start = -(h / 2);
+            for (int w = start; w < start + width; w++)
+            {
+                results.Add(new Vector3Int(w, h, -(w + h)));
+            }
+        }
+
         return results;
     }
 

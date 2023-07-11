@@ -12,14 +12,20 @@ using Random = UnityEngine.Random;
 public class TileSystem : MonoBehaviour
 {
     public GameObject tilePrefab;
+    public GameObject fogOfWarPrefab;
+    public Transform fogs;
     
     private Dictionary<Vector3Int, Tile> _tiles;
-    public List<TileObject> objects;
+
+    public GameObject map;
+    private HexGridLayout _gridLayout;
+
+    private HexGridLayout gridLayout => _gridLayout ??= map.GetComponent<HexGridLayout>();
 
     private void Awake()
     {
         _tiles = new Dictionary<Vector3Int, Tile>();
-        objects = GetComponentsInChildren<TileObject>().ToList();
+        _gridLayout = map.GetComponent<HexGridLayout>();
     }
 
     public List<Tile> GetAllTiles()
@@ -30,19 +36,35 @@ public class TileSystem : MonoBehaviour
         return result;
     }
 
+    public List<Vector3Int> GetAllTilePos()
+    {
+        var result = new List<Vector3Int>();
+        result.AddRange(_tiles.Values.Select(x => x.hexPosition));
+
+        return result;
+    }
+
     public void SetUpTilesAndObjects()
     {
-        var tilesInChildren = GetComponentsInChildren<Tile>();
+        var tilesInChildren = GetComponentsInChildren<Tile>();  
         foreach (Tile t in tilesInChildren)
         {
             AddTile(t);
-            TileEffectManager.SetEffect(t, !t.walkable ? EffectType.Impossible : EffectType.Normal);
+            if (GameManager.instance.CompareState(GameState.World))
+            {
+                var fow = Instantiate(fogOfWarPrefab, fogs).GetComponent<FogOfWar>(); 
+                fow.hexPosition = t.hexPosition;
+            }
+            
         }
 
+        var objects = GetComponentsInChildren<TileObject>().ToList();
         foreach (TileObject obj in objects)
         {
-            obj.Init();
+            obj.SetUp();
         }
+
+        _gridLayout.LayoutGrid();
     }
 
     /// <summary>
@@ -56,7 +78,7 @@ public class TileSystem : MonoBehaviour
     private Tile AddTile(Vector3Int position, bool walkable = true, bool visible = true, bool rayThroughable = true)
     {
         var tile = Instantiate(tilePrefab, transform).GetComponent<Tile>();
-        tile.hexTransform.position = position;
+        tile.hexPosition = position;
         tile.walkable = walkable;
         tile.visible = visible;
         tile.rayThroughable = rayThroughable;
@@ -67,6 +89,7 @@ public class TileSystem : MonoBehaviour
 
         return tile;
     }
+    
     /// <summary>
     /// 지정된 좌표에 타일을 생성합니다. walkable, visible, rayThroughable속성을 설정할 수 있습니다.
     /// </summary>
@@ -74,7 +97,7 @@ public class TileSystem : MonoBehaviour
     /// <returns> 추가된 Tile을 반환합니다. </returns>
     private Tile AddTile(Tile tile)
     {
-        if (!_tiles.TryAdd(tile.position, tile))
+        if (!_tiles.TryAdd(tile.hexPosition, tile))
         {
             throw new Exception("Tile 추가에 실패했습니다.");
         }
@@ -101,7 +124,7 @@ public class TileSystem : MonoBehaviour
     public IEnumerable<Tile> GetWalkableTiles(Vector3Int start, int maxLength)
     {
         var visited = new HashSet<Vector3Int> { start };
-        var result = new List<Tile>() { GetTile(start) };
+        var result = new List<Tile> { GetTile(start) };
         var container = new Queue<Vector3Int>();
         container.Enqueue(start);
 
@@ -118,7 +141,7 @@ public class TileSystem : MonoBehaviour
                     if (visited.Contains(next)) continue;
                     
                     var tile = GetTile(next);
-                    if (tile == null) continue;
+                    if (tile is null) continue;
                     if (!tile.walkable) continue;
                     
                     result.Add(GetTile(next));
@@ -131,11 +154,16 @@ public class TileSystem : MonoBehaviour
         return result;
     }
 
-    public IEnumerable<Tile> GetTilesInRange(Vector3Int start, int range)
+    public IEnumerable<Tile> GetTilesInRange(Vector3Int start, int range_)
     {
-        var list = Hex.GetGridsWithRange(range, start);
-        var ret = new List<Tile>(list.Count);
-        ret.AddRange(list.Select(GetTile));
+        var list = Hex.GetCircleGridList(range_, start);
+        var ret = new List<Tile>();
+
+        foreach (var t in list)
+        {
+            var tile = GetTile(t);
+            if (tile is not null) ret.Add(tile);
+        }
 
         return ret;
     }
@@ -155,7 +183,7 @@ public class TileSystem : MonoBehaviour
         var container = new Queue<PathNode>();
         container.Enqueue(new PathNode(start));
 
-        for(int cnt = 0; cnt < maxLength; cnt++)
+        for(int cnt = 0; cnt < maxLength + 1; cnt++)
         {
             int length = container.Count;
             for(int i = 0; i < length; i++)
@@ -164,7 +192,7 @@ public class TileSystem : MonoBehaviour
                 if (current.position == destination)
                 {
                     var result = new List<Tile>();
-                    while (current.from != null)
+                    while (current.from is not null)
                     {
                         result.Add(GetTile(current.position));
                         current = current.from;
@@ -180,8 +208,8 @@ public class TileSystem : MonoBehaviour
                     if (visited.Any(n => n == next)) continue;
                     
                     var tile = GetTile(next);
-                    if (tile == null) continue;
-                    if (!tile.walkable) continue;
+                    if (tile is null) continue;
+                    if (tile.walkable is false) continue;
                     
                     container.Enqueue(new PathNode(next, from:current));
                     visited.Add(next);
@@ -200,24 +228,22 @@ public class TileSystem : MonoBehaviour
     /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
     public bool RayCast(Vector3Int start, Vector3Int target)
     { 
-        var line1 = Hex.LineDraw(start, target);
+        var line1 = Hex.LineDraw (start, target);
         var line2 = Hex.LineDraw_(start, target);
 
         bool result = true;
-        Tile ret1, ret2;
-        
+
         for (int i = 0; i < line1.Count; i++)
         {
-            ret1 = GetTile(line1[i]);
-            ret2 = GetTile(line2[i]);
-            if (ret1 == null && ret2 == null) continue;
-            if (!ret1.rayThroughable && !ret2.rayThroughable)
-            {
-                result = false;
-            }
+            var ret1 = GetTile(line1[i]);
+            var ret2 = GetTile(line2[i]);
+            if (ret1 is null || ret2 is null) continue;
+            if (ret1.rayThroughable || ret2.rayThroughable) continue;
+
+            return false;
         }
 
-        return result;
+        return true;
     }
     
     /// <summary>
@@ -231,34 +257,36 @@ public class TileSystem : MonoBehaviour
         var line1 = Hex.LineDraw(start, target);
         var line2 = Hex.LineDraw_(start, target);
 
-        var result = true;
-
         for (int i = 0; i < line1.Count - 1; i++)
         {
             var ret1 = GetTile(line1[i]);
             var ret2 = GetTile(line2[i]);
-            if (ret1 == null && ret2 == null) continue;
-            if (!ret1.visible && !ret2.visible)
-            {
-                result = false;
-            }
+            if (ret1 is null || ret2 is null) continue;
+            if (ret1.visible || ret2.visible) continue;
+            return false;
         }
 
-        return result;
+        return true;
     }
     
     //demo code : 간단한 맵 생성용
-    [Header("Creating Demo World Inspector")]
+    [Header("Hex World Inspector")]
     public int range;
+
+    [Header("Square World Inspector")] 
+    public int width;
+    public int height;
     
-    [ContextMenu("Create World")]
-    public void CreateDemoWorld()
+    [ContextMenu("Create Hex World")]
+    public void CreateHexWorld()
     {
-        var positions = Hex.GetGridsWithRange(range, Hex.zero);
+        var positions = Hex.GetCircleGridList(range, Hex.zero);
+        Debug.Log(positions.Count);
         foreach (var pos in positions)
         {
-            var tile = Instantiate(tilePrefab, transform).GetComponent<HexTransform>();
-            tile.position = pos;
+            var tile = Instantiate(tilePrefab, map.transform).GetComponent<Tile>();
+            tile.hexPosition = pos;
+            tile.visible = tile.walkable = tile.rayThroughable = true;
             // if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
             //     isWall = false;
             //
@@ -267,6 +295,30 @@ public class TileSystem : MonoBehaviour
             //
             // TileEffectManager.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
         }
+        
+        gridLayout.LayoutGrid();
+    }
+
+    [ContextMenu("Create Rect World")]
+    public void CreateRectWorld()
+    {
+        var positions = Hex.GetSquareGridList(width, height);
+        Debug.Log(positions.Count);
+        foreach (var pos in positions)
+        {
+            var tile = Instantiate(tilePrefab, map.transform).GetComponent<Tile>();
+            tile.hexPosition = pos;
+            tile.visible = tile.walkable = tile.rayThroughable = true;
+            // if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
+            //     isWall = false;
+            //
+            // isWall = false;
+            // var tile = AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
+            //
+            // TileEffectManager.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
+        }
+
+        gridLayout.LayoutGrid();
     }
     //
     // [ContextMenu("Create World no wall")]
@@ -282,11 +334,13 @@ public class TileSystem : MonoBehaviour
     [ContextMenu("Remove Demo World")]
     private void RemoveDemoWorld()
     {
-        foreach (var tile in _tiles)
+        var tiles = GetComponentsInChildren<Tile>();
+        foreach (var tile in tiles)
         {
-            DestroyImmediate(tile.Value.gameObject);
+            DestroyImmediate(tile.gameObject);
         }
-        _tiles.Clear();
+
+        gridLayout.ClearGrid();
     }
 
     // [Header("World to combat Test")] 

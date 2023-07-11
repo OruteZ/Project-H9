@@ -9,18 +9,12 @@ using UnityEngine.Events;
 public class CombatSystem : MonoBehaviour
 {
     public static CombatSystem instance { get; private set; }
-    
     public TileSystem tileSystem;
     public TurnSystem turnSystem;
     public UnitSystem unitSystem;
 
     public GameState mapState;
-
-    public bool IsPlayerTurn()
-    {
-        return unitSystem.GetPlayer() == turnSystem.turnOwner;
-    }
-
+    
     private void Awake()
     {
         instance = this;
@@ -35,6 +29,16 @@ public class CombatSystem : MonoBehaviour
     {
         tileSystem.SetUpTilesAndObjects();
         unitSystem.SetUpUnits();
-        turnSystem.EndTurn();
+        turnSystem.StartCombat();
+    }
+
+    public bool IsPlayerTurn()
+    {
+        return unitSystem.GetPlayer() == turnSystem.turnOwner;
+    }
+
+    public List<Unit> GetUnitList()
+    {
+        return unitSystem.units;
     }
 }

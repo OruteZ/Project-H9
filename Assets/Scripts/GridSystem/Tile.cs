@@ -6,15 +6,21 @@ using UnityEngine;
 [RequireComponent(typeof(HexTransform))]
 public class Tile : MonoBehaviour
 {
-    [HideInInspector] public HexTransform hexTransform;
+    private HexTransform _hexTransform;
 
-    public Vector3Int position
+    public Vector3Int hexPosition
     {
-        get => hexTransform.position;
-        set => hexTransform.position = value;
-    } 
-
-    private MeshRenderer _meshRenderer;
+        get
+        {
+            _hexTransform ??= GetComponent<HexTransform>();
+            return _hexTransform.position;
+        }
+        set
+        {
+            _hexTransform ??= GetComponent<HexTransform>();
+            _hexTransform.position = value;
+        } 
+    }
 
     [Header("타일 속성")] public bool walkable;
     public bool visible;
@@ -22,19 +28,18 @@ public class Tile : MonoBehaviour
 
     [Header("플레이어 시야")] [SerializeField] private bool _inSight;
 
-    private Material _curEffect;
-
-    public Material effect
-    {
-        get => _curEffect;
-        set => _meshRenderer.material = value;
-    }
+    // private Material _curEffect;
+    //
+    // public Material effect
+    // {
+    //     get => _curEffect;
+    //     set => _meshRenderer.material = value;
+    // }
 
     public List<TileObject> objects;
     protected void Awake()
     {
-        hexTransform = GetComponent<HexTransform>();
-        _meshRenderer = GetComponent<MeshRenderer>();
+        _hexTransform = GetComponent<HexTransform>();
     }
 
     public void AddObject(TileObject u)
@@ -46,11 +51,6 @@ public class Tile : MonoBehaviour
     {
         objects.Remove(u);
     }
-    private void ReloadEffect()
-    {
-        if (!visible) TileEffectManager.SetEffect(this, EffectType.Impossible);
-        else TileEffectManager.SetEffect(this, EffectType.Normal);
-    }
 
     public bool inSight
     {
@@ -58,16 +58,31 @@ public class Tile : MonoBehaviour
         set
         {
             _inSight = value;
-            if (value)
+            for (var index = 0; index < objects.Count; index++)
             {
-                foreach (var obj in objects)
+                
+                var obj = objects[index];
+                if (obj is FogOfWar fow)
                 {
-                    obj.isVisible = true;
+                    fow.SetVisible(value);
+                    if (value) index--;
+                }
+                
+                
+                //Combat일때만 value 따라감
+                else if (GameManager.instance.CompareState(GameState.Combat))
+                {
+                    obj.SetVisible(value);
+                }
+                //월드Scene일 경우 무조건 true
+                else
+                {
+                    obj.SetVisible(true);
                 }
             }
-            
-            var unit = CombatSystem.instance.unitSystem.GetUnit(position);
-            if (unit != null) unit.isVisible = value;
+
+            var unit = CombatSystem.instance.unitSystem.GetUnit(hexPosition);
+            if (unit is not null) unit.isVisible = value;
         }
     }
 

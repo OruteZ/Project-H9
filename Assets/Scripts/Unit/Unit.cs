@@ -15,7 +15,7 @@ public enum UnitType
 }
 
 [RequireComponent(typeof(HexTransform))]
-public abstract class Unit : MonoBehaviour
+public abstract class Unit : MonoBehaviour, IUnit
 {
     protected static TurnSystem turnSystem => CombatSystem.instance.turnSystem;
     protected static UnitSystem unitSystem => CombatSystem.instance.unitSystem;
@@ -28,8 +28,7 @@ public abstract class Unit : MonoBehaviour
     public MeshRenderer visual;
 
     [Header("Status")] 
-    public UnitStat stat;
-    
+    [SerializeField] protected UnitStat stat;
     
     [HideInInspector] public UnityEvent<IUnitAction> onActionCompleted;
     [HideInInspector] public UnityEvent onBusyChanged;
@@ -39,8 +38,9 @@ public abstract class Unit : MonoBehaviour
     [HideInInspector] public UnityEvent<Unit, int> onHit;
 
     private IUnitAction[] _unitActionArray; // All Unit Actions attached to this Unit
-    public IUnitAction activeUnitAction; // Currently active action
-
+    protected IUnitAction activeUnitAction; // Currently active action
+    private bool _isBusy;
+    
     public string unitName;
     public int currentActionPoint;
     public Weapon weapon;
@@ -49,7 +49,7 @@ public abstract class Unit : MonoBehaviour
     public abstract void StartTurn();
     public abstract void GetDamage(int damage);
 
-    public Vector3Int position
+    public Vector3Int hexPosition
     {
         get => hexTransform.position;
         set
@@ -64,11 +64,12 @@ public abstract class Unit : MonoBehaviour
     {
         unitName = newName;
         stat = unitStat;
+        stat.curHp = stat.maxHp;
         WeaponData newWeaponData = WeaponManager.GetWeaponData(weaponIndex);
-        weapon = Weapon.Clone(newWeaponData, unit : this);
+        weapon = Weapon.Clone(newWeaponData, owner : this);
     }   
 
-    private void Awake()
+    protected virtual void Awake()
     {
         hexTransform = GetComponent<HexTransform>();
         visual = GetComponent<MeshRenderer>();
@@ -79,7 +80,7 @@ public abstract class Unit : MonoBehaviour
     {
         foreach (IUnitAction action in _unitActionArray)
         {
-            action.Setup(this);
+            action.SetUp(this);
         }
     }
     
@@ -101,36 +102,66 @@ public abstract class Unit : MonoBehaviour
         return _unitActionArray;
     }
 
+    public UnitStat GetStat()
+    {
+        return stat;
+    }
+
     public bool isVisible
     {
         get => visual.enabled;
         set => visual.enabled = value;
     }
 
-    public bool IsMyTurn()
+    protected bool IsMyTurn()
     {
         return turnSystem.turnOwner == this;
     }
-}
 
-[Serializable]
-public struct UnitStat
-{
-    public int hp;
-    public int concentration; 
-    public int sightRange; 
-    public int speed;
-    public int actionPoint;
-    public float additionalHitRate;
-    public float criticalChance;
-    public int revolverAdditionalDamage;
-    public int repeaterAdditionalDamage;
-    public int shotgunAdditionalDamage;
-    public int revolverAdditionalRange;
-    public int repeaterAdditionalRange;
-    public int shotgunAdditionalRange;
-    public float revolverCriticalDamage;
-    public float shotgunCriticalDamage;
-    public float repeaterCriticalDamage;
+    protected void SetBusy()
+    {
+        bool hasChanged = _isBusy is false;
+        _isBusy = true;
+        
+        if(hasChanged) onBusyChanged.Invoke();
+    }
+
+    protected void ClearBusy()
+    {
+        bool hasChanged = _isBusy is true;
+        _isBusy = false;
+        
+        if(hasChanged) onBusyChanged.Invoke();
+    }
+
+    public bool IsBusy()
+    {
+        return _isBusy;
+    }
+
+    protected bool TryExecuteUnitAction(Vector3Int targetPosition, Action onActionFinish)
+    {
+        activeUnitAction.SetTarget(targetPosition);
+
+        if (activeUnitAction.GetCost() > currentActionPoint)
+        {  
+            Debug.Log("Cost is loss, Cost is " + activeUnitAction.GetCost());
+            return false;
+        }
+
+        if (activeUnitAction.CanExecute() is not true)
+        {
+            Debug.Log("Can't Execute");
+            return false;
+        }
+        
+        activeUnitAction.Execute(onActionFinish);
+        return true;
+    }
+    
+    public IUnitAction GetSelectedAction()
+    {
+        return activeUnitAction;
+    }
 }
 

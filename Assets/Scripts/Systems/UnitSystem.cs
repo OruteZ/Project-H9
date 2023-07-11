@@ -47,7 +47,12 @@ public class UnitSystem : MonoBehaviour
 
     public Unit GetUnit(Vector3Int position)
     {
-        return units.FirstOrDefault(unit => unit.position == position);
+        foreach (var unit in units)
+        {
+            if (unit.hexPosition == position) return unit;
+        }
+
+        return null;
     }
 
     private void OnUnitMoved(Unit unit)
@@ -88,12 +93,30 @@ public class UnitSystem : MonoBehaviour
             if (unit is Player)
             {
                 unit.SetUp("Player", GameManager.instance.playerStat, 0);
+                if (GameManager.instance.CompareState(GameState.World))
+                {
+                    unit.hexPosition = GameManager.instance.playerWorldPos;
+                }
             }
             else
             {
-                unit.SetUp("EEEEEnemy", new UnitStat(), 0);
+                unit.SetUp("EEEEEnemy", GameManager.instance.playerStat, 0);
             }
             unit.onDead.AddListener(OnUnitDead);
         }
+    }
+
+    public bool IsCombatFinish()
+    {
+        if (GameManager.instance.CompareState(GameState.World))
+        {
+            Debug.LogError("Wrong function Call : check finish combat in world scene");
+            throw new NotSupportedException();
+        }
+        
+        if (GetPlayer().GetStat().curHp <= 0) return true;
+        if (units.Count == 1 && units[0] is Player) return true;
+
+        return false;
     }
 }

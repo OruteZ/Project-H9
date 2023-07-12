@@ -22,19 +22,14 @@ public class Tile : MonoBehaviour
         } 
     }
 
-    [Header("타일 속성")] public bool walkable;
+    [Header("타일 속성")] 
+    public bool walkable;
     public bool visible;
     public bool rayThroughable;
 
-    [Header("플레이어 시야")] [SerializeField] private bool _inSight;
-
-    // private Material _curEffect;
-    //
-    // public Material effect
-    // {
-    //     get => _curEffect;
-    //     set => _meshRenderer.material = value;
-    // }
+    [Header("플레이어 시야")] 
+    [SerializeField] 
+    private bool _inSight;
 
     public List<TileObject> objects;
     protected void Awake()
@@ -81,7 +76,7 @@ public class Tile : MonoBehaviour
                 }
             }
 
-            var unit = CombatSystem.instance.unitSystem.GetUnit(hexPosition);
+            var unit = FieldSystem.unitSystem.GetUnit(hexPosition);
             if (unit is not null) unit.isVisible = value;
         }
     }

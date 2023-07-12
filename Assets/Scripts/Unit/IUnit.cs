@@ -6,11 +6,6 @@ using UnityEngine;
 public interface IUnit
 {
     /// <summary>
-    /// 매 프레임 호출되는 함수입니다. Update대신 UnitSystem에서 호출하여 관리하도록 합니다.
-    /// </summary>
-    void Updated();
-    
-    /// <summary>
     /// 해당 유닛이 턴을 시작합니다.
     /// </summary>
     void StartTurn();
@@ -54,12 +49,15 @@ public struct UnitStat
     public int actionPoint;
     public float additionalHitRate;
     public float criticalChance;
+    [Header("추가 데미지")]
     public int revolverAdditionalDamage;
     public int repeaterAdditionalDamage;
     public int shotgunAdditionalDamage;
+    [Header("추가 사거리")]
     public int revolverAdditionalRange;
     public int repeaterAdditionalRange;
     public int shotgunAdditionalRange;
+    [Header("크리티컬 데미지")]
     public float revolverCriticalDamage;
     public float shotgunCriticalDamage;
     public float repeaterCriticalDamage;

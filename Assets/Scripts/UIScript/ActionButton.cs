@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class ActionButton : MonoBehaviour
 {
     private Outline _outline;
-    private Player _player => CombatSystem.instance.unitSystem.GetPlayer();
+    private IUnitAction _unitAction;
+    public string actionName;
+    
     public Outline outLine
     {
         get
@@ -20,39 +22,34 @@ public class ActionButton : MonoBehaviour
             return _outline;
         }
     }
-    
-    public IUnitAction unitAction;
-    
-
-    public string actionName;
 
     private void Start()
     {
-        _player.onSelectedChanged.
+        FieldSystem.unitSystem.GetPlayer().onSelectedChanged.
             AddListener(CheckActiveAction);
     }
 
     public void SetAction(IUnitAction newAction)
     {
-        this.unitAction = newAction;
+        _unitAction = newAction;
         actionName = newAction.ToString();
         CheckActiveAction();
     }
 
     public IUnitAction GetAction()
     {
-        return unitAction;
+        return _unitAction;
     }
 
     private void CheckActiveAction()
     {
         outLine.enabled = 
-            unitAction.GetActionType() == _player.GetSelectedAction().GetActionType();
+            _unitAction.GetActionType() == FieldSystem.unitSystem.GetPlayer().GetSelectedAction().GetActionType();
     }
 
     public void Select()
     {
-        _player.SelectAction(unitAction);
+        FieldSystem.unitSystem.GetPlayer().SelectAction(_unitAction);
     }
 
     public void OnMouseEnter()

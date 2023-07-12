@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class CombatUI : MonoBehaviour
 {
-    public TurnSystem turnSystem => CombatSystem.instance.turnSystem;
-    public UnitSystem unitSystem => CombatSystem.instance.unitSystem;
-
     public GameObject playerActionButtonsUI;
     public ActionButton[] actionButtonArray;
 
@@ -18,17 +15,17 @@ public class CombatUI : MonoBehaviour
 
     void Start()
     {
-        turnSystem.onTurnChanged.AddListener(System_OnTurnChanged);
+        FieldSystem.turnSystem.onTurnChanged.AddListener(System_OnTurnChanged);
     }
 
     public void EndTurnCall()
     {
-        turnSystem.EndTurn();
+        FieldSystem.turnSystem.EndTurn();
     }
 
     private void System_OnTurnChanged()
     {
-        if (CombatSystem.instance.IsPlayerTurn())
+        if (FieldSystem.turnSystem.turnOwner is Player && GameManager.instance.CompareState(GameState.Combat))
         {
             TurnOnPlayerActionUI();
         }
@@ -42,7 +39,7 @@ public class CombatUI : MonoBehaviour
     {
         playerActionButtonsUI.SetActive(true);
 
-        var actions = unitSystem.GetPlayer().GetUnitActionArray();
+        var actions = FieldSystem.unitSystem.GetPlayer().GetUnitActionArray();
 
         int index = 0;
         foreach (var act in actions)

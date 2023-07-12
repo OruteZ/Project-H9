@@ -11,7 +11,7 @@ public class TimingUI : UISystem
 
     public void SetTurnText(int currentTurn) 
     {
-        TurnText.GetComponent<TextMeshProUGUI>().text = "Current Turn: " + currentTurn.ToString();
+        TurnText.GetComponent<TextMeshProUGUI>().text = "Current Turn: " + currentTurn;
     }
 
     public override void OpenUI()

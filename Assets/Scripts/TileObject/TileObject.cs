@@ -9,12 +9,22 @@ public class TileObject : MonoBehaviour
     public HexTransform hexTransform;
     public MeshRenderer meshRenderer;
 
+    protected Tile tile;
     public Vector3Int hexPosition
     {
         get => hexTransform.position;
         set => hexTransform.position = value;
     } 
-    protected Tile tile;
+    
+    public static void Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
+    {
+        var tile = tileSystem.GetTile(pos);
+        if (tile == null) return;
+    
+        var tileObj = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity).GetComponent<TileObject>();
+        tileObj.hexPosition = pos;
+        tileObj.SetUp();
+    }
 
     private void Awake()
     {
@@ -24,7 +34,7 @@ public class TileObject : MonoBehaviour
     
     public void SetUp()
     {
-        tile = CombatSystem.instance.tileSystem.GetTile(hexPosition);
+        tile = FieldSystem.tileSystem.GetTile(hexPosition);
         if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
         
         SetTile(tile);
@@ -40,15 +50,6 @@ public class TileObject : MonoBehaviour
     {
         
     }
-    
-    // public static void Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
-    // {
-    //     var tile = tileSystem.GetTile(pos);
-    //     if (tile == null) return;
-    //
-    //     var tileObj = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity).GetComponent<TileObject>();
-    //     tileObj.position = pos;
-    // }
 
     [SerializeField] private bool vision;
     public bool IsVisible()

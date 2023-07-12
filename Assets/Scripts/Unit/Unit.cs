@@ -17,10 +17,6 @@ public enum UnitType
 [RequireComponent(typeof(HexTransform))]
 public abstract class Unit : MonoBehaviour, IUnit
 {
-    protected static TurnSystem turnSystem => CombatSystem.instance.turnSystem;
-    protected static UnitSystem unitSystem => CombatSystem.instance.unitSystem;
-    protected static TileSystem tileSystem => CombatSystem.instance.tileSystem;
-    
     [HideInInspector] 
     public HexTransform hexTransform;
 
@@ -44,8 +40,6 @@ public abstract class Unit : MonoBehaviour, IUnit
     public string unitName;
     public int currentActionPoint;
     public Weapon weapon;
-    
-    public abstract void Updated();
     public abstract void StartTurn();
     public abstract void GetDamage(int damage);
 
@@ -115,7 +109,7 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     protected bool IsMyTurn()
     {
-        return turnSystem.turnOwner == this;
+        return FieldSystem.turnSystem.turnOwner == this;
     }
 
     protected void SetBusy()
@@ -128,7 +122,7 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     protected void ClearBusy()
     {
-        bool hasChanged = _isBusy is true;
+        bool hasChanged = _isBusy;
         _isBusy = false;
         
         if(hasChanged) onBusyChanged.Invoke();

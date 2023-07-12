@@ -9,87 +9,20 @@ public class UnitSystem : MonoBehaviour
 {
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
-    //
-    // [Serializable]
-    //  private struct UnitInfo
-    //  {
-    //      public string unitName;
-    //     public UnitType type;
-    //      public Vector3Int spawnPosition;
-    //  };
-    //  [SerializeField] private UnitInfo[] _unitInfo;
-    // [SerializeField] private GameObject _playerPrefab;
-    // [SerializeField] private GameObject _enemyPrefab;
-
-    private void Awake()
+    
+    /// <summary>
+    /// 자식오브젝트에 존재하는 모든 Unit을 찾아 Units에 등록합니다.
+    /// </summary>
+    public void SetUpUnits()
     {
         var childUnits = GetComponentsInChildren<Unit>();
         foreach (var unit in childUnits)
         {
             units.Add(unit);
         }
-    }
-
-    private void Update()
-    {
-        foreach (var unit in units) unit.Updated();
-    }
-
-    public Player GetPlayer()
-    {
+        
         foreach (var unit in units)
         {
-            if (unit is Player u) return u;
-        }
-        return null;
-    }
-    
-
-    public Unit GetUnit(Vector3Int position)
-    {
-        foreach (var unit in units)
-        {
-            if (unit.hexPosition == position) return unit;
-        }
-
-        return null;
-    }
-
-    private void OnUnitMoved(Unit unit)
-    {
-        onAnyUnitMoved?.Invoke(unit);
-    }
-
-    private void OnUnitDead(Unit unit)
-    {
-        RemoveUnit(unit);
-    }
-
-    private void RemoveUnit(Unit unit)
-    {
-        units.Remove(unit);
-        unit.onMoved.RemoveListener(OnUnitMoved);
-    }
-
-    public void SetUpUnits()
-    {
-        foreach (var unit in units)
-        {
-            // Unit unit;
-            //
-            // switch (info.type)
-            // {
-            //     case UnitType.Player:
-            //         unit = Instantiate(_playerPrefab).GetComponent<Unit>();
-            //         unit.position = info.spawnPosition;
-            //         break;
-            //     case UnitType.Enemy:
-            //         unit = Instantiate(_enemyPrefab).GetComponent<Unit>();
-            //         unit.position = info.spawnPosition;
-            //         break;
-            //     default:
-            //         throw new ArgumentOutOfRangeException();
-            // }
             if (unit is Player)
             {
                 unit.SetUp("Player", GameManager.instance.playerStat, 0);
@@ -118,5 +51,49 @@ public class UnitSystem : MonoBehaviour
         if (units.Count == 1 && units[0] is Player) return true;
 
         return false;
+    }
+    
+    /// <summary>
+    /// 현재 플레이어 객체를 가져옵니다.
+    /// </summary>
+    /// <returns>Player reference, or null</returns>
+    public Player GetPlayer()
+    {
+        foreach (var unit in units)
+        {
+            if (unit is Player u) return u;
+        }
+        return null;
+    }
+    
+    /// <summary>
+    /// 특정 좌표에 존재하는 Unit을 가져옵니다.
+    /// </summary>
+    /// <param name="position">Hex 좌표</param>
+    /// <returns>Unit Reference</returns>
+    public Unit GetUnit(Vector3Int position)
+    {
+        foreach (var unit in units)
+        {
+            if (unit.hexPosition == position) return unit;
+        }
+
+        return null;
+    }
+
+    private void OnUnitMoved(Unit unit)
+    {
+        onAnyUnitMoved?.Invoke(unit);
+    }
+
+    private void OnUnitDead(Unit unit)
+    {
+        RemoveUnit(unit);
+    }
+
+    private void RemoveUnit(Unit unit)
+    {
+        units.Remove(unit);
+        unit.onMoved.RemoveListener(OnUnitMoved);
     }
 }

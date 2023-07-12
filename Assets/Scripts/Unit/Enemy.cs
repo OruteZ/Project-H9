@@ -19,7 +19,7 @@ public class Enemy : Unit
         base.SetUp(newName, unitStat, weaponIndex);
     }
     
-    public override void Updated()
+    public void Update()
     {
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
@@ -66,7 +66,7 @@ public class Enemy : Unit
         
         if (currentActionPoint == 0)
         {
-            turnSystem.EndTurn();
+            FieldSystem.turnSystem.EndTurn();
         }
     }
 }

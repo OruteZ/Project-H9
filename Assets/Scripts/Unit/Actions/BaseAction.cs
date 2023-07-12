@@ -37,7 +37,6 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     protected void FinishAction()
     {
         isActive = false;
-        //unit.UnitActionFinish(this);
         onActionComplete();
 
         onActionFinished.Invoke();

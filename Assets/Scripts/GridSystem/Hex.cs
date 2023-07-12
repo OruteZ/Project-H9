@@ -10,7 +10,7 @@ public static class Hex
     public const float Radius = 1f;
     
     //루트 3 상수입니다.
-    public static readonly float Sqrt3 = Mathf.Sqrt(3);
+    private static readonly float Sqrt3 = Mathf.Sqrt(3);
 
     /// <summary>
     /// Hex좌표를 인게임 World 직교좌표계로 변환합니다.

@@ -12,20 +12,16 @@ public class Player : Unit
     {
         base.SetUp(newName, unitStat, weaponIndex);
         
-        unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
+        FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);
         TileEffectManager.instance.SetPlayer(this);
     }
-    public override void Updated()
+    public void Update()
     {
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
         
         //todo : UIManager.Instance.IsMouseOverUI : return;
-        
-        // if (Input.GetKeyDown(KeyCode.A)) SelectAction(GetAction<MoveAction>());
-        // if (Input.GetKeyDown(KeyCode.D)) SelectAction(GetAction<AttackAction>());
-
         
         if (Input.GetMouseButtonDown(0) && TryGetMouseOverTilePos(out var targetPos)) 
         {
@@ -66,7 +62,6 @@ public class Player : Unit
     // ReSharper disable Unity.PerformanceAnalysis
     public static bool TryGetMouseOverTilePos(out Vector3Int pos)
     {
-
         if (UIManager.instance.isMouseOverUI)
         {
             pos = Vector3Int.zero;
@@ -97,12 +92,12 @@ public class Player : Unit
 
     private void ReloadSight()
     {
-        var allTile = tileSystem.GetTilesInRange(hexPosition, stat.sightRange);
+        var allTile = FieldSystem.tileSystem.GetTilesInRange(hexPosition, stat.sightRange);
 
         foreach (var tile in allTile)
         {
             tile.inSight = 
-                tileSystem.VisionCast(hexTransform.position, tile.hexPosition) &&
+                FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition) &&
                 Hex.Distance(hexTransform.position, tile.hexPosition) <= stat.sightRange;
         }
     }
@@ -115,7 +110,7 @@ public class Player : Unit
     {
         if(unit is not Player)
         {
-            unit.isVisible = tileSystem.VisionCast(hexPosition, unit.hexPosition) &&
+            unit.isVisible = FieldSystem.tileSystem.VisionCheck(hexPosition, unit.hexPosition) &&
                              Hex.Distance(hexTransform.position, unit.hexPosition) <= stat.sightRange;
         }
         
@@ -125,7 +120,7 @@ public class Player : Unit
     private void OnMoved(Unit unit)
     {
         ReloadSight();
-        foreach (var obj in tileSystem.GetTile(hexPosition).objects) 
+        foreach (var obj in FieldSystem.tileSystem.GetTile(hexPosition).objects) 
         { 
             obj.OnCollision(unit);
         }

@@ -11,15 +11,26 @@ using Random = UnityEngine.Random;
 
 public class TileSystem : MonoBehaviour
 {
+    /// <summary>
+    /// 타일 Prefab입니다.
+    /// </summary>
     public GameObject tilePrefab;
+    
+    /// <summary>
+    /// 전장의 안개 Prefab입니다.
+    /// </summary>
     public GameObject fogOfWarPrefab;
+    
+    /// <summary>
+    /// 모든 전장의 안개를 자식으로 가질 오브젝트 입니다.
+    /// </summary>
     public Transform fogs;
     
-    private Dictionary<Vector3Int, Tile> _tiles;
-
+    /// <summary>모든 TIle을 자식으로 가질 오브젝트입니다. </summary>
     public GameObject map;
+    
+    private Dictionary<Vector3Int, Tile> _tiles;
     private HexGridLayout _gridLayout;
-
     private HexGridLayout gridLayout => _gridLayout ??= map.GetComponent<HexGridLayout>();
 
     private void Awake()
@@ -28,6 +39,10 @@ public class TileSystem : MonoBehaviour
         _gridLayout = map.GetComponent<HexGridLayout>();
     }
 
+    /// <summary>
+    /// 현재 존재하는 모든 타일의 reference를 반환합니다.
+    /// </summary>
+    /// <returns></returns>
     public List<Tile> GetAllTiles()
     {
         var result = new List<Tile>();
@@ -35,7 +50,11 @@ public class TileSystem : MonoBehaviour
 
         return result;
     }
-
+    
+    /// <summary>
+    /// 현재 존재하는 모든 타일의 Hex 위치를 반환합니다.
+    /// </summary>
+    /// <returns>타일들의 위치목록</returns>
     public List<Vector3Int> GetAllTilePos()
     {
         var result = new List<Vector3Int>();
@@ -44,6 +63,10 @@ public class TileSystem : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// 자식 오브젝트로 존재하는 Tile과 TileObject를 모두 관리하고, 전장의 안개를 생성합니다.
+    /// 이 함수가 호출되기 전 까지 타일에 대한 접근은 NullReference Exception을 유발합니다.
+    /// </summary>
     public void SetUpTilesAndObjects()
     {
         var tilesInChildren = GetComponentsInChildren<Tile>();  
@@ -226,7 +249,7 @@ public class TileSystem : MonoBehaviour
     /// <param name="start">시작점의 좌표</param>
     /// <param name="target">목적지의 좌표</param>
     /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
-    public bool RayCast(Vector3Int start, Vector3Int target)
+    public bool RayThroughCheck(Vector3Int start, Vector3Int target)
     { 
         var line1 = Hex.LineDraw (start, target);
         var line2 = Hex.LineDraw_(start, target);
@@ -252,7 +275,7 @@ public class TileSystem : MonoBehaviour
     /// <param name="start">시작점의 좌표</param>
     /// <param name="target">목적지의 좌표</param>
     /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
-    public bool VisionCast(Vector3Int start, Vector3Int target)
+    public bool VisionCheck(Vector3Int start, Vector3Int target)
     { 
         var line1 = Hex.LineDraw(start, target);
         var line2 = Hex.LineDraw_(start, target);
@@ -287,13 +310,6 @@ public class TileSystem : MonoBehaviour
             var tile = Instantiate(tilePrefab, map.transform).GetComponent<Tile>();
             tile.hexPosition = pos;
             tile.visible = tile.walkable = tile.rayThroughable = true;
-            // if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
-            //     isWall = false;
-            //
-            // isWall = false;
-            // var tile = AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
-            //
-            // TileEffectManager.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
         }
         
         gridLayout.LayoutGrid();
@@ -309,27 +325,10 @@ public class TileSystem : MonoBehaviour
             var tile = Instantiate(tilePrefab, map.transform).GetComponent<Tile>();
             tile.hexPosition = pos;
             tile.visible = tile.walkable = tile.rayThroughable = true;
-            // if(pos == Vector3Int.zero || pos == new Vector3Int(0, -1, 1))
-            //     isWall = false;
-            //
-            // isWall = false;
-            // var tile = AddTile(pos, walkable : !isWall, visible : !isWall, rayThroughable: !isWall);
-            //
-            // TileEffectManager.SetEffect(tile, isWall ? EffectType.Impossible : EffectType.Normal);
         }
 
         gridLayout.LayoutGrid();
     }
-    //
-    // [ContextMenu("Create World no wall")]
-    // private void CreateDemoWorld2()
-    // {
-    //     var positions = Hex.GetGridsWithRange(range, Hex.zero);
-    //     foreach (var pos in positions)
-    //     {
-    //         AddTile(pos);
-    //     }
-    // }
 
     [ContextMenu("Remove Demo World")]
     private void RemoveDemoWorld()
@@ -342,27 +341,6 @@ public class TileSystem : MonoBehaviour
 
         gridLayout.ClearGrid();
     }
-
-    // [Header("World to combat Test")] 
-    // public Vector3Int playerPosition;
-    // public Scene combatScene;
-    //
-    // [ContextMenu("World to Combat")]
-    // private void ChangeToCombatScene()
-    // {
-    //     DontDestroyOnLoad(gameObject);
-    //     SceneManager.LoadScene("CombatScene");
-    //     gameObject.SetActive(false);
-    // }
-    //
-    // [ContextMenu("Combat to World")]
-    // private void CombatSceneToThis()
-    // {
-    //     SceneManager.LoadScene("WorldScene");
-    //     gameObject.SetActive(true);
-    // }
-    
-    //demo end
 }
 
 /// <summary>

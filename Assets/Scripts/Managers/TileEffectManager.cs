@@ -74,7 +74,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         int range = _player.currentActionPoint;
         Vector3Int start = _player.hexPosition;
 
-        var tiles = CombatSystem.instance.tileSystem.GetWalkableTiles(start, range);
+        var tiles = FieldSystem.tileSystem.GetWalkableTiles(start, range);
         foreach (var tile in tiles)
         {
             if (Hex.Distance(tile.hexPosition, _player.hexPosition) > _player.GetStat().sightRange) continue;
@@ -96,7 +96,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 continue;
             }
             
-            var route = CombatSystem.instance.tileSystem.FindPath(_player.hexPosition, target);
+            var route = FieldSystem.tileSystem.FindPath(_player.hexPosition, target);
             
             if(route.Count - 1 <= _player.currentActionPoint) foreach (var tile in route)
             {

@@ -25,13 +25,12 @@ public class HexGridLayout : MonoBehaviour
         var outerSize = Hex.Radius;
         var innerSize = outerSize - thickness;
         
-        var grids = Application.isPlaying ? CombatSystem.instance.tileSystem.GetAllTiles() : GetComponentsInChildren<Tile>().ToList();
+        var grids = Application.isPlaying ? FieldSystem.tileSystem.GetAllTiles() : 
+            GetComponentsInChildren<Tile>().ToList();
        
     
         foreach (var grid in grids)
         {
-            Debug.Log(grid.hexPosition);
-            
             HexGridRenderer hexGridRenderer = grid.gameObject.AddComponent<HexGridRenderer>();
             hexGridRenderer.isFlatTopped = isFlatTopped;
             hexGridRenderer.outerSize = outerSize;

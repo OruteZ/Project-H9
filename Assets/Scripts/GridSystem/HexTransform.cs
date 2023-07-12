@@ -20,6 +20,7 @@ public class HexTransform : MonoBehaviour
     private void SetPosition(Vector3Int pos)
     {
         Transform tsf = transform;
+        
         _position = pos;
         tsf.position = Hex.Hex2World(_position) + new Vector3(0, tsf.position.y, 0);
     }

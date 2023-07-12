@@ -26,7 +26,7 @@ public class UIManager : Generic.Singleton<UIManager>
     public bool isMouseOverUI;
     public int previousLayer = 1;
 
-    void Start()
+    void Awake()
     {
         _currentStatusUI = _worldCanvas.GetComponent<CurrentStatusUI>();
         _timingUI = _worldCanvas.GetComponent<TimingUI>();

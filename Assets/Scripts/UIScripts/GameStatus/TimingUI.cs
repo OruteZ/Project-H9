@@ -7,11 +7,9 @@ public class TimingUI : UISystem
 {
     [SerializeField] private GameObject TurnText;
 
-    public TurnSystem turnSystem;
-
     public void SetTurnText(int currentTurn) 
     {
-        TurnText.GetComponent<TextMeshProUGUI>().text = "Current Turn: " + currentTurn;
+        TurnText.GetComponent<TextMeshProUGUI>().text = currentTurn + "ео";
     }
 
     public override void OpenUI()

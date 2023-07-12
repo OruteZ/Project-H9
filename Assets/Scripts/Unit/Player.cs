@@ -20,8 +20,7 @@ public class Player : Unit
     {
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
-        
-        //todo : UIManager.Instance.IsMouseOverUI : return;
+        if (UIManager.instance.isMouseOverUI) return;
         
         if (Input.GetMouseButtonDown(0) && TryGetMouseOverTilePos(out var targetPos)) 
         {

@@ -6,7 +6,7 @@ using TMPro;
 
 public class CurrentStatusUI : UISystem
 {
-    private GameManager _gameManager;
+    private UnitStat _playerStat;
 
     [SerializeField] private GameObject _actionPointText;
     [SerializeField] private GameObject _healthPointText;
@@ -15,10 +15,12 @@ public class CurrentStatusUI : UISystem
     // Start is called before the first frame update
     void Start()
     {
-        _gameManager = GameManager.instance;
         SetCurrentStatusUI();
     }
-
+    private void Update()
+    {
+        SetCurrentStatusUI();//test
+    }
     public override void OpenUI()
     {
     }
@@ -26,10 +28,11 @@ public class CurrentStatusUI : UISystem
     {
     }
 
-    public void SetCurrentStatusUI() 
+    public void SetCurrentStatusUI()
     {
-        _actionPointText.GetComponent<TextMeshProUGUI>().text = _gameManager.playerStat.actionPoint.ToString();
-        _healthPointText.GetComponent<TextMeshProUGUI>().text = _gameManager.playerStat.curHp.ToString();
-        _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _gameManager.playerStat.concentration.ToString() + "/ 100";
+        _playerStat = GameManager.instance.playerStat;
+        _healthPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.curHp.ToString() + " / " + _playerStat.maxHp.ToString();
+        _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _playerStat.concentration.ToString();
+        _actionPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.actionPoint.ToString()+" / "/*+_playerStat.maxActionPoint.ToString()*/;
     }
 }

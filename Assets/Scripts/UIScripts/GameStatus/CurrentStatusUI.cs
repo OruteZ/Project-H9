@@ -23,12 +23,6 @@ public class CurrentStatusUI : UISystem
     {
         SetCurrentStatusUI();//test
     }
-    public override void OpenUI()
-    {
-    }
-    public override void CloseUI()
-    {
-    }
 
     public void SetCurrentStatusUI()
     {
@@ -39,5 +33,7 @@ public class CurrentStatusUI : UISystem
         _healthPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.curHp.ToString() + " / " + _playerStat.maxHp.ToString();
         _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _playerStat.concentration.ToString();
         _actionPointText.GetComponent<TextMeshProUGUI>().text = _player.currentActionPoint.ToString() + " / " + _playerStat.actionPoint.ToString();
+
+        GetComponent<PlayerHPUI>().SetHPUI();
     }
 }

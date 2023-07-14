@@ -11,11 +11,4 @@ public class TimingUI : UISystem
     {
         TurnText.GetComponent<TextMeshProUGUI>().text = currentTurn + "ео";
     }
-
-    public override void OpenUI()
-    {
-    }
-    public override void CloseUI()
-    {
-    }
 }

@@ -4,11 +4,8 @@ using UnityEngine;
 
 public abstract class UISystem : Generic.Singleton<UISystem>
 {
-    public abstract void OpenUI();
-    public abstract void CloseUI();
+    public virtual void OpenUI() { }
+    public virtual void CloseUI() { }
 
-    public virtual void ClosePopupWindow() 
-    {
-
-    }
+    public virtual void ClosePopupWindow() { }
 }

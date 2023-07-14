@@ -6,7 +6,9 @@ using TMPro;
 
 public class CurrentStatusUI : UISystem
 {
+    [SerializeField] private UnitSystem _unitSystem;
     private UnitStat _playerStat;
+    private Unit _player;
 
     [SerializeField] private GameObject _actionPointText;
     [SerializeField] private GameObject _healthPointText;
@@ -30,9 +32,12 @@ public class CurrentStatusUI : UISystem
 
     public void SetCurrentStatusUI()
     {
+        _player = _unitSystem.GetPlayer();
+        //_playerStat = _player.GetStat();
         _playerStat = GameManager.instance.playerStat;
+        
         _healthPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.curHp.ToString() + " / " + _playerStat.maxHp.ToString();
         _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _playerStat.concentration.ToString();
-        _actionPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.actionPoint.ToString()+" / "/*+_playerStat.maxActionPoint.ToString()*/;
+        _actionPointText.GetComponent<TextMeshProUGUI>().text = _player.currentActionPoint.ToString() + " / " + _playerStat.actionPoint.ToString();
     }
 }

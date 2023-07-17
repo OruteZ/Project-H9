@@ -27,6 +27,7 @@ public class HexTransform : MonoBehaviour
 
     public void OnValidate()
     {
+        _position.z = -(_position.x + _position.y); 
         SetPosition(_position);
     }
 }

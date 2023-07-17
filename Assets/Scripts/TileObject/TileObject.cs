@@ -40,7 +40,7 @@ public class TileObject : MonoBehaviour
         SetTile(tile);
     }
 
-    public void SetTile(Tile t)
+    public virtual void SetTile(Tile t)
     {
         t.AddObject(this);
         tile = t;
@@ -67,5 +67,12 @@ public class TileObject : MonoBehaviour
     {
         tile.RemoveObject(this);
         Destroy(gameObject);
+    }
+
+    [ContextMenu("Set MeshRenderer")]
+    public void SetMesh()
+    {
+        hexTransform = GetComponent<HexTransform>();
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 }

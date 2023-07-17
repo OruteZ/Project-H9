@@ -82,8 +82,9 @@ public class TileSystem : MonoBehaviour
         }
 
         var objects = GetComponentsInChildren<TileObject>().ToList();
-        foreach (TileObject obj in objects)
+        for (var index = 0; index < objects.Count; index++)
         {
+            var obj = objects[index];
             obj.SetUp();
         }
 
@@ -253,8 +254,6 @@ public class TileSystem : MonoBehaviour
     { 
         var line1 = Hex.LineDraw (start, target);
         var line2 = Hex.LineDraw_(start, target);
-
-        bool result = true;
 
         for (int i = 0; i < line1.Count; i++)
         {

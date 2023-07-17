@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Generic;
 
@@ -77,7 +78,15 @@ public class TileEffectManager : Singleton<TileEffectManager>
         var tiles = FieldSystem.tileSystem.GetWalkableTiles(start, range);
         foreach (var tile in tiles)
         {
-            if (Hex.Distance(tile.hexPosition, _player.hexPosition) > _player.GetStat().sightRange) continue;
+            if (GameManager.instance.CompareState(GameState.Combat))
+            {
+                if (Hex.Distance(tile.hexPosition, _player.hexPosition) > _player.GetStat().sightRange) continue;
+            }
+            else //GameState.World
+            {
+                bool containsFog = tile.objects.OfType<FogOfWar>().Any();
+                if (containsFog) continue;
+            }
             SetEffectBase(tile.hexPosition, EffectType.Normal);
         }
 
@@ -90,20 +99,25 @@ public class TileEffectManager : Singleton<TileEffectManager>
         {
             while (_effectStackRelatedTarget.TryPop(out var effect)) { Destroy(effect); }
 
-            if (!Player.TryGetMouseOverTilePos(out var target))
+            if (Player.TryGetMouseOverTilePos(out var target) is false)
             {
                 yield return null;
                 continue;
             }
             
             var route = FieldSystem.tileSystem.FindPath(_player.hexPosition, target);
+            if (route is null)
+            {
+                yield return null;
+                continue;
+            }
             
             if(route.Count - 1 <= _player.currentActionPoint) foreach (var tile in route)
             {
                 var pos = tile.hexPosition;
                 SetEffectTarget(pos, EffectType.Friendly);
             }
-
+    
             yield return null;
         }
     }
@@ -140,7 +154,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
     private void SetEffectBase(Vector3Int position, EffectType type)
     {
         Vector3 worldPosition = Hex.Hex2World(position);
-
+        worldPosition.y += 0.02f;
+        
         var gObject = Instantiate(GetEffect(type), worldPosition, Quaternion.identity);
         _effectStackBase.Push(gObject);
     }
@@ -148,6 +163,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
     private void SetEffectTarget(Vector3Int position, EffectType type)
     {
         Vector3 worldPosition = Hex.Hex2World(position);
+        worldPosition.y += 0.03f;
 
         var gObject = Instantiate(GetEffect(type), worldPosition, Quaternion.identity);
         _effectStackRelatedTarget.Push(gObject);

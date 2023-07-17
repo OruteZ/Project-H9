@@ -26,22 +26,29 @@ public class UIManager : Generic.Singleton<UIManager>
     public bool isMouseOverUI;
     public int previousLayer = 1;
 
-    void Start()
+    private new void Awake()
     {
+        base.Awake();
+        
         _currentStatusUI = _worldCanvas.GetComponent<CurrentStatusUI>();
         _timingUI = _worldCanvas.GetComponent<TimingUI>();
         _questUI = _worldCanvas.GetComponent<QuestUI>();
         _characterUI = _characterCanvas.GetComponent<CharacterUI>();
         _skillUI = _skillCanvas.GetComponent<SkillUI>();
         _pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
+        
+        Debug.Log("UI Manager Awake");
+    }
 
+    private void Start()
+    {
         OnOffCanvas(_characterCanvas, _characterUI, false);
         OnOffCanvas(_skillCanvas, _skillUI, false);
         OnOffCanvas(_pauseMenuCanvas, _pauseMenuUI, false);
     }
     void Update()
     {
-        isMouseOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+        isMouseOverUI = EventSystem.current.IsPointerOverGameObject();
         if (Input.GetMouseButtonDown(0))
         {
             int currentLayer = GetPointerOverUILayer();

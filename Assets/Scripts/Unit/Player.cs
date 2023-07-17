@@ -35,8 +35,8 @@ public class Player : Unit
         Debug.Log("Player Turn Started");
 #endif
         currentActionPoint = stat.actionPoint;
-        SelectAction(GetAction<MoveAction>());
         ReloadSight();
+        SelectAction(GetAction<MoveAction>());
     }
     
     public void SelectAction(IUnitAction action)
@@ -77,7 +77,7 @@ public class Player : Unit
                 pos = Vector3Int.zero;
                 return false;
             }
-            
+
             if (tile.inSight)
             {
                 pos = tile.hexPosition;

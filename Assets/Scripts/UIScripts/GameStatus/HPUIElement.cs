@@ -5,21 +5,21 @@ using UnityEngine.UI;
 
 public class HPUIElement : MonoBehaviour
 {
-    private bool isFill;
+    private bool _isFill;
 
     private void Start()
     {
-        isFill = false;
+        _isFill = false;
     }
     public void FillUI() 
     {
         GetComponent<Image>().color = new Color(1, 0, 0, 1);
-        isFill = true;
+        _isFill = true;
     }
 
     public void EmptyUI()
     {
         GetComponent<Image>().color = new Color(1, 1, 1, 1);
-        isFill = false;
+        _isFill = false;
     }
 }

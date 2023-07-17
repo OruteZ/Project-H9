@@ -7,12 +7,11 @@ public class PlayerHPUI : UISystem
     [SerializeField] private GameObject _playerHps;
     public GameObject hpUIPrefabs;
 
-    private List<GameObject> _hpUIs;
+    private List<GameObject> _hpUIs = new List<GameObject>();
     private readonly Vector3 HP_UI_INIT_POSITION = new Vector3(50, 210, 0);
     private readonly int HP_UI_INTERVAL = 30;
-    private int prevMaxHp;
-    private int prevCurHp;
-
+    private int _prevMaxHp;
+    private int _prevCurHp;
     void Start()
     {
         InitHPUI();
@@ -20,32 +19,31 @@ public class PlayerHPUI : UISystem
 
     private void InitHPUI()
     {
-        _hpUIs = new List<GameObject>();
         int maxHp = GameManager.instance.playerStat.maxHp;
         int curHp = GameManager.instance.playerStat.curHp;
 
         HpUIObjectPooling(maxHp);
         SetHPUI();
     }
-    private void HpUIObjectPooling(int leng)
+    private void HpUIObjectPooling(int length)
     {
-        for (int i = 0; i < leng; i++)
+        for (int i = 0; i < length; i++)
         {
             Vector3 pos = CalculateHpUIPosition(i);
             GameObject ui = Instantiate(hpUIPrefabs, pos, Quaternion.identity, _playerHps.transform);
-            ui.SetActive(false);
             _hpUIs.Add(ui);
+            ui.SetActive(false);
         }
-        prevMaxHp = leng;
+        _prevMaxHp = length;
     }
 
     public void SetHPUI()
     {
         int maxHp = GameManager.instance.playerStat.maxHp;
         int curHp = GameManager.instance.playerStat.curHp;
-        if (maxHp == prevMaxHp && curHp == prevCurHp) return;
+        if (maxHp == _prevMaxHp && curHp == _prevCurHp) return;
 
-        if (maxHp > prevMaxHp) 
+        if (maxHp > _prevMaxHp) 
         {
             HpUIObjectPooling(10);
         }
@@ -71,8 +69,8 @@ public class PlayerHPUI : UISystem
             }
         }
 
-        prevMaxHp = maxHp;
-        prevCurHp = curHp;
+        _prevMaxHp = maxHp;
+        _prevCurHp = curHp;
     }
 
     private Vector3 CalculateHpUIPosition(int i)

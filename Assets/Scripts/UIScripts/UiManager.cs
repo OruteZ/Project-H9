@@ -1,19 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class UIManager : Generic.Singleton<UIManager>
 {
     [HideInInspector]
-    public CurrentStatusUI _currentStatusUI { get; private set; }
-    public TimingUI _timingUI { get; private set; }
-    public QuestUI _questUI { get; private set; }
-    public CharacterUI _characterUI { get; private set; }
-    public SkillUI _skillUI { get; private set; }
-    public PauseMenuUI _pauseMenuUI { get; private set; }
+    public CurrentStatusUI currentStatusUI { get; private set; }
+    public TimingUI timingUI { get; private set; }
+    public QuestUI questUI { get; private set; }
+    public CharacterUI characterUI { get; private set; }
+    public SkillUI skillUI { get; private set; }
+    public PauseMenuUI pauseMenuUI { get; private set; }
 
     [Header("Canvases")]
     [SerializeField] private Canvas _worldCanvas;
@@ -26,18 +23,20 @@ public class UIManager : Generic.Singleton<UIManager>
     public bool isMouseOverUI;
     public int previousLayer = 1;
 
-    void Awake()
+    protected override void Awake()
     {
-        _currentStatusUI = _worldCanvas.GetComponent<CurrentStatusUI>();
-        _timingUI = _worldCanvas.GetComponent<TimingUI>();
-        _questUI = _worldCanvas.GetComponent<QuestUI>();
-        _characterUI = _characterCanvas.GetComponent<CharacterUI>();
-        _skillUI = _skillCanvas.GetComponent<SkillUI>();
-        _pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
+        base.Awake();
 
-        OnOffCanvas(_characterCanvas, _characterUI, false);
-        OnOffCanvas(_skillCanvas, _skillUI, false);
-        OnOffCanvas(_pauseMenuCanvas, _pauseMenuUI, false);
+        currentStatusUI = _worldCanvas.GetComponent<CurrentStatusUI>();
+        timingUI = _worldCanvas.GetComponent<TimingUI>();
+        questUI = _worldCanvas.GetComponent<QuestUI>();
+        characterUI = _characterCanvas.GetComponent<CharacterUI>();
+        skillUI = _skillCanvas.GetComponent<SkillUI>();
+        pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
+
+        OnOffCanvas(_characterCanvas, characterUI, false);
+        OnOffCanvas(_skillCanvas, skillUI, false);
+        OnOffCanvas(_pauseMenuCanvas, pauseMenuUI, false);
     }
     void Update()
     {
@@ -55,8 +54,8 @@ public class UIManager : Generic.Singleton<UIManager>
                 }
                 else if (currentLayer == 2) 
                 {
-                    _characterUI.ClosePopupWindow();
-                    _skillUI.ClosePopupWindow();
+                    characterUI.ClosePopupWindow();
+                    skillUI.ClosePopupWindow();
                 }
             }
 
@@ -87,15 +86,15 @@ public class UIManager : Generic.Singleton<UIManager>
     }
     public void OnOffCharacterCanvas(bool isOn)
     {
-        OnOffCanvas(_characterCanvas, _characterUI, isOn);
+        OnOffCanvas(_characterCanvas, characterUI, isOn);
     }
     public void OnOffSkillCanvas(bool isOn)
     {
-        OnOffCanvas(_skillCanvas, _skillUI, isOn);
+        OnOffCanvas(_skillCanvas, skillUI, isOn);
     }
     public void OnOffPauseMenuCanvas(bool isOn)
     {
-        OnOffCanvas(_pauseMenuCanvas, _pauseMenuUI, isOn);
+        OnOffCanvas(_pauseMenuCanvas, pauseMenuUI, isOn);
     }
 
     private int GetPointerOverUILayer() 

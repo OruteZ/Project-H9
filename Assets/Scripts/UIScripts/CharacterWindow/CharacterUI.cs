@@ -6,31 +6,31 @@ using UnityEngine.UI;
 
 public class CharacterUI : UISystem
 {
-    public CharacterStatUI _characterStatUI { get; private set; }
-    public LearnedSkillUI _learnedSkillUI { get; private set; }
-    public ItemListUI _itemListUI { get; private set; }
+    public CharacterStatUI characterStatUI { get; private set; }
+    public LearnedSkillUI learnedSkillUI { get; private set; }
+    public ItemListUI itemListUI { get; private set; }
 
     [SerializeField] private GameObject _moneyText;
 
     // Start is called before the first frame update
     void Start()
     {
-        _characterStatUI = GetComponent<CharacterStatUI>();
-        _learnedSkillUI = GetComponent<LearnedSkillUI>();
-        _itemListUI = GetComponent<ItemListUI>();
+        characterStatUI = GetComponent<CharacterStatUI>();
+        learnedSkillUI = GetComponent<LearnedSkillUI>();
+        itemListUI = GetComponent<ItemListUI>();
         SetMoneyText();
     }
     public override void OpenUI()
     {
-        _characterStatUI.OpenUI();
-        _learnedSkillUI.OpenUI();
-        _itemListUI.OpenUI();
+        characterStatUI.OpenUI();
+        learnedSkillUI.OpenUI();
+        itemListUI.OpenUI();
     }
     public override void CloseUI()
     {
-        _characterStatUI.CloseUI();
-        _learnedSkillUI.CloseUI();
-        _itemListUI.CloseUI();
+        characterStatUI.CloseUI();
+        learnedSkillUI.CloseUI();
+        itemListUI.CloseUI();
     }
 
     public void SetMoneyText()
@@ -42,6 +42,6 @@ public class CharacterUI : UISystem
     public override void ClosePopupWindow()
     {
         UIManager.instance.previousLayer = 2;
-        _itemListUI.CloseItemUseWindow();
+        itemListUI.CloseItemUseWindow();
     }
 }

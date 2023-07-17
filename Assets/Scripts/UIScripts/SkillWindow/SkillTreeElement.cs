@@ -23,7 +23,7 @@ public class SkillTreeElement : Generic.Singleton<SkillTreeElement>
 
     public void OnSkillUIBtnClick()
     {
-        _uiManager._skillUI.ClickSkillUIButton(this.gameObject.transform, skillIndex);
+        _uiManager.skillUI.ClickSkillUIButton(this.gameObject.transform, skillIndex);
     }
 
     public void SetSkillButtonEffect(int state) 

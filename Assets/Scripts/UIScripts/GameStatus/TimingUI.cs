@@ -5,10 +5,10 @@ using TMPro;
 
 public class TimingUI : UISystem
 {
-    [SerializeField] private GameObject TurnText;
+    [SerializeField] private GameObject _TurnText;
 
     public void SetTurnText(int currentTurn) 
     {
-        TurnText.GetComponent<TextMeshProUGUI>().text = currentTurn + "ео";
+        _TurnText.GetComponent<TextMeshProUGUI>().text = currentTurn + "ео";
     }
 }

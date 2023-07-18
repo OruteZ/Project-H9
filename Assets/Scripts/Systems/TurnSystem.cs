@@ -17,7 +17,7 @@ public class TurnSystem : MonoBehaviour
     {
         turnNumber = 0;
         onTurnChanged.AddListener(() => { turnNumber++;});
-        onTurnChanged.AddListener(() => UIManager.instance._timingUI.SetTurnText(turnNumber));
+        onTurnChanged.AddListener(() => UIManager.instance.timingUI.SetTurnText(turnNumber));
     }
 
     /// <summary>

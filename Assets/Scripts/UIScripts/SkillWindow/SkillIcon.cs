@@ -7,19 +7,19 @@ public class SkillIcon : MonoBehaviour
 {
     private UIManager _uiManager;
     private SkillManager _skillManager;
-    private int skillIndex;
+    private int _skillIndex;
     public void GetSkillIndex(int index) 
     {
         _uiManager = UIManager.instance;
         _skillManager = SkillManager.instance;
 
-        skillIndex = index;
+        _skillIndex = index;
         //FindIconImage();
     }
 
     private void FindIconImage() 
     {
-        Sprite sprite = Resources.Load("Images/" + _skillManager.GetSkill(skillIndex).skillInfo.iconNumber) as Sprite;
+        Sprite sprite = Resources.Load("Images/" + _skillManager.GetSkill(_skillIndex).skillInfo.iconNumber) as Sprite;
         this.GetComponent<Image>().sprite = sprite;
     }
     public void OnSkillUIButtonOver()

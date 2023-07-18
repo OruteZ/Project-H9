@@ -37,11 +37,11 @@ public class UIInteraction : Generic.Singleton<UIInteraction>
     }
     public void OnSkillTooltipCloseBtnClick()
     {
-        _uiManager._skillUI.CloseSkillTooltip();
+        _uiManager.skillUI.CloseSkillTooltip();
     }
     public void OnSkillTooltipLearnBtnClick()
     {
-        _uiManager._skillUI.ClickLearnSkill();
+        _uiManager.skillUI.ClickLearnSkill();
     }
 
     public void OnExitBtnClick()
@@ -55,27 +55,27 @@ public class UIInteraction : Generic.Singleton<UIInteraction>
 
     public void OnWeaponItemUIBtnClick()
     {
-        _uiManager._characterUI._itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Weapon);
+        _uiManager.characterUI.itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Weapon);
     }
     public void OnUsableItemUIBtnClick()
     {
-        _uiManager._characterUI._itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Usable);
+        _uiManager.characterUI.itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Usable);
     }
     public void OnOtherItemUIBtnClick()
     {
-        _uiManager._characterUI._itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Other);
+        _uiManager.characterUI.itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Other);
     }
 
     public void OnItemUseBtnClick()
     {
-        _uiManager._characterUI._itemListUI.ClickUseItem();
+        _uiManager.characterUI.itemListUI.ClickUseItem();
     }
     public void OnItemSellBtnClick()
     {
-        _uiManager._characterUI._itemListUI.ClickSellItem();
+        _uiManager.characterUI.itemListUI.ClickSellItem();
     }
     public void OnItemDiscardBtnClick()
     {
-        _uiManager._characterUI._itemListUI.ClickDiscardItem();
+        _uiManager.characterUI.itemListUI.ClickDiscardItem();
     }
 }

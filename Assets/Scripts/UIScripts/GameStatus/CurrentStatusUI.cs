@@ -6,32 +6,34 @@ using TMPro;
 
 public class CurrentStatusUI : UISystem
 {
-    private GameManager _gameManager;
+    [SerializeField] private UnitSystem _unitSystem;
+    private UnitStat _playerStat;
+    private Unit _player;
 
     [SerializeField] private GameObject _actionPointText;
     [SerializeField] private GameObject _healthPointText;
     [SerializeField] private GameObject _ConcentrationText;
-    [SerializeField] private GameObject _ConcentrationSlider;
 
     // Start is called before the first frame update
     void Start()
     {
-        _gameManager = GameManager.instance;
         SetCurrentStatusUI();
     }
-
-    public override void OpenUI()
+    private void Update()
     {
-    }
-    public override void CloseUI()
-    {
+        SetCurrentStatusUI();//test
     }
 
-    public void SetCurrentStatusUI() 
+    public void SetCurrentStatusUI()
     {
-        _actionPointText.GetComponent<TextMeshProUGUI>().text = _gameManager.playerStat.actionPoint.ToString();
-        _healthPointText.GetComponent<TextMeshProUGUI>().text = _gameManager.playerStat.curHp.ToString();
-        _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _gameManager.playerStat.concentration.ToString() + "/ 100";
-        _ConcentrationSlider.GetComponent<Slider>().value = _gameManager.playerStat.concentration / 100.0f;
+        _player = _unitSystem.GetPlayer();
+        //_playerStat = _player.GetStat();
+        _playerStat = GameManager.instance.playerStat;
+        
+        _healthPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.curHp.ToString() + " / " + _playerStat.maxHp.ToString();
+        _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _playerStat.concentration.ToString();
+        _actionPointText.GetComponent<TextMeshProUGUI>().text = _player.currentActionPoint.ToString() + " / " + _playerStat.actionPoint.ToString();
+
+        GetComponent<PlayerHPUI>().SetHPUI();
     }
 }

@@ -26,6 +26,7 @@ public class Tile : MonoBehaviour
     public bool walkable;
     public bool visible;
     public bool rayThroughable;
+    public bool gridVisible;
 
     [Header("플레이어 시야")] 
     [SerializeField] 

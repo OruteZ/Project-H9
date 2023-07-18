@@ -21,9 +21,8 @@ public class HexGridLayout : MonoBehaviour
     [ContextMenu("Layout Menu")]
     public void LayoutGrid()
     {
-        ClearGrid();
-        var outerSize = Hex.Radius;
-        var innerSize = outerSize - thickness;
+        var outerSize = Hex.Radius + thickness;
+        var innerSize = Hex.Radius - thickness;
         
         var grids = Application.isPlaying ? FieldSystem.tileSystem.GetAllTiles() : 
             GetComponentsInChildren<Tile>().ToList();
@@ -31,7 +30,14 @@ public class HexGridLayout : MonoBehaviour
     
         foreach (var grid in grids)
         {
-            HexGridRenderer hexGridRenderer = grid.gameObject.AddComponent<HexGridRenderer>();
+            if (grid.gridVisible is false)
+            {
+                grid.GetComponent<MeshRenderer>().enabled = false;
+                continue;
+            }
+            
+            HexGridRenderer hexGridRenderer = grid.gameObject.GetComponent<HexGridRenderer>();
+            if (hexGridRenderer is null) hexGridRenderer = grid.gameObject.AddComponent<HexGridRenderer>();
             hexGridRenderer.isFlatTopped = isFlatTopped;
             hexGridRenderer.outerSize = outerSize;
             hexGridRenderer.innerSize = innerSize;
@@ -46,16 +52,39 @@ public class HexGridLayout : MonoBehaviour
         }
     }
 
-    public void ClearGrid()
+
+    public Transform editor;
+    [ContextMenu("EditorLayout Menu")]
+    public void EditorLayoutGrid()
     {
-        if (gridList is null) return;
-        if (gridList.Count == 0) return;
-        
         foreach (var grid in gridList)
         {
-            Destroy(grid);
+            DestroyImmediate(grid);
         }
-
         gridList.Clear();
+        
+        var outerSize = Hex.Radius;
+        var innerSize = outerSize - thickness;
+        
+        var grids = Hex.GetCircleGridList(20, Hex.zero);
+       
+    
+        foreach (var grid in grids)
+        {
+            HexGridRenderer hexGridRenderer = new GameObject($"{grid}").AddComponent<HexGridRenderer>();
+            hexGridRenderer.transform.position = Hex.Hex2World(grid);
+            
+            hexGridRenderer.isFlatTopped = isFlatTopped;
+            hexGridRenderer.outerSize = outerSize;
+            hexGridRenderer.innerSize = innerSize;
+            hexGridRenderer.height = height;
+
+            hexGridRenderer.SetUp();
+            hexGridRenderer.SetMaterial(material);
+            hexGridRenderer.DrawMesh();
+            
+            hexGridRenderer.transform.SetParent(editor, true);
+            gridList.Add(hexGridRenderer.gameObject);
+        }
     }
 }

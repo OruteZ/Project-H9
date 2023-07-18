@@ -308,7 +308,8 @@ public class TileSystem : MonoBehaviour
         {
             var tile = Instantiate(tilePrefab, map.transform).GetComponent<Tile>();
             tile.hexPosition = pos;
-            tile.visible = tile.walkable = tile.rayThroughable = true;
+            tile.visible = tile.walkable = tile.rayThroughable = tile.gridVisible =  true;
+            tile.gameObject.name = $"Tile : {tile.hexPosition}";
         }
         
         gridLayout.LayoutGrid();
@@ -323,7 +324,8 @@ public class TileSystem : MonoBehaviour
         {
             var tile = Instantiate(tilePrefab, map.transform).GetComponent<Tile>();
             tile.hexPosition = pos;
-            tile.visible = tile.walkable = tile.rayThroughable = true;
+            tile.visible = tile.walkable = tile.rayThroughable = tile.gridVisible = true;
+            tile.gameObject.name = $"Tile : {tile.hexPosition}";
         }
 
         gridLayout.LayoutGrid();
@@ -337,8 +339,6 @@ public class TileSystem : MonoBehaviour
         {
             DestroyImmediate(tile.gameObject);
         }
-
-        gridLayout.ClearGrid();
     }
 }
 

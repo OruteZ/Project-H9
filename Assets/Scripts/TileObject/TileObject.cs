@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(HexTransform))]
 public class TileObject : MonoBehaviour
 {
+    public int id;
+    
     public HexTransform hexTransform;
     public MeshRenderer meshRenderer;
 

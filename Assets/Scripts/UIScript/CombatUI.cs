@@ -17,12 +17,7 @@ public class CombatUI : MonoBehaviour
     {
         FieldSystem.turnSystem.onTurnChanged.AddListener(System_OnTurnChanged);
     }
-
-    public void EndTurnCall()
-    {
-        FieldSystem.turnSystem.EndTurn();
-    }
-
+    
     private void System_OnTurnChanged()
     {
         if (FieldSystem.turnSystem.turnOwner is Player && GameManager.instance.CompareState(GameState.Combat))

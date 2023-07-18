@@ -1,4 +1,5 @@
 using System;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace Generic
@@ -11,12 +12,12 @@ namespace Generic
         {
             get
             {
-                if (_instance != null) return _instance;
+                if (_instance is not null) return _instance;
             
                 //없으면 동일 타입의 오브젝트 탐색
                 _instance = (T)FindObjectOfType(typeof(T));
 
-                if (_instance != null) return _instance;
+                if (_instance is not null) return _instance;
             
                 //찾아도 없으면 오브젝트 생성
                 var obj = new GameObject(typeof(T).Name, typeof(T));
@@ -26,13 +27,15 @@ namespace Generic
             }
         }
 
-        protected virtual void Awake()
+        protected void Awake()
         {
 #if UNITY_EDITOR
             if (_instance != null)
             {
-                Debug.LogError("Singleton 2회 생성" + nameof(T));
-                // Destroy(gameObject);
+                if (gameObject != _instance.gameObject)
+                {
+                    Destroy(gameObject);
+                }
             }
 #endif
             if (transform.parent != null && transform.root != null)

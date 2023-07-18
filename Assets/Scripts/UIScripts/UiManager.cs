@@ -23,7 +23,7 @@ public class UIManager : Generic.Singleton<UIManager>
     public bool isMouseOverUI;
     public int previousLayer = 1;
 
-    protected override void Awake()
+    private new void Awake()
     {
         base.Awake();
 

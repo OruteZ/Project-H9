@@ -17,6 +17,8 @@ public class CurrentStatusUI : UISystem
     // Start is called before the first frame update
     void Start()
     {
+        _unitSystem = FieldSystem.unitSystem;
+        
         SetCurrentStatusUI();
     }
     private void Update()

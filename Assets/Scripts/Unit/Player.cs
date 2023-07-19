@@ -78,6 +78,12 @@ public class Player : Unit
                 return false;
             }
 
+            if (GameManager.instance.CompareState(GameState.World))
+            {
+                pos = tile.hexPosition;
+                return true;
+            }
+
             if (tile.inSight)
             {
                 pos = tile.hexPosition;
@@ -91,7 +97,9 @@ public class Player : Unit
 
     private void ReloadSight()
     {
-        var allTile = FieldSystem.tileSystem.GetTilesInRange(hexPosition, stat.sightRange);
+        //한칸 움직일때마다 호출되므로, 보였다가 시야에서 사라지는 경우는 sightRange + 1로 탐색 범위에 포함 시킬 수 있음
+        IEnumerable<Tile> allTile =
+            FieldSystem.tileSystem.GetTilesInRange(hexPosition, stat.sightRange + 1);
 
         foreach (var tile in allTile)
         {
@@ -119,7 +127,7 @@ public class Player : Unit
     private void OnMoved(Unit unit)
     {
         ReloadSight();
-        foreach (var obj in FieldSystem.tileSystem.GetTile(hexPosition).objects) 
+        foreach (var obj in FieldSystem.tileSystem.GetTile(hexPosition).interactiveObjects) 
         { 
             obj.OnCollision(unit);
         }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 [RequireComponent(typeof(HexTransform))]
@@ -32,20 +34,17 @@ public class Tile : MonoBehaviour
     [SerializeField] 
     private bool _inSight;
 
-    public List<TileObject> objects;
-    protected void Awake()
-    {
-        _hexTransform = GetComponent<HexTransform>();
-    }
+    public List<TileObject> interactiveObjects;
+    public List<MeshRenderer> environments;
 
     public void AddObject(TileObject u)
     {
-        objects.Add(u);
+        interactiveObjects.Add(u);
     }
 
     public void RemoveObject(TileObject u)
     {
-        objects.Remove(u);
+        interactiveObjects.Remove(u);
     }
 
     public bool inSight
@@ -54,33 +53,72 @@ public class Tile : MonoBehaviour
         set
         {
             _inSight = value;
-            for (var index = 0; index < objects.Count; index++)
-            {
-                
-                var obj = objects[index];
-                if (obj is FogOfWar fow)
-                {
-                    fow.SetVisible(value);
-                    if (value) index--;
-                }
-                
-                
-                //Combat일때만 value 따라감
-                else if (GameManager.instance.CompareState(GameState.Combat))
-                {
-                    obj.SetVisible(value);
-                }
-                //월드Scene일 경우 무조건 true
-                else
-                {
-                    obj.SetVisible(true);
-                }
-            }
+            
+            SetObjectsSight();
+            SetEnvironmentsSight();
 
             var unit = FieldSystem.unitSystem.GetUnit(hexPosition);
             if (unit is not null) unit.isVisible = value;
         }
     }
 
-    
+    private void SetObjectsSight()
+    {
+        for (var index = 0; index < interactiveObjects.Count; index++)
+        {
+                
+            var obj = interactiveObjects[index];
+            if (obj is FogOfWar fow)
+            {
+                fow.SetVisible(_inSight);
+                if (_inSight) index--;
+            }
+                
+                
+            //Combat일때만 value 따라감
+            else if (GameManager.instance.CompareState(GameState.Combat))
+            {
+                obj.SetVisible(_inSight);
+            }
+            //월드Scene일 경우 무조건 true
+            else
+            {
+                obj.SetVisible(true);
+            }
+        }
+    }
+
+    private void SetEnvironmentsSight()
+    {
+        for (var index = 0; index < environments.Count; index++)
+        {
+            var obj = environments[index];
+            if (GameManager.instance.CompareState(GameState.Combat))
+            {
+                if (_inSight is false)
+                {
+                    if (obj.materials.Length >= 2) continue;
+                    
+                    var matList = obj.materials.ToList();
+                    matList.Add(TileEffectManager.instance.combatFowMaterial);
+
+                    obj.materials = matList.ToArray();
+                }
+                else
+                {
+                    if (obj.materials.Length == 1) continue;
+
+                    Material mat = obj.material;
+                    obj.materials = new [] { mat };
+                }
+            }
+            else
+            {
+                if (obj.materials.Length == 1) continue;
+
+                Material mat = obj.material;
+                obj.materials = new [] { mat };
+            }
+        }
+    }
 }

@@ -32,6 +32,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
     private Coroutine _curCoroutine;
 
+    public Material combatFowMaterial;
+
     public void SetPlayer(Player p)
     {
         _player = p;
@@ -81,10 +83,11 @@ public class TileEffectManager : Singleton<TileEffectManager>
             if (GameManager.instance.CompareState(GameState.Combat))
             {
                 if (Hex.Distance(tile.hexPosition, _player.hexPosition) > _player.GetStat().sightRange) continue;
+                if (!FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition)) continue;
             }
             else //GameState.World
             {
-                bool containsFog = tile.objects.OfType<FogOfWar>().Any();
+                bool containsFog = tile.interactiveObjects.OfType<FogOfWar>().Any();
                 if (containsFog) continue;
             }
             SetEffectBase(tile.hexPosition, EffectType.Normal);
@@ -120,6 +123,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
     
             yield return null;
         }
+        // ReSharper disable once IteratorNeverReturns
     }
 
     private new void Awake()

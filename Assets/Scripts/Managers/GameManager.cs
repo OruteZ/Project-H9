@@ -10,6 +10,7 @@ public enum GameState
 }
 public class GameManager : Generic.Singleton<GameManager>
 {
+    [SerializeField]
     private GameState _currentState = GameState.World;
 
     [Header("Player Info")] 

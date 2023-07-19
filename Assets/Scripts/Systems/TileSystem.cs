@@ -19,7 +19,9 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// 전장의 안개 Prefab입니다.
     /// </summary>
-    public GameObject fogOfWarPrefab;
+    public GameObject worldFogOfWarPrefab;
+
+    public GameObject combatFogOfWarPrefab;
     
     /// <summary>
     /// 모든 전장의 안개를 자식으로 가질 오브젝트 입니다.
@@ -28,16 +30,15 @@ public class TileSystem : MonoBehaviour
     
     /// <summary>모든 TIle을 자식으로 가질 오브젝트입니다. </summary>
     public GameObject map;
+
+    /// <summary>
+    /// 모든 환경요소를 자식으로 가지는 오브젝트입니다.
+    /// </summary>
+    public Transform environments;
     
     private Dictionary<Vector3Int, Tile> _tiles;
     private HexGridLayout _gridLayout;
     private HexGridLayout gridLayout => _gridLayout ??= map.GetComponent<HexGridLayout>();
-
-    private void Awake()
-    {
-        _tiles = new Dictionary<Vector3Int, Tile>();
-        _gridLayout = map.GetComponent<HexGridLayout>();
-    }
 
     /// <summary>
     /// 현재 존재하는 모든 타일의 reference를 반환합니다.
@@ -69,24 +70,41 @@ public class TileSystem : MonoBehaviour
     /// </summary>
     public void SetUpTilesAndObjects()
     {
+        _tiles = new Dictionary<Vector3Int, Tile>();
+        _gridLayout = map.GetComponent<HexGridLayout>();
+        
         var tilesInChildren = GetComponentsInChildren<Tile>();  
         foreach (Tile t in tilesInChildren)
         {
             AddTile(t);
             if (GameManager.instance.CompareState(GameState.World))
             {
-                var fow = Instantiate(fogOfWarPrefab, fogs).GetComponent<FogOfWar>(); 
+                var fow = Instantiate(worldFogOfWarPrefab, fogs).GetComponent<FogOfWar>(); 
                 fow.hexPosition = t.hexPosition;
             }
             
         }
 
         var objects = GetComponentsInChildren<TileObject>().ToList();
-        for (var index = 0; index < objects.Count; index++)
+        foreach (var obj in objects)
         {
-            var obj = objects[index];
             obj.SetUp();
         }
+
+        var envList = environments.GetComponentsInChildren<HexTransform>().ToList();
+        foreach (var env in envList)
+        {
+            var pos = env.position;
+            var tile = GetTile(pos);
+            
+            tile.environments.Add(env.GetComponent<MeshRenderer>());
+        }
+        
+        foreach (Tile t in GetAllTiles())
+        {
+            t.inSight = false;
+        }
+
 
         _gridLayout.LayoutGrid();
     }
@@ -181,8 +199,8 @@ public class TileSystem : MonoBehaviour
     public IEnumerable<Tile> GetTilesInRange(Vector3Int start, int range_)
     {
         var list = Hex.GetCircleGridList(range_, start);
+        
         var ret = new List<Tile>();
-
         foreach (var t in list)
         {
             var tile = GetTile(t);
@@ -252,8 +270,8 @@ public class TileSystem : MonoBehaviour
     /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
     public bool RayThroughCheck(Vector3Int start, Vector3Int target)
     { 
-        var line1 = Hex.LineDraw (start, target);
-        var line2 = Hex.LineDraw_(start, target);
+        var line1 = Hex.DrawLine1 (start, target);
+        var line2 = Hex.DrawLine2(start, target);
 
         for (int i = 0; i < line1.Count; i++)
         {
@@ -276,8 +294,8 @@ public class TileSystem : MonoBehaviour
     /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
     public bool VisionCheck(Vector3Int start, Vector3Int target)
     { 
-        var line1 = Hex.LineDraw(start, target);
-        var line2 = Hex.LineDraw_(start, target);
+        var line1 = Hex.DrawLine1(start, target);
+        var line2 = Hex.DrawLine2(start, target);
 
         for (int i = 0; i < line1.Count - 1; i++)
         {

@@ -10,7 +10,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
     private int _skillPoint;
 
-    private void Awake()
+    private new void Awake()
     {
         base.Awake();
         

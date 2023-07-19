@@ -10,6 +10,8 @@ public class HexGridLayout : MonoBehaviour
     public bool isFlatTopped;
     public Material material;
 
+    [Header("Debugging mode")] public bool onDebug;
+    
     private List<GameObject> _grids;
     private List<GameObject> gridList => _grids ?? new List<GameObject>();
 
@@ -21,8 +23,17 @@ public class HexGridLayout : MonoBehaviour
     [ContextMenu("Layout Menu")]
     public void LayoutGrid()
     {
-        var outerSize = Hex.Radius + thickness;
-        var innerSize = Hex.Radius - thickness;
+        float outerSize, innerSize;
+        if (onDebug is false)
+        {
+            outerSize = Hex.Radius + thickness;
+            innerSize = Hex.Radius - thickness;
+        }
+        else
+        {
+            outerSize = Hex.Radius;
+            innerSize = Hex.Radius - thickness;
+        }
         
         var grids = Application.isPlaying ? FieldSystem.tileSystem.GetAllTiles() : 
             GetComponentsInChildren<Tile>().ToList();

@@ -12,6 +12,8 @@ public class EnvTileGenerator : MonoBehaviour
     [ContextMenu("Generate Env")]
     private void Create()
     {
+        Remove();
+        
         var tiles = _tileParent.GetComponentsInChildren<Tile>();
 
         foreach (var tile in tiles)
@@ -24,5 +26,15 @@ public class EnvTileGenerator : MonoBehaviour
             
             objTsf.position = tile.hexPosition;
         }   
+    }
+
+    [ContextMenu(("Remove Env"))]
+    private void Remove()
+    {
+        var envs = _envParent.GetComponentsInChildren<HexTransform>();
+        foreach(var env in envs)
+        {
+            DestroyImmediate(env.gameObject);
+        }
     }
 }

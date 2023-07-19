@@ -43,12 +43,12 @@ public static class Hex
     /// <param name="start">시작점의 Hex좌표</param>
     /// <param name="end">도착점의 Hex좌표</param>
     /// <returns>Hex 좌표를 담은 List</returns>
-    public static List<Vector3Int> LineDraw(Vector3Int start, Vector3Int end)
+    public static List<Vector3Int> DrawLine1(Vector3Int start, Vector3Int end)
     {
         var dist = Distance(start, end);
 
-        var start_nudge = new Vector3((float)(start.x + 1e-6), (float)(start.y + 1e-6), (float)(start.z - 2e-6));
-        var end_nudge = new Vector3((float)(end.x + 1e-6), (float)(end.y + 1e-6), (float)(end.z - 2e-6));
+        var start_nudge = new Vector3((float)(start.x + 1e-6), (float)(start.y - 1e-6), (float)(start.z));
+        var end_nudge = new Vector3((float)(end.x + 1e-6), (float)(end.y - 1e-6), (float)(end.z));
         
         var results = new List<Vector3Int>();
         for (var i = 0; i <= dist; i++)
@@ -60,12 +60,12 @@ public static class Hex
         return results;
     }
     
-    public static List<Vector3Int> LineDraw_(Vector3Int start, Vector3Int end)
+    public static List<Vector3Int> DrawLine2(Vector3Int start, Vector3Int end)
     {
         var dist = Distance(start, end);
 
-        var start_nudge = new Vector3((float)(start.x - 1e-6), (float)(start.y - 1e-6), (float)(start.z + 2e-6));
-        var end_nudge = new Vector3((float)(end.x - 1e-6), (float)(end.y - 1e-6), (float)(end.z + 2e-6));
+        var start_nudge = new Vector3((float)(start.x - 1e-6), (float)(start.y + 1e-6), (float)(start.z));
+        var end_nudge = new Vector3((float)(end.x - 1e-6), (float)(end.y + 1e-6), (float)(end.z));
         
         var results = new List<Vector3Int>();
         for (var i = 0; i <= dist; i++)

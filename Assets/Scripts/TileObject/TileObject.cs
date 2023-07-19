@@ -6,6 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(HexTransform))]
 public class TileObject : MonoBehaviour
 {
+    //for debug
+    [SerializeField] 
+    private bool vision;
+    
     public int id;
     
     public HexTransform hexTransform;
@@ -40,6 +44,8 @@ public class TileObject : MonoBehaviour
         if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
         
         SetTile(tile);
+        meshRenderer.enabled = GameManager.instance.CompareState(GameState.World);
+        vision = IsVisible();
     }
 
     public virtual void SetTile(Tile t)
@@ -53,7 +59,6 @@ public class TileObject : MonoBehaviour
         
     }
 
-    [SerializeField] private bool vision;
     public bool IsVisible()
     {
         return meshRenderer.enabled;

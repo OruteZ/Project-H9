@@ -22,12 +22,12 @@ public class FieldSystem : MonoBehaviour
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();
         
-        unitSystem.SetUpUnits();
-        tileSystem.SetUpTilesAndObjects();
     }
 
     private void Start()
     {
+        unitSystem.SetUpUnits();
+        tileSystem.SetUpTilesAndObjects();
         turnSystem.StartCombat();
     }
 }

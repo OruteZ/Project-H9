@@ -14,7 +14,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     [Header("Canvases")]
     [SerializeField] private Canvas _worldCanvas;
-    [SerializeField] private Canvas _battleCanvas;
+    [SerializeField] private Canvas _combatCanvas;
     [SerializeField] private Canvas _characterCanvas;
     [SerializeField] private Canvas _skillCanvas;
     [SerializeField] private Canvas _pauseMenuCanvas;

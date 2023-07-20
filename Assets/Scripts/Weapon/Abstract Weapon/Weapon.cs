@@ -6,75 +6,49 @@ using UnityEngine.Events;
 [System.Serializable]
 public abstract class Weapon
 {
-    protected UnitStat unitStat;
-    public static Weapon Clone(WeaponData data, Unit owner = null)
-    {
-        Weapon weapon = data.type switch
-        {
-            WeaponType.Revolver => new Revolver(),
-            WeaponType.Repeater => new Repeater(),
-            WeaponType.Shotgun => new Shotgun(),
-            _ => throw new System.ArgumentOutOfRangeException()
-        };
-
-        weapon.unit = owner;
-        // ReSharper disable once MergeConditionalExpression
-        weapon.unitStat = weapon.unit is null ? new UnitStat() : weapon.unit.GetStat();
-        
-        weapon.SetUpData(data);
-        weapon.SetUpGimmicks();
-        
-        return weapon;
-    }
+    //Status
+    public int nameIndex;
+    public GameObject model;
+    public int weaponDamage;
+    public int weaponRange;
+    public int maxEmmo;
+    public int currentEmmo;
+    public float hitRate;
+    public float criticalChance;
+    public float criticalDamage;
+    public int script;
     
+    public UnitStat unitStat;
+    public Unit unit;
+
     protected const float SHOTGUN_OVER_RANGE_PENALTY = 3f;
     protected const float REVOLVER_OVER_RANGE_PENALTY = 2.5f;
     protected const float REPEATER_OVER_RANGE_PENALTY = 2f;
-
-    public Unit unit;
     
-    public string weaponName;
-    public GameObject weaponModel;
-    public int baseDamage;
-    public int baseRange;
-    public List<Gimmick> gimmicks;
-
-    [HideInInspector] public UnityEvent<Unit, int> onSuccessAttack;
-    [HideInInspector] public UnityEvent<Unit, int> onCriticalAttack;
-
-    private void SetUpData(WeaponData data)
-    {
-        weaponName = data.weaponName;
-        weaponModel = data.weaponModel;
-        baseDamage = data.baseDamage;
-        baseRange = data.baseRange;
-
-        onSuccessAttack = new UnityEvent<Unit, int>();
-        onCriticalAttack = new UnityEvent<Unit, int>();
-        
-        gimmicks = new List<Gimmick>();
-        foreach (var gimmickType in data.gimmicks)
-        {
-            gimmicks.Add(Gimmick.Clone(gimmickType));    
-        }
-    }
-    private void SetUpGimmicks()
-    {
-        foreach (var gimmick in gimmicks)
-        {
-            gimmick.Setup(this);
-        }
-    }
+    // private void SetUpGimmicks()
+    // {
+    //     foreach (var gimmick in gimmicks)
+    //     {
+    //         gimmick.Setup(this);
+    //     }
+    // }
     public abstract void Attack(Unit target, out bool isCritical);
     public abstract WeaponType GetWeaponType();
     public abstract int GetFinalDamage();
     public abstract int GetFinalCriticalDamage();
-    public abstract float GetHitRate(Unit target);
+    public abstract float GetFinalHitRate(Unit target);
     public abstract float GetDistancePenalty();
+
+    public void Reload()
+    {
+        currentEmmo = maxEmmo;
+    }
 }
 
 public enum WeaponType
 {
+    Null,
+    Character,
     Revolver,
     Repeater,
     Shotgun

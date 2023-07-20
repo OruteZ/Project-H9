@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946419217ef4dd245bd88cb099d27cd2, type: 3}
+  m_Name: WeaponDatabase
+  m_EditorClassIdentifier: 
+  weaponList:
+  - weaponNameIndex: 0
+    weaponModel: {fileID: 0}
+    type: 0
+    weaponDamage: 10
+    weaponRange: 4
+    weaponEmmo: 6
+    weaponHitRate: 60
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponScript: 0
+  weaponNameTable:
+  - SimpleRevolver
+  weaponScriptTable: []

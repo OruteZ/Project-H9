@@ -13,6 +13,10 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     public abstract int GetCost();
 
+    public abstract bool IsSelectable();
+
+    public abstract bool ExecuteImmediately();
+
     public UnityEvent onActionStarted;
     public UnityEvent onActionFinished;
 

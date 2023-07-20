@@ -127,7 +127,7 @@ public class Skill
 
     public Skill(SkillInfo info)
     {
-        this.skillInfo = info;
+        skillInfo = info;
 
         isLearned = false;
         InitIsLearnable();

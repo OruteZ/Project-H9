@@ -65,7 +65,9 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 break;
             case ActionType.Dynamite:
                 break;
-            case ActionType.None:
+            case ActionType.Idle:
+                break;
+            case ActionType.Reload:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

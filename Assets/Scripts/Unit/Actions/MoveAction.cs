@@ -22,6 +22,18 @@ public class MoveAction : BaseAction
         return _currentPositionIndex < 0 ? 0 : _currentPositionIndex - 1;
     }
 
+    public override bool IsSelectable()
+    {
+        if (unit.hasAttacked) return false;
+        
+        return true;
+    }
+
+    public override bool ExecuteImmediately()
+    {
+        return false;
+    }
+
     public override void SetTarget(Vector3Int targetPos)
     {
         _startPosition = unit.hexPosition;

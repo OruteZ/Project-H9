@@ -12,9 +12,9 @@ public class Revolver : Weapon
     
     public override void Attack(Unit target, out bool isCritical)
     {
-        Debug.Log("Weapon attack Call" + " : " + weaponName);
+        Debug.Log("Weapon attack Call" + " : " + nameIndex);
         
-        isCritical = Random.value < unitStat.criticalChance;
+        isCritical = Random.value < unitStat.criticalChance + criticalChance;
         if (isCritical)
         {
             CriticalAttack(target);
@@ -23,27 +23,29 @@ public class Revolver : Weapon
         {
             NonCriticalAttack(target);
         }
+
+        currentEmmo--;
     }
 
     public override int GetFinalDamage()
     {
-        return Mathf.RoundToInt(baseDamage + unitStat.revolverAdditionalDamage);
+        return Mathf.RoundToInt(weaponDamage + unitStat.revolverAdditionalDamage);
     }
 
     public override int GetFinalCriticalDamage()
     {
-        float dmg = baseDamage + unitStat.revolverAdditionalDamage;
-        dmg += dmg * unitStat.revolverCriticalDamage;
+        float dmg = weaponDamage + unitStat.revolverAdditionalDamage;
+        dmg += dmg * (unitStat.revolverCriticalDamage + criticalDamage);
 
         return Mathf.RoundToInt(dmg);
     }
 
-    public override float GetHitRate(Unit target)
+    public override float GetFinalHitRate(Unit target)
     {
-        int range = baseRange + unitStat.revolverAdditionalRange;
+        int range = weaponRange + unitStat.revolverAdditionalRange;
         int distance = Hex.Distance(unit.hexPosition, target.hexPosition);
 
-        float hitRate = unitStat.concentration * (100 - distance * GetDistancePenalty() *
+        float hitRate = this.hitRate + unitStat.concentration * (100 - distance * GetDistancePenalty() *
             (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1)
             ) * 0.01f;
 
@@ -62,7 +64,7 @@ public class Revolver : Weapon
         int damage = GetFinalDamage();
         target.GetDamage(damage);
 
-        onSuccessAttack.Invoke(target, damage);
+        unit.onSuccessAttack.Invoke(target, damage);
     }
 
     private void CriticalAttack(Unit target)
@@ -70,7 +72,7 @@ public class Revolver : Weapon
         int damage = GetFinalCriticalDamage();
         target.GetDamage(damage);
         
-        onSuccessAttack.Invoke(target, damage);
-        onCriticalAttack.Invoke(target, damage);
+        unit.onSuccessAttack.Invoke(target, damage);
+        unit.onCriticalAttack.Invoke(target, damage);
     }
 }

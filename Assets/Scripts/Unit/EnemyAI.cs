@@ -30,7 +30,7 @@ public class EnemyAI : MonoBehaviour
             return _enemy.GetAction<MoveAction>();
         }
         
-        float hitRate = _enemy.weapon.GetHitRate(FieldSystem.unitSystem.GetPlayer());
+        float hitRate = _enemy.weapon.GetFinalHitRate(FieldSystem.unitSystem.GetPlayer());
         if (hitRate <= 0.5f)
         {
             target = FieldSystem.tileSystem.FindPath(_enemy.hexPosition, _playerPosMemory)[1];

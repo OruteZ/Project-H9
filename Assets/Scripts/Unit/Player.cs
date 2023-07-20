@@ -8,9 +8,9 @@ using UnityEngine.EventSystems;
 public class Player : Unit
 {
     [HideInInspector] public UnityEvent onSelectedChanged;
-    public override void SetUp(string newName, UnitStat unitStat, int weaponIndex)
+    public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon)
     {
-        base.SetUp(newName, unitStat, weaponIndex);
+        base.SetUp(newName, unitStat, newWeapon);
         
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);
@@ -34,20 +34,33 @@ public class Player : Unit
 #if UNITY_EDITOR
         Debug.Log("Player Turn Started");
 #endif
+        
+        hasAttacked = false;
         currentActionPoint = stat.actionPoint;
         ReloadSight();
-        SelectAction(GetAction<MoveAction>());
+        SelectAction(GetAction<IdleAction>());
     }
     
     public void SelectAction(IUnitAction action)
     {
+        //if (activeUnitAction == action) return;
+        if (action.IsSelectable() is false) return;
+        if (action.GetCost() > currentActionPoint)
+        {  
+            Debug.Log("Cost is loss, Cost is " + activeUnitAction.GetCost());
+            return;
+        }
 #if UNITY_EDITOR
         Debug.Log("Select Action : " + action);
 #endif
-        //if (activeUnitAction == action) return;
 
         activeUnitAction = action;
         onSelectedChanged.Invoke();
+
+        if (activeUnitAction.ExecuteImmediately())
+        {
+            TryExecuteUnitAction(Vector3Int.zero, FinishAction);
+        }
     }
 
     private void FinishAction()
@@ -56,6 +69,7 @@ public class Player : Unit
         onCostChanged.Invoke(currentActionPoint);
         
         ClearBusy();
+        SelectAction(GetAction<IdleAction>());
     }
 
     // ReSharper disable Unity.PerformanceAnalysis

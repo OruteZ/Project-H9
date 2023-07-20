@@ -20,7 +20,7 @@ public class Shotgun : Weapon
         throw new System.NotImplementedException();
     }
 
-    public override float GetHitRate(Unit target)
+    public override float GetFinalHitRate(Unit target)
     {
         throw new System.NotImplementedException();
     }

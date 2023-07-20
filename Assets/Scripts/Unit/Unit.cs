@@ -32,6 +32,8 @@ public abstract class Unit : MonoBehaviour, IUnit
     [HideInInspector] public UnityEvent<Unit> onMoved;
     [HideInInspector] public UnityEvent<Unit> onDead;
     [HideInInspector] public UnityEvent<Unit, int> onHit;
+    [HideInInspector] public UnityEvent<Unit, int> onSuccessAttack;
+    [HideInInspector] public UnityEvent<Unit, int> onCriticalAttack;
 
     private IUnitAction[] _unitActionArray; // All Unit Actions attached to this Unit
     protected IUnitAction activeUnitAction; // Currently active action
@@ -43,6 +45,8 @@ public abstract class Unit : MonoBehaviour, IUnit
     public abstract void StartTurn();
     public abstract void GetDamage(int damage);
 
+    public bool hasAttacked;
+    
     public Vector3Int hexPosition
     {
         get => hexTransform.position;
@@ -54,14 +58,22 @@ public abstract class Unit : MonoBehaviour, IUnit
             if(hasMoved) onMoved?.Invoke(this);
         }
     }
-    public virtual void SetUp(string newName, UnitStat unitStat, int weaponIndex)
+    public virtual void SetUp(string newName, UnitStat unitStat, Weapon newWeapon)
     {
         unitName = newName;
         stat = unitStat;
         stat.curHp = stat.maxHp;
-        WeaponData newWeaponData = WeaponManager.GetWeaponData(weaponIndex);
-        weapon = Weapon.Clone(newWeaponData, owner : this);
-    }   
+
+        EquipWeapon(newWeapon);
+    }
+
+    private void EquipWeapon(Weapon newWeapon)
+    {
+        newWeapon.unit = this;
+        newWeapon.unitStat = stat;
+
+        weapon = newWeapon;
+    }
 
     protected virtual void Awake()
     {
@@ -136,12 +148,6 @@ public abstract class Unit : MonoBehaviour, IUnit
     protected bool TryExecuteUnitAction(Vector3Int targetPosition, Action onActionFinish)
     {
         activeUnitAction.SetTarget(targetPosition);
-
-        if (activeUnitAction.GetCost() > currentActionPoint)
-        {  
-            Debug.Log("Cost is loss, Cost is " + activeUnitAction.GetCost());
-            return false;
-        }
 
         if (activeUnitAction.CanExecute() is not true)
         {

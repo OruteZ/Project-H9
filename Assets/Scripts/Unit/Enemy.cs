@@ -14,9 +14,9 @@ public class Enemy : Unit
         _ai = GetComponent<EnemyAI>();
     }
 
-    public override void SetUp(string newName, UnitStat unitStat, int weaponIndex)
+    public override void SetUp(string newName, UnitStat unitStat, Weapon weapon)
     {
-        base.SetUp(newName, unitStat, weaponIndex);
+        base.SetUp(newName, unitStat, weapon);
     }
     
     public void Update()
@@ -25,22 +25,12 @@ public class Enemy : Unit
         if (!IsMyTurn()) return;
 
         activeUnitAction = _ai.SelectAction(out var target);
-        if (activeUnitAction is NoneAction) FinishAction();
+        if (activeUnitAction is IdleAction) FinishAction();
         
         if (TryExecuteUnitAction(target, FinishAction))
         {
             SetBusy();
         }
-
-        // activeUnitAction.SetTarget(target.position);
-        // if (activeUnitAction.CanExecute() && currentActionPoint >= activeUnitAction.GetCost())
-        // {
-        //     #if UNITY_EDITOR
-        //     Debug.Log("Active Action of " + gameObject + " = " + activeUnitAction.GetActionType());
-        //     #endif 
-        //     isBusy = true;
-        //     activeUnitAction.Execute(FinishAction);
-        // }
     }
 
     public override void StartTurn()

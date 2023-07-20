@@ -35,6 +35,12 @@ public interface IUnitAction {
     /// </summary>
     /// <returns></returns>
     bool CanExecute();
+
+    /// <summary>
+    /// 해당 UnitAction을 선택할 수 있는지 여부를 반환합니다.
+    /// </summary>
+    /// <returns></returns>
+    bool IsSelectable();
     
     /// <summary>
     /// UnitAction을 실행합니다.
@@ -47,6 +53,12 @@ public interface IUnitAction {
     /// </summary>
     /// <returns></returns>
     int GetCost();
+    
+    /// <summary>
+    /// 해당 행동을 선택한 후 바로 실행되는지에 대한 참 / 거짓을 반환합니다.
+    /// </summary>
+    /// <returns></returns>
+    public bool ExecuteImmediately();
 }
 
 public enum ActionType {
@@ -54,5 +66,6 @@ public enum ActionType {
     Spin,
     Attack,
     Dynamite,
-    None,
+    Idle,
+    Reload,
 }

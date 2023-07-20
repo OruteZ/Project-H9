@@ -15,15 +15,29 @@ public class AttackAction : BaseAction
         CoolOff
     }
 
-    private Weapon _weapon;
+    private Weapon weapon => unit.weapon;
     private Unit _target;
     private State _state;
     private float _stateTimer;
+
+    public override bool IsSelectable()
+    {
+        if (weapon.currentEmmo == 0) return false;
+        if (unit.hasAttacked) return false;
+
+        return true;
+    }
+
+    public override bool ExecuteImmediately()
+    {
+        return false;
+    }
 
     public override void Execute(Action onActionComplete)
     {
         Debug.Log("Attack Action call");
         StartAction(onActionComplete);
+        unit.hasAttacked = true;
 
         _state = State.Aiming;
         _stateTimer = 1f;
@@ -36,7 +50,6 @@ public class AttackAction : BaseAction
 
     public override void SetTarget(Vector3Int targetPos)
     {
-        _weapon = unit.weapon;
         _target = FieldSystem.unitSystem.GetUnit(targetPos);
         Debug.Log("Attack Target : " + _target);
     }
@@ -74,7 +87,7 @@ public class AttackAction : BaseAction
                     _state = State.Shooting;
                     _stateTimer = .5f;
 
-                    bool hit = _weapon.GetHitRate(_target) > UnityEngine.Random.value;
+                    bool hit = weapon.GetFinalHitRate(_target) > UnityEngine.Random.value;
 
                     #if UNITY_EDITOR
                     Debug.Log(hit ? "뱅" : "빗나감");
@@ -82,7 +95,7 @@ public class AttackAction : BaseAction
 
                     if (hit)
                     {
-                        _weapon.Attack(_target, out var isHeadShot);
+                        weapon.Attack(_target, out var isHeadShot);
                     }
                 }
                 break;

@@ -21,8 +21,8 @@ public interface IUnit
     /// </summary>
     /// <param name="newName">유닛의 이름</param>
     /// <param name="unitStat">유닛의 스탯</param>
-    /// <param name="weaponIndex">무기의 index</param>
-    void SetUp(string newName, UnitStat unitStat, int weaponIndex);
+    /// <param name="newWeapon">무기</param>
+    void SetUp(string newName, UnitStat unitStat, Weapon newWeapon);
     
     /// <summary>
     /// 특정 타입에 해당하는 액션을 반환합니다. 가지고 있지 않을경우 NoneAction을 반환합니다.

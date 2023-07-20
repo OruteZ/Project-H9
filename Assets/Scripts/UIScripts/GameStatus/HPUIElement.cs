@@ -13,13 +13,19 @@ public class HPUIElement : MonoBehaviour
     }
     public void FillUI() 
     {
-        GetComponent<Image>().color = new Color(1, 0, 0, 1);
-        _isFill = true;
+        if (!_isFill)
+        {
+            GetComponent<Image>().color = new Color(1, 0, 0, 1);
+            _isFill = true;
+        }
     }
 
     public void EmptyUI()
     {
-        GetComponent<Image>().color = new Color(1, 1, 1, 1);
-        _isFill = false;
+        if (_isFill)
+        {
+            GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            _isFill = false;
+        }
     }
 }

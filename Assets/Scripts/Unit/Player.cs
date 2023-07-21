@@ -57,7 +57,7 @@ public class Player : Unit
         activeUnitAction = action;
         onSelectedChanged.Invoke();
 
-        if (activeUnitAction.ExecuteImmediately())
+        if (activeUnitAction.CanExecuteImmediately())
         {
             TryExecuteUnitAction(Vector3Int.zero, FinishAction);
         }

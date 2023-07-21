@@ -25,7 +25,7 @@ public class IdleAction : BaseAction
         return true;
     }
 
-    public override bool ExecuteImmediately()
+    public override bool CanExecuteImmediately()
     {
         return false;
     }

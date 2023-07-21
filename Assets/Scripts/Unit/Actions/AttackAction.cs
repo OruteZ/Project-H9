@@ -28,7 +28,7 @@ public class AttackAction : BaseAction
         return true;
     }
 
-    public override bool ExecuteImmediately()
+    public override bool CanExecuteImmediately()
     {
         return false;
     }
@@ -99,10 +99,12 @@ public class AttackAction : BaseAction
                     }
                 }
                 break;
+            
             case State.Shooting:
                 _state = State.CoolOff;
                 _stateTimer = .5f;
                 break;
+            
             case State.CoolOff:
                 _stateTimer -= Time.deltaTime;
                 if (_stateTimer <= 0f)

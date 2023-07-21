@@ -34,6 +34,7 @@ public class CombatUI : MonoBehaviour
     {
         playerActionButtonsUI.SetActive(true);
 
+//행동 가능한 액션
         var actions = FieldSystem.unitSystem.GetPlayer().GetUnitActionArray();
 
         int index = 0;

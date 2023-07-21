@@ -29,4 +29,9 @@ public class Shotgun : Weapon
     {
         throw new System.NotImplementedException();
     }
+
+    public override int GetRange()
+    {
+        throw new System.NotImplementedException();
+    }
 }

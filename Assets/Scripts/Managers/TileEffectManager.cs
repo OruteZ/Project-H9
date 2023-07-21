@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Generic;
+using UnityEngine.Rendering;
 
 public enum EffectType
 {
@@ -34,6 +35,15 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
     public Material combatFowMaterial;
 
+    [field: Header("Attack Effect")] 
+    public GameObject attackTileEffect;
+    public GameObject attackOutOfRangeEffect;
+    public GameObject attackUnitEffect;
+    public RectTransform aimEffectRectTsf; 
+    public RectTransform combatCanvas;
+    public RectTransform aimEffect;
+    
+    
     public void SetPlayer(Player p)
     {
         _player = p;
@@ -62,6 +72,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             case ActionType.Spin:
                 break;
             case ActionType.Attack:
+                AttackTileEffect();
                 break;
             case ActionType.Dynamite:
                 break;
@@ -128,6 +139,70 @@ public class TileEffectManager : Singleton<TileEffectManager>
         // ReSharper disable once IteratorNeverReturns
     }
 
+    private void AttackTileEffect()
+    {
+        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, _player.weapon.GetRange()).Where(
+            tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
+        var units = FieldSystem.unitSystem.units.Where(
+            unit => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) && unit is not Player);
+
+        foreach (var tile in tiles)
+        {
+            if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
+
+            var go =Instantiate(attackTileEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
+            _effectStackBase.Push(go);
+        }
+
+        foreach (var unit in units)
+        {
+            if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, unit.hexPosition) is false) continue;
+            
+            var go = Instantiate((_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, unit.hexPosition) ? 
+                attackUnitEffect : attackOutOfRangeEffect), Hex.Hex2World(unit.hexPosition), Quaternion.identity);
+            _effectStackBase.Push((GameObject)go);
+        }
+
+        _curCoroutine = StartCoroutine(AttackTargetEffectCoroutine());
+    }
+
+    private IEnumerator AttackTargetEffectCoroutine()
+    {
+        while (true)
+        {
+            if (Player.TryGetMouseOverTilePos(out var target) is false)
+            {
+                aimEffectRectTsf.gameObject.SetActive(false);
+                yield return null;
+                continue;
+            }
+
+            Unit targetUnit = FieldSystem.unitSystem.GetUnit(target);
+            if (targetUnit is null)
+            {
+                aimEffectRectTsf.gameObject.SetActive(false);
+                yield return null;
+                continue;
+            }
+            
+            aimEffectRectTsf.gameObject.SetActive(true);
+            
+            Vector2 viewportPosition = Camera.main.WorldToViewportPoint(Hex.Hex2World(targetUnit.hexPosition) + 
+                                                                        Vector3.up * (targetUnit.transform.localScale.y * 0.5f));
+            var sizeDelta = combatCanvas.sizeDelta;
+            
+            Vector2 worldObjectScreenPosition = new Vector2(
+                ((viewportPosition.x * sizeDelta.x) - (sizeDelta.x * 0.5f)),
+                ((viewportPosition.y * sizeDelta.y) - (sizeDelta.y * 0.5f)));
+            aimEffectRectTsf.anchoredPosition = worldObjectScreenPosition;
+            aimEffect.localScale = Vector3.one * _player.weapon.GetFinalHitRate(targetUnit);
+
+            // aimEffectRectTsf.gameObject.SetActive(false);
+            yield return null;
+        }
+        // ReSharper disable once IteratorNeverReturns
+    }
+    
     private new void Awake()
     {
         base.Awake();

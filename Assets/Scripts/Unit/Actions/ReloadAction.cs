@@ -6,6 +6,16 @@ using UnityEngine;
 public class ReloadAction : BaseAction
 {
     private Weapon weapon => unit.weapon;
+
+    private State _curState;
+    public float animTime;
+    public float coolOffTime;
+
+    private enum State
+    {
+        Reloading,
+        CoolOff
+    }
     
     public override ActionType GetActionType()
     {
@@ -27,7 +37,7 @@ public class ReloadAction : BaseAction
         return weapon.currentEmmo < weapon.maxEmmo;
     }
 
-    public override bool ExecuteImmediately()
+    public override bool CanExecuteImmediately()
     {
         return true;
     }
@@ -42,7 +52,27 @@ public class ReloadAction : BaseAction
         Debug.Log("Reload weapon");
 
         StartAction(onActionComplete);
-        weapon.currentEmmo = weapon.maxEmmo;
-        FinishAction();
+        _stateTimer = animTime;
+        _curState = State.Reloading;
+    }
+
+    private float _stateTimer;
+    private void Update()
+    {
+        if (isActive is false) return;
+
+        if (!((_stateTimer -= Time.deltaTime) < 0)) return;
+        
+        switch (_curState)
+        {
+            case State.Reloading:
+                unit.weapon.currentEmmo = unit.weapon.maxEmmo;
+                break;
+            case State.CoolOff:
+                FinishAction();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }

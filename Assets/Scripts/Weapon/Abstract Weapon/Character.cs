@@ -33,4 +33,9 @@ public class Character : Weapon
     {
         throw new System.NotImplementedException();
     }
+
+    public override int GetRange()
+    {
+        throw new System.NotImplementedException();
+    }
 }

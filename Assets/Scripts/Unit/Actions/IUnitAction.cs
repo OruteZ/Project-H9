@@ -58,7 +58,7 @@ public interface IUnitAction {
     /// 해당 행동을 선택한 후 바로 실행되는지에 대한 참 / 거짓을 반환합니다.
     /// </summary>
     /// <returns></returns>
-    public bool ExecuteImmediately();
+    public bool CanExecuteImmediately();
 }
 
 public enum ActionType {

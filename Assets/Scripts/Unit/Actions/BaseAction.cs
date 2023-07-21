@@ -15,7 +15,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     public abstract bool IsSelectable();
 
-    public abstract bool ExecuteImmediately();
+    public abstract bool CanExecuteImmediately();
 
     public UnityEvent onActionStarted;
     public UnityEvent onActionFinished;

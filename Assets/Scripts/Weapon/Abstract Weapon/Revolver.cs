@@ -9,7 +9,11 @@ public class Revolver : Weapon
 {
     public override WeaponType GetWeaponType() => WeaponType.Revolver;
     public override float GetDistancePenalty() => 6;
-    
+    public override int GetRange()
+    {
+        return weaponRange + unitStat.revolverAdditionalRange;
+    }
+
     public override void Attack(Unit target, out bool isCritical)
     {
         Debug.Log("Weapon attack Call" + " : " + nameIndex);

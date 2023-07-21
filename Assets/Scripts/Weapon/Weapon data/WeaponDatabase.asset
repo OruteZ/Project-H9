@@ -13,16 +13,37 @@ MonoBehaviour:
   m_Name: WeaponDatabase
   m_EditorClassIdentifier: 
   weaponList:
-  - weaponNameIndex: 0
+  - weaponNameIndex: 101
     weaponModel: {fileID: 0}
-    type: 0
-    weaponDamage: 10
+    type: 2
+    weaponDamage: 1
     weaponRange: 4
-    weaponEmmo: 6
-    weaponHitRate: 60
+    weaponAmmo: 6
+    weaponHitRate: 0
     weaponCriticalChance: 0
     weaponCriticalDamage: 0
-    weaponScript: 0
+    weaponScript: 201
+  - weaponNameIndex: 102
+    weaponModel: {fileID: 0}
+    type: 2
+    weaponDamage: 2
+    weaponRange: 4
+    weaponAmmo: 6
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponScript: 202
+  - weaponNameIndex: 103
+    weaponModel: {fileID: 0}
+    type: 2
+    weaponDamage: 3
+    weaponRange: 4
+    weaponAmmo: 6
+    weaponHitRate: 10
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponScript: 203
   weaponNameTable:
   - SimpleRevolver
   weaponScriptTable: []
+  indexStart: 101

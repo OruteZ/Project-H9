@@ -39,6 +39,8 @@ public abstract class Weapon
     public abstract float GetFinalHitRate(Unit target);
     public abstract float GetDistancePenalty();
 
+    public abstract int GetRange();
+
     public void Reload()
     {
         currentEmmo = maxEmmo;

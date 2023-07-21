@@ -60,7 +60,7 @@ public class WeaponDatabase : ScriptableObject
     {
         var dataList = FileRead.Read("WeaponTable");
         
-        weaponList.Clear();
+        weaponList?.Clear();
 
         for (var i = 0; i < dataList.Count; i++)
         {

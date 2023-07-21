@@ -157,7 +157,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         foreach (var unit in units)
         {
             if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, unit.hexPosition) is false) continue;
-            
+
             var go = Instantiate((_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, unit.hexPosition) ? 
                 attackUnitEffect : attackOutOfRangeEffect), Hex.Hex2World(unit.hexPosition), Quaternion.identity);
             _effectStackBase.Push((GameObject)go);

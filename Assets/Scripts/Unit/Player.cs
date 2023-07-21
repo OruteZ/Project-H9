@@ -38,7 +38,14 @@ public class Player : Unit
         hasAttacked = false;
         currentActionPoint = stat.actionPoint;
         ReloadSight();
-        SelectAction(GetAction<IdleAction>());
+        if (GameManager.instance.CompareState(GameState.Combat))
+        {
+            SelectAction(GetAction<IdleAction>());
+        }
+        else
+        {
+            SelectAction(GetAction<MoveAction>());
+        }
     }
     
     public void SelectAction(IUnitAction action)
@@ -69,7 +76,14 @@ public class Player : Unit
         onCostChanged.Invoke(currentActionPoint);
         
         ClearBusy();
-        SelectAction(GetAction<IdleAction>());
+        if(GameManager.instance.CompareState(GameState.Combat))
+        {
+            SelectAction(GetAction<IdleAction>());
+        }
+        else
+        {
+            SelectAction(GetAction<MoveAction>());
+        }
     }
 
     // ReSharper disable Unity.PerformanceAnalysis

@@ -66,6 +66,7 @@ public class Player : Unit
 
         if (activeUnitAction.CanExecuteImmediately())
         {
+            if (activeUnitAction is AttackAction) { weapon.currentEmmo -= 1; }  //ui test
             TryExecuteUnitAction(Vector3Int.zero, FinishAction);
         }
     }

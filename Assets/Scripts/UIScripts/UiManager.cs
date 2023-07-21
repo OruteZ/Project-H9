@@ -26,6 +26,9 @@ public class UIManager : Generic.Singleton<UIManager>
     private new void Awake()
     {
         base.Awake();
+        _characterCanvas.enabled = false;
+        _skillCanvas.enabled = false;
+        _pauseMenuCanvas.enabled = false;
 
         currentStatusUI = _worldCanvas.GetComponent<CurrentStatusUI>();
         timingUI = _worldCanvas.GetComponent<TimingUI>();

@@ -6,11 +6,15 @@ using TMPro;
 public class MagazineUI : UISystem
 {
     [SerializeField] private GameObject _magazineText;
-    private Weapon _weapon;
 
+    private void Update()
+    {
+        //for test
+        SetMagazineText();
+    }
     void SetMagazineText() 
     {
         Weapon weapon = FieldSystem.unitSystem.GetPlayer().weapon;
-        //_magazineText.GetComponent<TextMeshProUGUI>().text = weapon.currentAmmo.ToString() + " / " + weapon.maxAmmo.ToString();
+        _magazineText.GetComponent<TextMeshProUGUI>().text = weapon.currentEmmo.ToString() + " / " + weapon.maxEmmo.ToString();
     }
 }

@@ -35,6 +35,14 @@ public class CurrentStatusUI : UISystem
         _healthPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.curHp.ToString() + " / " + _playerStat.maxHp.ToString();
         _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _playerStat.concentration.ToString();
         _actionPointText.GetComponent<TextMeshProUGUI>().text = _player.currentActionPoint.ToString() + " / " + _playerStat.actionPoint.ToString();
+        if (_player.currentActionPoint == 0)
+        {
+            _actionPointText.GetComponent<TextMeshProUGUI>().color = Color.red;
+        }
+        else
+        {
+            _actionPointText.GetComponent<TextMeshProUGUI>().color = Color.black;
+        }
 
         GetComponent<PlayerHPUI>().SetHPUI();
     }

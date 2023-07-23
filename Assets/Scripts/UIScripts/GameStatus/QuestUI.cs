@@ -15,4 +15,12 @@ public class QuestUI : UISystem
     {
 
     }
+    public override void OpenUI()
+    {
+        base.OpenUI();
+    }
+    public override void CloseUI()
+    {
+        base.CloseUI();
+    }
 }

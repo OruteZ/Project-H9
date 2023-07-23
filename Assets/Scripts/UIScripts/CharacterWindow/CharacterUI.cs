@@ -22,12 +22,14 @@ public class CharacterUI : UISystem
     }
     public override void OpenUI()
     {
+        base.OpenUI();
         characterStatUI.OpenUI();
         learnedSkillUI.OpenUI();
         itemListUI.OpenUI();
     }
     public override void CloseUI()
     {
+        base.CloseUI();
         characterStatUI.CloseUI();
         learnedSkillUI.CloseUI();
         itemListUI.CloseUI();

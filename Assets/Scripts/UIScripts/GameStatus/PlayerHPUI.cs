@@ -16,6 +16,14 @@ public class PlayerHPUI : UISystem
     {
         InitHPUI();
     }
+    public override void OpenUI()
+    {
+        base.OpenUI();
+    }
+    public override void CloseUI()
+    {
+        base.CloseUI();
+    }
 
     private void InitHPUI()
     {

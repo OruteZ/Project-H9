@@ -28,10 +28,12 @@ public class SkillUI : UISystem
     }
     public override void OpenUI() 
     {
+        base.OpenUI();
         UpdateSkillPointUI();
     }
     public override void CloseUI()
     {
+        base.CloseUI();
         CloseSkillTooltip();
     }
     public override void ClosePopupWindow()

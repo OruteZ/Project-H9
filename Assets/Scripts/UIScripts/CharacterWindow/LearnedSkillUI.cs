@@ -31,10 +31,12 @@ public class LearnedSkillUI : UISystem
     }
     public override void OpenUI()
     {
+        base.OpenUI();
         SetLearnedSkiilInfoUI();
     }
     public override void CloseUI()
     {
+        base.CloseUI();
     }
     public void SetLearnedSkiilInfoUI()
     {

@@ -12,6 +12,14 @@ public class MagazineUI : UISystem
         //for test
         SetMagazineText();
     }
+    public override void OpenUI()
+    {
+        base.OpenUI();
+    }
+    public override void CloseUI()
+    {
+        base.CloseUI();
+    }
     void SetMagazineText() 
     {
         Weapon weapon = FieldSystem.unitSystem.GetPlayer().weapon;

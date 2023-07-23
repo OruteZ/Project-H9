@@ -13,27 +13,27 @@ public class UIInteraction : Generic.Singleton<UIInteraction>
     }
     public void OnCharacterBtnClick()
     {
-        _uiManager.OnOffCharacterCanvas(true);
-        _uiManager.OnOffSkillCanvas(false);
-        _uiManager.OnOffPauseMenuCanvas(false);
+        _uiManager.SetCharacterCanvasState(true);
+        _uiManager.SetSkillCanvasState(false);
+        _uiManager.SetPauseMenuCanvasState(false);
     }
     public void OnSkillBtnClick()
     {
-        _uiManager.OnOffCharacterCanvas(false);
-        _uiManager.OnOffSkillCanvas(true);
-        _uiManager.OnOffPauseMenuCanvas(false);
+        _uiManager.SetCharacterCanvasState(false);
+        _uiManager.SetSkillCanvasState(true);
+        _uiManager.SetPauseMenuCanvasState(false);
     }
     public void OnPauseMenuBtnClick()
     {
-        _uiManager.OnOffCharacterCanvas(false);
-        _uiManager.OnOffSkillCanvas(false);
-        _uiManager.OnOffPauseMenuCanvas(true);
+        _uiManager.SetCharacterCanvasState(false);
+        _uiManager.SetSkillCanvasState(false);
+        _uiManager.SetPauseMenuCanvasState(true);
     }
     public void OnBackgroundBtnClick()
     {
-        _uiManager.OnOffCharacterCanvas(false);
-        _uiManager.OnOffSkillCanvas(false);
-        _uiManager.OnOffPauseMenuCanvas(false);
+        _uiManager.SetCharacterCanvasState(false);
+        _uiManager.SetSkillCanvasState(false);
+        _uiManager.SetPauseMenuCanvasState(false);
     }
     public void OnSkillTooltipCloseBtnClick()
     {

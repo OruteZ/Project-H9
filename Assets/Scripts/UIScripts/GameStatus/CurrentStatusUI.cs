@@ -25,6 +25,14 @@ public class CurrentStatusUI : UISystem
     {
         SetCurrentStatusUI();//test
     }
+    public override void OpenUI()
+    {
+        base.OpenUI();
+    }
+    public override void CloseUI()
+    {
+        base.CloseUI();
+    }
 
     public void SetCurrentStatusUI()
     {

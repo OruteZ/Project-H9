@@ -35,10 +35,12 @@ public class ItemListUI : UISystem
     }
     public override void OpenUI()
     {
+        base.OpenUI();
         SetItemLists();
     }
     public override void CloseUI()
     {
+        base.CloseUI();
     }
 
     public void ChangeItemUIStatus(ItemInfo.ItemCategory status)

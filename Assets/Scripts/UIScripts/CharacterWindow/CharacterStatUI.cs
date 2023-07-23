@@ -19,10 +19,13 @@ public class CharacterStatUI : UISystem
 
     public override void OpenUI()
     {
+        base.OpenUI();
+
         SetStatText();
     }
     public override void CloseUI()
     {
+        base.CloseUI();
     }
     private void SetStatText()
     {

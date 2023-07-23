@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Generic.Singleton<UIManager>
 {
@@ -8,6 +9,7 @@ public class UIManager : Generic.Singleton<UIManager>
     public CurrentStatusUI currentStatusUI { get; private set; }
     public TimingUI timingUI { get; private set; }
     public QuestUI questUI { get; private set; }
+    public CombatWindowUI combatUI { get; private set; }
     public CharacterUI characterUI { get; private set; }
     public SkillUI skillUI { get; private set; }
     public PauseMenuUI pauseMenuUI { get; private set; }
@@ -23,9 +25,14 @@ public class UIManager : Generic.Singleton<UIManager>
     public bool isMouseOverUI;
     public int previousLayer = 1;
 
+    private string prevSceneName;
+    private bool _isCombatScene = false;
+
+
     private new void Awake()
     {
         base.Awake();
+        _combatCanvas.enabled = false;
         _characterCanvas.enabled = false;
         _skillCanvas.enabled = false;
         _pauseMenuCanvas.enabled = false;
@@ -33,13 +40,18 @@ public class UIManager : Generic.Singleton<UIManager>
         currentStatusUI = _worldCanvas.GetComponent<CurrentStatusUI>();
         timingUI = _worldCanvas.GetComponent<TimingUI>();
         questUI = _worldCanvas.GetComponent<QuestUI>();
+
+        combatUI = _combatCanvas.GetComponent<CombatWindowUI>();
+
         characterUI = _characterCanvas.GetComponent<CharacterUI>();
         skillUI = _skillCanvas.GetComponent<SkillUI>();
         pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
 
-        OnOffCanvas(_characterCanvas, characterUI, false);
-        OnOffCanvas(_skillCanvas, skillUI, false);
-        OnOffCanvas(_pauseMenuCanvas, pauseMenuUI, false);
+        SetCanvasState(_characterCanvas, characterUI, false);
+        SetCanvasState(_skillCanvas, skillUI, false);
+        SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
+
+        prevSceneName = SceneManager.GetActiveScene().name;
     }
     void Update()
     {
@@ -51,9 +63,9 @@ public class UIManager : Generic.Singleton<UIManager>
             {
                 if (currentLayer <= 1)
                 {
-                    OnOffCharacterCanvas(false);
-                    OnOffSkillCanvas(false);
-                    OnOffPauseMenuCanvas(false);
+                    SetCharacterCanvasState(false);
+                    SetSkillCanvasState(false);
+                    SetPauseMenuCanvasState(false);
                 }
                 else if (currentLayer == 2) 
                 {
@@ -64,9 +76,12 @@ public class UIManager : Generic.Singleton<UIManager>
 
             previousLayer = currentLayer;
         }
+
+
+        UIManager.instance.ChangeScene();
     }
 
-    public void OnOffCanvas(Canvas canvas, UISystem uiSys, bool isOn)
+    public void SetCanvasState(Canvas canvas, UISystem uiSys, bool isOn)
     {
         if (canvas.enabled && isOn)
         {
@@ -87,17 +102,21 @@ public class UIManager : Generic.Singleton<UIManager>
             }
         }
     }
-    public void OnOffCharacterCanvas(bool isOn)
+    public void SetCombatCanvasState(bool isOn)
     {
-        OnOffCanvas(_characterCanvas, characterUI, isOn);
+        SetCanvasState(_combatCanvas, combatUI, isOn);
     }
-    public void OnOffSkillCanvas(bool isOn)
+    public void SetCharacterCanvasState(bool isOn)
     {
-        OnOffCanvas(_skillCanvas, skillUI, isOn);
+        SetCanvasState(_characterCanvas, characterUI, isOn);
     }
-    public void OnOffPauseMenuCanvas(bool isOn)
+    public void SetSkillCanvasState(bool isOn)
     {
-        OnOffCanvas(_pauseMenuCanvas, pauseMenuUI, isOn);
+        SetCanvasState(_skillCanvas, skillUI, isOn);
+    }
+    public void SetPauseMenuCanvasState(bool isOn)
+    {
+        SetCanvasState(_pauseMenuCanvas, pauseMenuUI, isOn);
     }
 
     private int GetPointerOverUILayer() 
@@ -128,5 +147,40 @@ public class UIManager : Generic.Singleton<UIManager>
         }
 
         return -1;
+    }
+
+    public void ChangeScene() 
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        if (prevSceneName == currentSceneName) return;
+        Debug.Log(currentSceneName);
+        switch (currentSceneName)
+        {
+            case "WorldScene":
+            case "UITestScene":
+                {
+                    _isCombatScene = false;
+                    ChangeUIToWorldScene();
+                    break;
+                }
+            case "CombatScene":
+                {
+                    _isCombatScene = true;
+                    ChangeUIToCombatScene();
+                    break;
+                }
+        }
+
+        prevSceneName = currentSceneName;
+    }
+    private void ChangeUIToWorldScene() 
+    {
+        SetCombatCanvasState(false);
+        timingUI.SetTurnOrderUIState(false);
+    }
+    private void ChangeUIToCombatScene()
+    {
+        SetCombatCanvasState(true);
+        timingUI.SetTurnOrderUIState(true);
     }
 }

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public abstract class UIElement : MonoBehaviour
 {
-    public abstract void OpenUI();
-    public abstract void CloseUI();
+    public virtual void OpenUI()
+    {
+        enabled = true;
+    }
+    public virtual void CloseUI()
+    {
+        enabled = false;
+    }
 }

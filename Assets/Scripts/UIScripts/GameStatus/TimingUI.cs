@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TimingUI : UISystem
 {
     [SerializeField] private GameObject _turnText;
-    [SerializeField] private GameObject _turnOrder;
+    [SerializeField] private GameObject _turnOrderUI;
     private readonly Vector3 TURN_ORDER_UI_INIT_POSITION = new Vector3(0, 0, 0);
     private const int TURN_ORDER_UI_INTERVAL = 10;
 
@@ -24,13 +25,22 @@ public class TimingUI : UISystem
     }
     public void SetTurnOrderUIState(bool isOn) 
     {
-        _turnOrder.SetActive(isOn);
+        _turnOrderUI.SetActive(isOn);
     }
     public void SetTurnOrderUI(List<Unit> turnOrder) 
     {
+        int index = 0;
         foreach(Unit unit in turnOrder) 
         {
-            Debug.Log(unit.unitName);
+            if (unit is Player)
+            {
+                _turnOrderUI.transform.GetChild(index).GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            }
+            else
+            {
+                _turnOrderUI.transform.GetChild(index).GetComponent<Image>().color = new Color(.5f, .5f, 0.5f, 1);
+            }
+            index++;
         }
     }
 }

@@ -12,8 +12,8 @@ public class TurnSystem : MonoBehaviour
     
     public Unit turnOwner;  
     public int turnNumber;
-    
-    private void Awake()
+
+private void Awake()
     {
         turnNumber = 0;
         onTurnChanged.AddListener(() => { turnNumber++;});
@@ -25,8 +25,6 @@ public class TurnSystem : MonoBehaviour
     /// </summary>
     public void StartCombat()
     {
-        //InitCurrentRound();
-
         StartTurn();
     }
 
@@ -51,52 +49,49 @@ public class TurnSystem : MonoBehaviour
         turnOwner.StartTurn();
         onTurnChanged.Invoke();
     }
-
-    private void InitCurrentRound() 
-    {
-        List<Unit> units = FieldSystem.unitSystem.units;
-
-        foreach (Unit unit in units)
-        {
-            unit.currentRound = 1;
-        }
-    }
     private void CalculateTurnOwner()
     {
         if (GameManager.instance.CompareState(GameState.World))
         {
             turnOwner = FieldSystem.unitSystem.GetPlayer();
         }
-        else if (GameManager.instance.CompareState(GameState.Combat)) 
+        else if (GameManager.instance.CompareState(GameState.Combat))
         {
             const int ORDER_LENGTH = 12;
-            List<Unit> turnOrder = new List<Unit>();
             List<Unit> units = FieldSystem.unitSystem.units;
+            List<Unit> turnOrder = new List<Unit>();
+            List<int> currentRounds = new List<int>();
+            for (int i = 0; i < units.Count; i++) 
+            {
+                currentRounds.Add(units[i].currentRound);
+            }
+
 
             while (turnOrder.Count < ORDER_LENGTH)
             {
-                Unit minOrderValueUnit = units[0];
-                float minOrderValue = CalculateTurnOrderValue(units[0]);
-                foreach (Unit unit in units) 
+                int minOrderValueUnitIndex = 0;
+                float minOrderValue = CalculateTurnOrderValue(currentRounds[0], units[0].GetStat().speed);
+                for (int i = 0; i < units.Count; i++)
                 {
-                    float orderValue = CalculateTurnOrderValue(unit);
-                    if (minOrderValue > orderValue) 
+                    float orderValue = CalculateTurnOrderValue(currentRounds[i], units[i].GetStat().speed);
+                    if (minOrderValue > orderValue)
                     {
-                        minOrderValueUnit = unit;
+                        minOrderValueUnitIndex = i;
                         minOrderValue = orderValue;
                     }
                 }
-                minOrderValueUnit.currentRound += 1;
-                turnOrder.Add(minOrderValueUnit);
+                currentRounds[minOrderValueUnitIndex]++;
+                turnOrder.Add(units[minOrderValueUnitIndex]);
             }
 
+            turnOrder[0].currentRound++;
             UIManager.instance.timingUI.SetTurnOrderUI(turnOrder);
             turnOwner = turnOrder[0];
         }
     }
-    private float CalculateTurnOrderValue(Unit unit) 
+    private float CalculateTurnOrderValue(int currentRound, int speed) 
     {
-        return (((float)unit.currentRound / unit.GetStat().speed) * 100.0f);
+        return (((float)currentRound / speed) * 100.0f);
     }
 }
 

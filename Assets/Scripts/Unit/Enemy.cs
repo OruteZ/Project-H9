@@ -37,6 +37,10 @@ public class Enemy : Unit
     {
         #if UNITY_EDITOR
         Debug.Log(unitName + " Turn Started");
+
+        StartCoroutine(UITestEndTurn());
+        return;//for ui test
+
         #endif
         currentActionPoint = stat.actionPoint;
 
@@ -57,6 +61,16 @@ public class Enemy : Unit
         if (currentActionPoint == 0)
         {
             FieldSystem.turnSystem.EndTurn();
+        }
+    }
+
+    IEnumerator UITestEndTurn() 
+    {
+        while(true) 
+        {
+            yield return new WaitForSeconds(2.0f * Time.timeScale);
+            FieldSystem.turnSystem.EndTurn();
+            yield break;
         }
     }
 }

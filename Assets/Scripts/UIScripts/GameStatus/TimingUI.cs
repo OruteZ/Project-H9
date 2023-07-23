@@ -7,6 +7,8 @@ public class TimingUI : UISystem
 {
     [SerializeField] private GameObject _turnText;
     [SerializeField] private GameObject _turnOrder;
+    private readonly Vector3 TURN_ORDER_UI_INIT_POSITION = new Vector3(0, 0, 0);
+    private const int TURN_ORDER_UI_INTERVAL = 10;
 
     public override void OpenUI()
     {
@@ -23,5 +25,12 @@ public class TimingUI : UISystem
     public void SetTurnOrderUIState(bool isOn) 
     {
         _turnOrder.SetActive(isOn);
+    }
+    public void SetTurnOrderUI(List<Unit> turnOrder) 
+    {
+        foreach(Unit unit in turnOrder) 
+        {
+            Debug.Log(unit.unitName);
+        }
     }
 }

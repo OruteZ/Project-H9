@@ -46,7 +46,9 @@ public abstract class Unit : MonoBehaviour, IUnit
     public abstract void GetDamage(int damage);
 
     public bool hasAttacked;
-    
+
+    public int currentRound;
+
     public Vector3Int hexPosition
     {
         get => hexTransform.position;

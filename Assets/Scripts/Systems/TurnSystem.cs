@@ -25,6 +25,8 @@ public class TurnSystem : MonoBehaviour
     /// </summary>
     public void StartCombat()
     {
+        //InitCurrentRound();
+
         StartTurn();
     }
 
@@ -50,9 +52,51 @@ public class TurnSystem : MonoBehaviour
         onTurnChanged.Invoke();
     }
 
+    private void InitCurrentRound() 
+    {
+        List<Unit> units = FieldSystem.unitSystem.units;
+
+        foreach (Unit unit in units)
+        {
+            unit.currentRound = 1;
+        }
+    }
     private void CalculateTurnOwner()
     {
-        turnOwner = FieldSystem.unitSystem.GetPlayer();
+        if (GameManager.instance.CompareState(GameState.World))
+        {
+            turnOwner = FieldSystem.unitSystem.GetPlayer();
+        }
+        else if (GameManager.instance.CompareState(GameState.Combat)) 
+        {
+            const int ORDER_LENGTH = 12;
+            List<Unit> turnOrder = new List<Unit>();
+            List<Unit> units = FieldSystem.unitSystem.units;
+
+            while (turnOrder.Count < ORDER_LENGTH)
+            {
+                Unit minOrderValueUnit = units[0];
+                float minOrderValue = CalculateTurnOrderValue(units[0]);
+                foreach (Unit unit in units) 
+                {
+                    float orderValue = CalculateTurnOrderValue(unit);
+                    if (minOrderValue > orderValue) 
+                    {
+                        minOrderValueUnit = unit;
+                        minOrderValue = orderValue;
+                    }
+                }
+                minOrderValueUnit.currentRound += 1;
+                turnOrder.Add(minOrderValueUnit);
+            }
+
+            UIManager.instance.timingUI.SetTurnOrderUI(turnOrder);
+            turnOwner = turnOrder[0];
+        }
+    }
+    private float CalculateTurnOrderValue(Unit unit) 
+    {
+        return (((float)unit.currentRound / unit.GetStat().speed) * 100.0f);
     }
 }
 

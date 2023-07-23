@@ -26,14 +26,12 @@ public class GameManager : Generic.Singleton<GameManager>
         playerWorldPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
         SceneManager.LoadScene(combatSceneName);
         ChangeState(GameState.Combat);
-        //ui change
     }
 
     public void FinishCombat()
     {
         SceneManager.LoadScene(worldSceneName);
         ChangeState(GameState.World);
-        //ui change
     }
 
     public bool CompareState(GameState state)
@@ -46,5 +44,6 @@ public class GameManager : Generic.Singleton<GameManager>
         if(CompareState(state)) return;
 
         _currentState = state;
+        UIManager.instance.ChangeScene();
     }
 }

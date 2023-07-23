@@ -153,7 +153,7 @@ public class UIManager : Generic.Singleton<UIManager>
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         if (prevSceneName == currentSceneName) return;
-        Debug.Log(currentSceneName);
+        Debug.Log("Current Scene is " + currentSceneName);
         switch (currentSceneName)
         {
             case "WorldScene":

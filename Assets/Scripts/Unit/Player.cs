@@ -53,7 +53,7 @@ public class Player : Unit
         //if (activeUnitAction == action) return;
         if (action.IsSelectable() is false) return;
         if (action.GetCost() > currentActionPoint)
-        {  
+        {
             Debug.Log("Cost is loss, Cost is " + activeUnitAction.GetCost());
             return;
         }
@@ -68,6 +68,7 @@ public class Player : Unit
         {
             TryExecuteUnitAction(Vector3Int.zero, FinishAction);
         }
+        UIManager.instance.combatUI.combatActionUI.SetActionButtons();
     }
 
     private void FinishAction()

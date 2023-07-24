@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -55,7 +56,7 @@ public class UIManager : Generic.Singleton<UIManager>
     }
     void Update()
     {
-        isMouseOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+        isMouseOverUI = EventSystem.current.IsPointerOverGameObject();
         if (Input.GetMouseButtonDown(0))
         {
             int currentLayer = GetPointerOverUILayer();
@@ -76,9 +77,6 @@ public class UIManager : Generic.Singleton<UIManager>
 
             previousLayer = currentLayer;
         }
-
-
-        UIManager.instance.ChangeScene();
     }
 
     public void SetCanvasState(Canvas canvas, UISystem uiSys, bool isOn)
@@ -149,21 +147,43 @@ public class UIManager : Generic.Singleton<UIManager>
         return -1;
     }
 
-    public void ChangeScene() 
+    /// <summary>
+    /// for development test
+    /// </summary>
+    /// <param name="gameState"></param>
+    public void ChangeScenePrepare(GameState gameState)
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        if (prevSceneName == currentSceneName) return;
-        Debug.Log("Current Scene is " + currentSceneName);
-        switch (currentSceneName)
+        if (gameState == GameState.Combat && SceneManager.GetActiveScene().name != "CombatScene")
         {
-            case "WorldScene":
-            case "UITestScene":
+            StartCoroutine(csp(gameState));
+        }
+        else 
+        {
+            ChangeScene(gameState);
+        }
+    }
+    IEnumerator csp(GameState gameState) 
+    {
+        while (true) 
+        {
+            yield return new WaitForSeconds(0.1f);
+            ChangeScenePrepare(gameState);
+            yield break;
+        }
+    }
+    public void ChangeScene(GameState gameState)
+    {
+        //if (prevSceneName == currentSceneName) return;
+        Debug.Log("Current State is " + gameState);
+        switch (gameState)
+        {
+            case GameState.World:
                 {
                     _isCombatScene = false;
                     ChangeUIToWorldScene();
                     break;
                 }
-            case "CombatScene":
+            case GameState.Combat:
                 {
                     _isCombatScene = true;
                     ChangeUIToCombatScene();
@@ -171,9 +191,8 @@ public class UIManager : Generic.Singleton<UIManager>
                 }
         }
 
-        prevSceneName = currentSceneName;
     }
-    private void ChangeUIToWorldScene() 
+    private void ChangeUIToWorldScene()
     {
         SetCombatCanvasState(false);
         timingUI.SetTurnOrderUIState(false);

@@ -43,4 +43,9 @@ public class TimingUI : UISystem
             index++;
         }
     }
+
+    public void OnClickEndTurnButton() 
+    {
+        FieldSystem.turnSystem.EndTurn();
+    }
 }

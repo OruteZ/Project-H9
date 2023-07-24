@@ -6,7 +6,6 @@ using TMPro;
 
 public class CurrentStatusUI : UISystem
 {
-    [SerializeField] private UnitSystem _unitSystem;
     private UnitStat _playerStat;
     private Unit _player;
 
@@ -17,8 +16,6 @@ public class CurrentStatusUI : UISystem
     // Start is called before the first frame update
     void Start()
     {
-        _unitSystem = FieldSystem.unitSystem;
-        
         SetCurrentStatusUI();
     }
     private void Update()
@@ -36,7 +33,7 @@ public class CurrentStatusUI : UISystem
 
     public void SetCurrentStatusUI()
     {
-        _player = _unitSystem.GetPlayer();
+        _player = FieldSystem.unitSystem.GetPlayer();
         //_playerStat = _player.GetStat();
         _playerStat = GameManager.instance.playerStat;
         

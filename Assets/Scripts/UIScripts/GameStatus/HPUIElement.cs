@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HPUIElement : MonoBehaviour
+public class HpUIElement : MonoBehaviour
 {
     private bool _isFill;
 

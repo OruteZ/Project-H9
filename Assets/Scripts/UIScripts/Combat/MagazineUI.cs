@@ -20,7 +20,7 @@ public class MagazineUI : UISystem
     {
         base.CloseUI();
     }
-    void SetMagazineText() 
+    public void SetMagazineText() 
     {
         Weapon weapon = FieldSystem.unitSystem.GetPlayer().weapon;
         _magazineText.GetComponent<TextMeshProUGUI>().text = weapon.currentEmmo.ToString() + " / " + weapon.maxEmmo.ToString();

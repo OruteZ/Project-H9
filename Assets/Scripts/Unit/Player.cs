@@ -68,7 +68,7 @@ public class Player : Unit
         {
             TryExecuteUnitAction(Vector3Int.zero, FinishAction);
         }
-        UIManager.instance.combatUI.combatActionUI.SetActionButtons();
+        UIManager.instance.combatUI.SetCombatUI();
     }
 
     private void FinishAction()

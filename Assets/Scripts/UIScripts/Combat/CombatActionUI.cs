@@ -19,7 +19,7 @@ public class CombatActionUI : UISystem
     {
         _gameState = GameState.World;
 
-           Transform baseActionButtons = _combatActionWindow.transform.GetChild(0);
+        Transform baseActionButtons = _combatActionWindow.transform.GetChild(0);
         for (int i = 0; i < baseActionButtons.transform.childCount; i++) 
         {
             _actionButtons.Add(baseActionButtons.GetChild(i).gameObject);
@@ -34,6 +34,7 @@ public class CombatActionUI : UISystem
 
         _idleButton.SetActive(false);
         _actionTooltipWindow.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -72,7 +73,7 @@ public class CombatActionUI : UISystem
             //idle action exception
             if (actions[i].GetActionType() == ActionType.Idle) 
             {
-                _idleButton.GetComponent<ActionSelectButtonElements>().SetActionSelectButton(actions[i], _player);
+                _idleButton.GetComponent<ActionSelectButtonElement>().SetActionSelectButton(actions[i], _player);
                 _idleButton.SetActive(false);
                 continue;
             }
@@ -82,7 +83,7 @@ public class CombatActionUI : UISystem
                 activeActionType = actions[i].GetActionType();
             }
             //set button info
-            _actionButtons[actionButtonsIndex].GetComponent<ActionSelectButtonElements>().SetActionSelectButton(actions[i], _player);
+            _actionButtons[actionButtonsIndex].GetComponent<ActionSelectButtonElement>().SetActionSelectButton(actions[i], _player);
             actionButtonsIndex++;
         }
 
@@ -92,12 +93,12 @@ public class CombatActionUI : UISystem
             bool isInitButton = (actionButtonsIndex > i);
             if (!isInitButton)
             {
-                _actionButtons[i].GetComponent<Button>().interactable = false;
+                _actionButtons[i].GetComponent<ActionSelectButtonElement>().SetActionSelectButton();
             }
             else if (activeActionType != ActionType.Idle)
             {
                 _actionButtons[i].GetComponent<Button>().interactable = false;
-                if (_actionButtons[i].GetComponent<ActionSelectButtonElements>()._action.GetActionType() == activeActionType)
+                if (_actionButtons[i].GetComponent<ActionSelectButtonElement>()._action.GetActionType() == activeActionType)
                 {
                     _actionButtons[i].SetActive(false);
                     _idleButton.SetActive(true);
@@ -115,12 +116,13 @@ public class CombatActionUI : UISystem
         pos.y += 200;
         _actionTooltipWindow.transform.position = pos;
 
-        IUnitAction action = button.GetComponent<ActionSelectButtonElements>()._action;
+        IUnitAction action = button.GetComponent<ActionSelectButtonElement>()._action;
         if (action == null) return;
         _actionTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = action.GetActionType().ToString();
     }
     public void HideActionUITooltip()
     {
         _actionTooltipWindow.SetActive(false);
+        _actionTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
     }
 }

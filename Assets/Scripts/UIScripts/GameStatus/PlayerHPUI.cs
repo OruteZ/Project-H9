@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHPUI : UISystem
+public class PlayerHpUI : UISystem
 {
     [SerializeField] private GameObject _playerHps;
     public GameObject hpUIPrefabs;
@@ -64,11 +64,11 @@ public class PlayerHPUI : UISystem
                 _hpUIs[i].transform.position = CalculateHpUIPosition(i);
                 if (i < curHp)
                 {
-                    _hpUIs[i].GetComponent<HPUIElement>().FillUI();
+                    _hpUIs[i].GetComponent<HpUIElement>().FillUI();
                 }
                 else
                 {
-                    _hpUIs[i].GetComponent<HPUIElement>().EmptyUI();
+                    _hpUIs[i].GetComponent<HpUIElement>().EmptyUI();
                 }
             }
             else

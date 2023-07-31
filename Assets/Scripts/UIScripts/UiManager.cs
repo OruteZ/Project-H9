@@ -153,7 +153,18 @@ public class UIManager : Generic.Singleton<UIManager>
     /// <param name="gameState"></param>
     public void ChangeScenePrepare(GameState gameState)
     {
-        if (gameState == GameState.Combat && SceneManager.GetActiveScene().name != "CombatScene")
+        GameState _realGameState = GameState.World;
+        if (SceneManager.GetActiveScene().name == "WorldScene" || SceneManager.GetActiveScene().name == "UITestScene")
+        {
+            _realGameState = GameState.World;
+        }
+        else if(SceneManager.GetActiveScene().name == "CombatScene")
+        {
+            _realGameState = GameState.Combat;
+        }
+
+
+        if (gameState != _realGameState)
         {
             StartCoroutine(csp(gameState));
         }

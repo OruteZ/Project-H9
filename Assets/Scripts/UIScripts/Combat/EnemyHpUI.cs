@@ -5,18 +5,16 @@ using UnityEngine;
 public class EnemyHpUI : UISystem
 {
     [SerializeField] private GameObject _hpBarPrefab;
-    [SerializeField] private GameObject _hpBars;
+    [SerializeField] private GameObject _enemyhpBarUIs;
+
+    private List<GameObject> _enemyHpBars;
 
     private List<Enemy> _enemies = new List<Enemy>();
 
-    // Start is called before the first frame update
     void Start()
     {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        _enemyHpBars = new List<GameObject>();
+        EnemyHpBarObjectPooling(10);
     }
 
     public void SetEnemyHpBars()
@@ -32,15 +30,33 @@ public class EnemyHpUI : UISystem
             }
         }
 
-        Debug.Log("���� ��:" + _enemies.Count);
+        Debug.Log("적 개체 수:" + _enemies.Count);
 
-        for (int i = 0; i < _hpBars.transform.childCount; i++)
+        if (_enemies.Count > _enemyHpBars.Count) 
         {
-            _hpBars.transform.GetChild(i).GetComponent<EnemyHpUIElement>().SetEnemyHpUI(_enemies[i]);
+            EnemyHpBarObjectPooling(10);
         }
+        InitEnemyHpUIs();
         for (int i = 0; i < _enemies.Count; i++) 
         {
-            _hpBars.transform.GetChild(i).GetComponent<EnemyHpUIElement>().SetEnemyHpUI(_enemies[i]);
+            _enemyHpBars[i].SetActive(true);
+            _enemyHpBars[i].GetComponent<EnemyHpUIElement>().SetEnemyHpUI(_enemies[i]);
         }
+    }
+    private void InitEnemyHpUIs()
+    {
+        foreach (GameObject hpBar in _enemyHpBars)
+        {
+            hpBar.SetActive(false);
+        }
+    }
+    private void EnemyHpBarObjectPooling(int length)
+    {
+        for (int i = 0; i < length; i++)
+        {
+            GameObject ui = Instantiate(_hpBarPrefab, Vector3.zero, Quaternion.identity, _enemyhpBarUIs.transform);
+            _enemyHpBars.Add(ui);
+        }
+        InitEnemyHpUIs();
     }
 }

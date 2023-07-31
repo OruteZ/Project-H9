@@ -68,7 +68,9 @@ public class Player : Unit
         {
             TryExecuteUnitAction(Vector3Int.zero, FinishAction);
         }
-        UIManager.instance.combatUI.SetCombatUI();
+        
+        
+        if (GameManager.instance.CompareState(GameState.Combat)) UIManager.instance.combatUI.SetCombatUI();
     }
 
     private void FinishAction()

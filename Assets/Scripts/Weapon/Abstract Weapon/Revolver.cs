@@ -54,9 +54,9 @@ public class Revolver : Weapon
         hitRate = Mathf.Round(10 * hitRate) * 0.1f;
         hitRate = Mathf.Clamp(hitRate, 0, 100);
         
-        #if UNITY_EDITOR
-        Debug.Log("Hit rate = " + hitRate);
-        #endif
+        // #if UNITY_EDITOR
+        // Debug.Log("Hit rate = " + hitRate);
+        // #endif
         
         return hitRate * 0.01f;
     }

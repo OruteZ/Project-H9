@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class CombatWindowUI : UISystem
@@ -9,8 +10,10 @@ public class CombatWindowUI : UISystem
     public EnemyHpUI enemyHpUI { get; private set; }
     public EnemyStatUI enemyStatUI { get; private set; }
     // Start is called before the first frame update
-    void Start()
+    private new void Awake()
     {
+        base.Awake();
+        
         combatActionUI = GetComponent<CombatActionUI>();
         magazineUI = GetComponent<MagazineUI>();
         enemyHpUI = GetComponent<EnemyHpUI>();
@@ -34,7 +37,7 @@ public class CombatWindowUI : UISystem
         enemyStatUI.CloseUI();
     }
 
-    public void SetCombatUI() 
+    public void SetCombatUI()
     {
         combatActionUI.SetActionButtons();
         magazineUI.SetMagazineText();

@@ -12,11 +12,13 @@ public class CombatActionUI : UISystem
     private Player _player;
     private GameState _gameState;
 
-    private List<GameObject> _actionButtons = new List<GameObject>();
+    private readonly List<GameObject> _actionButtons = new List<GameObject>();
     private GameObject _idleButton;
     // Start is called before the first frame update
-    void Start()
+    public new void Awake()
     {
+        base.Awake();
+        
         _gameState = GameState.World;
 
         Transform baseActionButtons = _combatActionWindow.transform.GetChild(0);

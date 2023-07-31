@@ -89,7 +89,7 @@ public class CharacterStatUI : UISystem
                        weapon.weaponDamage.ToString();
         _weaponStatText1Contents.GetComponent<TextMeshProUGUI>().text = text1;
 
-        string text2 = weapon.currentEmmo.ToString() + " / " + weapon.maxEmmo.ToString() + '\n' +
+        string text2 = weapon.currentAmmo.ToString() + " / " + weapon.maxAmmo.ToString() + '\n' +
                        weapon.weaponRange.ToString();
         _weaponStatText2Contents.GetComponent<TextMeshProUGUI>().text = text2;
 

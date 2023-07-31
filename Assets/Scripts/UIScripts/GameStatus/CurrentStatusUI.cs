@@ -34,6 +34,8 @@ public class CurrentStatusUI : UISystem
     public void SetCurrentStatusUI()
     {
         _player = FieldSystem.unitSystem.GetPlayer();
+        if (_player is null) return;
+        
         //_playerStat = _player.GetStat();
         _playerStat = GameManager.instance.playerStat;
         

@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
     public IUnitAction SelectAction(out Vector3Int targetPosition)
     {
         targetPosition = Hex.zero;
-        return null;
+        return _enemy.GetAction<IdleAction>();
     }
 
     private bool IsPlayerInSight()

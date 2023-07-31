@@ -67,6 +67,8 @@ public class UnitSystem : MonoBehaviour
         {
             if (unit is Player u) return u;
         }
+        
+        Debug.Log("Cant find Player");
         return null;
     }
     

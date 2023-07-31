@@ -11,7 +11,7 @@ public class EnemyHpUIElement : UIElement
     private int prevHp;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _hpBar = GetComponent<Slider>();
     }

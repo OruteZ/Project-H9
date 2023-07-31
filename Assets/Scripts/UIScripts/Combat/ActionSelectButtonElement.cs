@@ -17,8 +17,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
     private bool _isSelectable;
 
-    // Start is called before the first frame update
-    void Start()
+    void SetUp()
     {
         APCostUI = gameObject.transform.GetChild(0).gameObject;
         AmmoCostUI = gameObject.transform.GetChild(1).gameObject;
@@ -28,8 +27,14 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
         _isSelectable = true;
     }
-    public void SetActionSelectButton(IUnitAction action, Player player) 
+    void Awake()
     {
+        SetUp();
+    }
+    public void SetActionSelectButton(IUnitAction action, Player player)
+    {
+        SetUp();
+        
         _action = action;
         int apCost = action.GetCost();
         if (action.GetActionType() == ActionType.Move)
@@ -50,7 +55,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
             APCostUI.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
             _isSelectable = false;
         }
-        if (player.weapon.currentEmmo < ammoCost)
+        if (player.weapon.currentAmmo < ammoCost)
         {
             AmmoCostUI.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
             _isSelectable = false;
@@ -72,7 +77,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
         //Button Color Setting
         GetComponent<Image>().color = new Color(1, 1, 1);
-        if (action.GetActionType() == ActionType.Reload && player.weapon.currentEmmo == 0) 
+        if (action.GetActionType() == ActionType.Reload && player.weapon.currentAmmo == 0) 
         {
             GetComponent<Image>().color = new Color(1, 1, 0);
         }

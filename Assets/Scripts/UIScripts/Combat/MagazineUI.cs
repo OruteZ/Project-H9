@@ -23,6 +23,6 @@ public class MagazineUI : UISystem
     public void SetMagazineText() 
     {
         Weapon weapon = FieldSystem.unitSystem.GetPlayer().weapon;
-        _magazineText.GetComponent<TextMeshProUGUI>().text = weapon.currentEmmo.ToString() + " / " + weapon.maxEmmo.ToString();
+        _magazineText.GetComponent<TextMeshProUGUI>().text = weapon.currentAmmo.ToString() + " / " + weapon.maxAmmo.ToString();
     }
 }

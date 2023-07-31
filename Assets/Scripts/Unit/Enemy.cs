@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Enemy : Unit
 {
+    [Header("Index")]
     public int dataIndex;
     private EnemyAI _ai;
     [SerializeField] private BehaviorTreeRunner _tree;

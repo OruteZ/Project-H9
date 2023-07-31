@@ -11,8 +11,8 @@ public abstract class Weapon
     public GameObject model;
     public int weaponDamage;
     public int weaponRange;
-    public int maxEmmo;
-    public int currentEmmo;
+    public int maxAmmo;
+    public int currentAmmo;
     public float hitRate;
     public float criticalChance;
     public float criticalDamage;
@@ -25,13 +25,12 @@ public abstract class Weapon
     protected const float REVOLVER_OVER_RANGE_PENALTY = 2.5f;
     protected const float REPEATER_OVER_RANGE_PENALTY = 2f;
     
-    // private void SetUpGimmicks()
-    // {
-    //     foreach (var gimmick in gimmicks)
-    //     {
-    //         gimmick.Setup(this);
-    //     }
-    // }
+   
+    /// <summary>
+    /// 적을 향해 사격합니다.
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="isCritical"></param>
     public abstract void Attack(Unit target, out bool isCritical);
     public abstract WeaponType GetWeaponType();
     public abstract int GetFinalDamage();
@@ -43,7 +42,7 @@ public abstract class Weapon
 
     public void Reload()
     {
-        currentEmmo = maxEmmo;
+        currentAmmo = maxAmmo;
     }
 }
 

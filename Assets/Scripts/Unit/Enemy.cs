@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class Enemy : Unit
 {
+    public int dataIndex;
     private EnemyAI _ai;
+    [SerializeField] private BehaviorTreeRunner _tree;
 
     protected override void Awake()
     {

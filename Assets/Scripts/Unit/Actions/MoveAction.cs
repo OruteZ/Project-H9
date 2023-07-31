@@ -19,7 +19,7 @@ public class MoveAction : BaseAction
 
     public override int GetCost()
     {
-        return _currentPositionIndex < 0 ? 0 : _currentPositionIndex - 1;
+        return _path is null ? 1 : _currentPositionIndex - 1;
     }
 
     public override bool IsSelectable()
@@ -104,6 +104,7 @@ public class MoveAction : BaseAction
             if (_currentPositionIndex >= _path.Count)
             {
                 FinishAction();
+                _path = null;
             }
         }
     }

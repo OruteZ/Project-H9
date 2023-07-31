@@ -22,7 +22,7 @@ public class AttackAction : BaseAction
 
     public override bool IsSelectable()
     {
-        if (weapon.currentEmmo == 0) return false;
+        if (weapon.currentAmmo == 0) return false;
         if (unit.hasAttacked) return false;
 
         return true;
@@ -97,6 +97,7 @@ public class AttackAction : BaseAction
                     {
                         weapon.Attack(_target, out var isHeadShot);
                     }
+                    weapon.currentAmmo--;
                 }
                 break;
             

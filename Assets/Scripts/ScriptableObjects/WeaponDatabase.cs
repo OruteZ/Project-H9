@@ -13,7 +13,7 @@ public class WeaponDatabase : ScriptableObject
 
     public int indexStart = 101;
 
-    public WeaponData GetWeaponData(int index)
+    public WeaponData GetData(int index)
     {
         index -= indexStart;
         if (index < weaponList.Count && 0 <= index) return weaponList[index];
@@ -24,7 +24,7 @@ public class WeaponDatabase : ScriptableObject
     
     public Weapon Clone(int dataIndex)
     {
-        var data = GetWeaponData(dataIndex);
+        var data = GetData(dataIndex);
         Weapon weapon = data.type switch
         {
             WeaponType.Null => null,
@@ -43,8 +43,8 @@ public class WeaponDatabase : ScriptableObject
         weapon.model = data.weaponModel;
         weapon.weaponDamage = data.weaponDamage;
         weapon.weaponRange = data.weaponRange;
-        weapon.maxEmmo = data.weaponAmmo;
-        weapon.currentEmmo = data.weaponAmmo;
+        weapon.maxAmmo = data.weaponAmmo;
+        weapon.currentAmmo = data.weaponAmmo;
         weapon.hitRate = data.weaponHitRate;
         weapon.criticalChance = data.weaponCriticalChance;
         weapon.criticalDamage = data.weaponCriticalDamage;
@@ -60,7 +60,8 @@ public class WeaponDatabase : ScriptableObject
     {
         var dataList = FileRead.Read("WeaponTable");
         
-        weaponList?.Clear();
+        if (weaponList is null) weaponList = new List<WeaponData>();
+        else weaponList.Clear();
 
         for (var i = 0; i < dataList.Count; i++)
         {

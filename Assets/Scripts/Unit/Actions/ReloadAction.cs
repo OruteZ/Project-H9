@@ -34,7 +34,7 @@ public class ReloadAction : BaseAction
 
     public override bool IsSelectable()
     {
-        return weapon.currentEmmo < weapon.maxEmmo;
+        return weapon.currentAmmo < weapon.maxAmmo;
     }
 
     public override bool CanExecuteImmediately()
@@ -61,12 +61,14 @@ public class ReloadAction : BaseAction
     {
         if (isActive is false) return;
 
-        if (!((_stateTimer -= Time.deltaTime) < 0)) return;
+        if (((_stateTimer -= Time.deltaTime) > 0)) return;
         
         switch (_curState)
         {
             case State.Reloading:
-                unit.weapon.currentEmmo = unit.weapon.maxEmmo;
+                unit.weapon.currentAmmo = unit.weapon.maxAmmo;
+                _stateTimer = coolOffTime;
+                _curState = State.CoolOff;
                 break;
             case State.CoolOff:
                 FinishAction();

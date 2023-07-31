@@ -77,6 +77,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
             case ActionType.Dynamite:
                 break;
             case ActionType.Idle:
+                while (_effectStackRelatedTarget.TryPop(out var effect)) { Destroy(effect); }
+                while (_effectStackBase.TryPop(out var effect)) { Destroy(effect); }
                 break;
             case ActionType.Reload:
                 break;
@@ -168,6 +170,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
     private IEnumerator AttackTargetEffectCoroutine()
     {
+        Unit targetUnit = null;
         while (true)
         {
             if (Player.TryGetMouseOverTilePos(out var target) is false)
@@ -176,14 +179,22 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 yield return null;
                 continue;
             }
-
-            Unit targetUnit = FieldSystem.unitSystem.GetUnit(target);
-            if (targetUnit is null)
+            
+            
+            var newTarget = FieldSystem.unitSystem.GetUnit(target);
+            if (newTarget is null or Player)
             {
                 aimEffectRectTsf.gameObject.SetActive(false);
                 yield return null;
                 continue;
             }
+
+            //if (newTarget == targetUnit)
+            //{
+            //    yield return null;
+            //    continue;
+            //}
+            targetUnit = newTarget;
             
             aimEffectRectTsf.gameObject.SetActive(true);
             
@@ -195,7 +206,9 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 ((viewportPosition.x * sizeDelta.x) - (sizeDelta.x * 0.5f)),
                 ((viewportPosition.y * sizeDelta.y) - (sizeDelta.y * 0.5f)));
             aimEffectRectTsf.anchoredPosition = worldObjectScreenPosition;
-            aimEffect.localScale = Vector3.one * _player.weapon.GetFinalHitRate(targetUnit);
+            
+            float size = _player.weapon.GetFinalHitRate(targetUnit);
+            aimEffect.localScale = new Vector3(size, size, 1);
 
             // aimEffectRectTsf.gameObject.SetActive(false);
             yield return null;
@@ -230,6 +243,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         {
             Destroy(effect);
         }
+        aimEffectRectTsf.gameObject.SetActive(false);
     }
 
     private void SetEffectBase(Vector3Int position, EffectType type)

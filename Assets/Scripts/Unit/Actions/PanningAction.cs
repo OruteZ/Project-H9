@@ -41,7 +41,7 @@ public class PanningAction : BaseAction
 
     public override bool IsSelectable()
     {
-        return unit.weapon.currentEmmo > 0;
+        return unit.weapon.currentAmmo > 0;
     }
 
     public override bool CanExecute()
@@ -54,7 +54,7 @@ public class PanningAction : BaseAction
 
     public override void Execute(Action onActionComplete)
     {
-        _shotCount = unit.weapon.currentEmmo;
+        _shotCount = unit.weapon.currentAmmo;
         _state = State.Aiming;
         _stateTimer = 0.5f;
         StartAction(onActionComplete);
@@ -94,6 +94,7 @@ public class PanningAction : BaseAction
                         {
                             unit.weapon.Attack(_target, out var isHeadShot);
                         }
+                        unit.weapon.currentAmmo--;
                     }
                     
                 }

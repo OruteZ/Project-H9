@@ -54,7 +54,7 @@ public class Player : Unit
         if (action.IsSelectable() is false) return;
         if (action.GetCost() > currentActionPoint)
         {  
-            Debug.Log("Cost is loss, Cost is " + activeUnitAction.GetCost());
+            Debug.Log("Cost is loss, Cost is " + action.GetCost());
             return;
         }
 #if UNITY_EDITOR
@@ -78,7 +78,8 @@ public class Player : Unit
         ClearBusy();
         if(GameManager.instance.CompareState(GameState.Combat))
         {
-            SelectAction(GetAction<IdleAction>());
+            var idleAction = GetAction<IdleAction>();
+            SelectAction(idleAction is null ? GetAction<MoveAction>() : idleAction);
         }
         else
         {

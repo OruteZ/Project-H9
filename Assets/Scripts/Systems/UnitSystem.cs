@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class UnitSystem : MonoBehaviour
 {
     [SerializeField] private WeaponDatabase weaponDB;
+    [SerializeField] private EnemyDatabase enemyDB;
     
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
@@ -33,9 +34,10 @@ public class UnitSystem : MonoBehaviour
                     unit.hexPosition = GameManager.instance.playerWorldPos;
                 }
             }
-            else
+            else if(unit is Enemy enemy)
             {
-                unit.SetUp("EEEEEnemy", GameManager.instance.playerStat, weaponDB.Clone(102));
+                var info = enemyDB.GetInfo(enemy.dataIndex);
+                enemy.SetUp("Enemy", info.stat, weaponDB.Clone(info.weaponIndex));
             }
             unit.onDead.AddListener(OnUnitDead);
         }

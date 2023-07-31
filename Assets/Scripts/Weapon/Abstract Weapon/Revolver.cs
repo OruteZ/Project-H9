@@ -17,7 +17,7 @@ public class Revolver : Weapon
     public override void Attack(Unit target, out bool isCritical)
     {
         Debug.Log("Weapon attack Call" + " : " + nameIndex);
-        
+
         isCritical = Random.value < unitStat.criticalChance + criticalChance;
         if (isCritical)
         {
@@ -27,8 +27,6 @@ public class Revolver : Weapon
         {
             NonCriticalAttack(target);
         }
-
-        currentEmmo--;
     }
 
     public override int GetFinalDamage()

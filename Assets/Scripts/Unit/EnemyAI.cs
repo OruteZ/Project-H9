@@ -17,30 +17,8 @@ public class EnemyAI : MonoBehaviour
     
     public IUnitAction SelectAction(out Vector3Int targetPosition)
     {
-        Tile target;
-        if (!IsPlayerInSight())
-        {
-            if (_enemy.hexPosition == _playerPosMemory)
-            {
-                Debug.LogError("어디를 가라는거야");
-            }
-            target = FieldSystem.tileSystem.FindPath(_enemy.hexPosition, _playerPosMemory)[1];
-            targetPosition = target.hexPosition;
-
-            return _enemy.GetAction<MoveAction>();
-        }
-        
-        float hitRate = _enemy.weapon.GetFinalHitRate(FieldSystem.unitSystem.GetPlayer());
-        if (hitRate <= 0.5f)
-        {
-            target = FieldSystem.tileSystem.FindPath(_enemy.hexPosition, _playerPosMemory)[1];
-            targetPosition = target.hexPosition;
-            return _enemy.GetAction<MoveAction>();
-        }
-
-        target = FieldSystem.tileSystem.GetTile(_playerPosMemory);
-        targetPosition = target.hexPosition;
-        return _enemy.GetAction<AttackAction>();
+        targetPosition = Hex.zero;
+        return null;
     }
 
     private bool IsPlayerInSight()

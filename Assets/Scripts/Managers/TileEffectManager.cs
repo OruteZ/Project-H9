@@ -82,6 +82,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 break;
             case ActionType.Reload:
                 break;
+            case ActionType.Panning:
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }

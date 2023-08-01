@@ -68,4 +68,5 @@ public enum ActionType {
     Dynamite,
     Idle,
     Reload,
+    Panning,
 }

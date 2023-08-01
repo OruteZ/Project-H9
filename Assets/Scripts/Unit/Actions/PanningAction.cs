@@ -20,7 +20,7 @@ public class PanningAction : BaseAction
     
     public override ActionType GetActionType()
     {
-        throw new NotImplementedException();
+        return ActionType.Panning;
     }
 
     public override void SetTarget(Vector3Int targetPos)
@@ -47,7 +47,7 @@ public class PanningAction : BaseAction
     public override bool CanExecute()
     {
         if (_target is null) return false;
-        if (IsThereWallBetweenUnitAnd(_target.hexPosition)) return false;
+        if (IsThereWallBetweenUnitAndThis(_target.hexPosition)) return false;
         
         return true;
     }
@@ -60,7 +60,7 @@ public class PanningAction : BaseAction
         StartAction(onActionComplete);
     }
     
-    private bool IsThereWallBetweenUnitAnd(Vector3Int targetPos)
+    private bool IsThereWallBetweenUnitAndThis(Vector3Int targetPos)
     {
         return !FieldSystem.tileSystem.RayThroughCheck(unit.hexPosition, targetPos);
     }
@@ -82,21 +82,21 @@ public class PanningAction : BaseAction
                 _stateTimer -= Time.deltaTime;
                 if (_stateTimer <= 0f)
                 {
-                    _state = State.Shooting;
-                    _stateTimer = .5f;
-
-                    for (int i = 0; i < _shotCount; i++)
+                    if (--_shotCount == 0)
                     {
-                        bool hit = unit.weapon.GetFinalHitRate(_target) - 0.1f > UnityEngine.Random.value;
-                        Debug.Log(hit ? "뱅" : "빗나감");
-
-                        if (hit)
-                        {
-                            unit.weapon.Attack(_target, out var isHeadShot);
-                        }
-                        unit.weapon.currentAmmo--;
+                        _state = State.Shooting;
+                        _stateTimer = .5f;
                     }
-                    
+                    else
+                    {
+                        _state = State.Aiming;
+                        _stateTimer = .1f;
+                    }
+                    bool hit = unit.weapon.GetFinalHitRate(_target) - 0.1f > UnityEngine.Random.value;
+                    Debug.Log(hit ? "뱅" : "빗나감");
+
+                    if (hit) { unit.weapon.Attack(_target, out var isHeadShot); }
+                    unit.weapon.currentAmmo--;
                 }
                 break;
             

@@ -32,7 +32,7 @@ public class EnemyHpUI : UISystem
             }
         }
 
-        Debug.Log("���� ��:" + _enemies.Count);
+        Debug.Log("Enemy Count :" + _enemies.Count);
 
         for (int i = 0; i < _hpBars.transform.childCount; i++)
         {

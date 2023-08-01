@@ -157,6 +157,7 @@ public static class Hex
     public static Vector3Int downRight => new Vector3Int(1, -1, 0);
     public static Vector3Int downLeft => new Vector3Int(0, -1, 1);
     public static Vector3Int zero => new Vector3Int(0, 0, 0);
+    public static Vector3Int none => new Vector3Int(-1, -1, -1);
 
     public static IEnumerable<Vector3Int> directions => new[]
     {

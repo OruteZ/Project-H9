@@ -143,6 +143,7 @@ public class Player : Unit
     
     public override void GetDamage(int damage)
     {
+        base.GetDamage(damage);
     }
 
     private void OnAnyUnitMoved(Unit unit)

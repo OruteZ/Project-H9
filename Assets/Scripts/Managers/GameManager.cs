@@ -18,10 +18,13 @@ public class GameManager : Generic.Singleton<GameManager>
     [Header("Player Info")] 
     public Vector3Int playerWorldPos;
     public UnitStat playerStat;
-    public Weapon playerWeapon = null;
+    public int playerWeaponIndex;
 
     [Header("World Scene Name")] 
     public string worldSceneName;
+
+    [Header("World Info")] 
+    public int worldAp;
 
     public void StartCombat(string combatSceneName)
     {

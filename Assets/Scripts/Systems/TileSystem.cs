@@ -46,6 +46,8 @@ public class TileSystem : MonoBehaviour
     /// <returns></returns>
     public List<Tile> GetAllTiles()
     {
+        if (_tiles is null) return null;
+        
         var result = new List<Tile>();
         result.AddRange(_tiles.Values);
 
@@ -214,6 +216,7 @@ public class TileSystem : MonoBehaviour
     /// start지점에서 destination 까지의 경로를 리스트에 저장하여 반환합니다.
     /// 시작점과 도착지점을 포함한 경로를 반환합니다.
     /// maxLength로 입력되는 최대 길이 이상의 길은 탐색할 수 없습니다.
+    /// 불가능한 경로는 null을 반환합니다.
     /// </summary>
     /// <param name="start">시작지점</param>
     /// <param name="destination">도착지점</param>

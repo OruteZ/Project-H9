@@ -84,9 +84,12 @@ public class MoveAction : BaseAction
     {
         if (!isActive) return;
 
+        var targetTile = _path[_currentPositionIndex];
+        if (targetTile.inSight) unit.visual.enabled = true;
+
         Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].hexPosition);
         targetPos.y = transform.position.y;
-        
+
         Vector3 moveDirection = (targetPos - transform.position).normalized;
 
         Vector2 forwardVec2 = Vector2.Lerp(new Vector2(transform.forward.x, transform.forward.z),
@@ -99,7 +102,7 @@ public class MoveAction : BaseAction
         if (Vector3.Distance(transform.position, targetPos) < 0.1f)
         {
             unit.hexPosition = _path[_currentPositionIndex].hexPosition;
-            
+
             _currentPositionIndex++;
             if (_currentPositionIndex >= _path.Count)
             {

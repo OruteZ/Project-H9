@@ -8,7 +8,6 @@ public class Enemy : Unit
     [Header("Index")]
     public int dataIndex;
     private EnemyAI _ai;
-    [SerializeField] private BehaviorTreeRunner _tree;
 
     protected override void Awake()
     {
@@ -20,6 +19,7 @@ public class Enemy : Unit
     public override void SetUp(string newName, UnitStat unitStat, Weapon weapon)
     {
         base.SetUp(newName, unitStat, weapon);
+        
     }
     
     public void Update()
@@ -27,12 +27,22 @@ public class Enemy : Unit
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
 
-        activeUnitAction = _ai.SelectAction(out var target);
+        _ai.SelectAction();
+
+        activeUnitAction = _ai.resultAction;
+        Vector3Int target = _ai.resultPosition;
+        
+        Debug.Log("Enemy Selected Action = " + activeUnitAction.GetActionType());
+        
         if (activeUnitAction is IdleAction) FinishAction();
         
         if (TryExecuteUnitAction(target, FinishAction))
         {
             SetBusy();
+        }
+        else
+        {
+            Debug.Log("AI가 실행할 수 없는 행동을 실행 중 : " + activeUnitAction.GetActionType());
         }
     }
 
@@ -42,7 +52,6 @@ public class Enemy : Unit
         Debug.Log(unitName + " Turn Started");
 
         StartCoroutine(UITestEndTurn());
-        return;//for ui test
 
         #endif
         currentActionPoint = stat.actionPoint;
@@ -52,7 +61,7 @@ public class Enemy : Unit
 
     public override void GetDamage(int damage)
     {
-        Debug.Log(damage + " 데미지 받음");
+        base.GetDamage(damage);
     }
     
     private void FinishAction()
@@ -61,7 +70,7 @@ public class Enemy : Unit
         currentActionPoint -= activeUnitAction.GetCost();
         onCostChanged.Invoke(currentActionPoint);
         
-        if (currentActionPoint == 0)
+        if (currentActionPoint is 0)
         {
             FieldSystem.turnSystem.EndTurn();
         }

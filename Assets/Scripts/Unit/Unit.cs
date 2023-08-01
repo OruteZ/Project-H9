@@ -42,8 +42,24 @@ public abstract class Unit : MonoBehaviour, IUnit
     public string unitName;
     public int currentActionPoint;
     public Weapon weapon;
+
+    private GameObject _damageEffect = null;
+
+    public GameObject damageEffect => _damageEffect ? _damageEffect :
+        (_damageEffect = Resources.Load("Prefab/Damage Floater") as GameObject);
     public abstract void StartTurn();
-    public abstract void GetDamage(int damage);
+
+    public virtual void GetDamage(int damage)
+    {
+        stat.curHp -= damage;
+        onHit.Invoke(this, damage);
+        
+        //todo : Object Pool
+        var dmgEffect = Instantiate(damageEffect).GetComponent<DamageFloat>();
+        
+        dmgEffect.SetPosition(transform.position, 2);
+        dmgEffect.SetValue(damage);
+    }
 
     public bool hasAttacked;
 

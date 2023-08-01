@@ -40,6 +40,7 @@ public class UnitSystem : MonoBehaviour
                 enemy.SetUp("Enemy", info.stat, weaponDB.Clone(info.weaponIndex));
             }
             unit.onDead.AddListener(OnUnitDead);
+            unit.onMoved.AddListener(OnUnitMoved);
         }
     }
 
@@ -87,7 +88,7 @@ public class UnitSystem : MonoBehaviour
         return null;
     }
 
-    private void OnUnitMoved(Unit unit)
+    public void OnUnitMoved(Unit unit)
     {
         onAnyUnitMoved?.Invoke(unit);
     }

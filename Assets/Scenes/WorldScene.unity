@@ -5083,7 +5083,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -5175055.5, y: 0}
+  m_AnchoredPosition: {x: -6011683, y: 0}
   m_SizeDelta: {x: 25, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &124465386
@@ -30182,7 +30182,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588301575}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.310888, y: 0.5, z: -7.5}
+  m_LocalPosition: {x: 6.0621777, y: 0.5, z: -7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30217,7 +30217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fbeaa462d604364fb36744bf008da9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _position: {x: 15, y: 5, z: -20}
+  _position: {x: 1, y: 5, z: -6}
 --- !u!23 &588301579
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -76353,8 +76353,8 @@ MonoBehaviour:
     maxHp: 0
     curHp: 0
     concentration: 60
-    sightRange: 4
-    speed: 10
+    sightRange: 8
+    speed: 60
     actionPoint: 5
     additionalHitRate: 0
     criticalChance: 0.8
@@ -76367,6 +76367,7 @@ MonoBehaviour:
     revolverCriticalDamage: 0
     shotgunCriticalDamage: 0
     repeaterCriticalDamage: 0
+  playerWeaponIndex: 0
   worldSceneName: 
 --- !u!1 &1538032626
 GameObject:
@@ -78600,7 +78601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 0.49411765}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -83880,7 +83881,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -88481,7 +88482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

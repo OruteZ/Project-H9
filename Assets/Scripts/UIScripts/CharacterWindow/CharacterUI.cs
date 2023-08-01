@@ -43,7 +43,6 @@ public class CharacterUI : UISystem
 
     public override void ClosePopupWindow()
     {
-        UIManager.instance.previousLayer = 2;
-        itemListUI.CloseItemUseWindow();
+        itemListUI.ClosePopupWindow();
     }
 }

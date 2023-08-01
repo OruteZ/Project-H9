@@ -34,7 +34,7 @@ public class CharacterStatUI : UISystem
         WeaponType weaponType;
         //in test development
         if (playerWeapon == null) { 
-            weaponType = WeaponType.Revolver;
+            weaponType = WeaponType.Revolver;   //test
         }
         else { weaponType = playerWeapon.GetWeaponType(); }
 

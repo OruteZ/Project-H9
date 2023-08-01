@@ -13,5 +13,14 @@ public abstract class UISystem : Generic.Singleton<UISystem>
         enabled = false;
     }
 
-    public virtual void ClosePopupWindow() { }
+    public virtual void OpenPopupWindow()
+    {
+        //UIManager.instance.previousLayer = CurrentLayerNumber;
+        //OpenWindow();
+    }
+    public virtual void ClosePopupWindow()
+    {
+        //UIManager.instance.previousLayer = LowLayerNumber;
+        //CloseWindow();
+    }
 }

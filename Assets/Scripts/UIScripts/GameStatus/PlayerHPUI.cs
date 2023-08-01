@@ -64,11 +64,11 @@ public class PlayerHpUI : UISystem
                 _hpUIs[i].transform.position = CalculateHpUIPosition(i);
                 if (i < curHp)
                 {
-                    _hpUIs[i].GetComponent<HpUIElement>().FillUI();
+                    _hpUIs[i].GetComponent<PlayerHpUIElement>().FillUI();
                 }
                 else
                 {
-                    _hpUIs[i].GetComponent<HpUIElement>().EmptyUI();
+                    _hpUIs[i].GetComponent<PlayerHpUIElement>().EmptyUI();
                 }
             }
             else

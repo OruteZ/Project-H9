@@ -36,6 +36,11 @@ public class SkillUI : UISystem
         base.CloseUI();
         CloseSkillTooltip();
     }
+    public override void OpenPopupWindow()
+    {
+        UIManager.instance.previousLayer = 3;
+        _skillTooltipWindow.SetActive(true);
+    }
     public override void ClosePopupWindow()
     {
         UIManager.instance.previousLayer = 2;
@@ -46,8 +51,7 @@ public class SkillUI : UISystem
         _skillTooltipWindow.transform.position = _transform.position;
         SetTooltipWindow(btnIndex);
 
-        UIManager.instance.previousLayer = 3;
-        _skillTooltipWindow.SetActive(true);
+        OpenPopupWindow();
     }
     private void SetTooltipWindow(int index)
     {

@@ -164,8 +164,17 @@ public class ItemListUI : UISystem
 
         _currentItemIndex = index;
 
+        OpenPopupWindow();
+    }
+    public override void OpenPopupWindow()
+    {
         UIManager.instance.previousLayer = 3;
         _itemTooltipWindow.SetActive(true);
+    }
+    public override void ClosePopupWindow()
+    {
+        UIManager.instance.previousLayer = 2;
+        CloseItemUseWindow();
     }
 
     public void CloseItemUseWindow()

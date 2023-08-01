@@ -67,6 +67,7 @@ public class UIManager : Generic.Singleton<UIManager>
                     SetCharacterCanvasState(false);
                     SetSkillCanvasState(false);
                     SetPauseMenuCanvasState(false);
+                    combatUI.ClosePopupWindow();
                 }
                 else if (currentLayer == 2) 
                 {

@@ -27,8 +27,9 @@ public class PlayerHpUI : UISystem
 
     private void InitHPUI()
     {
-        int maxHp = GameManager.instance.playerStat.maxHp;
-        int curHp = GameManager.instance.playerStat.curHp;
+        int maxHp = FieldSystem.unitSystem.GetPlayer().GetStat().maxHp;
+        _prevMaxHp = 0;
+        _prevCurHp = 0;
 
         HpUIObjectPooling(maxHp);
         SetHPUI();
@@ -39,6 +40,7 @@ public class PlayerHpUI : UISystem
         {
             Vector3 pos = CalculateHpUIPosition(i);
             GameObject ui = Instantiate(hpUIPrefabs, pos, Quaternion.identity, _playerHps.transform);
+            ui.GetComponent<PlayerHpUIElement>().FillUI();
             _hpUIs.Add(ui);
             ui.SetActive(false);
         }
@@ -47,8 +49,11 @@ public class PlayerHpUI : UISystem
 
     public void SetHPUI()
     {
-        int maxHp = GameManager.instance.playerStat.maxHp;
-        int curHp = GameManager.instance.playerStat.curHp;
+        //int maxHp = GameManager.instance.playerStat.maxHp;
+        //int curHp = GameManager.instance.playerStat.curHp;
+        int maxHp = FieldSystem.unitSystem.GetPlayer().GetStat().maxHp;
+        int curHp = FieldSystem.unitSystem.GetPlayer().GetStat().curHp;
+        Debug.Log(curHp + "/" + maxHp);
         if (maxHp == _prevMaxHp && curHp == _prevCurHp) return;
 
         if (maxHp > _prevMaxHp) 

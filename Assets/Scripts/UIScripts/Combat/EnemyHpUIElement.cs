@@ -11,6 +11,7 @@ public class EnemyHpUIElement : UIElement
     private TextMeshProUGUI _hpText;
 
     private Enemy _enemy;
+    private Vector3 _enemyPrevPos;
 
     [SerializeField] private float HP_BAR_UI_Y_POSITION_CORRECTION =50;
     // Start is called before the first frame update
@@ -19,7 +20,6 @@ public class EnemyHpUIElement : UIElement
         _backHpBar = transform.GetChild(0).GetComponent<Slider>();
         _frontHpBar = transform.GetChild(1).GetComponent<Slider>();
         _hpText = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        Debug.Log(_hpText.gameObject);
     }
 
     // Update is called once per frame
@@ -27,18 +27,31 @@ public class EnemyHpUIElement : UIElement
     {
         if (_enemy is not null)
         {
+            //UI On & Off
             _backHpBar.gameObject.SetActive(_enemy.isVisible);
             _frontHpBar.gameObject.SetActive(_enemy.isVisible);
             _hpText.gameObject.SetActive(_enemy.isVisible);
             if (!_enemy.isVisible) return;
 
-            Vector3 uiPosition = Camera.main.WorldToScreenPoint(_enemy.transform.position);
-            uiPosition.y += HP_BAR_UI_Y_POSITION_CORRECTION;
-            GetComponent<RectTransform>().position = uiPosition;
+            //UI Position Setting
+            if (_enemy.gameObject.transform.position != _enemyPrevPos)
+            {
+                Vector3 uiPosition = Camera.main.WorldToScreenPoint(_enemy.transform.position);
+                uiPosition.y += HP_BAR_UI_Y_POSITION_CORRECTION;
+                GetComponent<RectTransform>().position = uiPosition;
 
-            if (_frontHpBar.value != _backHpBar.value)
+                _enemyPrevPos = _enemy.gameObject.transform.position;
+            }
+
+            //Hp Fill Setting
+            float threshold = 0.01f;
+            if (Mathf.Abs(_frontHpBar.value - _backHpBar.value) > threshold)
             {
                 _backHpBar.value = Mathf.Lerp(_backHpBar.value, _frontHpBar.value, Time.deltaTime * 2);
+            }
+            else 
+            {
+                _frontHpBar.value = _backHpBar.value;
             }
         }
     }
@@ -46,6 +59,7 @@ public class EnemyHpUIElement : UIElement
     public void SetEnemyHpUI(Enemy enemy)
     {
         _enemy = enemy;
+        _enemyPrevPos = Vector3.zero;
         int maxHp = enemy.GetStat().maxHp;
         int curHp = enemy.GetStat().curHp;
 

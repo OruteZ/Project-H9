@@ -5,27 +5,15 @@ using UnityEngine.UI;
 
 public class PlayerHpUIElement : MonoBehaviour
 {
-    private bool _isFill;
-
-    private void Start()
+    public void FillUI()
     {
-        _isFill = false;
-    }
-    public void FillUI() 
-    {
-        if (!_isFill)
-        {
-            GetComponent<Image>().color = new Color(1, 0, 0, 1);
-            _isFill = true;
-        }
+        GetComponent<Image>().color = new Color(1, 0, 0, 1);
+        Debug.Log("Fill");
     }
 
     public void EmptyUI()
     {
-        if (_isFill)
-        {
-            GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            _isFill = false;
-        }
+        GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        Debug.Log("Empty");
     }
 }

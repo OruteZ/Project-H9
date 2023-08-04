@@ -33,7 +33,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     }
     public void SetActionSelectButton(IUnitAction action, Player player)
     {
-        SetUp();
+        //SetUp();
         
         _action = action;
         int apCost = action.GetCost();

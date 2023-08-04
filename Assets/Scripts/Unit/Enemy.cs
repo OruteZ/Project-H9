@@ -51,8 +51,6 @@ public class Enemy : Unit
         #if UNITY_EDITOR
         Debug.Log(unitName + " Turn Started");
 
-        StartCoroutine(UITestEndTurn());
-
         #endif
         currentActionPoint = stat.actionPoint;
 
@@ -70,19 +68,9 @@ public class Enemy : Unit
         currentActionPoint -= activeUnitAction.GetCost();
         onCostChanged.Invoke(currentActionPoint);
         
-        if (currentActionPoint is 0)
+        if (currentActionPoint <= 0)
         {
             FieldSystem.turnSystem.EndTurn();
-        }
-    }
-
-    IEnumerator UITestEndTurn() 
-    {
-        while(true) 
-        {
-            yield return new WaitForSeconds(2.0f * Time.timeScale);
-            FieldSystem.turnSystem.EndTurn();
-            yield break;
         }
     }
 }

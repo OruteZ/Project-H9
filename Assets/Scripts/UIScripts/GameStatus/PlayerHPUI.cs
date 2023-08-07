@@ -53,7 +53,6 @@ public class PlayerHpUI : UISystem
         //int curHp = GameManager.instance.playerStat.curHp;
         int maxHp = FieldSystem.unitSystem.GetPlayer().GetStat().maxHp;
         int curHp = FieldSystem.unitSystem.GetPlayer().GetStat().curHp;
-        Debug.Log(curHp + "/" + maxHp);
         if (maxHp == _prevMaxHp && curHp == _prevCurHp) return;
 
         if (maxHp > _prevMaxHp) 

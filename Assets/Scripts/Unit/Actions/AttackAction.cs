@@ -53,6 +53,10 @@ public class AttackAction : BaseAction
         _target = FieldSystem.unitSystem.GetUnit(targetPos);
         Debug.Log("Attack Target : " + _target);
     }
+    public Unit GetTarget() 
+    {
+        return _target;
+    }
 
     public override bool CanExecute()
     {

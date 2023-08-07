@@ -14,6 +14,7 @@ public class UIManager : Generic.Singleton<UIManager>
     public CharacterUI characterUI { get; private set; }
     public SkillUI skillUI { get; private set; }
     public PauseMenuUI pauseMenuUI { get; private set; }
+    public DebugUI debugUI { get; private set; }
 
     [Header("Canvases")]
     [SerializeField] private Canvas _worldCanvas;
@@ -21,7 +22,8 @@ public class UIManager : Generic.Singleton<UIManager>
     [SerializeField] private Canvas _characterCanvas;
     [SerializeField] private Canvas _skillCanvas;
     [SerializeField] private Canvas _pauseMenuCanvas;
-    
+    [SerializeField] private Canvas _debugCanvas;
+
     //[HideInInspector]
     public bool isMouseOverUI;
     public int previousLayer = 1;
@@ -47,6 +49,7 @@ public class UIManager : Generic.Singleton<UIManager>
         characterUI = _characterCanvas.GetComponent<CharacterUI>();
         skillUI = _skillCanvas.GetComponent<SkillUI>();
         pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
+        debugUI = _debugCanvas.GetComponent<DebugUI>();
 
         SetCanvasState(_characterCanvas, characterUI, false);
         SetCanvasState(_skillCanvas, skillUI, false);

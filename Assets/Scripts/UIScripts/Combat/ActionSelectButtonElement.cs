@@ -33,59 +33,34 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     }
     public void SetActionSelectButton(IUnitAction action, Player player)
     {
-        //SetUp();
-        
         _action = action;
-        int apCost = action.GetCost();
-        if (action.GetActionType() == ActionType.Move)
-        {
-            //fix later
-            apCost = 1;
-        }
-        int ammoCost = GetAmmo();
 
         //Button selectable Setting
         _isSelectable = _action.IsSelectable();
-
-        //Cost Icon Color Setting
-        APCostUI.GetComponent<Image>().color = APCostUIInitColor;
-        AmmoCostUI.GetComponent<Image>().color = AmmoCostUIInitColor;
-        if (player.currentActionPoint < apCost)
+        bool isPlayerTurn = FieldSystem.turnSystem.turnOwner is Player;
+        bool isPlayerSelectAction = (player.GetSelectedAction().GetActionType() != ActionType.Idle);
+        bool isSelectedAction = (player.GetSelectedAction().GetActionType() == _action.GetActionType());
+        bool isIdleAction = (action.GetActionType() == ActionType.Idle);
+        if (!isPlayerTurn || (isPlayerSelectAction && !isSelectedAction && !isIdleAction))
         {
-            APCostUI.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
-            _isSelectable = false;
-        }
-        if (player.weapon.currentAmmo < ammoCost)
-        {
-            AmmoCostUI.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
             _isSelectable = false;
         }
 
-        //Cost Icon Visible Setting
-        APCostUI.SetActive(true);
-        APCostUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = apCost.ToString();
-        if (apCost == 0)
-        {
-            APCostUI.SetActive(false);
-        }
-        AmmoCostUI.SetActive(true);
-        AmmoCostUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ammoCost.ToString();
-        if (ammoCost == 0)
-        {
-            AmmoCostUI.SetActive(false);
-        }
+        SetCostIcons(player.currentActionPoint, player.weapon.currentAmmo);
+        GetComponent<Button>().interactable = _isSelectable;
 
         //Button Color Setting
-        GetComponent<Image>().color = new Color(1, 1, 1);
-        if (action.GetActionType() == ActionType.Reload && player.weapon.currentAmmo == 0) 
+        GetComponent<Image>().color = Color.white;
+        bool isRunOutAmmo = ((action.GetActionType() == ActionType.Reload) && (player.weapon.currentAmmo == 0));
+        if (isRunOutAmmo) 
         {
-            GetComponent<Image>().color = new Color(1, 1, 0);
+            GetComponent<Image>().color = Color.yellow;
         }
-        GetComponent<Button>().interactable = _isSelectable;
+
     }
 
     //null button
-    public void SetActionSelectButton()
+    public void OffActionSelectButton()
     {
         _action = null;
         //Button selectable Setting
@@ -100,7 +75,39 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         GetComponent<Image>().color = new Color(1, 1, 1);
     }
 
-    private int GetAmmo() 
+    private void SetCostIcons(int playerCurrentAp, int playerCurrentAmmo)
+    {
+        int apCost = _action.GetCost();
+        if (_action.GetActionType() is ActionType.Move) apCost = 1; //Delete later
+        //int ammoCost = _action.GetAmmoCost();
+        int ammoCost = GetAmmoCost();   //Delete later
+
+        SetEachCostIconUI(APCostUI, apCost, playerCurrentAp, APCostUIInitColor);
+        SetEachCostIconUI(AmmoCostUI, ammoCost, playerCurrentAmmo, AmmoCostUIInitColor);
+    }
+    private void SetEachCostIconUI(GameObject ui, int requiredCost, int currentCost, Color initColor)
+    {
+        //Cost Icon Visible Setting
+        ui.SetActive(true);
+        if (requiredCost == 0)
+        {
+            ui.SetActive(false);
+        }
+
+        //Cost Icon Color Setting
+        ui.GetComponent<Image>().color = initColor;
+        if (currentCost < requiredCost)
+        {
+            ui.GetComponent<Image>().color = Color.gray;
+            _isSelectable = false;
+        }
+
+        //Cost Icon Text Setting
+        ui.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = requiredCost.ToString();
+    }
+
+    //Delete later
+    private int GetAmmoCost() 
     {
         if (_action.GetActionType() == ActionType.Attack) return 1;
         return 0;

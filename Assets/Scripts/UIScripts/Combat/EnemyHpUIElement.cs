@@ -11,7 +11,7 @@ public class EnemyHpUIElement : UIElement
     private TextMeshProUGUI _hpText;
 
     private Enemy _enemy;
-    private Vector3 _enemyPrevPos;
+    private Vector3 _enemyUIPrevPos;
 
     [SerializeField] private float HP_BAR_UI_Y_POSITION_CORRECTION =50;
     // Start is called before the first frame update
@@ -34,13 +34,13 @@ public class EnemyHpUIElement : UIElement
             if (!_enemy.isVisible) return;
 
             //UI Position Setting
-            if (_enemy.gameObject.transform.position != _enemyPrevPos)
+            Vector3 uiPosition = Camera.main.WorldToScreenPoint(_enemy.transform.position);
+            if (uiPosition != _enemyUIPrevPos)
             {
-                Vector3 uiPosition = Camera.main.WorldToScreenPoint(_enemy.transform.position);
                 uiPosition.y += HP_BAR_UI_Y_POSITION_CORRECTION;
                 GetComponent<RectTransform>().position = uiPosition;
 
-                _enemyPrevPos = _enemy.gameObject.transform.position;
+                _enemyUIPrevPos = uiPosition;
             }
 
             //Hp Fill Setting
@@ -59,7 +59,7 @@ public class EnemyHpUIElement : UIElement
     public void SetEnemyHpUI(Enemy enemy)
     {
         _enemy = enemy;
-        _enemyPrevPos = Vector3.zero;
+        _enemyUIPrevPos = Vector3.zero;
         int maxHp = enemy.GetStat().maxHp;
         int curHp = enemy.GetStat().curHp;
 

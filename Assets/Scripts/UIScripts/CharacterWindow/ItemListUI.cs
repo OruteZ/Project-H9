@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ItemListUI : UISystem
@@ -23,6 +24,8 @@ public class ItemListUI : UISystem
     [SerializeField] private GameObject _usableItemListScrollContents;
     [SerializeField] private GameObject _otherItemListScrollContents;
     [SerializeField] private GameObject _itemTooltipWindow;
+
+    private static int _itemListCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -88,26 +91,22 @@ public class ItemListUI : UISystem
             _itemLists[i].SetActive(false);
             _itemLists[i].transform.SetParent(_ItemListPrefabs.transform);
         }
-        int itemListCount = 0;  //static?
         Inventory inventory = _itemManager.GetInventory();
 
-        SetEachItemList(itemListCount, inventory.weaponItems, _weaponItemListScrollContents);
-        itemListCount += inventory.weaponItems.Count;
-        SetEachItemList(itemListCount, inventory.usableItems, _usableItemListScrollContents);
-        itemListCount += inventory.usableItems.Count;
-        SetEachItemList(itemListCount, inventory.otherItems, _otherItemListScrollContents);
+        SetEachItemList(inventory.weaponItems, _weaponItemListScrollContents);
+        SetEachItemList(inventory.usableItems, _usableItemListScrollContents);
+        SetEachItemList(inventory.otherItems, _otherItemListScrollContents);
 
 
     }
-    private void SetEachItemList(int cnt, List<Item> items, GameObject scrollContents)
+    private void SetEachItemList(List<Item> items, GameObject scrollContents)
     {
-        int itemListCount = cnt;
         for (int i = 0; i < items.Count; i++)
         {
             Vector3 pos = ITEM_LIST_INIT_POSITION;
             pos.y -= i * ITEM_LIST_INTERVAL;
-            SetItemList(itemListCount, pos, scrollContents, items[i]);
-            itemListCount++;
+            SetItemList(_itemListCount, pos, scrollContents, items[i]);
+            _itemListCount++;
         }
         if (scrollContents == null) return;
         scrollContents.GetComponent<RectTransform>().sizeDelta = new Vector2(0, items.Count * ITEM_LIST_INTERVAL);
@@ -151,16 +150,7 @@ public class ItemListUI : UISystem
     private void SetItemUseWindow(int index)
     {
         _itemTooltipWindow.transform.position = Input.mousePosition;
-        ItemInfo itemInfo = _itemManager.GetItemInfo(index);
-        if (itemInfo.category == ItemInfo.ItemCategory.Weapon)
-        {
-        }
-        else if (itemInfo.category == ItemInfo.ItemCategory.Usable)
-        {
-        }
-        else
-        {
-        }
+        SetItemPopupWindow(_itemManager.GetItemInfo(index));
 
         _currentItemIndex = index;
 
@@ -175,6 +165,53 @@ public class ItemListUI : UISystem
     {
         UIManager.instance.previousLayer = 2;
         CloseItemUseWindow();
+    }
+
+    private void SetItemPopupWindow(ItemInfo itemInfo)
+    {
+        int cnt = 0;
+        if (itemInfo.category == ItemInfo.ItemCategory.Weapon)
+        {
+            SetItemPopupWindowButton(cnt++, "Eqipment");
+        }
+        else if (itemInfo.category == ItemInfo.ItemCategory.Usable)
+        {
+            SetItemPopupWindowButton(cnt++, "Use");
+        }
+        else
+        {
+        }
+        SetItemPopupWindowButton(cnt++, "Sell");
+        SetItemPopupWindowButton(cnt++, "Discard");
+    }
+    private void SetItemPopupWindowButton(int order, string type) 
+    {
+        Button btn = _itemTooltipWindow.transform.GetChild(order).GetComponent<Button>();
+        TextMeshProUGUI text = btn.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        switch (type) 
+        {
+            case "Eqipment": 
+                {
+                    btn.onClick.AddListener(() => ClickUseItem());
+                    break;
+                }
+            case "Use":
+                {
+                    btn.onClick.AddListener(() => ClickUseItem());
+                    break;
+                }
+            case "Sell":
+                {
+                    btn.onClick.AddListener(() => ClickSellItem());
+                    break;
+                }
+            case "Discard":
+                {
+                    btn.onClick.AddListener(() => ClickDiscardItem());
+                    break;
+                }
+        }
+        text.text = type;
     }
 
     public void CloseItemUseWindow()

@@ -37,10 +37,10 @@ public class EnemyStatUI : UISystem
         {
             Player player = FieldSystem.unitSystem.GetPlayer();
             if (player is null || player.GetSelectedAction().GetActionType() is not ActionType.Idle) return;
-
             Vector3Int enemyPos;
-            if (GetMouseClickObject(out enemyPos)) 
+            if (GetMouseClickObject(out enemyPos))
             {
+                Debug.Log("Click");
                 SetEnemyStatUI((Enemy)FieldSystem.unitSystem.GetUnit(enemyPos));
             }
         }
@@ -106,22 +106,10 @@ public class EnemyStatUI : UISystem
     }
     private static bool GetMouseClickObject(out Vector3Int pos)
     {
-        //if (UIManager.instance.isMouseOverUI)
-        //{
-        //    pos = Vector3Int.zero;
-        //    return false;
-        //}
-
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit, float.MaxValue, layerMask: LayerMask.GetMask("Enemy")))
         {
             Enemy enemy = hit.collider.GetComponent<Enemy>();
-
-            //if (enemy is null)
-            //{
-            //    pos = Vector3Int.zero;
-            //    return false;
-            //}
             pos = enemy.hexPosition;
             return true;
         }

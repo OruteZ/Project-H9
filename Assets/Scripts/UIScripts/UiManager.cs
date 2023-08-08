@@ -28,9 +28,6 @@ public class UIManager : Generic.Singleton<UIManager>
     public bool isMouseOverUI;
     public int previousLayer = 1;
 
-    private string prevSceneName;
-    private bool _isCombatScene = false;
-
 
     private new void Awake()
     {
@@ -55,7 +52,6 @@ public class UIManager : Generic.Singleton<UIManager>
         SetCanvasState(_skillCanvas, skillUI, false);
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
 
-        prevSceneName = SceneManager.GetActiveScene().name;
     }
     void Update()
     {
@@ -194,13 +190,11 @@ public class UIManager : Generic.Singleton<UIManager>
         {
             case GameState.World:
                 {
-                    _isCombatScene = false;
                     ChangeUIToWorldScene();
                     break;
                 }
             case GameState.Combat:
                 {
-                    _isCombatScene = true;
                     ChangeUIToCombatScene();
                     break;
                 }

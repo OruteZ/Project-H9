@@ -27,6 +27,14 @@ public class CombatWindowUI : UISystem
         magazineUI.OpenUI();
         enemyHpUI.OpenUI();
         enemyStatUI.OpenUI();
+
+        foreach (Unit unit in FieldSystem.unitSystem.units)
+        {
+            if (unit is Player)
+            {
+                //((Player)unit).SelectAction.AddListener(() => SetCombatUI());
+            }
+        }
     }
     public override void CloseUI()
     {
@@ -43,6 +51,7 @@ public class CombatWindowUI : UISystem
 
     public void SetCombatUI()
     {
+        if (!GameManager.instance.CompareState(GameState.Combat)) return;
         combatActionUI.SetActionButtons();
         magazineUI.SetMagazineText();
         enemyHpUI.SetEnemyHpBars();

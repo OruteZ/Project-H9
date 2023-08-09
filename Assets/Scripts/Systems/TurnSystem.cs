@@ -15,7 +15,7 @@ public class TurnSystem : MonoBehaviour
 
 private void Awake()
     {
-        turnNumber = 0;
+        turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.worldTurn : 0;
         onTurnChanged.AddListener(() => { turnNumber++;});
         onTurnChanged.AddListener(() => UIManager.instance.timingUI.SetTurnText(turnNumber));
     }

@@ -48,6 +48,11 @@ public class AttackAction : BaseAction
         return 1;
     }
 
+    public override int GetAmmoCost()
+    {
+        return 1;
+    }
+
     public override void SetTarget(Vector3Int targetPos)
     {
         _target = FieldSystem.unitSystem.GetUnit(targetPos);

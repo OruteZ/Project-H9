@@ -147,6 +147,8 @@ public class Player : Unit
     public override void GetDamage(int damage)
     {
         base.GetDamage(damage);
+
+        GameManager.instance.playerStat = stat;
     }
 
     private void OnAnyUnitMoved(Unit unit)

@@ -22,6 +22,11 @@ public class MoveAction : BaseAction
         return _path is null ? 1 : _currentPositionIndex - 1;
     }
 
+    public override int GetAmmoCost()
+    {
+        return 0;
+    }
+
     public override bool IsSelectable()
     {
         if (unit.hasAttacked) return false;

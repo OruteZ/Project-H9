@@ -25,7 +25,7 @@ public class EnemyHpUIElement : UIElement
     // Update is called once per frame
     void Update()
     {
-        if (_enemy is not null)
+        if (_enemy != null)
         {
             _backHpBar.gameObject.SetActive(_enemy.isVisible);
             _frontHpBar.gameObject.SetActive(_enemy.isVisible);

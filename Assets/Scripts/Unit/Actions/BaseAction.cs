@@ -10,6 +10,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     public abstract bool CanExecute();
     public abstract void Execute(Action onActionComplete);
     public abstract void SetTarget(Vector3Int targetPos);
+    public abstract int GetAmmoCost();
 
     public abstract int GetCost();
 

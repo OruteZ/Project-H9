@@ -64,7 +64,7 @@ public class TileObject : MonoBehaviour
         return meshRenderer.enabled;
     }
 
-    public void SetVisible(bool value)
+    public virtual void SetVisible(bool value)
     {
         meshRenderer.enabled = value;
         vision = value;

@@ -16,6 +16,8 @@ public class FieldSystem : MonoBehaviour
     
     private void Awake()
     {
+        Debug.Log("Field System : Awake");
+        
         _instance = this;
 
         tileSystem = GetComponent<TileSystem>();

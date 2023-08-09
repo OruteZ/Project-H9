@@ -12,8 +12,17 @@ public class DamageFloat : MonoBehaviour
 
     private RectTransform _parentCanvasRectTsf;
     public float randomScale;
-    
+
     private Camera _cam;
+
+    private Camera cam
+    {
+        get
+        {
+            if (_cam == null) _cam = Camera.main;
+            return _cam;
+        }
+    }
 
     private TextMeshProUGUI _textMeshPro;
     // Update is called once per frame
@@ -53,7 +62,7 @@ public class DamageFloat : MonoBehaviour
 
     private void UpdatePosition()
     {
-        Vector2 viewportPosition = _cam.WorldToViewportPoint(_worldPosition);
+        Vector2 viewportPosition = cam.WorldToViewportPoint(_worldPosition);
         var sizeDelta = _parentCanvasRectTsf.sizeDelta;
             
         Vector2 worldObjectScreenPosition = new Vector2(

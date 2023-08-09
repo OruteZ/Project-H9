@@ -23,14 +23,14 @@ public class EnemyHpUI : UISystem
         _enemies = new List<Enemy>();
         foreach (Unit unit in units)
         {
-            Debug.Log("type:" + unit.GetType());
+//            Debug.Log("type:" + unit.GetType());
             if (unit is Enemy)
             {
                 _enemies.Add((Enemy)unit);
             }
         }
 
-        Debug.Log("적 개체 수:" + _enemies.Count);
+//        Debug.Log("적 개체 수:" + _enemies.Count);
 
         if (_enemies.Count > _enemyHpBars.Count) 
         {

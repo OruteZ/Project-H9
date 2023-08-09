@@ -59,6 +59,12 @@ public abstract class Unit : MonoBehaviour, IUnit
         
         dmgEffect.SetPosition(transform.position, 2);
         dmgEffect.SetValue(damage);
+
+        if (stat.curHp <= 0)
+        {
+            onDead.Invoke(this);
+            Destroy(gameObject);
+        }
     }
 
     public bool hasAttacked;
@@ -81,6 +87,11 @@ public abstract class Unit : MonoBehaviour, IUnit
         unitName = newName;
         stat = unitStat;
         stat.curHp = stat.maxHp;
+        
+        foreach (IUnitAction action in _unitActionArray)
+        {
+            action.SetUp(this);
+        }
 
         EquipWeapon(newWeapon);
     }
@@ -102,10 +113,7 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     private void Start()
     {
-        foreach (IUnitAction action in _unitActionArray)
-        {
-            action.SetUp(this);
-        }
+        
     }
     
     public T GetAction<T>()

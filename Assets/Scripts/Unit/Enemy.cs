@@ -33,8 +33,12 @@ public class Enemy : Unit
         Vector3Int target = _ai.resultPosition;
         
         Debug.Log("Enemy Selected Action = " + activeUnitAction.GetActionType());
-        
-        if (activeUnitAction is IdleAction) FinishAction();
+
+        if (activeUnitAction is IdleAction)
+        {
+            FieldSystem.turnSystem.EndTurn();
+            return;
+        }
         
         if (TryExecuteUnitAction(target, FinishAction))
         {
@@ -51,11 +55,12 @@ public class Enemy : Unit
         #if UNITY_EDITOR
         Debug.Log(unitName + " Turn Started");
 
-        StartCoroutine(UITestEndTurn());
+        //StartCoroutine(UITestEndTurn());
 
         #endif
         currentActionPoint = stat.actionPoint;
 
+        hasAttacked = false;
         activeUnitAction = null;
     }
 

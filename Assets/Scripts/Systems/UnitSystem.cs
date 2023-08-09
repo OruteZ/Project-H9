@@ -26,12 +26,12 @@ public class UnitSystem : MonoBehaviour
         
         foreach (var unit in units)
         {
-            if (unit is Player)
+            if (unit is Player p)
             {
-                unit.SetUp("Player", GameManager.instance.playerStat, weaponDB.Clone(101));
+                p.SetUp("Player", GameManager.instance.playerStat, weaponDB.Clone(101));
                 if (GameManager.instance.CompareState(GameState.World))
                 {
-                    unit.hexPosition = GameManager.instance.playerWorldPos;
+                    p.hexTransform.position = GameManager.instance.playerWorldPos;
                 }
             }
             else if(unit is Enemy enemy)
@@ -96,6 +96,8 @@ public class UnitSystem : MonoBehaviour
     private void OnUnitDead(Unit unit)
     {
         RemoveUnit(unit);
+
+        if (IsCombatFinish()) GameManager.instance.FinishCombat();
     }
 
     private void RemoveUnit(Unit unit)

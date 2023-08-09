@@ -34,6 +34,11 @@ public class PanningAction : BaseAction
         return 4;
     }
 
+    public override int GetAmmoCost()
+    {
+        return unit.weapon.currentAmmo;
+    }
+
     public override bool CanExecuteImmediately()
     {
         return false;

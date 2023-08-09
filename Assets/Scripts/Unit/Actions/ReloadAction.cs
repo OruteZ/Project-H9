@@ -32,6 +32,11 @@ public class ReloadAction : BaseAction
         return 3;
     }
 
+    public override int GetAmmoCost()
+    {
+        return 0;
+    }
+
     public override bool IsSelectable()
     {
         return weapon.currentAmmo < weapon.maxAmmo;

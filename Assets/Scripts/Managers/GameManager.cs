@@ -25,18 +25,24 @@ public class GameManager : Generic.Singleton<GameManager>
 
     [Header("World Info")] 
     public int worldAp;
+    public int worldTurn;
 
     public void StartCombat(string combatSceneName)
     {
+        //Save World Data
+        worldAp = FieldSystem.unitSystem.GetPlayer().currentActionPoint;
+        worldTurn = FieldSystem.turnSystem.turnNumber;
+
         playerWorldPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
-        SceneManager.LoadScene(combatSceneName);
+        //SceneManager.LoadScene(combatSceneName);
         ChangeState(GameState.Combat);
+        LoadingManager.instance.LoadingScene(combatSceneName);
     }
 
     public void FinishCombat()
     {
-        SceneManager.LoadScene(worldSceneName);
         ChangeState(GameState.World);
+        LoadingManager.instance.LoadingScene(worldSceneName);
     }
 
     public bool CompareState(GameState state)

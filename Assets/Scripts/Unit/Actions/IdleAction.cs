@@ -20,6 +20,11 @@ public class IdleAction : BaseAction
         return 0;
     }
 
+    public override int GetAmmoCost()
+    {
+        return 1;
+    }
+
     public override bool IsSelectable()
     {
         return true;

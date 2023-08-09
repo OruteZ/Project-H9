@@ -58,7 +58,7 @@ public class Tile : MonoBehaviour
             SetEnvironmentsSight();
 
             var unit = FieldSystem.unitSystem.GetUnit(hexPosition);
-            if (unit is not null) unit.isVisible = value;
+            if (unit != null) unit.isVisible = value;
         }
     }
 

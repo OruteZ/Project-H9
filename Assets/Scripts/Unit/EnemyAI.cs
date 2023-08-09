@@ -41,9 +41,17 @@ public class EnemyAI : MonoBehaviour
                         new List<INode>
                         {
                             new ActionNode(IsPlayerOutOfSight),
+                            new ActionNode(() => 
+                                _enemy.hasAttacked is false ? 
+                                INode.ENodeState.Success :
+                                INode.ENodeState.Failure),
                             new ActionNode(() => {
                                 resultAction = _enemy.GetAction<MoveAction>();
-                                resultPosition = MoveOnePos(_playerPosMemory);
+
+                                if (TryMoveOnePos(_playerPosMemory, resultPosition))
+                                {
+                                    return INode.ENodeState.Failure;
+                                }
                                 return INode.ENodeState.Success;
                             })
                         }),
@@ -51,19 +59,34 @@ public class EnemyAI : MonoBehaviour
                         new List<INode>
                         {
                             new ActionNode(IsOutOfRange),
+                            new ActionNode(() => 
+                                _enemy.hasAttacked is false ? 
+                                    INode.ENodeState.Success :
+                                    INode.ENodeState.Failure),
                             new ActionNode(() => {
                                 resultAction = _enemy.GetAction<MoveAction>();
-                                resultPosition = MoveOnePos(_playerPosMemory);
+
+                                if (TryMoveOnePos(_playerPosMemory, resultPosition))
+                                {
+                                    return INode.ENodeState.Failure;
+                                }
                                 return INode.ENodeState.Success;
                             })
                         }),
-                    new ActionNode(() =>
-                    {
-                        resultAction = _enemy.GetAction<AttackAction>();
-                        resultPosition = _playerPosMemory;
-                        return INode.ENodeState.Success;
-                    }),
-                    
+                    new SequenceNode(new List<INode>
+                        {
+                            new ActionNode(() => 
+                                _enemy.hasAttacked is false ? 
+                                    INode.ENodeState.Success :
+                                    INode.ENodeState.Failure),
+                            new ActionNode(() =>
+                            {
+                                resultAction = _enemy.GetAction<AttackAction>();
+                                resultPosition = _playerPosMemory;
+                                return INode.ENodeState.Success;
+                            })
+                        }
+                        ),
                     new ActionNode(() =>
                     {
                         resultAction = _enemy.GetAction<IdleAction>();
@@ -106,12 +129,22 @@ public class EnemyAI : MonoBehaviour
             INode.ENodeState.Success : INode.ENodeState.Failure;
     }
 
-    private Vector3Int MoveOnePos(Vector3Int target)
+    private bool TryMoveOnePos(Vector3Int target, Vector3Int result)
     {
         var route = FieldSystem.tileSystem.FindPath(_enemy.hexPosition, target);
-        if (route is null) return _enemy.hexPosition;
-        if (route.Count <= 1) return route[0].hexPosition;
+        if (route is null)
+        {
+            result = _enemy.hexPosition;
+            return false;
+        }
 
-        return route[1].hexPosition;
+        if (route.Count <= 1)
+        {
+            result = route[0].hexPosition;
+            return false;
+        }
+
+        result = route[1].hexPosition;
+        return true;
     }
 }

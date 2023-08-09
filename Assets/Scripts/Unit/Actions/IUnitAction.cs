@@ -59,6 +59,8 @@ public interface IUnitAction {
     /// </summary>
     /// <returns></returns>
     public bool CanExecuteImmediately();
+
+    public int GetAmmoCost();
 }
 
 public enum ActionType {

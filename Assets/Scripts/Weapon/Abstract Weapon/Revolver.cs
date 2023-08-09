@@ -53,11 +53,12 @@ public class Revolver : Weapon
 
         hitRate = Mathf.Round(10 * hitRate) * 0.1f;
         hitRate = Mathf.Clamp(hitRate, 0, 100);
-        
+
         // #if UNITY_EDITOR
         // Debug.Log("Hit rate = " + hitRate);
         // #endif
-        
+
+        UIManager.instance.debugUI.SetDebugUI(hitRate, unit, target, distance, weaponRange, unitStat.revolverAdditionalRange, GetDistancePenalty() * (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
         return hitRate * 0.01f;
     }
 

@@ -36,8 +36,8 @@ public class CurrentStatusUI : UISystem
         _player = FieldSystem.unitSystem.GetPlayer();
         if (_player is null) return;
         
-        //_playerStat = _player.GetStat();
-        _playerStat = GameManager.instance.playerStat;
+        _playerStat = _player.GetStat();
+        //_playerStat = GameManager.instance.playerStat;
         
         _healthPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.curHp.ToString() + " / " + _playerStat.maxHp.ToString();
         _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _playerStat.concentration.ToString();

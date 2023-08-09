@@ -15,6 +15,8 @@ public class Player : Unit
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);
         TileEffectManager.instance.SetPlayer(this);
+
+        onSelectedChanged.AddListener(() => UIManager.instance.combatUI.SetCombatUI());
     }
     public void Update()
     {
@@ -67,12 +69,6 @@ public class Player : Unit
         if (activeUnitAction.CanExecuteImmediately())
         {
             TryExecuteUnitAction(Vector3Int.zero, FinishAction);
-        }
-
-
-        if (GameManager.instance.CompareState(GameState.Combat))
-        {
-            UIManager.instance.combatUI.SetCombatUI();
         }
     }
 

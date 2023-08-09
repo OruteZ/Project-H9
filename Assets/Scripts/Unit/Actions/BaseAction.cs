@@ -27,6 +27,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     public void SetUp(Unit unit)
     {
         this.unit = unit;
+        onActionStarted.AddListener(() => UIManager.instance.combatUI.SetCombatUI());
+        onActionFinished.AddListener(() => UIManager.instance.combatUI.SetCombatUI());
     }
     public Unit GetUnit() => unit;
     public bool IsActive() => isActive;

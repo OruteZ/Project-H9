@@ -14,6 +14,7 @@ public class UIManager : Generic.Singleton<UIManager>
     public CharacterUI characterUI { get; private set; }
     public SkillUI skillUI { get; private set; }
     public PauseMenuUI pauseMenuUI { get; private set; }
+    public DebugUI debugUI { get; private set; }
 
     [Header("Canvases")]
     [SerializeField] private Canvas _worldCanvas;
@@ -21,13 +22,11 @@ public class UIManager : Generic.Singleton<UIManager>
     [SerializeField] private Canvas _characterCanvas;
     [SerializeField] private Canvas _skillCanvas;
     [SerializeField] private Canvas _pauseMenuCanvas;
-    
+    [SerializeField] private Canvas _debugCanvas;
+
     //[HideInInspector]
     public bool isMouseOverUI;
     public int previousLayer = 1;
-
-    private string prevSceneName;
-    private bool _isCombatScene = false;
 
 
     private new void Awake()
@@ -47,12 +46,12 @@ public class UIManager : Generic.Singleton<UIManager>
         characterUI = _characterCanvas.GetComponent<CharacterUI>();
         skillUI = _skillCanvas.GetComponent<SkillUI>();
         pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
+        debugUI = _debugCanvas.GetComponent<DebugUI>();
 
         SetCanvasState(_characterCanvas, characterUI, false);
         SetCanvasState(_skillCanvas, skillUI, false);
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
 
-        prevSceneName = SceneManager.GetActiveScene().name;
     }
     void Update()
     {
@@ -191,13 +190,11 @@ public class UIManager : Generic.Singleton<UIManager>
         {
             case GameState.World:
                 {
-                    _isCombatScene = false;
                     ChangeUIToWorldScene();
                     break;
                 }
             case GameState.Combat:
                 {
-                    _isCombatScene = true;
                     ChangeUIToCombatScene();
                     break;
                 }

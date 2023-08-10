@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,8 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
     
     private IEnumerator LoadSceneCoroutine(string sceneName)
     {
+        SceneManager.LoadScene("LoadingScene");
+        
         yield return null;
         canvas.enabled = true;
         
@@ -47,8 +50,7 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
 
             operation.allowSceneActivation = true;
         }
-        
-        
+
         canvas.enabled = false;
     }
 }

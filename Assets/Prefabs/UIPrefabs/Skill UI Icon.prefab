@@ -10,12 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4898608753034365753}
   - component: {fileID: 4898608753034365755}
+  - component: {fileID: -8200463846172460940}
   - component: {fileID: 4898608753034365752}
   - component: {fileID: 8561000848125878494}
-  - component: {fileID: 1438744710299128481}
-  - component: {fileID: 7443952202532886731}
   m_Layer: 7
-  m_Name: SkillUI
+  m_Name: Skill UI Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,11 +35,11 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 75, y: 75}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &4898608753034365755
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -49,6 +48,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4898608753034365758}
   m_CullTransparentMesh: 1
+--- !u!114 &-8200463846172460940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4898608753034365758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe76c5187b9d78d448f88a32bde74a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4898608753034365752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,9 +134,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1438744710299128481}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SkillTreeElement, Assembly-CSharp
-        m_MethodName: OnSkillUIBtnClick
+        m_MethodName: OnSkillUIButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -135,35 +146,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1438744710299128481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4898608753034365758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 992a76074a6f9ed4d97f7bafc19df8cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillIndex: 1001
-  _effect:
-  - {fileID: 21300000, guid: affeade9874cf2347abb155e8d0db4d8, type: 3}
-  - {fileID: 21300000, guid: 0029170d14ce6c04c9f45c22cdae5559, type: 3}
-  - {fileID: 21300000, guid: 36e6970b84831434a9eac79abd03700b, type: 3}
-  _precedenceLine:
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &7443952202532886731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4898608753034365758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe76c5187b9d78d448f88a32bde74a12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

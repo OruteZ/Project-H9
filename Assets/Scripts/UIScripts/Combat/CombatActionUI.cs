@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+//액션 버튼 UI 자체를 하나의 클래스로 조직화해서 관리해도 될 듯?
+
 public class CombatActionUI : UISystem
 {
     [SerializeField] private GameObject _combatActionWindow;
@@ -128,24 +130,30 @@ public class CombatActionUI : UISystem
         List<IUnitAction> baseActions = new List<IUnitAction>();
         List<IUnitAction> skillActions = new List<IUnitAction>();
         ActionType[] baseActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload };
-        int baseActionFindCount = 0;
         for (int i = 0; i < playerActions.Length; i++)
         {
             if (playerActions[i].GetActionType() is ActionType.Idle)
             {
                 continue;
             }
-            else if (baseActionFindCount < baseActionType.Length && playerActions[i].GetActionType() == baseActionType[baseActionFindCount])
+            bool isBaseAction = false;
+            for (int j = 0; j < baseActionType.Length; j++) 
             {
-                baseActions.Add(playerActions[i]);
-                baseActionFindCount++;
+                if (playerActions[i].GetActionType() == baseActionType[j])
+                {
+                    baseActions.Add(playerActions[i]);
+                    isBaseAction = true;
+                    break;
+                }
             }
-            else
+
+            if (!isBaseAction)
             {
                 skillActions.Add(playerActions[i]);
             }
         }
-        baseActionFindCount = 0;
+
+        int baseActionFindCount = 0;
         while (baseActionFindCount < baseActionType.Length)
         {
             foreach (IUnitAction action in baseActions)

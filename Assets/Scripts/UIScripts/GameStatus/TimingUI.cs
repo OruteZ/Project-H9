@@ -46,6 +46,9 @@ public class TimingUI : UISystem
 
     public void OnClickEndTurnButton() 
     {
-        FieldSystem.turnSystem.EndTurn();
+        if (FieldSystem.turnSystem.turnOwner is Player)
+        {
+            FieldSystem.turnSystem.EndTurn();
+        }
     }
 }

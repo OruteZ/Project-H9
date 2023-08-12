@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 캐릭터 정보 창에서 캐릭터가 습득한 스킬을 표시하는 기능을 구현한 클래스
+/// </summary>
 public class LearnedSkillUI : UISystem
 {
     //Learned Skill UI
@@ -38,6 +41,9 @@ public class LearnedSkillUI : UISystem
     {
         base.CloseUI();
     }
+    /// <summary>
+    /// 플레이어가 습득한 스킬들을 받아와서 캐릭터 창 UI에 요약해서 띄워주는 기능입니다.
+    /// </summary>
     public void SetLearnedSkiilInfoUI()
     {
         for (int i = 0; i < _skillIconUIs.Count; i++)

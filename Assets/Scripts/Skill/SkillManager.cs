@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 게임에서 사용되는 스킬의 획득, 사용 등의 기능을 관리하는 클래스
+/// </summary>
 public class SkillManager : Generic.Singleton<SkillManager>
 {
     const int REQUIRED_SKILL_POINT = 1;
@@ -18,7 +21,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
         _skillPoint = 10;    //test
     }
 
-    void InitSkills()
+    private void InitSkills()
     {
         List<List<string>> _skillTable = FileRead.Read("SkillTable");
         if (_skillTable == null)
@@ -42,10 +45,18 @@ public class SkillManager : Generic.Singleton<SkillManager>
         }
     }
 
+    /// <summary>
+    /// 존재하는 모든 스킬들을 반환합니다.
+    /// </summary>
+    /// <returns> 존재하는 모든 스킬들을 담은 Skill리스트 </returns>
     public List<Skill> GetAllSkills() 
     {
         return _skills;
     }
+    /// <summary>
+    /// 플레이어가 습득한 스킬들만 반환합니다.
+    /// </summary>
+    /// <returns> 플레이어가 습득한 스킬들을 담은 Skill리스트 </returns>
     public List<Skill> GetAllLearnedSkills()
     {
         List<Skill> learnedSkills = new List<Skill>();
@@ -56,6 +67,14 @@ public class SkillManager : Generic.Singleton<SkillManager>
         }
         return learnedSkills;
     }
+    /// <summary>
+    /// 해당 고유번호를 가진 스킬을 반환합니다.
+    /// </summary>
+    /// <param name="index"> 반환하고자 하는 스킬의 고유번호 </param>
+    /// <returns> 
+    /// 해당 고유번호를 가진 스킬이 존재한다면 해당 스킬을 반환합니다.
+    /// 아니라면 null을 반환합니다.
+    /// </returns>
     public Skill GetSkill(int index) 
     {
         for (int i = 0; i < _skills.Count; i++) 
@@ -68,15 +87,30 @@ public class SkillManager : Generic.Singleton<SkillManager>
         Debug.Log("해당 인덱스의 스킬을 찾지 못했습니다. 인덱스: " + index);
         return null;
     }
-
+    /// <summary>
+    /// 스킬을 습득합니다.
+    /// </summary>
+    /// <param name="index"> 습득하고자 하는 스킬의 고유번호 </param>
+    /// <returns>
+    /// 스킬 습득조건이 충족되지 않았거나, 스킬 포인트가 부족한 경우 스킬은 습득되지 않고 false를 반환합니다.
+    /// 정상적으로 스킬을 습득한 경우 true를 반환합니다.
+    /// </returns>
     public bool LearnSkill(int index) 
     {
         for (int i = 0; i < _skills.Count; i++) 
         {
             if (_skills[i].skillInfo.index == index) 
             {
-                if (!_skills[i].isLearnable) { Debug.Log("습득 조건이 충족되지 않은 스킬입니다."); return false; }
-                if (_skillPoint < REQUIRED_SKILL_POINT) { Debug.Log("스킬 포인트가 부족합니다."); return false; }
+                if (!_skills[i].isLearnable) 
+                { 
+                    Debug.Log("습득 조건이 충족되지 않은 스킬입니다.");
+                    return false; 
+                }
+                if (!IsEnoughSkillPoint()) 
+                {
+                    Debug.Log("스킬 포인트가 부족합니다.");
+                    return false;
+                }
 
                 _skillPoint -= REQUIRED_SKILL_POINT;
                 _skills[i].LearnSkill();
@@ -90,11 +124,21 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
         return true;
     }
-
+    /// <summary>
+    /// 현재 소지한 스킬 포인트를 반환합니다.
+    /// </summary>
+    /// <returns> 현재 스킬 포인트 </returns>
     public int GetSkillPoint() 
     {
         return _skillPoint;
     }
+    /// <summary>
+    /// 현재 스킬 포인트가 스킬을 배울 만큼 충분한 지 반환합니다.
+    /// </summary>
+    /// <returns>
+    /// 현재 스킬 포인트가 필요한 스킬 포인트보다 작다면 false를 반환합니다.
+    /// 아니라면 true를 반환합니다.
+    /// </returns>
     public bool IsEnoughSkillPoint()
     {
         return REQUIRED_SKILL_POINT <= _skillPoint;

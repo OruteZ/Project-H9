@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 적 체력바 표시와 관련된 기능을 구현한 클래스
+/// </summary>
 public class EnemyHpUI : UISystem
 {
     [SerializeField] private GameObject _hpBarPrefab;
@@ -17,6 +20,10 @@ public class EnemyHpUI : UISystem
         EnemyHpBarObjectPooling(10);
     }
 
+    /// <summary>
+    /// 적 체력바 UI를 설정합니다.
+    /// 액션이 시작될 때, 액션이 끝날 때, 액션을 선택할 때 실행됩니다.
+    /// </summary>
     public void SetEnemyHpBars()
     {
         List<Unit> units = FieldSystem.unitSystem.units;

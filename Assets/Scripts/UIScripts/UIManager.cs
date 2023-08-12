@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// 게임의 UI 전체를 관리하는 클래스
+/// </summary>
 public class UIManager : Generic.Singleton<UIManager>
 {
     [HideInInspector]
@@ -24,7 +27,7 @@ public class UIManager : Generic.Singleton<UIManager>
     [SerializeField] private Canvas _pauseMenuCanvas;
     [SerializeField] private Canvas _debugCanvas;
 
-    //[HideInInspector]
+    //[HideInInspector] //테스트용으로 켜둠.
     public bool isMouseOverUI;
     public int previousLayer = 1;
 
@@ -79,6 +82,7 @@ public class UIManager : Generic.Singleton<UIManager>
         }
     }
 
+    //아래 캔버스 켜고끄는 것들 UIInteraction 삭제 후 전부 private로 전환 예정.
     public void SetCanvasState(Canvas canvas, UISystem uiSys, bool isOn)
     {
         if (canvas.enabled && isOn)
@@ -148,7 +152,7 @@ public class UIManager : Generic.Singleton<UIManager>
     }
 
     /// <summary>
-    /// for development test
+    /// 씬 전환 동기화때문에 만들어 둔건데, 문제 해결 시 삭제 예정.
     /// </summary>
     /// <param name="gameState"></param>
     public void ChangeScenePrepare(GameState gameState)
@@ -182,6 +186,11 @@ public class UIManager : Generic.Singleton<UIManager>
             yield break;
         }
     }
+    /// <summary>
+    /// 씬을 전환하여 UI 상태를 변경합니다.
+    /// GameManager에서 씬 전환 시 호출됩니다.(현재는 동기화 문제로 ChangeScenePrepared가 호출됩니다.)
+    /// </summary>
+    /// <param name="gameState"></param>
     public void ChangeScene(GameState gameState)
     {
         //if (prevSceneName == currentSceneName) return;

@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// 캐릭터 정보 창에서 인벤토리에 위치한 아이템 각각을 구현한 클래스
+/// </summary>
 public class ItemListElement : MonoBehaviour
 {
     private Image _ItemIcon;
     private TextMeshProUGUI _ItemName;
     private int _itemIndex;
-    private ItemListUI _itemListUI;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -17,7 +20,12 @@ public class ItemListElement : MonoBehaviour
         _ItemName = this.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
-    public void SetItemListElement(Item item, ItemListUI itemUI)
+    /// <summary>
+    /// 아이템 리스트 UI의 각 아이템 UI 정보를 갱신합니다.
+    /// itemListUI가 아이템 리스트 전체를 갱신할 때 실행됩니다.
+    /// </summary>
+    /// <param name="item"> 아이템 UI가 표시할 아이템 </param>
+    public void SetItemListElement(Item item)
     {
         _itemIndex = item.itemInfo.index;
         /*
@@ -25,11 +33,13 @@ public class ItemListElement : MonoBehaviour
         ItemIcon.sprite = sprite;
         */
         _ItemName.text = item.itemInfo.name;
-        _itemListUI = itemUI;
     }
 
+    /// <summary>
+    /// 아이템 UI를 클릭했을 때 팝업창을 띄우라는 명령을 itemListUI에게 보냅니다.
+    /// </summary>
     public void OnItemUIBtnClick()
     {
-        _itemListUI.ClickCharacterUIButton(_itemIndex);
+        UIManager.instance.characterUI.itemListUI.ClickItemUIButton(_itemIndex);
     }
 }

@@ -253,7 +253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -8463865, y: 0}
+  m_AnchoredPosition: {x: -8888328, y: 0}
   m_SizeDelta: {x: 25, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &3373449
@@ -7887,8 +7887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerHps: {fileID: 1054151795}
-  hpUIPrefabs: {fileID: 8471090228691241623, guid: ed98a09116c29ae45a5efb910f5a16f0,
-    type: 3}
+  hpUIPrefab: {fileID: 0}
 --- !u!114 &183053041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46572,9 +46571,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849ff317ae260b843bf88fe0d765527b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemListPrefab: {fileID: 2160492693776063615, guid: 9e7cb55e85933b04f94cacb7c891ba01,
+  itemListPrefab: {fileID: 2160492693776063615, guid: 9e7cb55e85933b04f94cacb7c891ba01,
     type: 3}
-  _ItemListPrefabs: {fileID: 673083643}
+  _itemListPrefabs: {fileID: 673083643}
   _weaponItemPanel: {fileID: 1177069174}
   _usableItemPanel: {fileID: 1482674383}
   _otherItemPanel: {fileID: 78085297}
@@ -46615,8 +46614,6 @@ MonoBehaviour:
   _weaponStatText2Contents: {fileID: 441119543}
   _weaponStatText3Name: {fileID: 913089241}
   _weaponStatText3Contents: {fileID: 1670285423}
-  _characterImage: {fileID: 0}
-  _weaponImage: {fileID: 0}
 --- !u!114 &1203181025
 MonoBehaviour:
   m_ObjectHideFlags: 0

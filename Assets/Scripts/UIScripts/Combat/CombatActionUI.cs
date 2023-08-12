@@ -4,17 +4,19 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-//액션 버튼 UI 자체를 하나의 클래스로 조직화해서 관리해도 될 듯?
-
+/// <summary>
+/// 행동창 UI를 표시 및 작동과 관련된 기능을 구현한 클래스
+/// 개선점: 액션 버튼 UI 자체를 하나의 클래스로 조직화해서 관리해도 될 듯? 지금은 조금 번잡한 느낌
+/// </summary>
 public class CombatActionUI : UISystem
 {
     [SerializeField] private GameObject _combatActionWindow;
     [SerializeField] private GameObject _actionTooltipWindow;
 
     private Player _player;
-    private GameState _gameState;
+    private GameState _gameState;   //동기화 오류때문에 만듬. 해결되면 삭제해도 될 듯?
 
-    private readonly List<GameObject> _actionButtons = new List<GameObject>();
+    private List<GameObject> _actionButtons;
     private GameObject _idleButton;
     private IUnitAction _activeAction;
     // Start is called before the first frame update
@@ -22,9 +24,11 @@ public class CombatActionUI : UISystem
     {
         base.Awake();
 
-        _gameState = GameState.World;
+        _gameState = GameState.World;   
 
         //Find Action Buttons & Put in to '_actionButtons'
+        _actionButtons = new List<GameObject>();
+
         Transform baseActionButtons = _combatActionWindow.transform.GetChild(0);
         for (int i = 0; i < baseActionButtons.transform.childCount; i++)
         {
@@ -54,6 +58,10 @@ public class CombatActionUI : UISystem
         base.CloseUI();
         _gameState = GameState.World;
     }
+    /// <summary>
+    /// 행동창 UI의 액션버튼들을 갱신합니다.
+    /// UI를 열었을 때, 액션이 시작될 때, 액션이 끝날 때, 플레이어가 액션을 선택할 때 실행됩니다.
+    /// </summary>
     public void SetActionButtons()
     {
         if (_gameState != GameState.Combat) return;
@@ -178,6 +186,11 @@ public class CombatActionUI : UISystem
         return actions;
     }
 
+    /// <summary>
+    /// 액션 설명창 UI를 엽니다.
+    /// 액션 버튼 위에 마우스를 오버하면 그 액션 버튼 위에 액션에 대한 설명을 띄워줍니다.
+    /// </summary>
+    /// <param name="button"></param>
     public void ShowActionUITooltip(GameObject button) 
     {
         _actionTooltipWindow.SetActive(true);
@@ -200,6 +213,10 @@ public class CombatActionUI : UISystem
         _actionTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = actionName;
         _actionTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = actionDescription;
     }
+    /// <summary>
+    /// 액션 설명창 UI를 닫습니다.
+    /// 액션 버튼 위에서 마우스 오버를 해제하고 다른 곳을 가리키면 설명창을 닫습니다.
+    /// </summary>
     public void HideActionUITooltip()
     {
         _actionTooltipWindow.SetActive(false);

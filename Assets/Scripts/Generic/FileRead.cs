@@ -4,12 +4,20 @@ using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using System.Text.RegularExpressions;
 
+/// <summary>
+/// CSV확장자로 된 각종 테이블 파일을 읽어서 string이중리스트로 반환하는 클래스
+/// </summary>
 public class FileRead : MonoBehaviour
 {
 	static readonly string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))"; //regular expression
 	static readonly string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
 	static readonly char[] TRIM_CHARS = { ' ' };
 
+    /// <summary>
+    /// CSV 파일을 읽어서 문자열 이중리스트로 반환합니다.
+    /// </summary>
+    /// <param name="file"> 파일 이름 </param>
+    /// <returns> 문자열 이중리스트로 변환된 파일의 내용 </returns>
 	public static List<List<string>> Read(string file)
 	{
 		TextAsset data = Resources.Load("files/" + file) as TextAsset;

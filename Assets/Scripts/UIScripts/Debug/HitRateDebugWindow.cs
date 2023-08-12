@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// 명중률 디버깅을 위한 디버깅 UI 클래스
+/// </summary>
 public class HitRateDebugWindow : UISystem
 {
     [SerializeField] private GameObject _text;

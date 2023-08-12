@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 플레이어의 Hp아이콘UI 표시 방식을 구현하는 클래스
+/// </summary>
 public class PlayerHpUI : UISystem
 {
     [SerializeField] private GameObject _playerHps;
-    public GameObject hpUIPrefabs;
+    public GameObject hpUIPrefab;
 
     private List<GameObject> _hpUIs = new List<GameObject>();
     private readonly Vector3 HP_UI_INIT_POSITION = new Vector3(50, 210, 0);
@@ -32,14 +35,14 @@ public class PlayerHpUI : UISystem
         _prevCurHp = 0;
 
         HpUIObjectPooling(maxHp);
-        SetHPUI();
+        SetHpUI();
     }
     private void HpUIObjectPooling(int length)
     {
         for (int i = 0; i < length; i++)
         {
             Vector3 pos = CalculateHpUIPosition(i);
-            GameObject ui = Instantiate(hpUIPrefabs, pos, Quaternion.identity, _playerHps.transform);
+            GameObject ui = Instantiate(hpUIPrefab, pos, Quaternion.identity, _playerHps.transform);
             ui.GetComponent<PlayerHpUIElement>().FillUI();
             _hpUIs.Add(ui);
             ui.SetActive(false);
@@ -47,10 +50,12 @@ public class PlayerHpUI : UISystem
         _prevMaxHp = length;
     }
 
-    public void SetHPUI()
+    /// <summary>
+    /// 플레이어 Hp아이콘UI를 배치합니다.
+    /// CurrentStatusUI가 갱신될 때 같이 갱신됩니다.
+    /// </summary>
+    public void SetHpUI()
     {
-        //int maxHp = GameManager.instance.playerStat.maxHp;
-        //int curHp = GameManager.instance.playerStat.curHp;
         int maxHp = FieldSystem.unitSystem.GetPlayer().GetStat().maxHp;
         int curHp = FieldSystem.unitSystem.GetPlayer().GetStat().curHp;
         if (maxHp == _prevMaxHp && curHp == _prevCurHp) return;

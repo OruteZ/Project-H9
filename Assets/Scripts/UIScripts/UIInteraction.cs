@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//원래 이 클래스를 이용해서 UI 입력을 처리할 다른 계획이 있었으나 폐기되어서 사실상 필요없는 코드입니다.
+//그나마 UIManager가 하는 일이 워낙 많으니 UIManager입력만 따로 처리하는 용도? 정도로만 쓸 수 있을 듯.
+//차근차근 함수들을 다른 위치로 이관하고 삭제할 예정.
+/// <summary>
+/// 각종 UI 상호작용을 처리하는 클래스
+/// </summary>
 public class UIInteraction : Generic.Singleton<UIInteraction>
 {
 
@@ -64,18 +70,5 @@ public class UIInteraction : Generic.Singleton<UIInteraction>
     public void OnOtherItemUIBtnClick()
     {
         _uiManager.characterUI.itemListUI.ChangeItemUIStatus(ItemInfo.ItemCategory.Other);
-    }
-
-    public void OnItemUseBtnClick()
-    {
-        _uiManager.characterUI.itemListUI.ClickUseItem();
-    }
-    public void OnItemSellBtnClick()
-    {
-        _uiManager.characterUI.itemListUI.ClickSellItem();
-    }
-    public void OnItemDiscardBtnClick()
-    {
-        _uiManager.characterUI.itemListUI.ClickDiscardItem();
     }
 }

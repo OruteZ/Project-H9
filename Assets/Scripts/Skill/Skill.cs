@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// Skill의 속성을 저장하고 초기화하는 클래스
+/// </summary>
 public class SkillInfo
 {
     enum SkillCategory
@@ -62,6 +64,10 @@ public class SkillInfo
     public int range { get; private set; }
     public int width { get; private set; }
 
+    /// <summary>
+    /// SkillTable에서 한 행을 입력받아서 변수들을 초기화합니다.
+    /// </summary>
+    /// <param name="list"> SkillTable에서 가져온 한 행의 문자열 </param>
     public SkillInfo(List<string> list)
     {
         for (int i = 0; i < list.Count; i++)
@@ -115,6 +121,9 @@ public class SkillInfo
     }
 }
 
+/// <summary>
+/// 스킬의 속성과 여러 상태 및 기능을 포함하는 클래스
+/// </summary>
 public class Skill
 {
     public SkillInfo skillInfo { get; private set; }
@@ -123,7 +132,6 @@ public class Skill
     public bool isLearnable { get; private set; }
     public int skillLevel { get; private set; }
     public bool[] isLearnedPrecedeSkill { get; private set; }
-
 
     public Skill(SkillInfo info)
     {
@@ -135,10 +143,13 @@ public class Skill
         InitIsLearnedPrecedeSkill();
     }
 
+    /// <summary>
+    /// isLearnable 변수를 초기화합니다.
+    /// 스킬의 선행 스킬이 존재하지 않을 경우 true, 존재할 경우 false로 초기화합니다.
+    /// </summary>
     private void InitIsLearnable()
     {
-        if (skillInfo.precedenceIndex[0] == 0) isLearnable = true;
-        else isLearnable = false;
+        isLearnable = (skillInfo.precedenceIndex[0] == 0);
     }
     private void InitIsLearnedPrecedeSkill()
     {
@@ -152,9 +163,14 @@ public class Skill
             isLearnedPrecedeSkill[0] = true;
         }
     }
+    /// <summary>
+    /// isLearnable 변수의 상태를 갱신합니다.
+    /// 스킬을 최대치까지 배운 상태라면 false로 갱신합니다.
+    /// 그렇지 않고, 선행 스킬들을 모두 배운 상태라면 true, 아니라면 false로 갱신합니다.
+    /// </summary>
+    /// <param name="skills"> 플레이어의 스킬 리스트 </param>
     public void UpdateIsLearnable(List<Skill> skills)
     {
-
         if (skillLevel >= skillInfo.repeatCount)
         {
             isLearnable = false;
@@ -162,7 +178,7 @@ public class Skill
         }
 
         CheckPrecedenceSkill(skills);
-        if (IsLearnedAllPrecedenceSkills()) isLearnable = true;
+        isLearnable = IsLearnedAllPrecedenceSkills();
     }
     private void CheckPrecedenceSkill(List<Skill> skills)
     {
@@ -187,9 +203,17 @@ public class Skill
         return true;
     }
 
+    /// <summary>
+    /// 해당 스킬을 배웁니다.
+    /// </summary>
     public void LearnSkill()
     {
-        if (skillLevel >= skillInfo.repeatCount) { Debug.Log("스킬 레벨 비정상적 상승"); return; }
+        if (skillLevel >= skillInfo.repeatCount) 
+        {
+            Debug.LogError("스킬 레벨 비정상적 상승");
+            return; 
+        }
+
         skillLevel++;
         isLearned = true;
         if (skillLevel >= skillInfo.repeatCount)

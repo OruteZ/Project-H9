@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// 캐릭터 정보 창에서 캐릭터의 스텟 및 장비하고 있는 무기의 스텟 정보를 표시하는 기능을 구현한 클래스
+/// </summary>
 public class CharacterStatUI : UISystem
 {
     //Character Stat
@@ -14,8 +17,9 @@ public class CharacterStatUI : UISystem
     [SerializeField] private GameObject _weaponStatText2Contents;
     [SerializeField] private GameObject _weaponStatText3Name;
     [SerializeField] private GameObject _weaponStatText3Contents;
-    public Image _characterImage;
-    public Image _weaponImage;
+
+    private Image _characterImage;
+    private Image _weaponImage;
 
     public override void OpenUI()
     {
@@ -29,21 +33,14 @@ public class CharacterStatUI : UISystem
     }
     private void SetStatText()
     {
-        UnitStat playerStat = GameManager.instance.playerStat;
-        Weapon playerWeapon = FieldSystem.unitSystem.GetPlayer().weapon;
-        WeaponType weaponType;
-        //in test development
-        if (playerWeapon == null) { 
-            weaponType = WeaponType.Revolver;   //test
-        }
-        else { weaponType = playerWeapon.GetWeaponType(); }
+        Player player = FieldSystem.unitSystem.GetPlayer();
 
-        SetCharacterStatText(playerStat);
-        //SetWeaponStatText(playerStat, weaponType);
-        SetWeaponStatText(playerWeapon);
+        SetCharacterStatText(player);
+        SetWeaponStatText(player.weapon);
     }
-    private void SetCharacterStatText(UnitStat playerStat)
+    private void SetCharacterStatText(Player player)
     {
+        UnitStat playerStat = player.GetStat();
         string text = playerStat.maxHp.ToString() + '\n' +
                       playerStat.concentration.ToString() + '\n' +
                       playerStat.sightRange.ToString() + '\n' +
@@ -53,35 +50,6 @@ public class CharacterStatUI : UISystem
                       playerStat.criticalChance.ToString();
 
         _characterStatText.GetComponent<TextMeshProUGUI>().text = text;
-    }
-    private void SetWeaponStatText(UnitStat playerStat, WeaponType weaponType)
-    {
-        string text = "";
-        switch (weaponType)
-        {
-            case WeaponType.Repeater:
-                {
-                    text += playerStat.repeaterAdditionalDamage.ToString() + '\n' +
-                            playerStat.repeaterAdditionalRange.ToString() + '\n' +
-                            playerStat.repeaterCriticalDamage.ToString();
-                    break;
-                }
-            case WeaponType.Revolver:
-                {
-                    text += playerStat.revolverAdditionalDamage.ToString() + '\n' +
-                            playerStat.revolverAdditionalRange.ToString() + '\n' +
-                            playerStat.revolverCriticalDamage.ToString();
-                    break;
-                }
-            case WeaponType.Shotgun:
-                {
-                    text += playerStat.shotgunAdditionalDamage.ToString() + '\n' +
-                            playerStat.shotgunAdditionalRange.ToString() + '\n' +
-                            playerStat.shotgunCriticalDamage.ToString();
-                    break;
-                }
-        }
-        _weaponStatText1Contents.GetComponent<TextMeshProUGUI>().text = text;
     }
     private void SetWeaponStatText(Weapon weapon)
     {

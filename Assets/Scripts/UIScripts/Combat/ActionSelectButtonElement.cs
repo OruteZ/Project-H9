@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// 전투 시 플레이어의 행동을 선택할 때 쓰이는 행동선택버튼 각각의 기능을 수행하는 클래스
+/// </summary>
 public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
     public IUnitAction _action { get; private set; }
@@ -31,6 +34,13 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     {
         SetUp();
     }
+
+    /// <summary>
+    /// 행동선택버튼을 설정합니다.
+    /// CombatActionUI에서 모든 행동선택버튼들을 설정하면서 실행됩니다.
+    /// </summary>
+    /// <param name="action"> 해당 버튼이 수행할 액션 정보 </param>
+    /// <param name="player"> 해당 버튼을 수행할 플레이어 캐릭터 개체 </param>
     public void SetActionSelectButton(IUnitAction action, Player player)
     {
         _action = action;
@@ -59,7 +69,13 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
     }
 
-    //null button
+    /// <summary>
+    /// 행동선택버튼을 완전히 비활성화시킵니다.
+    /// 상호작용은 물론 코스트나 스킬 이미지도 표시하지 않습니다.
+    /// 플레이어가 스킬을 배치하지 않아서 행동창 UI에 빈 공간이 있거나,
+    /// 이미 해당 행동을 선택하여 Idle 액션이 해당 행동선택버튼을 대체했거나,
+    /// 액션이 실행 중인 경우의 Idle 액션이 해당 상태가 됩니다.
+    /// </summary>
     public void OffActionSelectButton()
     {
         _action = null;
@@ -112,6 +128,10 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         if (_action.GetActionType() == ActionType.Attack) return 1;
         return 0;
     }
+
+    /// <summary>
+    /// 행동선택버튼을 클릭했을 때 플레이어에게 행동을 수행하라고 명령을 보내는 기능을 수행합니다.
+    /// </summary>
     public void OnClickActionSeleteButton() 
     {
         if (_action.GetActionType() == ActionType.Idle &&
@@ -120,6 +140,10 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         FieldSystem.unitSystem.GetPlayer().SelectAction(_action);
     }
 
+    /// <summary>
+    /// 행동선택버튼이 마우스오버되었는지를 감지합니다.
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (_action is not null)
@@ -128,6 +152,10 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         }
     }
 
+    /// <summary>
+    /// 행동선택버튼이 마우스오버 상태에서 벗어났는지를 감지합니다.
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerExit(PointerEventData eventData)
     {
         if (_action is not null)

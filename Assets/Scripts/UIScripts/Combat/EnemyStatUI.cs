@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// 전투 시 적의 스텟을 확인할 수 있는 적 스텟창 UI를 표시하는 기능을 수행하는 클래스
+/// </summary>
 public class EnemyStatUI : UISystem
 {
     [SerializeField] private GameObject _enemyStatWindow;
@@ -38,13 +41,18 @@ public class EnemyStatUI : UISystem
             Player player = FieldSystem.unitSystem.GetPlayer();
             if (player is null || player.GetSelectedAction().GetActionType() is not ActionType.Idle) return;
             Vector3Int enemyPos;
-            if (GetMouseClickObject(out enemyPos))
+            if (IsMouseClickedEnemy(out enemyPos))
             {
                 Debug.Log("Click");
                 SetEnemyStatUI((Enemy)FieldSystem.unitSystem.GetUnit(enemyPos));
             }
         }
     }
+    /// <summary>
+    /// 적 스텟창을 설정합니다.
+    /// 플레이어가 Idle 상태일 때 적 유닛을 클릭하면 해당 적 유닛 옆에 적의 스텟창 UI가 생성됩니다.
+    /// </summary>
+    /// <param name="enemy"> 클릭한 적 유닛 </param>
     public void SetEnemyStatUI(Enemy enemy) 
     {
         OpenPopupWindow();
@@ -100,11 +108,15 @@ public class EnemyStatUI : UISystem
         _weaponStatText3Name.GetComponent<TextMeshProUGUI>().text = text3;
         _weaponStatText3Contents.GetComponent<TextMeshProUGUI>().text = text4;
     }
+
+    /// <summary>
+    /// 적 스텟창 UI를 닫습니다.
+    /// </summary>
     public void CloseEnemyStatUI()
     {
         _enemyStatWindow.SetActive(false);
     }
-    private static bool GetMouseClickObject(out Vector3Int pos)
+    private static bool IsMouseClickedEnemy(out Vector3Int pos)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit, float.MaxValue, layerMask: LayerMask.GetMask("Enemy")))

@@ -134,8 +134,9 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     /// </summary>
     public void OnClickActionSeleteButton() 
     {
-        if (_action.GetActionType() == ActionType.Idle &&
-        FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive()) return;
+        bool isIdleButton = (_action.GetActionType() == ActionType.Idle);
+        bool isActiveSelectedAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
+        if (isIdleButton && isActiveSelectedAction) return;
 
         FieldSystem.unitSystem.GetPlayer().SelectAction(_action);
     }

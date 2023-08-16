@@ -55,6 +55,6 @@ public class GameManager : Generic.Singleton<GameManager>
         if(CompareState(state)) return;
 
         _currentState = state;
-        UIManager.instance.ChangeScenePrepare(state);
+        //UIManager.instance.ChangeScenePrepare(state);
     }
 }

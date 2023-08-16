@@ -253,7 +253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -8888328, y: 0}
+  m_AnchoredPosition: {x: -9057656, y: 0}
   m_SizeDelta: {x: 25, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &3373449
@@ -1617,7 +1617,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5917,7 +5917,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7887,7 +7887,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerHps: {fileID: 1054151795}
-  hpUIPrefab: {fileID: 0}
+  hpUIPrefab: {fileID: 8471090228691241623, guid: ed98a09116c29ae45a5efb910f5a16f0,
+    type: 3}
 --- !u!114 &183053041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24553,8 +24554,8 @@ MonoBehaviour:
   _currentState: 1
   playerWorldPos: {x: 2, y: 2, z: -4}
   playerStat:
-    maxHp: 0
-    curHp: 0
+    maxHp: 10
+    curHp: 10
     concentration: 60
     sightRange: 8
     speed: 60
@@ -40382,7 +40383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1043089455
 MonoBehaviour:
   m_ObjectHideFlags: 0

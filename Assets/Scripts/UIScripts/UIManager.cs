@@ -31,6 +31,7 @@ public class UIManager : Generic.Singleton<UIManager>
     public bool isMouseOverUI;
     public int previousLayer = 1;
 
+    private GameState _UIState;
 
     private new void Awake()
     {
@@ -55,6 +56,11 @@ public class UIManager : Generic.Singleton<UIManager>
         SetCanvasState(_skillCanvas, skillUI, false);
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
 
+        _UIState = GameState.World;
+        if (!GameManager.instance.CompareState(_UIState)) 
+        {
+            ChangeScene(GameState.Combat);
+        }
     }
     void Update()
     {
@@ -151,41 +157,6 @@ public class UIManager : Generic.Singleton<UIManager>
         return -1;
     }
 
-    /// <summary>
-    /// 씬 전환 동기화때문에 만들어 둔건데, 문제 해결 시 삭제 예정.
-    /// </summary>
-    /// <param name="gameState"></param>
-    public void ChangeScenePrepare(GameState gameState)
-    {
-        GameState _realGameState = GameState.World;
-        if (SceneManager.GetActiveScene().name == "WorldScene" || SceneManager.GetActiveScene().name == "UITestScene")
-        {
-            _realGameState = GameState.World;
-        }
-        else if(SceneManager.GetActiveScene().name == "CombatScene")
-        {
-            _realGameState = GameState.Combat;
-        }
-
-
-        if (gameState != _realGameState)
-        {
-            StartCoroutine(csp(gameState));
-        }
-        else 
-        {
-            ChangeScene(gameState);
-        }
-    }
-    IEnumerator csp(GameState gameState) 
-    {
-        while (true) 
-        {
-            yield return new WaitForSeconds(0.1f);
-            ChangeScenePrepare(gameState);
-            yield break;
-        }
-    }
     /// <summary>
     /// 씬을 전환하여 UI 상태를 변경합니다.
     /// GameManager에서 씬 전환 시 호출됩니다.(현재는 동기화 문제로 ChangeScenePrepared가 호출됩니다.)

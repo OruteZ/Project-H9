@@ -14,8 +14,10 @@ public class EnemyHpUI : UISystem
 
     private List<Enemy> _enemies = new List<Enemy>();
 
-    void Start()
+    private new void Awake()
     {
+        base.Awake();
+
         _enemyHpBars = new List<GameObject>();
         EnemyHpBarObjectPooling(10);
     }
@@ -36,7 +38,7 @@ public class EnemyHpUI : UISystem
             }
         }
 
-        //Debug.Log("적 개체 수:" + _enemies.Count);
+        Debug.Log("적 개체 수:" + _enemies.Count);
 
         if (_enemies.Count > _enemyHpBars.Count) 
         {

@@ -66,6 +66,11 @@ public class CombatActionUI : UISystem
     {
         if (_gameState != GameState.Combat) return;
         _player = FieldSystem.unitSystem.GetPlayer();
+        if (_player == null) 
+        {
+            //Debug.Log("플레이어를 찾지 못해 행동창을 구성하지 못했습니다.");
+            return;
+        }
         IUnitAction[] playerActions = _player.GetUnitActionArray();
 
         //Init Button UIs

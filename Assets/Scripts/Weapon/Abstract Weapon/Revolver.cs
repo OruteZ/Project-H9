@@ -27,6 +27,7 @@ public class Revolver : Weapon
         {
             NonCriticalAttack(target);
         }
+        UIManager.instance.combatUI.enemyHpUI.SetEnemyHpBars(); //test
     }
 
     public override int GetFinalDamage()

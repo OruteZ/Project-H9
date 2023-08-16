@@ -121,7 +121,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 96
+  controlID: 142
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 39
+  controlID: 147
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -271,8 +271,8 @@ MonoBehaviour:
     y: 0
     width: 352
     height: 716.4
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -527,6 +527,28 @@ MonoBehaviour:
       id: Scene View/Tilemap Palette Helper
       index: 12
       layout: 4
+    - dockPosition: 1
+      containerId: overlay-toolbar__top
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Open Tile Palette
+      index: 2
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-toolbar__top
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Tilemap Focus
+      index: 3
+      layout: 4
     m_OverlaysVisible: 1
   m_WindowGUID: 10f9c3a1fb975424d8f472c7a13b92b7
   m_Gizmos: 1
@@ -538,9 +560,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 614.7185, y: 365.50732, z: -392.3039}
+    m_Target: {x: 730.80725, y: 83.05082, z: -388.03036}
     speed: 2
-    m_Value: {x: 613.1327, y: 375.6223, z: -392.53406}
+    m_Value: {x: 730.80725, y: 83.05082, z: -388.03036}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -591,9 +613,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 488.44833
+    m_Target: 61.090897
     speed: 2
-    m_Value: 511.46423
+    m_Value: 61.090897
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -745,9 +767,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 8afe0800
-      m_LastClickedID: 589450
-      m_ExpandedIDs: 44f9f8ff5afdf8ff4e01f9ff6405f9ff8c09f9ff062cf9ffa23ffaffbc64faff0452fbffecd9fbffe2ddfbff00fafcffbc05fdffba79fdff32fbfffff4ffffff68750000424402007c450200605704008afe080072050900
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 2afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -843,8 +865,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders:
-    - Assets/Scenes
+    m_Folders: []
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 0
@@ -858,7 +879,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 4e6b0000
     m_LastClickedID: 27470
-    m_ExpandedIDs: 00000000ec870000ee870000f0870000f2870000f4870000f6870000f8870000fa870000
+    m_ExpandedIDs: 000000009a9100009c9100009e910000a0910000a2910000a4910000a6910000a8910000aa910000ac910000ae910000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -886,21 +907,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000ec870000f4870000f6870000fa870000
+    m_ExpandedIDs: ffffffff000000009a9100009c9100009e910000a0910000a2910000a4910000a6910000a8910000aa910000ae910000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: CombatScene
-      m_OriginalName: CombatScene
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 34914
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_SearchString: 

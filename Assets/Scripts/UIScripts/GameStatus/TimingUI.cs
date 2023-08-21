@@ -28,7 +28,7 @@ public class TimingUI : UISystem
     /// <param name="currentTurn"> 현재 턴 수 </param>
     public void SetTurnText(int currentTurn) 
     {
-        _turnText.GetComponent<TextMeshProUGUI>().text = currentTurn + "턴";
+        _turnText.GetComponent<TextMeshProUGUI>().text = "Turn " + currentTurn;
     }
     /// <summary>
     /// 턴 순서 UI를 키거나 끕니다.

@@ -11,8 +11,8 @@ public class PlayerHpUI : UISystem
     public GameObject hpUIPrefab;
 
     private List<GameObject> _hpUIs = new List<GameObject>();
-    private readonly Vector3 HP_UI_INIT_POSITION = new Vector3(50, 210, 0);
-    private readonly int HP_UI_INTERVAL = 30;
+    private readonly Vector3 HP_UI_INIT_POSITION = new Vector3(-120, 0, 0);
+    private readonly int HP_UI_INTERVAL = 25;
     private int _prevMaxHp;
     private int _prevCurHp;
     void Start()
@@ -70,7 +70,7 @@ public class PlayerHpUI : UISystem
             if (i < maxHp)
             {
                 _hpUIs[i].SetActive(true);
-                _hpUIs[i].transform.position = CalculateHpUIPosition(i);
+                _hpUIs[i].transform.localPosition = CalculateHpUIPosition(i);
                 if (i < curHp)
                 {
                     _hpUIs[i].GetComponent<PlayerHpUIElement>().FillUI();

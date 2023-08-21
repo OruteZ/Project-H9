@@ -57,7 +57,7 @@ public class CurrentStatusUI : UISystem
         }
         else
         {
-            _actionPointText.GetComponent<TextMeshProUGUI>().color = Color.black;
+            _actionPointText.GetComponent<TextMeshProUGUI>().color = Color.white;
         }
 
         GetComponent<PlayerHpUI>().SetHpUI();

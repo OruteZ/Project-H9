@@ -124,14 +124,12 @@ public class CombatActionUI : UISystem
             }
             if (isActiveSomeAction)
             {
-                if (_actionButtons[i].GetComponent<ActionSelectButtonElement>()._action.GetActionType() == activeActionType)
+                bool isActiveAction = _activeAction.IsActive();
+                bool isActiveActionButton = (_actionButtons[i].GetComponent<ActionSelectButtonElement>()._action.GetActionType() == activeActionType);
+                if (!isActiveAction && isActiveActionButton)
                 {
                     _idleButton.SetActive(true);
                     _idleButton.transform.position = _actionButtons[i].transform.position;
-                    if (_activeAction.IsActive()) 
-                    {
-                        _idleButton.GetComponent<ActionSelectButtonElement>().OffActionSelectButton();
-                    }
                     _actionButtons[i].GetComponent<ActionSelectButtonElement>().OffActionSelectButton();
                 }
             }

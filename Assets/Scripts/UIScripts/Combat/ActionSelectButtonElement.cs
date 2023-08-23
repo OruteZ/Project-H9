@@ -13,20 +13,23 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     public IUnitAction _action { get; private set; }
     private CombatActionUI _combatActionUI;
 
-    private GameObject APCostUI;
-    private GameObject AmmoCostUI;
-    private Color APCostUIInitColor;
-    private Color AmmoCostUIInitColor;
+    private GameObject _APCostUI;
+    private GameObject _AmmoCostUI;
+    private Color _APCostUIInitColor;
+    private Color _AmmoCostUIInitColor;
+
+    private GameObject _ActionNameUI;
 
     private bool _isSelectable;
 
     void SetUp()
     {
-        APCostUI = gameObject.transform.GetChild(0).gameObject;
-        AmmoCostUI = gameObject.transform.GetChild(1).gameObject;
+        _APCostUI = gameObject.transform.GetChild(0).gameObject;
+        _AmmoCostUI = gameObject.transform.GetChild(1).gameObject;
+        _ActionNameUI = gameObject.transform.GetChild(2).gameObject;
 
-        APCostUIInitColor = APCostUI.GetComponent<Image>().color;
-        AmmoCostUIInitColor = AmmoCostUI.GetComponent<Image>().color;
+        _APCostUIInitColor = _APCostUI.GetComponent<Image>().color;
+        _AmmoCostUIInitColor = _AmmoCostUI.GetComponent<Image>().color;
 
         _isSelectable = true;
     }
@@ -47,11 +50,13 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
         //Button selectable Setting
         _isSelectable = _action.IsSelectable();
+        IUnitAction playerSelectedAction = player.GetSelectedAction();
         bool isPlayerTurn = FieldSystem.turnSystem.turnOwner is Player;
-        bool isPlayerSelectAction = (player.GetSelectedAction().GetActionType() != ActionType.Idle);
-        bool isSelectedAction = (player.GetSelectedAction().GetActionType() == _action.GetActionType());
+        bool isPlayerSelectAction = (playerSelectedAction.GetActionType() != ActionType.Idle);
+        bool isSelectedAction = (playerSelectedAction.GetActionType() == _action.GetActionType());
         bool isIdleAction = (action.GetActionType() == ActionType.Idle);
-        if (!isPlayerTurn || (isPlayerSelectAction && !isSelectedAction && !isIdleAction))
+        bool isActiveAction = playerSelectedAction.IsActive();
+        if (!isPlayerTurn || (isPlayerSelectAction && !isSelectedAction && !isIdleAction) || isActiveAction)
         {
             _isSelectable = false;
         }
@@ -67,6 +72,13 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
             GetComponent<Image>().color = Color.yellow;
         }
 
+        //Text Setting
+        string actionName = action.GetActionType().ToString();
+        if (isIdleAction) 
+        {
+            actionName = playerSelectedAction.GetActionType().ToString();
+        }
+        _ActionNameUI.GetComponent<TextMeshProUGUI>().text = actionName;
     }
 
     /// <summary>
@@ -84,11 +96,14 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         GetComponent<Button>().interactable = _isSelectable;
 
         //Cost Icon Visible Setting
-        APCostUI.SetActive(false);
-        AmmoCostUI.SetActive(false);
+        _APCostUI.SetActive(false);
+        _AmmoCostUI.SetActive(false);
 
         //Button Color Setting
         GetComponent<Image>().color = new Color(1, 1, 1);
+
+        //Text Setting
+        _ActionNameUI.GetComponent<TextMeshProUGUI>().text = "";
     }
 
     private void SetCostIcons(int playerCurrentAp, int playerCurrentAmmo)
@@ -98,8 +113,8 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         //int ammoCost = _action.GetAmmoCost();
         int ammoCost = GetAmmoCost();   //Delete later
 
-        SetEachCostIconUI(APCostUI, apCost, playerCurrentAp, APCostUIInitColor);
-        SetEachCostIconUI(AmmoCostUI, ammoCost, playerCurrentAmmo, AmmoCostUIInitColor);
+        SetEachCostIconUI(_APCostUI, apCost, playerCurrentAp, _APCostUIInitColor);
+        SetEachCostIconUI(_AmmoCostUI, ammoCost, playerCurrentAmmo, _AmmoCostUIInitColor);
     }
     private void SetEachCostIconUI(GameObject ui, int requiredCost, int currentCost, Color initColor)
     {

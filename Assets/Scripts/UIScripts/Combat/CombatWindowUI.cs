@@ -25,6 +25,10 @@ public class CombatWindowUI : UISystem
     /// 적들의 스텟을 표시하는 스텟창과 관련된 기능
     /// </summary>
     public EnemyStatUI enemyStatUI { get; private set; }
+    /// <summary>
+    /// 현재 시작되는 턴 주인에 맞춰서 화면 중앙에 텍스트를 출력하는 기능
+    /// </summary>
+    public StartTurnTextUI startTurnTextUI { get; private set; }
 
     // Start is called before the first frame update
     private new void Awake()
@@ -35,6 +39,7 @@ public class CombatWindowUI : UISystem
         magazineUI = GetComponent<MagazineUI>();
         enemyHpUI = GetComponent<EnemyHpUI>();
         enemyStatUI = GetComponent<EnemyStatUI>();
+        startTurnTextUI = GetComponent<StartTurnTextUI>();
     }
 
     public override void OpenUI()

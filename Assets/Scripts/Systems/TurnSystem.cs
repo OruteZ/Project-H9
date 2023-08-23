@@ -18,6 +18,7 @@ private void Awake()
         turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.worldTurn : 0;
         onTurnChanged.AddListener(() => { turnNumber++;});
         onTurnChanged.AddListener(() => UIManager.instance.timingUI.SetTurnText(turnNumber));
+        onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));
     }
 
     /// <summary>

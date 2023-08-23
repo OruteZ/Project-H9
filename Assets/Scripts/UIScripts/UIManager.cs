@@ -185,10 +185,16 @@ public class UIManager : Generic.Singleton<UIManager>
     {
         SetCombatCanvasState(false);
         timingUI.SetTurnOrderUIState(false);
+
+        //TurnSystem turnSys = FieldSystem.turnSystem;
+        //turnSys.onTurnChanged.RemoveListener(() => combatUI.startTurnTextUI.SetStartTurnTextUI(turnSys.turnOwner));
     }
     private void ChangeUIToCombatScene()
     {
         SetCombatCanvasState(true);
         timingUI.SetTurnOrderUIState(true);
+
+        //TurnSystem turnSys = FieldSystem.turnSystem;
+        //turnSys.onTurnChanged.AddListener(() => combatUI.startTurnTextUI.SetStartTurnTextUI(turnSys.turnOwner));
     }
 }

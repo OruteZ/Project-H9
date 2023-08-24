@@ -68,7 +68,7 @@ private void Awake()
             }
 
 
-            while (turnOrder.Count < ORDER_LENGTH)
+            while (turnOrder.Count < ORDER_LENGTH * 2)
             {
                 int minOrderValueUnitIndex = 0;
                 float minOrderValue = CalculateTurnOrderValue(currentRounds[0], units[0].GetStat().speed);

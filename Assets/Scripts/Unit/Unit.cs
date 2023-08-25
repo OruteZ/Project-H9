@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using Generic;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,11 +22,15 @@ public abstract class Unit : MonoBehaviour, IUnit
     public HexTransform hexTransform;
 
     //차후에 Skinned Mesh Renderer로 변경하면 됨
-    public MeshRenderer visual;
+    public SkinnedMeshRenderer visual;
+    public Transform hand; 
 
     [Header("Status")] 
     [SerializeField] protected UnitStat stat;
-    
+
+    // ReSharper disable once InconsistentNaming
+     public static readonly UnityEvent<Unit> onAnyUnitActionFinished = new UnityEvent<Unit>();
+     
     [HideInInspector] public UnityEvent<IUnitAction> onActionCompleted;
     [HideInInspector] public UnityEvent onBusyChanged;
     [HideInInspector] public UnityEvent<int> onCostChanged;
@@ -38,6 +43,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     private IUnitAction[] _unitActionArray; // All Unit Actions attached to this Unit
     protected IUnitAction activeUnitAction; // Currently active action
     private bool _isBusy;
+    private bool _hasDead;
     
     public string unitName;
     public int currentActionPoint;
@@ -51,6 +57,8 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     public virtual void GetDamage(int damage)
     {
+        if (gameObject == null) return;
+        
         stat.curHp -= damage;
         onHit.Invoke(this, damage);
         
@@ -60,11 +68,18 @@ public abstract class Unit : MonoBehaviour, IUnit
         dmgEffect.SetPosition(transform.position, 2);
         dmgEffect.SetValue(damage);
 
-        if (stat.curHp <= 0)
+        if (stat.curHp <= 0 && _hasDead is false)
         {
-            onDead.Invoke(this);
-            Destroy(gameObject);
+            _hasDead = true;
+            onAnyUnitActionFinished.AddListener(DeadCall);
         }
+    }
+
+    public void DeadCall(Unit unit)
+    {
+        onDead.Invoke(this);
+        onAnyUnitActionFinished.RemoveListener(DeadCall);
+        Destroy(gameObject);
     }
 
     public bool hasAttacked;
@@ -82,7 +97,7 @@ public abstract class Unit : MonoBehaviour, IUnit
             if(hasMoved) onMoved?.Invoke(this);
         }
     }
-    public virtual void SetUp(string newName, UnitStat unitStat, Weapon newWeapon)
+    public virtual void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel)
     {
         unitName = newName;
         stat = unitStat;
@@ -93,6 +108,15 @@ public abstract class Unit : MonoBehaviour, IUnit
             action.SetUp(this);
         }
 
+
+        var model = Instantiate(unitModel, transform);
+        visual = model.GetComponentInChildren<SkinnedMeshRenderer>();
+        hand = model.GetComponent<UnitModel>().hand;
+        if (hand == null)
+        {
+            Debug.LogError("Hand is NULL");
+        }
+        
         EquipWeapon(newWeapon);
     }
 
@@ -100,20 +124,27 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         newWeapon.unit = this;
         newWeapon.unitStat = stat;
-
         weapon = newWeapon;
+
+        if (weapon.model == null)
+        {
+            Debug.LogError("Weapon Model Is NULL");
+        }
+        
+        var weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
+        weaponModel.SetPosRot();
+        SetAnimatorController(weapon.GetWeaponType());
     }
 
     protected virtual void Awake()
     {
         hexTransform = GetComponent<HexTransform>();
-        visual = GetComponent<MeshRenderer>();
         _unitActionArray = GetComponents<IUnitAction>();
     }
 
     private void Start()
     {
-        
+        _hasDead = false;
     }
     
     public T GetAction<T>()
@@ -187,7 +218,48 @@ public abstract class Unit : MonoBehaviour, IUnit
     
     public IUnitAction GetSelectedAction()
     {
+        if (activeUnitAction is null) return GetAction<IdleAction>();
         return activeUnitAction;
+    }
+
+    public bool TryAttack(Unit target)
+    {
+        bool hit = weapon.GetFinalHitRate(target) > UnityEngine.Random.value;
+
+#if UNITY_EDITOR
+        Debug.Log(hit ? "뱅" : "빗나감");
+#endif
+
+        if (hit)
+        {
+            weapon.Attack(target, out var isHeadShot);
+        }
+        weapon.currentAmmo--;
+
+        return hit;
+    }
+
+    private Animator _animator;
+    public Animator animator
+    {
+        get
+        {
+            if (_animator is null)
+            {
+                if (TryGetComponent(out _animator) is false)
+                {
+                    _animator = GetComponentInChildren<Animator>();
+                }
+            }
+
+            return _animator;
+        }
+    }
+    
+    private void SetAnimatorController(WeaponType type)
+    {
+        animator.runtimeAnimatorController =
+            (AnimatorController)Resources.Load("Animator/" + type + " Animator Controller");
     }
 }
 

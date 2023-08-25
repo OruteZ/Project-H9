@@ -15,14 +15,15 @@ public interface IUnit
     /// </summary>
     /// <param name="damage">피해량</param>
     void GetDamage(int damage);
-    
+
     /// <summary>
     /// Unit의 상태를 설정합니다.
     /// </summary>
     /// <param name="newName">유닛의 이름</param>
     /// <param name="unitStat">유닛의 스탯</param>
     /// <param name="newWeapon">무기</param>
-    void SetUp(string newName, UnitStat unitStat, Weapon newWeapon);
+    /// <param name="unitModel"></param>
+    void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel);
     
     /// <summary>
     /// 특정 타입에 해당하는 액션을 반환합니다. 가지고 있지 않을경우 NoneAction을 반환합니다.

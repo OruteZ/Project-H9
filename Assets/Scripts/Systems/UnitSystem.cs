@@ -28,7 +28,9 @@ public class UnitSystem : MonoBehaviour
         {
             if (unit is Player p)
             {
-                p.SetUp("Player", GameManager.instance.playerStat, weaponDB.Clone(101));
+                p.SetUp("Player", GameManager.instance.playerStat, 
+                    weaponDB.Clone(GameManager.instance.playerWeaponIndex),
+                    GameManager.instance.playerModel);
                 if (GameManager.instance.CompareState(GameState.World))
                 {
                     p.hexTransform.position = GameManager.instance.playerWorldPos;
@@ -37,7 +39,7 @@ public class UnitSystem : MonoBehaviour
             else if(unit is Enemy enemy)
             {
                 var info = enemyDB.GetInfo(enemy.dataIndex);
-                enemy.SetUp("Enemy", info.stat, weaponDB.Clone(info.weaponIndex));
+                enemy.SetUp("Enemy", info.stat, weaponDB.Clone(info.weaponIndex), info.model);
             }
             unit.onDead.AddListener(OnUnitDead);
             unit.onMoved.AddListener(OnUnitMoved);
@@ -69,7 +71,7 @@ public class UnitSystem : MonoBehaviour
             if (unit is Player u) return u;
         }
         
-        Debug.Log("Cant find Player");
+        Debug.LogError("Cant find Player");
         return null;
     }
     

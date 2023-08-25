@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-
+[CreateAssetMenu(fileName = "SelectorNode", menuName = "ScriptableObjects/BT/SequenceNode", order = 1)]
 public sealed class SequenceNode : ScriptableObject, INode
 {
     private readonly List<INode> _childNodes;

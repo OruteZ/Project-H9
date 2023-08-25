@@ -11,8 +11,8 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
     {
         base.Awake();
         
-        canvas = GetComponentInChildren<Canvas>();
-        progress = GetComponentInChildren<Slider>();
+        canvas = GetComponentInChildren<Canvas>(includeInactive:true);
+        progress = GetComponentInChildren<Slider>(includeInactive:true);
     }
 
     private void Start()

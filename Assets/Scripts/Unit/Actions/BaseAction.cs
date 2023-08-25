@@ -6,6 +6,12 @@ using UnityEngine.Events;
 
 public abstract class BaseAction : MonoBehaviour, IUnitAction
 {
+    protected static readonly int MOVE = Animator.StringToHash("Move");
+    protected static readonly int SHOOT = Animator.StringToHash("Shoot");
+    protected static readonly int IDLE = Animator.StringToHash("Idle");
+    protected static readonly int PANNING = Animator.StringToHash("Panning");
+    protected static readonly int RELOAD = Animator.StringToHash("Reload");
+    
     public abstract ActionType GetActionType();
     public abstract bool CanExecute();
     public abstract void Execute(Action onActionComplete);
@@ -37,6 +43,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     {
         this.onActionComplete = onActionComplete;
         isActive = true;
+        StartCoroutine(ExecuteCoroutine());
         
         onActionStarted.Invoke();
     }
@@ -47,5 +54,13 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         onActionComplete();
 
         onActionFinished.Invoke();
+        Unit.onAnyUnitActionFinished.Invoke(unit);
     }
+
+    protected virtual IEnumerator ExecuteCoroutine()
+    {
+        yield return null; 
+    }
+
+    
 }

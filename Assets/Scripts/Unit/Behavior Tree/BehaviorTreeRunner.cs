@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Behavior Tree {number}", menuName = "ScriptableObjects/AiBT", order = 1)]
 public class BehaviorTreeRunner : ScriptableObject
 {
+    [SerializeField]
     private readonly INode _rootNode;
     public BehaviorTreeRunner(INode rootNode)
     {

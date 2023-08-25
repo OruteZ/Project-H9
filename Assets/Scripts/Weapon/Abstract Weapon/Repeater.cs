@@ -6,32 +6,79 @@ public class Repeater : Weapon
 {
     public override void Attack(Unit target, out bool isCritical)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Weapon attack Call" + " : " + nameIndex);
+
+        isCritical = Random.value < unitStat.criticalChance + criticalChance;
+        if (isCritical)
+        {
+            CriticalAttack(target);
+        }
+        else
+        {
+            NonCriticalAttack(target);
+        }
+    }
+
+    private void NonCriticalAttack(Unit target)
+    {
+        int damage = GetFinalDamage();
+        target.GetDamage(damage);
+
+        unit.onSuccessAttack.Invoke(target, damage);
+    }
+
+    private void CriticalAttack(Unit target)
+    {
+        int damage = GetFinalCriticalDamage();
+        target.GetDamage(damage);
+        
+        unit.onCriticalAttack.Invoke(target, damage);
     }
 
     public override WeaponType GetWeaponType() => WeaponType.Repeater;
     public override int GetFinalDamage()
     {
-        throw new System.NotImplementedException();
+        return Mathf.RoundToInt(weaponDamage + unitStat.repeaterAdditionalDamage);
     }
 
     public override int GetFinalCriticalDamage()
     {
-        throw new System.NotImplementedException();
+        float dmg = weaponDamage + unitStat.repeaterAdditionalDamage;
+        dmg += dmg * (unitStat.repeaterCriticalDamage + criticalDamage);
+
+        return Mathf.RoundToInt(dmg);
     }
 
     public override float GetFinalHitRate(Unit target)
     {
-        throw new System.NotImplementedException();
+        int range = weaponRange + unitStat.repeaterAdditionalRange;
+        int distance = Hex.Distance(unit.hexPosition, target.hexPosition);
+
+        float hitRate = this.hitRate + unitStat.concentration * (100 - distance * GetDistancePenalty() *
+                (distance > range ? REPEATER_OVER_RANGE_PENALTY : 1)
+            ) * 0.01f;
+
+        hitRate = Mathf.Round(10 * hitRate) * 0.1f;
+        hitRate = Mathf.Clamp(hitRate, 0, 100);
+
+        // #if UNITY_EDITOR
+        // Debug.Log("Hit rate = " + hitRate);
+        // #endif
+
+        UIManager.instance.debugUI.SetDebugUI(
+            hitRate, unit, target, distance, weaponRange, unitStat.repeaterAdditionalRange, 
+            GetDistancePenalty() * (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
+        
+        return hitRate * 0.01f;
     }
 
     public override float GetDistancePenalty()
     {
-        throw new System.NotImplementedException();
+        return 4;
     }
 
     public override int GetRange()
     {
-        throw new System.NotImplementedException();
+        return weaponRange + unitStat.repeaterAdditionalRange;
     }
 }

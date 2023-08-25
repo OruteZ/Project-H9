@@ -1,22 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ReloadAction : BaseAction
 {
     private Weapon weapon => unit.weapon;
 
-    private State _curState;
-    public float animTime;
-    public float coolOffTime;
+    private const float ANIM_TIME = 0.5f;
+    private const float RELOAD_TIME = 0.2f;
+    private const float COOL_OFF_TIME = 0.5f;
 
-    private enum State
-    {
-        Reloading,
-        CoolOff
-    }
-    
     public override ActionType GetActionType()
     {
         return ActionType.Reload;
@@ -24,7 +20,6 @@ public class ReloadAction : BaseAction
 
     public override void SetTarget(Vector3Int targetPos)
     {
-        return;
     }
 
     public override int GetCost()
@@ -57,29 +52,25 @@ public class ReloadAction : BaseAction
         Debug.Log("Reload weapon");
 
         StartAction(onActionComplete);
-        _stateTimer = animTime;
-        _curState = State.Reloading;
     }
 
-    private float _stateTimer;
-    private void Update()
+    protected override IEnumerator ExecuteCoroutine()
     {
-        if (isActive is false) return;
+        unit.animator.SetTrigger(RELOAD);
 
-        if (((_stateTimer -= Time.deltaTime) > 0)) return;
-        
-        switch (_curState)
+        yield return new WaitForSeconds(ANIM_TIME);
+
+        for (int i = 0; i < weapon.maxAmmo; i++)
         {
-            case State.Reloading:
-                unit.weapon.currentAmmo = unit.weapon.maxAmmo;
-                _stateTimer = coolOffTime;
-                _curState = State.CoolOff;
-                break;
-            case State.CoolOff:
-                FinishAction();
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            if (weapon.maxAmmo <= weapon.currentAmmo) weapon.currentAmmo = weapon.maxAmmo;
+            else weapon.currentAmmo++;
+
+            yield return new WaitForSeconds(RELOAD_TIME);
         }
+
+        yield return new WaitForSeconds(COOL_OFF_TIME);
+        
+        unit.animator.SetTrigger(IDLE);
+        FinishAction();
     }
 }

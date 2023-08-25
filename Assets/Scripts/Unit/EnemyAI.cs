@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour
     private HexTransform _hexTransform;
     private Enemy _enemy;
 
+    [SerializeField]
     private Vector3Int _playerPosMemory;
 
     public IUnitAction resultAction;
@@ -48,11 +49,11 @@ public class EnemyAI : MonoBehaviour
                             new ActionNode(() => {
                                 resultAction = _enemy.GetAction<MoveAction>();
 
-                                if (TryMoveOnePos(_playerPosMemory, resultPosition))
+                                if (TryMoveOnePos(_playerPosMemory))
                                 {
-                                    return INode.ENodeState.Failure;
+                                    return INode.ENodeState.Success;
                                 }
-                                return INode.ENodeState.Success;
+                                return INode.ENodeState.Failure;
                             })
                         }),
                     new SequenceNode(
@@ -66,11 +67,11 @@ public class EnemyAI : MonoBehaviour
                             new ActionNode(() => {
                                 resultAction = _enemy.GetAction<MoveAction>();
 
-                                if (TryMoveOnePos(_playerPosMemory, resultPosition))
+                                if (TryMoveOnePos(_playerPosMemory))
                                 {
-                                    return INode.ENodeState.Failure;
+                                    return INode.ENodeState.Success;
                                 }
-                                return INode.ENodeState.Success;
+                                return INode.ENodeState.Failure;
                             })
                         }),
                     new SequenceNode(new List<INode>
@@ -112,39 +113,54 @@ public class EnemyAI : MonoBehaviour
         if (FieldSystem.tileSystem.VisionCheck(_enemy.hexPosition, curPlayerPos))
         {
             _playerPosMemory = curPlayerPos;
+            
+            Debug.Log("AI Think : Player is in sight");
+            
             return INode.ENodeState.Failure;
         }
         
+        
+        Debug.Log("AI Think : Player is out of sight");
         return INode.ENodeState.Success;
     }
 
     private INode.ENodeState IsOutOfAmmo()
     {
+        Debug.Log("AI Think : Ammo is " + _enemy.weapon.currentAmmo);
         return _enemy.weapon.currentAmmo is 0 ? INode.ENodeState.Success : INode.ENodeState.Failure;
     }
 
     private INode.ENodeState IsOutOfRange()
     {
-        return _enemy.weapon.GetRange() < Hex.Distance(_playerPosMemory, _enemy.hexPosition) ?
-            INode.ENodeState.Success : INode.ENodeState.Failure;
+        if (_enemy.weapon.GetRange() < Hex.Distance(_playerPosMemory, _enemy.hexPosition))
+        {
+            Debug.Log("AI Think player is out of range");
+            return INode.ENodeState.Success;
+        }
+        else
+        {
+            
+            Debug.Log("AI Think player is in range");
+            return INode.ENodeState.Failure;
+        }
     }
 
-    private bool TryMoveOnePos(Vector3Int target, Vector3Int result)
+    private bool TryMoveOnePos(Vector3Int target)
     {
         var route = FieldSystem.tileSystem.FindPath(_enemy.hexPosition, target);
         if (route is null)
         {
-            result = _enemy.hexPosition;
+            resultPosition = _enemy.hexPosition;
             return false;
         }
 
         if (route.Count <= 1)
         {
-            result = route[0].hexPosition;
+            resultPosition = route[0].hexPosition;
             return false;
         }
 
-        result = route[1].hexPosition;
+        resultPosition = route[1].hexPosition;
         return true;
     }
 }

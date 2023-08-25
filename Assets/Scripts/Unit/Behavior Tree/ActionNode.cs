@@ -5,7 +5,8 @@ using Unity.VisualScripting;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
-public class ActionNode : INode
+[CreateAssetMenu(fileName = "SelectorNode", menuName = "ScriptableObjects/BT/Selector", order = 1)]
+public class ActionNode : ScriptableObject, INode
 {
     private readonly Func<INode.ENodeState> _onEvaluate = null;
 

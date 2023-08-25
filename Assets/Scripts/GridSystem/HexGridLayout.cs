@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class HexGridLayout : MonoBehaviour
@@ -35,7 +36,8 @@ public class HexGridLayout : MonoBehaviour
             innerSize = Hex.Radius - thickness;
         }
 
-        var grids = FieldSystem.tileSystem.GetAllTiles() ?? GetComponentsInChildren<Tile>().ToList();
+        var grids = EditorApplication.isPlaying ?
+            FieldSystem.tileSystem.GetAllTiles() : GetComponentsInChildren<Tile>().ToList();
 
 
         foreach (var grid in grids)
@@ -46,8 +48,8 @@ public class HexGridLayout : MonoBehaviour
                 continue;
             }
             
-            HexGridRenderer hexGridRenderer = grid.gameObject.GetComponent<HexGridRenderer>();
-            if (hexGridRenderer is null) hexGridRenderer = grid.gameObject.AddComponent<HexGridRenderer>();
+            HexGridRenderer hexGridRenderer = 
+                grid.gameObject.GetComponent<HexGridRenderer>() ?? grid.gameObject.AddComponent<HexGridRenderer>();
             hexGridRenderer.isFlatTopped = isFlatTopped;
             hexGridRenderer.outerSize = outerSize;
             hexGridRenderer.innerSize = innerSize;

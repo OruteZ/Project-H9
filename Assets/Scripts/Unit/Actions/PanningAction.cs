@@ -5,19 +5,14 @@ using UnityEngine;
 
 public class PanningAction : BaseAction
 {
+    //todo : 애니메이션 확정되면 다 Frame단위 Int로 변경
+    private const float TURNING_TIME = 0.5f;
+    private const float SHOT_TIME = 0.1f;
+    private const float COOL_OFF_TIME = 0.5f;
+    
     private Unit _target;
     private int _shotCount;
 
-    private State _state;
-    private float _stateTimer;
-    
-    private enum State
-    {
-        Aiming,
-        Shooting,
-        CoolOff
-    }
-    
     public override ActionType GetActionType()
     {
         return ActionType.Panning;
@@ -60,8 +55,6 @@ public class PanningAction : BaseAction
     public override void Execute(Action onActionComplete)
     {
         _shotCount = unit.weapon.currentAmmo;
-        _state = State.Aiming;
-        _stateTimer = 0.5f;
         StartAction(onActionComplete);
     }
     
@@ -70,53 +63,41 @@ public class PanningAction : BaseAction
         return !FieldSystem.tileSystem.RayThroughCheck(unit.hexPosition, targetPos);
     }
 
-    private void Update()
+    private const float ROTATION_SPEED = 10f;
+    protected override IEnumerator ExecuteCoroutine()
     {
-        if (!isActive) return;
+        unit.animator.SetTrigger(PANNING);
+        
+        Transform tsf;
+        Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
+        aimDirection.y = 0;
 
-        switch (_state)
+        float totalTime = 0;
+        while ((totalTime += Time.deltaTime) > TURNING_TIME)
         {
-            default:
-            case State.Aiming:
-                Transform tsf;
-                Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
-
-                float rotationSpeed = 10f;
-                transform.forward = Vector3.Lerp(tsf.forward, aimDirection, Time.deltaTime * rotationSpeed);
-
-                _stateTimer -= Time.deltaTime;
-                if (_stateTimer <= 0f)
-                {
-                    if (--_shotCount == 0)
-                    {
-                        _state = State.Shooting;
-                        _stateTimer = .5f;
-                    }
-                    else
-                    {
-                        _state = State.Aiming;
-                        _stateTimer = .1f;
-                    }
-                    bool hit = unit.weapon.GetFinalHitRate(_target) - 0.1f > UnityEngine.Random.value;
-                    Debug.Log(hit ? "뱅" : "빗나감");
-
-                    if (hit) { unit.weapon.Attack(_target, out var isHeadShot); }
-                    unit.weapon.currentAmmo--;
-                }
-                break;
-            
-            case State.Shooting:
-                _state = State.CoolOff;
-                _stateTimer = .5f;
-                break;
-            
-            case State.CoolOff:
-                _stateTimer -= Time.deltaTime;
-                if (_stateTimer <= 0f)
-                {
-                    FinishAction();
-                }
-                break;
+            transform.forward = Vector3.Lerp(tsf.forward, aimDirection, Time.deltaTime * ROTATION_SPEED);
+            yield return null;
         }
+        transform.forward = aimDirection;
+
+        for(int i = 0; i < _shotCount; i++)
+        {
+            yield return new WaitForSeconds(SHOT_TIME);
+            
+            unit.weapon.currentAmmo--;
+            
+            bool hit = unit.weapon.GetFinalHitRate(_target) - 0.1f > UnityEngine.Random.value;
+            Debug.Log(hit ? "뱅" : "빗나감");
+
+            if (hit)
+            {
+                unit.weapon.Attack(_target, out var isHeadShot);
+            }
+        }
+
+        yield return new WaitForSeconds(COOL_OFF_TIME);
+        
+        unit.animator.SetTrigger(IDLE);
+        FinishAction();
     }
 }

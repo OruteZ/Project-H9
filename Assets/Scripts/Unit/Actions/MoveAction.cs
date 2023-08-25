@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MoveAction : BaseAction
 {
+    
     public override ActionType GetActionType() => ActionType.Move;
 
     private int maxMoveDistance => unit.currentActionPoint;
@@ -30,7 +32,7 @@ public class MoveAction : BaseAction
     public override bool IsSelectable()
     {
         if (unit.hasAttacked) return false;
-        
+
         return true;
     }
 
@@ -43,7 +45,7 @@ public class MoveAction : BaseAction
     {
         _startPosition = unit.hexPosition;
         _destinationPosition = targetPos;
-        _currentPositionIndex = 1;  
+        _currentPositionIndex = 1;
     }
 
     public override bool CanExecute()
@@ -53,13 +55,16 @@ public class MoveAction : BaseAction
             Debug.Log("there is unit, cant move");
             return false;
         }
-        
+
         _path = FieldSystem.tileSystem.FindPath(_startPosition, _destinationPosition, maxMoveDistance);
         if (_path == null)
         {
             Debug.Log("There is no path");
+            Debug.Log("start : " + _startPosition);
+            Debug.Log("dest : " + _destinationPosition);
             return false;
         }
+
         if (_path.Count < 1)
         {
             Debug.Log("제자리");
@@ -77,7 +82,7 @@ public class MoveAction : BaseAction
         //_path = unit.hexTransform.Map.FindPath(unit.Position, targetPos, _maxMoveDistance) as List<Vector3Int>;
         transform.forward =
             (Hex.Hex2World(_path[_currentPositionIndex].hexPosition)
-            - transform.position).normalized;
+             - transform.position).normalized;
     }
 
     private void Awake()
@@ -85,35 +90,85 @@ public class MoveAction : BaseAction
         _currentPositionIndex = -1;
     }
 
-    private void Update()
+    // private void Update()
+    // {
+    //     if (!isActive) return;
+    //     
+    //     var targetTile = _path[_currentPositionIndex];
+    //     if (targetTile.inSight) unit.visual.enabled = true;
+    //     
+    //     Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].hexPosition);
+    //     targetPos.y = transform.position.y;
+    //     
+    //     Vector3 moveDirection = (targetPos - transform.position).normalized;
+    //     
+    //     Vector2 forwardVec2 = Vector2.Lerp(new Vector2(transform.forward.x, transform.forward.z),
+    //         new Vector2(moveDirection.x, moveDirection.z), Time.deltaTime * rotationSpeed);
+    //     
+    //     transform.forward = new Vector3(forwardVec2.x, 0, forwardVec2.y);
+    //     
+    //     transform.position += moveDirection * (moveSpeed * Time.deltaTime);
+    //     
+    //     if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+    //     {
+    //         unit.hexPosition = _path[_currentPositionIndex].hexPosition;
+    //     
+    //         _currentPositionIndex++;
+    //         if (_currentPositionIndex >= _path.Count)
+    //         {
+    //             FinishAction();
+    //             _path = null;
+    //         }
+    //     }
+    // }
+
+    protected override IEnumerator ExecuteCoroutine()
     {
-        if (!isActive) return;
-
-        var targetTile = _path[_currentPositionIndex];
-        if (targetTile.inSight) unit.visual.enabled = true;
-
-        Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].hexPosition);
-        targetPos.y = transform.position.y;
-
-        Vector3 moveDirection = (targetPos - transform.position).normalized;
-
-        Vector2 forwardVec2 = Vector2.Lerp(new Vector2(transform.forward.x, transform.forward.z),
-            new Vector2(moveDirection.x, moveDirection.z), Time.deltaTime * rotationSpeed);
-
-        transform.forward = new Vector3(forwardVec2.x, 0, forwardVec2.y);
-
-        transform.position += moveDirection * (moveSpeed * Time.deltaTime);
-
-        if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+        unit.animator.SetTrigger(MOVE);
+        while(true)
         {
-            unit.hexPosition = _path[_currentPositionIndex].hexPosition;
-
-            _currentPositionIndex++;
-            if (_currentPositionIndex >= _path.Count)
+            //다음 움직임 타겟 타일 지정
+            if (_path != null)
             {
-                FinishAction();
-                _path = null;
+                var targetTile = _path[_currentPositionIndex];
+                if (targetTile.inSight) unit.visual.enabled = true;
             }
+            else
+            {
+                throw new NullReferenceException("Move Path is Null");
+            }
+
+            //다음 움직임 타겟 타일의 위치 가져오기
+            Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].hexPosition);
+            targetPos.y = transform.position.y;
+
+            //moveDirection 설정
+            Vector3 moveDirection = (targetPos - transform.position).normalized;
+
+            Vector2 forwardVec2 = Vector2.Lerp(new Vector2(transform.forward.x, transform.forward.z),
+                new Vector2(moveDirection.x, moveDirection.z), Time.deltaTime * rotationSpeed);
+
+            transform.forward = new Vector3(forwardVec2.x, 0, forwardVec2.y);
+
+            transform.forward = new Vector3(forwardVec2.x, 0, forwardVec2.y);
+
+            transform.position += moveDirection * (moveSpeed * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+            {
+                unit.hexPosition = _path[_currentPositionIndex].hexPosition;
+
+                _currentPositionIndex++;
+                if (_currentPositionIndex >= _path.Count)
+                {
+                    FinishAction();
+                    _path = null;
+                    unit.animator.SetTrigger(IDLE);
+                    yield break;
+                }
+            }
+            
+            yield return null;
         }
     }
 

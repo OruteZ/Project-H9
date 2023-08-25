@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public enum GameState
@@ -10,15 +11,14 @@ public enum GameState
 }
 public class GameManager : Generic.Singleton<GameManager>
 {
-    
-    
     [SerializeField]
-    private GameState _currentState = GameState.World;
+    private GameState currentState = GameState.World;
 
     [Header("Player Info")] 
     public Vector3Int playerWorldPos;
     public UnitStat playerStat;
     public int playerWeaponIndex;
+    public GameObject playerModel;
 
     [Header("World Scene Name")] 
     public string worldSceneName;
@@ -26,6 +26,8 @@ public class GameManager : Generic.Singleton<GameManager>
     [Header("World Info")] 
     public int worldAp;
     public int worldTurn;
+
+    public UnityEvent onCombatFinish;
 
     public void StartCombat(string combatSceneName)
     {
@@ -42,19 +44,21 @@ public class GameManager : Generic.Singleton<GameManager>
     public void FinishCombat()
     {
         ChangeState(GameState.World);
-        LoadingManager.instance.LoadingScene(worldSceneName);
+        
+        //LoadingManager.instance.LoadingScene(worldSceneName);
+        onCombatFinish.Invoke();
     }
 
     public bool CompareState(GameState state)
     {
-        return _currentState == state;
+        return currentState == state;
     }
     
     private void ChangeState(GameState state)
     {
         if(CompareState(state)) return;
 
-        _currentState = state;
+        currentState = state;
         UIManager.instance.ChangeScenePrepare(state);
     }
 }

@@ -21,13 +21,13 @@ public class MapSaveAndLoader : MonoBehaviour
         
         if (tileParent is null)
         {
-            Debug.LogError("Cant find Tiles");
+            Debug.LogError("Cant find 'Tiles'");
             return;
         }
 
         if (objParent is null)
         {
-            Debug.LogError("TileObjects");
+            Debug.LogError("Cant find 'TileObjects'");
             return;
         }
 

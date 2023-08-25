@@ -16,10 +16,9 @@ public class Enemy : Unit
         _ai = GetComponent<EnemyAI>();
     }
 
-    public override void SetUp(string newName, UnitStat unitStat, Weapon weapon)
+    public override void SetUp(string newName, UnitStat unitStat, Weapon weapon, GameObject unitModel)
     {
-        base.SetUp(newName, unitStat, weapon);
-        
+        base.SetUp(newName, unitStat, weapon, unitModel);
     }
     
     public void Update()
@@ -46,7 +45,9 @@ public class Enemy : Unit
         }
         else
         {
-            Debug.Log("AI가 실행할 수 없는 행동을 실행 중 : " + activeUnitAction.GetActionType());
+            Debug.LogError("AI가 실행할 수 없는 행동을 실행 중 : " + activeUnitAction.GetActionType());
+            FieldSystem.turnSystem.EndTurn();
+            return;
         }
     }
 
@@ -61,7 +62,7 @@ public class Enemy : Unit
         currentActionPoint = stat.actionPoint;
 
         hasAttacked = false;
-        activeUnitAction = null;
+        activeUnitAction = GetAction<IdleAction>();
     }
 
     public override void GetDamage(int damage)

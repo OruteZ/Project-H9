@@ -30,4 +30,10 @@ public class HexTransform : MonoBehaviour
         _position.z = -(_position.x + _position.y); 
         SetPosition(_position);
     }
+
+    [ContextMenu("Round Position")]
+    private void ResetPosition()
+    {
+        position = Hex.Round(Hex.World2Hex(transform.position));
+    }
 }

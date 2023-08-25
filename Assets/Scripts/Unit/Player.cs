@@ -8,9 +8,9 @@ using UnityEngine.EventSystems;
 public class Player : Unit
 {
     [HideInInspector] public UnityEvent onSelectedChanged;
-    public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon)
+    public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel)
     {
-        base.SetUp(newName, unitStat, newWeapon);
+        base.SetUp(newName, unitStat, newWeapon, unitModel);
         
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);
@@ -155,7 +155,7 @@ public class Player : Unit
                              Hex.Distance(hexTransform.position, unit.hexPosition) <= stat.sightRange;
         }
         
-        Debug.Log("On Any Unit Moved : Invoke");
+//        Debug.Log("On Any Unit Moved : Invoke");
     }
 
     private void OnMoved(Unit unit)

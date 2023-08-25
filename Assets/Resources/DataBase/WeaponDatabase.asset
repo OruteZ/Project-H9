@@ -13,18 +13,22 @@ MonoBehaviour:
   m_Name: WeaponDatabase
   m_EditorClassIdentifier: 
   weaponList:
-  - weaponNameIndex: 101
-    weaponModel: {fileID: 0}
+  - index: 101
+    weaponNameIndex: 101
+    weaponModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
+      type: 3}
     type: 2
     weaponDamage: 1
     weaponRange: 4
     weaponAmmo: 6
-    weaponHitRate: 1
-    weaponCriticalChance: 2
-    weaponCriticalDamage: 3
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
     weaponScript: 201
-  - weaponNameIndex: 102
-    weaponModel: {fileID: 0}
+  - index: 102
+    weaponNameIndex: 102
+    weaponModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
+      type: 3}
     type: 2
     weaponDamage: 2
     weaponRange: 4
@@ -33,9 +37,11 @@ MonoBehaviour:
     weaponCriticalChance: 0
     weaponCriticalDamage: 0
     weaponScript: 202
-  - weaponNameIndex: 103
-    weaponModel: {fileID: 0}
-    type: 2
+  - index: 103
+    weaponNameIndex: 103
+    weaponModel: {fileID: 6516096886141431931, guid: a6974077d11936a408ec2119273df417,
+      type: 3}
+    type: 3
     weaponDamage: 3
     weaponRange: 4
     weaponAmmo: 6

@@ -17,8 +17,8 @@ public class AttackAction : BaseAction
 
     private Weapon weapon => unit.weapon;
     private Unit _target;
-    private State _state;
-    private float _stateTimer;
+    // private State _state;
+    // private float _stateTimer;
 
     public override bool IsSelectable()
     {
@@ -38,9 +38,6 @@ public class AttackAction : BaseAction
         Debug.Log("Attack Action call");
         StartAction(onActionComplete);
         unit.hasAttacked = true;
-
-        _state = State.Aiming;
-        _stateTimer = 1f;
     }
 
     public override int GetCost()
@@ -65,8 +62,17 @@ public class AttackAction : BaseAction
 
     public override bool CanExecute()
     {
-        if (_target == null) return false;
-        if (IsThereWallBetweenUnitAnd(_target.hexPosition)) return false;
+        if (_target == null)
+        {
+            Debug.Log("Target is null, cant attack");
+            return false;
+        }
+
+        if (IsThereWallBetweenUnitAnd(_target.hexPosition))
+        {
+            Debug.Log("There is wall. cant attack");
+            return false;
+        }
         
         return true;
     }
@@ -78,50 +84,70 @@ public class AttackAction : BaseAction
 
     private void Update()
     {
-        if (!isActive) return;
+        // if (!isActive) return;
+        //
+        // switch (_state)
+        // {
+        //     default:
+        //     case State.Aiming:
+        //         Transform tsf;
+        //         Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
+        //
+        //         float rotationSpeed = 10f;
+        //         transform.forward = Vector3.Lerp(tsf.forward, aimDirection, Time.deltaTime * rotationSpeed);
+        //
+        //         _stateTimer -= Time.deltaTime;
+        //         if (_stateTimer <= 0f)
+        //         {
+        //             _state = State.Shooting;
+        //             _stateTimer = .5f;
+        //
+        //             unit.TryAttack(_target);
+        //         }
+        //         break;
+        //     
+        //     case State.Shooting:
+        //         _state = State.CoolOff;
+        //         _stateTimer = .5f;
+        //         break;
+        //     
+        //     case State.CoolOff:
+        //         _stateTimer -= Time.deltaTime;
+        //         if (_stateTimer <= 0f)
+        //         {
+        //             FinishAction();
+        //         }
+        //         break;
+        // }
+    }
 
-        switch (_state)
+    protected override IEnumerator ExecuteCoroutine()
+    {
+        //todo : turn around Animation;
+
+        float timer = 1f;
+        while ((timer -= Time.deltaTime) > 0)
         {
-            default:
-            case State.Aiming:
-                Transform tsf;
-                Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
+            Transform tsf;
+            Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
 
-                float rotationSpeed = 10f;
-                transform.forward = Vector3.Lerp(tsf.forward, aimDirection, Time.deltaTime * rotationSpeed);
-
-                _stateTimer -= Time.deltaTime;
-                if (_stateTimer <= 0f)
-                {
-                    _state = State.Shooting;
-                    _stateTimer = .5f;
-
-                    bool hit = weapon.GetFinalHitRate(_target) > UnityEngine.Random.value;
-
-                    #if UNITY_EDITOR
-                    Debug.Log(hit ? "뱅" : "빗나감");
-                    #endif
-
-                    if (hit)
-                    {
-                        weapon.Attack(_target, out var isHeadShot);
-                    }
-                    weapon.currentAmmo--;
-                }
-                break;
-            
-            case State.Shooting:
-                _state = State.CoolOff;
-                _stateTimer = .5f;
-                break;
-            
-            case State.CoolOff:
-                _stateTimer -= Time.deltaTime;
-                if (_stateTimer <= 0f)
-                {
-                    FinishAction();
-                }
-                break;
+            float rotationSpeed = 10f;
+            transform.forward = Vector3.Lerp(tsf.forward, aimDirection, Time.deltaTime * rotationSpeed);
         }
+        
+        unit.animator.SetTrigger(SHOOT);
+
+        //총을 드는 시간 (애니메이션에 따라 다른 상수 값 , 무조건 프레임 단위로) 
+        int cnt = 15;
+        while (cnt-- > 0) yield return null;
+        
+        unit.TryAttack(_target);
+
+        //Animation이 끝나고 IdleAction으로 돌아올 때 까지 대기 
+        cnt = 69 - 15;
+        while (cnt-- > 0) yield return null;
+        
+        unit.animator.SetTrigger(IDLE);
+        FinishAction();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+[CreateAssetMenu(fileName = "SelectorNode", menuName = "ScriptableObjects/BT/Selector", order = 1)]
 public class SelectorNode : ScriptableObject, INode
 {
     [SerializeField]

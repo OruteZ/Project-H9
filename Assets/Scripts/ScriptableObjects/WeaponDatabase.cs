@@ -15,8 +15,10 @@ public class WeaponDatabase : ScriptableObject
 
     public WeaponData GetData(int index)
     {
-        index -= indexStart;
-        if (index < weaponList.Count && 0 <= index) return weaponList[index];
+        foreach (var data in weaponList)
+        {
+            if (data.index == index) return data;
+        }
         
         Debug.LogError("there are " + weaponList.Count + " weapons, there is no " + index + " index");
         return null;
@@ -41,6 +43,14 @@ public class WeaponDatabase : ScriptableObject
 
         weapon.nameIndex = data.weaponNameIndex;
         weapon.model = data.weaponModel;
+        if (data.weaponModel == null)
+        {
+            Debug.LogError("Weapon Model Is NULL");
+        }
+        if (weapon.model == null)
+        {
+            Debug.LogError("Weapon Model Is NULL");
+        }
         weapon.weaponDamage = data.weaponDamage;
         weapon.weaponRange = data.weaponRange;
         weapon.maxAmmo = data.weaponAmmo;
@@ -67,6 +77,7 @@ public class WeaponDatabase : ScriptableObject
         {
             var curData = new WeaponData
             {
+                index = int.Parse(dataList[i][0]),
                 weaponNameIndex = int.Parse(dataList[i][1]),
                 type = (WeaponType)int.Parse(dataList[i][2]),
                 weaponRange = int.Parse(dataList[i][3]),
@@ -89,6 +100,7 @@ public class WeaponDatabase : ScriptableObject
 [Serializable]
 public class WeaponData
 {
+    public int index;
     public int weaponNameIndex;
     public GameObject weaponModel;
     public WeaponType type;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
+using Unity.VisualScripting;
 using UnityEngine;
 // ReSharper disable InconsistentNaming
 
@@ -23,6 +24,14 @@ public static class Hex
         var y = -position.y * 1.5f;
 
         return new Vector3(x, 0, y);
+    }
+
+    public static Vector3 World2Hex(Vector3 position)
+    {
+        var y =  -position.z * (2f/3f);
+        var x = ((Sqrt3 * position.x) / (Radius * 3)) - (0.5f * y);
+
+        return new Vector3(x, y, -(x + y));
     }
     
     /// <summary>
@@ -82,7 +91,7 @@ public static class Hex
     /// </summary>
     /// <param name="vec">실수형 Hex좌표</param>
     /// <returns>정수형 Hex좌표</returns>
-    private static Vector3Int Round(Vector3 vec)
+    public static Vector3Int Round(Vector3 vec)
     {
         var x = Mathf.RoundToInt(vec.x);
         var y = Mathf.RoundToInt(vec.y);

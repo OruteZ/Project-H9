@@ -33,8 +33,12 @@ public class UIManager : Generic.Singleton<UIManager>
 
     private GameState _UIState;
 
+    public GameObject loading; //test
+
     private new void Awake()
     {
+        if(loading is not null) loading.SetActive(true);
+
         base.Awake();
         _combatCanvas.enabled = false;
         _characterCanvas.enabled = false;

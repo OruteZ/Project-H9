@@ -113,7 +113,9 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         if (_action.GetActionType() is ActionType.Move) apCost = 1; //Delete later
         //int ammoCost = _action.GetAmmoCost();
         int ammoCost = GetAmmoCost();   //Delete later
-
+        
+        SetUp();
+        
         SetEachCostIconUI(_APCostUI, apCost, playerCurrentAp, _APCostUIInitColor);
         SetEachCostIconUI(_AmmoCostUI, ammoCost, playerCurrentAmmo, _AmmoCostUIInitColor);
     }

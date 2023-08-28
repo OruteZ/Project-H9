@@ -29,14 +29,17 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         _AmmoCostUI = gameObject.transform.GetChild(1).gameObject;
         _ActionNameUI = gameObject.transform.GetChild(2).gameObject;
 
-        _APCostUIInitColor = _APCostUI.GetComponent<Image>().color;
-        _AmmoCostUIInitColor = _AmmoCostUI.GetComponent<Image>().color;
-
-        _isSelectable = true;
     }
     void Awake()
     {
         SetUp();
+
+        _isSelectable = true;
+
+        _APCostUIInitColor = new Color32(0, 224, 128, 255);
+        _AmmoCostUIInitColor = new Color32(255, 128, 0, 255);
+        //_APCostUIInitColor = _APCostUI.GetComponent<Image>().color;
+        //_AmmoCostUIInitColor = _AmmoCostUI.GetComponent<Image>().color;
     }
 
     /// <summary>
@@ -57,9 +60,11 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         bool isSelectedAction = (playerSelectedAction.GetActionType() == _action.GetActionType());
         bool isIdleAction = (action.GetActionType() == ActionType.Idle);
         bool isActiveAction = playerSelectedAction.IsActive();
-        if (!isPlayerTurn || (isPlayerSelectAction && !isSelectedAction && !isIdleAction) || isActiveAction)
+        Debug.Log(isActiveAction);
+        if ((!isPlayerTurn) || (isPlayerSelectAction && !isSelectedAction && !isIdleAction) || isActiveAction)
         {
             _isSelectable = false;
+            Debug.Log("Selectable = " + _isSelectable);
         }
 
         SetCostIcons(player.currentActionPoint, player.weapon.currentAmmo);

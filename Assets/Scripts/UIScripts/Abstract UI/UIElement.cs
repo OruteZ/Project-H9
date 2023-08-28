@@ -9,13 +9,13 @@ public abstract class UIElement : MonoBehaviour
     /// </summary>
     public virtual void OpenUI()
     {
-        enabled = true;
+        gameObject.SetActive(true);
     }
     /// <summary>
     /// UI를 닫았을 때 작동합니다.
     /// </summary>
     public virtual void CloseUI()
     {
-        enabled = false;
+        gameObject.SetActive(false);
     }
 }

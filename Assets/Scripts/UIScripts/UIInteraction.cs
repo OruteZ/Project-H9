@@ -17,6 +17,13 @@ public class UIInteraction : Generic.Singleton<UIInteraction>
     {
         _uiManager = UIManager.instance;
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OnCharacterBtnClick();
+        }
+    }
     public void OnCharacterBtnClick()
     {
         _uiManager.SetCharacterCanvasState(true);

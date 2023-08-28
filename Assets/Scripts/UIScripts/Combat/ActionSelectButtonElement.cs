@@ -114,7 +114,12 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         //int ammoCost = _action.GetAmmoCost();
         int ammoCost = GetAmmoCost();   //Delete later
         
-        SetUp();
+        _APCostUI = gameObject.transform.GetChild(0).gameObject;
+        _AmmoCostUI = gameObject.transform.GetChild(1).gameObject;
+        _ActionNameUI = gameObject.transform.GetChild(2).gameObject;
+        
+        _APCostUIInitColor = _APCostUI.GetComponent<Image>().color;
+        _AmmoCostUIInitColor = _AmmoCostUI.GetComponent<Image>().color;
         
         SetEachCostIconUI(_APCostUI, apCost, playerCurrentAp, _APCostUIInitColor);
         SetEachCostIconUI(_AmmoCostUI, ammoCost, playerCurrentAmmo, _AmmoCostUIInitColor);

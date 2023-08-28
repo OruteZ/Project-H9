@@ -33,7 +33,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GetHit1
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3145308558573640463}
@@ -46,7 +46,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: -203655887218126122, guid: da65dcb09546ccc45b7d905b2eaeaf2e,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -111,7 +112,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Revolver
+  m_Name: ShotGun
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -3131650095521701806}
@@ -195,7 +196,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 352739d42e6875d4cba391114e5b40f8,
+  m_Motion: {fileID: -203655887218126122, guid: a3732424781ff2449914993a83150ce3,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -424,7 +425,7 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
-    m_Name: Revolver
+    m_Name: ShotGun
     m_StateMachine: {fileID: -3564355556907925191}
     m_Mask: {fileID: 0}
     m_Motions: []
@@ -456,7 +457,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 7744d5b76b8c5c54f801e0d952693a0d,
+  m_Motion: {fileID: -203655887218126122, guid: dcafcaa7f24a3e244be6c403a56dc8bf,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

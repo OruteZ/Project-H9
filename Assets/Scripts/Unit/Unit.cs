@@ -23,7 +23,10 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     //차후에 Skinned Mesh Renderer로 변경하면 됨
     public SkinnedMeshRenderer visual;
-    public Transform hand; 
+    public MeshRenderer weaponVisual;
+    public Transform hand;
+    public Transform back;
+    public Transform waist;
 
     [Header("Status")] 
     [SerializeField] protected UnitStat stat;
@@ -58,6 +61,8 @@ public abstract class Unit : MonoBehaviour, IUnit
     public virtual void GetDamage(int damage)
     {
         if (gameObject == null) return;
+
+        animator.SetTrigger(GET_HIT1);
         
         stat.curHp -= damage;
         onHit.Invoke(this, damage);
@@ -71,6 +76,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         if (stat.curHp <= 0 && _hasDead is false)
         {
             _hasDead = true;
+            animator.SetBool(DIE, true);
             onAnyUnitActionFinished.AddListener(DeadCall);
         }
     }
@@ -79,7 +85,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         onDead.Invoke(this);
         onAnyUnitActionFinished.RemoveListener(DeadCall);
-        Destroy(gameObject);
+        Invoke(nameof(DestroyThis), 2f);
     }
 
     public bool hasAttacked;
@@ -131,9 +137,18 @@ public abstract class Unit : MonoBehaviour, IUnit
             Debug.LogError("Weapon Model Is NULL");
         }
         
-        var weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
-        weaponModel.SetPosRot();
-        SetAnimatorController(weapon.GetWeaponType());
+        if (GameManager.instance.CompareState(GameState.Combat))
+        {
+            var weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
+            weaponModel.SetHandPosRot();
+            SetAnimatorController(weapon.GetWeaponType());
+        }
+        else
+        {
+            var weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
+            weaponModel.SetStandPosRot();
+            SetAnimatorController(WeaponType.Null);
+        }
     }
 
     protected virtual void Awake()
@@ -173,7 +188,11 @@ public abstract class Unit : MonoBehaviour, IUnit
     public bool isVisible
     {
         get => visual.enabled;
-        set => visual.enabled = value;
+        set
+        {
+            visual.enabled = value;
+            //weaponVisual.enabled = value;
+        }
     }
 
     protected bool IsMyTurn()
@@ -240,6 +259,9 @@ public abstract class Unit : MonoBehaviour, IUnit
     }
 
     private Animator _animator;
+    private static readonly int GET_HIT1 = Animator.StringToHash("GetHit1");
+    private static readonly int DIE = Animator.StringToHash("Die");
+
     public Animator animator
     {
         get
@@ -259,7 +281,12 @@ public abstract class Unit : MonoBehaviour, IUnit
     private void SetAnimatorController(WeaponType type)
     {
         animator.runtimeAnimatorController =
-            (AnimatorController)Resources.Load("Animator/" + type + " Animator Controller");
+            (AnimatorController)Resources.Load("Animator/" + (type is WeaponType.Null ? "Standing" : type) + " Animator Controller");
+    }
+
+    public void DestroyThis()
+    {
+        Destroy(gameObject);
     }
 }
 

@@ -5,5 +5,7 @@ using UnityEngine;
 public class UnitModel : MonoBehaviour
 {
     public Transform hand;
+    public Transform back;
+    public Transform waist;
     public Transform triggerFinger;
 }

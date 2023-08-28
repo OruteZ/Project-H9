@@ -14,6 +14,7 @@ public class Player : Unit
         
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);
+        FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnChanged);
         TileEffectManager.instance.SetPlayer(this);
 
         onSelectedChanged.AddListener(() => UIManager.instance.combatUI.SetCombatUI());
@@ -52,6 +53,9 @@ public class Player : Unit
     
     public void SelectAction(IUnitAction action)
     {
+        if (IsBusy()) return;
+        if (IsMyTurn() is false) return;
+        
         //if (activeUnitAction == action) return;
         if (action.IsSelectable() is false) return;
         if (action.GetCost() > currentActionPoint)
@@ -165,5 +169,10 @@ public class Player : Unit
         { 
             obj.OnCollision(unit);
         }
+    }
+
+    private void OnTurnChanged()
+    {
+        if(IsMyTurn() is false) SelectAction(GetAction<IdleAction>());
     }
 }

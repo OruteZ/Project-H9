@@ -59,15 +59,16 @@ private void Awake()
         else if (GameManager.instance.CompareState(GameState.Combat))
         {
             const int ORDER_LENGTH = 12;
+            
             List<Unit> units = FieldSystem.unitSystem.units;
             List<Unit> turnOrder = new List<Unit>();
             List<int> currentRounds = new List<int>();
+            
             for (int i = 0; i < units.Count; i++) 
             {
                 currentRounds.Add(units[i].currentRound);
             }
-
-
+            
             while (turnOrder.Count < ORDER_LENGTH * 2)
             {
                 int minOrderValueUnitIndex = 0;

@@ -6,18 +6,33 @@ public class WeaponModel : MonoBehaviour
 {
     public Transform trigger;
 
-    [ContextMenu("Save offset")]
-    public void SavePosRot()
+    [ContextMenu("Save offset : on hand")]
+    public void SaveHandPosRot()
     {
-        rotationOffset = transform.localRotation;
-        positionOffset = transform.localPosition;
+        handRotationOffset = transform.localRotation;
+        handPositionOffset = transform.localPosition;
     }
     
-    public Quaternion rotationOffset;
-    public Vector3 positionOffset;
-
-    public void SetPosRot()
+    [ContextMenu("Save offset : on stand")]
+    public void SaveStandPosRot()
     {
-        transform.SetLocalPositionAndRotation(positionOffset, rotationOffset); 
+        standRotationOffset = transform.localRotation;
+        standPositionOffset = transform.localPosition;
+    }
+    
+    public Quaternion handRotationOffset;
+    public Vector3 handPositionOffset;
+
+    public Quaternion standRotationOffset;
+    public Vector3 standPositionOffset;
+
+    public void SetHandPosRot()
+    {
+        transform.SetLocalPositionAndRotation(handPositionOffset, handRotationOffset); 
+    }
+
+    public void SetStandPosRot()
+    {
+        transform.SetLocalPositionAndRotation(standPositionOffset, standRotationOffset); 
     }
 }

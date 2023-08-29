@@ -20,6 +20,7 @@ public abstract class Weapon
     
     public UnitStat unitStat;
     public Unit unit;
+    public WeaponModel weaponModel;
 
     protected const float SHOTGUN_OVER_RANGE_PENALTY = 3f;
     protected const float REVOLVER_OVER_RANGE_PENALTY = 2.5f;

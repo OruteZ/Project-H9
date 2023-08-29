@@ -88,6 +88,11 @@ public class PanningAction : BaseAction
             
             bool hit = unit.weapon.GetFinalHitRate(_target) - 0.1f > UnityEngine.Random.value;
             Debug.Log(hit ? "뱅" : "빗나감");
+            if (VFXHelper.TryGetWeaponFXKey(VFXHelper.FXPattern.Fire, unit.weapon.GetWeaponType(), out var fxKey, out var fxTime))
+            {
+                var gunpointPos = unit.weapon.weaponModel.GetGunpointPosition();
+                VFXManager.instance.TryInstantiate(fxKey, fxTime, gunpointPos);
+            }
 
             if (hit)
             {

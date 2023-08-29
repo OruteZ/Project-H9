@@ -12,11 +12,13 @@ public class CharacterStatUI : UISystem
     //Character Stat
     [Header("Character Stat UI")]
     [SerializeField] private GameObject _characterStatText;
-    [SerializeField] private GameObject _characterLevelText;
-    [SerializeField] private GameObject _weaponStatText1Contents;
-    [SerializeField] private GameObject _weaponStatText2Contents;
-    [SerializeField] private GameObject _weaponStatText3Name;
-    [SerializeField] private GameObject _weaponStatText3Contents;
+    [SerializeField] private GameObject _weaponStatTextName;
+    [SerializeField] private GameObject _weaponStatTextContents;
+
+    [SerializeField] private GameObject _characterStatTexts;
+    [SerializeField] private GameObject _weaponStatTexts;
+
+    public GameObject _characterStatTooltip;
 
     private Image _characterImage;
     private Image _weaponImage;
@@ -35,52 +37,76 @@ public class CharacterStatUI : UISystem
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
 
-        SetCharacterStatText(player);
+        SetCharacterStatText(player.GetStat());
         SetWeaponStatText(player.weapon);
     }
-    private void SetCharacterStatText(Player player)
+    private void SetCharacterStatText(UnitStat playerStat)
     {
-        UnitStat playerStat = player.GetStat();
-        string text = playerStat.maxHp.ToString() + '\n' +
-                      playerStat.concentration.ToString() + '\n' +
-                      playerStat.sightRange.ToString() + '\n' +
-                      playerStat.speed.ToString() + '\n' +
-                      playerStat.actionPoint.ToString() + '\n' +
-                      playerStat.additionalHitRate.ToString() + '\n' +
-                      playerStat.criticalChance.ToString();
+        string addDmg = playerStat.revolverAdditionalDamage.ToString() + " / " + playerStat.repeaterAdditionalDamage.ToString() + " / " + playerStat.shotgunAdditionalDamage.ToString();
+        string addRng = playerStat.revolverAdditionalRange.ToString() + " / " + playerStat.repeaterAdditionalRange.ToString() + " / " + playerStat.shotgunAdditionalRange.ToString();
+        string criDmg = playerStat.revolverCriticalDamage.ToString() + " / " + playerStat.repeaterCriticalDamage.ToString() + " / " + playerStat.shotgunCriticalDamage.ToString();
 
-        _characterStatText.GetComponent<TextMeshProUGUI>().text = text;
+        string[,] texts =
+        {
+            {"HP:",                     playerStat.maxHp.ToString() },
+            {"Concentration:",          playerStat.concentration.ToString() },
+            {"Sight Range:",            playerStat.sightRange.ToString() },
+            {"Speed:",                  playerStat.speed.ToString() },
+            {"Action Point:",           playerStat.actionPoint.ToString() },
+            {"Additional Hit Rate:",    playerStat.additionalHitRate.ToString() + '%' },
+            {"Critical Chance:",        ((int)(playerStat.criticalChance * 100)).ToString() + '%' },
+            {"", "" },
+            {"Additional Damage:",      addDmg },
+            {"Additional Range:",       addRng },
+            {"Critical Damage:",        criDmg },
+            {"", "" },
+        };
+
+        for (int i = 0; i < _characterStatTexts.transform.childCount; i++) 
+        {
+            _characterStatTexts.transform.GetChild(i)
+                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(texts[i, 0], texts[i, 1]);
+        }
     }
     private void SetWeaponStatText(Weapon weapon)
     {
-        string text1 = /*weapon.weaponName +*/'\n' +
-                       weapon.weaponDamage.ToString();
-        _weaponStatText1Contents.GetComponent<TextMeshProUGUI>().text = text1;
+        string hitRateText = "Additional Hit Rate:";
+        string criChanceText = "Critical Chance:";
+        string criDamageText = "Critical Damage:";
+        string hitRateValue = weapon.hitRate.ToString() + '%';
+        string criChanceValue = weapon.criticalChance.ToString() + '%';
+        string criDamageValue = weapon.criticalDamage.ToString();
+        if (weapon.hitRate == 0)
+        {
+            hitRateText = "";
+            hitRateValue = "";
+        }
+        if (weapon.criticalChance == 0)
+        {
+            criChanceText = "";
+            criChanceValue = "";
+        }
+        if (weapon.criticalDamage == 0)
+        {
+            criDamageText = "";
+            criDamageValue = "";
+        }
 
-        string text2 = weapon.currentAmmo.ToString() + " / " + weapon.maxAmmo.ToString() + '\n' +
-                       weapon.weaponRange.ToString();
-        _weaponStatText2Contents.GetComponent<TextMeshProUGUI>().text = text2;
+        string[,] texts =
+        {
+            {"Name:",                 /*weapon.weaponName +*/"" },
+            {"Ammo:",                   weapon.maxAmmo.ToString() },
+            {"Damage:",                 weapon.weaponDamage.ToString() },
+            {"Range:",                  weapon.weaponRange.ToString() },
+            {hitRateText,               hitRateValue },
+            {criChanceText,             criChanceValue },
+            {criDamageText,             criDamageValue }
+        };
 
-        string text3 = "", text4 = "";
-        float hitRate = weapon.hitRate;
-        float criChance = weapon.criticalChance;
-        float criDamage = weapon.criticalDamage;
-        if (hitRate != 0)
+        for (int i = 0; i < _weaponStatTexts.transform.childCount; i++)
         {
-            text3 += "Hit Rate:" + '\n';
-            text4 += hitRate.ToString() + '\n';
+            _weaponStatTexts.transform.GetChild(i)
+                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(texts[i, 0], texts[i, 1]);
         }
-        if (criChance != 0)
-        {
-            text3 += "Critical Chance:" + '\n';
-            text4 += criChance.ToString() + '\n';
-        }
-        if (criDamage != 0)
-        {
-            text3 += "Critical Damage:" + '\n';
-            text4 += criDamage.ToString() + '\n';
-        }
-        _weaponStatText3Name.GetComponent<TextMeshProUGUI>().text = text3;
-        _weaponStatText3Contents.GetComponent<TextMeshProUGUI>().text = text4;
     }
 }

@@ -141,12 +141,14 @@ public abstract class Unit : MonoBehaviour, IUnit
         {
             var weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
             weaponModel.SetHandPosRot();
+            newWeapon.weaponModel = weaponModel;
             SetAnimatorController(weapon.GetWeaponType());
         }
         else
         {
             var weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
             weaponModel.SetStandPosRot();
+            newWeapon.weaponModel = weaponModel;
             SetAnimatorController(WeaponType.Null);
         }
     }

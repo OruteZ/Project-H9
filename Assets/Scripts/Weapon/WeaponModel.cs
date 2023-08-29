@@ -4,7 +4,25 @@ using UnityEngine;
 
 public class WeaponModel : MonoBehaviour
 {
+    [Header("Position refernce")]
+    [SerializeField]
+    [Tooltip("FX를 보여줄 총구의 위치")]
+    private Transform Gunpoint;
+    private bool _isExistGunpoint = false;
+
+    [Space()]
     public Transform trigger;
+    
+    public Quaternion rotationOffset;
+    public Vector3 positionOffset;
+
+    public void Awake()
+    {
+        if (Gunpoint != null)
+        {
+            _isExistGunpoint = true;
+        }
+    }
 
     [ContextMenu("Save offset : on hand")]
     public void SaveHandPosRot()
@@ -34,5 +52,11 @@ public class WeaponModel : MonoBehaviour
     public void SetStandPosRot()
     {
         transform.SetLocalPositionAndRotation(standPositionOffset, standRotationOffset); 
+    }
+    public Vector3 GetGunpointPosition()
+    {
+        if (_isExistGunpoint)
+            return Gunpoint.position;
+        return transform.position; // 총의 좌표 그대로 반환
     }
 }

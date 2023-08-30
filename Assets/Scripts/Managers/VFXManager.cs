@@ -93,6 +93,7 @@ public class VFXManager : Generic.Singleton<VFXManager>
             GameObject value = Resources.Load(key) as GameObject;
             if (value == null)
             {
+                Debug.LogError($"{key} is Missing!");
                 return false;
             }
             _caches[key] = value;

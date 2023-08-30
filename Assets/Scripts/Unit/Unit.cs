@@ -250,10 +250,29 @@ public abstract class Unit : MonoBehaviour, IUnit
 #if UNITY_EDITOR
         Debug.Log(hit ? "뱅" : "빗나감");
 #endif
+        if (VFXHelper.TryGetGunFireFXInfo(weapon.GetWeaponType(), out var fxGunFireKey, out var fxGunFireTime))
+        {
+            var gunpointPos = weapon.weaponModel.GetGunpointPosition();
+            VFXManager.instance.TryInstantiate(fxGunFireKey, fxGunFireTime, gunpointPos);
+        }
+
+        if (VFXHelper.TryGetTraceOfBulletFXKey(weapon.GetWeaponType(), out var fxBulletLine, out var traceTime))
+        {
+            var startPos = weapon.weaponModel.GetGunpointPosition();
+            var destPos = target.transform.position + Vector3.up;
+            if (!hit) destPos += new Vector3(UnityEngine.Random.value*2-1, UnityEngine.Random.value*2-1, UnityEngine.Random.value*2-1);
+            VFXManager.instance.TryLineRender(fxBulletLine, traceTime, startPos, destPos);
+        }
 
         if (hit)
         {
             weapon.Attack(target, out var isHeadShot);
+            var existKey = VFXHelper.TryGetBloodingFXKey(weapon.GetWeaponType(), out var fxBloodingKey, out var bloodingTime);
+            if (existKey)
+            {
+                var targetPos = target.transform.position + Vector3.up;
+                VFXManager.instance.TryInstantiate(fxBloodingKey, bloodingTime, targetPos);
+            }
         }
         weapon.currentAmmo--;
 

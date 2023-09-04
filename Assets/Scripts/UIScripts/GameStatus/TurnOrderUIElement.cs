@@ -17,12 +17,18 @@ public class TurnOrderUIElement : MonoBehaviour
     private const float TURN_ORDER_UI_SIZE_SCALE = 1.2f;
     private bool _isTurnOwner;
 
+    [SerializeField] private Texture2D _textures;
+    private Sprite[] _sprites;
+
     void Awake()
     {
         _frame = GetComponent<Image>();
         _characterIcon = transform.GetChild(0).gameObject.GetComponent<Image>();
         _targetPosition = TURN_ORDER_UI_INIT_POSITION;
         _isTurnOwner = false;
+
+        _sprites = Resources.LoadAll<Sprite>("Sprite/" + _textures.name);
+        GetComponent<Image>().sprite = _sprites[0];
     }
 
     void Update()
@@ -73,10 +79,12 @@ public class TurnOrderUIElement : MonoBehaviour
         if (unit is Player)
         {
             _frame.color = Color.green;
+            _characterIcon.sprite = _sprites[0];
         }
         else 
         {
             _frame.color = Color.red;
+            _characterIcon.sprite = _sprites[1];
         }
 
         //_characterIcon.sprite = unit.icon;

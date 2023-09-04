@@ -92,22 +92,22 @@ public class CombatActionUI : UISystem
         }
 
         //Sort Actions
-        List<IUnitAction> actions = SortActions(playerActions);
+        List<IUnitAction> Sortedactions = SortActions(playerActions);
 
         //Set Button Info
-        for (int i = 0; i < actions.Count; i++)
+        for (int i = 0; i < Sortedactions.Count; i++)
         {
-            _actionButtons[i].GetComponent<ActionSelectButtonElement>().SetActionSelectButton(actions[i], _player);
+            _actionButtons[i].GetComponent<ActionSelectButtonElement>().SetActionSelectButton(Sortedactions[i], _player);
         }
 
         //Find Active Action
         ActionType activeActionType = ActionType.Idle;
-        for (int i = 0; i < actions.Count; i++)
+        for (int i = 0; i < Sortedactions.Count; i++)
         {
-            if (actions[i].GetActionType() == _player.GetSelectedAction().GetActionType())
+            if (Sortedactions[i].GetActionType() == _player.GetSelectedAction().GetActionType())
             {
-                _activeAction = actions[i];
-                activeActionType = actions[i].GetActionType();
+                _activeAction = Sortedactions[i];
+                activeActionType = Sortedactions[i].GetActionType();
                 break;
             }
         }
@@ -115,7 +115,7 @@ public class CombatActionUI : UISystem
         //Set Button Status & Set Active Action Button
         for (int i = 0; i < _actionButtons.Count; i++)
         {
-            bool isInitButton = (actions.Count > i);
+            bool isInitButton = (Sortedactions.Count > i);
             bool isActiveSomeAction = (activeActionType != ActionType.Idle);
             if (!isInitButton)
             {

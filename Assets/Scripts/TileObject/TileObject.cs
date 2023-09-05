@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(HexTransform))]
-public class TileObject : MonoBehaviour
+public abstract class TileObject : MonoBehaviour
 {
     //for debug
     [SerializeField] 
@@ -75,6 +75,9 @@ public class TileObject : MonoBehaviour
         tile.RemoveObject(this);
         Destroy(gameObject);
     }
+
+    public abstract string[] GetArgs();
+    public abstract void SetArgs(string[] args);
 
     [ContextMenu("Set MeshRenderer")]
     public void SetMesh()

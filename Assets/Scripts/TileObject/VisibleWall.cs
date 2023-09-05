@@ -13,4 +13,14 @@ public class VisibleWall : TileObject
         t.visible = true;
         t.rayThroughable = false;
     }
+
+    public override string[] GetArgs()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void SetArgs(string[] args)
+    {
+        throw new System.NotImplementedException();
+    }
 }

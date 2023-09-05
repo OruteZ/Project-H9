@@ -8,8 +8,6 @@ using UnityEngine.Experimental.GlobalIllumination;
 [CreateAssetMenu(fileName = "SaveFile", menuName = "ScriptableObjects/Map Save File", order = 1)]
 public class MapData : ScriptableObject
 {
-    public int index;
-    
     public TileData[] tileData;
     public ObjectMapData[] objectData;
     public EnvironmentData[] envData;
@@ -72,12 +70,14 @@ public struct ObjectMapData
     public int id;
     public Vector3 hexPosition;
     public float rotation;
+    public string[] arguments;
 
     public ObjectMapData(TileObject obj)
     {
         id = obj.id;
         hexPosition = obj.hexPosition;
         rotation = obj.gameObject.transform.localRotation.y;
+        arguments = obj.GetArgs();
     }
 }
 

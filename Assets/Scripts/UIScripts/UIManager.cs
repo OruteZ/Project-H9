@@ -163,13 +163,13 @@ public class UIManager : Generic.Singleton<UIManager>
 
     /// <summary>
     /// 씬을 전환하여 UI 상태를 변경합니다.
-    /// GameManager에서 씬 전환 시 호출됩니다.(현재는 동기화 문제로 ChangeScenePrepared가 호출됩니다.)
+    /// GameManager에서 씬 전환 시 호출됩니다.
     /// </summary>
-    /// <param name="gameState"></param>
+    /// <param name="gameState"> 전환할 씬에 대응되는 gameState </param>
     public void ChangeScene(GameState gameState)
     {
         //if (prevSceneName == currentSceneName) return;
-        Debug.Log("Current State is " + gameState);
+        //Debug.Log("Current State is " + gameState);
         switch (gameState)
         {
             case GameState.World:
@@ -189,16 +189,10 @@ public class UIManager : Generic.Singleton<UIManager>
     {
         SetCombatCanvasState(false);
         timingUI.SetTurnOrderUIState(false);
-
-        //TurnSystem turnSys = FieldSystem.turnSystem;
-        //turnSys.onTurnChanged.RemoveListener(() => combatUI.startTurnTextUI.SetStartTurnTextUI(turnSys.turnOwner));
     }
     private void ChangeUIToCombatScene()
     {
         SetCombatCanvasState(true);
         timingUI.SetTurnOrderUIState(true);
-
-        //TurnSystem turnSys = FieldSystem.turnSystem;
-        //turnSys.onTurnChanged.AddListener(() => combatUI.startTurnTextUI.SetStartTurnTextUI(turnSys.turnOwner));
     }
 }

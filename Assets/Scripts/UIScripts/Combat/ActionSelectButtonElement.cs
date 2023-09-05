@@ -21,6 +21,10 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
     private GameObject _ActionNameUI;
 
+    [SerializeField] private Texture2D _textures; //test Texture. 이동, 공격, 장전, 패닝 순서
+    private ActionType[] normalActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload };
+    private Sprite[] _sprites;
+
     private bool _isSelectable;
 
     void SetUp()
@@ -28,16 +32,16 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         _APCostUI = gameObject.transform.GetChild(0).gameObject;
         _AmmoCostUI = gameObject.transform.GetChild(1).gameObject;
         _ActionNameUI = gameObject.transform.GetChild(2).gameObject;
-
     }
     void Awake()
     {
         SetUp();
 
+        _sprites = Resources.LoadAll<Sprite>("Sprite/" + _textures.name);
+        GetComponent<Image>().sprite = _sprites[0];
+
         _isSelectable = true;
 
-        _APCostUIInitColor = new Color32(0, 224, 128, 255);
-        _AmmoCostUIInitColor = new Color32(255, 128, 0, 255);
         //_APCostUIInitColor = _APCostUI.GetComponent<Image>().color;
         //_AmmoCostUIInitColor = _AmmoCostUI.GetComponent<Image>().color;
     }
@@ -66,11 +70,21 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
             _isSelectable = false;
             Debug.Log("Selectable = " + _isSelectable);
         }
+        SetUp();
+
+
+        if (action.GetActionType() == ActionType.Attack) Debug.Log(player.weapon.currentAmmo + " - " + action.GetAmmoCost());
 
         SetCostIcons(player.currentActionPoint, player.weapon.currentAmmo);
         GetComponent<Button>().interactable = _isSelectable;
 
-        //Button Color Setting
+        //Button Image Setting
+        Sprite spr = GetActionSprite(action.GetActionType());
+        if (isIdleAction)
+        {
+            spr = GetActionSprite(playerSelectedAction.GetActionType());
+        }
+        GetComponent<Image>().sprite = spr;
         GetComponent<Image>().color = Color.white;
         bool isRunOutAmmo = ((action.GetActionType() == ActionType.Reload) && (player.weapon.currentAmmo == 0));
         if (isRunOutAmmo) 
@@ -101,11 +115,14 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         _isSelectable = false;
         GetComponent<Button>().interactable = _isSelectable;
 
+        SetUp();
+
         //Cost Icon Visible Setting
         _APCostUI.SetActive(false);
         _AmmoCostUI.SetActive(false);
 
-        //Button Color Setting
+        //Button Image Setting
+        GetComponent<Image>().sprite = null;
         GetComponent<Image>().color = new Color(1, 1, 1);
 
         //Text Setting
@@ -115,46 +132,36 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     private void SetCostIcons(int playerCurrentAp, int playerCurrentAmmo)
     {
         int apCost = _action.GetCost();
-        if (_action.GetActionType() is ActionType.Move) apCost = 1; //Delete later
-        //int ammoCost = _action.GetAmmoCost();
-        int ammoCost = GetAmmoCost();   //Delete later
-        
-        _APCostUI = gameObject.transform.GetChild(0).gameObject;
-        _AmmoCostUI = gameObject.transform.GetChild(1).gameObject;
-        _ActionNameUI = gameObject.transform.GetChild(2).gameObject;
-        
-        _APCostUIInitColor = _APCostUI.GetComponent<Image>().color;
-        _AmmoCostUIInitColor = _AmmoCostUI.GetComponent<Image>().color;
-        
+        //MoveAction의 GetCost는 이전 턴에 MoveAction이 소모한 AP를 반환하는 상태라 임시방편으로 작성
+        if (_action.GetActionType() is ActionType.Move) apCost = 1;
+        int ammoCost = _action.GetAmmoCost();
+
+        _APCostUIInitColor = new Color32(0, 224, 128, 255);
+        _AmmoCostUIInitColor = new Color32(255, 128, 0, 255);
+
         SetEachCostIconUI(_APCostUI, apCost, playerCurrentAp, _APCostUIInitColor);
         SetEachCostIconUI(_AmmoCostUI, ammoCost, playerCurrentAmmo, _AmmoCostUIInitColor);
     }
-    private void SetEachCostIconUI(GameObject ui, int requiredCost, int currentCost, Color initColor)
+    private void SetEachCostIconUI(GameObject icon, int requiredCost, int currentCost, Color initColor)
     {
         //Cost Icon Visible Setting
-        ui.SetActive(true);
+        icon.SetActive(true);
         if (requiredCost == 0)
         {
-            ui.SetActive(false);
+            icon.SetActive(false);
         }
 
         //Cost Icon Color Setting
-        ui.GetComponent<Image>().color = initColor;
+        icon.GetComponent<Image>().color = initColor;
         if (currentCost < requiredCost)
         {
-            ui.GetComponent<Image>().color = Color.gray;
+            Debug.Log(currentCost + " -- " + requiredCost);
+            icon.GetComponent<Image>().color = Color.gray;
             _isSelectable = false;
         }
 
         //Cost Icon Text Setting
-        ui.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = requiredCost.ToString();
-    }
-
-    //Delete later
-    private int GetAmmoCost() 
-    {
-        if (_action.GetActionType() == ActionType.Attack) return 1;
-        return 0;
+        icon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = requiredCost.ToString();
     }
 
     /// <summary>
@@ -191,5 +198,25 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         {
             UIManager.instance.combatUI.combatActionUI.HideActionUITooltip();
         }
+    }
+
+
+    private Sprite GetActionSprite(ActionType actionType) 
+    {
+        //normal action
+        for (int i = 0; i < normalActionType.Length; i++)
+        {
+            if (normalActionType[i] == actionType)
+            {
+                return _sprites[i];
+;            }
+        }
+
+        //skill action 미구현
+        if (actionType == ActionType.Panning)
+        {
+            return _sprites[3];
+        }
+        return null;
     }
 }

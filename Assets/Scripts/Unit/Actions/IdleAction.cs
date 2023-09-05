@@ -22,7 +22,7 @@ public class IdleAction : BaseAction
 
     public override int GetAmmoCost()
     {
-        return 1;
+        return 0;   
     }
 
     public override bool IsSelectable()

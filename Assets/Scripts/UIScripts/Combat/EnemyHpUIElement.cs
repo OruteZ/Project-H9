@@ -13,7 +13,7 @@ public class EnemyHpUIElement : UIElement
     private Enemy _enemy;
     private Vector3 _enemyUIPrevPos;
 
-    [SerializeField] private float HP_BAR_UI_Y_POSITION_CORRECTION = 50;
+    [SerializeField] private float HP_BAR_UI_Y_POSITION_CORRECTION;
     // Start is called before the first frame update
     void Awake()
     {
@@ -36,10 +36,13 @@ public class EnemyHpUIElement : UIElement
             if (!_enemy.isVisible) return;
 
             //UI Position Setting
-            Vector3 uiPosition = Camera.main.WorldToScreenPoint(_enemy.transform.position);
+            Vector3 enemyPositionHeightCorrection = _enemy.transform.position;
+            enemyPositionHeightCorrection.y += 1.8f;
+            Vector3 uiPosition = Camera.main.WorldToScreenPoint(enemyPositionHeightCorrection);
             if (uiPosition != _enemyUIPrevPos)
             {
                 uiPosition.y += HP_BAR_UI_Y_POSITION_CORRECTION;
+                Debug.Log(uiPosition.y);
                 GetComponent<RectTransform>().position = uiPosition;
 
                 _enemyUIPrevPos = uiPosition;

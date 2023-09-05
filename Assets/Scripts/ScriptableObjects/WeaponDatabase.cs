@@ -10,9 +10,6 @@ public class WeaponDatabase : ScriptableObject
     public List<WeaponData> weaponList;
     public List<string> weaponNameTable;
     public List<string> weaponScriptTable;
-
-    public int indexStart = 101;
-
     public WeaponData GetData(int index)
     {
         foreach (var data in weaponList)
@@ -34,7 +31,7 @@ public class WeaponDatabase : ScriptableObject
             WeaponType.Revolver => new Revolver(),
             WeaponType.Repeater => new Repeater(),
             WeaponType.Shotgun => new Shotgun(),
-            _ => throw new System.ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException()
         };
         //
         // weapon.unit = owner;

@@ -59,7 +59,12 @@ public class Revolver : Weapon
         // Debug.Log("Hit rate = " + hitRate);
         // #endif
 
-        UIManager.instance.debugUI.SetDebugUI(hitRate, unit, target, distance, weaponRange, unitStat.revolverAdditionalRange, GetDistancePenalty() * (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
+        UIManager.instance.debugUI.SetDebugUI
+            (hitRate, unit, target, distance, weaponRange,
+                unitStat.revolverAdditionalRange,
+                GetDistancePenalty() *
+                (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
+        
         return hitRate * 0.01f;
     }
 

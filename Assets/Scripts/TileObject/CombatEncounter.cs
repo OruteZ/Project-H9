@@ -4,6 +4,8 @@ using UnityEngine.Rendering;
 
 public class CombatEncounter : TileObject
 {
+    public int encounterIndex;
+    
     private bool IsEncounterEnable()
     {
         int curTurn = FieldSystem.turnSystem.turnNumber;
@@ -24,5 +26,15 @@ public class CombatEncounter : TileObject
     public override void SetVisible(bool value)
     {
         meshRenderer.enabled = value && IsEncounterEnable();
+    }
+
+    public override string[] GetArgs()
+    {
+        return new [] { encounterIndex.ToString() };
+    }
+
+    public override void SetArgs(string[] args)
+    {
+        encounterIndex = int.Parse(args[0]);
     }
 }

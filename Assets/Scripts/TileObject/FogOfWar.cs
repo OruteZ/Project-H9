@@ -30,6 +30,17 @@ public class FogOfWar : TileObject
         StartCoroutine(RemovingCoroutine());
     }
 
+    public override string[] GetArgs()
+    {
+        return null;
+    }
+
+    public override void SetArgs(string[] args)
+    {
+        Debug.LogError("Try to set arguments in fow of war");
+        throw new System.Exception();
+    }
+
     private IEnumerator RemovingCoroutine()
     {
         float durationReciprocal = 1 / removingDuration; 

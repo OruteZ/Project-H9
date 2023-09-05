@@ -7,6 +7,22 @@ using UnityEngine;
 
 public static class Hex
 {
+    public static Vector3Int ColToHex(Vector2Int cooPos)
+    {
+        var x = cooPos.x - (cooPos.x - (cooPos.x & 1)) / 2;
+        var y = cooPos.y;
+
+        return new Vector3Int(x, y, - x - y);
+    }
+
+    public static Vector2Int HexToCol(Vector3Int hex)
+    {
+        var col = hex.x + (hex.y - (hex.y & 1)) / 2;
+        var row = hex.y;
+
+        return new Vector2Int(col, row); 
+    }
+    
     //육각형 타일 하나의 반지름 크기를 의미합니다.
     public const float Radius = 1f;
     

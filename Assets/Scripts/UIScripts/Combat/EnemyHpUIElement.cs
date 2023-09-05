@@ -42,7 +42,6 @@ public class EnemyHpUIElement : UIElement
             if (uiPosition != _enemyUIPrevPos)
             {
                 uiPosition.y += HP_BAR_UI_Y_POSITION_CORRECTION;
-                Debug.Log(uiPosition.y);
                 GetComponent<RectTransform>().position = uiPosition;
 
                 _enemyUIPrevPos = uiPosition;

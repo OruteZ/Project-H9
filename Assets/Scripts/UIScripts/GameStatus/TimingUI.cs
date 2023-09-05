@@ -33,8 +33,17 @@ public class TimingUI : UISystem
     /// 화면 우측 상단에 현재 턴 수를 표시한다.
     /// </summary>
     /// <param name="currentTurn"> 현재 턴 수 </param>
-    public void SetTurnText(int currentTurn) 
+    public void SetTurnText() 
     {
+        int currentTurn = 0;
+        if (GameManager.instance.CompareState(GameState.Combat))
+        {
+            currentTurn = FieldSystem.unitSystem.GetPlayer().currentRound;
+        }
+        else 
+        {
+            currentTurn = FieldSystem.turnSystem.turnNumber;
+        }
         _turnText.GetComponent<TextMeshProUGUI>().text = "Turn " + currentTurn;
     }
     /// <summary>

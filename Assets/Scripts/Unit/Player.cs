@@ -8,6 +8,8 @@ using UnityEngine.EventSystems;
 public class Player : Unit
 {
     [HideInInspector] public UnityEvent onSelectedChanged;
+    private static readonly int IDLE = Animator.StringToHash("Idle");
+
     public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel)
     {
         base.SetUp(newName, unitStat, newWeapon, unitModel);

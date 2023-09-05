@@ -8,6 +8,7 @@ public class Enemy : Unit
     [Header("Index")]
     public int dataIndex;
     private EnemyAI _ai;
+    private static readonly int IDLE = Animator.StringToHash("Idle");
 
     protected override void Awake()
     {
@@ -59,6 +60,7 @@ public class Enemy : Unit
         //StartCoroutine(UITestEndTurn());
 
         #endif
+        animator.SetTrigger(IDLE);
         currentActionPoint = stat.actionPoint;
 
         hasAttacked = false;

@@ -32,7 +32,7 @@ public class IdleAction : BaseAction
 
     public override bool CanExecuteImmediately()
     {
-        return false;
+        return true;
     }
 
     public override bool CanExecute()
@@ -42,6 +42,6 @@ public class IdleAction : BaseAction
 
     public override void Execute(Action onActionComplete)
     {
-        return;
+        unit.animator.SetTrigger(IDLE);
     }
 }

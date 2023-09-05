@@ -162,8 +162,8 @@ public class MoveAction : BaseAction
                 if (_currentPositionIndex >= _path.Count)
                 {
                     FinishAction();
-                    _path = null;
                     unit.animator.SetTrigger(IDLE);
+                    _path = null;
                     yield break;
                 }
             }

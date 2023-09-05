@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleUI : UISystem
+public class TitleUI : MonoBehaviour
 {
     [SerializeField] private GameObject _optionWindow;
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 /// <summary>
 /// 전투 시 적의 스텟을 확인할 수 있는 적 스텟창 UI를 표시하는 기능을 수행하는 클래스
@@ -16,7 +17,10 @@ public class EnemyStatUI : UISystem
     [SerializeField] private GameObject _weaponStatText3Name;
     [SerializeField] private GameObject _weaponStatText3Contents;
 
-    private const float WINDOW_X_POSITION_CORRECTION = 400;
+    private const float WINDOW_X_POSITION_CORRECTION = 300;
+
+    private bool _isOpenedUI = false;
+    private Enemy _enemy;
 
     public override void CloseUI()
     {
@@ -26,17 +30,19 @@ public class EnemyStatUI : UISystem
 
     public override void OpenPopupWindow()
     {
+        _isOpenedUI = true;
         UIManager.instance.previousLayer = 3;
         _enemyStatWindow.SetActive(true);
     }
     public override void ClosePopupWindow()
     {
+        _isOpenedUI = false;
         UIManager.instance.previousLayer = 1;
         CloseEnemyStatUI();
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             Player player = FieldSystem.unitSystem.GetPlayer();
             if (player is null || player.GetSelectedAction().GetActionType() is not ActionType.Idle) return;
@@ -47,20 +53,89 @@ public class EnemyStatUI : UISystem
                 SetEnemyStatUI((Enemy)FieldSystem.unitSystem.GetUnit(enemyPos));
             }
         }
+        if (_isOpenedUI)
+        {
+            if (_enemy is null) 
+            {
+                ClosePopupWindow();
+            }
+            SetEnemyStatUIPosition(_enemy.transform.position);
+        }
     }
     /// <summary>
     /// 적 스텟창을 설정합니다.
     /// 플레이어가 Idle 상태일 때 적 유닛을 클릭하면 해당 적 유닛 옆에 적의 스텟창 UI가 생성됩니다.
     /// </summary>
     /// <param name="enemy"> 클릭한 적 유닛 </param>
-    public void SetEnemyStatUI(Enemy enemy) 
+    public void SetEnemyStatUI(Enemy enemy)
     {
         OpenPopupWindow();
-        Vector3 enemyPos = Camera.main.WorldToScreenPoint(enemy.transform.position);
-        enemyPos.x -= WINDOW_X_POSITION_CORRECTION;
-        _enemyStatWindow.transform.position = enemyPos;
+        _enemy = enemy;
+        SetEnemyStatUIPosition(enemy.transform.position);
         SetCharacterStatText(enemy.GetStat());
         SetWeaponStatText(enemy.weapon);
+    }
+    private void SetEnemyStatUIPosition(Vector3 pos)
+    {
+        //Select UI Right or Left side
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        int sign = (int)(pos.x - player.transform.position.x);
+        if (sign == 0)
+        {
+            sign = -1;
+        }
+        sign = sign / Mathf.Abs(sign);
+
+        Vector3 enemyPositionHeightCorrection = pos;
+        enemyPositionHeightCorrection.y += 1.8f;
+
+        Vector2 enemyScreenPos = Camera.main.WorldToScreenPoint(enemyPositionHeightCorrection);
+        Vector2 windowSetPos = enemyScreenPos;
+        windowSetPos.x += sign * WINDOW_X_POSITION_CORRECTION;
+
+        //Set UI Position
+        _enemyStatWindow.GetComponent<RectTransform>().position = windowSetPos;
+
+        //Screen Range Correction
+        Vector2 enemyScreenLocalPos = _enemyStatWindow.GetComponent<RectTransform>().localPosition;
+
+        Vector2 canvasSize = GetComponent<RectTransform>().sizeDelta;
+        Vector2 windowSize = _enemyStatWindow.GetComponent<RectTransform>().sizeDelta;
+        float xPosLimit = (canvasSize.x / 2 - windowSize.x / 2) - 5;
+        float yPosLimit = (canvasSize.y / 2 - windowSize.y / 2) - 5;
+
+        if (enemyScreenLocalPos.x > xPosLimit) enemyScreenLocalPos.x = xPosLimit;
+        if (enemyScreenLocalPos.x < -xPosLimit) enemyScreenLocalPos.x = -xPosLimit;
+        if (enemyScreenLocalPos.y > yPosLimit) enemyScreenLocalPos.y = yPosLimit;
+        if (enemyScreenLocalPos.y < -yPosLimit) enemyScreenLocalPos.y = -yPosLimit;
+
+        _enemyStatWindow.GetComponent<RectTransform>().localPosition = enemyScreenLocalPos;
+
+        //Alpha setting
+        Vector2 windowScreenPos = _enemyStatWindow.GetComponent<RectTransform>().position;
+        bool isEnemyInWindowXpos = (windowScreenPos.x - windowSize.x / 2 < enemyScreenPos.x && enemyScreenPos.x < windowScreenPos.x + windowSize.x / 2);
+        bool isEnemyInWindowYpos = (windowScreenPos.y - windowSize.y / 2 < enemyScreenPos.y && enemyScreenPos.y < windowScreenPos.y + windowSize.y / 2);
+        float alpha = 0;
+        if (isEnemyInWindowXpos && isEnemyInWindowYpos)
+        {
+            alpha = 0.5f;
+        }
+        else 
+        {
+            alpha = 1;
+        }
+        Color c = _enemyStatWindow.GetComponent<Image>().color;
+        float threshold = 0.01f;
+        if (Mathf.Abs(c.a - alpha) > threshold)
+        {
+            c.a = Mathf.Lerp(c.a, alpha, Time.deltaTime * 2);
+        }
+        else
+        {
+            c.a = alpha;
+        }
+        _enemyStatWindow.GetComponent<Image>().color = c;
+
     }
     private void SetCharacterStatText(UnitStat enemyStat)
     {
@@ -119,7 +194,8 @@ public class EnemyStatUI : UISystem
     private static bool IsMouseClickedEnemy(out Vector3Int pos)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hit, float.MaxValue, layerMask: LayerMask.GetMask("Enemy")))
+        bool isSuccessRaycast = Physics.Raycast(ray, out var hit, float.MaxValue, layerMask: LayerMask.GetMask("Enemy"));
+        if (isSuccessRaycast)
         {
             Enemy enemy = hit.collider.GetComponent<Enemy>();
             pos = enemy.hexPosition;

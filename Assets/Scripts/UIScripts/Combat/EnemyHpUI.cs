@@ -38,7 +38,7 @@ public class EnemyHpUI : UISystem
             }
         }
 
-        Debug.Log("적 개체 수:" + _enemies.Count);
+        //Debug.Log("적 개체 수:" + _enemies.Count);
 
         if (_enemies.Count > _enemyHpBars.Count) 
         {

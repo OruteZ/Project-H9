@@ -64,16 +64,11 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         bool isSelectedAction = (playerSelectedAction.GetActionType() == _action.GetActionType());
         bool isIdleAction = (action.GetActionType() == ActionType.Idle);
         bool isActiveAction = playerSelectedAction.IsActive();
-        Debug.Log(isActiveAction);
         if ((!isPlayerTurn) || (isPlayerSelectAction && !isSelectedAction && !isIdleAction) || isActiveAction)
         {
             _isSelectable = false;
-            Debug.Log("Selectable = " + _isSelectable);
         }
         SetUp();
-
-
-        if (action.GetActionType() == ActionType.Attack) Debug.Log(player.weapon.currentAmmo + " - " + action.GetAmmoCost());
 
         SetCostIcons(player.currentActionPoint, player.weapon.currentAmmo);
         GetComponent<Button>().interactable = _isSelectable;
@@ -155,7 +150,6 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         icon.GetComponent<Image>().color = initColor;
         if (currentCost < requiredCost)
         {
-            Debug.Log(currentCost + " -- " + requiredCost);
             icon.GetComponent<Image>().color = Color.gray;
             _isSelectable = false;
         }

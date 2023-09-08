@@ -432,7 +432,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
   visual: {fileID: 174889144}
+  weaponVisual: {fileID: 0}
   hand: {fileID: 0}
+  back: {fileID: 0}
+  waist: {fileID: 0}
   stat:
     maxHp: 0
     curHp: 0
@@ -4094,6 +4097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f6d6e83eb63264c9d9eb9b09b31351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dataName: 
   tilePrefab: {fileID: 7055767354360999130, guid: 2b4c0590199488d4fae5ab62e5bca496,
     type: 3}
   worldFogOfWarPrefab: {fileID: 3921417558311075226, guid: 2b38978ec82fdef40b0068180537e289,
@@ -20587,7 +20591,8 @@ GameObject:
   - component: {fileID: 1066030851}
   - component: {fileID: 1066030850}
   - component: {fileID: 1066030849}
-  m_Layer: 0
+  - component: {fileID: 1066030856}
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20624,7 +20629,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hexTransform: {fileID: 0}
   visual: {fileID: 137990686406508055}
+  weaponVisual: {fileID: 0}
   hand: {fileID: 0}
+  back: {fileID: 0}
+  waist: {fileID: 0}
   stat:
     maxHp: 0
     curHp: 0
@@ -20774,6 +20782,20 @@ MonoBehaviour:
   onActionFinished:
     m_PersistentCalls:
       m_Calls: []
+--- !u!136 &1066030856
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066030847}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1070029371
 GameObject:
   m_ObjectHideFlags: 0

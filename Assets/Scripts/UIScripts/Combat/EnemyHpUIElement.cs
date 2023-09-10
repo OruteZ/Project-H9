@@ -27,36 +27,39 @@ public class EnemyHpUIElement : UIElement
     // Update is called once per frame
     void Update()
     {
-        if (_enemy != null)
+        if (_enemy == null) 
         {
-            //UI On & Off
-            _backHpBar.gameObject.SetActive(_enemy.isVisible);
-            _frontHpBar.gameObject.SetActive(_enemy.isVisible);
-            _hpText.gameObject.SetActive(_enemy.isVisible);
-            if (!_enemy.isVisible) return;
+            ClearEnemyHpUI();
+            return;
+        }
 
-            //UI Position Setting
-            Vector3 enemyPositionHeightCorrection = _enemy.transform.position;
-            enemyPositionHeightCorrection.y += 1.8f;
-            Vector3 uiPosition = Camera.main.WorldToScreenPoint(enemyPositionHeightCorrection);
-            if (uiPosition != _enemyUIPrevPos)
-            {
-                uiPosition.y += HP_BAR_UI_Y_POSITION_CORRECTION;
-                GetComponent<RectTransform>().position = uiPosition;
+        //UI On & Off
+        _backHpBar.gameObject.SetActive(_enemy.isVisible);
+        _frontHpBar.gameObject.SetActive(_enemy.isVisible);
+        _hpText.gameObject.SetActive(_enemy.isVisible);
+        if (!_enemy.isVisible) return;
 
-                _enemyUIPrevPos = uiPosition;
-            }
+        //UI Position Setting
+        Vector3 enemyPositionHeightCorrection = _enemy.transform.position;
+        enemyPositionHeightCorrection.y += 1.8f;
+        Vector3 uiPosition = Camera.main.WorldToScreenPoint(enemyPositionHeightCorrection);
+        if (uiPosition != _enemyUIPrevPos)
+        {
+            uiPosition.y += HP_BAR_UI_Y_POSITION_CORRECTION;
+            GetComponent<RectTransform>().position = uiPosition;
 
-            //Hp Fill Setting
-            float threshold = 0.01f;
-            if (Mathf.Abs(_frontHpBar.value - _backHpBar.value) > threshold)
-            {
-                _backHpBar.value = Mathf.Lerp(_backHpBar.value, _frontHpBar.value, Time.deltaTime * 2);
-            }
-            else 
-            {
-                _frontHpBar.value = _backHpBar.value;
-            }
+            _enemyUIPrevPos = uiPosition;
+        }
+
+        //Hp Fill Setting
+        float threshold = 0.01f;
+        if (Mathf.Abs(_frontHpBar.value - _backHpBar.value) > threshold)
+        {
+            _backHpBar.value = Mathf.Lerp(_backHpBar.value, _frontHpBar.value, Time.deltaTime * 2);
+        }
+        else
+        {
+            _frontHpBar.value = _backHpBar.value;
         }
     }
 
@@ -67,6 +70,8 @@ public class EnemyHpUIElement : UIElement
     /// <param name="enemy"> 해당 체력바로 설정할 적 개체 </param>
     public void SetEnemyHpUI(Enemy enemy)
     {
+        gameObject.SetActive(true);
+
         _enemyUIPrevPos = Vector3.zero;
         int maxHp = enemy.GetStat().maxHp;
         int curHp = enemy.GetStat().curHp;
@@ -76,7 +81,9 @@ public class EnemyHpUIElement : UIElement
         _backHpBar.maxValue = maxHp;
         _backHpBar.minValue = 0;
 
-        _hpText.text = curHp.ToString() + " / " + maxHp.ToString();
+        int curHpText = curHp;
+        if (curHpText < 0) curHpText = 0;
+        _hpText.text = curHpText.ToString() + " / " + maxHp.ToString();
         _frontHpBar.value = curHp;
 
         if (_enemy != enemy)
@@ -87,6 +94,7 @@ public class EnemyHpUIElement : UIElement
     }
     public void ClearEnemyHpUI()
     {
+        gameObject.SetActive(false);
         _enemy = null;
     }
 }

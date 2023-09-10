@@ -58,6 +58,7 @@ public class EnemyStatUI : UISystem
             if (_enemy is null) 
             {
                 ClosePopupWindow();
+                return;
             }
             SetEnemyStatUIPosition(_enemy.transform.position);
         }

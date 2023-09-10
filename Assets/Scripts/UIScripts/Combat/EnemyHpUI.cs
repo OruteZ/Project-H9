@@ -47,7 +47,9 @@ public class EnemyHpUI : UISystem
         InitEnemyHpUIs();
         for (int i = 0; i < _enemies.Count; i++) 
         {
-            _enemyHpBars[i].SetActive(true);
+            if (_enemies[i].GetStat().curHp <= 0) 
+            {
+            }
             _enemyHpBars[i].GetComponent<EnemyHpUIElement>().SetEnemyHpUI(_enemies[i]);
         }
     }
@@ -55,7 +57,7 @@ public class EnemyHpUI : UISystem
     {
         foreach (GameObject hpBar in _enemyHpBars)
         {
-            hpBar.SetActive(false);
+            hpBar.GetComponent<EnemyHpUIElement>().ClearEnemyHpUI();
         }
     }
     private void EnemyHpBarObjectPooling(int length)

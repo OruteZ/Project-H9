@@ -40,11 +40,6 @@ public abstract class Weapon
     public abstract float GetDistancePenalty();
 
     public abstract int GetRange();
-
-    public void Reload()
-    {
-        currentAmmo = maxAmmo;
-    }
 }
 
 public enum WeaponType

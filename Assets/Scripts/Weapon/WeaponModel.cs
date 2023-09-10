@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WeaponModel : MonoBehaviour
@@ -16,12 +17,17 @@ public class WeaponModel : MonoBehaviour
     public Quaternion rotationOffset;
     public Vector3 positionOffset;
 
+    private List<MeshRenderer> _meshRendererList;
+
     public void Awake()
     {
         if (Gunpoint != null)
         {
             _isExistGunpoint = true;
         }
+
+        _meshRendererList = GetComponentsInChildren<MeshRenderer>().ToList();
+        _meshRendererList.Add(GetComponent<MeshRenderer>());
     }
 
     [ContextMenu("Save offset : on hand")]
@@ -58,5 +64,17 @@ public class WeaponModel : MonoBehaviour
         if (_isExistGunpoint)
             return Gunpoint.position;
         return transform.position; // ÃÑÀÇ ÁÂÇ¥ ±×´ë·Î ¹ÝÈ¯
+    }
+
+    public bool visual
+    {
+        get => _meshRendererList[0].enabled;
+        set
+        {
+            foreach (var r in _meshRendererList)
+            {
+                r.enabled = value;
+            }
+        }
     }
 }

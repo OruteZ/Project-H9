@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class PanningAction : BaseAction
+public class FanningAction : BaseAction
 {
     //todo : 애니메이션 확정되면 다 Frame단위 Int로 변경
     private const float TURNING_TIME = 0.5f;

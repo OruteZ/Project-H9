@@ -23,7 +23,7 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     //차후에 Skinned Mesh Renderer로 변경하면 됨
     public SkinnedMeshRenderer visual;
-    public MeshRenderer weaponVisual;
+    public WeaponModel weaponModel;
     public Transform hand;
     public Transform back;
     public Transform waist;
@@ -107,7 +107,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         unitName = newName;
         stat = unitStat;
-        stat.curHp = stat.maxHp;
+        stat.curHp = stat.curHp;
         
         foreach (IUnitAction action in _unitActionArray)
         {
@@ -139,14 +139,14 @@ public abstract class Unit : MonoBehaviour, IUnit
         
         if (GameManager.instance.CompareState(GameState.Combat))
         {
-            var weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
+            weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
             weaponModel.SetHandPosRot();
             newWeapon.weaponModel = weaponModel;
             SetAnimatorController(weapon.GetWeaponType());
         }
         else
         {
-            var weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
+            weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
             weaponModel.SetStandPosRot();
             newWeapon.weaponModel = weaponModel;
             SetAnimatorController(WeaponType.Null);
@@ -193,7 +193,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         set
         {
             visual.enabled = value;
-            //weaponVisual.enabled = value;
+            weaponModel.visual = value;
         }
     }
 

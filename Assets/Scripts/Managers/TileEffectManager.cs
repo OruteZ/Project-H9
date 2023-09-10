@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Generic;
 using UnityEngine.Rendering;
+using UnityEngine.Pool;
 
 public enum EffectType
 {
@@ -31,6 +32,9 @@ public class TileEffectManager : Singleton<TileEffectManager>
     private Stack<GameObject> _effectStackBase;
     private Stack<GameObject> _effectStackRelatedTarget;
 
+    private IObjectPool<GameObject> _baseEffectPool;
+    private IObjectPool<GameObject> _targetEffectPool;
+
     private Coroutine _curCoroutine;
 
     public Material combatFowMaterial;
@@ -42,6 +46,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
     public RectTransform aimEffectRectTsf; 
     public RectTransform combatCanvas;
     public RectTransform aimEffect;
+    
     
     
     public void SetPlayer(Player p)
@@ -225,6 +230,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
         _effectStackBase = new Stack<GameObject>();
         _effectStackRelatedTarget = new Stack<GameObject>();
+        
+        
     }
 
     /// <summary>
@@ -241,11 +248,12 @@ public class TileEffectManager : Singleton<TileEffectManager>
         {
             Destroy(effect);
         }
-
+        
         while (_effectStackRelatedTarget.TryPop(out var effect))
         {
             Destroy(effect);
         }
+        
         aimEffectRectTsf.gameObject.SetActive(false);
     }
 

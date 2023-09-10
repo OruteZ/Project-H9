@@ -8,7 +8,6 @@ using UnityEngine.EventSystems;
 public class Player : Unit
 {
     [HideInInspector] public UnityEvent onSelectedChanged;
-    private static readonly int IDLE = Animator.StringToHash("Idle");
 
     public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel)
     {
@@ -26,10 +25,27 @@ public class Player : Unit
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
         if (UIManager.instance.isMouseOverUI) return;
-        
-        if (Input.GetMouseButtonDown(0) && TryGetMouseOverTilePos(out var targetPos)) 
+
+        var isMouseOnTile = TryGetMouseOverTilePos(out var onMouseTilePos);
+
+        if (isMouseOnTile && GetSelectedAction().GetActionType() is
+                ActionType.Attack or ActionType.Panning)
         {
-            var actionSuccess = TryExecuteUnitAction(targetPos, FinishAction);
+            var target = FieldSystem.unitSystem.GetUnit(onMouseTilePos);
+            if (target is not Player and not null)
+            {
+                transform.LookAt(Hex.Hex2World(onMouseTilePos));
+                var curRotation = transform.localRotation.eulerAngles;
+                curRotation.z = curRotation.x = 0;
+            
+                transform.localRotation = Quaternion.Euler(curRotation);
+            }
+        }
+        
+        
+        if (Input.GetMouseButtonDown(0) && isMouseOnTile) 
+        {
+            var actionSuccess = TryExecuteUnitAction(onMouseTilePos, FinishAction);
             if (actionSuccess) SetBusy();
         }   
     }
@@ -151,6 +167,11 @@ public class Player : Unit
         base.GetDamage(damage);
 
         GameManager.instance.playerStat = stat;
+    }
+
+    private void LookTarget()
+    {
+        
     }
 
     private void OnAnyUnitMoved(Unit unit)

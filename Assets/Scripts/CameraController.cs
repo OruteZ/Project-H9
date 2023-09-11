@@ -14,8 +14,18 @@ public class CameraController : MonoBehaviour
     public Vector3 newPosition;
     public Quaternion newRotation;
 
-    private void Start()
+    [Space(1)] public float lookAtOffset;
+
+    private void Awake()
     {
+        FieldSystem.onCombatAwake.AddListener(() =>
+        {
+            if (GameManager.instance.CompareState(GameState.Combat))
+            {
+                LookAtPlayer();
+            };
+        });
+        
         var tsf = transform;
         
         newPosition = tsf.position;
@@ -37,8 +47,8 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) direction += transform.right;
         if (Input.GetKey(KeyCode.S)) direction -= transform.forward;
         direction.Normalize();
-
         newPosition += direction * (movementSpeed * Time.deltaTime);
+        
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
 
         if (Input.GetKey(KeyCode.Q)) newRotation *= Quaternion.Euler(Vector3.up * rotationAmount);
@@ -47,5 +57,21 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * movementTime);
     }
 
-    
+    private void LookAtUnit(Unit unit)
+    {
+        var worldPos = Hex.Hex2World(unit.hexPosition);
+        worldPos.y = transform.position.y;
+        worldPos.z += 2f;
+
+        newPosition = worldPos;
+        //transform.position = worldPos;
+    }
+
+    private void LookAtPlayer()
+    {
+        var player = FieldSystem.unitSystem.GetPlayer();
+        if(player is null) Debug.LogError("Player is null");
+        
+        LookAtUnit(player);
+    }
 }

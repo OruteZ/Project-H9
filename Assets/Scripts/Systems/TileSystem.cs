@@ -182,6 +182,7 @@ public class TileSystem : MonoBehaviour
                     var tile = GetTile(next);
                     if (tile is null) continue;
                     if (!tile.walkable) continue;
+                    if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) != null) continue;
                     
                     result.Add(GetTile(next));
                     container.Enqueue(next);
@@ -250,6 +251,8 @@ public class TileSystem : MonoBehaviour
                     var tile = GetTile(next);
                     if (tile is null) continue;
                     if (tile.walkable is false) continue;
+                    if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null
+                        && next != destination) continue;
                     
                     container.Enqueue(new PathNode(next, from:current));
                     visited.Add(next);

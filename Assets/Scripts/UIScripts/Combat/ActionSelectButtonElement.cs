@@ -80,6 +80,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
             spr = GetActionSprite(playerSelectedAction.GetActionType());
         }
         GetComponent<Image>().sprite = spr;
+
         GetComponent<Image>().color = Color.white;
         bool isRunOutAmmo = ((action.GetActionType() == ActionType.Reload) && (player.weapon.currentAmmo == 0));
         if (isRunOutAmmo) 

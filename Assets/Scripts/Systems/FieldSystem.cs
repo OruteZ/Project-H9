@@ -22,13 +22,21 @@ public class FieldSystem : MonoBehaviour
         tileSystem = GetComponent<TileSystem>();
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();
-        
     }
 
     private void Start()
     {
-        unitSystem.SetUpUnits();
         tileSystem.SetUpTilesAndObjects();
-        turnSystem.StartCombat();
+        unitSystem.SetUpUnits();
+        turnSystem.SetUp();
+        StartCoroutine(StartCombatCoroutine());
+    }
+
+    private IEnumerator StartCombatCoroutine()
+    {
+        unitSystem.GetPlayer().ReloadSight();
+
+        yield return new WaitUntil(() => LoadingManager.instance.isLoadingNow is false);
+        turnSystem.StartTurn();
     }
 }

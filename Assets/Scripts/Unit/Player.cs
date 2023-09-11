@@ -58,7 +58,6 @@ public class Player : Unit
         
         hasAttacked = false;
         currentActionPoint = stat.actionPoint;
-        ReloadSight();
         if (GameManager.instance.CompareState(GameState.Combat))
         {
             SelectAction(GetAction<IdleAction>());
@@ -148,7 +147,7 @@ public class Player : Unit
         return false;
     }
 
-    private void ReloadSight()
+    public void ReloadSight()
     {
         //한칸 움직일때마다 호출되므로, 보였다가 시야에서 사라지는 경우는 sightRange + 1로 탐색 범위에 포함 시킬 수 있음
         IEnumerable<Tile> allTile =

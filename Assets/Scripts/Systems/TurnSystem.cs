@@ -21,12 +21,9 @@ private void Awake()
         onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));
     }
 
-    /// <summary>
-    /// 전투를 시작합니다. StartTurn과 구분됩니다.
-    /// </summary>
-    public void StartCombat()
+    public void SetUp()
     {
-        StartTurn();
+        CalculateTurnOwner();
     }
 
     /// <summary>
@@ -42,7 +39,7 @@ private void Awake()
         StartTurn();
     }
 
-    private void StartTurn()
+    public void StartTurn()
     {
         Debug.Log("start turn");
         

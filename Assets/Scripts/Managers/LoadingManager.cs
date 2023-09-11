@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mono.Cecil.Cil;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadingManager : Generic.Singleton<LoadingManager>
 {
+    public bool isLoadingNow;
+    [SerializeField] private float fadeDuration;
     private new void Awake()
     {
         base.Awake();
@@ -18,6 +21,8 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
     private void Start()
     {
         canvas.enabled = false;
+        progress.gameObject.SetActive(false);
+        isLoadingNow = false;
     }
 
     public Canvas canvas;
@@ -30,16 +35,16 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
     
     private IEnumerator LoadSceneCoroutine(string sceneName)
     {
-        SceneManager.LoadScene("LoadingScene");
-        
-        yield return null;
+        isLoadingNow = true;
         canvas.enabled = true;
+        yield return StartCoroutine(FadeOut(fadeDuration));
         
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         operation.allowSceneActivation = false;
 
         while (!operation.isDone)
         {
+            progress.gameObject.SetActive(true);
             yield return null;
 
             if (progress.value < 1f)
@@ -47,11 +52,16 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
                 
                 progress.value = operation.progress;
             }
-
             operation.allowSceneActivation = true;
+            progress.gameObject.SetActive(false);
         }
+        
         UIManager.instance.ChangeScene(SceneNameToGameState(sceneName));
+        
+        yield return StartCoroutine(FadeIn(fadeDuration));
         canvas.enabled = false;
+
+        isLoadingNow = false; 
     }
 
     /// <summary>
@@ -77,6 +87,7 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
         Debug.LogError(sceneName + "이라는 Scene을 찾을 수 없습니다.");
         return GameState.World;
     }
+    
     /// <summary>
     /// GameState를 입력하면 그에 대응하는 씬의 이름을 반환합니다.
     /// </summary>
@@ -84,17 +95,41 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
     /// <returns> 입력한 GameState에 대응하는 씬 이름 </returns>
     public string GameStateToSceneName(GameState gameState)
     {
-        switch (gameState)
+        return gameState switch
         {
-            case GameState.World:
-                {
-                    return "WorldScene";
-                }
-            case GameState.Combat:
-                {
-                    return "CombatScene";
-                }
+            GameState.World => "WorldScene",
+            GameState.Combat => "CombatScene",
+            _ => null
+        };
+    }
+
+    private IEnumerator FadeIn(float duration)
+    {
+        var image = canvas.GetComponentInChildren<Image>();
+
+        float reciprocalDuration = 1 / duration;
+        float t = 0;
+        while ((t += Time.deltaTime) < duration)
+        {
+            var percentage = t * reciprocalDuration;
+            image.color = new Color(0, 0, 0, Mathf.Lerp(1, 0, percentage));
+            yield return null;
         }
-        return null;
+        image.color = Color.black;
+    }
+
+    private IEnumerator FadeOut(float duration)
+    {
+        var image = canvas.GetComponentInChildren<Image>();
+
+        float reciprocalDuration = 1 / duration;
+        float t = 0;
+        while ((t += Time.deltaTime) < duration)
+        {
+            var percentage = t * reciprocalDuration;
+            image.color = new Color(0, 0, 0, Mathf.Lerp(0, 1, percentage));
+            yield return null;
+        }
+        image.color = Color.black;
     }
 }

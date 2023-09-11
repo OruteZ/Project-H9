@@ -119,6 +119,7 @@ public class FanningAction : BaseAction
 
         yield return new WaitForSeconds(COOL_OFF_TIME);
         
+        unit.hasAttacked = true;
         unit.animator.SetTrigger(IDLE);
         FinishAction();
     }

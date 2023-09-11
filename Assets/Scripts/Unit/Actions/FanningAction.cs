@@ -42,7 +42,10 @@ public class FanningAction : BaseAction
 
     public override bool IsSelectable()
     {
-        return unit.weapon.currentAmmo > 0;
+        if (unit.weapon.currentAmmo < 0) return false;
+        if (unit.hasAttacked) return false;
+
+        return true;
     }
 
     public override bool CanExecute()

@@ -28,7 +28,6 @@ public class TurnOrderUIElement : MonoBehaviour
         _isTurnOwner = false;
 
         _sprites = Resources.LoadAll<Sprite>("Sprite/" + _textures.name);
-        GetComponent<Image>().sprite = _sprites[0];
     }
 
     void Update()

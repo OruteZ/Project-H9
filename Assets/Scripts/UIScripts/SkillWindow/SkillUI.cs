@@ -150,4 +150,12 @@ public class SkillUI : UISystem
     {
         _skillPointText.GetComponent<TextMeshProUGUI>().text = "SP: " + _skillManager.GetSkillPoint().ToString();
     }
+
+
+    public void OnCloseBtnClick()
+    {
+        UIManager.instance.SetCharacterCanvasState(false);
+        UIManager.instance.SetSkillCanvasState(false);
+        UIManager.instance.SetPauseMenuCanvasState(false);
+    }
 }

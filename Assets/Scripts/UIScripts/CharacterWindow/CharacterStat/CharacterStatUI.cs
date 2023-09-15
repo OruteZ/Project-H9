@@ -110,3 +110,23 @@ public class CharacterStatUI : UISystem
         }
     }
 }
+
+//HP:
+//Concentration:
+//Sight Range:
+//Speed:
+//Action Point:
+//Additional Hit Rate:
+//Critical Chance:
+
+//Additional Damage:
+//Additional Range:
+//Critical Damage:
+
+//Name:
+//Ammo:
+//Damage:
+//Range:
+//Additional Hit Rate:
+//Critical Chance:
+//Critical Damage:

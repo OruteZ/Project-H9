@@ -31,21 +31,12 @@ public class CharacterUI : UISystem
         learnedSkillUI = GetComponent<LearnedSkillUI>();
         itemListUI = GetComponent<ItemListUI>();
         SetMoneyText();
+
+        uiSubsystems.Add(characterStatUI);
+        uiSubsystems.Add(learnedSkillUI);
+        uiSubsystems.Add(itemListUI);
     }
-    public override void OpenUI()
-    {
-        base.OpenUI();
-        characterStatUI.OpenUI();
-        learnedSkillUI.OpenUI();
-        itemListUI.OpenUI();
-    }
-    public override void CloseUI()
-    {
-        base.CloseUI();
-        characterStatUI.CloseUI();
-        learnedSkillUI.CloseUI();
-        itemListUI.CloseUI();
-    }
+
     public override void ClosePopupWindow()
     {
         itemListUI.ClosePopupWindow();

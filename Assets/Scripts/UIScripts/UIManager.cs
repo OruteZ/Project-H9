@@ -10,9 +10,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : Generic.Singleton<UIManager>
 {
     [HideInInspector]
-    public CurrentStatusUI currentStatusUI { get; private set; }
-    public TimingUI timingUI { get; private set; }
-    public QuestUI questUI { get; private set; }
+    public GameSystemUI gameSystemUI { get; private set; }
     public CombatWindowUI combatUI { get; private set; }
     public CharacterUI characterUI { get; private set; }
     public SkillUI skillUI { get; private set; }
@@ -45,9 +43,7 @@ public class UIManager : Generic.Singleton<UIManager>
         _skillCanvas.enabled = false;
         _pauseMenuCanvas.enabled = false;
 
-        currentStatusUI = _worldCanvas.GetComponent<CurrentStatusUI>();
-        timingUI = _worldCanvas.GetComponent<TimingUI>();
-        questUI = _worldCanvas.GetComponent<QuestUI>();
+        gameSystemUI = _worldCanvas.GetComponent<GameSystemUI>();
 
         combatUI = _combatCanvas.GetComponent<CombatWindowUI>();
 
@@ -90,6 +86,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
             previousLayer = currentLayer;
         }
+
     }
 
     //아래 캔버스 켜고끄는 것들 UIInteraction 삭제 후 전부 private로 전환 예정.
@@ -129,6 +126,15 @@ public class UIManager : Generic.Singleton<UIManager>
     public void SetPauseMenuCanvasState(bool isOn)
     {
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, isOn);
+    }
+
+    public void OnExitBtnClick()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     private int GetPointerOverUILayer() 
@@ -188,11 +194,9 @@ public class UIManager : Generic.Singleton<UIManager>
     private void ChangeUIToWorldScene()
     {
         SetCombatCanvasState(false);
-        timingUI.SetTurnOrderUIState(false);
     }
     private void ChangeUIToCombatScene()
     {
         SetCombatCanvasState(true);
-        timingUI.SetTurnOrderUIState(true);
     }
 }

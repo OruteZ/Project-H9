@@ -19,12 +19,10 @@ public class PauseMenuUI : UISystem
     {
 
     }
-    public override void OpenUI()
+    public void OnResumeBtnClick()
     {
-        base.OpenUI();
-    }
-    public override void CloseUI()
-    {
-        base.CloseUI();
+        UIManager.instance.SetCharacterCanvasState(false);
+        UIManager.instance.SetSkillCanvasState(false);
+        UIManager.instance.SetPauseMenuCanvasState(false);
     }
 }

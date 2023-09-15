@@ -5,20 +5,11 @@ using TMPro;
 
 public class CharacterTooltip : UIElement
 {
-    // Start is called before the first frame update
     void Start()
     {
         CloseUI();
     }
 
-    public override void OpenUI()
-    {
-        base.OpenUI();
-    }
-    public override void CloseUI()
-    {
-        base.CloseUI();
-    }
     public void SetCharacterTooltip(string name, float yPosition) 
     {
         OpenUI();

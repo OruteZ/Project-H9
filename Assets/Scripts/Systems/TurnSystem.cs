@@ -17,7 +17,7 @@ private void Awake()
     {
         turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.worldTurn : 0;
         onTurnChanged.AddListener(() => { turnNumber++;});
-        onTurnChanged.AddListener(() => UIManager.instance.timingUI.SetTurnText());
+        onTurnChanged.AddListener(() => UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI());
         onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));
     }
 
@@ -87,7 +87,7 @@ private void Awake()
             }
 
             turnOrder[0].currentRound++;
-            UIManager.instance.timingUI.SetTurnOrderUI(turnOrder);
+            UIManager.instance.combatUI.turnOrderUI.SetTurnOrderUI(turnOrder);
             turnOwner = turnOrder[0];
         }
     }

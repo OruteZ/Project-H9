@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class EnemyHpUI : UISystem
 {
-    [SerializeField] private GameObject _hpBarPrefab;
-    [SerializeField] private GameObject _enemyhpBarUIs;
+    [SerializeField] private GameObject _enemyHpBarPrefab;
+    [SerializeField] private GameObject _enemyHpBarContainer;
 
     private List<GameObject> _enemyHpBars;
 
@@ -19,6 +19,7 @@ public class EnemyHpUI : UISystem
         base.Awake();
 
         _enemyHpBars = new List<GameObject>();
+        Debug.Log("asdf");
         EnemyHpBarObjectPooling(10);
     }
 
@@ -64,7 +65,7 @@ public class EnemyHpUI : UISystem
     {
         for (int i = 0; i < length; i++)
         {
-            GameObject ui = Instantiate(_hpBarPrefab, Vector3.zero, Quaternion.identity, _enemyhpBarUIs.transform);
+            GameObject ui = Instantiate(_enemyHpBarPrefab, Vector3.zero, Quaternion.identity, _enemyHpBarContainer.transform);
             _enemyHpBars.Add(ui);
         }
         InitEnemyHpUIs();

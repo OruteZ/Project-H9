@@ -37,11 +37,12 @@ public class IdleAction : BaseAction
 
     public override bool CanExecute()
     {
-        return false;
+        return true;
     }
 
     public override void Execute(Action onActionComplete)
     {
+        Debug.Log("IDLE Action Execute");
         unit.animator.SetTrigger(IDLE);
     }
 }

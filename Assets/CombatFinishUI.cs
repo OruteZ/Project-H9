@@ -8,20 +8,16 @@ public class CombatFinishUI : MonoBehaviour
     public GameObject combatFinishCanvas;
     public GameObject gameOverCanvas;
 
-    public void Awake()
-    {
-        GameManager.instance.onCombatFinish.AddListener(OnCombatFinish);
-    }
-
     public void Start()
     {
+        FieldSystem.unitSystem.onCombatFinish.AddListener(() => Invoke(nameof(OnCombatFinish), 2f));
         combatFinishCanvas.SetActive(false);
         gameOverCanvas.SetActive(false);
     }
 
     public void BackToWorld()
     {
-        LoadingManager.instance.LoadingScene(GameManager.instance.worldSceneName);
+        GameManager.instance.FinishCombat();
     }
 
     public void BackToMenu()

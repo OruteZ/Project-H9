@@ -123,28 +123,30 @@ public class AttackAction : BaseAction
 
     protected override IEnumerator ExecuteCoroutine()
     {
-        //todo : turn around Animation;
-
-        float timer = 1f;
-        while ((timer -= Time.deltaTime) > 0)
-        {
-            Transform tsf;
-            Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
-
-            float rotationSpeed = 10f;
-            transform.forward = Vector3.Lerp(tsf.forward, aimDirection, Time.deltaTime * rotationSpeed);
-        }
+        unit.animator.SetTrigger(IDLE);
+        
+        // float timer = 1f;
+        // while ((timer -= Time.deltaTime) > 0)
+        // {
+        //     Transform tsf;
+        //     Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
+        //
+        //     float rotationSpeed = 10f;
+        //     transform.forward = Vector3.Slerp(tsf.forward, aimDirection, Time.deltaTime * rotationSpeed);
+        //     yield return null;
+        // }
+        yield return new WaitForSeconds(1f);
         
         unit.animator.SetTrigger(SHOOT);
 
         //총을 드는 시간 (애니메이션에 따라 다른 상수 값 , 무조건 프레임 단위로) 
-        int cnt = 15;
-        while (cnt-- > 0) yield return null;
+        int cnt = 20;
+        for(int i = 0; i < cnt; i++) yield return null;
         
         unit.TryAttack(_target);
 
         //Animation이 끝나고 IdleAction으로 돌아올 때 까지 대기 
-        cnt = 69 - 15;
+        cnt = 69 - cnt;
         while (cnt-- > 0) yield return null;
         
         unit.animator.SetTrigger(IDLE);

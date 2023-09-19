@@ -9,7 +9,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     protected static readonly int MOVE = Animator.StringToHash("Move");
     protected static readonly int SHOOT = Animator.StringToHash("Shoot");
     protected static readonly int IDLE = Animator.StringToHash("Idle");
-    protected static readonly int PANNING = Animator.StringToHash("Panning");
+    protected static readonly int FANNING = Animator.StringToHash("Panning");
     protected static readonly int RELOAD = Animator.StringToHash("Reload");
     
     public abstract ActionType GetActionType();
@@ -41,6 +41,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     protected void StartAction(Action onActionComplete)
     {
+        unit.animator.ResetTrigger(IDLE);
         this.onActionComplete = onActionComplete;
         isActive = true;
         StartCoroutine(ExecuteCoroutine());
@@ -50,6 +51,32 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     protected void FinishAction()
     {
+        switch (GetActionType())
+        {
+            case ActionType.Move:
+                unit.animator.ResetTrigger(MOVE);
+                break;
+            case ActionType.Spin:
+                // unit.animator.ResetTrigger(MOVE);
+                break;
+            case ActionType.Attack:
+                unit.animator.ResetTrigger(SHOOT);
+                break;
+            case ActionType.Dynamite:
+                break;
+            case ActionType.Idle:
+                unit.animator.ResetTrigger(IDLE);
+                break;
+            case ActionType.Reload:
+                unit.animator.ResetTrigger(RELOAD);
+                break;
+            case ActionType.Fanning:
+                unit.animator.ResetTrigger(FANNING);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
         isActive = false;
         onActionComplete();
 
@@ -62,5 +89,9 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         yield return null; 
     }
 
-    
+    public virtual void ForceFinish()
+    {
+        StopCoroutine(ExecuteCoroutine());
+        FinishAction();
+    }
 }

@@ -63,6 +63,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         if (gameObject == null) return;
 
         animator.SetTrigger(GET_HIT1);
+        CameraController.ShakeCamera();
         
         stat.curHp -= damage;
         onHit.Invoke(this, damage);
@@ -124,6 +125,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
         
         EquipWeapon(newWeapon);
+        // FieldSystem.onCombatAwake.AddListener(() => {animator.SetTrigger(START);});
     }
 
     private void EquipWeapon(Weapon newWeapon)
@@ -308,6 +310,20 @@ public abstract class Unit : MonoBehaviour, IUnit
     public void DestroyThis()
     {
         Destroy(gameObject);
+    }
+
+    public void ConsumeCost(int value)
+    {
+        if (currentActionPoint < value)
+        {
+            Debug.LogError("Consume More Cost");
+            return;
+        }
+
+        if (value == 0) return;
+
+        currentActionPoint -= value;
+        onCostChanged.Invoke(currentActionPoint);
     }
 }
 

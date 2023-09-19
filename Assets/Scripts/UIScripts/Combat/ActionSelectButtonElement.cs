@@ -213,7 +213,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         }
 
         //skill action ¹Ì±¸Çö
-        if (actionType == ActionType.Panning)
+        if (actionType == ActionType.Fanning)
         {
             return _sprites[3];
         }

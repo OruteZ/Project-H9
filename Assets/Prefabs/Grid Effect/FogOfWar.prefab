@@ -158,9 +158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c01c49bb321454f9702ce564b4c229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vision: 0
+  id: 0
   hexTransform: {fileID: 0}
   meshRenderer: {fileID: 2715423338037739766}
-  vision: 0
   removingDuration: 1
 --- !u!1001 &2737209643661961638
 PrefabInstance:
@@ -195,7 +196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4282584874226646, guid: 6068f0d0298633f4d97cd682123592b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4282584874226646, guid: 6068f0d0298633f4d97cd682123592b9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -243,21 +244,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2737209643661961638}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2736239289688865296 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1572886353646518, guid: 6068f0d0298633f4d97cd682123592b9,
-    type: 3}
-  m_PrefabInstance: {fileID: 2737209643661961638}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6547943229721446560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2736239289688865296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c34d37dd40c0854487dcab5b040c3cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

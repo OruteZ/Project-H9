@@ -17,6 +17,8 @@ public class CombatEncounter : TileObject
     public override void OnCollision(Unit other)
     {
         if (IsEncounterEnable() is false) return;
+
+        other.GetSelectedAction().ForceFinish();
         
         Debug.Log("On Collision Calls");
         EncounterManager.instance.AddValue(hexPosition, FieldSystem.turnSystem.turnNumber);

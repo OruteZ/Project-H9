@@ -16,7 +16,7 @@ public class FanningAction : BaseAction
 
     public override ActionType GetActionType()
     {
-        return ActionType.Panning;
+        return ActionType.Fanning;
     }
 
     public override void SetTarget(Vector3Int targetPos)
@@ -42,7 +42,7 @@ public class FanningAction : BaseAction
 
     public override bool IsSelectable()
     {
-        if (unit.weapon.currentAmmo < 0) return false;
+        if (unit.weapon.currentAmmo == 0) return false;
         if (unit.hasAttacked) return false;
 
         return true;
@@ -70,7 +70,7 @@ public class FanningAction : BaseAction
     private const float ROTATION_SPEED = 10f;
     protected override IEnumerator ExecuteCoroutine()
     {
-        unit.animator.SetTrigger(PANNING);
+        unit.animator.SetTrigger(FANNING);
         
         Transform tsf;
         Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
@@ -120,7 +120,6 @@ public class FanningAction : BaseAction
         yield return new WaitForSeconds(COOL_OFF_TIME);
         
         unit.hasAttacked = true;
-        unit.animator.SetTrigger(IDLE);
         FinishAction();
     }
 }

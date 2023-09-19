@@ -16,7 +16,8 @@ public class TurnSystem : MonoBehaviour
 private void Awake()
     {
         turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.worldTurn : 0;
-        onTurnChanged.AddListener(() => { turnNumber++;});
+        
+        onTurnChanged.AddListener(() => { turnNumber++; });
         onTurnChanged.AddListener(() => UIManager.instance.timingUI.SetTurnText());
         onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));
     }
@@ -44,8 +45,16 @@ private void Awake()
         Debug.Log("start turn");
         
         CalculateTurnOwner();
-        turnOwner.StartTurn();
-        onTurnChanged.Invoke();
+        if (GameManager.instance.backToWorldTrigger)
+        {
+            GameManager.instance.backToWorldTrigger = false;
+            ((Player)turnOwner).ContinueWorldTurn();
+        }
+        else
+        {
+            turnOwner.StartTurn();
+            onTurnChanged.Invoke();
+        }
     }
     private void CalculateTurnOwner()
     {

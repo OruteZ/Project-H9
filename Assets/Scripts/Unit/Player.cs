@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Generic;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -29,16 +30,15 @@ public class Player : Unit
         var isMouseOnTile = TryGetMouseOverTilePos(out var onMouseTilePos);
 
         if (isMouseOnTile && GetSelectedAction().GetActionType() is
-                ActionType.Attack or ActionType.Panning)
+                ActionType.Attack or ActionType.Fanning)
         {
             var target = FieldSystem.unitSystem.GetUnit(onMouseTilePos);
             if (target is not Player and not null)
             {
-                transform.LookAt(Hex.Hex2World(onMouseTilePos));
-                var curRotation = transform.localRotation.eulerAngles;
-                curRotation.z = curRotation.x = 0;
-            
-                transform.localRotation = Quaternion.Euler(curRotation);
+                transform.LookAt(Hex.Hex2World(onMouseTilePos), Vector3.up);
+                // var curRotation = transform.localRotation.eulerAngles;
+                // curRotation.z = curRotation.x = 0;
+                //transform.localRotation = Quaternion.Euler(curRotation);
             }
         }
         
@@ -47,7 +47,12 @@ public class Player : Unit
         {
             var actionSuccess = TryExecuteUnitAction(onMouseTilePos, FinishAction);
             if (actionSuccess) SetBusy();
-        }   
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            SelectAction(GetAction<IdleAction>());
+        }
     }
 
     public override void StartTurn()
@@ -65,7 +70,14 @@ public class Player : Unit
         else
         {
             SelectAction(GetAction<MoveAction>());
+            ReloadSight();
         }
+    }
+
+    public void ContinueWorldTurn()
+    {
+        currentActionPoint = GameManager.instance.worldAp;
+        SelectAction(GetAction<MoveAction>());
     }
     
     public void SelectAction(IUnitAction action)
@@ -88,15 +100,14 @@ public class Player : Unit
         onSelectedChanged.Invoke();
 
         if (activeUnitAction.CanExecuteImmediately())
-        {
+        { 
             TryExecuteUnitAction(Vector3Int.zero, FinishAction);
         }
     }
 
     private void FinishAction()
     {
-        currentActionPoint -= activeUnitAction.GetCost();
-        onCostChanged.Invoke(currentActionPoint);
+        ConsumeCost(activeUnitAction.GetCost());
         
         ClearBusy();
         if(GameManager.instance.CompareState(GameState.Combat))
@@ -106,6 +117,7 @@ public class Player : Unit
         }
         else
         {
+            SelectAction(GetAction<IdleAction>());
             SelectAction(GetAction<MoveAction>());
         }
     }

@@ -79,6 +79,7 @@ public class TileSystem : MonoBehaviour
             {
                 var fow = Instantiate(worldFogOfWarPrefab, fogs).GetComponent<FogOfWar>(); 
                 fow.hexPosition = t.hexPosition;
+                fow.VisualSet();
             }
         }
 

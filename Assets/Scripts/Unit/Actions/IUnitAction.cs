@@ -61,6 +61,8 @@ public interface IUnitAction {
     public bool CanExecuteImmediately();
 
     public int GetAmmoCost();
+
+    public void ForceFinish();
 }
 
 public enum ActionType {
@@ -70,5 +72,5 @@ public enum ActionType {
     Dynamite,
     Idle,
     Reload,
-    Panning,
+    Fanning,
 }

@@ -87,7 +87,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 break;
             case ActionType.Reload:
                 break;
-            case ActionType.Panning:
+            case ActionType.Fanning:
                 AttackTileEffect();
                 break;
             default:
@@ -170,7 +170,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
             var go = Instantiate((_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, unit.hexPosition) ? 
                 attackUnitEffect : attackOutOfRangeEffect), Hex.Hex2World(unit.hexPosition), Quaternion.identity);
-            _effectStackBase.Push((GameObject)go);
+                
+            _effectStackBase.Push(go);
         }
 
         _curCoroutine = StartCoroutine(AttackTargetEffectCoroutine());

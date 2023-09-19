@@ -12,6 +12,7 @@ public class UnitSystem : MonoBehaviour
     
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
+    public UnityEvent onCombatFinish;
     
     /// <summary>
     /// 자식오브젝트에 존재하는 모든 Unit을 찾아 Units에 등록합니다.
@@ -99,7 +100,7 @@ public class UnitSystem : MonoBehaviour
     {
         RemoveUnit(unit);
 
-        if (IsCombatFinish()) GameManager.instance.FinishCombat();
+        if (IsCombatFinish()) onCombatFinish.Invoke();
     }
 
     private void RemoveUnit(Unit unit)

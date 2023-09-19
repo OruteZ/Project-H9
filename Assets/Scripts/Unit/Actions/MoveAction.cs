@@ -21,7 +21,7 @@ public class MoveAction : BaseAction
 
     public override int GetCost()
     {
-        return _path is null ? 1 : _currentPositionIndex - 1;
+        return _path is null ? 1 : 0;
     }
 
     public override int GetAmmoCost()
@@ -80,47 +80,15 @@ public class MoveAction : BaseAction
         StartAction(onActionComplete);
 
         //_path = unit.hexTransform.Map.FindPath(unit.Position, targetPos, _maxMoveDistance) as List<Vector3Int>;
-        transform.forward =
-            (Hex.Hex2World(_path[_currentPositionIndex].hexPosition)
-             - transform.position).normalized;
+        // transform.forward =
+        //     (Hex.Hex2World(_path[_currentPositionIndex].hexPosition)
+        //      - transform.position).normalized;
     }
 
     private void Awake()
     {
         _currentPositionIndex = -1;
     }
-
-    // private void Update()
-    // {
-    //     if (!isActive) return;
-    //     
-    //     var targetTile = _path[_currentPositionIndex];
-    //     if (targetTile.inSight) unit.visual.enabled = true;
-    //     
-    //     Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].hexPosition);
-    //     targetPos.y = transform.position.y;
-    //     
-    //     Vector3 moveDirection = (targetPos - transform.position).normalized;
-    //     
-    //     Vector2 forwardVec2 = Vector2.Lerp(new Vector2(transform.forward.x, transform.forward.z),
-    //         new Vector2(moveDirection.x, moveDirection.z), Time.deltaTime * rotationSpeed);
-    //     
-    //     transform.forward = new Vector3(forwardVec2.x, 0, forwardVec2.y);
-    //     
-    //     transform.position += moveDirection * (moveSpeed * Time.deltaTime);
-    //     
-    //     if (Vector3.Distance(transform.position, targetPos) < 0.1f)
-    //     {
-    //         unit.hexPosition = _path[_currentPositionIndex].hexPosition;
-    //     
-    //         _currentPositionIndex++;
-    //         if (_currentPositionIndex >= _path.Count)
-    //         {
-    //             FinishAction();
-    //             _path = null;
-    //         }
-    //     }
-    // }
 
     protected override IEnumerator ExecuteCoroutine()
     {
@@ -144,25 +112,25 @@ public class MoveAction : BaseAction
 
             //moveDirection 설정
             Vector3 moveDirection = (targetPos - transform.position).normalized;
+            Vector3 rotateDirection = Quaternion.AngleAxis(10, Vector3.up) * moveDirection;
 
-            Vector2 forwardVec2 = Vector2.Lerp(new Vector2(transform.forward.x, transform.forward.z),
-                new Vector2(moveDirection.x, moveDirection.z), Time.deltaTime * rotationSpeed);
+            Vector2 forwardVec2 = Vector3.Slerp(new Vector2(transform.forward.x, transform.forward.z),
+                new Vector2(rotateDirection.x, rotateDirection.z), rotationSpeed * Time.deltaTime);
 
             transform.forward = new Vector3(forwardVec2.x, 0, forwardVec2.y);
-
-            transform.forward = new Vector3(forwardVec2.x, 0, forwardVec2.y);
-
             transform.position += moveDirection * (moveSpeed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, targetPos) < 0.1f)
             {
+                unit.ConsumeCost(1);
                 unit.hexPosition = _path[_currentPositionIndex].hexPosition;
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                if (_path is null) yield break;
 
                 _currentPositionIndex++;
                 if (_currentPositionIndex >= _path.Count)
                 {
                     FinishAction();
-                    unit.animator.SetTrigger(IDLE);
                     _path = null;
                     yield break;
                 }
@@ -175,5 +143,11 @@ public class MoveAction : BaseAction
     private Tile GetNextTile()
     {
         return _path[_currentPositionIndex];
+    }
+
+    public override void ForceFinish()
+    {
+        _path = null;
+        base.ForceFinish();
     }
 }

@@ -7,6 +7,17 @@ public class FogOfWar : TileObject
 {
     private bool _isRemoving = false;
     public float removingDuration;
+
+    private const float TO_CAM = 0.5f;
+
+    public void VisualSet()
+    {
+        // Vector3 camPos = Camera.main.transform.position;
+        //
+        // transform.position = Vector3.Lerp(transform.position, camPos, TO_CAM);
+        // transform.localScale *= TO_CAM;
+    }
+
     public new void SetVisible(bool value)
     {
         if (value)
@@ -46,7 +57,7 @@ public class FogOfWar : TileObject
         float durationReciprocal = 1 / removingDuration; 
         float t = 0;
 
-        var originalScale = meshRenderer.transform.localScale;
+        var originalScale = transform.localScale;
         
         while (t < removingDuration)
         {
@@ -54,7 +65,7 @@ public class FogOfWar : TileObject
             
             t += Time.deltaTime;
             var percentage = t * durationReciprocal;
-            meshRenderer.gameObject.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, percentage);
+            gameObject.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, percentage);
         }
         
         Destroy(gameObject);

@@ -163,4 +163,18 @@ public class EnemyAI : MonoBehaviour
         resultPosition = route[1].hexPosition;
         return true;
     }
+
+    private float _waitingTime = 0f;
+    public void AiWaitingCall(float time)
+    {
+        _waitingTime = time;
+    }
+
+    public bool IsWaiting() => _waitingTime > 0;
+
+    private void Update()
+    {
+        if (_waitingTime <= 0) return;
+        _waitingTime -= Time.deltaTime;
+    }
 }

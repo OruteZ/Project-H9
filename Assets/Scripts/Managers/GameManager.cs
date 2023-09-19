@@ -27,8 +27,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public int worldAp;
     public int worldTurn;
 
-    public UnityEvent onCombatFinish;
-
+    public bool backToWorldTrigger = false;
     public void StartCombat(string combatSceneName)
     {
         //Save World Data
@@ -44,9 +43,9 @@ public class GameManager : Generic.Singleton<GameManager>
     public void FinishCombat()
     {
         ChangeState(GameState.World);
-        
-        //LoadingManager.instance.LoadingScene(worldSceneName);
-        onCombatFinish.Invoke();
+
+        backToWorldTrigger = true;
+        LoadingManager.instance.LoadingScene(worldSceneName);
     }
 
     public bool CompareState(GameState state)

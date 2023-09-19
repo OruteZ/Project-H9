@@ -26,6 +26,7 @@ public class Enemy : Unit
     {
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
+        //if (_ai.IsWaiting()) return;
 
         _ai.SelectAction();
 
@@ -36,6 +37,7 @@ public class Enemy : Unit
 
         if (activeUnitAction is IdleAction)
         {
+            animator.SetTrigger(IDLE);
             FieldSystem.turnSystem.EndTurn();
             return;
         }
@@ -47,6 +49,7 @@ public class Enemy : Unit
         else
         {
             Debug.LogError("AI가 실행할 수 없는 행동을 실행 중 : " + activeUnitAction.GetActionType());
+            animator.SetTrigger(IDLE);
             FieldSystem.turnSystem.EndTurn();
             return;
         }
@@ -78,9 +81,9 @@ public class Enemy : Unit
         currentActionPoint -= activeUnitAction.GetCost();
         onCostChanged.Invoke(currentActionPoint);
         
-        if (currentActionPoint <= 0)
-        {
-            FieldSystem.turnSystem.EndTurn();
-        }
+        // if (currentActionPoint <= 0)
+        // {
+        //     FieldSystem.turnSystem.EndTurn();
+        // }
     }
 }

@@ -7,7 +7,7 @@ using TMPro;
 /// <summary>
 /// 플레이어의 스텟 중 체력, 집중력, 액션 포인트를 표시하는 UI의 기능을 수행하는 클래스
 /// </summary>
-public class CurrentStatusUI : UISystem
+public class PlayerSummaryStatUI : UISystem
 {
     private UnitStat _playerStat;
     private Unit _player;

@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerHpUI : UISystem
 {
-    [SerializeField] private GameObject _playerHps;
-    public GameObject hpUIPrefab;
+    [SerializeField] private GameObject _playerHpContainer;
+    [SerializeField] private GameObject hpUIPrefab;
 
     private List<GameObject> _hpUIs = new List<GameObject>();
     private readonly Vector3 HP_UI_INIT_POSITION = new Vector3(-120, 0, 0);
@@ -42,7 +42,7 @@ public class PlayerHpUI : UISystem
         for (int i = 0; i < length; i++)
         {
             Vector3 pos = CalculateHpUIPosition(i);
-            GameObject ui = Instantiate(hpUIPrefab, pos, Quaternion.identity, _playerHps.transform);
+            GameObject ui = Instantiate(hpUIPrefab, pos, Quaternion.identity, _playerHpContainer.transform);
             ui.GetComponent<PlayerHpUIElement>().FillUI();
             _hpUIs.Add(ui);
             ui.SetActive(false);

@@ -18,7 +18,10 @@ public class CombatActionUI : UISystem
 
     private List<GameObject> _actionButtons;
     private GameObject _idleButton;
-    private IUnitAction _activeAction;
+    private IUnitAction _selectedAction;
+
+    private const int COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION = 150;
+
     // Start is called before the first frame update
     public new void Awake()
     {
@@ -43,7 +46,7 @@ public class CombatActionUI : UISystem
         _idleButton = _combatActionWindow.transform.GetChild(2).gameObject;
 
         _idleButton.SetActive(false);
-        _actionTooltipWindow.SetActive(false);
+        _actionTooltipWindow.GetComponent<CombatActionTooltip>().CloseUI();
 
     }
     public override void OpenUI()
@@ -77,7 +80,6 @@ public class CombatActionUI : UISystem
         for (int i = 0; i < _actionButtons.Count; i++)
         {
             _actionButtons[i].SetActive(true);
-            _actionButtons[i].GetComponent<Button>().interactable = true;
         }
 
         //Find Idle Action
@@ -92,40 +94,40 @@ public class CombatActionUI : UISystem
         }
 
         //Sort Actions
-        List<IUnitAction> Sortedactions = SortActions(playerActions);
+        List<IUnitAction> SortedActions = SortActions(playerActions);
 
         //Set Button Info
-        for (int i = 0; i < Sortedactions.Count; i++)
+        for (int i = 0; i < SortedActions.Count; i++)
         {
-            _actionButtons[i].GetComponent<ActionSelectButtonElement>().SetActionSelectButton(Sortedactions[i], _player);
+            _actionButtons[i].GetComponent<ActionSelectButtonElement>().SetActionSelectButton(SortedActions[i], _player);
         }
 
-        //Find Active Action
-        ActionType activeActionType = ActionType.Idle;
-        for (int i = 0; i < Sortedactions.Count; i++)
+        //Find Selected Action
+        ActionType selectedActionType = ActionType.Idle;
+        for (int i = 0; i < SortedActions.Count; i++)
         {
-            if (Sortedactions[i].GetActionType() == _player.GetSelectedAction().GetActionType())
+            if (SortedActions[i].GetActionType() == _player.GetSelectedAction().GetActionType())
             {
-                _activeAction = Sortedactions[i];
-                activeActionType = Sortedactions[i].GetActionType();
+                _selectedAction = SortedActions[i];
+                selectedActionType = SortedActions[i].GetActionType();
                 break;
             }
         }
 
-        //Set Button Status & Set Active Action Button
+        //Set Button On/Off Status & Set Active Action Button(On Idle Button, Off Seleced Action Button)
         for (int i = 0; i < _actionButtons.Count; i++)
         {
-            bool isInitButton = (Sortedactions.Count > i);
-            bool isActiveSomeAction = (activeActionType != ActionType.Idle);
+            bool isInitButton = (SortedActions.Count > i);
             if (!isInitButton)
             {
                 _actionButtons[i].GetComponent<ActionSelectButtonElement>().OffActionSelectButton();
                 continue;
             }
-            if (isActiveSomeAction)
+            bool isSelectedSomeAction = (selectedActionType != ActionType.Idle);
+            if (isSelectedSomeAction)
             {
-                bool isActiveAction = _activeAction.IsActive();
-                bool isActiveActionButton = (_actionButtons[i].GetComponent<ActionSelectButtonElement>()._action.GetActionType() == activeActionType);
+                bool isActiveAction = _selectedAction.IsActive();
+                bool isActiveActionButton = (_actionButtons[i].GetComponent<ActionSelectButtonElement>()._action.GetActionType() == selectedActionType);
                 if (!isActiveAction && isActiveActionButton)
                 {
                     _idleButton.SetActive(true);
@@ -194,27 +196,16 @@ public class CombatActionUI : UISystem
     /// 액션 버튼 위에 마우스를 오버하면 그 액션 버튼 위에 액션에 대한 설명을 띄워줍니다.
     /// </summary>
     /// <param name="button"></param>
-    public void ShowActionUITooltip(GameObject button) 
+    public void ShowActionUITooltip(GameObject button)
     {
-        _actionTooltipWindow.SetActive(true);
-
         Vector3 pos = button.transform.position;
-        pos.y += 200;
+        pos.y += COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION;
         _actionTooltipWindow.transform.position = pos;
 
         IUnitAction action = button.GetComponent<ActionSelectButtonElement>()._action;
         if (action == null) return;
 
-        string actionName = action.GetActionType().ToString();
-        //string actionDescription = action.GetActionDescription().ToString();
-        string actionDescription = "Description";
-        if (actionName == "Idle") 
-        {
-            actionName = "Cancel " + _activeAction.GetActionType().ToString();
-            //actionDescription = _activeAction.GetActionDescription().ToString();
-        }
-        _actionTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = actionName;
-        _actionTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = actionDescription;
+        _actionTooltipWindow.GetComponent<CombatActionTooltip>().SetCombatActionTooltip(action, _selectedAction, pos);
     }
     /// <summary>
     /// 액션 설명창 UI를 닫습니다.
@@ -222,7 +213,6 @@ public class CombatActionUI : UISystem
     /// </summary>
     public void HideActionUITooltip()
     {
-        _actionTooltipWindow.SetActive(false);
-        _actionTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+        _actionTooltipWindow.GetComponent<CombatActionTooltip>().CloseUI();
     }
 }

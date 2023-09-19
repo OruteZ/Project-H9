@@ -9,9 +9,9 @@ public class LearnedSkillUI : UISystem
 {
     //Learned Skill UI
     [Header("Learned Skill UI")]
-    public GameObject skillIconPrefab;
+    [SerializeField] private GameObject _skillIconPrefab;
+    [SerializeField] private GameObject _skillIconContainer;
     private List<GameObject> _skillIconUIs = new List<GameObject>();
-    [SerializeField] private GameObject _iconScrollContents;
     private readonly Vector3 ICON_INIT_POSITION = new Vector3(235, 280, 0);
     private const float ICON_INTERVAL = 100;
 
@@ -26,7 +26,7 @@ public class LearnedSkillUI : UISystem
         int skillCount = _skillManager.GetAllSkills().Count;
         for (int i = 0; i < skillCount; i++)
         {
-            GameObject skillIcon = Instantiate(skillIconPrefab, ICON_INIT_POSITION, Quaternion.identity, _iconScrollContents.transform);
+            GameObject skillIcon = Instantiate(_skillIconPrefab, ICON_INIT_POSITION, Quaternion.identity, _skillIconContainer.transform);
 
             skillIcon.SetActive(false);
             _skillIconUIs.Add(skillIcon);
@@ -65,7 +65,7 @@ public class LearnedSkillUI : UISystem
                 cnt++;
             }
         }
-        _iconScrollContents.GetComponent<RectTransform>().sizeDelta = new Vector2(cnt * ICON_INTERVAL + 25, 100);
+        _skillIconContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(cnt * ICON_INTERVAL + 25, 100);
     }
 
 }

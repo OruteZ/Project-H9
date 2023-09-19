@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class EnemyHpUI : UISystem
 {
-    [SerializeField] private GameObject _hpBarPrefab;
-    [SerializeField] private GameObject _enemyhpBarUIs;
+    [SerializeField] private GameObject _enemyHpBarPrefab;
+    [SerializeField] private GameObject _enemyHpBarContainer;
 
     private List<GameObject> _enemyHpBars;
 
@@ -19,6 +19,7 @@ public class EnemyHpUI : UISystem
         base.Awake();
 
         _enemyHpBars = new List<GameObject>();
+        Debug.Log("asdf");
         EnemyHpBarObjectPooling(10);
     }
 
@@ -38,7 +39,7 @@ public class EnemyHpUI : UISystem
             }
         }
 
-        Debug.Log("적 개체 수:" + _enemies.Count);
+        //Debug.Log("적 개체 수:" + _enemies.Count);
 
         if (_enemies.Count > _enemyHpBars.Count) 
         {
@@ -47,7 +48,9 @@ public class EnemyHpUI : UISystem
         InitEnemyHpUIs();
         for (int i = 0; i < _enemies.Count; i++) 
         {
-            _enemyHpBars[i].SetActive(true);
+            if (_enemies[i].GetStat().curHp <= 0) 
+            {
+            }
             _enemyHpBars[i].GetComponent<EnemyHpUIElement>().SetEnemyHpUI(_enemies[i]);
         }
     }
@@ -55,14 +58,14 @@ public class EnemyHpUI : UISystem
     {
         foreach (GameObject hpBar in _enemyHpBars)
         {
-            hpBar.SetActive(false);
+            hpBar.GetComponent<EnemyHpUIElement>().ClearEnemyHpUI();
         }
     }
     private void EnemyHpBarObjectPooling(int length)
     {
         for (int i = 0; i < length; i++)
         {
-            GameObject ui = Instantiate(_hpBarPrefab, Vector3.zero, Quaternion.identity, _enemyhpBarUIs.transform);
+            GameObject ui = Instantiate(_enemyHpBarPrefab, Vector3.zero, Quaternion.identity, _enemyHpBarContainer.transform);
             _enemyHpBars.Add(ui);
         }
         InitEnemyHpUIs();

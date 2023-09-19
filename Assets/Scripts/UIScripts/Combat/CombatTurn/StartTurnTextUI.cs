@@ -6,7 +6,7 @@ using TMPro;
 /// <summary>
 /// 전투 중 현재 시작되는 턴의 주인을 화면 중앙에 텍스트로 표시하는 기능을 수행하는 클래스
 /// </summary>
-public class StartTurnTextUI : MonoBehaviour
+public class StartTurnTextUI : UISystem
 {
     public TextMeshProUGUI turnText;
     // Start is called before the first frame update

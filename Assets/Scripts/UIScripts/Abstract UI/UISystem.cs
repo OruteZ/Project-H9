@@ -4,17 +4,27 @@ using UnityEngine;
 
 public abstract class UISystem : Generic.Singleton<UISystem>
 {
+    protected List<UISystem> uiSubsystems = new List<UISystem>();
+
     /// <summary>
     /// UI를 열었을 때 작동합니다.
     /// </summary>
     public virtual void OpenUI() 
     {
+        foreach (UISystem sys in uiSubsystems) 
+        {
+            sys.OpenUI();
+        }
     }
     /// <summary>
     /// UI를 닫았을 때 작동합니다.
     /// </summary>
     public virtual void CloseUI()
     {
+        foreach (UISystem sys in uiSubsystems)
+        {
+            sys.CloseUI();
+        }
     }
 
     /// <summary>

@@ -12,33 +12,28 @@ using UnityEngine.EventSystems;
 public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
     public IUnitAction _action { get; private set; }
-    private CombatActionUI _combatActionUI;
 
-    private GameObject _APCostUI;
-    private GameObject _AmmoCostUI;
+    [SerializeField] private GameObject _skillImage;
+    [SerializeField] private GameObject _highlightEffect;
+    private Color32 grayColor = new Color32(0, 0, 0, 200);
+    private Color32 redColor = new Color32(240, 64, 0, 200);
+    private Color32 yellowColor = new Color32(240, 240, 0, 200);
+
+    [SerializeField] private GameObject _APCostUI;
+    [SerializeField] private GameObject _AmmoCostUI;
     private Color _APCostUIInitColor;
     private Color _AmmoCostUIInitColor;
 
-    private GameObject _ActionNameUI;
+    [SerializeField] private GameObject _ActionNameUI;
 
     [SerializeField] private Texture2D _textures; //test Texture. 이동, 공격, 장전, 패닝 순서
     private ActionType[] normalActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload };
     private Sprite[] _sprites;
 
     private bool _isSelectable;
-
-    void SetUp()
-    {
-        _APCostUI = gameObject.transform.GetChild(0).gameObject;
-        _AmmoCostUI = gameObject.transform.GetChild(1).gameObject;
-        _ActionNameUI = gameObject.transform.GetChild(2).gameObject;
-    }
     void Awake()
     {
-        SetUp();
-
         _sprites = Resources.LoadAll<Sprite>("Sprite/" + _textures.name);
-        GetComponent<Image>().sprite = _sprites[0];
 
         _isSelectable = true;
 
@@ -57,6 +52,10 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         _action = action;
 
         //Button selectable Setting
+        // 플레이어의 턴이 아닌 경우 - 선택 불가
+        // 플레이어가 이미 행동을 실행 중인 경우 - 선택 불가
+        // 플레이어가 어떤 행동을 선택했는데, 해당 버튼의 행동이 선택된 행동이 아닐 경우 - 선택 불가. 단, Idle버튼은 제외.
+        // SetCostIcons() 메소드에서 Cost가 부족하다고 판단되면 - 선택 불가
         _isSelectable = _action.IsSelectable();
         IUnitAction playerSelectedAction = player.GetSelectedAction();
         bool isPlayerTurn = FieldSystem.turnSystem.turnOwner is Player;
@@ -64,16 +63,10 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         bool isSelectedAction = (playerSelectedAction.GetActionType() == _action.GetActionType());
         bool isIdleAction = (action.GetActionType() == ActionType.Idle);
         bool isActiveAction = playerSelectedAction.IsActive();
-        Debug.Log(isActiveAction);
-        if ((!isPlayerTurn) || (isPlayerSelectAction && !isSelectedAction && !isIdleAction) || isActiveAction)
+        if ((!isPlayerTurn) || isActiveAction || (isPlayerSelectAction && !isSelectedAction && !isIdleAction))
         {
             _isSelectable = false;
-            Debug.Log("Selectable = " + _isSelectable);
         }
-        SetUp();
-
-
-        if (action.GetActionType() == ActionType.Attack) Debug.Log(player.weapon.currentAmmo + " - " + action.GetAmmoCost());
 
         SetCostIcons(player.currentActionPoint, player.weapon.currentAmmo);
         GetComponent<Button>().interactable = _isSelectable;
@@ -84,13 +77,28 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         {
             spr = GetActionSprite(playerSelectedAction.GetActionType());
         }
-        GetComponent<Image>().sprite = spr;
-        GetComponent<Image>().color = Color.white;
+        _skillImage.GetComponent<Image>().sprite = spr;
+
+        Color skillIconColor = Color.gray;
+        if (_isSelectable)
+        {
+            skillIconColor = Color.white;
+        }
+        _skillImage.GetComponent<Image>().color = skillIconColor;
+
+
+        //highlight Setting
+        Color hLColor = redColor;
         bool isRunOutAmmo = ((action.GetActionType() == ActionType.Reload) && (player.weapon.currentAmmo == 0));
         if (isRunOutAmmo) 
         {
-            GetComponent<Image>().color = Color.yellow;
+            hLColor = yellowColor;
         }
+        if (!_isSelectable) 
+        {
+            hLColor = grayColor;
+        }
+        _highlightEffect.GetComponent<Image>().color = hLColor;
 
         //Text Setting
         string actionName = action.GetActionType().ToString();
@@ -115,15 +123,13 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         _isSelectable = false;
         GetComponent<Button>().interactable = _isSelectable;
 
-        SetUp();
-
         //Cost Icon Visible Setting
         _APCostUI.SetActive(false);
         _AmmoCostUI.SetActive(false);
 
         //Button Image Setting
-        GetComponent<Image>().sprite = null;
-        GetComponent<Image>().color = new Color(1, 1, 1);
+        _skillImage.GetComponent<Image>().sprite = null;
+        _skillImage.GetComponent<Image>().color = Color.gray;
 
         //Text Setting
         _ActionNameUI.GetComponent<TextMeshProUGUI>().text = "";
@@ -155,7 +161,6 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         icon.GetComponent<Image>().color = initColor;
         if (currentCost < requiredCost)
         {
-            Debug.Log(currentCost + " -- " + requiredCost);
             icon.GetComponent<Image>().color = Color.gray;
             _isSelectable = false;
         }

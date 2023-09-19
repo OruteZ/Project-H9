@@ -18,14 +18,16 @@ public class ItemListUI : UISystem
     private readonly Vector3 ITEM_LIST_INIT_POSITION = new Vector3(364, -60, 0);
     private const float ITEM_LIST_INTERVAL = 100;
 
-    public GameObject itemListPrefab;
-    [SerializeField] private GameObject _itemListPrefabs;
+    [SerializeField] private GameObject _itemListPrefab;
+    [SerializeField] private GameObject _itemListContainer;
+
     [SerializeField] private GameObject _weaponItemPanel;
     [SerializeField] private GameObject _usableItemPanel;
     [SerializeField] private GameObject _otherItemPanel;
     [SerializeField] private GameObject _weaponItemListScrollContents;
     [SerializeField] private GameObject _usableItemListScrollContents;
     [SerializeField] private GameObject _otherItemListScrollContents;
+
     [SerializeField] private GameObject _itemTooltipWindow;
 
     private static int _itemListCount = 0;
@@ -97,7 +99,7 @@ public class ItemListUI : UISystem
         for (int i = 0; i < _itemLists.Count; i++)
         {
             _itemLists[i].SetActive(false);
-            _itemLists[i].transform.SetParent(_itemListPrefabs.transform);
+            _itemLists[i].transform.SetParent(_itemListContainer.transform);
         }
         Inventory inventory = _itemManager.GetInventory();
 
@@ -136,7 +138,7 @@ public class ItemListUI : UISystem
     {
         for (int i = 0; i < ITEM_LIST_INIT_COUNT; i++)
         {
-            GameObject itemList = Instantiate(itemListPrefab, ITEM_LIST_INIT_POSITION, Quaternion.identity, _itemListPrefabs.transform);
+            GameObject itemList = Instantiate(_itemListPrefab, ITEM_LIST_INIT_POSITION, Quaternion.identity, _itemListContainer.transform);
 
             itemList.SetActive(false);
             _itemLists.Add(itemList);
@@ -275,5 +277,18 @@ public class ItemListUI : UISystem
         _itemManager.DiscardItem(_currentItemIndex);
         SetItemLists();
         CloseItemUseWindow();
+    }
+
+    public void OnWeaponItemUIBtnClick()
+    {
+        ChangeItemUIStatus(ItemInfo.ItemCategory.Weapon);
+    }
+    public void OnUsableItemUIBtnClick()
+    {
+        ChangeItemUIStatus(ItemInfo.ItemCategory.Usable);
+    }
+    public void OnOtherItemUIBtnClick()
+    {
+        ChangeItemUIStatus(ItemInfo.ItemCategory.Other);
     }
 }

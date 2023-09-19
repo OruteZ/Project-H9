@@ -29,6 +29,7 @@ public class CombatWindowUI : UISystem
     /// 현재 시작되는 턴 주인에 맞춰서 화면 중앙에 텍스트를 출력하는 기능
     /// </summary>
     public StartTurnTextUI startTurnTextUI { get; private set; }
+    public TurnOrderUI turnOrderUI { get; private set; }
 
     // Start is called before the first frame update
     private new void Awake()
@@ -40,24 +41,16 @@ public class CombatWindowUI : UISystem
         enemyHpUI = GetComponent<EnemyHpUI>();
         enemyStatUI = GetComponent<EnemyStatUI>();
         startTurnTextUI = GetComponent<StartTurnTextUI>();
+        turnOrderUI = GetComponent<TurnOrderUI>();
+
+        uiSubsystems.Add(combatActionUI);
+        uiSubsystems.Add(magazineUI);
+        uiSubsystems.Add(enemyHpUI);
+        uiSubsystems.Add(enemyStatUI);
+        uiSubsystems.Add(startTurnTextUI);
+        uiSubsystems.Add(turnOrderUI);
     }
 
-    public override void OpenUI()
-    {
-        base.OpenUI();
-        combatActionUI.OpenUI();
-        magazineUI.OpenUI();
-        enemyHpUI.OpenUI();
-        enemyStatUI.OpenUI();
-    }
-    public override void CloseUI()
-    {
-        base.CloseUI();
-        combatActionUI.CloseUI();
-        magazineUI.CloseUI();
-        enemyHpUI.CloseUI();
-        enemyStatUI.CloseUI();
-    }
     public override void ClosePopupWindow()
     {
         enemyStatUI.CloseEnemyStatUI();

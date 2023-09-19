@@ -31,6 +31,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     private Sprite[] _sprites;
 
     private bool _isSelectable;
+    private bool _isEnoughCost;
     void Awake()
     {
         _sprites = Resources.LoadAll<Sprite>("Sprite/" + _textures.name);
@@ -68,7 +69,12 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
             _isSelectable = false;
         }
 
+        _isEnoughCost = true;
         SetCostIcons(player.currentActionPoint, player.weapon.currentAmmo);
+        if (!_isEnoughCost)
+        {
+            _isSelectable = false;
+        }
         GetComponent<Button>().interactable = _isSelectable;
 
         //Button Image Setting
@@ -121,6 +127,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         _action = null;
         //Button selectable Setting
         _isSelectable = false;
+        _isEnoughCost = false;
         GetComponent<Button>().interactable = _isSelectable;
 
         //Cost Icon Visible Setting
@@ -162,7 +169,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         if (currentCost < requiredCost)
         {
             icon.GetComponent<Image>().color = Color.gray;
-            _isSelectable = false;
+            _isEnoughCost = false;
         }
 
         //Cost Icon Text Setting
@@ -174,6 +181,8 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     /// </summary>
     public void OnClickActionSeleteButton() 
     {
+        if (!GetComponent<Button>().IsInteractable()) return;
+        if (FieldSystem.unitSystem.IsCombatFinish()) return;
         bool isIdleButton = (_action.GetActionType() == ActionType.Idle);
         bool isActiveSelectedAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
         if (isIdleButton && isActiveSelectedAction) return;
@@ -223,5 +232,10 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
             return _sprites[3];
         }
         return null;
+    }
+
+    public override bool IsInteractable()
+    {
+        return _isSelectable;
     }
 }

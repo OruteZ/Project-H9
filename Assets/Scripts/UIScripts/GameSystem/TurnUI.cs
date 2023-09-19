@@ -10,6 +10,19 @@ using TMPro;
 public class TurnUI : UISystem
 {
     [SerializeField] private GameObject _turnText;
+    [SerializeField] private GameObject _endTurnButton;
+
+    private bool _isInteractable = true;
+    private bool _isHighlight = false;
+
+    private void Update()
+    {
+        SetEndTurnButton();
+        if (Input.GetKeyDown(KeyCode.BackQuote)) 
+        {
+            OnClickEndTurnButton();
+        }
+    }
 
     /// <summary>
     /// 화면 우측 상단에 현재 턴 수를 표시한다.
@@ -28,7 +41,13 @@ public class TurnUI : UISystem
         }
         _turnText.GetComponent<TextMeshProUGUI>().text = "Turn " + currentTurn;
     }
-    
+    public void SetEndTurnButton() 
+    {
+        Color color = Color.white;
+        if (!IsButtonInteractable()) color = Color.black;
+        else if (IsButtonHighlighted()) color = Color.yellow;
+        _endTurnButton.GetComponent<Image>().color = color;
+    }
 
     /// <summary>
     /// 턴 종료 버튼을 클릭할 시 실행됩니다.
@@ -36,9 +55,34 @@ public class TurnUI : UISystem
     /// </summary>
     public void OnClickEndTurnButton() 
     {
-        if (FieldSystem.turnSystem.turnOwner is Player)
+        Debug.Log("adsf");
+        if (IsButtonInteractable())
         {
             FieldSystem.turnSystem.EndTurn();
+        }
+    }
+
+    private bool IsButtonInteractable()
+    {
+        bool isPlayerTurn = (FieldSystem.turnSystem.turnOwner is Player);
+        bool isActiveAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
+        bool isCombatFinished = (GameManager.instance.CompareState(GameState.Combat) && FieldSystem.unitSystem.IsCombatFinish());
+        if (isPlayerTurn && !isActiveAction && !isCombatFinished) 
+        {
+            return true;
+        }
+        return false;
+    }
+    private bool IsButtonHighlighted() 
+    {
+        if (GameManager.instance.CompareState(GameState.World))
+        {
+            Debug.Log("world");
+            return (FieldSystem.unitSystem.GetPlayer().currentActionPoint <= 0);
+        }
+        else
+        {
+            return !UIManager.instance.combatUI.combatActionUI.IsThereSeletableButton();
         }
     }
 }

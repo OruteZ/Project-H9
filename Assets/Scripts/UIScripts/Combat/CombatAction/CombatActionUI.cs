@@ -22,6 +22,22 @@ public class CombatActionUI : UISystem
 
     private const int COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION = 150;
 
+    private KeyCode[] _shortCutKey = 
+    {   
+            KeyCode.Alpha1, 
+            KeyCode.Alpha2, 
+            KeyCode.Alpha3, 
+            KeyCode.Alpha4, 
+            KeyCode.Alpha5, 
+            KeyCode.Alpha6, 
+            KeyCode.Alpha7, 
+            KeyCode.Alpha8, 
+            KeyCode.Alpha9, 
+            KeyCode.Alpha0,
+            KeyCode.Minus,
+            KeyCode.Plus
+    };
+
     // Start is called before the first frame update
     public new void Awake()
     {
@@ -48,6 +64,25 @@ public class CombatActionUI : UISystem
         _idleButton.SetActive(false);
         _actionTooltipWindow.GetComponent<CombatActionTooltip>().CloseUI();
 
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i <= _actionButtons.Count; i++)
+        {
+            if (Input.GetKeyDown(_shortCutKey[i]))
+            {
+                _player = FieldSystem.unitSystem.GetPlayer();
+                if (_actionButtons[i].GetComponent<ActionSelectButtonElement>()._action == null)
+                {
+                    _idleButton.GetComponent<ActionSelectButtonElement>().OnClickActionSeleteButton();
+                }
+                else
+                {
+                    _actionButtons[i].GetComponent<ActionSelectButtonElement>().OnClickActionSeleteButton();
+                }
+            }
+        }
     }
     public override void OpenUI()
     {
@@ -214,5 +249,19 @@ public class CombatActionUI : UISystem
     public void HideActionUITooltip()
     {
         _actionTooltipWindow.GetComponent<CombatActionTooltip>().CloseUI();
+    }
+
+    public bool IsThereSeletableButton() 
+    {
+        foreach (GameObject btn in _actionButtons) 
+        {
+            if (btn.GetComponent<ActionSelectButtonElement>()._action == null) continue;
+            if (_idleButton.activeSelf) return true;
+            if (btn.GetComponent<ActionSelectButtonElement>().IsInteractable()) 
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

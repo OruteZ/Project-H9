@@ -32,9 +32,10 @@ private void Awake()
     public void EndTurn()
     {
         Debug.Log("Finish Turn Call");
-        
+
         //todo : combat finish check
-        
+
+        Debug.Log(FieldSystem.unitSystem.GetPlayer().IsBusy());
         if (FieldSystem.unitSystem.GetPlayer().IsBusy()) return;
         StartTurn();
     }

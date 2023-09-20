@@ -18,4 +18,9 @@ public abstract class UIElement : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    public virtual bool IsInteractable() 
+    {
+        return true;
+    }
 }

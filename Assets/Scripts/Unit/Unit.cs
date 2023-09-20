@@ -229,6 +229,10 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         return _isBusy;
     }
+    public bool HasDead() 
+    {
+        return _hasDead;
+    }
 
     protected bool TryExecuteUnitAction(Vector3Int targetPosition, Action onActionFinish)
     {

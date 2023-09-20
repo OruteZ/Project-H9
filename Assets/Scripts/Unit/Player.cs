@@ -47,6 +47,7 @@ public class Player : Unit
         if (Input.GetMouseButtonDown(0) && isMouseOnTile) 
         {
             var actionSuccess = TryExecuteUnitAction(onMouseTilePos, FinishAction);
+            Debug.Log("actionSuccess: " + actionSuccess);
             if (actionSuccess) SetBusy();
         }
 
@@ -109,6 +110,7 @@ public class Player : Unit
 
     private void FinishAction()
     {
+        Debug.Log("Finish Action : player");
         ConsumeCost(activeUnitAction.GetCost());
         
         ClearBusy();

@@ -51,6 +51,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     protected void FinishAction()
     {
+        Debug.Log("Finish Action : Action");
         switch (GetActionType())
         {
             case ActionType.Move:

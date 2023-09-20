@@ -104,7 +104,9 @@ public class Player : Unit
 
         if (activeUnitAction.CanExecuteImmediately())
         { 
-            TryExecuteUnitAction(Vector3Int.zero, FinishAction);
+            var actionSuccess = TryExecuteUnitAction(Vector3Int.zero, FinishAction);
+            Debug.Log("actionSuccess: " + actionSuccess);
+            if (actionSuccess && activeUnitAction is not IdleAction) SetBusy();
         }
     }
 

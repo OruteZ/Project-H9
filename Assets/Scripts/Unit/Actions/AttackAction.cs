@@ -125,17 +125,16 @@ public class AttackAction : BaseAction
     {
         unit.animator.SetTrigger(IDLE);
         
-        // float timer = 1f;
-        // while ((timer -= Time.deltaTime) > 0)
-        // {
-        //     Transform tsf;
-        //     Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
-        //
-        //     float rotationSpeed = 10f;
-        //     transform.forward = Vector3.Slerp(tsf.forward, aimDirection, Time.deltaTime * rotationSpeed);
-        //     yield return null;
-        // }
-        yield return new WaitForSeconds(1f);
+        float timer = 1f;
+        while ((timer -= Time.deltaTime) > 0)
+        {
+            Transform tsf;
+            Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
+        
+            float rotationSpeed = 10f;
+            transform.forward = Vector3.Slerp(tsf.forward, aimDirection, Time.deltaTime * rotationSpeed);
+            yield return null;
+        }
         
         unit.animator.SetTrigger(SHOOT);
 

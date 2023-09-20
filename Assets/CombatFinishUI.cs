@@ -32,7 +32,10 @@ public class CombatFinishUI : MonoBehaviour
 
     private void OnCombatFinish()
     {
-        if(FieldSystem.unitSystem.GetPlayer().GetStat().curHp <= 0) gameOverCanvas.SetActive(true);
+        var player = FieldSystem.unitSystem.GetPlayer();
+        
+        if(player is null)gameOverCanvas.SetActive(true);
+        else if(player.GetStat().curHp <= 0) gameOverCanvas.SetActive(true);
         else combatFinishCanvas.SetActive(true);
     }
 }

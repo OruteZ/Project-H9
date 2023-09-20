@@ -36,8 +36,7 @@ public class HexGridLayout : MonoBehaviour
             innerSize = Hex.Radius - thickness;
         }
 
-        var grids = EditorApplication.isPlaying ?
-            FieldSystem.tileSystem.GetAllTiles() : GetComponentsInChildren<Tile>().ToList();
+        var grids = FieldSystem.tileSystem.GetAllTiles() ?? GetComponentsInChildren<Tile>().ToList();
 
 
         foreach (var grid in grids)

@@ -260,7 +260,8 @@ public class TileSystem : MonoBehaviour
                 }
             }
         }
-
+        
+        Debug.Log("MaxLength is " + maxLength + ", Find Path is null");
         return null;
     }
 

@@ -70,6 +70,7 @@ public class FanningAction : BaseAction
     private const float ROTATION_SPEED = 10f;
     protected override IEnumerator ExecuteCoroutine()
     {
+        unit.animator.ResetTrigger(IDLE);
         unit.animator.SetTrigger(FANNING);
         
         Transform tsf;

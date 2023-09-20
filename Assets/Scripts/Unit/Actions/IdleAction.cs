@@ -32,17 +32,14 @@ public class IdleAction : BaseAction
 
     public override bool CanExecuteImmediately()
     {
-        return true;
+        return false;
     }
 
     public override bool CanExecute()
     {
-        return true;
+        return false;
     }
 
     public override void Execute(Action onActionComplete)
-    {
-        Debug.Log("IDLE Action Execute");
-        unit.animator.SetTrigger(IDLE);
-    }
+    { }
 }

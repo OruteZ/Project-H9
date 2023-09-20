@@ -55,7 +55,6 @@ public class TurnUI : UISystem
     /// </summary>
     public void OnClickEndTurnButton() 
     {
-        Debug.Log("adsf");
         if (IsButtonInteractable())
         {
             FieldSystem.turnSystem.EndTurn();
@@ -64,20 +63,17 @@ public class TurnUI : UISystem
 
     private bool IsButtonInteractable()
     {
-        bool isPlayerTurn = (FieldSystem.turnSystem.turnOwner is Player);
-        bool isActiveAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
-        bool isCombatFinished = (GameManager.instance.CompareState(GameState.Combat) && FieldSystem.unitSystem.IsCombatFinish());
-        if (isPlayerTurn && !isActiveAction && !isCombatFinished) 
-        {
-            return true;
-        }
-        return false;
+        if (FieldSystem.turnSystem.turnOwner is not Player) return false;
+        if (GameManager.instance.CompareState(GameState.Combat) && FieldSystem.unitSystem.IsCombatFinish())
+            return false;
+        if (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive()) return false;
+        
+        return true;
     }
     private bool IsButtonHighlighted() 
     {
         if (GameManager.instance.CompareState(GameState.World))
         {
-            Debug.Log("world");
             return (FieldSystem.unitSystem.GetPlayer().currentActionPoint <= 0);
         }
         else

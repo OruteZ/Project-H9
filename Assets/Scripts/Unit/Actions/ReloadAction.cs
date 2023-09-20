@@ -56,6 +56,7 @@ public class ReloadAction : BaseAction
 
     protected override IEnumerator ExecuteCoroutine()
     {
+        unit.animator.ResetTrigger(IDLE);
         unit.animator.SetTrigger(RELOAD);
 
         yield return new WaitForSeconds(ANIM_TIME);

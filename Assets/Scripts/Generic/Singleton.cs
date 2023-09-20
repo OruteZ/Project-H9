@@ -1,5 +1,4 @@
 using System;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace Generic
@@ -29,7 +28,6 @@ namespace Generic
 
         protected void Awake()
         {
-#if UNITY_EDITOR
             if (_instance != null)
             {
                 if (gameObject != _instance.gameObject)
@@ -37,7 +35,7 @@ namespace Generic
                     Destroy(gameObject);
                 }
             }
-#endif
+            
             if (transform.parent != null && transform.root != null)
             {
                 DontDestroyOnLoad(transform.root.gameObject);
@@ -48,10 +46,10 @@ namespace Generic
             }
         }
 
-        [RuntimeInitializeOnLoadMethod]
-        private static void RuntimeInitializeOnLoad()
-        {
-            _instance = null;
-        }
+        // [RuntimeInitializeOnLoadMethod]
+        // private static void RuntimeInitializeOnLoad()
+        // {
+        //     _instance = null;
+        // }
     }
 }

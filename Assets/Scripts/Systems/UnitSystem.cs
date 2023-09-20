@@ -41,6 +41,7 @@ public class UnitSystem : MonoBehaviour
             {
                 var info = enemyDB.GetInfo(enemy.dataIndex);
                 enemy.SetUp("Enemy", info.stat, weaponDB.Clone(info.weaponIndex), info.model);
+                enemy.isVisible = false;
             }
             unit.onDead.AddListener(OnUnitDead);
             unit.onMoved.AddListener(OnUnitMoved);
@@ -54,7 +55,8 @@ public class UnitSystem : MonoBehaviour
             Debug.LogError("Wrong function Call : check finish combat in world scene");
             throw new NotSupportedException();
         }
-        
+
+        if (GetPlayer() is null) return true;
         if (GetPlayer().GetStat().curHp <= 0) return true;
         if (units.Count == 1 && units[0] is Player) return true;
 
@@ -71,8 +73,6 @@ public class UnitSystem : MonoBehaviour
         {
             if (unit is Player u) return u;
         }
-        
-        Debug.LogError("Cant find Player");
         return null;
     }
     
@@ -83,6 +83,8 @@ public class UnitSystem : MonoBehaviour
     /// <returns>Unit Reference</returns>
     public Unit GetUnit(Vector3Int position)
     {
+        if (units is null) return null;
+        
         foreach (var unit in units)
         {
             if (unit.hexPosition == position) return unit;

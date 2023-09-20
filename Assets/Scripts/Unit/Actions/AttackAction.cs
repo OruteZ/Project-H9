@@ -136,6 +136,7 @@ public class AttackAction : BaseAction
             yield return null;
         }
         
+        unit.animator.ResetTrigger(IDLE);
         unit.animator.SetTrigger(SHOOT);
 
         //총을 드는 시간 (애니메이션에 따라 다른 상수 값 , 무조건 프레임 단위로) 

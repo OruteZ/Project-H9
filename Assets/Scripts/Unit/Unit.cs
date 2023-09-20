@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using Generic;
-using Unity.VisualScripting;
-using UnityEditor.Animations;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -108,7 +105,6 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         unitName = newName;
         stat = unitStat;
-        stat.curHp = stat.curHp;
         
         foreach (IUnitAction action in _unitActionArray)
         {
@@ -236,11 +232,23 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     protected bool TryExecuteUnitAction(Vector3Int targetPosition, Action onActionFinish)
     {
+        if (activeUnitAction is null)
+        {
+            Debug.Log("Active action is null");
+            return false;
+        }
+
         activeUnitAction.SetTarget(targetPosition);
 
         if (activeUnitAction.CanExecute() is not true)
         {
             Debug.Log("Can't Execute");
+            return false;
+        }
+
+        if (activeUnitAction.IsActive())
+        {
+            Debug.Log("Already Executing");
             return false;
         }
 
@@ -313,7 +321,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     private void SetAnimatorController(WeaponType type)
     {
         animator.runtimeAnimatorController =
-            (AnimatorController)Resources.Load("Animator/" + (type is WeaponType.Null ? "Standing" : type) + " Animator Controller");
+            (RuntimeAnimatorController)Resources.Load("Animator/" + (type is WeaponType.Null ? "Standing" : type) + " Animator Controller");
     }
 
     public void DestroyThis()
@@ -325,7 +333,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         if (currentActionPoint < value)
         {
-            Debug.LogError("Consume More Cost");
+            Debug.LogError("Player Consumed More Cost");
             return;
         }
 

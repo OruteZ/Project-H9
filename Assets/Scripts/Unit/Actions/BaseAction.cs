@@ -9,7 +9,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     protected static readonly int MOVE = Animator.StringToHash("Move");
     protected static readonly int SHOOT = Animator.StringToHash("Shoot");
     protected static readonly int IDLE = Animator.StringToHash("Idle");
-    protected static readonly int FANNING = Animator.StringToHash("Panning");
+    protected static readonly int FANNING = Animator.StringToHash("Fanning");
     protected static readonly int RELOAD = Animator.StringToHash("Reload");
     
     public abstract ActionType GetActionType();
@@ -66,7 +66,6 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
             case ActionType.Dynamite:
                 break;
             case ActionType.Idle:
-                unit.animator.ResetTrigger(IDLE);
                 break;
             case ActionType.Reload:
                 unit.animator.ResetTrigger(RELOAD);
@@ -77,10 +76,11 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        unit.animator.SetTrigger(IDLE);
         
         isActive = false;
         onActionComplete();
-
         onActionFinished.Invoke();
         Unit.onAnyUnitActionFinished.Invoke(unit);
     }

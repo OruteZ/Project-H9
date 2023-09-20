@@ -123,6 +123,12 @@ public abstract class Unit : MonoBehaviour, IUnit
         {
             Debug.LogError("Hand is NULL");
         }
+
+        waist = model.GetComponent<UnitModel>().waist;
+        if (waist == null)
+        {
+            Debug.LogError("Waist (Hip) is NULL");
+        }
         
         EquipWeapon(newWeapon);
         // FieldSystem.onCombatAwake.AddListener(() => {animator.SetTrigger(START);});
@@ -131,7 +137,6 @@ public abstract class Unit : MonoBehaviour, IUnit
     private void EquipWeapon(Weapon newWeapon)
     {
         newWeapon.unit = this;
-        newWeapon.unitStat = stat;
         weapon = newWeapon;
 
         if (weapon.model == null)
@@ -148,7 +153,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
         else
         {
-            weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
+            weaponModel = Instantiate(weapon.model, waist).GetComponent<WeaponModel>();
             weaponModel.SetStandPosRot();
             newWeapon.weaponModel = weaponModel;
             SetAnimatorController(WeaponType.Null);

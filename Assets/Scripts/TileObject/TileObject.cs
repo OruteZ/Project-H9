@@ -13,7 +13,7 @@ public abstract class TileObject : MonoBehaviour
     public int id;
     
     public HexTransform hexTransform;
-    public MeshRenderer meshRenderer;
+    public Renderer meshRenderer;
 
     protected Tile tile;
     public Vector3Int hexPosition
@@ -83,6 +83,9 @@ public abstract class TileObject : MonoBehaviour
     public void SetMesh()
     {
         hexTransform = GetComponent<HexTransform>();
-        meshRenderer = GetComponent<MeshRenderer>();
+        if (TryGetComponent(out meshRenderer) is false)
+        {
+            meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        }
     }
 }

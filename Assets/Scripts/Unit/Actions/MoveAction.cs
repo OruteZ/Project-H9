@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+
 public class MoveAction : BaseAction
 {
-    
     public override ActionType GetActionType() => ActionType.Move;
 
     private int maxMoveDistance => unit.currentActionPoint;
@@ -112,12 +113,13 @@ public class MoveAction : BaseAction
 
             //moveDirection 설정
             Vector3 moveDirection = (targetPos - transform.position).normalized;
-            Vector3 rotateDirection = Quaternion.AngleAxis(10, Vector3.up) * moveDirection;
+            
+            //회전
+            Vector3 rotateDirection = moveDirection;
+            Vector3 forwardVec2 = Vector3.Slerp(transform.forward,
+                rotateDirection, rotationSpeed * Time.deltaTime);
 
-            Vector2 forwardVec2 = Vector3.Slerp(new Vector2(transform.forward.x, transform.forward.z),
-                new Vector2(rotateDirection.x, rotateDirection.z), rotationSpeed * Time.deltaTime);
-
-            transform.forward = new Vector3(forwardVec2.x, 0, forwardVec2.y);
+            transform.forward = forwardVec2;
             transform.position += moveDirection * (moveSpeed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, targetPos) < 0.1f)

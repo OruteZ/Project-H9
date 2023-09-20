@@ -18,7 +18,7 @@ public abstract class Weapon
     public float criticalDamage;
     public int script;
     
-    public UnitStat unitStat;
+    public UnitStat unitStat => unit.GetStat();
     public Unit unit;
     public WeaponModel weaponModel;
 

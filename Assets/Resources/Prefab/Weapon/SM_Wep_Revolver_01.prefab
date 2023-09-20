@@ -299,10 +299,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gunpoint: {fileID: 6906953570896713979}
   trigger: {fileID: 0}
+  rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+  positionOffset: {x: 0, y: 0, z: 0}
   handRotationOffset: {x: -0.38480735, y: 0.38480735, z: -0.59323126, w: 0.59323126}
   handPositionOffset: {x: 2.4, y: 4.75, z: -1.54}
-  standRotationOffset: {x: 0, y: 0, z: 0, w: 0}
-  standPositionOffset: {x: 0, y: 0, z: 0}
+  standRotationOffset: {x: -0.0124870185, y: 0.6730451, z: 0.2177926, w: 0.70669705}
+  standPositionOffset: {x: -7.06, y: -0.46, z: -20.75}
 --- !u!1 &5610334337701580740
 GameObject:
   m_ObjectHideFlags: 0

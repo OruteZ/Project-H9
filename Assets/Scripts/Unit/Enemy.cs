@@ -9,6 +9,7 @@ public class Enemy : Unit
     public int dataIndex;
     private EnemyAI _ai;
     private static readonly int IDLE = Animator.StringToHash("Idle");
+    private static readonly int START_TURN = Animator.StringToHash("StartTurn");
 
     protected override void Awake()
     {
@@ -64,6 +65,7 @@ public class Enemy : Unit
 
         #endif
         animator.SetTrigger(IDLE);
+        animator.SetTrigger(START_TURN);
         currentActionPoint = stat.actionPoint;
 
         hasAttacked = false;

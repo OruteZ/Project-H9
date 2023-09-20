@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class Player : Unit
 {
     [HideInInspector] public UnityEvent onSelectedChanged;
+    private static readonly int START_TURN = Animator.StringToHash("StartTurn");
 
     public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel)
     {
@@ -63,6 +64,7 @@ public class Player : Unit
         
         hasAttacked = false;
         currentActionPoint = stat.actionPoint;
+        animator.SetTrigger(START_TURN);
         if (GameManager.instance.CompareState(GameState.Combat))
         {
             SelectAction(GetAction<IdleAction>());

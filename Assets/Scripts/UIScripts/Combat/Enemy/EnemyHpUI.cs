@@ -19,7 +19,6 @@ public class EnemyHpUI : UISystem
         base.Awake();
 
         _enemyHpBars = new List<GameObject>();
-        Debug.Log("asdf");
         EnemyHpBarObjectPooling(10);
     }
 

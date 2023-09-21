@@ -9,12 +9,15 @@ public class TurnOrderUIElement : MonoBehaviour
     private Image _frame;
     private Image _characterIcon;
 
+    private Color32 _frameColor_green = new Color32(64, 192, 224, 255);
+    private Color32 _frameColor_red = new Color32(160, 32, 64,255);
+
     private readonly Vector3 TURN_ORDER_UI_INIT_POSITION = new Vector3(-440, 0, 0);
     private const int TURN_ORDER_UI_INTERVAL = 80;
     private Vector3 _targetPosition;
 
-    private const float TURN_ORDER_UI_INIT_SIZE = 50;
-    private const float TURN_ORDER_UI_SIZE_SCALE = 1.2f;
+    private const float TURN_ORDER_UI_INIT_SIZE = 60;
+    private const float TURN_ORDER_UI_SIZE_SCALE = 1.25f;
     private bool _isTurnOwner;
 
     [SerializeField] private Texture2D _textures;
@@ -77,14 +80,15 @@ public class TurnOrderUIElement : MonoBehaviour
         _unit = unit;
         if (unit is Player)
         {
-            _frame.color = Color.green;
+            _frame.color = _frameColor_green;
             _characterIcon.sprite = _sprites[0];
         }
         else 
         {
-            _frame.color = Color.red;
+            _frame.color = _frameColor_red;
             _characterIcon.sprite = _sprites[1];
         }
+        Debug.Log(_frame.color);
 
         //_characterIcon.sprite = unit.icon;
 

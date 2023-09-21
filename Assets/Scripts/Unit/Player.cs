@@ -46,9 +46,12 @@ public class Player : Unit
         
         if (Input.GetMouseButtonDown(0) && isMouseOnTile) 
         {
+            SetBusy();
+
             var actionSuccess = TryExecuteUnitAction(onMouseTilePos, FinishAction);
             Debug.Log("actionSuccess: " + actionSuccess);
-            if (actionSuccess) SetBusy();
+            
+            if(actionSuccess is false) ClearBusy();
         }
 
         if (Input.GetMouseButton(1))
@@ -65,9 +68,9 @@ public class Player : Unit
         
         hasAttacked = false;
         currentActionPoint = stat.actionPoint;
-        animator.SetTrigger(START_TURN);
         if (GameManager.instance.CompareState(GameState.Combat))
         {
+            animator.SetTrigger(START_TURN);
             SelectAction(GetAction<IdleAction>());
         }
         else
@@ -87,8 +90,6 @@ public class Player : Unit
     {
         if (IsBusy()) return;
         if (IsMyTurn() is false) return;
-        
-        //if (activeUnitAction == action) return;
         if (action.IsSelectable() is false) return;
         if (action.GetCost() > currentActionPoint)
         {  
@@ -104,14 +105,18 @@ public class Player : Unit
 
         if (activeUnitAction.CanExecuteImmediately())
         { 
-            TryExecuteUnitAction(Vector3Int.zero, FinishAction);
+            if (activeUnitAction is not IdleAction) SetBusy();
+            var actionSuccess = TryExecuteUnitAction(Vector3Int.zero, FinishAction);
+            Debug.Log("actionSuccess: " + actionSuccess);
+            
+            if(actionSuccess is false) ClearBusy();
         }
     }
 
     private void FinishAction()
     {
         Debug.Log("Finish Action : player");
-        ConsumeCost(activeUnitAction.GetCost());
+        if(activeUnitAction is not MoveAction) ConsumeCost(activeUnitAction.GetCost());
         
         ClearBusy();
         if(GameManager.instance.CompareState(GameState.Combat))
@@ -174,6 +179,16 @@ public class Player : Unit
             tile.inSight = 
                 FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition) &&
                 Hex.Distance(hexTransform.position, tile.hexPosition) <= stat.sightRange;
+
+#if UNITY_EDITOR
+            var unitVision = FieldSystem.unitSystem.GetUnit(tile.hexPosition);
+            if (unitVision != null)
+            {
+                Debug.Log("Unit : " + unitVision.gameObject.name);
+                Debug.Log("Vision Check = " + FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition));
+                Debug.Log("Distance = " + Hex.Distance(hexTransform.position, tile.hexPosition));
+            }
+#endif
         }
     }
     

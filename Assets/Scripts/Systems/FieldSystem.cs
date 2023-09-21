@@ -41,13 +41,14 @@ public class FieldSystem : MonoBehaviour
         tileSystem.SetUpTilesAndObjects();
         unitSystem.SetUpUnits();
         turnSystem.SetUp();
-        StartCoroutine(StartCombatCoroutine());
+        StartCoroutine(StartSceneCoroutine());
     }
 
-    private IEnumerator StartCombatCoroutine()
+    private IEnumerator StartSceneCoroutine()
     {
         onCombatAwake.Invoke();
         unitSystem.GetPlayer().ReloadSight();
+        UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI();
 
         yield return new WaitUntil(() => LoadingManager.instance.isLoadingNow is false);
         

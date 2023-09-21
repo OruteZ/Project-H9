@@ -16,7 +16,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     [SerializeField] private GameObject _skillImage;
     [SerializeField] private GameObject _highlightEffect;
     private Color32 grayColor = new Color32(0, 0, 0, 200);
-    private Color32 redColor = new Color32(240, 64, 0, 200);
+    private Color32 whiteColor = new Color32(251, 251, 251, 200);
     private Color32 yellowColor = new Color32(240, 240, 0, 200);
 
     [SerializeField] private GameObject _APCostUI;
@@ -28,13 +28,13 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
     [SerializeField] private Texture2D _textures; //test Texture. 이동, 공격, 장전, 패닝 순서
     private ActionType[] normalActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload };
-    private Sprite[] _sprites;
+    public Sprite[] _sprites;
 
     private bool _isSelectable;
     private bool _isEnoughCost;
     void Awake()
     {
-        _sprites = Resources.LoadAll<Sprite>("Sprite/" + _textures.name);
+        //_sprites = Resources.LoadAll<Sprite>("Sprite/" + _textures.name);
 
         _isSelectable = true;
 
@@ -59,6 +59,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         // SetCostIcons() 메소드에서 Cost가 부족하다고 판단되면 - 선택 불가
         _isSelectable = _action.IsSelectable();
         IUnitAction playerSelectedAction = player.GetSelectedAction();
+        
         bool isPlayerTurn = FieldSystem.turnSystem.turnOwner is Player;
         bool isPlayerSelectAction = (playerSelectedAction.GetActionType() != ActionType.Idle);
         bool isSelectedAction = (playerSelectedAction.GetActionType() == _action.GetActionType());
@@ -94,7 +95,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
 
         //highlight Setting
-        Color hLColor = redColor;
+        Color hLColor = whiteColor;
         bool isRunOutAmmo = ((action.GetActionType() == ActionType.Reload) && (player.weapon.currentAmmo == 0));
         if (isRunOutAmmo) 
         {

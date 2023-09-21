@@ -22,7 +22,8 @@ public class MoveAction : BaseAction
 
     public override int GetCost()
     {
-        return _path is null ? 1 : 0;
+        //return _path is null ? 1 : 0;
+        return 1;
     }
 
     public override int GetAmmoCost()
@@ -133,6 +134,7 @@ public class MoveAction : BaseAction
                 if (_currentPositionIndex >= _path.Count)
                 {
                     FinishAction();
+                    unit.animator.SetTrigger(IDLE);
                     _path = null;
                     yield break;
                 }

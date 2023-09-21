@@ -123,28 +123,22 @@ public class TileEffectManager : Singleton<TileEffectManager>
     {
         while (true)
         {
+            yield return null;
             while (_effectStackRelatedTarget.TryPop(out var effect)) { Destroy(effect); }
 
-            if (Player.TryGetMouseOverTilePos(out var target) is false)
-            {
-                yield return null;
-                continue;
-            }
-            
+            if (Player.TryGetMouseOverTilePos(out var target) is false) continue;
+            if (FieldSystem.tileSystem.GetTile(target).visible is false) continue;
+            if (FieldSystem.unitSystem.GetUnit(target) is not null) continue;
+
             var route = FieldSystem.tileSystem.FindPath(_player.hexPosition, target);
-            if (route is null)
-            {
-                yield return null;
-                continue;
-            }
+            if (route is null) continue;
+            
             
             if(route.Count - 1 <= _player.currentActionPoint) foreach (var tile in route)
             {
                 var pos = tile.hexPosition;
                 SetEffectTarget(pos, EffectType.Friendly);
             }
-    
-            yield return null;
         }
         // ReSharper disable once IteratorNeverReturns
     }

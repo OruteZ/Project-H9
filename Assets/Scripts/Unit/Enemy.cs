@@ -27,6 +27,7 @@ public class Enemy : Unit
     {
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
+        if (FieldSystem.unitSystem.IsCombatFinish()) return;
         //if (_ai.IsWaiting()) return;
 
         _ai.SelectAction();
@@ -34,11 +35,11 @@ public class Enemy : Unit
         activeUnitAction = _ai.resultAction;
         Vector3Int target = _ai.resultPosition;
         
-        Debug.Log("Enemy Selected Action = " + activeUnitAction.GetActionType());
+        Debug.Log("AI Selected Action = " + activeUnitAction.GetActionType());
 
         if (activeUnitAction is IdleAction)
         {
-            animator.SetTrigger(IDLE);
+            animator.Play(IDLE);
             FieldSystem.turnSystem.EndTurn();
             return;
         }

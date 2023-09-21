@@ -595,7 +595,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 10}
+  m_SizeDelta: {x: 6, y: 6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2230849032760892332
 CanvasRenderer:
@@ -774,6 +774,11 @@ MonoBehaviour:
   _AmmoCostUI: {fileID: 5083579760199542248}
   _ActionNameUI: {fileID: 2665889084040074670}
   _textures: {fileID: 2800000, guid: e1fa569d06b7636429aff43399f65b1f, type: 3}
+  _sprites:
+  - {fileID: -77189912, guid: e1fa569d06b7636429aff43399f65b1f, type: 3}
+  - {fileID: -1398390497, guid: e1fa569d06b7636429aff43399f65b1f, type: 3}
+  - {fileID: 450169389, guid: e1fa569d06b7636429aff43399f65b1f, type: 3}
+  - {fileID: -1334875892, guid: e1fa569d06b7636429aff43399f65b1f, type: 3}
 --- !u!222 &6887397507019667453
 CanvasRenderer:
   m_ObjectHideFlags: 0

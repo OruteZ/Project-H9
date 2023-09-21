@@ -123,7 +123,7 @@ public class CombatActionUI : UISystem
             if (playerActions[i].GetActionType() is ActionType.Idle)
             {
                 _idleButton.GetComponent<ActionSelectButtonElement>().SetActionSelectButton(playerActions[i], _player);
-                _idleButton.SetActive(false);
+                _idleButton.SetActive(false); //@@ 
                 break;
             }
         }
@@ -163,6 +163,8 @@ public class CombatActionUI : UISystem
             {
                 bool isActiveAction = _selectedAction.IsActive();
                 bool isActiveActionButton = (_actionButtons[i].GetComponent<ActionSelectButtonElement>()._action.GetActionType() == selectedActionType);
+                
+//                Debug.Log(isActiveAction + " " + isActiveActionButton);
                 if (!isActiveAction && isActiveActionButton)
                 {
                     _idleButton.SetActive(true);
@@ -233,9 +235,9 @@ public class CombatActionUI : UISystem
     /// <param name="button"></param>
     public void ShowActionUITooltip(GameObject button)
     {
-        Vector3 pos = button.transform.position;
-        pos.y += COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION;
-        _actionTooltipWindow.transform.position = pos;
+        Vector3 pos = button.GetComponent<RectTransform>().position;
+        pos.y += COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION * Camera.main.pixelHeight / 1080.0f;
+        _actionTooltipWindow.GetComponent<RectTransform>().position = pos;
 
         IUnitAction action = button.GetComponent<ActionSelectButtonElement>()._action;
         if (action == null) return;

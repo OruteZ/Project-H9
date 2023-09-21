@@ -36,7 +36,8 @@ public class EnemyAI : MonoBehaviour
                                 resultAction = _enemy.GetAction<ReloadAction>();
                                 resultPosition = Hex.zero;
                                 return INode.ENodeState.Success;
-                            })
+                            }),
+                            new ActionNode(IsCostOk)
                         }),
                     new SequenceNode(
                         new List<INode>
@@ -54,7 +55,8 @@ public class EnemyAI : MonoBehaviour
                                     return INode.ENodeState.Success;
                                 }
                                 return INode.ENodeState.Failure;
-                            })
+                            }),
+                            new ActionNode(IsCostOk)
                         }),
                     new SequenceNode(
                         new List<INode>
@@ -72,7 +74,8 @@ public class EnemyAI : MonoBehaviour
                                     return INode.ENodeState.Success;
                                 }
                                 return INode.ENodeState.Failure;
-                            })
+                            }),
+                            new ActionNode(IsCostOk)
                         }),
                     new SequenceNode(new List<INode>
                         {
@@ -85,7 +88,8 @@ public class EnemyAI : MonoBehaviour
                                 resultAction = _enemy.GetAction<AttackAction>();
                                 resultPosition = _playerPosMemory;
                                 return INode.ENodeState.Success;
-                            })
+                            }),
+                            new ActionNode(IsCostOk)
                         }
                         ),
                     new ActionNode(() =>
@@ -109,6 +113,8 @@ public class EnemyAI : MonoBehaviour
 
     private INode.ENodeState IsPlayerOutOfSight()
     {
+        if (FieldSystem.unitSystem.GetPlayer() is null) return INode.ENodeState.Success;
+        
         var curPlayerPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
         if (FieldSystem.tileSystem.VisionCheck(_enemy.hexPosition, curPlayerPos))
         {
@@ -164,17 +170,15 @@ public class EnemyAI : MonoBehaviour
         return true;
     }
 
-    private float _waitingTime = 0f;
-    public void AiWaitingCall(float time)
+    private INode.ENodeState IsCostOk()
     {
-        _waitingTime = time;
-    }
-
-    public bool IsWaiting() => _waitingTime > 0;
-
-    private void Update()
-    {
-        if (_waitingTime <= 0) return;
-        _waitingTime -= Time.deltaTime;
+        if (_enemy.currentActionPoint >= resultAction.GetCost())
+        {
+            return INode.ENodeState.Success;
+        }
+        else
+        {
+            return INode.ENodeState.Failure;
+        }
     }
 }

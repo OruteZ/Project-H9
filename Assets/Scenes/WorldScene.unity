@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589245, b: 0.2978263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7655,7 +7655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12984,7 +12984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoadingNow: 0
-  fadeDuration: 0
+  fadeDuration: 1
   canvas: {fileID: 0}
   progress: {fileID: 0}
 --- !u!4 &315837297
@@ -40126,8 +40126,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UiInteraction, Assembly-CSharp
+      - m_Target: {fileID: 136156469}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnExitBtnClick
         m_Mode: 1
         m_Arguments:
@@ -42879,7 +42879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4826482246484046, guid: 21ad646f7480143489a4865e1d1100e2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.4887533
+      value: 5.76
       objectReference: {fileID: 0}
     - target: {fileID: 4826482246484046, guid: 21ad646f7480143489a4865e1d1100e2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -42887,7 +42887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4826482246484046, guid: 21ad646f7480143489a4865e1d1100e2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.673726
+      value: -9.79
       objectReference: {fileID: 0}
     - target: {fileID: 4826482246484046, guid: 21ad646f7480143489a4865e1d1100e2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -46294,7 +46294,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -46345,14 +46345,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039307701}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.6830127, y: -0.18301266, z: 0.18301266, w: 0.6830127}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -30, z: 0}
 --- !u!114 &1039307704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66795,23 +66795,23 @@ MonoBehaviour:
   _currentState: 1
   playerWorldPos: {x: 2, y: 2, z: -4}
   playerStat:
-    maxHp: 20
-    curHp: 20
+    maxHp: 5
+    curHp: 5
     concentration: 60
-    sightRange: 8
-    speed: 61
-    actionPoint: 10
+    sightRange: 4
+    speed: 60
+    actionPoint: 4
     additionalHitRate: 0
-    criticalChance: 0.8
+    criticalChance: 0.1
     revolverAdditionalDamage: 0
     repeaterAdditionalDamage: 0
     shotgunAdditionalDamage: 0
     revolverAdditionalRange: 0
     repeaterAdditionalRange: 0
     shotgunAdditionalRange: 0
-    revolverCriticalDamage: 0
-    shotgunCriticalDamage: 0
-    repeaterCriticalDamage: 0
+    revolverCriticalDamage: 1
+    shotgunCriticalDamage: 1
+    repeaterCriticalDamage: 1
   playerWeaponIndex: 101
   playerModel: {fileID: 8346860575773991373, guid: e397d6d377b80f748b12eee185a4d1b6,
     type: 3}
@@ -88821,8 +88821,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a28d8b18c7272f4b8e043d02b8dafd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thickness: 0.05
-  height: 0.02
+  thickness: 0.01
+  height: 0.005
   isFlatTopped: 0
   material: {fileID: 2100000, guid: 6653050ac87d57c4f972f7b51ea558f3, type: 2}
   onDebug: 0

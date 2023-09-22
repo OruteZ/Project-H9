@@ -86,10 +86,6 @@ public class EnemyHpUIElement : UIElement
         _hpText.text = curHpText.ToString() + " / " + maxHp.ToString();
         _frontHpBar.value = curHp;
 
-        if (_enemy != enemy)
-        {
-            _backHpBar.value = curHp;
-        }
         _enemy = enemy;
     }
     public void ClearEnemyHpUI()

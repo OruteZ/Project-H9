@@ -13,9 +13,6 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
     private bool _isOpenTooltip = false;
     private bool _isMouseOver = false;
     private float _mouseOverCount = 0.0f;
-
-    private string _currentStatName;
-    private CharacterTooltip _characterTooltip;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,17 +29,15 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
             if (_mouseOverCount > 0.5f) 
             {
                 _isOpenTooltip = true;
-                _characterTooltip.SetCharacterTooltip(_currentStatName, GetComponent<RectTransform>().position.y);
+                UIManager.instance.characterUI.characterStatUI.OpenCharacterTooltip(_nameText.text, GetComponent<RectTransform>().position.y);
             }
         }
     }
-    public void SetCharacterStatText(string name, string value) 
+    public void SetCharacterStatText(CharacterStatUIInfo info)
     {
-        _currentStatName = name.Replace(':', '\0');
-        _nameText.text = name;
-        _contentsText.text = value;
-        _isSetContents = (_currentStatName != "");
-        _characterTooltip = UIManager.instance.characterUI.characterStatUI._characterStatTooltip.GetComponent<CharacterTooltip>();
+        _nameText.text = info.statName;
+        _contentsText.text = info.GetFinalStatValueString();
+        _isSetContents = (_nameText.text != "");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -63,6 +58,6 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
         _isMouseOver = false;
         _mouseOverCount = 0.0f;
 
-        _characterTooltip.CloseUI();
+        UIManager.instance.characterUI.characterStatUI.CloseCharacterTooltip(_nameText.text);
     }
 }

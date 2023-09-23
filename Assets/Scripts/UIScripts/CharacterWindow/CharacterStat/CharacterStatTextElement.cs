@@ -11,11 +11,12 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
 
     private bool _isSetContents = false;
     private bool _isOpenTooltip = false;
-    private bool _isMouseOver = false;
+    public bool isMouseOver { get; private set; }
     private float _mouseOverCount = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
+        isMouseOver = false;
         _nameText = GetComponent<TextMeshProUGUI>();
         _contentsText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
@@ -23,13 +24,13 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
     // Update is called once per frame
     void Update()
     {
-        if (_isMouseOver && !_isOpenTooltip && _isSetContents) 
+        if (isMouseOver && !_isOpenTooltip && _isSetContents) 
         {
             _mouseOverCount += Time.deltaTime;
             if (_mouseOverCount > 0.5f) 
             {
                 _isOpenTooltip = true;
-                UIManager.instance.characterUI.characterStatUI.OpenCharacterTooltip(_nameText.text, GetComponent<RectTransform>().position.y);
+                UIManager.instance.characterUI.characterStatUI.OpenCharacterTooltip(this, _nameText.text, GetComponent<RectTransform>().position.y);
             }
         }
     }
@@ -46,7 +47,7 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
         _contentsText.color = Color.yellow;
 
         _isOpenTooltip = false;
-        _isMouseOver = true;
+        isMouseOver = true;
         _mouseOverCount = 0.0f;
     }
     public void OnPointerExit(PointerEventData eventData)
@@ -55,9 +56,9 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
         _contentsText.color = Color.white;
 
         _isOpenTooltip = false;
-        _isMouseOver = false;
+        isMouseOver = false;
         _mouseOverCount = 0.0f;
 
-        UIManager.instance.characterUI.characterStatUI.CloseCharacterTooltip(_nameText.text);
+        UIManager.instance.characterUI.characterStatUI._characterStatTooltip.GetComponent<CharacterTooltip>().CloseUI();
     }
 }

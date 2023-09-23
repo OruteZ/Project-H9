@@ -62,14 +62,17 @@ public class CharacterStatUIInfo
         }
         return result;
     }
+    public float GetCorrectedValue(float stat)
+    {
+        if (statName == "Critical Chance") return ((int)(stat * 100));
+        return stat;
+    }
     public string GetFinalStatValueString() 
     {
-        float finalStat = GetFinalStatValue();
+        string finalStat = GetCorrectedValue(GetFinalStatValue()).ToString();
         if (statName == "") return "";
-        if (statName == "Additional Hit Rate") return finalStat.ToString() + "%";
-        if (statName == "Critical Chance") return ((int)(finalStat * 100)).ToString() + '%';
-
-
+        if (statName == "Additional Hit Rate") return finalStat + "%";
+        if (statName == "Critical Chance") return finalStat + '%';
 
         return finalStat.ToString();
     }
@@ -82,10 +85,6 @@ public class CharacterStatUI : UISystem
 {
     //Character Stat
     [Header("Character Stat UI")]
-    [SerializeField] private GameObject _characterStatText;
-    [SerializeField] private GameObject _weaponStatTextName;
-    [SerializeField] private GameObject _weaponStatTextContents;
-
     [SerializeField] private GameObject _characterStatTexts;
     [SerializeField] private GameObject _weaponStatTexts;
 
@@ -108,6 +107,7 @@ public class CharacterStatUI : UISystem
         "Range"
     };
     public Dictionary<string, CharacterStatUIInfo> characterStatInfo { get; private set; }
+
     private void Start()
     {
         characterStatInfo = new Dictionary<string, CharacterStatUIInfo>();
@@ -198,15 +198,12 @@ public class CharacterStatUI : UISystem
         }
     }
 
-    public void OpenCharacterTooltip(string name, float yPosition) 
+    public void OpenCharacterTooltip(CharacterStatTextElement textElement, string name, float yPosition) 
     {
-        _characterStatTooltip.GetComponent<CharacterTooltip>().SetCharacterTooltip(characterStatInfo[name], yPosition);
+        _characterStatTooltip.GetComponent<CharacterTooltip>().SetCharacterTooltip(textElement, characterStatInfo[name], yPosition);
     }
-    public void CloseCharacterTooltip(string name)
+    public void CloseCharacterTooltip()
     {
-        bool isTooltipMatched = (name == _characterStatTooltip.GetComponent<CharacterTooltip>().nameText);
-        bool isTooltipMouseOver = (_characterStatTooltip.GetComponent<CharacterTooltip>().isMouseOver);
-        if (!isTooltipMatched || isTooltipMouseOver) return;
         _characterStatTooltip.GetComponent<CharacterTooltip>().CloseUI();
     }
 }

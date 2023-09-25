@@ -10,7 +10,7 @@ public class TurnOrderUIElement : MonoBehaviour
     private Image _characterIcon;
 
     private Color32 _frameColor_green = new Color32(64, 192, 224, 255);
-    private Color32 _frameColor_red = new Color32(160, 32, 64,255);
+    private Color32 _frameColor_red = new Color32(160, 32, 64, 255);
 
     private readonly Vector3 TURN_ORDER_UI_INIT_POSITION = new Vector3(-440, 0, 0);
     private const int TURN_ORDER_UI_INTERVAL = 80;

@@ -2,14 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool
+/// <summary>
+/// 생성과 삭제가 잦아 재사용이 필요한 오브젝트에 사용하는 풀링용 클래스입니다.
+/// 자식 클래스를 생성하여 Set(), OnUpdated() 를 변경해서 사용하는 것을 권장합니다.
+/// </summary>
+/// <typeparam name="T"> Instance를 가질 수 있는 Transform / RectTrasnform 를 취급합니다. </typeparam>
+public class ObjectPool<T> where T : Transform
 {
     private class Wrapper
     {
-        public Wrapper(GameObject instance, float lifeTime)
+        public T Instance;
+        public float LifeTime;
+        public float Duration;
+        public bool Enable; // true 일시 사용 가능함(Object Pool에 들어가있으며, 인게임에서 사용중이 아님)
+
+        public Wrapper(T instance, float lifeTime)
         {
             Instance = instance;
-            instance.SetActive(false);
+            instance.gameObject.SetActive(false);
             LifeTime = lifeTime;
             Duration = 0.0f;
             Enable = true;
@@ -17,15 +27,10 @@ public class ObjectPool
 
         public void Reset()
         {
-            Instance.SetActive(false);
+            Instance.gameObject.SetActive(false);
             Duration = 0.0f;
             Enable = true;
         }
-
-        public GameObject Instance;
-        public float LifeTime;
-        public float Duration;
-        public bool Enable; // true 일시 사용 가능함(Object Pool에 들어가있으며, 인게임에서 사용중이 아님)
     }
 
     private GameObject _prefab;
@@ -35,7 +40,15 @@ public class ObjectPool
     private Queue<Wrapper> _pool;
     private List<Wrapper> _working;
 
-    public void Init(string objectKey, Transform parent, float generalLifeTime, uint expectedSize=10, string rootName="")
+    /// <summary>
+    /// Prefab 을 Resources에서 불러와 저장, parent 설정 등 초기 1회만 실행하는 내용입니다.
+    /// </summary>
+    /// <param name="objectKey"> Resources.Load로 호출할 수 있는 Prefab 경로 </param>
+    /// <param name="parent"> 모든 instance의 부모인 root의 부모로 배치할 Transform </param>
+    /// <param name="generalLifeTime"></param>
+    /// <param name="expectedSize"></param>
+    /// <param name="rootName"></param>
+    public virtual void Init(string objectKey, Transform parent, float generalLifeTime, uint expectedSize=10, string rootName="")
     {
         _pool = new Queue<Wrapper>();
         _working = new List<Wrapper>();
@@ -51,13 +64,17 @@ public class ObjectPool
             Debug.LogError($"Resources: '{objectKey}' is not exist");
     }
 
-    public GameObject Set(Vector3 position)
+    /// <summary>
+    /// Pool에서 빼내어 Object를 사용하기 시작합니다.
+    /// </summary>
+    /// <returns> ObjectPool에서 사용하기 시작한 Instance를 반환합니다. </returns>
+    public virtual T Set()
     {
         if (_limitSize > _pool.Count)
         {
             for (int i = 0; i < _limitSize; i++)
             {
-                var ins = GameObject.Instantiate(_prefab, Vector3.zero, Quaternion.identity, _root);
+                var ins = GameObject.Instantiate(_prefab, Vector3.zero, Quaternion.identity, _root) as T;
                 var insWrap = new Wrapper(ins, _generalLifeTime);
                 _pool.Enqueue(insWrap);
             }
@@ -65,15 +82,14 @@ public class ObjectPool
 
         var target = _pool.Dequeue();
         _working.Add(target);
-        target.Instance.transform.position = position;
-        target.Instance.SetActive(true);
+        target.Instance.gameObject.SetActive(true);
         return target.Instance;
     }
     
     /// <summary>
-    /// 관리하는 Scene에서 하나의 OnUpdated를 실행해주어야 작동합니다.
+    /// 관리하는 Scene에서 매 프레임마다 OnUpdated를 실행하여 작동합니다.
     /// </summary>
-    public void OnUpdated(float deltaTime)
+    public virtual void OnUpdated(float deltaTime)
     {
         for (int i = _working.Count - 1; 0 <= i; i--)
         {

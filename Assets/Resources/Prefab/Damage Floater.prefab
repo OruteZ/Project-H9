@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1368774576812075888}
   - component: {fileID: 3626199169825749098}
-  - component: {fileID: 6824269611616841219}
   - component: {fileID: -5789721716996225207}
   m_Layer: 5
   m_Name: Damage Floater
@@ -47,19 +46,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4100184763837731637}
   m_CullTransparentMesh: 1
---- !u!114 &6824269611616841219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4100184763837731637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 804b3201d8751c24bb8b489822fe48cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  randomScale: 1
 --- !u!114 &-5789721716996225207
 MonoBehaviour:
   m_ObjectHideFlags: 0

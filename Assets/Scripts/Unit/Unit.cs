@@ -85,12 +85,8 @@ public abstract class Unit : MonoBehaviour, IUnit
         
         hp -= damage;
         onHit.Invoke(this, damage);
-        
-        //todo : Object Pool
-        var dmgEffect = Instantiate(damageEffect).GetComponent<DamageFloat>();
-        
-        dmgEffect.SetPosition(transform.position, 2);
-        dmgEffect.SetValue(damage);
+
+        Service.SetText(damage.ToString(), transform.position);
 
         if (hp <= 0 && _hasDead is false)
         {
@@ -329,6 +325,10 @@ public abstract class Unit : MonoBehaviour, IUnit
                 var targetPos = target.transform.position + Vector3.up;
                 VFXManager.instance.TryInstantiate(fxBloodingKey, bloodingTime, targetPos);
             }
+        }
+        else
+        {
+            Service.SetText("MISS", target.transform.position);
         }
         weapon.currentAmmo--;
 

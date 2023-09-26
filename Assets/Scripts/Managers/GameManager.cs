@@ -60,6 +60,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public int worldTurn;
 
     public bool backToWorldTrigger = false;
+
     public void StartCombat(string combatSceneName)
     {
         //Save World Data
@@ -91,5 +92,11 @@ public class GameManager : Generic.Singleton<GameManager>
 
         _currentState = state;
         //UIManager.instance.ChangeScenePrepare(state);
+    }
+
+    public void Update()
+    {
+        var deltaTime = Time.deltaTime;
+        Service.OnUpdated(deltaTime);
     }
 }

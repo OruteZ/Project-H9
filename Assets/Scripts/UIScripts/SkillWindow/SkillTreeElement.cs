@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 스킬 트리 안에서 각각의 Skill요소를 구성하는 스킬트리UI의 기능을 구현한 클래스
 /// </summary>
-public class SkillTreeElement : Generic.Singleton<SkillTreeElement>
+public class SkillTreeElement : UIElement
 {
     //개선 필요
     //현재는 인스펙터 창에서 스킬 인덱스와 선행스킬연결UI를 하나하나 지정해주어야 하는데, 더 좋은 방법을 찾아서 변경해야 할 듯
@@ -26,20 +26,15 @@ public class SkillTreeElement : Generic.Singleton<SkillTreeElement>
     [SerializeField] private Image _ButtonImage;
     [SerializeField] private Image _SkillImage;
 
-    //1==습득불가, 2==습득가능, 3==습득완료 -> enum으로 변경해야 하나?
-    //SkillIcon 코드로 기능 이전 예정?
-    [SerializeField] private Sprite[] _effect = new Sprite[3];
+    private SkillIcon _skillIcon;
     private void Start()
     {
+        _skillIcon = _SkillImage.GetComponent<SkillIcon>();
+        _skillIcon.SetSkillIndex(skillIndex);
         for (int i = 0; i < _precedenceLine.Length; i++)
         {
             _precedenceLine[i].transform.GetChild(0).GetComponent<Image>().color = new Color32(199, 94, 8, 255);
         }
-    }
-
-    private void Update()
-    {
-        if (_effectImage.color == Color.white) Debug.LogError("?????");
     }
 
     /// <summary>
@@ -64,7 +59,6 @@ public class SkillTreeElement : Generic.Singleton<SkillTreeElement>
         new Color32(255, 201, 18, 255),
         new Color32(72, 219, 18, 255)
         };
-        Debug.Log(effectColor[state]);
         _effectImage.color = effectColor[state];
     }
     /// <summary>

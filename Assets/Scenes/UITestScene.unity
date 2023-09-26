@@ -3435,7 +3435,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 2869367.2, y: 0}
+  m_AnchoredPosition: {x: 3581096.8, y: 0}
   m_SizeDelta: {x: 25, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &116450563
@@ -58242,11 +58242,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1438744710299128481, guid: 7552baf1c30645f4e851aef9cdeeb0bb,
         type: 3}
-      propertyPath: _uiManager
-      value: 
-      objectReference: {fileID: 1734141979}
-    - target: {fileID: 1438744710299128481, guid: 7552baf1c30645f4e851aef9cdeeb0bb,
-        type: 3}
       propertyPath: _precedenceLine.Array.data[0]
       value: 
       objectReference: {fileID: 691417355}
@@ -58255,21 +58250,6 @@ PrefabInstance:
       propertyPath: _precedenceLine.Array.data[1]
       value: 
       objectReference: {fileID: 571800983}
-    - target: {fileID: 4104560390898890761, guid: 7552baf1c30645f4e851aef9cdeeb0bb,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.85882354
-      objectReference: {fileID: 0}
-    - target: {fileID: 4104560390898890761, guid: 7552baf1c30645f4e851aef9cdeeb0bb,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.28235295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749443037867943630, guid: 7552baf1c30645f4e851aef9cdeeb0bb,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4898608753034365753, guid: 7552baf1c30645f4e851aef9cdeeb0bb,
         type: 3}
       propertyPath: m_Pivot.x
@@ -58379,21 +58359,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SkillUI Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898608753034365758, guid: 7552baf1c30645f4e851aef9cdeeb0bb,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7443952202532886731, guid: 7552baf1c30645f4e851aef9cdeeb0bb,
-        type: 3}
-      propertyPath: _uiManager
-      value: 
-      objectReference: {fileID: 1734141979}
-    - target: {fileID: 7443952202532886731, guid: 7552baf1c30645f4e851aef9cdeeb0bb,
-        type: 3}
-      propertyPath: _skillManager
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7552baf1c30645f4e851aef9cdeeb0bb, type: 3}

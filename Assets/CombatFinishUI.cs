@@ -10,7 +10,7 @@ public class CombatFinishUI : MonoBehaviour
 
     public void Start()
     {
-        FieldSystem.unitSystem.onCombatFinish.AddListener(() => Invoke(nameof(OnCombatFinish), 2f));
+        FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
         combatFinishCanvas.SetActive(false);
         gameOverCanvas.SetActive(false);
     }
@@ -30,12 +30,19 @@ public class CombatFinishUI : MonoBehaviour
         Application.Quit();
     }
 
-    private void OnCombatFinish()
+    private void OnCombatFinish(bool isPlayerWin)
     {
-        var player = FieldSystem.unitSystem.GetPlayer();
-        
-        if(player is null)gameOverCanvas.SetActive(true);
-        else if(player.GetStat().curHp <= 0) gameOverCanvas.SetActive(true);
-        else combatFinishCanvas.SetActive(true);
+        if(isPlayerWin is false) Invoke(nameof(TurnOnDefeatUI), 2f);
+        else Invoke(nameof(TurnOnWinUI), 2f);
+    }
+
+    private void TurnOnDefeatUI()
+    {
+        gameOverCanvas.SetActive(true);
+    }
+
+    private void TurnOnWinUI()
+    {
+        combatFinishCanvas.SetActive(true);
     }
 }

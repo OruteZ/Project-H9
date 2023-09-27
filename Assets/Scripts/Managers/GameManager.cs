@@ -19,7 +19,32 @@ public class GameManager : Generic.Singleton<GameManager>
     public UnitStat playerStat;
     public int playerWeaponIndex;
     public GameObject playerModel;
+    public List<int> playerPassiveIndexList;
 
+    #region LEVEL
+
+    [Header("Level system")] 
+    public int level;
+    public int curExp;
+    private int maxExp => level * 100;
+    public void GetExp(int exp)
+    {
+        curExp += exp;
+        while (curExp >= maxExp)
+        {
+            LevelUp();
+        }
+    }
+    private void LevelUp()
+    {
+        if (maxExp > curExp) return;
+
+        curExp -= maxExp;
+        level++;
+        playerStat.curHp = playerStat.maxHp;
+    }
+    #endregion
+    
     [Header("World Scene Name")] 
     public string worldSceneName;
 

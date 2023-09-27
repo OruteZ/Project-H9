@@ -23,16 +23,12 @@ public class Repeater : Weapon
     {
         int damage = GetFinalDamage();
         target.GetDamage(damage);
-
-        unit.onSuccessAttack.Invoke(target, damage);
     }
 
     private void CriticalAttack(Unit target)
     {
         int damage = GetFinalCriticalDamage();
         target.GetDamage(damage);
-        
-        unit.onCriticalAttack.Invoke(target, damage);
     }
 
     public override WeaponType GetWeaponType() => WeaponType.Repeater;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using PassiveSkill;
 using UnityEngine;
 
 public class Enemy : Unit
@@ -18,17 +19,16 @@ public class Enemy : Unit
         _ai = GetComponent<EnemyAI>();
     }
 
-    public override void SetUp(string newName, UnitStat unitStat, Weapon weapon, GameObject unitModel)
+    public override void SetUp(string newName, UnitStat unitStat, Weapon weapon, GameObject unitModel, List<Passive> passiveList)
     {
-        base.SetUp(newName, unitStat, weapon, unitModel);
+        base.SetUp(newName, unitStat, weapon, unitModel, passiveList);
     }
     
     public void Update()
     {
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
-        if (FieldSystem.unitSystem.IsCombatFinish()) return;
-        //if (_ai.IsWaiting()) return;
+        if (FieldSystem.unitSystem.IsCombatFinish(out var none)) return;
 
         _ai.SelectAction();
 
@@ -53,7 +53,6 @@ public class Enemy : Unit
             Debug.LogError("AI가 실행할 수 없는 행동을 실행 중 : " + activeUnitAction.GetActionType());
             animator.SetTrigger(IDLE);
             FieldSystem.turnSystem.EndTurn();
-            return;
         }
     }
 
@@ -80,9 +79,11 @@ public class Enemy : Unit
     
     private void FinishAction()
     {
+        int beforeCost = currentActionPoint;
+        
         ClearBusy();
         currentActionPoint -= activeUnitAction.GetCost();
-        onCostChanged.Invoke(currentActionPoint);
+        onCostChanged.Invoke(beforeCost, currentActionPoint);
         
         // if (currentActionPoint <= 0)
         // {

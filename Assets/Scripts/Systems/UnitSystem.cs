@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using PassiveSkill;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,16 +10,20 @@ public class UnitSystem : MonoBehaviour
 {
     [SerializeField] private WeaponDatabase weaponDB;
     [SerializeField] private EnemyDatabase enemyDB;
+    [SerializeField] private PassiveDatabase passiveDB;
     
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
-    public UnityEvent onCombatFinish;
+
+    private int _totalExp;
     
     /// <summary>
     /// 자식오브젝트에 존재하는 모든 Unit을 찾아 Units에 등록합니다.
     /// </summary>
     public void SetUpUnits()
     {
+        _totalExp = 0;
+        
         var childUnits = GetComponentsInChildren<Unit>();
         foreach (var unit in childUnits)
         {
@@ -29,9 +34,18 @@ public class UnitSystem : MonoBehaviour
         {
             if (unit is Player p)
             {
+                var playerPassiveIndexList = GameManager.instance.playerPassiveIndexList;
+                if (playerPassiveIndexList == null)
+                {
+                    Debug.LogError("GameManager.playerPassiveList is null");
+                    return;
+                }
+                
+                var playerPassiveList = playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, unit)).ToList();
+
                 p.SetUp("Player", GameManager.instance.playerStat, 
                     weaponDB.Clone(GameManager.instance.playerWeaponIndex),
-                    GameManager.instance.playerModel);
+                    GameManager.instance.playerModel, playerPassiveList);
                 if (GameManager.instance.CompareState(GameState.World))
                 {
                     p.hexTransform.position = GameManager.instance.playerWorldPos;
@@ -40,15 +54,17 @@ public class UnitSystem : MonoBehaviour
             else if(unit is Enemy enemy)
             {
                 var info = enemyDB.GetInfo(enemy.dataIndex);
-                enemy.SetUp("Enemy", info.stat, weaponDB.Clone(info.weaponIndex), info.model);
+                enemy.SetUp("Enemy", (UnitStat)info.stat.Clone(), weaponDB.Clone(info.weaponIndex), info.model, new List<Passive>());
                 enemy.isVisible = false;
+
+                _totalExp += info.rewardExp;
             }
             unit.onDead.AddListener(OnUnitDead);
             unit.onMoved.AddListener(OnUnitMoved);
         }
     }
 
-    public bool IsCombatFinish()
+    public bool IsCombatFinish(out bool hasPlayerWin)
     {
         if (GameManager.instance.CompareState(GameState.World))
         {
@@ -56,9 +72,15 @@ public class UnitSystem : MonoBehaviour
             throw new NotSupportedException();
         }
 
+        hasPlayerWin = false;
         if (GetPlayer() is null) return true;
         if (GetPlayer().GetStat().curHp <= 0) return true;
-        if (units.Count == 1 && units[0] is Player) return true;
+        
+        if (units.Count == 1 && units[0] is Player)
+        {
+            hasPlayerWin = true;
+            return true;
+        }
 
         return false;
     }
@@ -102,7 +124,11 @@ public class UnitSystem : MonoBehaviour
     {
         RemoveUnit(unit);
 
-        if (IsCombatFinish()) onCombatFinish.Invoke();
+        if (IsCombatFinish(out var playerWin))
+        {
+            if(playerWin) LevelSystem.ReservationExp(_totalExp);
+            FieldSystem.onCombatFinish.Invoke(playerWin);
+        }
     }
 
     private void RemoveUnit(Unit unit)

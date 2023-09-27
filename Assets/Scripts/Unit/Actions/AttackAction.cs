@@ -143,7 +143,7 @@ public class AttackAction : BaseAction
         int cnt = 20;
         for(int i = 0; i < cnt; i++) yield return null;
         
-        unit.TryAttack(_target);
+        unit.TryAttack(_target, 0);
 
         //Animation이 끝나고 IdleAction으로 돌아올 때 까지 대기 
         cnt = 69 - cnt;

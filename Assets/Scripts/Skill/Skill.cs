@@ -18,8 +18,8 @@ public class SkillInfo
     enum SkillActiveOrPassive
     {
         Null,
-        Active,
-        Passive
+        ActiveType,
+        PassiveType
     }
     enum Stat
     {
@@ -85,14 +85,14 @@ public class SkillInfo
         category = int.Parse(list[4]);
         activeOrPassive = int.Parse(list[5]);
         precedenceIndex = InitIntArrayValue(list[6]);
-        repeatCount = int.Parse(list[7]);
-        if (repeatCount == 0) repeatCount = 1;  //table issue
-        stat = InitIntArrayValue(list[8]);
-        activeType = int.Parse(list[9]);
-        upgradeSkill = int.Parse(list[10]);
-        amount = InitIntArrayValue(list[11]);
-        range = int.Parse(list[12]);
-        width = int.Parse(list[13]);
+        // repeatCount = int.Parse(list[7]);
+        // if (repeatCount == 0) repeatCount = 1;  //table issue
+        // stat = InitIntArrayValue(list[8]);
+        // activeType = int.Parse(list[9]);
+        // upgradeSkill = int.Parse(list[10]);
+        // amount = InitIntArrayValue(list[11]);
+        // range = int.Parse(list[12]);
+        // width = int.Parse(list[13]);
     }
     private int[] InitIntArrayValue(string str)
     {
@@ -113,7 +113,7 @@ public class SkillInfo
 
     public bool IsActive()
     {
-        if (activeOrPassive.Equals(SkillActiveOrPassive.Active))
+        if (activeOrPassive.Equals(SkillActiveOrPassive.ActiveType))
         {
             return true;
         }
@@ -220,6 +220,8 @@ public class Skill
         {
             isLearnable = false;
         }
+        
+        //"플레이어가 배운 스킬"에 해당 스킬의 index 추가
     }
 }
 

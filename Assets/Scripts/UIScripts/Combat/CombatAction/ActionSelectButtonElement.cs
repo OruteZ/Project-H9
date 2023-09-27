@@ -183,7 +183,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     public void OnClickActionSeleteButton() 
     {
         if (!GetComponent<Button>().IsInteractable()) return;
-        if (FieldSystem.unitSystem.IsCombatFinish()) return;
+        if (FieldSystem.unitSystem.IsCombatFinish(out var none)) return;
         bool isIdleButton = (_action.GetActionType() == ActionType.Idle);
         bool isActiveSelectedAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
         if (isIdleButton && isActiveSelectedAction) return;

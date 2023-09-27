@@ -12,18 +12,33 @@ public abstract class Weapon
     public int weaponDamage;
     public int weaponRange;
     public int maxAmmo;
-    public int currentAmmo;
+    private int _curAmmo;
     public float hitRate;
     public float criticalChance;
     public float criticalDamage;
     public int script;
+
+    public int currentAmmo
+    {
+        get => _curAmmo;
+        set
+        {
+            int before = _curAmmo;
+            _curAmmo = value;
+
+            if (before == _curAmmo) return;
+            if (unit is null) return;
+                
+            unit.onAmmoChanged.Invoke(before, _curAmmo);
+        }
+    }
     
     public UnitStat unitStat => unit.GetStat();
     public Unit unit;
     public WeaponModel weaponModel;
 
     protected const float SHOTGUN_OVER_RANGE_PENALTY = 3f;
-    protected const float REVOLVER_OVER_RANGE_PENALTY = 2.5f;
+    protected const float REVOLVER_OVER_RANGE_PENALTY = 2f;
     protected const float REPEATER_OVER_RANGE_PENALTY = 2f;
     
    

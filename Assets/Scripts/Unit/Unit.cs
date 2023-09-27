@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using PassiveSkill;
 
 public enum UnitType
 {
@@ -28,17 +30,36 @@ public abstract class Unit : MonoBehaviour, IUnit
     [Header("Status")] 
     [SerializeField] protected UnitStat stat;
 
+    public int hp
+    {
+        get => stat.curHp;
+        set
+        {
+            var after = Mathf.Clamp(value, 0, stat.maxHp);
+            var before = stat.curHp;
+            
+            if (before == after) return;
+            
+            stat.curHp = after;
+            onHpChanged.Invoke(before, after);
+        }
+    }
+    private List<Passive> _passiveList;
+
     // ReSharper disable once InconsistentNaming
-     public static readonly UnityEvent<Unit> onAnyUnitActionFinished = new UnityEvent<Unit>();
-     
-    [HideInInspector] public UnityEvent<IUnitAction> onActionCompleted;
+    public static readonly UnityEvent<Unit> onAnyUnitActionFinished = new UnityEvent<Unit>();
+    [HideInInspector] public UnityEvent<IUnitAction> onFinishAction; //action
     [HideInInspector] public UnityEvent onBusyChanged;
-    [HideInInspector] public UnityEvent<int> onCostChanged;
-    [HideInInspector] public UnityEvent<Unit> onMoved;
-    [HideInInspector] public UnityEvent<Unit> onDead;
-    [HideInInspector] public UnityEvent<Unit, int> onHit;
-    [HideInInspector] public UnityEvent<Unit, int> onSuccessAttack;
-    [HideInInspector] public UnityEvent<Unit, int> onCriticalAttack;
+    [HideInInspector] public UnityEvent<int, int> onCostChanged; // before, after
+    [HideInInspector] public UnityEvent<int, int> onAmmoChanged; // before, after
+    [HideInInspector] public UnityEvent<int, int> onHpChanged; // before, after
+    [HideInInspector] public UnityEvent<Unit> onMoved; // me
+    [HideInInspector] public UnityEvent<Unit> onDead; //me
+    [HideInInspector] public UnityEvent<Unit, int> onHit; // attacker, damage
+    [HideInInspector] public UnityEvent<Unit> onStartShoot; // target
+    [HideInInspector] public UnityEvent<Unit, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
+    [HideInInspector] public UnityEvent<Unit> onKill; // target
+    [HideInInspector] public UnityEvent onSelectedChanged;
 
     private IUnitAction[] _unitActionArray; // All Unit Actions attached to this Unit
     protected IUnitAction activeUnitAction; // Currently active action
@@ -62,7 +83,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         animator.SetTrigger(GET_HIT1);
         CameraController.ShakeCamera();
         
-        stat.curHp -= damage;
+        hp -= damage;
         onHit.Invoke(this, damage);
         
         //todo : Object Pool
@@ -71,17 +92,22 @@ public abstract class Unit : MonoBehaviour, IUnit
         dmgEffect.SetPosition(transform.position, 2);
         dmgEffect.SetValue(damage);
 
-        if (stat.curHp <= 0 && _hasDead is false)
+        if (hp <= 0 && _hasDead is false)
         {
             _hasDead = true;
             animator.SetBool(DIE, true);
             onAnyUnitActionFinished.AddListener(DeadCall);
+
+            _attacker = FieldSystem.turnSystem.turnOwner;
         }
     }
 
+    private Unit _attacker = null;
     public void DeadCall(Unit unit)
     {
         onDead.Invoke(this);
+        _attacker.onKill.Invoke(this);
+        
         onAnyUnitActionFinished.RemoveListener(DeadCall);
         Invoke(nameof(DestroyThis), 2f);
     }
@@ -101,7 +127,7 @@ public abstract class Unit : MonoBehaviour, IUnit
             if(hasMoved) onMoved?.Invoke(this);
         }
     }
-    public virtual void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel)
+    public virtual void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList)
     {
         unitName = newName;
         stat = unitStat;
@@ -111,6 +137,11 @@ public abstract class Unit : MonoBehaviour, IUnit
             action.SetUp(this);
         }
 
+        _passiveList = passiveList;
+        foreach (var passive in _passiveList)
+        {
+            passive.Setup();
+        }
 
         var model = Instantiate(unitModel, transform);
         visual = model.GetComponentInChildren<SkinnedMeshRenderer>();
@@ -128,6 +159,8 @@ public abstract class Unit : MonoBehaviour, IUnit
         
         EquipWeapon(newWeapon);
         // FieldSystem.onCombatAwake.AddListener(() => {animator.SetTrigger(START);});
+
+        onFinishAction.AddListener((action) => onAnyUnitActionFinished.Invoke(this));
     }
 
     private void EquipWeapon(Weapon newWeapon)
@@ -262,19 +295,18 @@ public abstract class Unit : MonoBehaviour, IUnit
         return activeUnitAction;
     }
 
-    public bool TryAttack(Unit target)
+    public bool TryAttack(Unit target, float hitRateOffset)
     {
-        bool hit = weapon.GetFinalHitRate(target) > UnityEngine.Random.value;
+        onStartShoot.Invoke(target);
 
-#if UNITY_EDITOR
-        Debug.Log(hit ? "뱅" : "빗나감");
-#endif
+        bool isCritical = false;
+        bool hit = weapon.GetFinalHitRate(target) + hitRateOffset > UnityEngine.Random.value;
+
         if (VFXHelper.TryGetGunFireFXInfo(weapon.GetWeaponType(), out var fxGunFireKey, out var fxGunFireTime))
         {
             var gunpointPos = weapon.weaponModel.GetGunpointPosition();
             VFXManager.instance.TryInstantiate(fxGunFireKey, fxGunFireTime, gunpointPos);
         }
-
         if (VFXHelper.TryGetTraceOfBulletFXKey(weapon.GetWeaponType(), out var fxBulletLine, out var traceTime))
         {
             var startPos = weapon.weaponModel.GetGunpointPosition();
@@ -285,7 +317,7 @@ public abstract class Unit : MonoBehaviour, IUnit
 
         if (hit)
         {
-            weapon.Attack(target, out var isHeadShot);
+            weapon.Attack(target, out isCritical);
             var existKey = VFXHelper.TryGetBloodingFXKey(weapon.GetWeaponType(), out var fxBloodingKey, out var bloodingTime);
             if (existKey)
             {
@@ -295,6 +327,8 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
         weapon.currentAmmo--;
 
+        int damage = hit ? isCritical ? weapon.GetFinalCriticalDamage() : weapon.GetFinalDamage() : 0;
+        onFinishShoot.Invoke(target, damage, hit, isCritical);
         return hit;
     }
 
@@ -340,7 +374,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         if (value == 0) return;
 
         currentActionPoint -= value;
-        onCostChanged.Invoke(currentActionPoint);
+        onCostChanged.Invoke(currentActionPoint + value, currentActionPoint);
     }
 }
 

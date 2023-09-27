@@ -10,6 +10,11 @@ public class MagazineUI : UISystem
 {
     [SerializeField] private GameObject _magazineText;
 
+    private void Start()
+    {
+        //FieldSystem.unitSystem.GetPlayer().onAmmoChanged.AddListener(SetMagazineText);
+    }
+
     private void Update()
     {
         //for test
@@ -29,7 +34,7 @@ public class MagazineUI : UISystem
     /// 액션을 시작될 때, 끝날 때, 선택할 때 실행됩니다.
     /// 현재 테스트용으로 매 프레임마다 업데이트되고 있습니다.
     /// </summary>
-    public void SetMagazineText() 
+    public void SetMagazineText(int beforeAmmo, int afterAmmo) 
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player == null) 
@@ -37,6 +42,22 @@ public class MagazineUI : UISystem
             return;
         }
         Weapon weapon = FieldSystem.unitSystem.GetPlayer().weapon;
+        _magazineText.GetComponent<TextMeshProUGUI>().text = weapon.currentAmmo.ToString() + " / " + weapon.maxAmmo.ToString();
+    }
+
+    public void SetMagazineText()
+    {
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player == null) 
+        {
+            return;
+        }
+        Weapon weapon = FieldSystem.unitSystem.GetPlayer().weapon;
+        if (weapon == null)
+        {
+            return;
+        }
+        
         _magazineText.GetComponent<TextMeshProUGUI>().text = weapon.currentAmmo.ToString() + " / " + weapon.maxAmmo.ToString();
     }
 }

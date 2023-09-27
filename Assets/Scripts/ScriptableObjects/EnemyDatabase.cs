@@ -19,6 +19,8 @@ public class EnemyDatabase : ScriptableObject
     private const int WEAPON_INDEX = 10;
     private const int BT_INDEX = 11;
     private const int MODEL_NAME = 12;
+    private const int REWARD_GOLD = 13;
+    private const int REWARD_EXP = 14;
     
     [SerializeField] 
     private List<EnemyData> enemyInfos;
@@ -64,7 +66,10 @@ public class EnemyDatabase : ScriptableObject
                 },
                 weaponIndex = int.Parse(data[WEAPON_INDEX]),
                 btIndex = int.Parse(data[BT_INDEX]),
-                model = Resources.Load("Prefab/Units/" + data[MODEL_NAME]) as GameObject
+                model = Resources.Load("Prefab/Units/" + data[MODEL_NAME]) as GameObject,
+                
+                rewardGold = int.Parse(data[REWARD_GOLD]),
+                rewardExp = int.Parse(data[REWARD_EXP]),
             };
             
             enemyInfos.Add(curData);
@@ -96,6 +101,10 @@ public struct EnemyData
     public int weaponIndex;
     public int btIndex;
     // todo : Reward
+    public int rewardGold;
+    public int rewardExp;
+    public string rewardItem;
+    public string rewardWeapon;
 }
 
 public struct UnitModelData

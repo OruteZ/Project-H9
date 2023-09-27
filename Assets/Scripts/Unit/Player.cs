@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Generic;
+using PassiveSkill;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,12 +9,11 @@ using UnityEngine.EventSystems;
 
 public class Player : Unit
 {
-    [HideInInspector] public UnityEvent onSelectedChanged;
     private static readonly int START_TURN = Animator.StringToHash("StartTurn");
 
-    public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel)
+    public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList)
     {
-        base.SetUp(newName, unitStat, newWeapon, unitModel);
+        base.SetUp(newName, unitStat, newWeapon, unitModel, passiveList);
         
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);

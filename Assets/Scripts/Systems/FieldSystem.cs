@@ -24,8 +24,11 @@ public class FieldSystem : MonoBehaviour
     /// CombatScene의 Fade-in이 완전히 끝난 후 Invoke되는 이벤트입니다. 
     /// </summary>
     private static UnityEvent _onCombatStart;
-
     public static UnityEvent onCombatStart => _onCombatStart ??= new UnityEvent();
+
+    private static UnityEvent<bool> _onCombatFinish;
+    public static UnityEvent<bool> onCombatFinish => _onCombatFinish ??= new UnityEvent<bool> ();
+    
     
     private void Awake()
     {

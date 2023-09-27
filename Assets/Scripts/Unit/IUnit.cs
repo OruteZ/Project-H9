@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using PassiveSkill;
 using UnityEngine;
 
 public interface IUnit
@@ -23,7 +25,8 @@ public interface IUnit
     /// <param name="unitStat">유닛의 스탯</param>
     /// <param name="newWeapon">무기</param>
     /// <param name="unitModel"></param>
-    void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel);
+    /// <param name="passiveList">패시브 스킬의 List</param>
+    void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList);
     
     /// <summary>
     /// 특정 타입에 해당하는 액션을 반환합니다. 가지고 있지 않을경우 NoneAction을 반환합니다.
@@ -40,7 +43,7 @@ public interface IUnit
 }
 
 [System.Serializable]
-public struct UnitStat
+public class UnitStat : ICloneable
 {
     public int maxHp;
     public int curHp;
@@ -62,4 +65,8 @@ public struct UnitStat
     public float revolverCriticalDamage;
     public float shotgunCriticalDamage;
     public float repeaterCriticalDamage;
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }

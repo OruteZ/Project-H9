@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class Revolver : Weapon
 {
     public override WeaponType GetWeaponType() => WeaponType.Revolver;
-    public override float GetDistancePenalty() => 6;
+    public override float GetDistancePenalty() => 5;
     public override int GetRange()
     {
         return weaponRange + unitStat.revolverAdditionalRange;
@@ -72,16 +72,11 @@ public class Revolver : Weapon
     {
         int damage = GetFinalDamage();
         target.GetDamage(damage);
-
-        unit.onSuccessAttack.Invoke(target, damage);
     }
 
     private void CriticalAttack(Unit target)
     {
         int damage = GetFinalCriticalDamage();
         target.GetDamage(damage);
-        
-        unit.onSuccessAttack.Invoke(target, damage);
-        unit.onCriticalAttack.Invoke(target, damage);
     }
 }

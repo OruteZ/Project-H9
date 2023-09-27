@@ -24,17 +24,12 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     public abstract bool CanExecuteImmediately();
 
-    public UnityEvent onActionStarted;
-    public UnityEvent onActionFinished;
-
     protected Unit unit;
     protected bool isActive;
     protected Action onActionComplete;
     public void SetUp(Unit unit)
     {
         this.unit = unit;
-        onActionStarted.AddListener(() => UIManager.instance.combatUI.SetCombatUI());
-        onActionFinished.AddListener(() => UIManager.instance.combatUI.SetCombatUI());
     }
     public Unit GetUnit() => unit;
     public bool IsActive() => isActive;
@@ -45,8 +40,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         this.onActionComplete = onActionComplete;
         isActive = true;
         StartCoroutine(ExecuteCoroutine());
-        
-        onActionStarted.Invoke();
+        UIManager.instance.combatUI.SetCombatUI();
     }
 
     protected void FinishAction()
@@ -81,8 +75,9 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         
         isActive = false;
         onActionComplete();
-        onActionFinished.Invoke();
-        Unit.onAnyUnitActionFinished.Invoke(unit);
+        UIManager.instance.combatUI.SetCombatUI();
+        
+        unit.onFinishAction.Invoke(this);
     }
 
     protected virtual IEnumerator ExecuteCoroutine()

@@ -40360,11 +40360,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDB: {fileID: 11400000, guid: ff152c5f6f9fe8b468cfd7935134e353, type: 2}
   enemyDB: {fileID: 11400000, guid: 450d8f5528bf2864ab9655c7c32be5b7, type: 2}
+  passiveDB: {fileID: 11400000, guid: 4725cab2e80d6194c87de84a6b4cb490, type: 2}
   units: []
   onAnyUnitMoved:
-    m_PersistentCalls:
-      m_Calls: []
-  onCombatFinish:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &912538270
@@ -55473,12 +55471,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4903b8c0073cb0e4d85cbf51c73842c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onActionStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  onActionFinished:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1275726345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55491,12 +55483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c344f2b27fb6b142a2855c52005bfde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onActionStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  onActionFinished:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1275726346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55509,12 +55495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df925ac8b091684682c6931a44c4f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onActionStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  onActionFinished:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1275726347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55527,12 +55507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3cc784cd3504643a6ddc38c4871420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onActionStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  onActionFinished:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1275726348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55545,12 +55519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb8c1692a078274687545adece96562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onActionStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  onActionFinished:
-    m_PersistentCalls:
-      m_Calls: []
   rotationSpeed: 10
   moveSpeed: 4
 --- !u!114 &1275726349
@@ -55589,13 +55557,16 @@ MonoBehaviour:
     revolverCriticalDamage: 0
     shotgunCriticalDamage: 0
     repeaterCriticalDamage: 0
-  onActionCompleted:
+  onActionFinished:
     m_PersistentCalls:
       m_Calls: []
   onBusyChanged:
     m_PersistentCalls:
       m_Calls: []
   onCostChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onAmmoChanged:
     m_PersistentCalls:
       m_Calls: []
   onMoved:
@@ -55607,19 +55578,22 @@ MonoBehaviour:
   onHit:
     m_PersistentCalls:
       m_Calls: []
-  onSuccessAttack:
+  onStartShoot:
     m_PersistentCalls:
       m_Calls: []
-  onCriticalAttack:
+  onFinishShoot:
+    m_PersistentCalls:
+      m_Calls: []
+  onKill:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelectedChanged:
     m_PersistentCalls:
       m_Calls: []
   unitName: 
   currentActionPoint: 0
   hasAttacked: 0
   currentRound: 0
-  onSelectedChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1275726350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66815,6 +66789,9 @@ MonoBehaviour:
   playerWeaponIndex: 101
   playerModel: {fileID: 8346860575773991373, guid: e397d6d377b80f748b12eee185a4d1b6,
     type: 3}
+  playerPassiveIndexList: 00000000
+  level: 1
+  curExp: 0
   worldSceneName: WorldScene
   worldAp: 0
   worldTurn: 0

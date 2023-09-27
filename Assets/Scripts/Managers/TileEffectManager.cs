@@ -7,7 +7,7 @@ using Generic;
 using UnityEngine.Rendering;
 using UnityEngine.Pool;
 
-public enum EffectType
+public enum TileEffectType
 {
     None = 0,
     Normal = 1,
@@ -113,7 +113,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 bool containsFog = tile.interactiveObjects.OfType<FogOfWar>().Any();
                 if (containsFog) continue;
             }
-            SetEffectBase(tile.hexPosition, EffectType.Normal);
+            SetEffectBase(tile.hexPosition, TileEffectType.Normal);
         }
 
         _curCoroutine = StartCoroutine(MovableTileEffectCoroutine());
@@ -137,7 +137,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             if(route.Count - 1 <= _player.currentActionPoint) foreach (var tile in route)
             {
                 var pos = tile.hexPosition;
-                SetEffectTarget(pos, EffectType.Friendly);
+                SetEffectTarget(pos, TileEffectType.Friendly);
             }
         }
         // ReSharper disable once IteratorNeverReturns
@@ -252,7 +252,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         aimEffectRectTsf.gameObject.SetActive(false);
     }
 
-    private void SetEffectBase(Vector3Int position, EffectType type)
+    private void SetEffectBase(Vector3Int position, TileEffectType type)
     {
         Vector3 worldPosition = Hex.Hex2World(position);
         worldPosition.y += 0.02f;
@@ -261,7 +261,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         _effectStackBase.Push(gObject);
     }
     
-    private void SetEffectTarget(Vector3Int position, EffectType type)
+    private void SetEffectTarget(Vector3Int position, TileEffectType type)
     {
         Vector3 worldPosition = Hex.Hex2World(position);
         worldPosition.y += 0.03f;
@@ -270,26 +270,26 @@ public class TileEffectManager : Singleton<TileEffectManager>
         _effectStackRelatedTarget.Push(gObject);
     }
     
-    private GameObject GetEffect(EffectType type)
+    private GameObject GetEffect(TileEffectType type)
     {
         return type switch
         {
-            EffectType.Friendly => friendlyEffect,
-            EffectType.Hostile => hostileEffect,
-            EffectType.Normal => normalEffect,
-            EffectType.Impossible => impossibleEffect,
-            EffectType.Invisible => invisibleEffect,
+            TileEffectType.Friendly => friendlyEffect,
+            TileEffectType.Hostile => hostileEffect,
+            TileEffectType.Normal => normalEffect,
+            TileEffectType.Impossible => impossibleEffect,
+            TileEffectType.Invisible => invisibleEffect,
             _ => null
         };
     }
 
-    private EffectType GetEffectType(GameObject effect)
+    private TileEffectType GetEffectType(GameObject effect)
     {
-        if (effect == friendlyEffect) return EffectType.Friendly;
-        if (effect == hostileEffect) return EffectType.Hostile;
-        if (effect == impossibleEffect) return EffectType.Impossible;
-        if (effect == invisibleEffect) return EffectType.Invisible;
-        if (effect == normalEffect) return EffectType.Normal;
-        return EffectType.None;
+        if (effect == friendlyEffect) return TileEffectType.Friendly;
+        if (effect == hostileEffect) return TileEffectType.Hostile;
+        if (effect == impossibleEffect) return TileEffectType.Impossible;
+        if (effect == invisibleEffect) return TileEffectType.Invisible;
+        if (effect == normalEffect) return TileEffectType.Normal;
+        return TileEffectType.None;
     }
 }

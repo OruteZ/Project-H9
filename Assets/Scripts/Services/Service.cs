@@ -14,7 +14,7 @@ public static class Service
         _rootCanvasRect = _rootCanvas.GetComponent<RectTransform>();
         _rootCanvasRect.anchoredPosition = Vector2.zero;
         var common = new DamageFloaterManager();
-        common.Init("Prefab/Damage Floater", _rootCanvas.transform, 1.5f);
+        common.Init("Prefab/Damage Floater", _rootCanvas.transform, 0.4f);
         _floaters.Add(common);
         SetCamera(Camera.main);
 
@@ -26,7 +26,8 @@ public static class Service
 
     public static void SetText(string text, Vector3 position)
     {
-        Vector2 viewportPosition = _camera.WorldToViewportPoint(position);
+        var randValue = new Vector3(Random.value - 0.5f, Random.value, Random.value - 0.5f) * 2.0f;
+        Vector2 viewportPosition = _camera.WorldToViewportPoint(position + randValue);
         var sizeDelta = _rootCanvasRect.sizeDelta;
         Vector2 worldObjectScreenPosition = new Vector2(
             ((viewportPosition.x * sizeDelta.x) - (sizeDelta.x * 0.5f)),

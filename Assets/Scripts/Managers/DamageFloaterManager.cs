@@ -4,10 +4,19 @@ using TMPro;
 public class DamageFlaoterWrapper : ObjectPoolWrapper<RectTransform>
 {
     public TextMeshProUGUI TMP;
+    public float FloatingSpeed = 10.0f;
+    public float ScaleStart = 2.0f;
+    public float ScaleEnd = 1.0f;
+    public float ScaleSpeed = 8.0f;
 
     public DamageFlaoterWrapper(RectTransform instance, float lifeTime, TextMeshProUGUI tmp) : base(instance, lifeTime)
     {
         TMP = tmp;
+    }
+
+    public override void Reset()
+    {
+        base.Reset();
     }
 }
 
@@ -27,6 +36,7 @@ public class DamageFloaterManager : ObjectPool<RectTransform, DamageFlaoterWrapp
 
         var target = _pool.Dequeue();
         target.Enable = false;
+        target.Instance.localScale = Vector3.one * target.ScaleStart;
         target.Instance.gameObject.SetActive(true);
         _working.Add(target);
         return target;
@@ -51,6 +61,10 @@ public class DamageFloaterManager : ObjectPool<RectTransform, DamageFlaoterWrapp
             var target = _working[i];
             if (target.Enable)
                 continue;
+
+            target.Instance.anchoredPosition += Vector2.up * target.FloatingSpeed * deltaTime;
+            var lerp = Mathf.Lerp(target.Instance.localScale.x, target.ScaleEnd, deltaTime * target.ScaleSpeed);
+            target.Instance.localScale = Vector3.one * lerp;
 
             target.Duration += deltaTime;
             if (target.LifeTime <= target.Duration)

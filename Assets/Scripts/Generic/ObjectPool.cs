@@ -17,7 +17,7 @@ public class ObjectPoolWrapper<T> where T : Transform
         Enable = true;
     }
 
-    public void Reset()
+    public virtual void Reset()
     {
         Instance.gameObject.SetActive(false);
         Duration = 0.0f;

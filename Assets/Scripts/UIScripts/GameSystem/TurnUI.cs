@@ -18,10 +18,12 @@ public class TurnUI : UISystem
     private void Update()
     {
         SetEndTurnButton();
-        if (Input.GetKeyDown(KeyCode.BackQuote)) 
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             OnClickEndTurnButton();
         }
+#endif 
     }
 
     /// <summary>

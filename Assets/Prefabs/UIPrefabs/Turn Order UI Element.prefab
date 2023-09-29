@@ -111,8 +111,8 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 70, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -129,6 +129,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textures: {fileID: 2800000, guid: b22fd97be70d0cc41af8f0f9ab15a23d, type: 3}
+  _sprites:
+  - {fileID: -1409943159, guid: b22fd97be70d0cc41af8f0f9ab15a23d, type: 3}
+  - {fileID: -383706831, guid: b22fd97be70d0cc41af8f0f9ab15a23d, type: 3}
+  - {fileID: -654616971, guid: b22fd97be70d0cc41af8f0f9ab15a23d, type: 3}
 --- !u!222 &7696319615396013333
 CanvasRenderer:
   m_ObjectHideFlags: 0

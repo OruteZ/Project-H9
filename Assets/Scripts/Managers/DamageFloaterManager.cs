@@ -4,9 +4,10 @@ using TMPro;
 public class DamageFlaoterWrapper : ObjectPoolWrapper<RectTransform>
 {
     public TextMeshProUGUI TMP;
-    public float FloatingSpeed = 10.0f;
-    public float ScaleStart = 2.0f;
-    public float ScaleEnd = 1.0f;
+    public Vector3 StartWorldPosition;
+    public float FloatingSpeed = 2f;
+    public float ScaleStart = 0.04f;
+    public float ScaleEnd = 0.01f;
     public float ScaleSpeed = 8.0f;
 
     public DamageFlaoterWrapper(RectTransform instance, float lifeTime, TextMeshProUGUI tmp) : base(instance, lifeTime)
@@ -46,7 +47,7 @@ public class DamageFloaterManager : ObjectPool<RectTransform, DamageFlaoterWrapp
     {
         for (int i = 0; i < size; i++)
         {
-            var ins = GameObject.Instantiate(_prefab, Vector3.zero, Quaternion.identity, _root) as GameObject;
+            var ins = GameObject.Instantiate(_prefab, Vector3.zero, _prefab.transform.rotation, _root) as GameObject;
             var insRect = ins.GetComponent<RectTransform>();
             var insTmp = ins.GetComponent<TextMeshProUGUI>();
             var insWrap = new DamageFlaoterWrapper(insRect, _generalLifeTime, insTmp);

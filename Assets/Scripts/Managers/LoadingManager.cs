@@ -56,7 +56,6 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
         }
         
         UIManager.instance.ChangeScene(SceneNameToGameState(sceneName));
-        Service.SetCamera(Camera.main);
 
         yield return StartCoroutine(FadeIn(fadeDuration));
         canvas.enabled = false;

@@ -14,19 +14,16 @@ public class PlayerStatLevelUpElement : UIElement, IPointerEnterHandler, IPointe
 
     [SerializeField] private int _cardNumber;
     [SerializeField] private Sprite[] _cardIcons;
-
-    public string statName { get; private set; }
-    public int statLevel { get; private set; }
-    public bool isLevelUpFully { get; private set; }
+    public PlayerStatLevelInfo statLevelInfo { get; private set; }
 
     private bool _isMouseOver = false;
     private bool _isSelected = false;
     private float _scaleCorrection = 1.0f;
     private float _scaleCorrectSpeed = 5;
-    // Start is called before the first frame update
-    void Start()
+
+    public override void CloseUI()
     {
-        
+        isOpenUI = false;
     }
 
     // Update is called once per frame
@@ -44,7 +41,7 @@ public class PlayerStatLevelUpElement : UIElement, IPointerEnterHandler, IPointe
                 _scaleCorrection *= 0.95f;
                 _scaleCorrectSpeed = 20;
             }
-            if (Input.GetMouseButtonUp(0) && !isLevelUpFully) 
+            if (Input.GetMouseButtonUp(0) && !statLevelInfo.IsLevelUpFully()) 
             {
                 _isSelected = !_isSelected;
                 UIManager.instance.gameSystemUI.playerStatLevelUpUI.ClickStatCard(_cardNumber, _isSelected);
@@ -57,7 +54,7 @@ public class PlayerStatLevelUpElement : UIElement, IPointerEnterHandler, IPointe
         }
 
         //scale correction
-        if ((isSelectedSomeCard && !_isSelected) || isLevelUpFully)
+        if ((isSelectedSomeCard && !_isSelected) || statLevelInfo.IsLevelUpFully())
         {
             _scaleCorrection = 1.0f;
         }
@@ -74,45 +71,38 @@ public class PlayerStatLevelUpElement : UIElement, IPointerEnterHandler, IPointe
         scale.y = scale.x;
         GetComponent<RectTransform>().localScale = scale;
     }
-    public void SetPlayerStatLevelUpCard(int level, string name)
+    public void SetPlayerStatLevelUpCard(PlayerStatLevelInfo info)
     {
         OpenUI();
-        statLevel = level;
+        statLevelInfo = info;
         for (int i = 0; i < _levelImages.Length; i++)
         {
             _levelImages[i].color = Color.yellow;
-            if (i + 1 > level)
+            if (i + 1 > statLevelInfo.statLevel)
             {
                 _levelImages[i].color /= 4;
             }
         }
-        isLevelUpFully = (statLevel >= _levelImages.Length);
 
-        statName = name;
-        _statNameText.GetComponent<TextMeshProUGUI>().text = name;
-        UnitStat playerStat = FieldSystem.unitSystem.GetPlayer().GetStat();
-        int currentStat = 0;
-        int increseStat = 0;
-        if (name == "Concentration") 
+        _statNameText.GetComponent<TextMeshProUGUI>().text = statLevelInfo.statName;
+
+        if (statLevelInfo.statName == "Concentration") 
         {
             _statIcon.sprite = _cardIcons[0];
-            currentStat = playerStat.concentration;
-            increseStat = UIManager.instance.gameSystemUI.playerStatLevelUpUI.statIncreseValue[0];
         }
-        else if (name == "Sight Range")
+        else if (statLevelInfo.statName == "Sight Range")
         {
             _statIcon.sprite = _cardIcons[1];
-            currentStat = playerStat.sightRange;
-            increseStat = UIManager.instance.gameSystemUI.playerStatLevelUpUI.statIncreseValue[1];
         }
-        else if (name == "Speed")
+        else if (statLevelInfo.statName == "Speed")
         {
             _statIcon.sprite = _cardIcons[2];
-            currentStat = playerStat.speed;
-            increseStat = UIManager.instance.gameSystemUI.playerStatLevelUpUI.statIncreseValue[2];
         }
+
+        int currentStat = statLevelInfo.GetPlayerCurrentValue();
+        int increseStat = statLevelInfo.statIncreaseValue;
         string descriptionText = currentStat.ToString();
-        if (!isLevelUpFully)
+        if (!statLevelInfo.IsLevelUpFully())
         {
             descriptionText += " -> " + (currentStat + increseStat).ToString();
         }
@@ -121,11 +111,6 @@ public class PlayerStatLevelUpElement : UIElement, IPointerEnterHandler, IPointe
         _isMouseOver = false;
         _isSelected = false;
         GetComponent<RectTransform>().localScale = Vector3.one;
-    }
-    public void ClearPlayerStatLevelUpUICard(int level)
-    {
-        isLevelUpFully = (level >= _levelImages.Length);
-        CloseUI();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

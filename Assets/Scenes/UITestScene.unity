@@ -3435,7 +3435,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10434294, y: 0}
+  m_AnchoredPosition: {x: 11136697, y: 0}
   m_SizeDelta: {x: 25, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &116450563
@@ -6755,7 +6755,6 @@ MonoBehaviour:
   - {fileID: 1953873611}
   - {fileID: 323222616}
   _statSelectButton: {fileID: 645254061}
-  statIncreseValue: 0a000000010000000a000000
 --- !u!1 &204002555
 GameObject:
   m_ObjectHideFlags: 0
@@ -17699,6 +17698,7 @@ GameObject:
   - component: {fileID: 645254065}
   - component: {fileID: 645254064}
   - component: {fileID: 645254063}
+  - component: {fileID: 645254067}
   m_Layer: 7
   m_Name: OK Button
   m_TagString: Untagged
@@ -17824,6 +17824,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _frame: {fileID: 1318414313}
   _checkmark: {fileID: 1700821028}
+--- !u!225 &645254067
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645254061}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &652526378
 GameObject:
   m_ObjectHideFlags: 0

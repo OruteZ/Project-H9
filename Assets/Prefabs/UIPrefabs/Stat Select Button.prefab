@@ -727,6 +727,7 @@ GameObject:
   - component: {fileID: 5910694044179385781}
   - component: {fileID: 5910694044179385779}
   - component: {fileID: 5910694044179385778}
+  - component: {fileID: 6978516023282865935}
   m_Layer: 7
   m_Name: Stat Select Button
   m_TagString: Untagged
@@ -823,6 +824,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &6978516023282865935
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5910694044179385783}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5910694044372303787
 GameObject:
   m_ObjectHideFlags: 0

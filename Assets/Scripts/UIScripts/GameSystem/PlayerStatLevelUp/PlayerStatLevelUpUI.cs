@@ -3,6 +3,61 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class PlayerStatLevelInfo 
+{
+    public string statName { get; private set; }
+    public int statIncreaseValue { get; private set; }
+    public int statLevel { get; private set; }
+
+    public PlayerStatLevelInfo(string name, int increse) 
+    {
+        statName = name;
+        statIncreaseValue = increse;
+        statLevel = 0;
+    }
+
+    public void LevelUpStat() 
+    {
+        if(IsLevelUpFully()) return;
+        statLevel++;
+        if (statName == "Concentration")
+        {
+            GameManager.instance.playerStat.concentration += statIncreaseValue;
+        }
+        else if (statName == "Sight Range")
+        {
+            GameManager.instance.playerStat.sightRange += statIncreaseValue;
+        }
+        else if (statName == "Speed")
+        {
+            GameManager.instance.playerStat.speed += statIncreaseValue;
+        }
+    }
+    public bool IsLevelUpFully() 
+    {
+        return (statLevel >= 6);
+    }
+    public int GetPlayerCurrentValue()
+    {
+        UnitStat playerStat = GameManager.instance.playerStat;
+        if (statName == "Concentration")
+        {
+            return playerStat.concentration;
+        }
+        else if (statName == "Sight Range")
+        {
+            return playerStat.sightRange;
+        }
+        else if (statName == "Speed")
+        {
+            return playerStat.speed;
+        }
+
+        Debug.LogError("유효하지 않은 statName입니다.");
+        return -1;
+    }
+}
+
 public class PlayerStatLevelUpUI : UISystem
 {
     [SerializeField] private GameObject _statLevelUpWindow;
@@ -12,10 +67,7 @@ public class PlayerStatLevelUpUI : UISystem
     [SerializeField] private GameObject _statSelectButton;
 
     private bool isOpenUI = false;
-
-    private int[] _statLevel = { 0, 0, 0 }; //Player에게 이관 후 저장 가능하게 해야 함.
-    private string[] _statNames = { "Concentration", "Sight Range", "Speed" };
-    public  int[] statIncreseValue = { 10, 1, 10 };
+    public PlayerStatLevelInfo[] statLevels { get; private set; }
     public int selectedCardNumber { get; private set; }
     public bool isSelectedSomeCard { get; private set; }
 
@@ -24,6 +76,11 @@ public class PlayerStatLevelUpUI : UISystem
     // Start is called before the first frame update
     void Start()
     {
+        statLevels = new PlayerStatLevelInfo[3];
+        statLevels[0] = new PlayerStatLevelInfo("Concentration", 10);
+        statLevels[1] = new PlayerStatLevelInfo("Sight Range", 1);
+        statLevels[2] = new PlayerStatLevelInfo("Speed", 10);
+
         selectedCardNumber = -1;
         isSelectedSomeCard = false;
         ClosePlayerStatLevelUpUI();
@@ -32,6 +89,7 @@ public class PlayerStatLevelUpUI : UISystem
     // Update is called once per frame
     void Update()
     {
+
         float[] appearTargetValue = { 380, 0, 192 / 255.0f };
         float[] disappearTargetValue = 
         {
@@ -41,6 +99,7 @@ public class PlayerStatLevelUpUI : UISystem
         };
         Vector3 pos;
         Color color;
+        float alpha;
         float[] targetValue;
         if (isOpenUI)
         {
@@ -58,9 +117,23 @@ public class PlayerStatLevelUpUI : UISystem
             for (int i = 0; i < _statCardButtons.Length; i++)
         {
             pos = _statCardButtons[i].GetComponent<RectTransform>().localPosition;
-            pos.y = CalculationLerpValue(pos.y, targetValue[1]);
-            _statCardButtons[i].GetComponent<RectTransform>().localPosition = pos;
-            if (pos.y == disappearTargetValue[1]) _statCardButtons[i].SetActive(false);
+            if (selectedCardNumber != i || isOpenUI)
+            {
+                pos.y = CalculationLerpValue(pos.y, targetValue[1]);
+                _statCardButtons[i].GetComponent<RectTransform>().localPosition = pos;
+            }
+
+            alpha = _statCardButtons[i].GetComponent<CanvasGroup>().alpha;
+            if (!isOpenUI)
+            {
+                alpha = CalculationLerpValue(alpha, 0);
+                _statCardButtons[i].GetComponent<CanvasGroup>().alpha = alpha;
+            }
+
+            if (pos.y == disappearTargetValue[1] || alpha == 0) 
+            {
+                _statCardButtons[i].SetActive(false);
+            }
         }
 
         color = _background.GetComponent<Image>().color;
@@ -89,7 +162,7 @@ public class PlayerStatLevelUpUI : UISystem
         int cnt = 0;
         for (int i = 0; i < _statCardButtons.Length; i++)
         {
-            if (_statCardButtons[i].GetComponent<PlayerStatLevelUpElement>().isLevelUpFully)
+            if (statLevels[i].IsLevelUpFully())
             {
                 cnt++;
             }
@@ -114,7 +187,8 @@ public class PlayerStatLevelUpUI : UISystem
             pos = _statCardButtons[i].GetComponent<RectTransform>().localPosition;
             pos.y = -(Camera.main.pixelHeight / 2 + _statCardButtons[i].GetComponent<RectTransform>().sizeDelta.y / 2 * (i + 1));
             _statCardButtons[i].GetComponent<RectTransform>().localPosition = pos;
-            _statCardButtons[i].GetComponent<PlayerStatLevelUpElement>().SetPlayerStatLevelUpCard(_statLevel[i], _statNames[i]);
+            _statCardButtons[i].GetComponent<PlayerStatLevelUpElement>().SetPlayerStatLevelUpCard(statLevels[i]);
+            _statCardButtons[i].GetComponent<CanvasGroup>().alpha = 1;
         }
         _statSelectButton.GetComponent<PlayerStatLevelUpSelectButton>().InitPlayerStatLevelUpSelectButton();
 
@@ -124,7 +198,7 @@ public class PlayerStatLevelUpUI : UISystem
         color.a = 0;
         _background.GetComponent<Image>().color = color;
 
-        _statSelectButton.SetActive(true);
+        _statSelectButton.SetActive(false);
 
         _statLevelUpWindow.SetActive(true);
     }
@@ -133,7 +207,7 @@ public class PlayerStatLevelUpUI : UISystem
         isOpenUI = false;
         for (int i = 0; i < _statCardButtons.Length; i++)
         {
-            _statCardButtons[i].GetComponent<PlayerStatLevelUpElement>().ClearPlayerStatLevelUpUICard(_statLevel[i]);
+            _statCardButtons[i].GetComponent<PlayerStatLevelUpElement>().CloseUI();
         }
         _statSelectButton.SetActive(false);
 
@@ -152,24 +226,19 @@ public class PlayerStatLevelUpUI : UISystem
         {
             selectedCardNumber = -1;
         }
+        _statSelectButton.SetActive(true);
     }
     public void ClickSelectButton() 
     {
         if (!isSelectedSomeCard) return;
 
-        string levelUpStatName = _statCardButtons[selectedCardNumber].GetComponent<PlayerStatLevelUpElement>().statName;
-        if (levelUpStatName == "Concentration") 
+        string levelUpStatName = _statCardButtons[selectedCardNumber].GetComponent<PlayerStatLevelUpElement>().statLevelInfo.statName;
+        for (int i = 0; i < statLevels.Length; i++) 
         {
-            _statLevel[0]++;
-            //FieldSystem.unitSystem.GetPlayer().   //스탯 변환 어케 함?
-        }
-        else if (levelUpStatName == "Sight Range")
-        {
-            _statLevel[1]++;
-        }
-        else if (levelUpStatName == "Speed")
-        {
-            _statLevel[2]++;
+            if (levelUpStatName == statLevels[i].statName)
+            {
+                statLevels[i].LevelUpStat();
+            }
         }
 
         ClosePlayerStatLevelUpUI();

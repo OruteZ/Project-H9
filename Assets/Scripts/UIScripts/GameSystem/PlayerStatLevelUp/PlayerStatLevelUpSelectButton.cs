@@ -13,11 +13,6 @@ public class PlayerStatLevelUpSelectButton : UIElement, IPointerEnterHandler, IP
     private bool _isMouseOver = false;
     private float _scaleCorrection = 1.0f;
     private float _scaleCorrectSpeed = 20;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

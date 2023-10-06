@@ -70,3 +70,28 @@ public class UnitStat : ICloneable
         return MemberwiseClone();
     }
 }
+
+public enum UnitStatType
+{
+    MaxHp,
+    CurHp,
+    Concentration,
+    SightRange,
+    Speed,
+    ActionPoint,
+    AdditionalHitRate,
+    CriticalDamage,
+    RevolverAdditionalDamage,
+    RepeaterAdditionalDamage,
+    ShotgunAdditionalDamage,
+    RevolverAdditionalRange,
+    RepeaterAdditionalRange,
+    ShotgunAdditionalRange,
+    RevolverCriticalDamage,
+    RepeaterCriticalDamage,
+    ShotgunCriticalDamage,
+    
+    AllAdditionalDamage,
+    AllAdditionalRange,
+    AllCriticalDamage,
+}

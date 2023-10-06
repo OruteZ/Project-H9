@@ -9,79 +9,70 @@ namespace PassiveSkill
     public class Passive
     {
         #region STATIC
-        public static ITrigger CloneTrigger(TriggerType type, float amount)
+        public static ICondition CloneTrigger(ConditionType type, float amount)
         {
-            ITrigger trigger = type switch
+            ICondition condition = type switch
             {
-                TriggerType.Null => new NullTrigger(amount),
-                TriggerType.TargetLowHp => new TargetLowHp(amount),
-                TriggerType.TargetHighHp => new TargetHighHp(amount),
-                TriggerType.TargetHpIs => new TargetHpIs(amount),
-                TriggerType.LowAmmo => new LowAmmo(amount),
-                TriggerType.HighAmmo => new HighAmmo(amount),
-                TriggerType.AmmoIs => new AmmoIs(amount),
-                TriggerType.LowHp => new LowHp(amount),
-                TriggerType.HighHp => new HighHp(amount),
-                TriggerType.HpIs => new HpIs(amount),
-                TriggerType.ReloadedInThisTurn => new ReloadedInThisTurn(amount),
-                TriggerType.MovedInThisTurn => new MovedInThisTurn(amount),
-                TriggerType.NotMovedInThisTurn => new NotMovedInThisTurn(amount),
+                ConditionType.Null => new NullCondition(amount),
+                ConditionType.TargetHpMax => new TargetHpMax(amount),
+                ConditionType.TargetLowHp => new TargetLowHp(amount),
+                ConditionType.TargetHighHp => new TargetHighHp(amount),
+                ConditionType.TargetHpIs => new TargetHpIs(amount),
+                ConditionType.LowAmmo => new LowAmmo(amount),
+                ConditionType.HighAmmo => new HighAmmo(amount),
+                ConditionType.AmmoIs => new AmmoIs(amount),
+                ConditionType.LowHp => new LowHp(amount),
+                ConditionType.HighHp => new HighHp(amount),
+                ConditionType.HpIs => new HpIs(amount),
+                ConditionType.ReloadedInThisTurn => new ReloadedInThisTurn(amount),
+                ConditionType.MovedInThisTurn => new MovedInThisTurn(amount),
+                ConditionType.NotMovedInThisTurn => new NotMovedInThisTurn(amount),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 
-            return trigger;
+            return condition;
         }
-        public static IEffect CloneEffect(PassiveEffectType type, float amount)
+        public static IEffect CloneEffect(PassiveEffectType type, UnitStatType stat, float amount)
         {
             IEffect effect = type switch
             {
-                PassiveEffectType.RevolverAdditionalDamageUp => new RevolverDamageUp(amount),
-                _ => throw new ArgumentOutOfRangeException()
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 
             return effect;
         }
         #endregion
         
-        private readonly ITrigger _trigger;
+        private readonly ICondition _condition;
         private readonly IEffect _effect;
         public readonly Unit unit;
-
-        private bool _enable;
     
-        public Passive(Unit unit, ITrigger trigger, IEffect effect)
+        public Passive(Unit unit, ICondition condition, IEffect effect)
         {
             this.unit = unit;
-            _trigger = trigger;
+            _condition = condition;
             _effect = effect;
         }
     
-        public void TurnOnPassive()
+        public void EnableCondition()
         {
-            if (_enable) return;
-            
-            _enable = true;
-            _effect.Enable();
+            _effect.OnConditionEnable();
         }
 
-        public void TurnOffPassive()
+        public void DisableCondition()
         {
-            if (_enable is false) return;
-            
-            _enable = false;
-            _effect.Disable();
+            _effect.OnConditionDisable();
         }
 
         public void Setup()
         {
-            _trigger.Setup(this);
+            _condition.Setup(this);
             _effect.Setup(this);
-            _enable = false;
         }
 
-        public bool IsEnable()
+        public bool IsEffectEnable()
         {
-            return _enable;
+            return _effect.IsEnable();
         }
     }
 }

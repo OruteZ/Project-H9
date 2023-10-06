@@ -4,29 +4,13 @@
     {
         void Setup(Passive passive);
         PassiveEffectType GetEffectType();
-
-        void Enable();
-        void Disable();
+        bool IsEnable();
+        void OnConditionEnable();
+        void OnConditionDisable();
     }
 
     public enum PassiveEffectType
     {
-        Null,
-        HpUp,
-        ConcentrationUp,
-        SightRangeUp,
-        SpeedUp,
-        ActionPointUp,
-        AdditionalHitRateUp,
-        CriticalChanceUp,
-        RevolverAdditionalDamageUp,
-        RevolverAdditionalRangeUp,
-        RevolverCriticalDamageUp,
-        RepeaterAdditionalDamageUp,
-        RepeaterAdditionalRangeUp,
-        RepeaterCriticalDamageUp,
-        ShotgunAdditionalDamageUp,
-        ShotgunAdditionalRangeUp,
-        ShotgunCriticalDamageUp,
+        Null
     }
 }

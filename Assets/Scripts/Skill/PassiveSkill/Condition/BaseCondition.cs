@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace PassiveSkill
 {
-    public abstract class BaseTrigger : ITrigger
+    public abstract class BaseCondition : ICondition
     {
         protected float amount;
         
         protected Passive passive;
         public Unit unit => passive.unit;
         
-        public BaseTrigger(float amt)
+        public BaseCondition(float amt)
         {
             SetAmount(amt);
         }
@@ -20,15 +20,16 @@ namespace PassiveSkill
         public void Setup(Passive passive)
         {
             this.passive = passive;
-            TriggerSetup();
+            ConditionSetup();
         }
+
         public void SetAmount(float amt)
         {
             amount = amt;
         }
 
-        public abstract TriggerType GetTriggerType();
-        protected abstract void TriggerSetup();
+        public abstract ConditionType GetConditionType();
+        protected abstract void ConditionSetup();
     }
 }
 

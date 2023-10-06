@@ -2,17 +2,17 @@
 
 namespace PassiveSkill
 {
-    public class MovedInThisTurn : BaseTrigger
+    public class MovedInThisTurn : BaseCondition
     {
         public MovedInThisTurn(float amt) : base(amt)
         { }
 
-        public override TriggerType GetTriggerType()
+        public override ConditionType GetConditionType()
         {
-            return TriggerType.MovedInThisTurn;
+            return ConditionType.MovedInThisTurn;
         }
 
-        protected override void TriggerSetup()
+        protected override void ConditionSetup()
         {
             unit.onFinishAction.AddListener(CheckAction);
             FieldSystem.turnSystem.onTurnChanged.AddListener(ClearFlag);
@@ -21,26 +21,26 @@ namespace PassiveSkill
         //---
         private void CheckAction(IUnitAction unitAction)
         {
-            if (unitAction is MoveAction) passive.TurnOnPassive();
+            if (unitAction is MoveAction) passive.EnableCondition();
         }
 
         private void ClearFlag()
         {
-            passive.TurnOffPassive();
+            passive.DisableCondition();
         }
     }
     
-    public class NotMovedInThisTurn : BaseTrigger
+    public class NotMovedInThisTurn : BaseCondition
     {
         public NotMovedInThisTurn(float amt) : base(amt)
         { }
 
-        public override TriggerType GetTriggerType()
+        public override ConditionType GetConditionType()
         {
-            return TriggerType.NotMovedInThisTurn;
+            return ConditionType.NotMovedInThisTurn;
         }
 
-        protected override void TriggerSetup()
+        protected override void ConditionSetup()
         {
             unit.onFinishAction.AddListener(CheckAction);
             FieldSystem.turnSystem.onTurnChanged.AddListener(ClearFlag);
@@ -49,30 +49,30 @@ namespace PassiveSkill
         //---
         private void CheckAction(IUnitAction unitAction)
         {
-            if (unitAction is MoveAction) passive.TurnOffPassive();
+            if (unitAction is MoveAction) passive.DisableCondition();
         }
 
         private void ClearFlag()
         {
             if (FieldSystem.turnSystem.turnOwner == unit)
             {
-                passive.TurnOnPassive();
+                passive.EnableCondition();
             }
         }
     }
     
     
-    public class ReloadedInThisTurn : BaseTrigger
+    public class ReloadedInThisTurn : BaseCondition
     {
         public ReloadedInThisTurn(float amt) : base(amt)
         { }
 
-        public override TriggerType GetTriggerType()
+        public override ConditionType GetConditionType()
         {
-            return TriggerType.ReloadedInThisTurn;
+            return ConditionType.ReloadedInThisTurn;
         }
 
-        protected override void TriggerSetup()
+        protected override void ConditionSetup()
         {
             unit.onFinishAction.AddListener(CheckAction);
             FieldSystem.turnSystem.onTurnChanged.AddListener(ClearFlag);
@@ -81,12 +81,12 @@ namespace PassiveSkill
         //---
         private void CheckAction(IUnitAction unitAction)
         {
-            if (unitAction is ReloadAction) passive.TurnOnPassive();
+            if (unitAction is ReloadAction) passive.EnableCondition();
         }
 
         private void ClearFlag()
         {
-            passive.TurnOffPassive();
+            passive.DisableCondition();
         }
     }
 }

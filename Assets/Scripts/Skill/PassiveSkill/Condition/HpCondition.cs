@@ -1,10 +1,10 @@
 ﻿namespace PassiveSkill
 {
-    public class HpIs : BaseTrigger
+    public class HpIs : BaseCondition
     {
-        public override TriggerType GetTriggerType() => TriggerType.HpIs;
+        public override ConditionType GetConditionType() => ConditionType.HpIs;
 
-        protected override void TriggerSetup()
+        protected override void ConditionSetup()
         {
             unit.onHpChanged.AddListener(CheckHp);
         }
@@ -12,20 +12,20 @@
         private void CheckHp(int before, int after)
         {
             if (after == (int)amount)
-                passive.TurnOnPassive();
+                passive.EnableCondition();
             else
-                passive.TurnOffPassive();
+                passive.DisableCondition();
         }
 
         public HpIs(float amt) : base(amt)
         { }
     }
     
-    public class HighHp : BaseTrigger 
+    public class HighHp : BaseCondition 
     {
-        public override TriggerType GetTriggerType() => TriggerType.HighHp;
+        public override ConditionType GetConditionType() => ConditionType.HighHp;
 
-        protected override void TriggerSetup()
+        protected override void ConditionSetup()
         {
             unit.onHpChanged.AddListener(CheckHp);
         }
@@ -33,20 +33,20 @@
         private void CheckHp(int before, int after)
         {
             if (after >= (int)amount)
-                passive.TurnOnPassive();
+                passive.EnableCondition();
             else
-                passive.TurnOffPassive();
+                passive.DisableCondition();
         }
 
         public HighHp(float amt) : base(amt)
         { }
     }
     
-    public class LowHp : BaseTrigger 
+    public class LowHp : BaseCondition 
     {
-        public override TriggerType GetTriggerType() => TriggerType.LowHp;
+        public override ConditionType GetConditionType() => ConditionType.LowHp;
 
-        protected override void TriggerSetup()
+        protected override void ConditionSetup()
         {
             unit.onHpChanged.AddListener(CheckHp);
         }
@@ -54,9 +54,9 @@
         private void CheckHp(int before, int after)
         {
             if (after <= (int)amount)
-                passive.TurnOnPassive();
+                passive.EnableCondition();
             else
-                passive.TurnOffPassive();
+                passive.DisableCondition();
         }
 
         public LowHp(float amt) : base(amt)

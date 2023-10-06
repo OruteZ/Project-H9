@@ -2,14 +2,16 @@
 {
     public abstract class BaseEffect : IEffect
     {
-        protected float amount;
+        private float _amount;
+        private UnitStatType _statType;
         
         private Passive _passive;
         public Unit unit => _passive.unit;
+        private bool _enable;
 
-        public BaseEffect(float amount)
+        public BaseEffect(UnitStatType statType, float amount)
         {
-            SetAmount(amount);
+            SetTypeAndAmount(statType, amount);
         }
     
         public void Setup(Passive passive)
@@ -17,16 +19,26 @@
             _passive = passive;
             EffectSetup();
         }
-        
-        private void SetAmount(float amount)
-        {
-            this.amount = amount;
-        }
 
+        public UnitStatType GetStatType() => _statType;
+        public float GetAmount() => _amount;
         protected abstract void EffectSetup();
         public abstract PassiveEffectType GetEffectType();
+        public bool IsEnable()
+        {
+            return _enable;
+        }
 
-        public abstract void Enable();
-        public abstract void Disable();
+        public abstract void OnConditionEnable();
+        public abstract void OnConditionDisable();
+        
+        
+        
+        private void SetTypeAndAmount(UnitStatType statType, float amount)
+        {
+            _amount = amount;
+            _statType = statType;
+        }
+
     }    
 }

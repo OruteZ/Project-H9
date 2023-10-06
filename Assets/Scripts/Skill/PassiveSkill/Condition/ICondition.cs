@@ -1,15 +1,16 @@
 ﻿namespace PassiveSkill
 {
-    public interface ITrigger
+    public interface ICondition
     {
         void Setup(Passive passive);
-        TriggerType GetTriggerType();
+        ConditionType GetConditionType();
         void SetAmount(float amount);
     }
 
-    public enum TriggerType
+    public enum ConditionType
     {
         Null,
+        TargetHpMax,
         TargetLowHp,
         TargetHighHp,
         TargetHpIs,

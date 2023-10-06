@@ -8,6 +8,7 @@ public class GameSystemUI : UISystem
     public PlayerHpUI playerHpUI { get; private set; }
     public QuestUI questUI { get; private set; }
     public TurnUI turnUI { get; private set; }
+    public PlayerStatLevelUpUI playerStatLevelUpUI { get; private set; }
 
     private new void Awake()
     {
@@ -15,11 +16,13 @@ public class GameSystemUI : UISystem
         playerHpUI = GetComponent<PlayerHpUI>();
         questUI = GetComponent<QuestUI>();
         turnUI = GetComponent<TurnUI>();
+        playerStatLevelUpUI = GetComponent<PlayerStatLevelUpUI>();
 
         uiSubsystems.Add(playerSummaryStatUI);
         uiSubsystems.Add(playerHpUI);
         uiSubsystems.Add(questUI);
         uiSubsystems.Add(turnUI);
+        uiSubsystems.Add(playerStatLevelUpUI);
     }
 
     // Update is called once per frame
@@ -28,6 +31,10 @@ public class GameSystemUI : UISystem
         if (Input.GetKeyDown(KeyCode.I))
         {
             OnCharacterBtnClick();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
         }
     }
 

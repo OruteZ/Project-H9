@@ -50,13 +50,13 @@ public class TurnOrderUI : UISystem
             TurnOrderUIObjectPooling(15);
         }
         GameObject ui = _turnOrderUIContainer.transform.GetChild(0).gameObject;
-        ui.transform.SetParent(_turnOrderUI.transform);
+        ui.transform.SetParent(_turnOrderUI.transform, false);
         ui.GetComponent<TurnOrderUIElement>().InitTurnOrderUIElement(unit, order);
         ui.SetActive(true);
     }
     private void DeleteTurnOrderUI(GameObject ui)
     {
-        ui.transform.SetParent(_turnOrderUIContainer.transform);
+        ui.transform.SetParent(_turnOrderUIContainer.transform, false);
         ui.SetActive(false);
     }
     private void InitTurnOrderUI(List<Unit> turnOrder)
@@ -118,14 +118,14 @@ public class TurnOrderUI : UISystem
         //표시 순서를 지키기 위해 현재 표시중인 UI들을 임시로 전부 오브젝트 풀링 대기 장소로 이동.(원본 순서는 currentTurnOrderUI가 기억)
         while (_turnOrderUI.transform.childCount > 0)
         {
-            _turnOrderUI.transform.GetChild(0).SetParent(_turnOrderUIContainer.transform);
+            _turnOrderUI.transform.GetChild(0).SetParent(_turnOrderUIContainer.transform, false);
         }
 
         //생성한 changeOrder에 따라 currentTurnOrderUI에서 순서대로 요소를 선택해 _turnOrderUI로 다시 이동하고 changeOrder함수를 실행해 UI 위치를 이동하도록 명령
         for (int i = 0; i < changeOrder.Count; i++)
         {
             //Debug.Log(currentTurnOrderUI[changeOrder[i]].GetComponent<TurnOrderUIElement>()._unit + "index: " + changeOrder[i]);
-            currentTurnOrderUI[changeOrder[i]].transform.SetParent(_turnOrderUI.transform);
+            currentTurnOrderUI[changeOrder[i]].transform.SetParent(_turnOrderUI.transform, false);
             currentTurnOrderUI[changeOrder[i]].GetComponent<TurnOrderUIElement>().ChangeOrder(i);
         }
 

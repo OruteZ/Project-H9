@@ -21,9 +21,9 @@ MonoBehaviour:
     weaponDamage: 1
     weaponRange: 4
     weaponAmmo: 6
-    weaponHitRate: 0
-    weaponCriticalChance: 0
-    weaponCriticalDamage: 0
+    weaponHitRate: 10
+    weaponCriticalChance: 0.2
+    weaponCriticalDamage: 3
     weaponScript: 201
   - index: 102
     weaponNameIndex: 102
@@ -51,4 +51,3 @@ MonoBehaviour:
     weaponScript: 203
   weaponNameTable: []
   weaponScriptTable: []
-  indexStart: 101

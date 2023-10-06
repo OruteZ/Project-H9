@@ -10,7 +10,7 @@ public class SkillUI : UISystem
     /// 스킬의 습득 상태를 정의합니다.
     /// NotLearnable = 배울 수 없음.
     /// Learnable = 배울 수 있음.
-    /// Learned = 배움.
+    /// Learned = 배움. (더 이상 못 배움)
     /// </summary>
     public enum LearnStatus
     {
@@ -138,6 +138,7 @@ public class SkillUI : UISystem
             {
                 state = LearnStatus.Learnable;
             }
+            Debug.Log(_skillElement.skillIndex + " / " + state);
             _skillElement.SetSkillButtonEffect((int)state);
 
             if (_skill.skillLevel > 0)

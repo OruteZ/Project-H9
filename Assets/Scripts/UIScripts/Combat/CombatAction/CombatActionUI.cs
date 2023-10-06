@@ -68,6 +68,7 @@ public class CombatActionUI : UISystem
 
     private void Update()
     {
+        if (!GameManager.instance.CompareState(GameState.Combat)) return;
         for (int i = 0; i <= _actionButtons.Count; i++)
         {
             if (Input.GetKeyDown(_shortCutKey[i]))

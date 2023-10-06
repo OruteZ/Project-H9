@@ -4,6 +4,80 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public class CharacterStatUIInfo
+{
+    private Dictionary<string, string> _statNameTransleation = new Dictionary<string, string>()
+    {
+            {"HP",                      "체력" },
+            {"Concentration",           "집중력" },
+            {"Sight Range",             "시야 범위" },
+            {"Speed",                   "속도" },
+            {"Action Point",            "행동 포인트" },
+            {"Additional Hit Rate",     "추가 명중률" },
+            {"Critical Chance",         "치명타 확률" },
+            {"Additional Damage",       "추가 데미지" },
+            {"Additional Range",        "추가 사거리" },
+            {"Critical Damage",         "치명타 데미지" },
+            {"Name",                    "무기 이름" },
+            {"Ammo",                    "무기 탄창 용량" },
+            {"Damage",                  "무기 데미지" },
+            {"Range",                   "무기 사거리" },
+            {"",                        "" },
+    };
+    //이걸 이런 식으로 여기 이러는 게 맞나?
+
+    public string statName { get; private set; }
+    public Dictionary<string, float> statValues { get; private set; }
+
+    public CharacterStatUIInfo(string name) 
+    {
+        statName = name;
+        statValues = new Dictionary<string, float>() 
+        {
+            {"CharacterStat",   0.0f},
+            {"WeaponStat",      0.0f},
+            {"SkillStat",       0.0f}
+        };
+    }
+
+    public void SetStatValue(string statType, float value) 
+    {
+        if (!statValues.ContainsKey(statType)) 
+        {
+            Debug.LogError("잘못된 키 밸류 입력");
+            return;
+        }
+        statValues[statType] = value;
+    }
+    public string GetTranslateStatName() 
+    {
+        return _statNameTransleation[statName];
+    }
+    public float GetFinalStatValue() 
+    {
+        float result = 0;
+        foreach (float x in statValues.Values) 
+        {
+            result += x;
+        }
+        return result;
+    }
+    public float GetCorrectedValue(float stat)
+    {
+        if (statName == "Critical Chance") return ((int)(stat * 100));
+        return stat;
+    }
+    public string GetFinalStatValueString() 
+    {
+        string finalStat = GetCorrectedValue(GetFinalStatValue()).ToString();
+        if (statName == "") return "";
+        if (statName == "Additional Hit Rate") return finalStat + "%";
+        if (statName == "Critical Chance") return finalStat + '%';
+
+        return finalStat.ToString();
+    }
+}
+
 /// <summary>
 /// 캐릭터 정보 창에서 캐릭터의 스텟 및 장비하고 있는 무기의 스텟 정보를 표시하는 기능을 구현한 클래스
 /// </summary>
@@ -11,17 +85,37 @@ public class CharacterStatUI : UISystem
 {
     //Character Stat
     [Header("Character Stat UI")]
-    [SerializeField] private GameObject _characterStatText;
-    [SerializeField] private GameObject _weaponStatTextName;
-    [SerializeField] private GameObject _weaponStatTextContents;
-
     [SerializeField] private GameObject _characterStatTexts;
     [SerializeField] private GameObject _weaponStatTexts;
 
     public GameObject _characterStatTooltip;
+    private readonly List<string> _stats = new List<string>()
+    {   "HP",
+        "Concentration",
+        "Sight Range",
+        "Speed",
+        "Action Point",
+        "",
+        "Additional Hit Rate",
+        "Critical Chance",
+        "Additional Damage",
+        "Additional Range",
+        "Critical Damage",
+        "Name",
+        "Ammo",
+        "Damage",
+        "Range"
+    };
+    public Dictionary<string, CharacterStatUIInfo> characterStatInfo { get; private set; }
 
-    private Image _characterImage;
-    private Image _weaponImage;
+    private void Start()
+    {
+        characterStatInfo = new Dictionary<string, CharacterStatUIInfo>();
+        foreach (string str in _stats)
+        {
+            characterStatInfo.Add(str, new CharacterStatUIInfo(str));
+        }
+    }
 
     public override void OpenUI()
     {
@@ -37,79 +131,83 @@ public class CharacterStatUI : UISystem
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
 
-        SetCharacterStatText(player.GetStat());
-        SetWeaponStatText(player.weapon);
+        SetStatInfo(player);
+        SetCharacterStatText();
+        SetWeaponStatText();
     }
-    private void SetCharacterStatText(UnitStat playerStat)
+    private void SetStatInfo(Player player) 
     {
-        string addDmg = playerStat.revolverAdditionalDamage.ToString() + " / " + playerStat.repeaterAdditionalDamage.ToString() + " / " + playerStat.shotgunAdditionalDamage.ToString();
-        string addRng = playerStat.revolverAdditionalRange.ToString() + " / " + playerStat.repeaterAdditionalRange.ToString() + " / " + playerStat.shotgunAdditionalRange.ToString();
-        string criDmg = playerStat.revolverCriticalDamage.ToString() + " / " + playerStat.repeaterCriticalDamage.ToString() + " / " + playerStat.shotgunCriticalDamage.ToString();
+        UnitStat stat = player.GetStat();
+        Weapon weapon = player.weapon;
+        //player
+        //basic stat
+        characterStatInfo["HP"].SetStatValue("CharacterStat", stat.maxHp);
+        //characterStatInfo["HP"].SetStatValue("WeaponStat", weapon.bonusStat.maxHp); //예시
+        characterStatInfo["Concentration"].SetStatValue("CharacterStat", stat.concentration);
+        characterStatInfo["Sight Range"].SetStatValue("CharacterStat", stat.sightRange);
+        characterStatInfo["Speed"].SetStatValue("CharacterStat", stat.speed);
+        characterStatInfo["Action Point"].SetStatValue("CharacterStat", stat.actionPoint);
 
-        string[,] texts =
+        //bonus stat
+        characterStatInfo["Additional Hit Rate"].SetStatValue("CharacterStat", stat.additionalHitRate);
+        characterStatInfo["Additional Hit Rate"].SetStatValue("WeaponStat", weapon.hitRate);
+        characterStatInfo["Critical Chance"].SetStatValue("CharacterStat", stat.criticalChance);
+        characterStatInfo["Critical Chance"].SetStatValue("WeaponStat", weapon.criticalChance);
+
+        WeaponType weaponType = weapon.GetWeaponType();
+        if (weaponType is WeaponType.Revolver)
         {
-            {"HP:",                     playerStat.maxHp.ToString() },
-            {"Concentration:",          playerStat.concentration.ToString() },
-            {"Sight Range:",            playerStat.sightRange.ToString() },
-            {"Speed:",                  playerStat.speed.ToString() },
-            {"Action Point:",           playerStat.actionPoint.ToString() },
-            {"Additional Hit Rate:",    playerStat.additionalHitRate.ToString() + '%' },
-            {"Critical Chance:",        ((int)(playerStat.criticalChance * 100)).ToString() + '%' },
-            {"", "" },
-            {"Additional Damage:",      addDmg },
-            {"Additional Range:",       addRng },
-            {"Critical Damage:",        criDmg },
-            {"", "" },
-        };
+            characterStatInfo["Additional Damage"].SetStatValue("CharacterStat", stat.revolverAdditionalDamage);
+            characterStatInfo["Additional Range"].SetStatValue("CharacterStat", stat.revolverAdditionalRange);
+            characterStatInfo["Critical Damage"].SetStatValue("CharacterStat", stat.revolverCriticalDamage);
+        }
+        else if (weaponType is WeaponType.Repeater)
+        {
+            characterStatInfo["Additional Damage"].SetStatValue("CharacterStat", stat.repeaterAdditionalDamage);
+            characterStatInfo["Additional Range"].SetStatValue("CharacterStat", stat.repeaterAdditionalRange);
+            characterStatInfo["Critical Damage"].SetStatValue("CharacterStat", stat.repeaterCriticalDamage);
+        }
+        else if (weaponType is WeaponType.Shotgun)
+        {
+            characterStatInfo["Additional Damage"].SetStatValue("CharacterStat", stat.shotgunAdditionalDamage);
+            characterStatInfo["Additional Range"].SetStatValue("CharacterStat", stat.shotgunAdditionalRange);
+            characterStatInfo["Critical Damage"].SetStatValue("CharacterStat", stat.shotgunCriticalDamage);
+        }
+        characterStatInfo["Critical Damage"].SetStatValue("WeaponStat", weapon.criticalDamage);
 
+        //weapon
+        characterStatInfo["Name"].SetStatValue("WeaponStat", weapon.nameIndex);
+        characterStatInfo["Ammo"].SetStatValue("WeaponStat", weapon.maxAmmo);
+        characterStatInfo["Damage"].SetStatValue("WeaponStat", weapon.weaponDamage);
+        characterStatInfo["Range"].SetStatValue("WeaponStat", weapon.weaponRange);
+    }
+    private void SetCharacterStatText()
+    {
         for (int i = 0; i < _characterStatTexts.transform.childCount; i++) 
         {
             _characterStatTexts.transform.GetChild(i)
-                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(texts[i, 0], texts[i, 1]);
+                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[i]]);
         }
     }
-    private void SetWeaponStatText(Weapon weapon)
+    private void SetWeaponStatText()
     {
-        string hitRateText = "Additional Hit Rate:";
-        string criChanceText = "Critical Chance:";
-        string criDamageText = "Critical Damage:";
-        string hitRateValue = weapon.hitRate.ToString() + '%';
-        string criChanceValue = weapon.criticalChance.ToString() + '%';
-        string criDamageValue = weapon.criticalDamage.ToString();
-        if (weapon.hitRate == 0)
-        {
-            hitRateText = "";
-            hitRateValue = "";
-        }
-        if (weapon.criticalChance == 0)
-        {
-            criChanceText = "";
-            criChanceValue = "";
-        }
-        if (weapon.criticalDamage == 0)
-        {
-            criDamageText = "";
-            criDamageValue = "";
-        }
-
-        string[,] texts =
-        {
-            {"Name:",                 /*weapon.weaponName +*/"" },
-            {"Ammo:",                   weapon.maxAmmo.ToString() },
-            {"Damage:",                 weapon.weaponDamage.ToString() },
-            {"Range:",                  weapon.weaponRange.ToString() },
-            {hitRateText,               hitRateValue },
-            {criChanceText,             criChanceValue },
-            {criDamageText,             criDamageValue }
-        };
-
         for (int i = 0; i < _weaponStatTexts.transform.childCount; i++)
         {
             _weaponStatTexts.transform.GetChild(i)
-                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(texts[i, 0], texts[i, 1]);
+                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[i + _characterStatTexts.transform.childCount]]);
         }
     }
+
+    public void OpenCharacterTooltip(CharacterStatTextElement textElement, string name, float yPosition) 
+    {
+        _characterStatTooltip.GetComponent<CharacterTooltip>().SetCharacterTooltip(textElement, characterStatInfo[name], yPosition);
+    }
+    public void CloseCharacterTooltip()
+    {
+        _characterStatTooltip.GetComponent<CharacterTooltip>().CloseUI();
+    }
 }
+
 
 //HP:
 //Concentration:

@@ -54,7 +54,8 @@ public class FieldSystem : MonoBehaviour
         UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI();
 
         yield return new WaitUntil(() => LoadingManager.instance.isLoadingNow is false);
-        
+
+        Debug.Log("onCombatStart");
         onCombatStart.Invoke();
         turnSystem.StartTurn();
     }

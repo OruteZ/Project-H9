@@ -115,6 +115,8 @@ public class PlayerStatLevelUpElement : UIElement, IPointerEnterHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        bool isSelectedSomeCard = UIManager.instance.gameSystemUI.playerStatLevelUpUI.isSelectedSomeCard;
+        if (isSelectedSomeCard && !_isSelected) return;
         _isMouseOver = true;
     }
 

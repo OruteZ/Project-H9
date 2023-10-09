@@ -19,12 +19,15 @@ public class PlayerSummaryStatUI : UISystem
     // Start is called before the first frame update
     void Start()
     {
+        UIManager.instance.onPlayerStatChanged.AddListener(() => SetCurrentStatusUI());
+        UIManager.instance.onTurnChanged.AddListener(() => SetCurrentStatusUI());
+        UIManager.instance.onActionChanged.AddListener(() => SetCurrentStatusUI());
         SetCurrentStatusUI();
     }
     private void Update()
     {
         //for test
-        SetCurrentStatusUI();
+        //SetCurrentStatusUI();
         //유닛의 스텟 변화 시점을 감지할 방법이...? Unit의 stat변수는 protected이고... UnityEvent는 마땅한 것이 없다.
         //stat 변수의 set을 이용해서 해도 되긴 하는데 내가 구현한 게 아니라서 조심스럽다. 향후 리펙토링 시 고려.
     }

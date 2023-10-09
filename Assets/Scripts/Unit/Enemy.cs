@@ -75,6 +75,7 @@ public class Enemy : Unit
     public override void GetDamage(int damage)
     {
         base.GetDamage(damage);
+        UIManager.instance.onActionChanged.Invoke();
     }
     
     private void FinishAction()

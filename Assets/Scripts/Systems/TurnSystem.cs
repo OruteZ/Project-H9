@@ -17,6 +17,7 @@ private void Awake()
     {
         turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.worldTurn : 0;
         onTurnChanged.AddListener(() => { turnNumber++;});
+        onTurnChanged.AddListener(() => UIManager.instance.onTurnChanged.Invoke());
         onTurnChanged.AddListener(() => UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI());
         onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));
     }
@@ -37,7 +38,6 @@ private void Awake()
         var player = FieldSystem.unitSystem.GetPlayer();
         if (player is not null)
         {
-            Debug.Log(FieldSystem.unitSystem.GetPlayer().IsBusy());
             if (FieldSystem.unitSystem.GetPlayer().IsBusy()) return;
         }
         
@@ -61,6 +61,7 @@ private void Awake()
             turnOwner.StartTurn();
             onTurnChanged.Invoke();
         }
+        UIManager.instance.onTurnChanged.Invoke();
     }
     private void CalculateTurnOwner()
     {

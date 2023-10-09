@@ -32,6 +32,7 @@ public class PlayerStatLevelInfo
         {
             GameManager.instance.playerStat.speed += statIncreaseValue;
         }
+        UIManager.instance.onPlayerStatChanged.Invoke();
     }
     public bool IsLevelUpFully() 
     {
@@ -226,7 +227,7 @@ public class PlayerStatLevelUpUI : UISystem
         {
             selectedCardNumber = -1;
         }
-        _statSelectButton.SetActive(true);
+        _statSelectButton.SetActive(isSelected);
     }
     public void ClickSelectButton() 
     {

@@ -24,6 +24,7 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
     // Update is called once per frame
     void Update()
     {
+        if (_nameText.text == "Level" || _nameText.text == "Exp") return;
         if (isMouseOver && !_isOpenTooltip && _isSetContents) 
         {
             _mouseOverCount += Time.deltaTime;

@@ -66,7 +66,7 @@ public class Enemy : Unit
         #endif
         animator.SetTrigger(IDLE);
         animator.SetTrigger(START_TURN);
-        currentActionPoint = originalstat.actionPoint;
+        currentActionPoint = stat.actionPoint;
 
         hasAttacked = false;
         activeUnitAction = GetAction<IdleAction>();

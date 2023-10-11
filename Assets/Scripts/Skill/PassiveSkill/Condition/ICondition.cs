@@ -17,6 +17,11 @@
         LowAmmo,
         HighAmmo,
         AmmoIs,
+        
+        LessTargetRange,
+        MoreTargetRange,
+        SameTargetRange,
+        
         LowHp,
         HighHp,
         HpIs,

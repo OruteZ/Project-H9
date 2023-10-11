@@ -28,19 +28,19 @@ public abstract class Unit : MonoBehaviour, IUnit
     public Transform waist;
 
     [Header("Status")] 
-    [SerializeField] protected UnitStat originalstat;
+    [SerializeField] protected UnitStat stat;
 
     public int hp
     {
-        get => originalstat.curHp;
+        get => stat.curHp;
         set
         {
-            var after = Mathf.Clamp(value, 0, originalstat.maxHp);
-            var before = originalstat.curHp;
+            var after = Mathf.Clamp(value, 0, stat.maxHp);
+            var before = stat.curHp;
             
             if (before == after) return;
             
-            originalstat.curHp = after;
+            stat.curHp = after;
             onHpChanged.Invoke(before, after);
         }
     }
@@ -130,7 +130,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     public virtual void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList)
     {
         unitName = newName;
-        originalstat = unitStat;
+        stat = unitStat;
         
         _unitActionArray = GetComponents<IUnitAction>();
         foreach (IUnitAction action in _unitActionArray)
@@ -225,7 +225,7 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     public UnitStat GetStat()
     {
-        return originalstat;
+        return stat;
     }
 
     public bool isVisible

@@ -11,7 +11,7 @@ public class PlayerExpUI : UIElement, IPointerEnterHandler, IPointerExitHandler
     // Start is called before the first frame update
     void Start()
     {
-        UIManager.instance.onPlayerStatChanged.AddListener(() => SetPlayerExpUI());
+        UIManager.instance.onPlayerStatChanged.AddListener(SetPlayerExpUI);
         SetPlayerExpUI();
         _playerExpText.gameObject.SetActive(false);
     }

@@ -1,51 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum ScriptLanguage 
-{
-    NULL,
-    Korean,
-    English
-}
-public class SkillScript
+public class SkillDescriptionScript
 {
     public int index { get; private set; }
-    public string name { get; private set; }
     private string _description;
     private bool _isSubstituted;
-    public SkillScript(int idx, string str, string dsc) 
+    public SkillDescriptionScript(int idx, string dsc)
     {
         index = idx;
-        name = str;
         _description = dsc;
         _isSubstituted = false;
     }
-    public string GetDescription(int skiilIndex) 
+    public string GetDescription(int skiilIndex)
     {
         if (!_isSubstituted)
         {
-            _isSubstituted = SubstituteDescriptionValues(skiilIndex);
         }
-        if (!_isSubstituted) 
+        if (!_isSubstituted)
         {
             Debug.LogError("툴팁 변수 대입에 실패했습니다.");
         }
-        return _description;
+        return SubstituteDescriptionValues(skiilIndex);
     }
-    private bool SubstituteDescriptionValues(int skillIndex) 
+    private string SubstituteDescriptionValues(int skillIndex)
     {
         string result = "";
         char[] splitChar = { '{', '}' };
         string[] splitString = _description.Split(splitChar);
         bool isSubstitutableValue = false;
-        foreach (string str in splitString) 
+        foreach (string str in splitString)
         {
             if (!isSubstitutableValue)
             {
                 result += str;
             }
-            else 
+            else
             {
                 Debug.Log(skillIndex + " / " + SkillManager.instance.GetSkill(skillIndex).skillInfo.isPassive);
                 if (SkillManager.instance.GetSkill(skillIndex).skillInfo.IsPassive())
@@ -64,7 +54,6 @@ public class SkillScript
             }
             isSubstitutableValue = !isSubstitutableValue;
         }
-        _description = result;
-        return true;
+        return result;
     }
 }

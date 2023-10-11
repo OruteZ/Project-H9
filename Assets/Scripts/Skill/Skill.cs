@@ -125,17 +125,15 @@ public class SkillInfo
 public class Skill
 {
     public SkillInfo skillInfo { get; private set; }
-    public SkillScript skillScript { get; private set; }
 
     public bool isLearned { get; private set; }
     public bool isLearnable { get; private set; }
     public int skillLevel { get; private set; }
     public bool[] isLearnedPrecedeSkill { get; private set; }
 
-    public Skill(SkillInfo info, SkillScript script)
+    public Skill(SkillInfo info)
     {
         skillInfo = info;
-        skillScript = script;
 
         isLearned = false;
         InitIsLearnable();

@@ -72,8 +72,8 @@ public class SkillUI : UISystem
     {
         Skill currentSkill = _skillManager.GetSkill(index);
         _currentSkillIndex = index;
-        _skillTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentSkill.skillScript.name;
-        _skillTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = currentSkill.skillScript.GetDescription(currentSkill.skillInfo.index);
+        _skillTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillName(_currentSkillIndex);
+        _skillTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillDescription(_currentSkillIndex);
 
         TextMeshProUGUI buttonText = _skillTooltipWindow.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
         if (currentSkill.isLearnable)

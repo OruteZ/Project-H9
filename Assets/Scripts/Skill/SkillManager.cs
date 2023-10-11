@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ScriptLanguage
+{
+    NULL,
+    Korean,
+    English
+}
+
 /// <summary>
 /// 게임에서 사용되는 스킬의 획득, 사용 등의 기능을 관리하는 클래스
 /// </summary>
@@ -12,7 +19,8 @@ public class SkillManager : Generic.Singleton<SkillManager>
     public ActiveDatabase activeDB;
 
     private List<Skill> _skills;
-    private List<SkillScript> _skillScripts;
+    private List<SkillNameScript> _skillNameScripts;
+    private List<SkillDescriptionScript> _skillDescriptionScripts;
 
     private int _skillPoint;
 
@@ -47,19 +55,25 @@ public class SkillManager : Generic.Singleton<SkillManager>
             _skillInformations.Add(skillInfo);
         }
 
-        _skillScripts = new List<SkillScript>();
-        int language = 1;
-        for (int i = 0; i < _skillName.Count; i++)
-        {
-            SkillScript script = new SkillScript(i, _skillName[i][language], _skilldescription[i][language]);
-            _skillScripts.Add(script);
-        }
-
         _skills = new List<Skill>();
         for (int i = 0; i < _skillInformations.Count; i++)
         {
-            Skill skill = new Skill(_skillInformations[i], _skillScripts[_skillInformations[i].nameIndex]);
+            Skill skill = new Skill(_skillInformations[i]);
             _skills.Add(skill);
+        }
+        ScriptLanguage language = ScriptLanguage.Korean;
+
+        _skillNameScripts = new List<SkillNameScript>();
+        for (int i = 0; i < _skillName.Count; i++)
+        {
+            SkillNameScript script = new SkillNameScript(i, _skillName[i][(int)language]);
+            _skillNameScripts.Add(script);
+        }
+        _skillDescriptionScripts = new List<SkillDescriptionScript>();
+        for (int i = 0; i < _skillName.Count; i++)
+        {
+            SkillDescriptionScript script = new SkillDescriptionScript(i, _skilldescription[i][(int)language]);
+            _skillDescriptionScripts.Add(script);
         }
     }
 
@@ -160,5 +174,16 @@ public class SkillManager : Generic.Singleton<SkillManager>
     public bool IsEnoughSkillPoint()
     {
         return REQUIRED_SKILL_POINT <= _skillPoint;
+    }
+    public string GetSkillName(int skillIndex) 
+    {
+        Skill skill = GetSkill(skillIndex);
+        return _skillNameScripts[skill.skillInfo.nameIndex].name;
+    }
+    public string GetSkillDescription(int skillIndex)
+    {
+        Debug.Log("skill index:" + skillIndex);
+        Skill skill = GetSkill(skillIndex);
+        return _skillDescriptionScripts[skill.skillInfo.tooltipIndex].GetDescription(skillIndex);
     }
 }

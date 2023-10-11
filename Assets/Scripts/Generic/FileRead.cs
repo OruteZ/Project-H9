@@ -37,6 +37,7 @@ public class FileRead : MonoBehaviour
         }
 
         //string[] header = Regex.Split(lines[0], SPLIT_RE);    //for test
+		//첫 줄은 value 설명 로우로 취급하여 생략.
         for (int i = 1; i < lines.Length; i++)
         {
             string[] values = Regex.Split(lines[i], SPLIT_RE);

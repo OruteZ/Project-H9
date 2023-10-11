@@ -18,8 +18,8 @@ public class SkillInfo
     enum SkillActiveOrPassive
     {
         Null,
+        PassiveType,
         ActiveType,
-        PassiveType
     }
     enum Stat
     {
@@ -49,20 +49,20 @@ public class SkillInfo
     }
 
     public int index { get; private set; }
-    public int iconNumber { get; private set; }
-    public string name { get; private set; }
-    public string description { get; private set; }
-    public int category { get; private set; }
-
-    private int activeOrPassive;
+    public int section { get; private set; }
+    public int isPassive { get; private set; }
+    public int nameIndex { get; private set; }
+    public int tooltipIndex { get; private set; }
+    public int iconIndex { get; private set; }
     public int[] precedenceIndex { get; private set; }
-    public int repeatCount { get; private set; }
-    public int[] stat { get; private set; }
-    public int activeType { get; private set; }
-    public int upgradeSkill { get; private set; }
-    public int[] amount { get; private set; }
-    public int range { get; private set; }
-    public int width { get; private set; }
+
+    //public int repeatCount { get; private set; }
+    //public int[] stat { get; private set; }
+    //public int activeType { get; private set; }
+    //public int upgradeSkill { get; private set; }
+    //public int[] amount { get; private set; }
+    //public int range { get; private set; }
+    //public int width { get; private set; }
 
     /// <summary>
     /// SkillTable에서 한 행을 입력받아서 변수들을 초기화합니다.
@@ -72,27 +72,19 @@ public class SkillInfo
     {
         for (int i = 0; i < list.Count; i++)
         {
-            if (list[i].Equals(""))
+            if (list[i].Equals("") || list[i].Equals("null"))
             {
                 list[i] = "0";
             }
         }
 
         index = int.Parse(list[0]);
-        iconNumber = int.Parse(list[1]);
-        name = list[2];
-        description = list[3];
-        category = int.Parse(list[4]);
-        activeOrPassive = int.Parse(list[5]);
+        section = int.Parse(list[1]);
+        isPassive = int.Parse(list[2]);
+        nameIndex = int.Parse(list[3]);
+        tooltipIndex = int.Parse(list[4]);
+        iconIndex = int.Parse(list[5]);
         precedenceIndex = InitIntArrayValue(list[6]);
-        // repeatCount = int.Parse(list[7]);
-        // if (repeatCount == 0) repeatCount = 1;  //table issue
-        // stat = InitIntArrayValue(list[8]);
-        // activeType = int.Parse(list[9]);
-        // upgradeSkill = int.Parse(list[10]);
-        // amount = InitIntArrayValue(list[11]);
-        // range = int.Parse(list[12]);
-        // width = int.Parse(list[13]);
     }
     private int[] InitIntArrayValue(string str)
     {
@@ -113,11 +105,17 @@ public class SkillInfo
 
     public bool IsActive()
     {
-        if (activeOrPassive.Equals(SkillActiveOrPassive.ActiveType))
+        Debug.Log("isPassiveTest");
+        Debug.Log((int)SkillActiveOrPassive.ActiveType);
+        if (isPassive == (int)SkillActiveOrPassive.ActiveType)
         {
             return true;
         }
         return false;
+    }
+    public bool IsPassive() 
+    {
+        return !IsActive();
     }
 }
 
@@ -127,15 +125,17 @@ public class SkillInfo
 public class Skill
 {
     public SkillInfo skillInfo { get; private set; }
+    public SkillScript skillScript { get; private set; }
 
     public bool isLearned { get; private set; }
     public bool isLearnable { get; private set; }
     public int skillLevel { get; private set; }
     public bool[] isLearnedPrecedeSkill { get; private set; }
 
-    public Skill(SkillInfo info)
+    public Skill(SkillInfo info, SkillScript script)
     {
         skillInfo = info;
+        skillScript = script;
 
         isLearned = false;
         InitIsLearnable();
@@ -171,11 +171,11 @@ public class Skill
     /// <param name="skills"> 플레이어의 스킬 리스트 </param>
     public void UpdateIsLearnable(List<Skill> skills)
     {
-        if (skillLevel >= skillInfo.repeatCount)
-        {
-            isLearnable = false;
-            return;
-        }
+        //if (skillLevel >= skillInfo.repeatCount)
+        //{
+        //    isLearnable = false;
+        //    return;
+        //}
 
         CheckPrecedenceSkill(skills);
         isLearnable = IsLearnedAllPrecedenceSkills();
@@ -208,20 +208,19 @@ public class Skill
     /// </summary>
     public void LearnSkill()
     {
-        if (skillLevel >= skillInfo.repeatCount) 
-        {
-            Debug.LogError("스킬 레벨 비정상적 상승");
-            return; 
-        }
+        //if (skillLevel >= skillInfo.repeatCount) 
+        //{
+        //    Debug.LogError("스킬 레벨 비정상적 상승");
+        //    return; 
+        //}
 
         skillLevel++;
         isLearned = true;
-        if (skillLevel >= skillInfo.repeatCount)
-        {
-            isLearnable = false;
-        }
-        
-        //"플레이어가 배운 스킬"에 해당 스킬의 index 추가
+        //if (skillLevel >= skillInfo.repeatCount)
+        //{
+        //    isLearnable = false;
+        //}
+        isLearnable = false;
     }
 }
 

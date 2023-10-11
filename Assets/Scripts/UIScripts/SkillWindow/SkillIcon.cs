@@ -27,7 +27,7 @@ public class SkillIcon : UIElement
     private void FindIconImage()
     {
         SkillManager skillManager = SkillManager.instance;
-        Sprite sprite = Resources.Load("Images/" + skillManager.GetSkill(_skillIndex).skillInfo.iconNumber) as Sprite;
+        Sprite sprite = Resources.Load("Images/" + skillManager.GetSkill(_skillIndex).skillInfo.iconIndex) as Sprite;
         if (sprite == null) 
         {
             sprite = defaultImage;

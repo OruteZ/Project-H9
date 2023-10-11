@@ -8,8 +8,11 @@ using UnityEngine;
 public class SkillManager : Generic.Singleton<SkillManager>
 {
     const int REQUIRED_SKILL_POINT = 1;
+    public PassiveDatabase passiveDB;
+    public ActiveDatabase activeDB;
 
     private List<Skill> _skills;
+    private List<SkillScript> _skillScripts;
 
     private int _skillPoint;
 
@@ -24,24 +27,39 @@ public class SkillManager : Generic.Singleton<SkillManager>
     private void InitSkills()
     {
         List<List<string>> _skillTable = FileRead.Read("SkillTable");
-        if (_skillTable == null)
+        List<List<string>> _skillName = FileRead.Read("SkillNameScript");
+        List<List<string>> _skilldescription = FileRead.Read("SkillTooltipScript");
+        if (_skillTable == null || _skillName == null || _skilldescription == null) 
         {
             Debug.Log("skill table을 읽어오지 못했습니다.");
+            return;
+        }
+        if (_skillName.Count != _skilldescription.Count)
+        {
+            Debug.Log("Script Table에 누락된 데이터가 있습니다.");
             return;
         }
 
         List<SkillInfo> _skillInformations = new List<SkillInfo>();
         for (int i = 0; i < _skillTable.Count; i++)
         {
-            SkillInfo _skillInfo = new SkillInfo(_skillTable[i]);
-            _skillInformations.Add(_skillInfo);
+            SkillInfo skillInfo = new SkillInfo(_skillTable[i]);
+            _skillInformations.Add(skillInfo);
+        }
+
+        _skillScripts = new List<SkillScript>();
+        int language = 1;
+        for (int i = 0; i < _skillName.Count; i++)
+        {
+            SkillScript script = new SkillScript(i, _skillName[i][language], _skilldescription[i][language]);
+            _skillScripts.Add(script);
         }
 
         _skills = new List<Skill>();
         for (int i = 0; i < _skillInformations.Count; i++)
         {
-            Skill _skill = new Skill(_skillInformations[i]);
-            _skills.Add(_skill);
+            Skill skill = new Skill(_skillInformations[i], _skillScripts[_skillInformations[i].nameIndex]);
+            _skills.Add(skill);
         }
     }
 

@@ -55,6 +55,21 @@ public class PassiveDatabase : ScriptableObject
 
         return null;
     }
+
+    public PassiveInfo GetPassiveInfo(int index)
+    {
+        for (int i = 0; i < infos.Count; i++)
+        {
+            var info = infos[i];
+            Debug.Log(info.index);
+            if (info.index == index)
+            {
+                return info;
+            }
+        }
+        Debug.LogError(index);
+        return new PassiveInfo();
+    }
 }
 
 [Serializable]

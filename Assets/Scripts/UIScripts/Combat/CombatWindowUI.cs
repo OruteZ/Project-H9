@@ -53,6 +53,10 @@ public class CombatWindowUI : UISystem
         uiSubsystems.Add(turnOrderUI);
 
         _isInCombat = GameManager.instance.CompareState(GameState.Combat);
+
+        UIManager.instance.onActionChanged.AddListener(() => combatActionUI.SetActionButtons());
+        UIManager.instance.onActionChanged.AddListener(() => enemyHpUI.SetEnemyHpBars());
+        UIManager.instance.onPlayerStatChanged.AddListener(() => magazineUI.SetMagazineText());
     }
 
     public override void ClosePopupWindow()

@@ -138,7 +138,6 @@ public class SkillUI : UISystem
             {
                 state = LearnStatus.Learnable;
             }
-            Debug.Log(_skillElement.skillIndex + " / " + state);
             _skillElement.SetSkillButtonEffect((int)state);
 
             if (_skill.skillLevel > 0)

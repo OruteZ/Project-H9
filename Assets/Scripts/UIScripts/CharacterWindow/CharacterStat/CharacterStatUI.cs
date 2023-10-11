@@ -8,6 +8,8 @@ public class CharacterStatUIInfo
 {
     private Dictionary<string, string> _statNameTransleation = new Dictionary<string, string>()
     {
+            {"Level",                   "레벨" },
+            {"Exp",                     "경험치" },
             {"HP",                      "체력" },
             {"Concentration",           "집중력" },
             {"Sight Range",             "시야 범위" },
@@ -71,6 +73,7 @@ public class CharacterStatUIInfo
     {
         string finalStat = GetCorrectedValue(GetFinalStatValue()).ToString();
         if (statName == "") return "";
+        if (statName == "Exp") return finalStat + " / " + GameManager.instance.GetMaxExp();
         if (statName == "Additional Hit Rate") return finalStat + "%";
         if (statName == "Critical Chance") return finalStat + '%';
 
@@ -85,12 +88,17 @@ public class CharacterStatUI : UISystem
 {
     //Character Stat
     [Header("Character Stat UI")]
+    [SerializeField] private GameObject _characterLevelTexts;
     [SerializeField] private GameObject _characterStatTexts;
     [SerializeField] private GameObject _weaponStatTexts;
+    static int _textIndex;
 
     public GameObject _characterStatTooltip;
     private readonly List<string> _stats = new List<string>()
-    {   "HP",
+    {
+        "Level",
+        "Exp",
+        "HP",
         "Concentration",
         "Sight Range",
         "Speed",
@@ -115,6 +123,7 @@ public class CharacterStatUI : UISystem
         {
             characterStatInfo.Add(str, new CharacterStatUIInfo(str));
         }
+        UIManager.instance.onPlayerStatChanged.AddListener(() => SetStatText());
     }
 
     public override void OpenUI()
@@ -132,6 +141,8 @@ public class CharacterStatUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
 
         SetStatInfo(player);
+        _textIndex = 0;
+        SetCharacterLevelText();
         SetCharacterStatText();
         SetWeaponStatText();
     }
@@ -140,6 +151,10 @@ public class CharacterStatUI : UISystem
         UnitStat stat = player.GetStat();
         Weapon weapon = player.weapon;
         //player
+        //level
+        characterStatInfo["Level"].SetStatValue("CharacterStat", GameManager.instance.level);
+        characterStatInfo["Exp"].SetStatValue("CharacterStat", GameManager.instance.curExp);
+
         //basic stat
         characterStatInfo["HP"].SetStatValue("CharacterStat", stat.maxHp);
         //characterStatInfo["HP"].SetStatValue("WeaponStat", weapon.bonusStat.maxHp); //예시
@@ -181,12 +196,20 @@ public class CharacterStatUI : UISystem
         characterStatInfo["Damage"].SetStatValue("WeaponStat", weapon.weaponDamage);
         characterStatInfo["Range"].SetStatValue("WeaponStat", weapon.weaponRange);
     }
+    private void SetCharacterLevelText()
+    {
+        for (int i = 0; i < _characterLevelTexts.transform.childCount; i++)
+        {
+            _characterLevelTexts.transform.GetChild(i)
+                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[_textIndex++]]);
+        }
+    }
     private void SetCharacterStatText()
     {
         for (int i = 0; i < _characterStatTexts.transform.childCount; i++) 
         {
             _characterStatTexts.transform.GetChild(i)
-                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[i]]);
+                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[_textIndex++]]);
         }
     }
     private void SetWeaponStatText()
@@ -194,7 +217,7 @@ public class CharacterStatUI : UISystem
         for (int i = 0; i < _weaponStatTexts.transform.childCount; i++)
         {
             _weaponStatTexts.transform.GetChild(i)
-                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[i + _characterStatTexts.transform.childCount]]);
+                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[_textIndex++]]);
         }
     }
 

@@ -20,7 +20,7 @@ public class Player : Unit
         FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnChanged);
         TileEffectManager.instance.SetPlayer(this);
 
-        onSelectedChanged.AddListener(() => UIManager.instance.combatUI.SetCombatUI());
+        onSelectedChanged.AddListener(() => UIManager.instance.onActionChanged.Invoke());
     }
     public void Update()
     {
@@ -115,7 +115,6 @@ public class Player : Unit
 
     private void FinishAction()
     {
-        Debug.Log("Finish Action : player");
         if(activeUnitAction is not MoveAction) ConsumeCost(activeUnitAction.GetCost());
         
         ClearBusy();
@@ -196,6 +195,7 @@ public class Player : Unit
     {
         base.GetDamage(damage);
 
+        UIManager.instance.onPlayerStatChanged.Invoke();
         GameManager.instance.playerStat = originalstat;
     }
 

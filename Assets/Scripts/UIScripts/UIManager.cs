@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 /// <summary>
 /// 게임의 UI 전체를 관리하는 클래스
@@ -33,6 +33,11 @@ public class UIManager : Generic.Singleton<UIManager>
 
     public GameObject loading; //test
 
+    [HideInInspector] public UnityEvent onTurnChanged;
+    [HideInInspector] public UnityEvent onPlayerStatChanged;
+    [HideInInspector] public UnityEvent onPlayerSkillChanged;
+    [HideInInspector] public UnityEvent onActionChanged;
+
     private new void Awake()
     {
         if(loading is not null) loading.SetActive(true);
@@ -44,9 +49,7 @@ public class UIManager : Generic.Singleton<UIManager>
         _pauseMenuCanvas.enabled = false;
 
         gameSystemUI = _worldCanvas.GetComponent<GameSystemUI>();
-
         combatUI = _combatCanvas.GetComponent<CombatWindowUI>();
-
         characterUI = _characterCanvas.GetComponent<CharacterUI>();
         skillUI = _skillCanvas.GetComponent<SkillUI>();
         pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();

@@ -91,7 +91,6 @@ public class TurnOrderUIElement : MonoBehaviour
 
         Vector3 pos = TURN_ORDER_UI_INIT_POSITION;
         pos.x += TURN_ORDER_UI_INTERVAL * order;
-        Debug.Log(order + "/" + pos.x);
         GetComponent<RectTransform>().localPosition = pos;
 
         ChangeOrder(order);
@@ -102,7 +101,6 @@ public class TurnOrderUIElement : MonoBehaviour
         Vector3 pos = TURN_ORDER_UI_INIT_POSITION;
         pos.x += TURN_ORDER_UI_INTERVAL * order;
         _targetPosition = pos;
-        Debug.Log(GetComponent<RectTransform>().localPosition + "/" + _targetPosition);
 
         _isTurnOwner = false;
         if (order == 0)

@@ -40,12 +40,11 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         this.onActionComplete = onActionComplete;
         isActive = true;
         StartCoroutine(ExecuteCoroutine());
-        UIManager.instance.combatUI.SetCombatUI();
+        UIManager.instance.onActionChanged.Invoke();
     }
 
     protected void FinishAction()
     {
-        Debug.Log("Finish Action : Action");
         switch (GetActionType())
         {
             case ActionType.Move:
@@ -75,8 +74,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         
         isActive = false;
         onActionComplete();
-        UIManager.instance.combatUI.SetCombatUI();
-        
+        UIManager.instance.onActionChanged.Invoke();
+
         unit.onFinishAction.Invoke(this);
     }
 

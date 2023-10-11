@@ -11,6 +11,7 @@
 
     public enum PassiveEffectType
     {
-        Null
+        Null,
+        StatUpDependedOnCondition,
     }
 }

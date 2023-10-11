@@ -7,10 +7,11 @@
         
         private Passive _passive;
         public Unit unit => _passive.unit;
-        private bool _enable;
+        protected bool enable;
 
         public BaseEffect(UnitStatType statType, float amount)
         {
+            enable = false;
             SetTypeAndAmount(statType, amount);
         }
     
@@ -26,7 +27,7 @@
         public abstract PassiveEffectType GetEffectType();
         public bool IsEnable()
         {
-            return _enable;
+            return enable;
         }
 
         public abstract void OnConditionEnable();

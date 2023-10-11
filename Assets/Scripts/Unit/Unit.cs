@@ -28,19 +28,19 @@ public abstract class Unit : MonoBehaviour, IUnit
     public Transform waist;
 
     [Header("Status")] 
-    [SerializeField] protected UnitStat stat;
+    [SerializeField] protected UnitStat originalstat;
 
     public int hp
     {
-        get => stat.curHp;
+        get => originalstat.curHp;
         set
         {
-            var after = Mathf.Clamp(value, 0, stat.maxHp);
-            var before = stat.curHp;
+            var after = Mathf.Clamp(value, 0, originalstat.maxHp);
+            var before = originalstat.curHp;
             
             if (before == after) return;
             
-            stat.curHp = after;
+            originalstat.curHp = after;
             onHpChanged.Invoke(before, after);
         }
     }
@@ -130,8 +130,9 @@ public abstract class Unit : MonoBehaviour, IUnit
     public virtual void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList)
     {
         unitName = newName;
-        stat = unitStat;
+        originalstat = unitStat;
         
+        _unitActionArray = GetComponents<IUnitAction>();
         foreach (IUnitAction action in _unitActionArray)
         {
             action.SetUp(this);
@@ -140,6 +141,11 @@ public abstract class Unit : MonoBehaviour, IUnit
         _passiveList = passiveList;
         foreach (var passive in _passiveList)
         {
+            if (passive is null)
+            {
+                Debug.LogError("passive is null");
+                break;
+            }
             passive.Setup();
         }
 
@@ -192,7 +198,6 @@ public abstract class Unit : MonoBehaviour, IUnit
     protected virtual void Awake()
     {
         hexTransform = GetComponent<HexTransform>();
-        _unitActionArray = GetComponents<IUnitAction>();
     }
 
     private void Start()
@@ -220,7 +225,7 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     public UnitStat GetStat()
     {
-        return stat;
+        return originalstat;
     }
 
     public bool isVisible

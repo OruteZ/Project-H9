@@ -20,6 +20,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public int playerWeaponIndex;
     public GameObject playerModel;
     public List<int> playerPassiveIndexList;
+    public List<int> playerActiveIndexList;
 
     #region LEVEL
 

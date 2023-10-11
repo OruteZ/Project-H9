@@ -90,4 +90,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         StopCoroutine(ExecuteCoroutine());
         FinishAction();
     }
+
+    public virtual void SetAmount(float[] amounts)
+    { }
 }

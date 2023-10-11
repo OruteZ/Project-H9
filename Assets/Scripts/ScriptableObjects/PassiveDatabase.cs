@@ -15,7 +15,7 @@ public class PassiveDatabase : ScriptableObject
     [ContextMenu("Read Csv")]
     public void ReadCsv()
     {
-        var infoList = FileRead.Read("Passive");
+        var infoList = FileRead.Read("PassiveTable");
 
         if (infos is null) infos = new List<PassiveInfo>();
         else infos.Clear();
@@ -24,14 +24,16 @@ public class PassiveDatabase : ScriptableObject
         {
             var curInfo = new PassiveInfo
             {
-                index = int.Parse(info[(int)Column.Index]),
+                index = int.Parse(info[(int)PassiveColumn.Index]),
 
-                condition = (ConditionType)int.Parse(info[(int)Column.Condition]),
-                conditionAmount = int.Parse(info[(int)Column.ConditionAmount]),
+                condition = (ConditionType)int.Parse(info[(int)PassiveColumn.Condition]),
+                conditionAmount = int.Parse(info[(int)PassiveColumn.ConditionAmount]),
 
-                effect = (PassiveEffectType)int.Parse(info[(int)Column.Effect]),
-                effectStat = (UnitStatType)int.Parse(info[(int)Column.EffectStat]),
-                effectAmount = int.Parse(info[(int)Column.EffectAmount]),
+                effect = (PassiveEffectType)int.Parse(info[(int)PassiveColumn.Effect]),
+                
+                //maxHp는 사용안하므로 CSV상 null과 대응, maxHp를 건들려면 이부분 수정해야 함
+                effectStat = (UnitStatType)int.Parse(info[(int)PassiveColumn.EffectStat]),
+                effectAmount = float.Parse(info[(int)PassiveColumn.EffectAmount]),
             };
             
             infos.Add(curInfo);
@@ -68,7 +70,7 @@ public struct PassiveInfo
     public float effectAmount;
 }
 
-internal enum Column
+internal enum PassiveColumn
 {
     Index,
     Condition,

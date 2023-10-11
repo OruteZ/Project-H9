@@ -67,7 +67,7 @@ public class Player : Unit
 #endif
         
         hasAttacked = false;
-        currentActionPoint = stat.actionPoint;
+        currentActionPoint = originalstat.actionPoint;
         if (GameManager.instance.CompareState(GameState.Combat))
         {
             animator.SetTrigger(START_TURN);
@@ -172,13 +172,13 @@ public class Player : Unit
     {
         //한칸 움직일때마다 호출되므로, 보였다가 시야에서 사라지는 경우는 sightRange + 1로 탐색 범위에 포함 시킬 수 있음
         IEnumerable<Tile> allTile =
-            FieldSystem.tileSystem.GetTilesInRange(hexPosition, stat.sightRange + 1);
+            FieldSystem.tileSystem.GetTilesInRange(hexPosition, originalstat.sightRange + 1);
 
         foreach (var tile in allTile)
         {
             tile.inSight = 
                 FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition) &&
-                Hex.Distance(hexTransform.position, tile.hexPosition) <= stat.sightRange;
+                Hex.Distance(hexTransform.position, tile.hexPosition) <= originalstat.sightRange;
 
 #if UNITY_EDITOR
             var unitVision = FieldSystem.unitSystem.GetUnit(tile.hexPosition);
@@ -196,7 +196,7 @@ public class Player : Unit
     {
         base.GetDamage(damage);
 
-        GameManager.instance.playerStat = stat;
+        GameManager.instance.playerStat = originalstat;
     }
 
     private void LookTarget()
@@ -209,7 +209,7 @@ public class Player : Unit
         if(unit is not Player)
         {
             unit.isVisible = FieldSystem.tileSystem.VisionCheck(hexPosition, unit.hexPosition) &&
-                             Hex.Distance(hexTransform.position, unit.hexPosition) <= stat.sightRange;
+                             Hex.Distance(hexTransform.position, unit.hexPosition) <= originalstat.sightRange;
         }
         
 //        Debug.Log("On Any Unit Moved : Invoke");

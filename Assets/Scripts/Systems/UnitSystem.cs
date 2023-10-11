@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PassiveSkill;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,7 @@ public class UnitSystem : MonoBehaviour
     [SerializeField] private WeaponDatabase weaponDB;
     [SerializeField] private EnemyDatabase enemyDB;
     [SerializeField] private PassiveDatabase passiveDB;
+    [SerializeField] private ActiveDatabase activeDB;
     
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
@@ -34,6 +36,7 @@ public class UnitSystem : MonoBehaviour
         {
             if (unit is Player p)
             {
+                #region PLYAER PASSIVE SETUP
                 var playerPassiveIndexList = GameManager.instance.playerPassiveIndexList;
                 if (playerPassiveIndexList == null)
                 {
@@ -42,6 +45,14 @@ public class UnitSystem : MonoBehaviour
                 }
                 
                 var playerPassiveList = playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, unit)).ToList();
+                #endregion
+
+                var activeList = GameManager.instance.playerActiveIndexList;
+                foreach (var activeIdx in activeList)
+                {
+                    activeDB.GetAction(p, activeIdx);
+                }
+                p.AddComponent<IdleAction>();
 
                 p.SetUp("Player", GameManager.instance.playerStat, 
                     weaponDB.Clone(GameManager.instance.playerWeaponIndex),

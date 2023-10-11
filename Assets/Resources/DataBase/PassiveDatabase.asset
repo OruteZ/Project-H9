@@ -13,8 +13,21 @@ MonoBehaviour:
   m_Name: PassiveDatabase
   m_EditorClassIdentifier: 
   infos:
-  - index: 0
-    trigger: 0
-    triggerAmount: 1
-    passiveEffect: 0
-    effectAmount: 100
+  - index: 11001
+    condition: 1
+    conditionAmount: 0
+    effect: 1
+    effectStat: 17
+    effectAmount: 1
+  - index: 11002
+    condition: 16
+    conditionAmount: 0
+    effect: 1
+    effectStat: 17
+    effectAmount: 1
+  - index: 11003
+    condition: 0
+    conditionAmount: 0
+    effect: 1
+    effectStat: 7
+    effectAmount: 0.1

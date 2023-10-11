@@ -301,8 +301,7 @@ GameObject:
   - component: {fileID: 8809604}
   - component: {fileID: 8809603}
   - component: {fileID: 8809602}
-  - component: {fileID: 8809601}
-  - component: {fileID: 8809600}
+  - component: {fileID: 8809607}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -326,30 +325,6 @@ Transform:
   m_Father: {fileID: 138153909}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8809600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8809598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4903b8c0073cb0e4d85cbf51c73842c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8809601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8809598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c344f2b27fb6b142a2855c52005bfde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8809602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,11 +381,11 @@ MonoBehaviour:
   hand: {fileID: 0}
   back: {fileID: 0}
   waist: {fileID: 0}
-  stat:
+  originalstat:
     maxHp: 0
     curHp: 0
     concentration: 0
-    sightRange: 5
+    sightRange: 0
     speed: 0
     actionPoint: 0
     additionalHitRate: 0
@@ -424,7 +399,7 @@ MonoBehaviour:
     revolverCriticalDamage: 0
     shotgunCriticalDamage: 0
     repeaterCriticalDamage: 0
-  onActionFinished:
+  onFinishAction:
     m_PersistentCalls:
       m_Calls: []
   onBusyChanged:
@@ -434,6 +409,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onAmmoChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onHpChanged:
     m_PersistentCalls:
       m_Calls: []
   onMoved:
@@ -474,6 +452,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position: {x: -1, y: 6, z: -5}
+--- !u!114 &8809607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8809598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4903b8c0073cb0e4d85cbf51c73842c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &13246649
 Mesh:
   m_ObjectHideFlags: 0
@@ -4059,11 +4049,9 @@ MonoBehaviour:
   weaponDB: {fileID: 11400000, guid: ff152c5f6f9fe8b468cfd7935134e353, type: 2}
   enemyDB: {fileID: 11400000, guid: 450d8f5528bf2864ab9655c7c32be5b7, type: 2}
   passiveDB: {fileID: 11400000, guid: 4725cab2e80d6194c87de84a6b4cb490, type: 2}
+  activeDB: {fileID: 11400000, guid: 4baa4a6f772e8644098cd35918c7e865, type: 2}
   units: []
   onAnyUnitMoved:
-    m_PersistentCalls:
-      m_Calls: []
-  onCombatFinish:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &230774713
@@ -18740,6 +18728,9 @@ MonoBehaviour:
   playerWeaponIndex: 0
   playerModel: {fileID: 0}
   playerPassiveIndexList: 
+  playerActiveIndexList: 
+  level: 0
+  curExp: 0
   worldSceneName: 
   worldAp: 0
   worldTurn: 0
@@ -20857,7 +20848,7 @@ MonoBehaviour:
   hand: {fileID: 0}
   back: {fileID: 0}
   waist: {fileID: 0}
-  stat:
+  originalstat:
     maxHp: 0
     curHp: 0
     concentration: 0
@@ -20875,7 +20866,7 @@ MonoBehaviour:
     revolverCriticalDamage: 0
     shotgunCriticalDamage: 0
     repeaterCriticalDamage: 0
-  onActionFinished:
+  onFinishAction:
     m_PersistentCalls:
       m_Calls: []
   onBusyChanged:
@@ -20885,6 +20876,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onAmmoChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onHpChanged:
     m_PersistentCalls:
       m_Calls: []
   onMoved:

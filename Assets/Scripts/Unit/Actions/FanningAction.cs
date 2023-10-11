@@ -14,6 +14,13 @@ public class FanningAction : BaseAction
     private Unit _target;
     private int _shotCount;
 
+    private float minusHitrate;
+
+    public override void SetAmount(float[] amounts)
+    {
+        minusHitrate = amounts[0] * 0.01f;
+    }
+
     public override ActionType GetActionType()
     {
         return ActionType.Fanning;
@@ -88,7 +95,7 @@ public class FanningAction : BaseAction
         for (int i = 0; i < _shotCount; i++)
         {
             yield return new WaitForSeconds(SHOT_TIME);
-            unit.TryAttack(_target, -0.1f);
+            unit.TryAttack(_target, -minusHitrate);
 
             // unit.weapon.currentAmmo--;
             //

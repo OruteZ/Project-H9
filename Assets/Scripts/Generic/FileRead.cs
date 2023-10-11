@@ -56,7 +56,24 @@ public class FileRead : MonoBehaviour
         return rowList;
 	}
 	
-	public static int[] ConvertStringToArray(string input)
+	public static float[] ConvertStringToFloatArray(string input)
+	{
+		// 문자열에서 "["와 "]"를 제거하고, 쉼표로 분리하여 숫자 부분만 가져옵니다.
+		string[] numbersAsString = input.Trim('\"','\"').Split(',');
+
+		// 결과로 반환할 정수 배열을 초기화합니다.
+		float[] result = new float[numbersAsString.Length];
+
+		// 숫자를 정수로 변환하여 결과 배열에 저장합니다.
+		for (int i = 0; i < numbersAsString.Length; i++)
+		{
+			result[i] = float.Parse(numbersAsString[i]);
+		}
+
+		return result;
+	}
+	
+	public static int[] ConvertStringToIntArray(string input)
 	{
 		// 문자열에서 "["와 "]"를 제거하고, 쉼표로 분리하여 숫자 부분만 가져옵니다.
 		string[] numbersAsString = input.Trim('\"','\"').Split(',');

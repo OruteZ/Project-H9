@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using NSubstitute.Exceptions;
 using PassiveSkill;
 using UnityEngine;
+using UnityEngine.Purchasing.Extension;
 
 public interface IUnit
 {
@@ -65,6 +67,7 @@ public class UnitStat : ICloneable
     public float revolverCriticalDamage;
     public float shotgunCriticalDamage;
     public float repeaterCriticalDamage;
+
     public object Clone()
     {
         return MemberwiseClone();
@@ -80,7 +83,7 @@ public enum UnitStatType
     Speed,
     ActionPoint,
     AdditionalHitRate,
-    CriticalDamage,
+    CriticalChance,
     RevolverAdditionalDamage,
     RepeaterAdditionalDamage,
     ShotgunAdditionalDamage,
@@ -94,4 +97,6 @@ public enum UnitStatType
     AllAdditionalDamage,
     AllAdditionalRange,
     AllCriticalDamage,
+    
+    Length, // enum 개수
 }

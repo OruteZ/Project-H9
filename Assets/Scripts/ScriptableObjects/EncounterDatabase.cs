@@ -36,7 +36,7 @@ public class EncounterDatabase : ScriptableObject
             {
                 index = int.Parse(dataList[i][0]),
                 groupNameIndex = int.Parse(dataList[i][1]),
-                enemiesIndex = FileRead.ConvertStringToArray(dataList[i][2])
+                enemiesIndex = FileRead.ConvertStringToIntArray(dataList[i][2])
             };
             
             encounterList.Add(curData);

@@ -36,6 +36,7 @@ namespace PassiveSkill
         {
             IEffect effect = type switch
             {
+                PassiveEffectType.StatUpDependedOnCondition => new StatUpDependedOnCondition(stat, amount),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 

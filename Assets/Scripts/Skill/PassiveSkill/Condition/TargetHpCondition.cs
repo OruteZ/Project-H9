@@ -104,7 +104,7 @@
         private void SetTarget(Unit target)
         {
             if(target.hp == target.GetStat().maxHp) passive.EnableCondition();
-            else passive.DisableCondition();
+            // else passive.DisableCondition();
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)

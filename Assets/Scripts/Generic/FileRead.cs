@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// CSV확장자로 된 각종 테이블 파일을 읽어서 string이중리스트로 반환하는 클래스
 /// </summary>
-public class FileRead : MonoBehaviour
+public static class FileRead
 {
 	static readonly string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))"; //regular expression
 	static readonly string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
@@ -56,38 +56,36 @@ public class FileRead : MonoBehaviour
         }
         return rowList;
 	}
-	
-	public static float[] ConvertStringToFloatArray(string input)
-	{
-		// 문자열에서 "["와 "]"를 제거하고, 쉼표로 분리하여 숫자 부분만 가져옵니다.
-		string[] numbersAsString = input.Trim('\"','\"').Split(',');
 
-		// 결과로 반환할 정수 배열을 초기화합니다.
-		float[] result = new float[numbersAsString.Length];
+    public static T[] ConvertStringToArray<T>(string input)
+    {
+	    T type = default;
+	    if ((type is int or float) is false)
+	    {
+		    Debug.LogError("Cant String to array with type" + typeof(T));
+		    return null;
+	    }
+	    
+	    // 문자열에서 "["와 "]"를 제거하고, 쉼표로 분리하여 숫자 부분만 가져옵니다.
+	    string[] numbersAsString = input.Trim('\"', '\"').Split(',');
 
-		// 숫자를 정수로 변환하여 결과 배열에 저장합니다.
-		for (int i = 0; i < numbersAsString.Length; i++)
-		{
-			result[i] = float.Parse(numbersAsString[i]);
-		}
+	    // 결과로 반환할 정수 배열을 초기화합니다.
+	    T[] result = new T[numbersAsString.Length];
 
-		return result;
-	}
-	
-	public static int[] ConvertStringToIntArray(string input)
-	{
-		// 문자열에서 "["와 "]"를 제거하고, 쉼표로 분리하여 숫자 부분만 가져옵니다.
-		string[] numbersAsString = input.Trim('\"','\"').Split(',');
+	    // 숫자를 정수로 변환하여 결과 배열에 저장합니다.
+	    for (int i = 0; i < numbersAsString.Length; i++)
+	    {
+		    if (result is int[] ints)
+		    {
+			    ints[i] = int.Parse(numbersAsString[i]);
+		    }
 
-		// 결과로 반환할 정수 배열을 초기화합니다.
-		int[] result = new int[numbersAsString.Length];
+		    if (result is float[] floats)
+		    {
+			    floats[i] = float.Parse(numbersAsString[i]);
+		    }
+	    }
 
-		// 숫자를 정수로 변환하여 결과 배열에 저장합니다.
-		for (int i = 0; i < numbersAsString.Length; i++)
-		{
-			result[i] = int.Parse(numbersAsString[i]);
-		}
-
-		return result;
-	}
+	    return result;
+    }
 }

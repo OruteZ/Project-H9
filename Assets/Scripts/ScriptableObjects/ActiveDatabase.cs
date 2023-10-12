@@ -25,7 +25,7 @@ public class ActiveDatabase : ScriptableObject
             {
                 index = int.Parse(info[0]),
                 action = ActionType.Fanning,
-                amounts = FileRead.ConvertStringToFloatArray(info[2])
+                amounts = FileRead.ConvertStringToArray<float>(info[2])
             };
             
             infos.Add(curInfo);

@@ -56,7 +56,7 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
         }
         
         UIManager.instance.ChangeScene(SceneNameToGameState(sceneName));
-        
+
         yield return StartCoroutine(FadeIn(fadeDuration));
         canvas.enabled = false;
 

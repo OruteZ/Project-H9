@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class DamageFloat : MonoBehaviour
 {
+    /*
     private Vector3 _worldPosition;
     private float _duration;
     private float _startTime;
@@ -70,4 +71,5 @@ public class DamageFloat : MonoBehaviour
             ((viewportPosition.y * sizeDelta.y) - (sizeDelta.y * 0.5f)));
         ((RectTransform)gameObject.transform).anchoredPosition = worldObjectScreenPosition;
     }
+    */
 }

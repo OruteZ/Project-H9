@@ -6,22 +6,29 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyDatabase", menuName = "ScriptableObjects/EnemyDatabase", order = 1)]
 public class EnemyDatabase : ScriptableObject
 {
-    private const int INDEX = 0;
-    private const int NAME_INDEX = 1;
-    private const int HP = 2;
-    private const int CONCENTRATION = 3;
-    private const int SIGHT_RANGE = 4;
-    private const int SPEED = 5;
-    private const int ACTION_POINT = 6;
-    private const int ADDITIONAL_HIT_RATE = 7;
-    private const int CRIT_CHANCE = 8;
-    private const int CRIT_DAMAGE = 9;
-    private const int WEAPON_INDEX = 10;
-    private const int BT_INDEX = 11;
-    private const int MODEL_NAME = 12;
-    private const int REWARD_GOLD = 13;
-    private const int REWARD_EXP = 14;
-    
+    #region COLUMN
+    private enum Col
+    {
+        Index,
+        EnemyName,
+        ModelFile,
+        Hp,
+        Concentration,
+        SightRange,
+        Speed,
+        ActionPoint,
+        AdditionalHitRate,
+        CriticalChance,
+        CriticalDamage,
+        EquippedWeapon,
+        BehaviorPattern,
+        EnemySkill,
+        RewardGold,
+        RewardXP,
+        RewardItem,
+        RewardWeapon
+    }
+    #endregion
     [SerializeField] 
     private List<EnemyData> enemyInfos;
     
@@ -35,37 +42,36 @@ public class EnemyDatabase : ScriptableObject
 
         foreach (var data in dataList)
         {
-            var curData = new EnemyData
-            { 
-                index = int.Parse(data[INDEX]),
-                nameIndex = int.Parse(data[NAME_INDEX]),
-                stat = new UnitStat(),
-                weaponIndex = int.Parse(data[WEAPON_INDEX]),
-                btIndex = int.Parse(data[BT_INDEX]),
-                model = Resources.Load("Prefab/Units/" + data[MODEL_NAME]) as GameObject,
-                
-                rewardGold = int.Parse(data[REWARD_GOLD]),
-                rewardExp = int.Parse(data[REWARD_EXP]),
-            };
+            var curData = new EnemyData();
 
-            curData.stat.original[(int)StatType.MaxHp] = int.Parse(data[HP]);
-            curData.stat.original[(int)StatType.CurHp] = int.Parse(data[HP]);;
-            curData.stat.original[(int)StatType.Concentration] = int.Parse(data[CONCENTRATION]);;
-            curData.stat.original[(int)StatType.SightRange] = int.Parse(data[SIGHT_RANGE]);;
-            curData.stat.original[(int)StatType.Speed] = int.Parse(data[SPEED]);;
-            curData.stat.original[(int)StatType.MaxActionPoint] = int.Parse(data[ACTION_POINT]);
-            curData.stat.original[(int)StatType.CurActionPoint] = int.Parse(data[ACTION_POINT]);
-            curData.stat.original[(int)StatType.AdditionalHitRate] = int.Parse(data[ADDITIONAL_HIT_RATE]);
-            curData.stat.original[(int)StatType.CriticalChance] = int.Parse(data[CRIT_CHANCE]);
-            curData.stat.original[(int)StatType.RevolverAdditionalDamage] = 0;
-            curData.stat.original[(int)StatType.RepeaterAdditionalDamage] = 0;
-            curData.stat.original[(int)StatType.ShotgunAdditionalDamage] = 0;
-            curData.stat.original[(int)StatType.RevolverAdditionalRange] = 0;
-            curData.stat.original[(int)StatType.RepeaterAdditionalRange] = 0;
-            curData.stat.original[(int)StatType.ShotgunAdditionalRange] = 0;
-            curData.stat.original[(int)StatType.RevolverCriticalDamage] = int.Parse(data[CRIT_DAMAGE]);
-            curData.stat.original[(int)StatType.RepeaterCriticalDamage] = int.Parse(data[CRIT_DAMAGE]);
-            curData.stat.original[(int)StatType.ShotgunCriticalDamage] = int.Parse(data[CRIT_DAMAGE]);
+            curData.index = int.Parse(data[(int)Col.Index]);
+            curData.nameIndex = int.Parse(data[(int)Col.EnemyName]);
+            curData.stat = new UnitStat();
+            curData.weaponIndex = int.Parse(data[(int)Col.EquippedWeapon]);
+            curData.btIndex = int.Parse(data[(int)Col.BehaviorPattern]);
+            //curData.model = Resources.Load("Prefab/Units/" + data[(int)Col.ModelFile]) as GameObject,
+
+            curData.rewardGold = int.Parse(data[(int)Col.RewardGold]);
+            curData.rewardExp = int.Parse(data[(int)Col.RewardXP]);
+
+            curData.stat.SetOriginalStat(StatType.MaxHp, int.Parse(data[(int)Col.Hp]));
+            curData.stat.SetOriginalStat(StatType.CurHp, int.Parse(data[(int)Col.Hp]));
+            curData.stat.SetOriginalStat(StatType.Concentration, int.Parse(data[(int)Col.Concentration]));
+            curData.stat.SetOriginalStat(StatType.SightRange, int.Parse(data[(int)Col.SightRange]));
+            curData.stat.SetOriginalStat(StatType.Speed, int.Parse(data[(int)Col.Speed]));
+            curData.stat.SetOriginalStat(StatType.MaxActionPoint, int.Parse(data[(int)Col.ActionPoint]));
+            curData.stat.SetOriginalStat(StatType.CurActionPoint, 0);
+            curData.stat.SetOriginalStat(StatType.AdditionalHitRate, int.Parse(data[(int)Col.AdditionalHitRate]));
+            curData.stat.SetOriginalStat(StatType.CriticalChance, int.Parse(data[(int)Col.CriticalChance]));
+            curData.stat.SetOriginalStat(StatType.RevolverAdditionalDamage, 0);
+            curData.stat.SetOriginalStat(StatType.RevolverAdditionalRange, 0);
+            curData.stat.SetOriginalStat(StatType.RevolverCriticalDamage, int.Parse(data[(int)Col.CriticalDamage]));
+            curData.stat.SetOriginalStat(StatType.RepeaterAdditionalDamage, 0);
+            curData.stat.SetOriginalStat(StatType.RepeaterAdditionalRange, 0);
+            curData.stat.SetOriginalStat(StatType.RepeaterCriticalDamage, int.Parse(data[(int)Col.CriticalDamage]));
+            curData.stat.SetOriginalStat(StatType.ShotgunAdditionalDamage, 0);
+            curData.stat.SetOriginalStat(StatType.ShotgunAdditionalRange, 0);
+            curData.stat.SetOriginalStat(StatType.ShotgunCriticalDamage, int.Parse(data[(int)Col.CriticalDamage]));
 
             enemyInfos.Add(curData);
         }
@@ -79,7 +85,7 @@ public class EnemyDatabase : ScriptableObject
         }
 
         Debug.LogError("Wrong index");
-        return new EnemyData();
+        throw new Exception();
     }
 }
 
@@ -95,7 +101,7 @@ public struct EnemyData
     
     public int weaponIndex;
     public int btIndex;
-    // todo : Reward
+    
     public int rewardGold;
     public int rewardExp;
     public string rewardItem;

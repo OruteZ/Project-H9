@@ -13,9 +13,9 @@ public abstract class Weapon
     public int weaponRange;
     public int maxAmmo;
     private int _curAmmo;
-    public float hitRate;
-    public float criticalChance;
-    public float criticalDamage;
+    public int hitRate;
+    public int criticalChance;
+    public int criticalDamage;
     public int script;
 
     public int currentAmmo

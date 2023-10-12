@@ -2981,7 +2981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1219593.2, y: 0}
+  m_AnchoredPosition: {x: 1829852.2, y: 0}
   m_SizeDelta: {x: 25, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &53218655
@@ -56610,23 +56610,7 @@ MonoBehaviour:
   back: {fileID: 0}
   waist: {fileID: 0}
   stat:
-    maxHp: 0
-    curHp: 0
-    concentration: 0
-    sightRange: 0
-    speed: 0
-    actionPoint: 0
-    additionalHitRate: 0
-    criticalChance: 0
-    revolverAdditionalDamage: 0
-    repeaterAdditionalDamage: 0
-    shotgunAdditionalDamage: 0
-    revolverAdditionalRange: 0
-    repeaterAdditionalRange: 0
-    shotgunAdditionalRange: 0
-    revolverCriticalDamage: 0
-    shotgunCriticalDamage: 0
-    repeaterCriticalDamage: 0
+    original: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   onFinishAction:
     m_PersistentCalls:
       m_Calls: []
@@ -56664,7 +56648,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unitName: 
-  currentActionPoint: 0
   hasAttacked: 0
   currentRound: 0
 --- !u!114 &1275726350
@@ -68098,23 +68081,7 @@ MonoBehaviour:
   _currentState: 1
   playerWorldPos: {x: 2, y: 2, z: -4}
   playerStat:
-    maxHp: 5
-    curHp: 5
-    concentration: 60
-    sightRange: 4
-    speed: 60
-    actionPoint: 4
-    additionalHitRate: 0
-    criticalChance: 0.1
-    revolverAdditionalDamage: 0
-    repeaterAdditionalDamage: 0
-    shotgunAdditionalDamage: 0
-    revolverAdditionalRange: 0
-    repeaterAdditionalRange: 0
-    shotgunAdditionalRange: 0
-    revolverCriticalDamage: 1
-    shotgunCriticalDamage: 1
-    repeaterCriticalDamage: 1
+    original: 05000000050000003c000000040000003c0000000400000004000000000000000a000000000000000000000064000000000000000000000064000000000000000000000064000000
   playerWeaponIndex: 101
   playerModel: {fileID: 8346860575773991373, guid: e397d6d377b80f748b12eee185a4d1b6,
     type: 3}

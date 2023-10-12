@@ -29,8 +29,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
     public GameObject invisibleEffect;
 
     private Player _player;
-    private Stack<GameObject> _effectStackBase;
-    private Stack<GameObject> _effectStackRelatedTarget;
+    private Dictionary<Vector3Int, GameObject> _effectsBase;
+    private Dictionary<Vector3Int, GameObject> _effectsRelatedTarget;
 
     private IObjectPool<GameObject> _baseEffectPool;
     private IObjectPool<GameObject> _targetEffectPool;
@@ -46,9 +46,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
     public RectTransform aimEffectRectTsf; 
     public RectTransform combatCanvas;
     public RectTransform aimEffect;
-    
-    
-    
+
     public void SetPlayer(Player p)
     {
         _player = p;
@@ -82,8 +80,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
             case ActionType.Dynamite:
                 break;
             case ActionType.Idle:
-                while (_effectStackRelatedTarget.TryPop(out var effect)) { Destroy(effect); }
-                while (_effectStackBase.TryPop(out var effect)) { Destroy(effect); }
+                ClearEffect(_effectsBase);
+                ClearEffect(_effectsRelatedTarget);
                 break;
             case ActionType.Reload:
                 break;
@@ -124,20 +122,41 @@ public class TileEffectManager : Singleton<TileEffectManager>
         while (true)
         {
             yield return null;
-            while (_effectStackRelatedTarget.TryPop(out var effect)) { Destroy(effect); }
+            ClearEffect(_effectsRelatedTarget);
 
-            if (Player.TryGetMouseOverTilePos(out var target) is false) continue;
-            if (FieldSystem.tileSystem.GetTile(target).visible is false) continue;
-            if (FieldSystem.unitSystem.GetUnit(target) is not null) continue;
+            if (Player.TryGetMouseOverTilePos(out var target) is false)
+            {
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
+            if (FieldSystem.tileSystem.GetTile(target).visible is false)
+            {
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
+            if (FieldSystem.unitSystem.GetUnit(target) is not null)
+            {
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
 
             var route = FieldSystem.tileSystem.FindPath(_player.hexPosition, target);
-            if (route is null) continue;
-            
-            
-            if(route.Count - 1 <= _player.currentActionPoint) foreach (var tile in route)
+            if (route is null)
             {
-                var pos = tile.hexPosition;
-                SetEffectTarget(pos, TileEffectType.Friendly);
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
+
+            if(route.Count - 1 <= _player.currentActionPoint)
+            {
+                foreach (var pos in route.Select(tile => tile.hexPosition))
+                {
+                    SetEffectTarget(pos, TileEffectType.Friendly);
+                }
+            }
+            else
+            {
+                ClearEffect(_effectsRelatedTarget);
             }
         }
         // ReSharper disable once IteratorNeverReturns
@@ -155,7 +174,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
 
             var go =Instantiate(attackTileEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
-            _effectStackBase.Push(go);
+            _effectsBase.Add(tile.hexPosition, go);
         }
 
         foreach (var unit in units)
@@ -165,7 +184,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             var go = Instantiate((_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, unit.hexPosition) ? 
                 attackUnitEffect : attackOutOfRangeEffect), Hex.Hex2World(unit.hexPosition), Quaternion.identity);
                 
-            _effectStackBase.Push(go);
+            _effectsBase.Add(unit.hexPosition, go);
         }
 
         _curCoroutine = StartCoroutine(AttackTargetEffectCoroutine());
@@ -191,12 +210,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 yield return null;
                 continue;
             }
-
-            //if (newTarget == targetUnit)
-            //{
-            //    yield return null;
-            //    continue;
-            //}
+            
             targetUnit = newTarget;
             
             aimEffectRectTsf.gameObject.SetActive(true);
@@ -210,7 +224,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 ((viewportPosition.y * sizeDelta.y) - (sizeDelta.y * 0.5f)));
             aimEffectRectTsf.anchoredPosition = worldObjectScreenPosition;
             
-            float size = _player.weapon.GetFinalHitRate(targetUnit);
+            float size = _player.weapon.GetFinalHitRate(targetUnit) * 0.01f;
             aimEffect.localScale = new Vector3(size, size, 1);
 
             // aimEffectRectTsf.gameObject.SetActive(false);
@@ -223,10 +237,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
     {
         base.Awake();
 
-        _effectStackBase = new Stack<GameObject>();
-        _effectStackRelatedTarget = new Stack<GameObject>();
-        
-        
+        _effectsBase = new Dictionary<Vector3Int, GameObject>();
+        _effectsRelatedTarget = new Dictionary<Vector3Int, GameObject>();
     }
 
     /// <summary>
@@ -238,17 +250,10 @@ public class TileEffectManager : Singleton<TileEffectManager>
         // var tiles = MainSystem.instance.tileSystem.GetAllTiles();
         // foreach (var tile in tiles) tile.effect = null;
         if(_curCoroutine is not null) StopCoroutine(_curCoroutine);
+        
+        ClearEffect(_effectsBase);
+        ClearEffect(_effectsRelatedTarget);
 
-        while (_effectStackBase.TryPop(out var effect))
-        {
-            Destroy(effect);
-        }
-        
-        while (_effectStackRelatedTarget.TryPop(out var effect))
-        {
-            Destroy(effect);
-        }
-        
         aimEffectRectTsf.gameObject.SetActive(false);
     }
 
@@ -258,7 +263,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         worldPosition.y += 0.02f;
         
         var gObject = Instantiate(GetEffect(type), worldPosition, Quaternion.identity);
-        _effectStackBase.Push(gObject);
+        _effectsBase.Add(position, gObject);
     }
     
     private void SetEffectTarget(Vector3Int position, TileEffectType type)
@@ -266,8 +271,11 @@ public class TileEffectManager : Singleton<TileEffectManager>
         Vector3 worldPosition = Hex.Hex2World(position);
         worldPosition.y += 0.03f;
 
-        var gObject = Instantiate(GetEffect(type), worldPosition, Quaternion.identity);
-        _effectStackRelatedTarget.Push(gObject);
+        if (_effectsRelatedTarget.ContainsKey(position) is false)
+        {
+            var gObject = Instantiate(GetEffect(type), worldPosition, Quaternion.identity);
+            _effectsRelatedTarget.Add(position, gObject);
+        }
     }
     
     private GameObject GetEffect(TileEffectType type)
@@ -291,5 +299,15 @@ public class TileEffectManager : Singleton<TileEffectManager>
         if (effect == invisibleEffect) return TileEffectType.Invisible;
         if (effect == normalEffect) return TileEffectType.Normal;
         return TileEffectType.None;
+    }
+
+    public void ClearEffect(Dictionary<Vector3Int, GameObject> pool)
+    {
+        foreach (var go in pool.Values)
+        {
+            Destroy(go);
+        }
+        
+        pool.Clear();
     }
 }

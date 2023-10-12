@@ -104,9 +104,9 @@ public class WeaponData
     public int weaponDamage;
     public int weaponRange;
     public int weaponAmmo;
-    public float weaponHitRate;
-    public float weaponCriticalChance;
-    public float weaponCriticalDamage;
+    public int weaponHitRate;
+    public int weaponCriticalChance;
+    public int weaponCriticalDamage;
 
     public int weaponScript;
 }

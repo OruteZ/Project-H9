@@ -65,6 +65,8 @@ public class UnitSystem : MonoBehaviour
             else if(unit is Enemy enemy)
             {
                 var info = enemyDB.GetInfo(enemy.dataIndex);
+                info.stat.ResetModifier();
+                
                 enemy.SetUp("Enemy", (UnitStat)info.stat.Clone(), weaponDB.Clone(info.weaponIndex), info.model, new List<Passive>());
                 enemy.isVisible = false;
 

@@ -18,7 +18,7 @@ public class Revolver : Weapon
     {
         Debug.Log("Weapon attack Call" + " : " + nameIndex);
 
-        isCritical = Random.value < unitStat.criticalChance + criticalChance;
+        isCritical = Random.value * 100 < unitStat.criticalChance + criticalChance;
         if (isCritical)
         {
             CriticalAttack(target);
@@ -38,7 +38,7 @@ public class Revolver : Weapon
     public override int GetFinalCriticalDamage()
     {
         float dmg = weaponDamage + unitStat.revolverAdditionalDamage;
-        dmg += dmg * (unitStat.revolverCriticalDamage + criticalDamage);
+        dmg += dmg * ((unitStat.revolverCriticalDamage + criticalDamage) * 0.01f);
 
         return Mathf.RoundToInt(dmg);
     }
@@ -48,24 +48,24 @@ public class Revolver : Weapon
         int range = weaponRange + unitStat.revolverAdditionalRange;
         int distance = Hex.Distance(unit.hexPosition, target.hexPosition);
 
-        float hitRate = this.hitRate + unitStat.concentration * (100 - distance * GetDistancePenalty() *
+        float finalHitRate = (hitRate + unitStat.concentration * (100 - distance * GetDistancePenalty() *
             (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1)
-            ) * 0.01f;
+            )) * 0.01f;
 
-        hitRate = Mathf.Round(10 * hitRate) * 0.1f;
-        hitRate = Mathf.Clamp(hitRate, 0, 100);
+        finalHitRate = Mathf.Round(10 * finalHitRate) * 0.1f;
+        finalHitRate = Mathf.Clamp(finalHitRate, 0, 100);
 
-        // #if UNITY_EDITOR
-        // Debug.Log("Hit rate = " + hitRate);
-        // #endif
+        #if UNITY_EDITOR
+        Debug.Log("Hit rate = " + finalHitRate);
+        #endif
 
         UIManager.instance.debugUI.SetDebugUI
-            (hitRate, unit, target, distance, weaponRange,
+            (finalHitRate, unit, target, distance, weaponRange,
                 unitStat.revolverAdditionalRange,
                 GetDistancePenalty() *
                 (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
         
-        return hitRate * 0.01f;
+        return finalHitRate;
     }
 
     private void NonCriticalAttack(Unit target)

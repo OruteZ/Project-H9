@@ -381,24 +381,8 @@ MonoBehaviour:
   hand: {fileID: 0}
   back: {fileID: 0}
   waist: {fileID: 0}
-  originalstat:
-    maxHp: 0
-    curHp: 0
-    concentration: 0
-    sightRange: 0
-    speed: 0
-    actionPoint: 0
-    additionalHitRate: 0
-    criticalChance: 0
-    revolverAdditionalDamage: 0
-    repeaterAdditionalDamage: 0
-    shotgunAdditionalDamage: 0
-    revolverAdditionalRange: 0
-    repeaterAdditionalRange: 0
-    shotgunAdditionalRange: 0
-    revolverCriticalDamage: 0
-    shotgunCriticalDamage: 0
-    repeaterCriticalDamage: 0
+  stat:
+    original: 
   onFinishAction:
     m_PersistentCalls:
       m_Calls: []
@@ -436,7 +420,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unitName: 
-  currentActionPoint: 0
   hasAttacked: 0
   currentRound: 0
 --- !u!114 &8809606
@@ -18708,23 +18691,7 @@ MonoBehaviour:
   _currentState: 1
   playerWorldPos: {x: 2, y: 2, z: -4}
   playerStat:
-    maxHp: 0
-    curHp: 0
-    concentration: 60
-    sightRange: 4
-    speed: 10
-    actionPoint: 5
-    additionalHitRate: 0
-    criticalChance: 0.8
-    revolverAdditionalDamage: 0
-    repeaterAdditionalDamage: 0
-    shotgunAdditionalDamage: 0
-    revolverAdditionalRange: 0
-    repeaterAdditionalRange: 0
-    shotgunAdditionalRange: 0
-    revolverCriticalDamage: 1
-    shotgunCriticalDamage: 0
-    repeaterCriticalDamage: 0
+    original: 
   playerWeaponIndex: 0
   playerModel: {fileID: 0}
   playerPassiveIndexList: 
@@ -20848,24 +20815,8 @@ MonoBehaviour:
   hand: {fileID: 0}
   back: {fileID: 0}
   waist: {fileID: 0}
-  originalstat:
-    maxHp: 0
-    curHp: 0
-    concentration: 0
-    sightRange: 0
-    speed: 0
-    actionPoint: 0
-    additionalHitRate: 0
-    criticalChance: 0
-    revolverAdditionalDamage: 0
-    repeaterAdditionalDamage: 0
-    shotgunAdditionalDamage: 0
-    revolverAdditionalRange: 0
-    repeaterAdditionalRange: 0
-    shotgunAdditionalRange: 0
-    revolverCriticalDamage: 0
-    shotgunCriticalDamage: 0
-    repeaterCriticalDamage: 0
+  stat:
+    original: 
   onFinishAction:
     m_PersistentCalls:
       m_Calls: []
@@ -20903,7 +20854,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unitName: 
-  currentActionPoint: 0
   hasAttacked: 0
   currentRound: 0
   dataIndex: 1
@@ -26933,6 +26883,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5717064955f00e54a8b926927ea84489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passiveDB: {fileID: 0}
+  activeDB: {fileID: 0}
 --- !u!4 &1345492677
 Transform:
   m_ObjectHideFlags: 0

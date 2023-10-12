@@ -73,8 +73,8 @@ public class EnemyHpUIElement : UIElement
         gameObject.SetActive(true);
 
         _enemyUIPrevPos = Vector3.zero;
-        int maxHp = enemy.GetStat().maxHp;
-        int curHp = enemy.GetStat().curHp;
+        int maxHp = enemy.stat.maxHp;
+        int curHp = enemy.stat.curHp;
 
         _frontHpBar.maxValue = maxHp;
         _frontHpBar.minValue = 0;

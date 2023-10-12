@@ -85,7 +85,7 @@ public class UnitSystem : MonoBehaviour
 
         hasPlayerWin = false;
         if (GetPlayer() is null) return true;
-        if (GetPlayer().GetStat().curHp <= 0) return true;
+        if (GetPlayer().hp <= 0) return true;
         
         if (units.Count == 1 && units[0] is Player)
         {

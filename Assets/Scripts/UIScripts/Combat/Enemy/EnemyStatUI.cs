@@ -73,7 +73,7 @@ public class EnemyStatUI : UISystem
         OpenPopupWindow();
         _enemy = enemy;
         SetEnemyStatUIPosition(enemy.transform.position);
-        SetCharacterStatText(enemy.GetStat());
+        SetCharacterStatText(enemy.stat);
         SetWeaponStatText(enemy.weapon);
     }
     private void SetEnemyStatUIPosition(Vector3 pos)
@@ -144,7 +144,7 @@ public class EnemyStatUI : UISystem
                       enemyStat.concentration.ToString() + '\n' +
                       enemyStat.sightRange.ToString() + '\n' +
                       enemyStat.speed.ToString() + '\n' +
-                      enemyStat.actionPoint.ToString() + '\n' +
+                      enemyStat.maxActionPoint.ToString() + '\n' +
                       enemyStat.additionalHitRate.ToString() + '\n' +
                       enemyStat.criticalChance.ToString();
 

@@ -39,31 +39,7 @@ public class EnemyDatabase : ScriptableObject
             { 
                 index = int.Parse(data[INDEX]),
                 nameIndex = int.Parse(data[NAME_INDEX]),
-                stat = new UnitStat
-                {
-                    maxHp = int.Parse(data[HP]),
-                    concentration = int.Parse(data[CONCENTRATION]),
-                    sightRange = int.Parse(data[SIGHT_RANGE]),
-                    speed = int.Parse(data[SPEED]),
-                    actionPoint = int.Parse(data[ACTION_POINT]),
-                    additionalHitRate = float.Parse(data[ADDITIONAL_HIT_RATE]),
-                    criticalChance = float.Parse(data[CRIT_CHANCE]),
-                    
-                    //추가 데미지
-                    revolverAdditionalDamage = 0,
-                    repeaterAdditionalDamage = 0,
-                    shotgunAdditionalDamage = 0,
-                    
-                    //추가 사거리
-                    revolverAdditionalRange = 0,
-                    repeaterAdditionalRange = 0,
-                    shotgunAdditionalRange = 0,
-                    
-                    //크뎀
-                    revolverCriticalDamage = float.Parse(data[CRIT_DAMAGE]),
-                    repeaterCriticalDamage = float.Parse(data[CRIT_DAMAGE]),
-                    shotgunCriticalDamage = float.Parse(data[CRIT_DAMAGE]),
-                },
+                stat = new UnitStat(),
                 weaponIndex = int.Parse(data[WEAPON_INDEX]),
                 btIndex = int.Parse(data[BT_INDEX]),
                 model = Resources.Load("Prefab/Units/" + data[MODEL_NAME]) as GameObject,
@@ -71,7 +47,26 @@ public class EnemyDatabase : ScriptableObject
                 rewardGold = int.Parse(data[REWARD_GOLD]),
                 rewardExp = int.Parse(data[REWARD_EXP]),
             };
-            
+
+            curData.stat.original[(int)StatType.MaxHp] = int.Parse(data[HP]);
+            curData.stat.original[(int)StatType.CurHp] = int.Parse(data[HP]);;
+            curData.stat.original[(int)StatType.Concentration] = int.Parse(data[CONCENTRATION]);;
+            curData.stat.original[(int)StatType.SightRange] = int.Parse(data[SIGHT_RANGE]);;
+            curData.stat.original[(int)StatType.Speed] = int.Parse(data[SPEED]);;
+            curData.stat.original[(int)StatType.MaxActionPoint] = int.Parse(data[ACTION_POINT]);
+            curData.stat.original[(int)StatType.CurActionPoint] = int.Parse(data[ACTION_POINT]);
+            curData.stat.original[(int)StatType.AdditionalHitRate] = int.Parse(data[ADDITIONAL_HIT_RATE]);
+            curData.stat.original[(int)StatType.CriticalChance] = int.Parse(data[CRIT_CHANCE]);
+            curData.stat.original[(int)StatType.RevolverAdditionalDamage] = 0;
+            curData.stat.original[(int)StatType.RepeaterAdditionalDamage] = 0;
+            curData.stat.original[(int)StatType.ShotgunAdditionalDamage] = 0;
+            curData.stat.original[(int)StatType.RevolverAdditionalRange] = 0;
+            curData.stat.original[(int)StatType.RepeaterAdditionalRange] = 0;
+            curData.stat.original[(int)StatType.ShotgunAdditionalRange] = 0;
+            curData.stat.original[(int)StatType.RevolverCriticalDamage] = int.Parse(data[CRIT_DAMAGE]);
+            curData.stat.original[(int)StatType.RepeaterCriticalDamage] = int.Parse(data[CRIT_DAMAGE]);
+            curData.stat.original[(int)StatType.ShotgunCriticalDamage] = int.Parse(data[CRIT_DAMAGE]);
+
             enemyInfos.Add(curData);
         }
     }

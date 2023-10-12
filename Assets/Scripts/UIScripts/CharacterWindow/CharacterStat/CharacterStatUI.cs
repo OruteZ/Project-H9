@@ -148,7 +148,7 @@ public class CharacterStatUI : UISystem
     }
     private void SetStatInfo(Player player) 
     {
-        UnitStat stat = player.GetStat();
+        UnitStat stat = player.stat;
         Weapon weapon = player.weapon;
         //player
         //level
@@ -156,12 +156,12 @@ public class CharacterStatUI : UISystem
         characterStatInfo["Exp"].SetStatValue("CharacterStat", GameManager.instance.curExp);
 
         //basic stat
-        characterStatInfo["HP"].SetStatValue("CharacterStat", stat.maxHp);
+        characterStatInfo["HP"].SetStatValue("CharacterStat", stat.GetStat(StatType.MaxHp));
         //characterStatInfo["HP"].SetStatValue("WeaponStat", weapon.bonusStat.maxHp); //¿¹½Ã
         characterStatInfo["Concentration"].SetStatValue("CharacterStat", stat.concentration);
         characterStatInfo["Sight Range"].SetStatValue("CharacterStat", stat.sightRange);
         characterStatInfo["Speed"].SetStatValue("CharacterStat", stat.speed);
-        characterStatInfo["Action Point"].SetStatValue("CharacterStat", stat.actionPoint);
+        characterStatInfo["Action Point"].SetStatValue("CharacterStat", stat.maxActionPoint);
 
         //bonus stat
         characterStatInfo["Additional Hit Rate"].SetStatValue("CharacterStat", stat.additionalHitRate);

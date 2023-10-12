@@ -47,7 +47,7 @@ public class EnemyHpUI : UISystem
         InitEnemyHpUIs();
         for (int i = 0; i < _enemies.Count; i++) 
         {
-            if (_enemies[i].GetStat().curHp <= 0) 
+            if (_enemies[i].stat.GetStat(StatType.CurHp) <= 0) 
             {
             }
             _enemyHpBars[i].GetComponent<EnemyHpUIElement>().SetEnemyHpUI(_enemies[i]);

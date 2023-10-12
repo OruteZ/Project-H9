@@ -20,17 +20,21 @@ public class PlayerStatLevelInfo
     {
         if(IsLevelUpFully()) return;
         statLevel++;
+        var stat = GameManager.instance.playerStat;
         if (statName == "Concentration")
         {
-            GameManager.instance.playerStat.concentration += statIncreaseValue;
+            stat.SetOriginalStat(StatType.Concentration, 
+                stat.GetOriginalStat(StatType.Concentration) + statIncreaseValue);
         }
         else if (statName == "Sight Range")
         {
-            GameManager.instance.playerStat.sightRange += statIncreaseValue;
+            stat.SetOriginalStat(StatType.SightRange, 
+                stat.GetOriginalStat(StatType.SightRange) + statIncreaseValue);
         }
         else if (statName == "Speed")
         {
-            GameManager.instance.playerStat.speed += statIncreaseValue;
+            stat.SetOriginalStat(StatType.Speed, 
+                stat.GetOriginalStat(StatType.Speed) + statIncreaseValue);
         }
         UIManager.instance.onPlayerStatChanged.Invoke();
     }

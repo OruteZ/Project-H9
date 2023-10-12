@@ -28,21 +28,11 @@ public abstract class Unit : MonoBehaviour, IUnit
     public Transform waist;
 
     [Header("Status")] 
-    [SerializeField] protected UnitStat stat;
+    [SerializeField] public UnitStat stat;
 
     public int hp
     {
-        get => stat.curHp;
-        set
-        {
-            var after = Mathf.Clamp(value, 0, stat.maxHp);
-            var before = stat.curHp;
-            
-            if (before == after) return;
-            
-            stat.curHp = after;
-            onHpChanged.Invoke(before, after);
-        }
+        get => stat.GetStat(StatType.CurHp);
     }
     private List<Passive> _passiveList;
 
@@ -67,7 +57,9 @@ public abstract class Unit : MonoBehaviour, IUnit
     private bool _hasDead;
     
     public string unitName;
-    public int currentActionPoint;
+
+    public int currentActionPoint => stat.GetStat(StatType.CurActionPoint);
+
     public Weapon weapon;
 
     private GameObject _damageEffect = null;
@@ -83,7 +75,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         animator.SetTrigger(GET_HIT1);
         CameraController.ShakeCamera();
         
-        hp -= damage;
+        stat.Consume(StatType.CurHp, damage);
         onHit.Invoke(this, damage);
 
         Service.SetText(damage.ToString(), transform.position);
@@ -218,12 +210,6 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         return _unitActionArray;
     }
-
-    public UnitStat GetStat()
-    {
-        return stat;
-    }
-
     public bool isVisible
     {
         get => visual.enabled;
@@ -370,15 +356,14 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     public void ConsumeCost(int value)
     {
-        if (currentActionPoint < value)
+        if (stat.TryConsume(StatType.CurActionPoint, value) is false)
         {
-            Debug.LogError("Player Consumed More Cost");
+            Debug.LogError("    Consumed More Cost");
             return;
         }
 
         if (value == 0) return;
 
-        currentActionPoint -= value;
         onCostChanged.Invoke(currentActionPoint + value, currentActionPoint);
     }
 }

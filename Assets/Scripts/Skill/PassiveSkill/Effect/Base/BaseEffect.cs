@@ -3,13 +3,13 @@
     public abstract class BaseEffect : IEffect
     {
         private float _amount;
-        private UnitStatType _statType;
+        private StatType _statType;
         
         private Passive _passive;
         public Unit unit => _passive.unit;
         protected bool enable;
 
-        public BaseEffect(UnitStatType statType, float amount)
+        public BaseEffect(StatType statType, float amount)
         {
             enable = false;
             SetTypeAndAmount(statType, amount);
@@ -21,7 +21,7 @@
             EffectSetup();
         }
 
-        public UnitStatType GetStatType() => _statType;
+        public StatType GetStatType() => _statType;
         public float GetAmount() => _amount;
         protected abstract void EffectSetup();
         public abstract PassiveEffectType GetEffectType();
@@ -35,7 +35,7 @@
         
         
         
-        private void SetTypeAndAmount(UnitStatType statType, float amount)
+        private void SetTypeAndAmount(StatType statType, float amount)
         {
             _amount = amount;
             _statType = statType;

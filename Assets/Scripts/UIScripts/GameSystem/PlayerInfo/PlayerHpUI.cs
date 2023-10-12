@@ -30,7 +30,7 @@ public class PlayerHpUI : UISystem
 
     private void InitHPUI()
     {
-        int maxHp = GameManager.instance.playerStat.maxHp;
+        int maxHp = GameManager.instance.playerStat.GetStat(StatType.MaxHp);
         _prevMaxHp = 0;
         _prevCurHp = 0;
 
@@ -56,8 +56,8 @@ public class PlayerHpUI : UISystem
     /// </summary>
     public void SetHpUI()
     {
-        int maxHp = GameManager.instance.playerStat.maxHp;
-        int curHp = GameManager.instance.playerStat.curHp;
+        int maxHp = GameManager.instance.playerStat.GetStat(StatType.MaxHp);
+        int curHp = GameManager.instance.playerStat.GetStat(StatType.CurHp);
         // int maxHp = FieldSystem.unitSystem.GetPlayer().GetStat().maxHp;
         // int curHp = FieldSystem.unitSystem.GetPlayer().GetStat().curHp;
         if (maxHp == _prevMaxHp && curHp == _prevCurHp) return;

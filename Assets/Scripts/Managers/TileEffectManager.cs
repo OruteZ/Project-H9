@@ -105,7 +105,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         {
             if (GameManager.instance.CompareState(GameState.Combat))
             {
-                if (Hex.Distance(tile.hexPosition, _player.hexPosition) > _player.GetStat().sightRange) continue;
+                if (Hex.Distance(tile.hexPosition, _player.hexPosition) > _player.stat.sightRange) continue;
                 if (!FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition)) continue;
             }
             else //GameState.World

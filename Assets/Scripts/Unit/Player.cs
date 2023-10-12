@@ -67,7 +67,7 @@ public class Player : Unit
 #endif
         
         hasAttacked = false;
-        currentActionPoint = stat.actionPoint;
+        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
         if (GameManager.instance.CompareState(GameState.Combat))
         {
             animator.SetTrigger(START_TURN);
@@ -82,7 +82,7 @@ public class Player : Unit
 
     public void ContinueWorldTurn()
     {
-        currentActionPoint = GameManager.instance.worldAp;
+        stat.SetOriginalStat(StatType.CurActionPoint, GameManager.instance.worldAp);
         SelectAction(GetAction<MoveAction>());
     }
     

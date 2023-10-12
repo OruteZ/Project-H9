@@ -43,7 +43,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
         curExp -= maxExp;
         level++;
-        playerStat.curHp = playerStat.maxHp;
+        playerStat.Recover(StatType.CurHp, playerStat.GetStat(StatType.MaxHp));
         UIManager.instance.gameSystemUI.playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
     }
     public int GetMaxExp() 

@@ -10,7 +10,7 @@ public class SkillDescriptionScript
     {
         index = idx;
         _description = dsc;
-        _isSubstituted = false;
+        _isSubstituted = true;
     }
     public string GetDescription(int skiilIndex)
     {

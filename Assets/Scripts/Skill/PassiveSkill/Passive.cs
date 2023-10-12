@@ -35,7 +35,7 @@ namespace PassiveSkill
 
             return condition;
         }
-        public static IEffect CloneEffect(PassiveEffectType type, UnitStatType stat, float amount)
+        public static IEffect CloneEffect(PassiveEffectType type, StatType stat, float amount)
         {
             IEffect effect = type switch
             {

@@ -33,7 +33,7 @@ public abstract class Weapon
         }
     }
     
-    public UnitStat unitStat => unit.GetStat();
+    public UnitStat unitStat => unit.stat;
     public Unit unit;
     public WeaponModel weaponModel;
 

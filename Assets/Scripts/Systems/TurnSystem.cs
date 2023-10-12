@@ -85,10 +85,10 @@ private void Awake()
             while (turnOrder.Count < ORDER_LENGTH * 2)
             {
                 int minOrderValueUnitIndex = 0;
-                float minOrderValue = CalculateTurnOrderValue(currentRounds[0], units[0].GetStat().speed);
+                float minOrderValue = CalculateTurnOrderValue(currentRounds[0], units[0].stat.GetStat(StatType.Speed));
                 for (int i = 0; i < units.Count; i++)
                 {
-                    float orderValue = CalculateTurnOrderValue(currentRounds[i], units[i].GetStat().speed);
+                    float orderValue = CalculateTurnOrderValue(currentRounds[i], units[i].stat.GetStat(StatType.Speed));
                     if (minOrderValue > orderValue)
                     {
                         minOrderValueUnitIndex = i;

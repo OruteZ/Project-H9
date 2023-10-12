@@ -14,4 +14,25 @@
         Null,
         StatUpDependedOnCondition,
     }
+
+    public enum StatUpType
+    {
+        Null,
+        Hp,
+        Concentration,
+        SightRange,
+        Speed,
+        ActionPoint,
+        AdditionalHitRate,
+        CriticalChance,
+        RevolverAdditionalDamage,
+        RevolverAdditionalRange,
+        RevolverCriticalDamage,
+        RepeaterAdditionalDamage,
+        RepeaterAdditionalRange,
+        RepeaterCriticalDamage,
+        ShotgunAdditionalDamage,
+        ShotgunAdditionalRange,
+        ShotgunCriticalDamage,
+    }
 }

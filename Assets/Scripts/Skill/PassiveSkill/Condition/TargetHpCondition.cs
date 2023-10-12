@@ -103,7 +103,7 @@
 
         private void SetTarget(Unit target)
         {
-            if(target.hp == target.GetStat().maxHp) passive.EnableCondition();
+            if(target.hp == target.stat.GetStat(StatType.MaxHp)) passive.EnableCondition();
             // else passive.DisableCondition();
         }
 

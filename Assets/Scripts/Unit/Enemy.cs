@@ -66,7 +66,7 @@ public class Enemy : Unit
         #endif
         animator.SetTrigger(IDLE);
         animator.SetTrigger(START_TURN);
-        currentActionPoint = stat.actionPoint;
+        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
 
         hasAttacked = false;
         activeUnitAction = GetAction<IdleAction>();
@@ -80,12 +80,8 @@ public class Enemy : Unit
     
     private void FinishAction()
     {
-        int beforeCost = currentActionPoint;
-        
         ClearBusy();
-        currentActionPoint -= activeUnitAction.GetCost();
-        onCostChanged.Invoke(beforeCost, currentActionPoint);
-        
+        ConsumeCost(activeUnitAction.GetCost());
         // if (currentActionPoint <= 0)
         // {
         //     FieldSystem.turnSystem.EndTurn();

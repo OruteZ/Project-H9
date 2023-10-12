@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -125,7 +126,13 @@ public class MoveAction : BaseAction
 
             if (Vector3.Distance(transform.position, targetPos) < 0.1f)
             {
-                unit.ConsumeCost(1);
+                if (unit.stat.TryConsume(StatType.CurActionPoint, 1) is false)
+                {
+                    Debug.LogError("Fail to consume");
+                    #if UNITY_EDITOR
+                    EditorApplication.isPaused = true;
+                    #endif
+                };
                 unit.hexPosition = _path[_currentPositionIndex].hexPosition;
                 // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                 if (_path is null) yield break;

@@ -49,11 +49,11 @@ public class PlayerSummaryStatUI : UISystem
         _player = FieldSystem.unitSystem.GetPlayer();
         if (_player is null) return;
         
-        _playerStat = _player.GetStat();
+        _playerStat = _player.stat;
         
-        _healthPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.curHp.ToString() + " / " + _playerStat.maxHp.ToString();
+        _healthPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.curHp.ToString() + " / " + _playerStat.GetStat(StatType.MaxHp).ToString();
         _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _playerStat.concentration.ToString();
-        _actionPointText.GetComponent<TextMeshProUGUI>().text = _player.currentActionPoint.ToString() + " / " + _playerStat.actionPoint.ToString();
+        _actionPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.GetStat(StatType.CurActionPoint).ToString() + " / " + _playerStat.GetStat(StatType.MaxActionPoint).ToString();
         if (_player.currentActionPoint == 0)
         {
             _actionPointText.GetComponent<TextMeshProUGUI>().color = Color.red;

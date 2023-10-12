@@ -50,7 +50,7 @@ public class SkillInfo
 
     public int index { get; private set; }
     public int section { get; private set; }
-    public int isPassive { get; private set; }
+    private int _isPassive;
     public int nameIndex { get; private set; }
     public int tooltipIndex { get; private set; }
     public int iconIndex { get; private set; }
@@ -80,7 +80,7 @@ public class SkillInfo
 
         index = int.Parse(list[0]);
         section = int.Parse(list[1]);
-        isPassive = int.Parse(list[2]);
+        _isPassive = int.Parse(list[2]);
         nameIndex = int.Parse(list[3]);
         tooltipIndex = int.Parse(list[4]);
         iconIndex = int.Parse(list[5]);
@@ -105,9 +105,7 @@ public class SkillInfo
 
     public bool IsActive()
     {
-        Debug.Log("isPassiveTest");
-        Debug.Log((int)SkillActiveOrPassive.ActiveType);
-        if (isPassive == (int)SkillActiveOrPassive.ActiveType)
+        if (_isPassive == (int)SkillActiveOrPassive.ActiveType)
         {
             return true;
         }
@@ -169,11 +167,11 @@ public class Skill
     /// <param name="skills"> 플레이어의 스킬 리스트 </param>
     public void UpdateIsLearnable(List<Skill> skills)
     {
-        //if (skillLevel >= skillInfo.repeatCount)
-        //{
-        //    isLearnable = false;
-        //    return;
-        //}
+        if (skillLevel > 0)
+        {
+            isLearnable = false;
+            return;
+        }
 
         CheckPrecedenceSkill(skills);
         isLearnable = IsLearnedAllPrecedenceSkills();
@@ -206,12 +204,20 @@ public class Skill
     /// </summary>
     public void LearnSkill()
     {
+        if (!isLearnable) return;
         //if (skillLevel >= skillInfo.repeatCount) 
         //{
         //    Debug.LogError("스킬 레벨 비정상적 상승");
         //    return; 
         //}
-
+        if (skillInfo.IsPassive())
+        {
+            GameManager.instance.playerPassiveIndexList.Add(skillInfo.index);
+        }
+        else
+        {
+            GameManager.instance.playerActiveIndexList.Add(skillInfo.index);
+        }
         skillLevel++;
         isLearned = true;
         //if (skillLevel >= skillInfo.repeatCount)

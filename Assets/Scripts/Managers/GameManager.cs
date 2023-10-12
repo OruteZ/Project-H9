@@ -60,7 +60,6 @@ public class GameManager : Generic.Singleton<GameManager>
     public int worldTurn;
 
     public bool backToWorldTrigger = false;
-
     public void StartCombat(string combatSceneName)
     {
         //Save World Data
@@ -92,6 +91,28 @@ public class GameManager : Generic.Singleton<GameManager>
 
         _currentState = state;
         //UIManager.instance.ChangeScenePrepare(state);
+    }
+
+    public void AddPlayerSkillListElement(int skillIndex, bool isPassive) 
+    {
+        List<int> list = null;
+        if (isPassive) 
+        {
+            list = playerPassiveIndexList;
+        }
+        else
+        {
+            list = playerActiveIndexList;
+        }
+        foreach (int i in list) 
+        {
+            if (i == skillIndex) 
+            {
+                Debug.Log("동일한 스킬 연속 습득 오류");
+                return;
+            }
+        }
+        list.Add(skillIndex);
     }
 
     public void Update()

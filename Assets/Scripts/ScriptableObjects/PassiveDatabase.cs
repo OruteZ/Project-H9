@@ -61,7 +61,6 @@ public class PassiveDatabase : ScriptableObject
         for (int i = 0; i < infos.Count; i++)
         {
             var info = infos[i];
-            Debug.Log(info.index);
             if (info.index == index)
             {
                 return info;

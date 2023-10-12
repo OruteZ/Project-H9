@@ -5,22 +5,13 @@ public class SkillDescriptionScript
 {
     public int index { get; private set; }
     private string _description;
-    private bool _isSubstituted;
     public SkillDescriptionScript(int idx, string dsc)
     {
         index = idx;
         _description = dsc;
-        _isSubstituted = true;
     }
     public string GetDescription(int skiilIndex)
     {
-        if (!_isSubstituted)
-        {
-        }
-        if (!_isSubstituted)
-        {
-            Debug.LogError("툴팁 변수 대입에 실패했습니다.");
-        }
         return SubstituteDescriptionValues(skiilIndex);
     }
     private string SubstituteDescriptionValues(int skillIndex)
@@ -37,7 +28,7 @@ public class SkillDescriptionScript
             }
             else
             {
-                Debug.Log(skillIndex + " / " + SkillManager.instance.GetSkill(skillIndex).skillInfo.isPassive);
+                //Debug.Log(skillIndex + " / " + SkillManager.instance.GetSkill(skillIndex).skillInfo.IsPassive());
                 if (SkillManager.instance.GetSkill(skillIndex).skillInfo.IsPassive())
                 {
                     PassiveInfo info = SkillManager.instance.passiveDB.GetPassiveInfo(skillIndex);
@@ -50,7 +41,6 @@ public class SkillDescriptionScript
                     ActiveInfo info = SkillManager.instance.activeDB.GetActiveInfo(skillIndex);
                     result += info.amounts[0].ToString();
                 }
-                Debug.Log(result);
             }
             isSubstitutableValue = !isSubstitutableValue;
         }

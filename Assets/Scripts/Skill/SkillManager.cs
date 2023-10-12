@@ -129,6 +129,15 @@ public class SkillManager : Generic.Singleton<SkillManager>
     /// </returns>
     public bool LearnSkill(int index) 
     {
+        List<Skill> learnedSkill = GetAllLearnedSkills();
+        foreach (Skill skill in learnedSkill) 
+        {
+            if (skill.skillInfo.index == index) 
+            {
+                Debug.Log("동일 스킬 습득 오류");
+                return false;
+            }
+        }
         for (int i = 0; i < _skills.Count; i++) 
         {
             if (_skills[i].skillInfo.index == index) 
@@ -182,7 +191,6 @@ public class SkillManager : Generic.Singleton<SkillManager>
     }
     public string GetSkillDescription(int skillIndex)
     {
-        Debug.Log("skill index:" + skillIndex);
         Skill skill = GetSkill(skillIndex);
         return _skillDescriptionScripts[skill.skillInfo.tooltipIndex].GetDescription(skillIndex);
     }

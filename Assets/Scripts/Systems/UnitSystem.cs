@@ -141,7 +141,6 @@ public class UnitSystem : MonoBehaviour
         {
             if (playerWin)
             {
-                GameManager.instance.GetExp(_totalExp); //test
                 LevelSystem.ReservationExp(_totalExp);
             }
             FieldSystem.onCombatFinish.Invoke(playerWin);

@@ -20,6 +20,7 @@ public class EnemyHpUI : UISystem
 
         _enemyHpBars = new List<GameObject>();
         EnemyHpBarObjectPooling(10);
+        UIManager.instance.onActionChanged.AddListener(() => SetEnemyHpBars());
     }
 
     /// <summary>

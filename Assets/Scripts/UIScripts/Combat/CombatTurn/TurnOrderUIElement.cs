@@ -92,6 +92,7 @@ public class TurnOrderUIElement : MonoBehaviour
         Vector3 pos = TURN_ORDER_UI_INIT_POSITION;
         pos.x += TURN_ORDER_UI_INTERVAL * order;
         GetComponent<RectTransform>().localPosition = pos;
+        GetComponent<RectTransform>().sizeDelta = new Vector2(TURN_ORDER_UI_INIT_SIZE, TURN_ORDER_UI_INIT_SIZE);
 
         ChangeOrder(order);
     }

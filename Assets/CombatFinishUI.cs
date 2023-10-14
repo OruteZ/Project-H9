@@ -10,7 +10,7 @@ public class CombatFinishUI : MonoBehaviour
 
     public void Start()
     {
-        FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
+        //FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
         combatFinishCanvas.SetActive(false);
         gameOverCanvas.SetActive(false);
     }

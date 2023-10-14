@@ -15,15 +15,13 @@ public class TurnOrderUI : UISystem
     {
         TurnOrderUIObjectPooling(30);
     }
-    
-    /// <summary>
-    /// 턴 순서 UI를 키거나 끕니다.
-    /// 전투 씬일 때 켜지고 아닐 때 꺼집니다.
-    /// </summary>
-    /// <param name="isOn"> UI 활성화 상태 </param>
-    public void SetTurnOrderUIState(bool isOn)
+    public override void CloseUI()
     {
-        _turnOrderUI.SetActive(isOn);
+        while (_turnOrderUI.transform.childCount > 0)
+        {
+            DeleteTurnOrderUI(_turnOrderUI.transform.GetChild(0).gameObject);
+        }
+        base.CloseUI();
     }
     /// <summary>
     /// 턴 순서 UI를 설정합니다.
@@ -38,10 +36,7 @@ public class TurnOrderUI : UISystem
         {
             InitTurnOrderUI(turnOrder);
         }
-        else
-        {
-            ChangeTurnOrderUI(turnOrder);
-        }
+        ChangeTurnOrderUI(turnOrder);
     }
     private void AddTurnOrderUI(Unit unit, int order)
     {
@@ -51,7 +46,7 @@ public class TurnOrderUI : UISystem
         }
         GameObject ui = _turnOrderUIContainer.transform.GetChild(0).gameObject;
         ui.transform.SetParent(_turnOrderUI.transform, false);
-        ui.GetComponent<TurnOrderUIElement>().InitTurnOrderUIElement(unit, order);
+        ui.GetComponent<TurnOrderUIElement>().InitTurnOrderUIElement(unit, 1 + TURN_ORDER_UI_LENGTH);
         ui.SetActive(true);
     }
     private void DeleteTurnOrderUI(GameObject ui)

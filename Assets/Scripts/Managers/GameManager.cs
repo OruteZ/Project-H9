@@ -31,11 +31,11 @@ public class GameManager : Generic.Singleton<GameManager>
     public void GetExp(int exp)
     {
         curExp += exp;
-        UIManager.instance.onPlayerStatChanged.Invoke();
         while (curExp >= maxExp)
         {
             LevelUp();
         }
+        UIManager.instance.onPlayerStatChanged.Invoke();
     }
     private void LevelUp()
     {
@@ -44,7 +44,10 @@ public class GameManager : Generic.Singleton<GameManager>
         curExp -= maxExp;
         level++;
         playerStat.Recover(StatType.CurHp, playerStat.GetStat(StatType.MaxHp));
-        UIManager.instance.gameSystemUI.playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
+        if (level % 3 == 0)
+        {
+            UIManager.instance.gameSystemUI.playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
+        }
     }
     public int GetMaxExp() 
     {

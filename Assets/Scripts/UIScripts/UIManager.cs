@@ -33,6 +33,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     public GameObject loading; //test
 
+    [HideInInspector] public UnityEvent onSceneChanged;
     [HideInInspector] public UnityEvent onTurnChanged;
     [HideInInspector] public UnityEvent onPlayerStatChanged;
     [HideInInspector] public UnityEvent onPlayerSkillChanged;
@@ -192,7 +193,7 @@ public class UIManager : Generic.Singleton<UIManager>
                     break;
                 }
         }
-
+        onSceneChanged.Invoke();
     }
     private void ChangeUIToWorldScene()
     {

@@ -84,9 +84,9 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
         List<(string, float)> tooltipTexts = new List<(string, float)>()
         {
             ( "CharacterStat", info.GetCorrectedValue(info.statValues["CharacterStat"]) ),
-            ( "", 11 ),
+            ( "+", 0 ),
             ( "WeaponStat", info.GetCorrectedValue(info.statValues["WeaponStat"]) ),
-            ( "", 11 ),
+            ( "+", 0 ),
             ( "SkillStat", info.GetCorrectedValue(info.statValues["SkillStat"]) )
         };
 

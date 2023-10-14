@@ -30,6 +30,7 @@ public class CombatWindowUI : UISystem
     /// </summary>
     public StartTurnTextUI startTurnTextUI { get; private set; }
     public TurnOrderUI turnOrderUI { get; private set; }
+    public CombatResultUI combatResultUI { get; private set; }
 
     private bool _isInCombat;
 
@@ -44,6 +45,7 @@ public class CombatWindowUI : UISystem
         enemyStatUI = GetComponent<EnemyStatUI>();
         startTurnTextUI = GetComponent<StartTurnTextUI>();
         turnOrderUI = GetComponent<TurnOrderUI>();
+        combatResultUI = GetComponent<CombatResultUI>();
 
         uiSubsystems.Add(combatActionUI);
         uiSubsystems.Add(magazineUI);
@@ -51,12 +53,10 @@ public class CombatWindowUI : UISystem
         uiSubsystems.Add(enemyStatUI);
         uiSubsystems.Add(startTurnTextUI);
         uiSubsystems.Add(turnOrderUI);
+        uiSubsystems.Add(combatResultUI);
 
         _isInCombat = GameManager.instance.CompareState(GameState.Combat);
 
-        UIManager.instance.onActionChanged.AddListener(() => combatActionUI.SetActionButtons());
-        UIManager.instance.onActionChanged.AddListener(() => enemyHpUI.SetEnemyHpBars());
-        UIManager.instance.onPlayerStatChanged.AddListener(() => magazineUI.SetMagazineText());
     }
 
     public override void ClosePopupWindow()
@@ -69,15 +69,15 @@ public class CombatWindowUI : UISystem
     /// 특정한 액션이 실행될 때, 액션이 종료될 때 실행됩니다.
     /// 플레이어가 특정한 액션을 선택할 때에도 실행됩니다.
     /// </summary>
-    public void SetCombatUI()
-    {
-        _isInCombat = GameManager.instance.CompareState(GameState.Combat);
+    //public void SetCombatUI()
+    //{
+    //    _isInCombat = GameManager.instance.CompareState(GameState.Combat);
 
-        if (!_isInCombat) return;
+    //    if (!_isInCombat) return;
 
-        combatActionUI.SetActionButtons();
-        magazineUI.SetMagazineText();
-        enemyHpUI.SetEnemyHpBars();
-    }
+    //    combatActionUI.SetActionButtons();
+    //    magazineUI.SetMagazineText();
+    //    enemyHpUI.SetEnemyHpBars();
+    //}
 
 }

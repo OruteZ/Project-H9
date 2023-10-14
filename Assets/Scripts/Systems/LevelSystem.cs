@@ -21,6 +21,7 @@
     public static void ReservationExp(int exp)
     {
         _exp = exp;
+        UIManager.instance.combatUI.combatResultUI.SetExpInformation(exp);
         FieldSystem.onCombatStart.AddListener(GetExp);
     }
 

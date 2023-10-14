@@ -50,15 +50,16 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
             string str = "캐릭터 보너스";
             if (statName == "Additional Hit Rate" || statName == "Critical Chance" || statName == "Critical Damage")
             {
-                if (FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType() == WeaponType.Revolver)
+                WeaponType playerWeaponType = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
+                if (playerWeaponType == WeaponType.Revolver)
                 {
                     str += " (리볼버)";
                 }
-                else if (FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType() == WeaponType.Repeater)
+                else if (playerWeaponType == WeaponType.Repeater)
                 {
                     str += " (리피터)";
                 }
-                else if (FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType() == WeaponType.Shotgun)
+                else if (playerWeaponType == WeaponType.Shotgun)
                 {
                     str += " (샷건)";
                 }

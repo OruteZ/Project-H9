@@ -12,7 +12,7 @@ public class MagazineUI : UISystem
 
     private void Start()
     {
-        //FieldSystem.unitSystem.GetPlayer().onAmmoChanged.AddListener(SetMagazineText);
+        UIManager.instance.onPlayerStatChanged.AddListener(() => SetMagazineText());
     }
 
     private void Update()

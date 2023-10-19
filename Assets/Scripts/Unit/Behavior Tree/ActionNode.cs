@@ -4,23 +4,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SelectorNode", menuName = "ScriptableObjects/BT/Selector", order = 1)]
-public class ActionNode : ScriptableObject, INode
+[System.Serializable]
+public abstract class ActionNode : INode
 {
-    private readonly Func<INode.ENodeState> _onEvaluate = null;
+    protected readonly BehaviourTree tree = null;
 
-    public ActionNode(Func<INode.ENodeState> onEvaluate)
+    protected ActionNode(BehaviourTree tree)
     {
-        _onEvaluate = onEvaluate;
+        this.tree = tree;
     }
 
-    public INode.ENodeState Evaluate()
-    {
-        return _onEvaluate?.Invoke() ?? INode.ENodeState.Failure;
-    }
-
-    public Func<INode.ENodeState> GetFunc()
-    {
-        return _onEvaluate;
-    }
+    public abstract INode.ENodeState Evaluate();
+    // public abstract string GetName();
 }
+
+

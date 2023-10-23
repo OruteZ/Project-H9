@@ -9,10 +9,6 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
     [SerializeField] private GameObject _subTooltip;
     [SerializeField] private GameObject _subTooltipText;
 
-    private Color _orangeColor = new Color32(237, 146, 0, 255);
-    private Color _greenColor = new Color32(18, 219, 36, 255);
-    private Color _redColor = new Color32(219, 36, 18, 255);
-
     private bool _isSetContents = false;
     private bool _isOpenTooltip = false;
     private bool isMouseOver = false;
@@ -45,8 +41,8 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
         if (statType == "CharacterStat") 
         {
             valueStr = value.ToString();
-            GetComponent<TextMeshProUGUI>().color = _orangeColor;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().color = _orangeColor;
+            GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
+            _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
             string str = "캐릭터 보너스";
             if (statName == "Additional Hit Rate" || statName == "Critical Chance" || statName == "Critical Damage")
             {
@@ -69,15 +65,15 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
         else if (statType == "WeaponStat")
         {
             valueStr = value.ToString();
-            GetComponent<TextMeshProUGUI>().color = _greenColor;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().color = _greenColor;
+            GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
+            _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = "장착 무기 보너스";
         }
         else if (statType == "SkillStat")
         {
             valueStr = value.ToString();
-            GetComponent<TextMeshProUGUI>().color = _redColor;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().color = _redColor;
+            GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
+            _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = "스킬 보너스";
         }
         else

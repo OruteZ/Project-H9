@@ -45,9 +45,9 @@ public class TurnUI : UISystem
     }
     public void SetEndTurnButton() 
     {
-        Color color = Color.white;
-        if (!IsButtonInteractable()) color = Color.black;
-        else if (IsButtonHighlighted()) color = Color.yellow;
+        Color color = UICustomColor.NormalStateColor;
+        if (!IsButtonInteractable()) color = UICustomColor.DisableStateColor;
+        else if (IsButtonHighlighted()) color = UICustomColor.HighlightStateColor;
         _endTurnButton.GetComponent<Image>().color = color;
     }
 

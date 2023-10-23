@@ -25,7 +25,7 @@ public class UIManager : Generic.Singleton<UIManager>
     [SerializeField] private Canvas _pauseMenuCanvas;
     [SerializeField] private Canvas _debugCanvas;
 
-    //[HideInInspector] //테스트용으로 켜둠.
+    [HideInInspector]
     public bool isMouseOverUI;
     public int previousLayer = 1;
 

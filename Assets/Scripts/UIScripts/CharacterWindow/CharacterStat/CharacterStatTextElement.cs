@@ -44,8 +44,8 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _nameText.color = Color.yellow;
-        _contentsText.color = Color.yellow;
+        _nameText.color = UICustomColor.TextHighlightColor;
+        _contentsText.color = UICustomColor.TextHighlightColor;
 
         _isOpenTooltip = false;
         isMouseOver = true;

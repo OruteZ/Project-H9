@@ -18,9 +18,11 @@ public class SkillManager : Generic.Singleton<SkillManager>
     public PassiveDatabase passiveDB;
     public ActiveDatabase activeDB;
 
+    private ScriptLanguage _language = ScriptLanguage.Korean;
     private List<Skill> _skills;
     private List<SkillNameScript> _skillNameScripts;
     private List<SkillDescriptionScript> _skillDescriptionScripts;
+    private List<SkillKeywordScript> _skillKeywordScripts;
 
     private int _skillPoint;
 
@@ -29,29 +31,23 @@ public class SkillManager : Generic.Singleton<SkillManager>
         base.Awake();
         
         InitSkills();
+        InitSkillScripts();
         _skillPoint = 10;    //test
     }
 
     private void InitSkills()
     {
-        List<List<string>> _skillTable = FileRead.Read("SkillTable");
-        List<List<string>> _skillName = FileRead.Read("SkillNameScript");
-        List<List<string>> _skilldescription = FileRead.Read("SkillTooltipScript");
-        if (_skillTable == null || _skillName == null || _skilldescription == null) 
+        List<List<string>> skillTable = FileRead.Read("SkillTable");
+        if (skillTable == null) 
         {
             Debug.Log("skill table을 읽어오지 못했습니다.");
             return;
         }
-        if (_skillName.Count != _skilldescription.Count)
-        {
-            Debug.Log("Script Table에 누락된 데이터가 있습니다.");
-            return;
-        }
 
         List<SkillInfo> _skillInformations = new List<SkillInfo>();
-        for (int i = 0; i < _skillTable.Count; i++)
+        for (int i = 0; i < skillTable.Count; i++)
         {
-            SkillInfo skillInfo = new SkillInfo(_skillTable[i]);
+            SkillInfo skillInfo = new SkillInfo(skillTable[i]);
             _skillInformations.Add(skillInfo);
         }
 
@@ -61,19 +57,36 @@ public class SkillManager : Generic.Singleton<SkillManager>
             Skill skill = new Skill(_skillInformations[i]);
             _skills.Add(skill);
         }
-        ScriptLanguage language = ScriptLanguage.Korean;
-
-        _skillNameScripts = new List<SkillNameScript>();
-        for (int i = 0; i < _skillName.Count; i++)
+    }
+    private void InitSkillScripts()
+    {
+        List<List<string>> skillNameTable = FileRead.Read("SkillNameScript");
+        List<List<string>> skillDescriptionTable = FileRead.Read("SkillTooltipScript");
+        List<List<string>> skillKeywordTable = FileRead.Read("");
+        if (skillNameTable == null || skillDescriptionTable == null)
         {
-            SkillNameScript script = new SkillNameScript(i, _skillName[i][(int)language]);
+            Debug.Log("skill Script table을 읽어오지 못했습니다.");
+            return;
+        }
+        _skillNameScripts = new List<SkillNameScript>();
+        for (int i = 0; i < skillNameTable.Count; i++)
+        {
+            SkillNameScript script = new SkillNameScript(i, skillNameTable[i][(int)_language]);
             _skillNameScripts.Add(script);
         }
+
         _skillDescriptionScripts = new List<SkillDescriptionScript>();
-        for (int i = 0; i < _skillName.Count; i++)
+        for (int i = 0; i < skillDescriptionTable.Count; i++)
         {
-            SkillDescriptionScript script = new SkillDescriptionScript(i, _skilldescription[i][(int)language]);
+            SkillDescriptionScript script = new SkillDescriptionScript(i, skillDescriptionTable[i][(int)_language]);
             _skillDescriptionScripts.Add(script);
+        }
+        return;
+        _skillKeywordScripts = new List<SkillKeywordScript>();
+        for (int i = 0; i < skillKeywordTable.Count; i++)
+        {
+            SkillKeywordScript script = new SkillKeywordScript(i, skillKeywordTable[i][(int)_language]);
+            _skillKeywordScripts.Add(script);
         }
     }
 
@@ -193,5 +206,16 @@ public class SkillManager : Generic.Singleton<SkillManager>
     {
         Skill skill = GetSkill(skillIndex);
         return _skillDescriptionScripts[skill.skillInfo.tooltipIndex].GetDescription(skillIndex);
+    }
+    public string GetSkillKeyword(int keywordIndex)
+    {
+        foreach (SkillKeywordScript script in _skillKeywordScripts) 
+        {
+            if (script.index == keywordIndex) 
+            {
+                return script.keyword;
+            }
+        }
+        return "???";
     }
 }

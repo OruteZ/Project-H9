@@ -61,43 +61,11 @@ public class SkillUI : UISystem
     /// </summary>
     /// <param name="_transform"> 클릭된 UI요소의 위치 </param>
     /// <param name="btnIndex"> 클릭된 skill의 고유번호 </param>
-    public void ClickSkillUIButton(Transform _transform, int btnIndex)
+    public void ClickSkillUIButton(Vector3 pos, int btnIndex)
     {
-        _skillTooltipWindow.transform.position = _transform.position;
-        SetTooltipWindow(btnIndex);
+        _skillTooltipWindow.GetComponent<SkillTooltip>().SetSkillTooltip(pos, btnIndex);
 
         OpenPopupWindow();
-    }
-    private void SetTooltipWindow(int index)
-    {
-        Skill currentSkill = _skillManager.GetSkill(index);
-        _currentSkillIndex = index;
-        _skillTooltipWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillName(_currentSkillIndex);
-        _skillTooltipWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillDescription(_currentSkillIndex);
-
-        TextMeshProUGUI buttonText = _skillTooltipWindow.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
-        if (currentSkill.isLearnable)
-        {
-            if (_skillManager.IsEnoughSkillPoint())
-            {
-                buttonText.text = "습득";
-            }
-            else
-            {
-                buttonText.text = "스킬 포인트 부족";
-            }
-        }
-        else
-        {
-            if (currentSkill.isLearned)
-            {
-                buttonText.text = "습득 완료";
-            }
-            else
-            {
-                buttonText.text = "습득 불가";
-            }
-        }
     }
     /// <summary>
     /// 스킬 툴팁창을 닫습니다.
@@ -107,20 +75,7 @@ public class SkillUI : UISystem
     {
         _skillTooltipWindow.SetActive(false);
     }
-
-    /// <summary>
-    /// 해당 스킬을 습득하는 것이 가능하다면 SkillManager를 통해 스킬을 습득합니다.
-    /// 스킬 툴팁창의 스킬습득버튼을 클릭할 시 실행됩니다.
-    /// </summary>
-    public void ClickLearnSkill()
-    {
-        if (_skillManager.LearnSkill(_currentSkillIndex))
-        {
-            UpdateSkillUIImage();
-        }
-        SetTooltipWindow(_currentSkillIndex);
-    }
-    private void UpdateSkillUIImage()
+    public void UpdateSkillUIImage()
     {
         UpdateSkillPointUI();
         for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
@@ -149,7 +104,6 @@ public class SkillUI : UISystem
     {
         _skillPointText.GetComponent<TextMeshProUGUI>().text = "SP: " + _skillManager.GetSkillPoint().ToString();
     }
-
 
     public void OnCloseBtnClick()
     {

@@ -31,8 +31,7 @@ public class CombatWindowUI : UISystem
     public StartTurnTextUI startTurnTextUI { get; private set; }
     public TurnOrderUI turnOrderUI { get; private set; }
     public CombatResultUI combatResultUI { get; private set; }
-
-    private bool _isInCombat;
+    public BuffUI buffUI { get; private set; }
 
     // Start is called before the first frame update
     private new void Awake()
@@ -46,6 +45,7 @@ public class CombatWindowUI : UISystem
         startTurnTextUI = GetComponent<StartTurnTextUI>();
         turnOrderUI = GetComponent<TurnOrderUI>();
         combatResultUI = GetComponent<CombatResultUI>();
+        buffUI = GetComponent<BuffUI>();
 
         uiSubsystems.Add(combatActionUI);
         uiSubsystems.Add(magazineUI);
@@ -54,9 +54,7 @@ public class CombatWindowUI : UISystem
         uiSubsystems.Add(startTurnTextUI);
         uiSubsystems.Add(turnOrderUI);
         uiSubsystems.Add(combatResultUI);
-
-        _isInCombat = GameManager.instance.CompareState(GameState.Combat);
-
+        uiSubsystems.Add(buffUI);
     }
 
     public override void ClosePopupWindow()

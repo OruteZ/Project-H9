@@ -15,13 +15,6 @@ public class SkillTreeElement : UIElement
     [SerializeField] private GameObject[] _precedenceLine;  //이름이 혼동된다. 해당 코드에서 가리키는 스킬을 습득했을 경우에 활성화해야하는 선행스킬연결UI임.
                                                             //아예 이걸 새 코드로 분리해야 할지도...
 
-    //왜 여기서 정의하고 쓰면 색깔이 제대로 안나옴? 몰?루
-    [SerializeField] private Color32[] _effectColor =
-    {
-        new Color32(0, 0, 0, 255),
-        new Color32(255, 201, 18, 255),
-        new Color32(72, 219, 18, 255)
-    };
     [SerializeField] private Image _effectImage;
     [SerializeField] private Image _ButtonImage;
     [SerializeField] private Image _SkillImage;
@@ -43,7 +36,7 @@ public class SkillTreeElement : UIElement
     /// </summary>
     public void OnSkillUIBtnClick()
     {
-        UIManager.instance.skillUI.ClickSkillUIButton(this.gameObject.transform, skillIndex);
+        UIManager.instance.skillUI.ClickSkillUIButton(GetComponent<RectTransform>().position, skillIndex);
     }
 
     /// <summary>
@@ -55,9 +48,9 @@ public class SkillTreeElement : UIElement
     {
         Color32[] effectColor =
         {
-        new Color32(0, 0, 0, 255),
-        new Color32(255, 201, 18, 255),
-        new Color32(72, 219, 18, 255)
+            UICustomColor.SkillIconNotLearnedColor,
+            UICustomColor.SkillIconLearnableColor,
+            UICustomColor.SkillIconLearnedColor
         };
         _effectImage.color = effectColor[state];
     }
@@ -68,7 +61,7 @@ public class SkillTreeElement : UIElement
     {
         for (int i = 0; i < _precedenceLine.Length; i++)
         {
-            _precedenceLine[i].transform.GetChild(0).GetComponent<Image>().color = _effectColor[1];
+            _precedenceLine[i].transform.GetChild(0).GetComponent<Image>().color = UICustomColor.SkillIconLearnedColor;
         }
     }
     /// <summary>

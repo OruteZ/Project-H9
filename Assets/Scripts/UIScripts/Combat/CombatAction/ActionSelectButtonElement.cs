@@ -15,14 +15,9 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
     [SerializeField] private GameObject _skillImage;
     [SerializeField] private GameObject _highlightEffect;
-    private Color32 grayColor = new Color32(0, 0, 0, 200);
-    private Color32 whiteColor = new Color32(251, 251, 251, 200);
-    private Color32 yellowColor = new Color32(240, 240, 0, 200);
 
     [SerializeField] private GameObject _APCostUI;
     [SerializeField] private GameObject _AmmoCostUI;
-    private Color _APCostUIInitColor;
-    private Color _AmmoCostUIInitColor;
 
     [SerializeField] private GameObject _ActionNameUI;
 
@@ -95,15 +90,15 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
 
         //highlight Setting
-        Color hLColor = whiteColor;
+        Color hLColor = UICustomColor.NormalStateColor;
         bool isRunOutAmmo = ((action.GetActionType() == ActionType.Reload) && (player.weapon.currentAmmo == 0));
         if (isRunOutAmmo) 
         {
-            hLColor = yellowColor;
+            hLColor = UICustomColor.HighlightStateColor;
         }
         if (!_isSelectable) 
         {
-            hLColor = grayColor;
+            hLColor = UICustomColor.DisableStateColor;
         }
         _highlightEffect.GetComponent<Image>().color = hLColor;
 
@@ -150,11 +145,11 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         if (_action.GetActionType() is ActionType.Move) apCost = 1;
         int ammoCost = _action.GetAmmoCost();
 
-        _APCostUIInitColor = new Color32(0, 224, 128, 255);
-        _AmmoCostUIInitColor = new Color32(255, 128, 0, 255);
+        Color32 ApColor = UICustomColor.ActionAPColor;
+        Color32 AmmoColor = UICustomColor.ActionAmmoColor;
 
-        SetEachCostIconUI(_APCostUI, apCost, playerCurrentAp, _APCostUIInitColor);
-        SetEachCostIconUI(_AmmoCostUI, ammoCost, playerCurrentAmmo, _AmmoCostUIInitColor);
+        SetEachCostIconUI(_APCostUI, apCost, playerCurrentAp, ApColor);
+        SetEachCostIconUI(_AmmoCostUI, ammoCost, playerCurrentAmmo, AmmoColor);
     }
     private void SetEachCostIconUI(GameObject icon, int requiredCost, int currentCost, Color initColor)
     {

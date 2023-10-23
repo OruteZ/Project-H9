@@ -12,15 +12,13 @@ public class CombatActionUI : UISystem
 {
     [SerializeField] private GameObject _combatActionWindow;
     [SerializeField] private GameObject _actionTooltipWindow;
+    [SerializeField] private GameObject _idleButton;
 
     private Player _player;
     private GameState _gameState;   //동기화 오류때문에 만듬. 해결되면 삭제해도 될 듯?
 
     private List<GameObject> _actionButtons;
-    private GameObject _idleButton;
     private IUnitAction _selectedAction;
-
-    private const int COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION = 150;
 
     private KeyCode[] _shortCutKey = 
     {   
@@ -59,7 +57,6 @@ public class CombatActionUI : UISystem
         {
             _actionButtons.Add(skillActionButtons.GetChild(i).gameObject);
         }
-        _idleButton = _combatActionWindow.transform.GetChild(2).gameObject;
 
         _idleButton.SetActive(false);
         _actionTooltipWindow.GetComponent<CombatActionTooltip>().CloseUI();
@@ -238,9 +235,6 @@ public class CombatActionUI : UISystem
     public void ShowActionUITooltip(GameObject button)
     {
         Vector3 pos = button.GetComponent<RectTransform>().position;
-        pos.y += COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION * Camera.main.pixelHeight / 1080.0f;
-        _actionTooltipWindow.GetComponent<RectTransform>().position = pos;
-
         IUnitAction action = button.GetComponent<ActionSelectButtonElement>()._action;
         if (action == null) return;
 

@@ -68,7 +68,7 @@ public class PlayerStatLevelUpUI : UISystem
     [SerializeField] private GameObject _statLevelUpWindow;
     [SerializeField] private GameObject _background;
     [SerializeField] private GameObject _statLevelUpTitleText;
-    [SerializeField] private GameObject[] _statCardButtons;
+    [SerializeField] private GameObject[] _statCards;
     [SerializeField] private GameObject _statSelectButton;
 
     private bool isOpenUI = false;
@@ -99,7 +99,7 @@ public class PlayerStatLevelUpUI : UISystem
         float[] disappearTargetValue = 
         {
             Camera.main.pixelHeight / 2  + _statLevelUpTitleText.GetComponent<RectTransform>().sizeDelta.y / 2, 
-            -(Camera.main.pixelHeight / 2 + _statCardButtons[0].GetComponent<RectTransform>().sizeDelta.y / 2),
+            -(Camera.main.pixelHeight / 2 + _statCards[0].GetComponent<RectTransform>().sizeDelta.y / 2),
             0
         };
         Vector3 pos;
@@ -115,65 +115,50 @@ public class PlayerStatLevelUpUI : UISystem
             targetValue = disappearTargetValue;
         }
         pos = _statLevelUpTitleText.GetComponent<RectTransform>().localPosition;
-        pos.y = CalculationLerpValue(pos.y, targetValue[0]);
+        LerpCalculation.CalculateLerpValue(ref pos.y, targetValue[0], _appearSpeed);
         _statLevelUpTitleText.GetComponent<RectTransform>().localPosition = pos;
         if (pos.y == disappearTargetValue[0]) _statLevelUpTitleText.SetActive(false);
 
-            for (int i = 0; i < _statCardButtons.Length; i++)
+            for (int i = 0; i < _statCards.Length; i++)
         {
-            pos = _statCardButtons[i].GetComponent<RectTransform>().localPosition;
+            pos = _statCards[i].GetComponent<RectTransform>().localPosition;
             if (selectedCardNumber != i || isOpenUI)
             {
-                pos.y = CalculationLerpValue(pos.y, targetValue[1]);
-                _statCardButtons[i].GetComponent<RectTransform>().localPosition = pos;
+                LerpCalculation.CalculateLerpValue(ref pos.y, targetValue[1], _appearSpeed);
+                _statCards[i].GetComponent<RectTransform>().localPosition = pos;
             }
 
-            alpha = _statCardButtons[i].GetComponent<CanvasGroup>().alpha;
+            alpha = _statCards[i].GetComponent<CanvasGroup>().alpha;
             if (!isOpenUI)
             {
-                alpha = CalculationLerpValue(alpha, 0);
-                _statCardButtons[i].GetComponent<CanvasGroup>().alpha = alpha;
+                LerpCalculation.CalculateLerpValue(ref alpha, 0, _appearSpeed);
+                _statCards[i].GetComponent<CanvasGroup>().alpha = alpha;
             }
 
             if (pos.y == disappearTargetValue[1] || alpha == 0) 
             {
-                _statCardButtons[i].SetActive(false);
+                _statCards[i].SetActive(false);
             }
         }
 
         color = _background.GetComponent<Image>().color;
-        color.a = CalculationLerpValue(color.a, targetValue[2]);
+        LerpCalculation.CalculateLerpValue(ref color.a, targetValue[2], _appearSpeed);
         _background.GetComponent<Image>().color = color;
         if (color.a == disappearTargetValue[2]) _background.SetActive(false);
-
-    }
-    private float CalculationLerpValue(float a, float b)
-    {
-        float threshold = 0.01f;
-        if (Mathf.Abs(a - b) < threshold)
-        {
-            a = b;
-        }
-        else
-        {
-            a = Mathf.Lerp(a, b, Time.deltaTime * _appearSpeed);
-        }
-        return a;
     }
 
     public void OpenPlayerStatLevelUpUI() 
     {
         if (isOpenUI) return;
         int cnt = 0;
-        for (int i = 0; i < _statCardButtons.Length; i++)
+        for (int i = 0; i < _statCards.Length; i++)
         {
             if (statLevels[i].IsLevelUpFully())
             {
                 cnt++;
             }
         }
-        Debug.Log(cnt);
-        if (cnt >= _statCardButtons.Length) return;
+        if (cnt >= _statCards.Length) return;
 
         OpenUI();
         isOpenUI = true;
@@ -187,13 +172,13 @@ public class PlayerStatLevelUpUI : UISystem
         _statLevelUpTitleText.GetComponent<RectTransform>().localPosition = pos;
 
         //Set Card Position
-        for (int i = 0; i < _statCardButtons.Length; i++) 
+        for (int i = 0; i < _statCards.Length; i++) 
         {
-            pos = _statCardButtons[i].GetComponent<RectTransform>().localPosition;
-            pos.y = -(Camera.main.pixelHeight / 2 + _statCardButtons[i].GetComponent<RectTransform>().sizeDelta.y / 2 * (i + 1));
-            _statCardButtons[i].GetComponent<RectTransform>().localPosition = pos;
-            _statCardButtons[i].GetComponent<PlayerStatLevelUpElement>().SetPlayerStatLevelUpCard(statLevels[i]);
-            _statCardButtons[i].GetComponent<CanvasGroup>().alpha = 1;
+            pos = _statCards[i].GetComponent<RectTransform>().localPosition;
+            pos.y = -(Camera.main.pixelHeight / 2 + _statCards[i].GetComponent<RectTransform>().sizeDelta.y / 2 * (i + 1));
+            _statCards[i].GetComponent<RectTransform>().localPosition = pos;
+            _statCards[i].GetComponent<PlayerStatLevelUpElement>().SetPlayerStatLevelUpCard(statLevels[i]);
+            _statCards[i].GetComponent<CanvasGroup>().alpha = 1;
         }
         _statSelectButton.GetComponent<PlayerStatLevelUpSelectButton>().InitPlayerStatLevelUpSelectButton();
 
@@ -210,9 +195,9 @@ public class PlayerStatLevelUpUI : UISystem
     private void ClosePlayerStatLevelUpUI() 
     {
         isOpenUI = false;
-        for (int i = 0; i < _statCardButtons.Length; i++)
+        for (int i = 0; i < _statCards.Length; i++)
         {
-            _statCardButtons[i].GetComponent<PlayerStatLevelUpElement>().CloseUI();
+            _statCards[i].GetComponent<PlayerStatLevelUpElement>().CloseUI();
         }
         _statSelectButton.SetActive(false);
 
@@ -237,7 +222,7 @@ public class PlayerStatLevelUpUI : UISystem
     {
         if (!isSelectedSomeCard) return;
 
-        string levelUpStatName = _statCardButtons[selectedCardNumber].GetComponent<PlayerStatLevelUpElement>().statLevelInfo.statName;
+        string levelUpStatName = _statCards[selectedCardNumber].GetComponent<PlayerStatLevelUpElement>().statLevelInfo.statName;
         for (int i = 0; i < statLevels.Length; i++) 
         {
             if (levelUpStatName == statLevels[i].statName)

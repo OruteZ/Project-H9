@@ -25,7 +25,7 @@ public class PlayerExpUI : UISystem
     }
     void Update()
     {
-        if (LerpCalculation.CalculationLerpValue(ref _currentExpText, _targetCurrentExpText, 5, 0.5f))
+        if (LerpCalculation.CalculateLerpValue(ref _currentExpText, _targetCurrentExpText, 5, 0.5f))
         {
             isLastChange = false;
             UpdateExpBar();

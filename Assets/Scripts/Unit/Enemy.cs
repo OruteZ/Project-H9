@@ -44,7 +44,7 @@ public class Enemy : Unit
             return;
         }
         
-        if (TryExecuteUnitAction(target, FinishAction))
+        if (TryExecuteUnitAction(target))
         {
             SetBusy();
         }
@@ -78,7 +78,7 @@ public class Enemy : Unit
         UIManager.instance.onActionChanged.Invoke();
     }
     
-    private void FinishAction()
+    public new void FinishAction()
     {
         ClearBusy();
         ConsumeCost(activeUnitAction.GetCost());

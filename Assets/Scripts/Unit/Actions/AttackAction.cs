@@ -33,13 +33,6 @@ public class AttackAction : BaseAction
         return false;
     }
 
-    public override void Execute(Action onActionComplete)
-    {
-        Debug.Log("Attack Action call");
-        StartAction(onActionComplete);
-        unit.hasAttacked = true;
-    }
-
     public override int GetCost()
     {
         return 1;
@@ -82,48 +75,11 @@ public class AttackAction : BaseAction
         return !FieldSystem.tileSystem.RayThroughCheck(unit.hexPosition, targetPos);
     }
 
-    private void Update()
-    {
-        // if (!isActive) return;
-        //
-        // switch (_state)
-        // {
-        //     default:
-        //     case State.Aiming:
-        //         Transform tsf;
-        //         Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
-        //
-        //         float rotationSpeed = 10f;
-        //         transform.forward = Vector3.Lerp(tsf.forward, aimDirection, Time.deltaTime * rotationSpeed);
-        //
-        //         _stateTimer -= Time.deltaTime;
-        //         if (_stateTimer <= 0f)
-        //         {
-        //             _state = State.Shooting;
-        //             _stateTimer = .5f;
-        //
-        //             unit.TryAttack(_target);
-        //         }
-        //         break;
-        //     
-        //     case State.Shooting:
-        //         _state = State.CoolOff;
-        //         _stateTimer = .5f;
-        //         break;
-        //     
-        //     case State.CoolOff:
-        //         _stateTimer -= Time.deltaTime;
-        //         if (_stateTimer <= 0f)
-        //         {
-        //             FinishAction();
-        //         }
-        //         break;
-        // }
-    }
-
     protected override IEnumerator ExecuteCoroutine()
     {
         unit.animator.SetTrigger(IDLE);
+        
+        unit.hasAttacked = true;
         
         float timer = 1f;
         while ((timer -= Time.deltaTime) > 0)
@@ -150,6 +106,5 @@ public class AttackAction : BaseAction
         while (cnt-- > 0) yield return null;
         
         unit.animator.SetTrigger(IDLE);
-        FinishAction();
     }
 }

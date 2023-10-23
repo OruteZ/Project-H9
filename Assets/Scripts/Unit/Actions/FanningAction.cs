@@ -14,11 +14,16 @@ public class FanningAction : BaseAction
     private Unit _target;
     private int _shotCount;
 
-    private float minusHitrate;
+    private float _hitRateModifier;
 
     public override void SetAmount(float[] amounts)
     {
-        minusHitrate = amounts[0] * 0.01f;
+        if (amounts.Length is not 1)
+        {
+            Debug.LogError($"HitRate modifier needs only one amounts. Length of this amounts is {amounts.Length}");
+        }
+        
+        _hitRateModifier = amounts[0];
     }
 
     public override ActionType GetActionType()
@@ -62,12 +67,6 @@ public class FanningAction : BaseAction
         
         return true;
     }
-
-    public override void Execute(Action onActionComplete)
-    {
-        _shotCount = unit.weapon.currentAmmo;
-        StartAction(onActionComplete);
-    }
     
     private bool IsThereWallBetweenUnitAndThis(Vector3Int targetPos)
     {
@@ -79,6 +78,8 @@ public class FanningAction : BaseAction
     {
         unit.animator.ResetTrigger(IDLE);
         unit.animator.SetTrigger(FANNING);
+        
+        _shotCount = unit.weapon.currentAmmo;
         
         Transform tsf;
         Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
@@ -95,40 +96,11 @@ public class FanningAction : BaseAction
         for (int i = 0; i < _shotCount; i++)
         {
             yield return new WaitForSeconds(SHOT_TIME);
-            unit.TryAttack(_target, -minusHitrate);
-
-            // unit.weapon.currentAmmo--;
-            //
-            // bool hit = unit.weapon.GetFinalHitRate(_target) - 0.1f > UnityEngine.Random.value;
-            // Debug.Log(hit ? "뱅" : "빗나감");
-            // if (VFXHelper.TryGetGunFireFXInfo(unit.weapon.GetWeaponType(), out var fxKey, out var fxTime))
-            // {
-            //     var gunpointPos = unit.weapon.weaponModel.GetGunpointPosition();
-            //     VFXManager.instance.TryInstantiate(fxKey, fxTime, gunpointPos);
-            // }
-            //
-            // if (VFXHelper.TryGetTraceOfBulletFXKey(unit.weapon.GetWeaponType(), out var fxBulletLine, out var traceTime))
-            // {
-            //     var startPos = unit.weapon.weaponModel.GetGunpointPosition();
-            //     var destPos = _target.transform.position + Vector3.up;
-            //     if (!hit) destPos += new Vector3(UnityEngine.Random.value * 2 - 1, UnityEngine.Random.value * 2 - 1, UnityEngine.Random.value * 2 - 1);
-            //     VFXManager.instance.TryLineRender(fxBulletLine, traceTime, startPos, destPos);
-            // }
-            //
-            // if (hit)
-            // {
-            //     unit.weapon.Attack(_target, out var isHeadShot);
-            //     if (VFXHelper.TryGetBloodingFXKey(unit.weapon.GetWeaponType(), out var fxBloodingKey, out var bloodingTime))
-            //     {
-            //         var startPos = _target.transform.position + Vector3.up;
-            //         VFXManager.instance.TryInstantiate(fxBloodingKey, bloodingTime, startPos);
-            //     }
-            // }
+            unit.TryAttack(_target, _hitRateModifier);
         }
 
         yield return new WaitForSeconds(COOL_OFF_TIME);
         
         unit.hasAttacked = true;
-        FinishAction();
     }
 }

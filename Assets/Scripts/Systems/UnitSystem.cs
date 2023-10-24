@@ -16,6 +16,7 @@ public class UnitSystem : MonoBehaviour
     
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
+    public UnityEvent<Unit> onAnyUnitDead;
 
     private int _totalExp;
     
@@ -194,7 +195,8 @@ public class UnitSystem : MonoBehaviour
     private void OnUnitDead(Unit unit)
     {
         RemoveUnit(unit);
-
+        onAnyUnitDead.Invoke(unit);
+        
         if (IsCombatFinish(out var playerWin))
         {
             if (playerWin)

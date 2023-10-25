@@ -13,6 +13,7 @@ public class UnitSystem : MonoBehaviour
     [SerializeField] private EnemyDatabase enemyDB;
     [SerializeField] private PassiveDatabase passiveDB;
     [SerializeField] private ActiveDatabase activeDB;
+    [SerializeField] private BehaviourTreeDatabase aiDB;
     
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
@@ -69,6 +70,7 @@ public class UnitSystem : MonoBehaviour
                 info.stat.ResetModifier();
                 
                 enemy.SetUp("Enemy", (UnitStat)info.stat.Clone(), weaponDB.Clone(info.weaponIndex), info.model, new List<Passive>());
+                enemy.SetupAI(aiDB.GetTree(info.btIndex));
                 enemy.isVisible = false;
 
                 _totalExp += info.rewardExp;

@@ -69,7 +69,7 @@ public class DynamiteAction : BaseAction
     }
 
     public int GetExplosionRange() => explosionRange;
-    public int GetThrowingRange() => Mathf.Min(throwingRange, unit.stat.sightRange);
+    public int GetThrowingRange() => Mathf.Clamp(throwingRange, 0, unit.stat.sightRange);
 
     protected override IEnumerator ExecuteCoroutine()
     {

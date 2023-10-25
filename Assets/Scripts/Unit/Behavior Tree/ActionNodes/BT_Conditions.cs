@@ -18,23 +18,20 @@ namespace BT
             ref var playerPosMemory = ref tree.playerPosMemory;
             
             var curPlayerPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
-            if (FieldSystem.tileSystem.VisionCheck(enemy.hexPosition, curPlayerPos))
+            if (FieldSystem.tileSystem.VisionCheck(enemy.hexPosition, curPlayerPos) is false)
             {
-                // if (Hex.Distance(enemy.hexPosition, curPlayerPos) > enemy.stat.sightRange)
-                // {
-                //     Debug.Log("AI Think : Player is out of sight");
-                //     return INode.ENodeState.Success;
-                // }
-                playerPosMemory = curPlayerPos;
-            
-                Debug.Log("AI Think : Player is in sight");
-            
-                return INode.ENodeState.Failure;
+                Debug.Log("AI Think : Player is out of sight");
+                return INode.ENodeState.Success;
             }
-        
-        
-            Debug.Log("AI Think : Player is out of sight");
-            return INode.ENodeState.Success;
+            if (enemy.stat.sightRange < Hex.Distance(enemy.hexPosition, curPlayerPos))
+            {
+                Debug.Log("AI Think : Player is out of sight");
+                return INode.ENodeState.Success;
+            }
+            
+            playerPosMemory = curPlayerPos;
+            Debug.Log("AI Think : Player is in sight");
+            return INode.ENodeState.Failure;
         }
     }
 

@@ -87,7 +87,7 @@ namespace BT
                 return INode.ENodeState.Failure;
             }
 
-            if (!((Enemy)unit).TryExecute(_route[1].hexPosition))
+            if (!((Enemy)unit).TryExecute(_route[++_curIndex].hexPosition))
             {
                 return INode.ENodeState.Failure;
             }
@@ -102,6 +102,7 @@ namespace BT
             if (_route is null) return false;
             if (_route.Count <= 1) return false;
 
+            _curIndex = 0;
             return true;
         }
         private bool IsRouteStillValid()

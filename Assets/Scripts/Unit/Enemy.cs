@@ -31,8 +31,8 @@ public class Enemy : Unit
             EditorApplication.isPaused = true;
         }
 
-        this.ai = ai;
-        this.ai.Setup();
+        this.ai = Instantiate(ai);
+        this.ai.Setup(this);
     }
     
     public void Update()
@@ -41,7 +41,7 @@ public class Enemy : Unit
         if (!IsMyTurn()) return;
         if (FieldSystem.unitSystem.IsCombatFinish(out var none)) return;
 
-        ai.Operate(this);
+        ai.Operate();
 
         // activeUnitAction = _ai.resultAction;
         // Vector3Int target = _ai.resultPosition;

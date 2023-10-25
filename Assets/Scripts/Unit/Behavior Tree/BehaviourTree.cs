@@ -17,15 +17,16 @@ public class BehaviourTree : ScriptableObject
 
     public UnityEvent onSetUp = new UnityEvent();
 
-    public void Setup()
-    {
-        _rootNode = INode.GetNode(nodeInfo, this);
-        onSetUp.Invoke();
-    }
-
-    public void Operate(Unit unit)
+    public void Setup(Unit unit)
     {
         _unit = unit;
+        _rootNode = INode.GetNode(nodeInfo, this);
+        onSetUp.Invoke();
+        FieldSystem.unitSystem.onAnyUnitMoved.AddListener(SeePlayer);
+    }
+
+    public void Operate()
+    {
         _rootNode.Evaluate();
     }
     
@@ -96,4 +97,15 @@ public class BehaviourTree : ScriptableObject
     }
 
     public Unit GetUnit() => _unit;
+
+    private void SeePlayer(Unit player)
+    {
+        if (player is not Player) return;
+        
+        //if player moved, check player is in sight
+        if (Hex.Distance(_unit.hexPosition, player.hexPosition) > _unit.stat.sightRange) return;
+        if (FieldSystem.tileSystem.VisionCheck(_unit.hexPosition, player.hexPosition) is false) return;
+
+        playerPosMemory = player.hexPosition;
+    }
 }

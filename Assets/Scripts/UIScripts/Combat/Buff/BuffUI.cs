@@ -22,7 +22,7 @@ public class BuffUI : UISystem
     public void SetBuffUI()
     {
         _BuffUI.SetActive(true);
-        Debug.Log("Test1");
+//        Debug.Log("Test1");
         for (int i = 0; i < _BuffUI.transform.childCount; i++) 
         {
             _BuffUI.transform.GetChild(i).GetComponent<BuffUIElement>().CloseUI();

@@ -119,7 +119,7 @@ public class Enemy : Unit
 
     public bool TryExecute(Vector3Int target)
     {
-        if (TryExecuteUnitAction(target, FinishAction))
+        if (TryExecuteUnitAction(target))
         {
             SetBusy();
             return true;

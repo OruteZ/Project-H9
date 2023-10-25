@@ -39,7 +39,4 @@ public class IdleAction : BaseAction
     {
         return false;
     }
-
-    public override void Execute(Action onActionComplete)
-    { }
 }

@@ -41,7 +41,16 @@ public class ActiveDatabase : ScriptableObject
                 var info = infos[i];
                 
                 Debug.Log("Add Component");
-                unit.AddComponent<FanningAction>().SetAmount(info.amounts);
+                switch (info.action)
+                {
+                    case ActionType.Fanning:
+                        unit.AddComponent<FanningAction>().SetAmount(info.amounts);
+                        break;
+                    case ActionType.Dynamite:
+                        unit.AddComponent<DynamiteAction>().SetAmount(info.amounts);
+                        break;
+                }
+
                 break;
             }
         }

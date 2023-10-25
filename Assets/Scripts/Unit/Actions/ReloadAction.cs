@@ -47,13 +47,6 @@ public class ReloadAction : BaseAction
         return IsSelectable();
     }
 
-    public override void Execute(Action onActionComplete)
-    {
-        Debug.Log("Reload weapon");
-
-        StartAction(onActionComplete);
-    }
-
     protected override IEnumerator ExecuteCoroutine()
     {
         unit.animator.ResetTrigger(IDLE);
@@ -72,6 +65,5 @@ public class ReloadAction : BaseAction
         yield return new WaitForSeconds(COOL_OFF_TIME);
         
         unit.animator.SetTrigger(IDLE);
-        FinishAction();
     }
 }

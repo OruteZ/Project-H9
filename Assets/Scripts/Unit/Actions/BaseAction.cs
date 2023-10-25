@@ -14,7 +14,18 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     
     public abstract ActionType GetActionType();
     public abstract bool CanExecute();
-    public abstract void Execute(Action onActionComplete);
+
+    public void Execute()
+    {
+        IEnumerator Coroutine()
+        {
+            yield return ExecuteCoroutine();
+            FinishAction();
+        }
+        
+        StartAction();
+        StartCoroutine(Coroutine());
+    }
     public abstract void SetTarget(Vector3Int targetPos);
     public abstract int GetAmmoCost();
 
@@ -26,7 +37,6 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     protected Unit unit;
     protected bool isActive;
-    protected Action onActionComplete;
     public void SetUp(Unit unit)
     {
         this.unit = unit;
@@ -34,16 +44,14 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     public Unit GetUnit() => unit;
     public bool IsActive() => isActive;
 
-    protected void StartAction(Action onActionComplete)
+    private void StartAction()
     {
         unit.animator.ResetTrigger(IDLE);
-        this.onActionComplete = onActionComplete;
         isActive = true;
-        StartCoroutine(ExecuteCoroutine());
         UIManager.instance.onActionChanged.Invoke();
     }
 
-    protected void FinishAction()
+    private void FinishAction()
     {
         switch (GetActionType())
         {
@@ -73,10 +81,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         unit.animator.SetTrigger(IDLE);
         
         isActive = false;
-        onActionComplete();
         UIManager.instance.onActionChanged.Invoke();
-
-        unit.onFinishAction.Invoke(this);
+        unit.FinishAction();
     }
 
     protected virtual IEnumerator ExecuteCoroutine()

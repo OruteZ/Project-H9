@@ -16,6 +16,7 @@ public class UnitSystem : MonoBehaviour
     
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
+    public UnityEvent<Unit> onAnyUnitDead;
 
     private int _totalExp;
     
@@ -128,6 +129,64 @@ public class UnitSystem : MonoBehaviour
         return null;
     }
 
+    public bool TryGetUnit(Vector3Int position, out Unit unit)
+    {
+        unit = null;
+        if (units is null)
+        {
+            return false;
+        }
+        
+        foreach (var u in units)
+        {
+            if (u.hexPosition == position)
+            {
+                unit = u;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public List<Unit> GetUnitListInRange(IEnumerable<Vector3Int> positions)
+    {
+        var result = new List<Unit>();
+        if (units is null)
+        {
+            return result;
+        }
+
+        foreach (var pos in positions)
+        {
+            if (TryGetUnit(pos, out var u))
+            {
+                result.Add(u);
+            }
+        }
+
+        return result;
+    }
+    public List<Unit> GetUnitListInRange(Vector3Int start, int range)
+    {
+        var positions = Hex.GetCircleGridList(range, start);
+        var result = new List<Unit>();
+        if (units is null)
+        {
+            return result;
+        }
+
+        foreach (var pos in positions)
+        {
+            if (TryGetUnit(pos, out var u))
+            {
+                result.Add(u);
+            }
+        }
+
+        return result;
+    }
+
     public void OnUnitMoved(Unit unit)
     {
         onAnyUnitMoved?.Invoke(unit);
@@ -136,7 +195,8 @@ public class UnitSystem : MonoBehaviour
     private void OnUnitDead(Unit unit)
     {
         RemoveUnit(unit);
-
+        onAnyUnitDead.Invoke(unit);
+        
         if (IsCombatFinish(out var playerWin))
         {
             if (playerWin)

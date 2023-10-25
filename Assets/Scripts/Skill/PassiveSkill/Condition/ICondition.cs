@@ -28,5 +28,11 @@
         ReloadedInThisTurn,
         MovedInThisTurn,
         NotMovedInThisTurn,
+        
+        Revenge,
+        Dying,
+        
+        Snipe,
+        Fighter
     }
 }

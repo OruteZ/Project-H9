@@ -62,6 +62,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         });
     }
 
+    #region PRIVATE
     private void TileEffectSet()
     {
         Debug.Log("Setting Tile Effect");
@@ -78,6 +79,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 AttackTileEffect();
                 break;
             case ActionType.Dynamite:
+                DynamiteTileEffect();
                 break;
             case ActionType.Idle:
                 ClearEffect(_effectsBase);
@@ -93,6 +95,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         }
     }
 
+    #region MOVE
     private void MovableTileEffect()
     {
         int range = _player.currentActionPoint;
@@ -161,7 +164,9 @@ public class TileEffectManager : Singleton<TileEffectManager>
         }
         // ReSharper disable once IteratorNeverReturns
     }
-
+    #endregion
+    
+    #region SHOOT
     private void AttackTileEffect()
     {
         var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, _player.weapon.GetRange()).Where(
@@ -232,7 +237,61 @@ public class TileEffectManager : Singleton<TileEffectManager>
         }
         // ReSharper disable once IteratorNeverReturns
     }
+    #endregion
     
+    #region DYNAMITE
+    private void DynamiteTileEffect()
+    {
+        int range = _player.GetAction<DynamiteAction>().GetThrowingRange();
+        
+        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, range).Where(
+            tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
+
+        foreach (var tile in tiles)
+        {
+            var go =Instantiate(attackTileEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
+            _effectsBase.Add(tile.hexPosition, go);
+        }
+
+        _curCoroutine = StartCoroutine(DynamiteTargetEffectCoroutine());
+    }
+
+    private IEnumerator DynamiteTargetEffectCoroutine()
+    {
+        int expRange = _player.GetAction<DynamiteAction>().GetExplosionRange();
+        int thrRange = _player.GetAction<DynamiteAction>().GetThrowingRange();
+        
+        while (true)
+        {
+            yield return null;
+            ClearEffect(_effectsRelatedTarget);
+
+            if (Player.TryGetMouseOverTilePos(out var target) is false)
+            {
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
+            if (FieldSystem.tileSystem.GetTile(target).visible is false)
+            {
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
+
+            if (Hex.Distance(target, _player.hexPosition) > thrRange)
+            {
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
+
+            var tiles = FieldSystem.tileSystem.GetTilesInRange(target, expRange);
+            foreach (var pos in tiles.Select(tile => tile.hexPosition)) 
+            {
+                SetEffectTarget(pos, TileEffectType.Friendly);
+            }
+        }
+        // ReSharper disable once IteratorNeverReturns
+    }
+    #endregion
     private new void Awake()
     {
         base.Awake();
@@ -241,9 +300,6 @@ public class TileEffectManager : Singleton<TileEffectManager>
         _effectsRelatedTarget = new Dictionary<Vector3Int, GameObject>();
     }
 
-    /// <summary>
-    /// 모든 이펙트를 초기화 합니다.
-    /// </summary>
     private void ClearEffect()
     {
         // <Legacy>
@@ -290,7 +346,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             _ => null
         };
     }
-
+    
     private TileEffectType GetEffectType(GameObject effect)
     {
         if (effect == friendlyEffect) return TileEffectType.Friendly;
@@ -300,8 +356,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
         if (effect == normalEffect) return TileEffectType.Normal;
         return TileEffectType.None;
     }
-
-    public void ClearEffect(Dictionary<Vector3Int, GameObject> pool)
+    
+    private void ClearEffect(Dictionary<Vector3Int, GameObject> pool)
     {
         foreach (var go in pool.Values)
         {
@@ -310,4 +366,5 @@ public class TileEffectManager : Singleton<TileEffectManager>
         
         pool.Clear();
     }
+    #endregion
 }

@@ -48,7 +48,7 @@ public class Player : Unit
         {
             SetBusy();
 
-            var actionSuccess = TryExecuteUnitAction(onMouseTilePos, FinishAction);
+            var actionSuccess = TryExecuteUnitAction(onMouseTilePos);
             Debug.Log("actionSuccess: " + actionSuccess);
             
             if(actionSuccess is false) ClearBusy();
@@ -86,50 +86,7 @@ public class Player : Unit
         SelectAction(GetAction<MoveAction>());
     }
     
-    public void SelectAction(IUnitAction action)
-    {
-        if (IsBusy()) return;
-        if (IsMyTurn() is false) return;
-        if (action.IsSelectable() is false) return;
-        if (action.GetCost() > currentActionPoint)
-        {  
-            Debug.Log("Cost is loss, Cost is " + action.GetCost());
-            return;
-        }
-#if UNITY_EDITOR
-        Debug.Log("Select Action : " + action);
-#endif
-
-        activeUnitAction = action;
-        onSelectedChanged.Invoke();
-
-        if (activeUnitAction.CanExecuteImmediately())
-        { 
-            if (activeUnitAction is not IdleAction) SetBusy();
-            var actionSuccess = TryExecuteUnitAction(Vector3Int.zero, FinishAction);
-            Debug.Log("actionSuccess: " + actionSuccess);
-            
-            if(actionSuccess is false) ClearBusy();
-        }
-    }
-
-    private void FinishAction()
-    {
-        if(activeUnitAction is not MoveAction) ConsumeCost(activeUnitAction.GetCost());
-        
-        ClearBusy();
-        if(GameManager.instance.CompareState(GameState.Combat))
-        {
-            var idleAction = GetAction<IdleAction>();
-            SelectAction(idleAction is null ? GetAction<MoveAction>() : idleAction);
-        }
-        else
-        {
-            SelectAction(GetAction<IdleAction>());
-            SelectAction(GetAction<MoveAction>());
-        }
-    }
-
+    
     // ReSharper disable Unity.PerformanceAnalysis
     public static bool TryGetMouseOverTilePos(out Vector3Int pos)
     {
@@ -198,12 +155,6 @@ public class Player : Unit
         UIManager.instance.onPlayerStatChanged.Invoke();
         GameManager.instance.playerStat = stat;
     }
-
-    private void LookTarget()
-    {
-        
-    }
-
     private void OnAnyUnitMoved(Unit unit)
     {
         if(unit is not Player)

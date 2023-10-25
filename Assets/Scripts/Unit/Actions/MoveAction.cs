@@ -77,21 +77,10 @@ public class MoveAction : BaseAction
         return true;
     }
 
-    // ReSharper disable once InconsistentNaming
-    public override void Execute(Action onActionComplete)
-    {
-        StartAction(onActionComplete);
-
-        //_path = unit.hexTransform.Map.FindPath(unit.Position, targetPos, _maxMoveDistance) as List<Vector3Int>;
-        // transform.forward =
-        //     (Hex.Hex2World(_path[_currentPositionIndex].hexPosition)
-        //      - transform.position).normalized;
-    }
-
     private void Awake()
     {
         _currentPositionIndex = -1;
-    }
+    }   
 
     protected override IEnumerator ExecuteCoroutine()
     {
@@ -140,8 +129,6 @@ public class MoveAction : BaseAction
                 _currentPositionIndex++;
                 if (_currentPositionIndex >= _path.Count)
                 {
-                    FinishAction();
-                    unit.animator.SetTrigger(IDLE);
                     _path = null;
                     yield break;
                 }

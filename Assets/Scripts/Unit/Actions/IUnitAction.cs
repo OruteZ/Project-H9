@@ -45,8 +45,7 @@ public interface IUnitAction {
     /// <summary>
     /// UnitAction을 실행합니다.
     /// </summary>
-    /// <param name="onActionComplete"> UnitAction이 끝났을 때 실행 될 System.Action함수입니다. (다른 Action)</param>
-    void Execute(Action onActionComplete);
+    void Execute();
     
     /// <summary>
     /// 행동 후 해당 Action이 소모한 Cost를 반환합니다.

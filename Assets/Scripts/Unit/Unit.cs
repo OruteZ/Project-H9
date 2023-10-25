@@ -30,10 +30,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     [Header("Status")] 
     [SerializeField] public UnitStat stat;
 
-    public int hp
-    {
-        get => stat.GetStat(StatType.CurHp);
-    }
+    public int hp => stat.GetStat(StatType.CurHp);
     private List<Passive> _passiveList;
 
     // ReSharper disable once InconsistentNaming
@@ -250,7 +247,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         return _hasDead;
     }
 
-    protected bool TryExecuteUnitAction(Vector3Int targetPosition, Action onActionFinish)
+    protected bool TryExecuteUnitAction(Vector3Int targetPosition)
     {
         if (activeUnitAction is null)
         {
@@ -272,7 +269,7 @@ public abstract class Unit : MonoBehaviour, IUnit
             return false;
         }
 
-        activeUnitAction.Execute(onActionFinish);
+        activeUnitAction.Execute();
         return true;
     }
     
@@ -287,7 +284,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         onStartShoot.Invoke(target);
 
         bool isCritical = false;
-        bool hit = weapon.GetFinalHitRate(target) + hitRateOffset > UnityEngine.Random.value;
+        bool hit = weapon.GetFinalHitRate(target) + hitRateOffset > UnityEngine.Random.value * 100;
 
         if (VFXHelper.TryGetGunFireFXInfo(weapon.GetWeaponType(), out var fxGunFireKey, out var fxGunFireTime))
         {
@@ -365,6 +362,52 @@ public abstract class Unit : MonoBehaviour, IUnit
         if (value == 0) return;
 
         onCostChanged.Invoke(currentActionPoint + value, currentActionPoint);
+    }
+
+    public void SelectAction(IUnitAction action)
+    {
+        if (IsBusy()) return;
+        if (IsMyTurn() is false) return;
+        if (action.IsSelectable() is false) return;
+        if (action.GetCost() > currentActionPoint)
+        {  
+            Debug.Log("Cost is loss, Cost is " + action.GetCost());
+            return;
+        }
+#if UNITY_EDITOR
+        Debug.Log("Select Action : " + action);
+#endif
+
+        activeUnitAction = action;
+        onSelectedChanged.Invoke();
+
+        if (activeUnitAction.CanExecuteImmediately())
+        { 
+            if (activeUnitAction is not IdleAction) SetBusy();
+            var actionSuccess = TryExecuteUnitAction(Vector3Int.zero);
+            Debug.Log("actionSuccess: " + actionSuccess);
+            
+            if(actionSuccess is false) ClearBusy();
+        }
+    }
+
+    public void FinishAction()
+    {
+        var action = activeUnitAction;
+        if(activeUnitAction is not MoveAction) ConsumeCost(activeUnitAction.GetCost());
+        
+        ClearBusy();
+        if(GameManager.instance.CompareState(GameState.Combat))
+        {
+            var idleAction = GetAction<IdleAction>();
+            SelectAction(idleAction is null ? GetAction<MoveAction>() : idleAction);
+        }
+        else
+        {
+            SelectAction(GetAction<IdleAction>());
+            SelectAction(GetAction<MoveAction>());
+        }
+        onFinishAction.Invoke(action);
     }
 }
 

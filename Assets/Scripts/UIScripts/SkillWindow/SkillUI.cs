@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -28,16 +29,18 @@ public class SkillUI : UISystem
     [SerializeField] private GameObject _skillTooltipWindow;
     [SerializeField] private GameObject _skillPointText;
 
+    [SerializeField] private GameObject[] _skillRootNodes;
+
     void Start()
     {
         _skillManager = SkillManager.instance;
         //GetComponent<Image>().sprite = ;
-        UpdateSkillUIImage();
+        UpdateSkillWindow();
     }
     public override void OpenUI() 
     {
         base.OpenUI();
-        UpdateSkillPointUI();
+        UpdateSkillWindow();
     }
     public override void CloseUI()
     {
@@ -75,31 +78,64 @@ public class SkillUI : UISystem
     {
         _skillTooltipWindow.SetActive(false);
     }
-    public void UpdateSkillUIImage()
+
+    public void UpdateSkillWindow()
     {
+        UpdateAllSkillUINode();
         UpdateSkillPointUI();
+    }
+    public void UpdateAllSkillUINode()
+    {
         for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
         {
-            SkillTreeElement _skillElement = _skillUIButtons.transform.GetChild(i).GetComponent<SkillTreeElement>();
-            Skill _skill = _skillManager.GetSkill(_skillElement.GetSkillUIIndex());
-
-            LearnStatus state = LearnStatus.NotLearnable;
-            if (_skill.isLearned)
-            {
-                state = LearnStatus.Learned;
-            }
-            if (_skill.isLearnable)
-            {
-                state = LearnStatus.Learnable;
-            }
-            _skillElement.SetSkillButtonEffect((int)state);
-
-            if (_skill.skillLevel > 0)
-            {
-                _skillElement.SetSkillArrow();
-            }
+            UpdateSkillUINode(_skillUIButtons.transform.GetChild(i).gameObject);
         }
     }
+    public void UpdateRelatedSkillNodes(int index) 
+    {
+        GameObject targetNode = FindSkillNode(index);
+        UpdateSkillUINode(targetNode);
+
+        List<GameObject> arrows = targetNode.GetComponent<SkillTreeElement>().GetPostArrow();
+        foreach (GameObject arrow in arrows) 
+        {
+            UpdateSkillUINode(arrow.GetComponent<SkillTreeArrow>().GetPostSkillNode());
+        }
+    }
+    private void UpdateSkillUINode(GameObject ui)
+    {
+        SkillTreeElement _skillElement = ui.GetComponent<SkillTreeElement>();
+        Skill _skill = _skillManager.GetSkill(_skillElement.GetSkillUIIndex());
+
+        LearnStatus state = LearnStatus.NotLearnable;
+        if (_skill.isLearned)
+        {
+            state = LearnStatus.Learned;
+        }
+        if (_skill.isLearnable)
+        {
+            state = LearnStatus.Learnable;
+        }
+        _skillElement.SetSkillButtonEffect((int)state);
+
+        if (_skill.skillLevel > 0)
+        {
+            _skillElement.SetSkillArrow();
+        }
+    }
+    private GameObject FindSkillNode(int index) 
+    {
+        foreach (GameObject root in _skillRootNodes) 
+        {
+            GameObject findResult = root.GetComponent<SkillTreeElement>().FindSkillNode(index);
+            if (findResult != null) 
+            {
+                return findResult;
+            }
+        }
+        return null;
+    }
+
     private void UpdateSkillPointUI()
     {
         _skillPointText.GetComponent<TextMeshProUGUI>().text = "SP: " + _skillManager.GetSkillPoint().ToString();

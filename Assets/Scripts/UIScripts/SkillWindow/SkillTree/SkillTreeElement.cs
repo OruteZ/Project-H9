@@ -8,26 +8,23 @@ using UnityEngine.UI;
 /// </summary>
 public class SkillTreeElement : UIElement
 {
-    //개선 필요
-    //현재는 인스펙터 창에서 스킬 인덱스와 선행스킬연결UI를 하나하나 지정해주어야 하는데, 더 좋은 방법을 찾아서 변경해야 할 듯
-
-    public int skillIndex;
-    [SerializeField] private GameObject[] _precedenceLine;  //이름이 혼동된다. 해당 코드에서 가리키는 스킬을 습득했을 경우에 활성화해야하는 선행스킬연결UI임.
-                                                            //아예 이걸 새 코드로 분리해야 할지도...
+    [SerializeField] private int skillIndex;
+    [SerializeField] private List<GameObject> _postLine;
 
     [SerializeField] private Image _effectImage;
-    [SerializeField] private Image _ButtonImage;
     [SerializeField] private Image _SkillImage;
 
     private SkillIcon _skillIcon;
+
+    public float effectSpeed { get; private set; }
     private void Start()
     {
+        ClearPostArrowList();
+        effectSpeed = 10;
+        StartCoroutine(EffectColorChange((int)SkillUI.LearnStatus.NotLearnable, 0));
+
         _skillIcon = _SkillImage.GetComponent<SkillIcon>();
         _skillIcon.SetSkillIndex(skillIndex);
-        for (int i = 0; i < _precedenceLine.Length; i++)
-        {
-            _precedenceLine[i].transform.GetChild(0).GetComponent<Image>().color = new Color32(199, 94, 8, 255);
-        }
     }
 
     /// <summary>
@@ -46,22 +43,28 @@ public class SkillTreeElement : UIElement
     /// <param name="state"> 스킬트리UI의 상태 </param>
     public void SetSkillButtonEffect(int state) 
     {
+        StartCoroutine(EffectColorChange(state, 1 / effectSpeed));
+    }
+    IEnumerator EffectColorChange(int state, float speed)
+    {
         Color32[] effectColor =
         {
             UICustomColor.SkillIconNotLearnedColor,
             UICustomColor.SkillIconLearnableColor,
             UICustomColor.SkillIconLearnedColor
         };
+        yield return new WaitForSeconds(speed);
         _effectImage.color = effectColor[state];
+        yield break;
     }
     /// <summary>
     /// 스킬트리UI에 연결된 "해당 스킬트리UI가 가리키는 스킬을 배워야만 활성화되는 선행스킬연결UI"들의 상태를 설정합니다.
     /// </summary>
     public void SetSkillArrow()
     {
-        for (int i = 0; i < _precedenceLine.Length; i++)
+        for (int i = 0; i < _postLine.Count; i++)
         {
-            _precedenceLine[i].transform.GetChild(0).GetComponent<Image>().color = UICustomColor.SkillIconLearnedColor;
+            _postLine[i].GetComponent<SkillTreeArrow>().ProgressArrow();
         }
     }
     /// <summary>
@@ -71,5 +74,43 @@ public class SkillTreeElement : UIElement
     public int GetSkillUIIndex() 
     {
         return skillIndex;
+    }
+    public GameObject FindSkillNode(int index) 
+    {
+        if (index == skillIndex)
+        {
+            return this.gameObject;
+        }
+        else 
+        {
+            foreach (GameObject arrow in _postLine) 
+            {
+                GameObject postNode = arrow.GetComponent<SkillTreeArrow>().GetPostSkillNode();
+                GameObject findResult = postNode.GetComponent<SkillTreeElement>().FindSkillNode(index);
+                if (findResult != null) 
+                {
+                    return findResult;
+                }
+            }
+            return null;
+        }
+    }
+    public List<GameObject> GetPostArrow() 
+    {
+        return _postLine;
+    }
+    public void AddPostArrow(GameObject arrow) 
+    {
+        _postLine.Add(arrow);
+    }
+    private void ClearPostArrowList()
+    {
+        for (int i = _postLine.Count - 1; i >= 0; i--)
+        {
+            if (_postLine[i] is null)
+            {
+                _postLine.RemoveAt(i);
+            }
+        }
     }
 }

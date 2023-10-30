@@ -311,25 +311,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992a76074a6f9ed4d97f7bafc19df8cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillIndex: 1001
-  _precedenceLine:
-  - {fileID: 0}
-  - {fileID: 0}
-  _effectColor:
-  - serializedVersion: 2
-    rgba: 4294967295
-  - serializedVersion: 2
-    rgba: 4279421439
-  - serializedVersion: 2
-    rgba: 4279425864
+  skillIndex: 0
+  _precedenceLine: []
   _effectImage: {fileID: 4104560390898890761}
   _ButtonImage: {fileID: 8471245450037732803}
   _SkillImage: {fileID: 707704199439099060}
-  _effect:
-  - {fileID: 21300000, guid: affeade9874cf2347abb155e8d0db4d8, type: 3}
-  - {fileID: 21300000, guid: 0029170d14ce6c04c9f45c22cdae5559, type: 3}
-  - {fileID: 21300000, guid: 36e6970b84831434a9eac79abd03700b, type: 3}
-  _skillIcon: {fileID: 0}
 --- !u!222 &4898608753034365755
 CanvasRenderer:
   m_ObjectHideFlags: 0

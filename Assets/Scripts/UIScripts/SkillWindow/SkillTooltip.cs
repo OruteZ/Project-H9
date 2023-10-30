@@ -62,7 +62,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     {
         if (_skillManager.LearnSkill(_currentSkillIndex))
         {
-            UIManager.instance.skillUI.UpdateSkillUIImage();
+            UIManager.instance.skillUI.UpdateAllSkillUINode();
         }
         SetSkillTooltip(GetComponent<RectTransform>().position, _currentSkillIndex);
     }

@@ -66,7 +66,7 @@ public class CharacterStatUIInfo
     }
     public float GetCorrectedValue(float stat)
     {
-        if (statName == "Critical Chance") return ((int)(stat * 100));
+        //if (statName == "Critical Chance") return ((int)(stat * 100));
         return stat;
     }
     public string GetFinalStatValueString() 

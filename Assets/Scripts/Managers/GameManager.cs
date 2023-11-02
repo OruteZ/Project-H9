@@ -14,7 +14,7 @@ public class GameManager : Generic.Singleton<GameManager>
     [SerializeField]
     private GameState _currentState = GameState.World;
 
-    [Header("Player Info")] 
+    [Header("Player Info")]
     public Vector3Int playerWorldPos;
     public UnitStat playerStat;
     public int playerWeaponIndex;
@@ -24,7 +24,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
     #region LEVEL
 
-    [Header("Level system")] 
+    [Header("Level system")]
     public int level = 1;
     public int curExp = 0;
     private int maxExp => level * 100;
@@ -49,16 +49,16 @@ public class GameManager : Generic.Singleton<GameManager>
             UIManager.instance.gameSystemUI.playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
         }
     }
-    public int GetMaxExp() 
+    public int GetMaxExp()
     {
         return maxExp;
     }
     #endregion
-    
-    [Header("World Scene Name")] 
+
+    [Header("World Scene Name")]
     public string worldSceneName;
 
-    [Header("World Info")] 
+    [Header("World Info")]
     public int worldAp;
     public int worldTurn;
 
@@ -87,35 +87,43 @@ public class GameManager : Generic.Singleton<GameManager>
     {
         return _currentState == state;
     }
-    
+
     private void ChangeState(GameState state)
     {
-        if(CompareState(state)) return;
+        if (CompareState(state)) return;
 
         _currentState = state;
         //UIManager.instance.ChangeScenePrepare(state);
     }
 
-    public void AddPlayerSkillListElement(int skillIndex, bool isPassive) 
+    public void AddPlayerSkillListElement(int skillIndex, bool isPassive)
     {
         List<int> list = null;
-        if (isPassive) 
+        if (isPassive)
         {
             list = playerPassiveIndexList;
         }
         else
         {
+            DeleteSameSkill();
             list = playerActiveIndexList;
         }
-        foreach (int i in list) 
+        foreach (int i in list)
         {
-            if (i == skillIndex) 
+            if (i == skillIndex)
             {
                 Debug.Log("동일한 스킬 연속 습득 오류");
                 return;
             }
         }
         list.Add(skillIndex);
+    }
+    private void DeleteSameSkill()
+    {
+        //delete another version of active skill
+        //need a way to find another version of skill
+
+        //problem: what if player puts a another version of skill in action window?
     }
 
     public void Update()

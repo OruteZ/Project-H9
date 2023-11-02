@@ -13,15 +13,18 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 
     private SkillManager _skillManager;
     private int _currentSkillIndex;
+    private bool _isInteractableButton;
 
     // Start is called before the first frame update
     void Start()
     {
         _skillManager = SkillManager.instance;
+        _isInteractableButton = false;
     }
 
-    public void SetSkillTooltip(Vector3 pos, int skillIndex) 
+    public void SetSkillTooltip(Vector3 pos, int skillIndex)
     {
+        _isInteractableButton = false;
         GetComponent<RectTransform>().position = pos;
         Skill currentSkill = _skillManager.GetSkill(skillIndex);
 
@@ -30,27 +33,35 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         _skillTooltipDescriptionText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillDescription(_currentSkillIndex);
 
         TextMeshProUGUI buttonText = _skillTooltipButtonText.GetComponent<TextMeshProUGUI>();
-        if (currentSkill.isLearnable)
+        if (GameManager.instance.CompareState(GameState.World))
         {
-            if (_skillManager.IsEnoughSkillPoint())
+            if (currentSkill.isLearnable)
             {
-                buttonText.text = "습득";
+                if (_skillManager.IsEnoughSkillPoint())
+                {
+                    _isInteractableButton = true;
+                    buttonText.text = "습득";
+                }
+                else
+                {
+                    buttonText.text = "스킬 포인트 부족";
+                }
             }
             else
             {
-                buttonText.text = "스킬 포인트 부족";
+                if (currentSkill.isLearned)
+                {
+                    buttonText.text = "습득 완료";
+                }
+                else
+                {
+                    buttonText.text = "습득 불가";
+                }
             }
         }
-        else
+        else 
         {
-            if (currentSkill.isLearned)
-            {
-                buttonText.text = "습득 완료";
-            }
-            else
-            {
-                buttonText.text = "습득 불가";
-            }
+            buttonText.text = "전투 중 스킬 습득 불가";
         }
     }
 
@@ -60,7 +71,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     /// </summary>
     public void ClickLearnSkill()
     {
-        if (_skillManager.LearnSkill(_currentSkillIndex))
+        if (_isInteractableButton && _skillManager.LearnSkill(_currentSkillIndex))
         {
             UIManager.instance.skillUI.UpdateAllSkillUINode();
         }

@@ -210,14 +210,8 @@ public class Skill
         //    Debug.LogError("스킬 레벨 비정상적 상승");
         //    return; 
         //}
-        if (skillInfo.IsPassive())
-        {
-            GameManager.instance.playerPassiveIndexList.Add(skillInfo.index);
-        }
-        else
-        {
-            GameManager.instance.playerActiveIndexList.Add(skillInfo.index);
-        }
+
+        GameManager.instance.AddPlayerSkillListElement(skillInfo.index, skillInfo.IsPassive());
         skillLevel++;
         isLearned = true;
         //if (skillLevel >= skillInfo.repeatCount)

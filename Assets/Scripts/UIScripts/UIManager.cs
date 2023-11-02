@@ -44,6 +44,7 @@ public class UIManager : Generic.Singleton<UIManager>
         if(loading is not null) loading.SetActive(true);
 
         base.Awake();
+        _worldCanvas.enabled = true;
         _combatCanvas.enabled = false;
         _characterCanvas.enabled = false;
         _skillCanvas.enabled = false;

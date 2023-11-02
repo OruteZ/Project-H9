@@ -7824,7 +7824,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275711479}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5717064955f00e54a8b926927ea84489, type: 3}
   m_Name: 
@@ -20373,6 +20373,7 @@ GameObject:
   m_Component:
   - component: {fileID: 686429581}
   - component: {fileID: 686429580}
+  - component: {fileID: 686429582}
   - component: {fileID: 686429577}
   - component: {fileID: 686429579}
   - component: {fileID: 686429578}
@@ -20390,7 +20391,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 686429576}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -20482,6 +20483,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &686429582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686429576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce5e2aa8a06207b45b1f6de31cae744b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillUIArrows: {fileID: 455229051}
+  isSkillTreeEditing: 0
 --- !u!1 &687103278
 GameObject:
   m_ObjectHideFlags: 0
@@ -31842,7 +31857,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1040067998}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -40817,7 +40832,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 17421878, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 25, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1281460941
@@ -59891,7 +59906,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 817696921}
   m_HandleRect: {fileID: 817696920}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -64009,7 +64024,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116575621}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}

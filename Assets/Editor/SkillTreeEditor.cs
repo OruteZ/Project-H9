@@ -12,7 +12,7 @@ public class SkillTreeEditor : EditorWindow
     public Transform skillArrows;
 
     [MenuItem("Tools/SkillTreeEditor")]
-    public static void Open() 
+    public static void Open()
     {
         GetWindow<SkillTreeEditor>();
     }

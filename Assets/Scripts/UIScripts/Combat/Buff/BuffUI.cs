@@ -7,8 +7,9 @@ public class BuffUI : UISystem
     [SerializeField] private GameObject _BuffUI;
     [SerializeField] private PassiveDatabase passiveDB;
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         _BuffUI.SetActive(false);
 
         UIManager.instance.onTurnChanged.AddListener(SetBuffUI);

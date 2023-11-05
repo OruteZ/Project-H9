@@ -12,9 +12,6 @@ public class TurnUI : UISystem
     [SerializeField] private GameObject _turnText;
     [SerializeField] private GameObject _endTurnButton;
 
-    private bool _isInteractable = true;
-    private bool _isHighlight = false;
-
     private void Update()
     {
         SetEndTurnButton();

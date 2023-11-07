@@ -9,6 +9,15 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "ActiveDatabase", menuName = "ScriptableObjects/ActiveDatabase", order = 0)]
 public class ActiveDatabase : ScriptableObject
 {
+    #region STATIC
+    ActionType GetActionRange(int index)
+    {
+        if (index is >= 22001 and <= 22003) return ActionType.Fanning;
+        
+        return ActionType.None;
+    }
+    #endregion
+    
     public List<ActiveInfo> infos;
     
     [ContextMenu("Read Csv")]
@@ -24,8 +33,9 @@ public class ActiveDatabase : ScriptableObject
             var curInfo = new ActiveInfo
             {
                 index = int.Parse(info[0]),
-                action = ActionType.Fanning,
-                amounts = FileRead.ConvertStringToArray<float>(info[2])
+                action = GetActionRange(int.Parse(info[0])),
+                upgSkillIndex = int.TryParse(info[2], out var result) ? result : 0,
+                amounts = FileRead.ConvertStringToArray<float>(info[3])
             };
             
             infos.Add(curInfo);
@@ -77,5 +87,7 @@ public struct ActiveInfo
 {
     public int index;
     public ActionType action;
+    public int upgSkillIndex;
     public float[] amounts;
 }
+

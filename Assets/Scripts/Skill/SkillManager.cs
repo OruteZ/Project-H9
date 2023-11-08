@@ -57,13 +57,17 @@ public class SkillManager : Generic.Singleton<SkillManager>
             Skill skill = new Skill(_skillInformations[i]);
             _skills.Add(skill);
         }
+        foreach (SkillInfo info in _skillInformations)
+        {
+            info.ConnectPrecedenceSkill();
+        }
     }
     private void InitSkillScripts()
     {
-        List<List<string>> skillNameTable = FileRead.Read("SkillNameScript");
-        List<List<string>> skillDescriptionTable = FileRead.Read("SkillTooltipScript");
-        List<List<string>> skillKeywordTable = FileRead.Read("");
-        if (skillNameTable == null || skillDescriptionTable == null)
+        List<List<string>> skillNameTable = FileRead.Read("SkillNameScriptTable");
+        List<List<string>> skillDescriptionTable = FileRead.Read("SkillTooltipScriptTable");
+        List<List<string>> skillKeywordTable = FileRead.Read("KeywordTable");
+        if (skillNameTable == null || skillDescriptionTable == null || skillKeywordTable == null)
         {
             Debug.Log("skill Script table을 읽어오지 못했습니다.");
             return;
@@ -168,6 +172,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
                 _skillPoint -= REQUIRED_SKILL_POINT;
                 _skills[i].LearnSkill();
+                GameManager.instance.AddPlayerSkillListElement(_skills[i].skillInfo);
                 break;
             }
         }
@@ -200,11 +205,13 @@ public class SkillManager : Generic.Singleton<SkillManager>
     public string GetSkillName(int skillIndex) 
     {
         Skill skill = GetSkill(skillIndex);
+        if (skill == null || _skillNameScripts.Count <= skill.skillInfo.nameIndex) return "";
         return _skillNameScripts[skill.skillInfo.nameIndex].name;
     }
     public string GetSkillDescription(int skillIndex)
     {
         Skill skill = GetSkill(skillIndex);
+        if (skill == null || _skillDescriptionScripts.Count <= skill.skillInfo.tooltipIndex) return "";
         return _skillDescriptionScripts[skill.skillInfo.tooltipIndex].GetDescription(skillIndex);
     }
     public string GetSkillKeyword(int keywordIndex)
@@ -217,5 +224,54 @@ public class SkillManager : Generic.Singleton<SkillManager>
             }
         }
         return "???";
+    }
+
+    //public int GetUpgradedSkillIndex(SkillInfo sInfo)
+    //{
+    //    if (sInfo.IsPassive())
+    //    {
+    //        //change later.
+    //        return -1;
+
+    //        PassiveInfo pInfo = passiveDB.GetPassiveInfo(sInfo.index);
+    //        //return pInfo.upgSkillIndex;
+    //    }
+    //    else
+    //    {
+    //        ActiveInfo aInfo = activeDB.GetActiveInfo(sInfo.index);
+    //        return aInfo.upgSkillIndex;
+    //    }
+    //}
+    public int FindUpgradeSkillIndex(SkillInfo sInfo, ActionType type)
+    {
+        if (sInfo.precedenceSkillInfo.Count == 0)
+        {
+            return -1;
+        }
+        else
+        {
+            foreach (SkillInfo pre in sInfo.precedenceSkillInfo)
+            {
+                int result = rFindSameActionTypeSkill(pre, type);
+                if (result != -1)
+                {
+                    return result;
+                }
+            }
+            return -1;
+        }
+    }
+    private int rFindSameActionTypeSkill(SkillInfo sInfo, ActionType type)
+    {
+        if (sInfo.IsActive()) 
+        {
+            ActiveInfo aInfo = activeDB.GetActiveInfo(sInfo.index);
+            if (aInfo.action == type) 
+            {
+                return sInfo.index;
+            }
+        }
+
+        return FindUpgradeSkillIndex(sInfo, type);
     }
 }

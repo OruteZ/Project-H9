@@ -24,11 +24,12 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 
     public void SetSkillTooltip(Vector3 pos, int skillIndex)
     {
+        _currentSkillIndex = skillIndex;
         _isInteractableButton = false;
         GetComponent<RectTransform>().position = pos;
         Skill currentSkill = _skillManager.GetSkill(skillIndex);
+        if (currentSkill == null) return;
 
-        _currentSkillIndex = skillIndex;
         _skillTooltipNameText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillName(_currentSkillIndex);
         _skillTooltipDescriptionText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillDescription(_currentSkillIndex);
 

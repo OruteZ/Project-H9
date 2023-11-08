@@ -106,6 +106,7 @@ public class SkillUI : UISystem
     {
         SkillTreeElement _skillElement = ui.GetComponent<SkillTreeElement>();
         Skill _skill = _skillManager.GetSkill(_skillElement.GetSkillUIIndex());
+        if (_skill == null) return;
 
         LearnStatus state = LearnStatus.NotLearnable;
         if (_skill.isLearned)
@@ -120,6 +121,7 @@ public class SkillUI : UISystem
 
         if (_skill.skillLevel > 0)
         {
+            Debug.Log(_skill.skillInfo.index);
             _skillElement.SetSkillArrow();
         }
     }

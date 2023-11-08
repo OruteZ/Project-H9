@@ -13,7 +13,8 @@ public class ActiveDatabase : ScriptableObject
     ActionType GetActionRange(int index)
     {
         if (index is >= 22001 and <= 22003) return ActionType.Fanning;
-        
+        if (index is >= 12001 and <= 12002) return ActionType.Dynamite;
+
         return ActionType.None;
     }
     #endregion
@@ -23,7 +24,7 @@ public class ActiveDatabase : ScriptableObject
     [ContextMenu("Read Csv")]
     public void ReadCsv()
     {
-        var infoList = FileRead.Read("ActiveTable");
+        var infoList = FileRead.Read("ActiveSkillTable");
 
         if (infos is null) infos = new List<ActiveInfo>();
         else infos.Clear();
@@ -34,8 +35,7 @@ public class ActiveDatabase : ScriptableObject
             {
                 index = int.Parse(info[0]),
                 action = GetActionRange(int.Parse(info[0])),
-                upgSkillIndex = int.TryParse(info[2], out var result) ? result : 0,
-                amounts = FileRead.ConvertStringToArray<float>(info[3])
+                amounts = FileRead.ConvertStringToArray<float>(info[2])
             };
             
             infos.Add(curInfo);
@@ -87,7 +87,6 @@ public struct ActiveInfo
 {
     public int index;
     public ActionType action;
-    public int upgSkillIndex;
     public float[] amounts;
 }
 

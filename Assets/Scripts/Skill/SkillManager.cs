@@ -22,7 +22,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
     private List<Skill> _skills;
     private List<SkillNameScript> _skillNameScripts;
     private List<SkillDescriptionScript> _skillDescriptionScripts;
-    private List<SkillKeywordScript> _skillKeywordScripts;
+    private List<KeywordScript> _skillKeywordScripts;
 
     private int _skillPoint;
 
@@ -85,11 +85,10 @@ public class SkillManager : Generic.Singleton<SkillManager>
             SkillDescriptionScript script = new SkillDescriptionScript(i, skillDescriptionTable[i][(int)_language]);
             _skillDescriptionScripts.Add(script);
         }
-        return;
-        _skillKeywordScripts = new List<SkillKeywordScript>();
+        _skillKeywordScripts = new List<KeywordScript>();
         for (int i = 0; i < skillKeywordTable.Count; i++)
         {
-            SkillKeywordScript script = new SkillKeywordScript(i, skillKeywordTable[i][(int)_language]);
+            KeywordScript script = new KeywordScript(int.Parse(skillKeywordTable[i][0]), skillKeywordTable[i][(int)_language], skillKeywordTable[i][(int)_language + 3], skillKeywordTable[i][3] == "1");
             _skillKeywordScripts.Add(script);
         }
     }
@@ -214,34 +213,17 @@ public class SkillManager : Generic.Singleton<SkillManager>
         if (skill == null || _skillDescriptionScripts.Count <= skill.skillInfo.tooltipIndex) return "";
         return _skillDescriptionScripts[skill.skillInfo.tooltipIndex].GetDescription(skillIndex);
     }
-    public string GetSkillKeyword(int keywordIndex)
+    public KeywordScript GetSkillKeyword(int keywordIndex)
     {
-        foreach (SkillKeywordScript script in _skillKeywordScripts) 
+        foreach (KeywordScript script in _skillKeywordScripts) 
         {
             if (script.index == keywordIndex) 
             {
-                return script.keyword;
+                return script;
             }
         }
-        return "???";
+        return null;
     }
-
-    //public int GetUpgradedSkillIndex(SkillInfo sInfo)
-    //{
-    //    if (sInfo.IsPassive())
-    //    {
-    //        //change later.
-    //        return -1;
-
-    //        PassiveInfo pInfo = passiveDB.GetPassiveInfo(sInfo.index);
-    //        //return pInfo.upgSkillIndex;
-    //    }
-    //    else
-    //    {
-    //        ActiveInfo aInfo = activeDB.GetActiveInfo(sInfo.index);
-    //        return aInfo.upgSkillIndex;
-    //    }
-    //}
     public int FindUpgradeSkillIndex(SkillInfo sInfo, ActionType type)
     {
         if (sInfo.precedenceSkillInfo.Count == 0)

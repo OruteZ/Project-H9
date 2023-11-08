@@ -76,7 +76,7 @@ public class SkillUI : UISystem
     /// </summary>
     public void CloseSkillTooltip()
     {
-        _skillTooltipWindow.SetActive(false);
+        _skillTooltipWindow.GetComponent<SkillTooltip>().CloseUI();
     }
 
     public void UpdateSkillWindow()
@@ -148,5 +148,14 @@ public class SkillUI : UISystem
         UIManager.instance.SetCharacterCanvasState(false);
         UIManager.instance.SetSkillCanvasState(false);
         UIManager.instance.SetPauseMenuCanvasState(false);
+    }
+
+    public void SetKeywordTooltipContents(List<int> keywords) 
+    {
+        foreach (int i in keywords)
+        {
+            KeywordScript kw = _skillManager.GetSkillKeyword(i);
+            _skillTooltipWindow.GetComponent<SkillTooltip>().SetKeywordTooltipContents(kw);
+        }
     }
 }

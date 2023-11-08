@@ -9,22 +9,35 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private GameObject _skillTooltipNameText;
     [SerializeField] private GameObject _skillTooltipDescriptionText;
     [SerializeField] private GameObject _skillTooltipButtonText;
-    [SerializeField] private GameObject _skillKeywordTooltips;
+    [SerializeField] private GameObject _skillKeywordTooltipContainer;
 
     private SkillManager _skillManager;
     private int _currentSkillIndex;
     private bool _isInteractableButton;
 
+    static private List<SkillKeywordPool> _keywordTooltips = new List<SkillKeywordPool>();
+    private KeywordScript _keyword;
+
     // Start is called before the first frame update
     void Start()
     {
         _skillManager = SkillManager.instance;
+        _currentSkillIndex = 0;
         _isInteractableButton = false;
+
+        var kw = new SkillKeywordPool();
+        kw.Init("Prefab/Keyword Tooltip", _skillKeywordTooltipContainer.transform, 0);
+        _keywordTooltips.Add(kw);
     }
 
     public void SetSkillTooltip(Vector3 pos, int skillIndex)
     {
-        _currentSkillIndex = skillIndex;
+        OpenUI();
+        if (_currentSkillIndex != skillIndex) 
+        {
+            _keyword = null;
+            _currentSkillIndex = skillIndex;
+        }
         _isInteractableButton = false;
         GetComponent<RectTransform>().position = pos;
         Skill currentSkill = _skillManager.GetSkill(skillIndex);
@@ -81,14 +94,29 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //기획 보고 Set 함수 호출 위치 체크해야 함.
-        _skillKeywordTooltips.SetActive(true);
-        return;
-        
+        _skillKeywordTooltipContainer.SetActive(_keyword != null);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _skillKeywordTooltips.GetComponent<SkillKeywordTooltip>().CloseUI();
+        _skillKeywordTooltipContainer.SetActive(false);
+    }
+    public void SetKeywordTooltipContents(KeywordScript kw)
+    {
+        _keyword = kw;
+        SetKeywordTooltips();
+    }
+    private void SetKeywordTooltips()
+    {
+        if (_keyword == null) return;
+        var t = _keywordTooltips[0].Set();
+        t.tooltip.SetSkillKeywordTooltip(_keyword.index, _keyword.name, _keyword.description);
+        Vector3 pos = Vector3.zero;
+        t.Instance.GetComponent<RectTransform>().localPosition = pos;
+    }
+    public override void CloseUI()
+    {
+        _skillKeywordTooltipContainer.SetActive(false);
+        base.CloseUI();
     }
 }

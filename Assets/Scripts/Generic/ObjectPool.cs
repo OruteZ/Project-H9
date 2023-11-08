@@ -58,7 +58,7 @@ public abstract class ObjectPool<T, Q>
         _limitSize = expectedSize / 2 + 1;
         _limitSize = (_limitSize <= 1) ? 2 : _limitSize;
         var root = new GameObject();
-        root.transform.parent = parent;
+        root.transform.SetParent(parent, true);
         root.name = (string.IsNullOrEmpty(rootName)) ? objectKey : rootName;
         _root = root.transform;
         _prefab = Resources.Load(objectKey) as GameObject;

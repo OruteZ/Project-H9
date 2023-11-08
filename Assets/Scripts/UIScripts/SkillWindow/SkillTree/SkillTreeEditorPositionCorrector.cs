@@ -20,15 +20,15 @@ public class SkillTreeEditorPositionCorrector : MonoBehaviour
                 RectTransform rect = arrow.GetComponent<RectTransform>();
                 SkillTreeArrow function = arrow.GetComponent<SkillTreeArrow>();
 
-                Vector3 myPos = rect.localPosition;
-                Vector3 myAngle = rect.localEulerAngles;
+                Vector3 myPos = rect.position;
+                Vector3 myAngle = rect.eulerAngles;
                 Vector3 mySize = rect.sizeDelta;
-                Vector3 prePos = function.GetPreSkillNode().GetComponent<RectTransform>().localPosition;
-                Vector3 postPos = function.GetPostSkillNode().GetComponent<RectTransform>().localPosition;
+                Vector3 prePos = function.GetPreSkillNode().GetComponent<RectTransform>().position;
+                Vector3 postPos = function.GetPostSkillNode().GetComponent<RectTransform>().position;
                 //position setting
                 if (myPos != prePos)
                 {
-                    arrow.GetComponent<RectTransform>().localPosition = prePos;
+                    arrow.GetComponent<RectTransform>().position = prePos;
                 }
                 //angle setting
                 Vector2 v2 = postPos - prePos;
@@ -36,7 +36,7 @@ public class SkillTreeEditorPositionCorrector : MonoBehaviour
                 if (myAngle.z != targetAngle)
                 {
                     myAngle.z = targetAngle;
-                    arrow.GetComponent<RectTransform>().localEulerAngles = myAngle;
+                    arrow.GetComponent<RectTransform>().eulerAngles = myAngle;
                 }
                 //length setting
                 float targetLength = v2.magnitude;

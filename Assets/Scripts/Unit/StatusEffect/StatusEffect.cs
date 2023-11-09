@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class StatusEffect : IUIDisplayableEffect
+public abstract class StatusEffect : IDisplayableEffect
 {
     protected UnitStatusEffectController controller;
     public UnityEvent OnStackChanged => controller.OnStatusEffectChanged;
@@ -25,7 +25,12 @@ public abstract class StatusEffect : IUIDisplayableEffect
     public abstract void OnTurnStarted();
     public abstract void OnTurnFinished();
     public abstract int GetDuration();
+
     #endregion
+    public bool CanDisplay()
+    {
+        return true;
+    }
 
     public virtual void Setup(UnitStatusEffectController controller)
     {

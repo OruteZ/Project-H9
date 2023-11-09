@@ -2,9 +2,9 @@
 using System;
 using PassiveSkill;
 
-public class StatUpDependedOnCondition : BaseEffect
+public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
 {
-    public StatUpDependedOnCondition(StatType statType, float amount) : base(statType, amount)
+    public StatUpDependedOnCondition(StatType statType, int amount) : base(statType, amount)
     { }
 
     protected override void EffectSetup()
@@ -20,7 +20,7 @@ public class StatUpDependedOnCondition : BaseEffect
         if (enable) return;
         enable = true;
         
-        unit.stat.Subtract(GetStatType(), (int)GetAmount());
+        unit.stat.Subtract(GetStatType(), GetAmount());
     }
 
     public override void OnConditionDisable()
@@ -28,6 +28,28 @@ public class StatUpDependedOnCondition : BaseEffect
         if (enable is false) return;
         enable = false;
         
-        unit.stat.Add(GetStatType(), (int)GetAmount());
+        unit.stat.Add(GetStatType(), GetAmount());
     }
+    
+    #region IDISPLAYABLE_EFFECT
+    public string GetEffectName()
+    {
+        return GetEffectType().ToString();
+    }
+
+    public int GetStack()
+    {
+        return GetAmount();
+    }
+
+    public int GetDuration()
+    {
+        return IDisplayableEffect.NONE;
+    }
+
+    public bool CanDisplay()
+    {
+        return enable;
+    }
+    #endregion
 }

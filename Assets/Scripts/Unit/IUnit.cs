@@ -43,4 +43,10 @@ public interface IUnit
     /// </summary>
     /// <returns>UnitAction의 배열</returns>
     IUnitAction[] GetUnitActionArray();
+    
+    /// <summary>
+    /// 현재 UI에 표시할 모든 상태이상, 패시브등을 반환합니다.
+    /// </summary>
+    /// <returns></returns>
+    IDisplayableEffect[] GetDisplayableEffects();
 }

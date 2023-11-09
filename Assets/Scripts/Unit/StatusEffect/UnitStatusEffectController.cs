@@ -56,22 +56,17 @@ public class UnitStatusEffectController
         }
     }
     
-    public List<StatusEffectInfo> GetAllStatusEffectInfo()
+    public List<IDisplayableEffect> GetAllStatusEffectInfo()
     {
         if (_statusEffects is null) return null;
         
-        var statusEffectInfo = new List<StatusEffectInfo>();
+        var list = new List<IDisplayableEffect>();
         foreach (var statusEffect in _statusEffects)
         {
-            statusEffectInfo.Add(new StatusEffectInfo
-            {
-                statusEffectType = statusEffect.GetStatusEffectType(),
-                stack = statusEffect.GetStack(),
-                duration = statusEffect.GetDuration()    
-            });
+            list.Add(statusEffect);
         }
-        
-        return statusEffectInfo;
+
+        return list;
     }
     
     public bool HasStatusEffect(StatusEffectType type)

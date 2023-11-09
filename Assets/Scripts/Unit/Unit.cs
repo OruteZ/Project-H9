@@ -96,6 +96,8 @@ public abstract class Unit : MonoBehaviour, IUnit
         // FieldSystem.onCombatAwake.AddListener(() => {animator.SetTrigger(START);});
 
         onFinishAction.AddListener((action) => onAnyUnitActionFinished.Invoke(this));
+
+        _seController = new UnitStatusEffectController(this);
     }
 
     public abstract void StartTurn();
@@ -196,6 +198,29 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         return _unitActionArray;
     }
+
+    public IDisplayableEffect[] GetDisplayableEffects()
+    {
+        //search passive that has displayable effect
+        var displayableEffects = new List<IDisplayableEffect>();
+        foreach (var passive in _passiveList)
+        {
+            if (passive.TryGetDisplayableEffect(out var displayableEffect))
+            {
+                displayableEffects.Add(displayableEffect);
+            }
+        }
+        
+        //search status effect that has displayable effect
+        var statusEffects = _seController.GetAllStatusEffectInfo();
+        if (statusEffects is not null)
+        {
+            displayableEffects.AddRange(statusEffects);
+        }
+        
+        return displayableEffects.ToArray();
+    }
+
     public bool isVisible
     {
         get => visual.enabled;
@@ -308,33 +333,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         onFinishShoot.Invoke(target, damage, hit, isCritical);
         return hit;
     }
-
-    private Animator _animator;
-    private static readonly int GET_HIT1 = Animator.StringToHash("GetHit1");
-    private static readonly int DIE = Animator.StringToHash("Die");
-
-    public Animator animator
-    {
-        get
-        {
-            if (_animator is null)
-            {
-                if (TryGetComponent(out _animator) is false)
-                {
-                    _animator = GetComponentInChildren<Animator>();
-                }
-            }
-
-            return _animator;
-        }
-    }
     
-    private void SetAnimatorController(WeaponType type)
-    {
-        animator.runtimeAnimatorController =
-            (RuntimeAnimatorController)Resources.Load("Animator/" + (type is WeaponType.Null ? "Standing" : type) + " Animator Controller");
-    }
-
     public void DestroyThis()
     {
         Destroy(gameObject);
@@ -399,19 +398,38 @@ public abstract class Unit : MonoBehaviour, IUnit
         onFinishAction.Invoke(action);
     }
     
+    #region ANIMATION
+    private Animator _animator;
+    private static readonly int GET_HIT1 = Animator.StringToHash("GetHit1");
+    private static readonly int DIE = Animator.StringToHash("Die");
+
+    public Animator animator
+    {
+        get
+        {
+            if (_animator is null)
+            {
+                if (TryGetComponent(out _animator) is false)
+                {
+                    _animator = GetComponentInChildren<Animator>();
+                }
+            }
+
+            return _animator;
+        }
+    }
+    
+    private void SetAnimatorController(WeaponType type)
+    {
+        animator.runtimeAnimatorController =
+            (RuntimeAnimatorController)Resources.Load("Animator/" + (type is WeaponType.Null ? "Standing" : type) + " Animator Controller");
+    }
+    #endregion ANIMATION
+    
     #region STATUE EFFECT
 
     private UnitStatusEffectController _seController;
-    
-    /// <summary>
-    /// StatusEffectType과 Stack을 반환합니다.
-    /// </summary>
-    /// <returns></returns>
-    public List<StatusEffectInfo> GetAllStatus()
-    {
-        return _seController.GetAllStatusEffectInfo();
-    }
-    
+
     public bool HasStatus(StatusEffectType type)
     {
         return _seController.HasStatusEffect(type);

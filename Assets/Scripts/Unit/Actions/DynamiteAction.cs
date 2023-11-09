@@ -90,7 +90,7 @@ public class DynamiteAction : BaseAction
     {
         foreach(var target in _targets)
         {
-            target.GetDamage(damage);
+            target.TakeDamage(damage);
         }
     }
 

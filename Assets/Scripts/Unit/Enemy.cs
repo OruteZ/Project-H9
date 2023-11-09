@@ -42,29 +42,6 @@ public class Enemy : Unit
         if (FieldSystem.unitSystem.IsCombatFinish(out var none)) return;
 
         ai.Operate();
-
-        // activeUnitAction = _ai.resultAction;
-        // Vector3Int target = _ai.resultPosition;
-        //
-        // Debug.Log("AI Selected Action = " + activeUnitAction.GetActionType());
-        //
-        // if (activeUnitAction is IdleAction)
-        // {
-        //     animator.Play(IDLE);
-        //     FieldSystem.turnSystem.EndTurn();
-        //     return;
-        // }
-        //
-        // if (TryExecuteUnitAction(target, FinishAction))
-        // {
-        //     SetBusy();
-        // }
-        // else
-        // {
-        //     Debug.LogError("AI가 실행할 수 없는 행동을 실행 중 : " + activeUnitAction.GetActionType());
-        //     animator.SetTrigger(IDLE);
-        //     FieldSystem.turnSystem.EndTurn();
-        // }
     }
 
     public override void StartTurn()
@@ -77,15 +54,16 @@ public class Enemy : Unit
         #endif
         animator.SetTrigger(IDLE);
         animator.SetTrigger(START_TURN);
-        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
 
         hasAttacked = false;
+        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
+
         activeUnitAction = GetAction<IdleAction>();
     }
 
-    public override void GetDamage(int damage)
+    public override void TakeDamage(int damage)
     {
-        base.GetDamage(damage);
+        base.TakeDamage(damage);
         UIManager.instance.onActionChanged.Invoke();
     }
     
@@ -93,10 +71,6 @@ public class Enemy : Unit
     {
         ClearBusy();
         ConsumeCost(activeUnitAction.GetCost());
-        // if (currentActionPoint <= 0)
-        // {
-        //     FieldSystem.turnSystem.EndTurn();
-        // }
     }
 
     public bool TrySelectAction(IUnitAction action)

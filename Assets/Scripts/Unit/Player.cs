@@ -27,6 +27,7 @@ public class Player : Unit
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
         if (UIManager.instance.isMouseOverUI) return;
+        if (HasStatus(StatusEffectType.Stun)) FieldSystem.turnSystem.EndTurn(); 
 
         var isMouseOnTile = TryGetMouseOverTilePos(out var onMouseTilePos);
 
@@ -65,9 +66,10 @@ public class Player : Unit
 #if UNITY_EDITOR
         Debug.Log("Player Turn Started");
 #endif
-        
+
         hasAttacked = false;
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
+        
         if (GameManager.instance.CompareState(GameState.Combat))
         {
             animator.SetTrigger(START_TURN);
@@ -148,9 +150,9 @@ public class Player : Unit
         }
     }
     
-    public override void GetDamage(int damage)
+    public override void TakeDamage(int damage)
     {
-        base.GetDamage(damage);
+        base.TakeDamage(damage);
 
         UIManager.instance.onPlayerStatChanged.Invoke();
         GameManager.instance.playerStat = stat;
@@ -162,8 +164,6 @@ public class Player : Unit
             unit.isVisible = FieldSystem.tileSystem.VisionCheck(hexPosition, unit.hexPosition) &&
                              Hex.Distance(hexTransform.position, unit.hexPosition) <= stat.sightRange;
         }
-        
-//        Debug.Log("On Any Unit Moved : Invoke");
     }
 
     private void OnMoved(Unit unit)

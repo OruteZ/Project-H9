@@ -115,7 +115,7 @@ public class MoveAction : BaseAction
 
             if (Vector3.Distance(transform.position, targetPos) < 0.1f)
             {
-                if (unit.stat.TryConsume(StatType.CurActionPoint, 1) is false)
+                if (unit.stat.TryConsume(StatType.CurActionPoint, unit.HasStatus(StatusEffectType.Fracture) ? 2 : 1) is false)
                 {
                     Debug.LogError("Fail to consume");
                     #if UNITY_EDITOR

@@ -19,7 +19,7 @@ public interface IUnit
     /// damage 만큼 피해를 입습니다.
     /// </summary>
     /// <param name="damage">피해량</param>
-    void GetDamage(int damage);
+    void TakeDamage(int damage);
 
     /// <summary>
     /// Unit의 상태를 설정합니다.

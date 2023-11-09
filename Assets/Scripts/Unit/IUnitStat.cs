@@ -2,25 +2,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public interface IUnitStat
-{
-    public object Clone();
-    public int GetStat(StatType stat);
-    public int GetOriginalStat(StatType stat);
-    public void SetOriginalStat(StatType stat, int value);
-    public void AppendAdditional(StatType stat, int value);
-    public void RemoveAdditional(StatType stat, int value);
-    public void AppendMultiplier(StatType stat, int value);
-    public void RemoveMultiplier(StatType stat, int value);
-    public void ResetModifier();
-    public void Recover(StatType stat, int value);
-    public void Consume(StatType stat, int value);
-    public bool TryConsume(StatType stat, int value);
-}
-
-#region IMPLEMENT
 [Serializable]
-public class UnitStat : ICloneable, IUnitStat
+public class UnitStat : ICloneable
 {
     public UnitStat()
     {
@@ -76,22 +59,22 @@ public class UnitStat : ICloneable, IUnitStat
         original[(int)type] = value;
     }
 
-    public void AppendAdditional(StatType type, int value)
+    public void Subtract(StatType type, int value)
     {
         _additional[(int)type] += value;
     }
 
-    public void AppendMultiplier(StatType type, int value)
+    public void AddMultiplier(StatType type, int value)
     {
         _multiplier[(int)type] += value;
     }
 
-    public void RemoveAdditional(StatType type, int value)
+    public void Add(StatType type, int value)
     {
         _additional[(int)type] -= value;
     }
 
-    public void RemoveMultiplier(StatType type, int value)
+    public void SubtractMultiplier(StatType type, int value)
     {
         _multiplier[(int)type] -= value;
     }
@@ -182,4 +165,3 @@ public enum StatType
     ShotgunCriticalDamage,// 18
     Length,
 }
-#endregion

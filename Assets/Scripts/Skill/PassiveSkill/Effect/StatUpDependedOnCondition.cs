@@ -20,7 +20,7 @@ public class StatUpDependedOnCondition : BaseEffect
         if (enable) return;
         enable = true;
         
-        unit.stat.AppendAdditional(GetStatType(), (int)GetAmount());
+        unit.stat.Subtract(GetStatType(), (int)GetAmount());
     }
 
     public override void OnConditionDisable()
@@ -28,6 +28,6 @@ public class StatUpDependedOnCondition : BaseEffect
         if (enable is false) return;
         enable = false;
         
-        unit.stat.RemoveAdditional(GetStatType(), (int)GetAmount());
+        unit.stat.Add(GetStatType(), (int)GetAmount());
     }
 }

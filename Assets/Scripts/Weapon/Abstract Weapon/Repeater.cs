@@ -22,13 +22,13 @@ public class Repeater : Weapon
     private void NonCriticalAttack(Unit target)
     {
         int damage = GetFinalDamage();
-        target.GetDamage(damage);
+        target.TakeDamage(damage);
     }
 
     private void CriticalAttack(Unit target)
     {
         int damage = GetFinalCriticalDamage();
-        target.GetDamage(damage);
+        target.TakeDamage(damage);
     }
 
     public override WeaponType GetWeaponType() => WeaponType.Repeater;

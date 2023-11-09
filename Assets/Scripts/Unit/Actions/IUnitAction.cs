@@ -65,6 +65,7 @@ public interface IUnitAction {
 }
 
 public enum ActionType {
+    None,
     Move,
     Spin,
     Attack,

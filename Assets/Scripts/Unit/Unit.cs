@@ -25,6 +25,8 @@ public abstract class Unit : MonoBehaviour, IUnit
     public Transform hand => _unitModel.hand;
     public Transform back => _unitModel.back;
     public Transform waist => _unitModel.waist;
+    
+    public Animator animator => _unitModel.animator;
     #endregion
 
     public string unitName;
@@ -45,6 +47,8 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     // ReSharper disable once InconsistentNaming
     public static readonly UnityEvent<Unit> onAnyUnitActionFinished = new UnityEvent<Unit>();
+    [HideInInspector] public UnityEvent<Unit> onTurnStart; // me
+    [HideInInspector] public UnityEvent<Unit> onTurnEnd; // me
     [HideInInspector] public UnityEvent<IUnitAction> onFinishAction; //action
     [HideInInspector] public UnityEvent onBusyChanged;
     [HideInInspector] public UnityEvent<int, int> onCostChanged; // before, after
@@ -91,6 +95,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         var model = Instantiate(unitModel, transform);
         visual = model.GetComponentInChildren<SkinnedMeshRenderer>();
         _unitModel = model.GetComponent<UnitModel>();
+        _unitModel.Setup(this);
         
         EquipWeapon(newWeapon);
         // FieldSystem.onCombatAwake.AddListener(() => {animator.SetTrigger(START);});
@@ -100,23 +105,32 @@ public abstract class Unit : MonoBehaviour, IUnit
         _seController = new UnitStatusEffectController(this);
     }
 
-    public abstract void StartTurn();
+    public virtual void StartTurn()
+    {
+#if UNITY_EDITOR
+        Debug.Log(unitName + " Turn Started");
+#endif
+        
+        hasAttacked = false;
+        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
+        
+        SelectAction(GetAction<IdleAction>());
+        
+        onTurnStart.Invoke(this);
+    }
 
     public virtual void TakeDamage(int damage)
     {
         if (gameObject == null) return;
-
-        animator.SetTrigger(GET_HIT1);
         
         stat.Consume(StatType.CurHp, damage);
-        onHit.Invoke(this, damage);
+        onHit.Invoke(FieldSystem.turnSystem.turnOwner, damage);
 
         Service.SetText(damage.ToString(), transform.position);
 
         if (hp <= 0 && _hasDead is false)
         {
             _hasDead = true;
-            animator.SetBool(DIE, true);
             onAnyUnitActionFinished.AddListener(DeadCall);
 
             _attacker = FieldSystem.turnSystem.turnOwner;
@@ -160,14 +174,14 @@ public abstract class Unit : MonoBehaviour, IUnit
             weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
             weaponModel.SetHandPosRot();
             newWeapon.weaponModel = weaponModel;
-            SetAnimatorController(weapon.GetWeaponType());
+            _unitModel.SetAnimator(weapon.GetWeaponType());
         }
         else
         {
             weaponModel = Instantiate(weapon.model, waist).GetComponent<WeaponModel>();
             weaponModel.SetStandPosRot();
             newWeapon.weaponModel = weaponModel;
-            SetAnimatorController(WeaponType.Null);
+            _unitModel.SetAnimator(WeaponType.Null);
         }
     }
 
@@ -397,35 +411,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
         onFinishAction.Invoke(action);
     }
-    
-    #region ANIMATION
-    private Animator _animator;
-    private static readonly int GET_HIT1 = Animator.StringToHash("GetHit1");
-    private static readonly int DIE = Animator.StringToHash("Die");
 
-    public Animator animator
-    {
-        get
-        {
-            if (_animator is null)
-            {
-                if (TryGetComponent(out _animator) is false)
-                {
-                    _animator = GetComponentInChildren<Animator>();
-                }
-            }
-
-            return _animator;
-        }
-    }
-    
-    private void SetAnimatorController(WeaponType type)
-    {
-        animator.runtimeAnimatorController =
-            (RuntimeAnimatorController)Resources.Load("Animator/" + (type is WeaponType.Null ? "Standing" : type) + " Animator Controller");
-    }
-    #endregion ANIMATION
-    
     #region STATUE EFFECT
 
     private UnitStatusEffectController _seController;

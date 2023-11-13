@@ -63,23 +63,16 @@ public class Player : Unit
 
     public override void StartTurn()
     {
-#if UNITY_EDITOR
-        Debug.Log("Player Turn Started");
-#endif
-
-        hasAttacked = false;
-        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
-        
-        if (GameManager.instance.CompareState(GameState.Combat))
-        {
-            animator.SetTrigger(START_TURN);
-            SelectAction(GetAction<IdleAction>());
-        }
-        else
+        if (GameManager.instance.CompareState(GameState.World))
         {
             SelectAction(GetAction<MoveAction>());
             ReloadSight();
         }
+    }
+
+    public void EndTurn()
+    {
+        FieldSystem.turnSystem.EndTurn();
     }
 
     public void ContinueWorldTurn()

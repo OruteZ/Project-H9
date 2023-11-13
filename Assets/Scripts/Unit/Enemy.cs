@@ -44,23 +44,6 @@ public class Enemy : Unit
         ai.Operate();
     }
 
-    public override void StartTurn()
-    {
-        #if UNITY_EDITOR
-        Debug.Log(unitName + " Turn Started");
-
-        //StartCoroutine(UITestEndTurn());
-
-        #endif
-        animator.SetTrigger(IDLE);
-        animator.SetTrigger(START_TURN);
-
-        hasAttacked = false;
-        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
-
-        activeUnitAction = GetAction<IdleAction>();
-    }
-
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);

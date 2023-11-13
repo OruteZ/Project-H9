@@ -15,7 +15,8 @@ public class UnitStatusEffectController
     public UnitStatusEffectController(Unit unit)
     {
         _unit = unit;
-        FieldSystem.turnSystem.onTurnChanged.AddListener(CheckTurnStartOrFinished);
+        unit.onTurnStart.AddListener((u) => OnTurnStart());
+        unit.onTurnEnd.AddListener((u) => OnTurnFinished());
     }
 
     public void AddStatusEffect(StatusEffect statusEffect)
@@ -102,21 +103,6 @@ public class UnitStatusEffectController
     public Unit GetUnit() => _unit;
     
     #region PRIVATE
-
-    private void CheckTurnStartOrFinished()
-    {
-        //if turn owner is this unit, call on turn start
-        if (FieldSystem.turnSystem.turnOwner == _unit && !_unitTurn)
-        {
-            OnTurnStart();
-        }
-        
-        //if turn owner is not this unit, call on turn finished
-        if (FieldSystem.turnSystem.turnOwner != _unit && _unitTurn)
-        {
-            OnTurnFinished();
-        }
-    }
 
     private void OnTurnStart()
     {

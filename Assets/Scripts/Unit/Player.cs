@@ -21,6 +21,7 @@ public class Player : Unit
         TileEffectManager.instance.SetPlayer(this);
 
         onSelectedChanged.AddListener(() => UIManager.instance.onActionChanged.Invoke());
+        FieldSystem.onStageAwake.AddListener(ReloadSight);
     }
     public void Update()
     {

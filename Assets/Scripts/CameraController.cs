@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour
         _instance = this;
         _cameraDegree = transform.GetChild(0).localRotation.eulerAngles.x;
         
-        FieldSystem.onCombatAwake.AddListener(OnCombatAwake);
+        FieldSystem.onStageAwake.AddListener(OnCombatAwake);
         
         var tsf = transform;
         newPosition = tsf.position;
@@ -127,23 +127,23 @@ public class CameraController : MonoBehaviour
     #endregion
     
     #region LIMIT
+    #if UNITY_EDITOR
 
     public float maxZ, minZ, maxX, minX;
 
-    [ContextMenu("Set LU")]
     private void SetLeftUpLimit()
     {
         maxZ = transform.position.z;
         minX = transform.position.x;
     }
     
-    [ContextMenu("Set RD")]
     private void SetRightDownLimit()
     {
         maxX = transform.position.x;
         minZ = transform.position.z;
     }
 
+    #endif
     #endregion
 
     public static float GetCamDeg()

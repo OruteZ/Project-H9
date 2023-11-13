@@ -15,17 +15,20 @@ public class FieldSystem : MonoBehaviour
     public static UnitSystem unitSystem;
 
     /// <summary>
-    /// Combat Scene 이 로딩되었을때 바로 호출되는 이벤트입니다.
+    /// Stage가 로딩되었을때 바로 호출되는 이벤트입니다.
     /// </summary>
-    private static UnityEvent _onCombatAwake;
-    public static UnityEvent onCombatAwake => _onCombatAwake ??= new UnityEvent();
+    private static UnityEvent _onStageAwake;
+    public static UnityEvent onStageAwake => _onStageAwake ??= new UnityEvent();
 
     /// <summary>
-    /// CombatScene의 Fade-in이 완전히 끝난 후 Invoke되는 이벤트입니다. 
+    /// Stage의 Fade-in이 완전히 끝난 후 Invoke되는 이벤트입니다. 
     /// </summary>
-    private static UnityEvent _onCombatStart;
-    public static UnityEvent onCombatStart => _onCombatStart ??= new UnityEvent();
-
+    private static UnityEvent _onStageStart;
+    public static UnityEvent onStageStart => _onStageStart ??= new UnityEvent();
+    
+    /// <summary>
+    /// CombatScene에서 Stage가 끝났을때 호출되는 이벤트입니다. WorldScene에서 호출되지 않습니다.
+    /// </summary>
     private static UnityEvent<bool> _onCombatFinish;
     public static UnityEvent<bool> onCombatFinish => _onCombatFinish ??= new UnityEvent<bool> ();
     
@@ -49,14 +52,14 @@ public class FieldSystem : MonoBehaviour
 
     private IEnumerator StartSceneCoroutine()
     {
-        onCombatAwake.Invoke();
-        unitSystem.GetPlayer().ReloadSight();
+        Debug.Log("onStageAwake");
+        onStageAwake.Invoke();
         UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI();
 
         yield return new WaitUntil(() => LoadingManager.instance.isLoadingNow is false);
 
-        Debug.Log("onCombatStart");
-        onCombatStart.Invoke();
+        Debug.Log("onStageStart");
+        onStageStart.Invoke();
         turnSystem.StartTurn();
     }
 }

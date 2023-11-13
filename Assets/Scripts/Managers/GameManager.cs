@@ -96,34 +96,40 @@ public class GameManager : Generic.Singleton<GameManager>
         //UIManager.instance.ChangeScenePrepare(state);
     }
 
-    public void AddPlayerSkillListElement(int skillIndex, bool isPassive)
+    public void AddPlayerSkillListElement(SkillInfo skillInfo)
     {
         List<int> list = null;
-        if (isPassive)
+        if (skillInfo.IsPassive())
         {
             list = playerPassiveIndexList;
         }
         else
         {
-            DeleteSameSkill();
             list = playerActiveIndexList;
         }
-        foreach (int i in list)
+        if (list.IndexOf(skillInfo.index) != -1)
         {
-            if (i == skillIndex)
-            {
-                Debug.Log("동일한 스킬 연속 습득 오류");
-                return;
-            }
+            Debug.Log("동일한 스킬 연속 습득 오류");
+            return;
         }
-        list.Add(skillIndex);
-    }
-    private void DeleteSameSkill()
-    {
-        //delete another version of active skill
-        //need a way to find another version of skill
 
-        //problem: what if player puts a another version of skill in action window?
+        int USIPosition = -1;
+        if (skillInfo.IsActive())
+        {
+            ActiveInfo aInfo = SkillManager.instance.activeDB.GetActiveInfo(skillInfo.index);
+            int upgSkillIndex = SkillManager.instance.FindUpgradeSkillIndex(skillInfo, aInfo.action);
+            USIPosition = list.IndexOf(upgSkillIndex);
+        }
+
+        if (USIPosition == -1)
+        {
+            list.Add(skillInfo.index);
+        }
+        else
+        {
+            list.RemoveAt(USIPosition);
+            list.Insert(USIPosition, skillInfo.index);
+        }
     }
 
     public void Update()

@@ -4,27 +4,39 @@ using UnityEngine;
 public class SkillDescriptionScript
 {
     public int index { get; private set; }
-    private string _description;
-    private List<int> _keywordIndex;
+    public string description { get; private set; }
+    public List<int> keywordIndex { get; private set; }
 
-    public SkillDescriptionScript(int idx, string dsc)
+    private static string substitutedDescription ="";
+    public SkillDescriptionScript(int idx, string str)
     {
         index = idx;
-        _description = dsc;
-        _keywordIndex = new List<int>();
+        description = str;
+        keywordIndex = new List<int>();
     }
     public string GetDescription(int skiilIndex)
     {
-        string result;
-        result = SubstituteDescriptionValues(skiilIndex);
-        result = SubstituteKeyword(result);
-        return result;
+        substitutedDescription = description;
+        SubstituteKeyword();
+        SubstituteDescriptionValues(skiilIndex);
+        if (substitutedDescription[0] == '\"') 
+        {
+            Debug.Log(substitutedDescription);
+            substitutedDescription = substitutedDescription.Substring(1, substitutedDescription.Length - 2);
+            Debug.Log(substitutedDescription);
+
+        }
+        if (keywordIndex.Count != 0)
+        {
+            UIManager.instance.skillUI.SetKeywordTooltipContents(keywordIndex);
+        }
+        return substitutedDescription;
     }
-    private string SubstituteDescriptionValues(int skillIndex)  //대입할 수가 설명 맨 앞에 오는 경우 오류 가능성 높음.
+    private void SubstituteDescriptionValues(int skillIndex)  //대입할 수가 설명 맨 앞에 오는 경우 오류 가능성 높음.
     {
         string result = "";
         char[] splitChar = { '{', '}' };
-        string[] splitString = _description.Split(splitChar);
+        string[] splitString = substitutedDescription.Split(splitChar);
         bool isSubstitutableValue = false;
         foreach (string str in splitString)
         {
@@ -45,32 +57,38 @@ public class SkillDescriptionScript
                 else
                 {
                     ActiveInfo info = SkillManager.instance.activeDB.GetActiveInfo(skillIndex);
-                    amountText = info.amounts[0].ToString();
+                    amountText = info.amounts[int.Parse(str)].ToString();
                 }
                 string highlightColor = UICustomColor.GetColorHexCode(UICustomColor.PlayerStatColor);
                 result += string.Format("<color=#{0}>{1}</color>", highlightColor, amountText);
-                //result += "<color=#" + HIGHLIGHT_COLOR + ">" + amountText + "</color>";
             }
             isSubstitutableValue = !isSubstitutableValue;
         }
-        return result;
+        substitutedDescription = result;
     }
-    private string SubstituteKeyword(string valueSubstitutedString)
+    private void SubstituteKeyword()
     {
-        string vss = valueSubstitutedString;
-        return vss;  //test
-        string[] split = { "<tooltip:", "</tooltip>" };
+        string origin = substitutedDescription;
+        string[] split = { "<keyword:", ">" };
         string result = "";
-        while (vss.Contains(split[0])) 
+        keywordIndex.Clear();
+        while (origin.Contains(split[0]))
         {
-            string beforeString = vss.Substring(0, vss.IndexOf(split[0]));
-            string middleString = vss.Substring(vss.IndexOf(split[0]) + split.Length + 4, vss.IndexOf(split[1]) - 1);
-            string afterString = vss.Substring(vss.IndexOf(split[1]) + split[1].Length, vss.Length - 1);
+            string beforeString = GetSubString(origin, 0, origin.IndexOf(split[0]));
+            string middleString = GetSubString(origin, origin.IndexOf(split[0]) + split[0].Length, origin.IndexOf(split[1]));
+            string afterString = GetSubString(origin, origin.IndexOf(split[1]) + split[1].Length, origin.Length);
             result += beforeString;
             string highlightColor = UICustomColor.GetColorHexCode(UICustomColor.PlayerStatColor);
-            result += string.Format("<color=#{0}>{1}</color>", highlightColor, middleString);
-            vss = afterString;
+            keywordIndex.Add(int.Parse(middleString));
+            string keyword = SkillManager.instance.GetSkillKeyword(int.Parse(middleString)).name;
+            result += string.Format("<color=#{0}>{1}</color>", highlightColor, keyword);
+            origin = afterString;
         }
-        return result;
+        substitutedDescription = result + origin;
+    }
+    private string GetSubString(string origin, int startIndex, int endIndex) 
+    {
+        int length = endIndex - startIndex;
+        return origin.Substring(startIndex, length);
     }
 }

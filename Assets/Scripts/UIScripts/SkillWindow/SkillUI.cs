@@ -76,7 +76,7 @@ public class SkillUI : UISystem
     /// </summary>
     public void CloseSkillTooltip()
     {
-        _skillTooltipWindow.SetActive(false);
+        _skillTooltipWindow.GetComponent<SkillTooltip>().CloseUI();
     }
 
     public void UpdateSkillWindow()
@@ -106,6 +106,7 @@ public class SkillUI : UISystem
     {
         SkillTreeElement _skillElement = ui.GetComponent<SkillTreeElement>();
         Skill _skill = _skillManager.GetSkill(_skillElement.GetSkillUIIndex());
+        if (_skill == null) return;
 
         LearnStatus state = LearnStatus.NotLearnable;
         if (_skill.isLearned)
@@ -120,6 +121,7 @@ public class SkillUI : UISystem
 
         if (_skill.skillLevel > 0)
         {
+            Debug.Log(_skill.skillInfo.index);
             _skillElement.SetSkillArrow();
         }
     }
@@ -146,5 +148,14 @@ public class SkillUI : UISystem
         UIManager.instance.SetCharacterCanvasState(false);
         UIManager.instance.SetSkillCanvasState(false);
         UIManager.instance.SetPauseMenuCanvasState(false);
+    }
+
+    public void SetKeywordTooltipContents(List<int> keywords) 
+    {
+        foreach (int i in keywords)
+        {
+            KeywordScript kw = _skillManager.GetSkillKeyword(i);
+            _skillTooltipWindow.GetComponent<SkillTooltip>().SetKeywordTooltipContents(kw);
+        }
     }
 }

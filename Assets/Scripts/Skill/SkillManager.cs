@@ -22,7 +22,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
     private List<Skill> _skills;
     private List<SkillNameScript> _skillNameScripts;
     private List<SkillDescriptionScript> _skillDescriptionScripts;
-    private List<SkillKeywordScript> _skillKeywordScripts;
+    private List<KeywordScript> _skillKeywordScripts;
 
     private int _skillPoint;
 
@@ -57,13 +57,17 @@ public class SkillManager : Generic.Singleton<SkillManager>
             Skill skill = new Skill(_skillInformations[i]);
             _skills.Add(skill);
         }
+        foreach (SkillInfo info in _skillInformations)
+        {
+            info.ConnectPrecedenceSkill();
+        }
     }
     private void InitSkillScripts()
     {
-        List<List<string>> skillNameTable = FileRead.Read("SkillNameScript");
-        List<List<string>> skillDescriptionTable = FileRead.Read("SkillTooltipScript");
-        List<List<string>> skillKeywordTable = FileRead.Read("");
-        if (skillNameTable == null || skillDescriptionTable == null)
+        List<List<string>> skillNameTable = FileRead.Read("SkillNameScriptTable");
+        List<List<string>> skillDescriptionTable = FileRead.Read("SkillTooltipScriptTable");
+        List<List<string>> skillKeywordTable = FileRead.Read("KeywordTable");
+        if (skillNameTable == null || skillDescriptionTable == null || skillKeywordTable == null)
         {
             Debug.Log("skill Script table을 읽어오지 못했습니다.");
             return;
@@ -81,11 +85,10 @@ public class SkillManager : Generic.Singleton<SkillManager>
             SkillDescriptionScript script = new SkillDescriptionScript(i, skillDescriptionTable[i][(int)_language]);
             _skillDescriptionScripts.Add(script);
         }
-        return;
-        _skillKeywordScripts = new List<SkillKeywordScript>();
+        _skillKeywordScripts = new List<KeywordScript>();
         for (int i = 0; i < skillKeywordTable.Count; i++)
         {
-            SkillKeywordScript script = new SkillKeywordScript(i, skillKeywordTable[i][(int)_language]);
+            KeywordScript script = new KeywordScript(int.Parse(skillKeywordTable[i][0]), skillKeywordTable[i][(int)_language], skillKeywordTable[i][(int)_language + 3], skillKeywordTable[i][3] == "1");
             _skillKeywordScripts.Add(script);
         }
     }
@@ -168,6 +171,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
                 _skillPoint -= REQUIRED_SKILL_POINT;
                 _skills[i].LearnSkill();
+                GameManager.instance.AddPlayerSkillListElement(_skills[i].skillInfo);
                 break;
             }
         }
@@ -200,22 +204,56 @@ public class SkillManager : Generic.Singleton<SkillManager>
     public string GetSkillName(int skillIndex) 
     {
         Skill skill = GetSkill(skillIndex);
+        if (skill == null || _skillNameScripts.Count <= skill.skillInfo.nameIndex) return "";
         return _skillNameScripts[skill.skillInfo.nameIndex].name;
     }
     public string GetSkillDescription(int skillIndex)
     {
         Skill skill = GetSkill(skillIndex);
+        if (skill == null || _skillDescriptionScripts.Count <= skill.skillInfo.tooltipIndex) return "";
         return _skillDescriptionScripts[skill.skillInfo.tooltipIndex].GetDescription(skillIndex);
     }
-    public string GetSkillKeyword(int keywordIndex)
+    public KeywordScript GetSkillKeyword(int keywordIndex)
     {
-        foreach (SkillKeywordScript script in _skillKeywordScripts) 
+        foreach (KeywordScript script in _skillKeywordScripts) 
         {
             if (script.index == keywordIndex) 
             {
-                return script.keyword;
+                return script;
             }
         }
-        return "???";
+        return null;
+    }
+    public int FindUpgradeSkillIndex(SkillInfo sInfo, ActionType type)
+    {
+        if (sInfo.precedenceSkillInfo.Count == 0)
+        {
+            return -1;
+        }
+        else
+        {
+            foreach (SkillInfo pre in sInfo.precedenceSkillInfo)
+            {
+                int result = rFindSameActionTypeSkill(pre, type);
+                if (result != -1)
+                {
+                    return result;
+                }
+            }
+            return -1;
+        }
+    }
+    private int rFindSameActionTypeSkill(SkillInfo sInfo, ActionType type)
+    {
+        if (sInfo.IsActive()) 
+        {
+            ActiveInfo aInfo = activeDB.GetActiveInfo(sInfo.index);
+            if (aInfo.action == type) 
+            {
+                return sInfo.index;
+            }
+        }
+
+        return FindUpgradeSkillIndex(sInfo, type);
     }
 }

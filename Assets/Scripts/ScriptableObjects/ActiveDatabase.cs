@@ -14,7 +14,7 @@ public class ActiveDatabase : ScriptableObject
     {
         if (index is >= 22001 and <= 22003) return ActionType.Fanning;
         if (index is 12001) return ActionType.Dynamite;
-        if (index is 12002) return ActionType.Fanning;
+        if (index is 12002) return ActionType.StopBleeding;
 
         return ActionType.None;
     }
@@ -25,7 +25,7 @@ public class ActiveDatabase : ScriptableObject
     [ContextMenu("Read Csv")]
     public void ReadCsv()
     {
-        var infoList = FileRead.Read("ActiveTable");
+        var infoList = FileRead.Read("ActiveSkillTable");
 
         if (infos is null) infos = new List<ActiveInfo>();
         else infos.Clear();
@@ -88,7 +88,6 @@ public struct ActiveInfo
 {
     public int index;
     public ActionType action;
-    public int upgSkillIndex;
     public float[] amounts;
 }
 

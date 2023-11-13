@@ -14,24 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   infos:
   - index: 22001
-    action: 7
-    upgSkillIndex: 0
+    action: 6
     amounts:
     - -10
   - index: 22002
-    action: 7
-    upgSkillIndex: 22001
+    action: 6
     amounts:
     - -5
   - index: 22003
-    action: 7
-    upgSkillIndex: 22002
+    action: 6
     amounts:
     - 0
-  - index: 22004
-    action: 4
-    upgSkillIndex: 0
+  - index: 12001
+    action: 3
+    amounts:
+    - 5
+    - 2
+  - index: 12002
+    action: 3
     amounts:
     - 1
-    - 2
-    - 5

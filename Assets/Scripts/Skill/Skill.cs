@@ -55,14 +55,8 @@ public class SkillInfo
     public int tooltipIndex { get; private set; }
     public int iconIndex { get; private set; }
     public int[] precedenceIndex { get; private set; }
-
-    //public int repeatCount { get; private set; }
-    //public int[] stat { get; private set; }
-    //public int activeType { get; private set; }
-    //public int upgradeSkill { get; private set; }
-    //public int[] amount { get; private set; }
-    //public int range { get; private set; }
-    //public int width { get; private set; }
+    public List<SkillInfo> precedenceSkillInfo { get; private set; }
+    public List<SkillInfo> childSkillInfo { get; private set; }
 
     /// <summary>
     /// SkillTable에서 한 행을 입력받아서 변수들을 초기화합니다.
@@ -85,6 +79,23 @@ public class SkillInfo
         tooltipIndex = int.Parse(list[4]);
         iconIndex = int.Parse(list[5]);
         precedenceIndex = InitIntArrayValue(list[6]);
+        precedenceSkillInfo = new List<SkillInfo>();
+        childSkillInfo = new List<SkillInfo>();
+    }
+    public void ConnectPrecedenceSkill()
+    {
+        if (precedenceIndex[0] == 0) return;
+        for (int i = 0; i < precedenceIndex.Length; i++)
+        {
+            SkillInfo preSkill = SkillManager.instance.GetSkill(precedenceIndex[i]).skillInfo;
+            precedenceSkillInfo.Add(preSkill);
+            preSkill.AddChildInfo(this);
+        }
+
+    }
+    public void AddChildInfo(SkillInfo child)
+    {
+        childSkillInfo.Add(child);
     }
     private int[] InitIntArrayValue(string str)
     {
@@ -204,20 +215,8 @@ public class Skill
     /// </summary>
     public void LearnSkill()
     {
-        if (!isLearnable) return;
-        //if (skillLevel >= skillInfo.repeatCount) 
-        //{
-        //    Debug.LogError("스킬 레벨 비정상적 상승");
-        //    return; 
-        //}
-
-        GameManager.instance.AddPlayerSkillListElement(skillInfo.index, skillInfo.IsPassive());
         skillLevel++;
         isLearned = true;
-        //if (skillLevel >= skillInfo.repeatCount)
-        //{
-        //    isLearnable = false;
-        //}
         isLearnable = false;
     }
 }

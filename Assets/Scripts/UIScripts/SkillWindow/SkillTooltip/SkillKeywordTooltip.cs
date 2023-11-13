@@ -8,13 +8,14 @@ public class SkillKeywordTooltip : UIElement
     [SerializeField] private GameObject _keywordNameText;
     [SerializeField] private GameObject _keywordDescriptionText;
 
-    public void SetSkillKeywordTooltip(int index, string name, string description)
+    public void SetSkillKeywordTooltip(int order, string name, string description)
     {
         if (isOpenUI) return;
         OpenUI();
         RectTransform rt = GetComponent<RectTransform>();
         Vector3 pos = Vector3.zero;
-        pos.y = (rt.sizeDelta.y + 10) * index;
+        pos.y = -(rt.sizeDelta.y + 10) * order;
+        Debug.Log(order + "/" + pos.y);
         GetComponent<RectTransform>().localPosition = pos;
 
         _keywordNameText.GetComponent<TextMeshProUGUI>().text = name;

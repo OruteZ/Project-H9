@@ -23,7 +23,6 @@ public class BuffUI : UISystem
     public void SetBuffUI()
     {
         _BuffUI.SetActive(true);
-//        Debug.Log("Test1");
         for (int i = 0; i < _BuffUI.transform.childCount; i++) 
         {
             _BuffUI.transform.GetChild(i).GetComponent<BuffUIElement>().CloseUI();
@@ -36,12 +35,10 @@ public class BuffUI : UISystem
         foreach (int index in passiveList)
         {
             PassiveSkill.Passive passive = passiveDB.GetPassive(index, player);
-            Debug.Log("Test2");
             Debug.Log(passive.IsEffectEnable());
             //if (passive.IsEffectEnable())
             if (true)
                 {
-                Debug.Log("Test3");
                 if (buffCount >= _BuffUI.transform.childCount)
                 {
                     buffs.RemoveAt(0);
@@ -56,7 +53,6 @@ public class BuffUI : UISystem
         {
             if (i < buffCount)
             {
-                Debug.Log("Test4");
                 _BuffUI.transform.GetChild(i).GetComponent<BuffUIElement>().SetBuffUIElement(buffs[i], true, 0);
             }
         }

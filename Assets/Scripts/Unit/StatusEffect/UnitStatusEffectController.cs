@@ -55,6 +55,20 @@ public class UnitStatusEffectController
             }
         }
     }
+
+    public void RemoveStatusEffect(StatusEffectType type)
+    {
+        //find same type and remove
+        foreach (var effect in _statusEffects)
+        {
+            if (effect.GetStatusEffectType() == type)
+            {
+                _statusEffects.Remove(effect);
+                OnStatusEffectChanged.Invoke();
+                return;
+            }
+        }
+    }
     
     public List<IDisplayableEffect> GetAllStatusEffectInfo()
     {

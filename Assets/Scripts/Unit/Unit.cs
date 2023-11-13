@@ -1,10 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using Castle.Core;
-using Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using PassiveSkill;
@@ -419,6 +413,34 @@ public abstract class Unit : MonoBehaviour, IUnit
     public bool HasStatus(StatusEffectType type)
     {
         return _seController.HasStatusEffect(type);
+    }
+
+    public bool TryAddStatus(StatusEffect effect)
+    {
+        _seController.AddStatusEffect(effect);
+        return true;
+    }
+
+    public bool TryRemoveStatus(StatusEffectType type)
+    {
+        if (_seController.HasStatusEffect(type) is false)
+        {
+            return false;
+        }
+        
+        _seController.RemoveStatusEffect(type);
+        return true;
+    }
+
+    public bool TryRemoveStatus(StatusEffect effect)
+    {
+        if (_seController.HasStatusEffect(effect.GetStatusEffectType()) is false)
+        {
+            return false;
+        }
+
+        _seController.RemoveStatusEffect(effect);
+        return true;
     }
 
     #endregion

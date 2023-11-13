@@ -73,4 +73,5 @@ public enum ActionType {
     Idle,
     Reload,
     Fanning,
+    StopBleeding,
 }

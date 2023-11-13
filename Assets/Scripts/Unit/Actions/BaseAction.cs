@@ -11,6 +11,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     protected static readonly int IDLE = Animator.StringToHash("Idle");
     protected static readonly int FANNING = Animator.StringToHash("Fanning");
     protected static readonly int RELOAD = Animator.StringToHash("Reload");
+    protected static readonly int DYNAMITE = Animator.StringToHash("Dynamite");
     
     public abstract ActionType GetActionType();
     public abstract bool CanExecute();
@@ -65,6 +66,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
                 unit.animator.ResetTrigger(SHOOT);
                 break;
             case ActionType.Dynamite:
+                unit.animator.ResetTrigger(DYNAMITE);
                 break;
             case ActionType.Idle:
                 break;

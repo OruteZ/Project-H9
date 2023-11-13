@@ -13,7 +13,9 @@ public class ActiveDatabase : ScriptableObject
     ActionType GetActionRange(int index)
     {
         if (index is >= 22001 and <= 22003) return ActionType.Fanning;
-        
+        if (index is 12001) return ActionType.Dynamite;
+        if (index is 12002) return ActionType.Fanning;
+
         return ActionType.None;
     }
     #endregion
@@ -34,8 +36,7 @@ public class ActiveDatabase : ScriptableObject
             {
                 index = int.Parse(info[0]),
                 action = GetActionRange(int.Parse(info[0])),
-                upgSkillIndex = int.TryParse(info[2], out var result) ? result : 0,
-                amounts = FileRead.ConvertStringToArray<float>(info[3])
+                amounts = FileRead.ConvertStringToArray<float>(info[2])
             };
             
             infos.Add(curInfo);

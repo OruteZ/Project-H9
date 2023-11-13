@@ -66,13 +66,13 @@ public static class FileRead
 		    return null;
 	    }
 	    
-	    // 문자열에서 "["와 "]"를 제거하고, 쉼표로 분리하여 숫자 부분만 가져옵니다.
+	    // 문자열에서 "를 제거하고, 쉼표로 분리하여 숫자 부분만 가져옵니다.
 	    string[] numbersAsString = input.Trim('\"', '\"').Split(',');
 
-	    // 결과로 반환할 정수 배열을 초기화합니다.
+	    // 결과로 반환할 배열을 초기화합니다.
 	    T[] result = new T[numbersAsString.Length];
 
-	    // 숫자를 정수로 변환하여 결과 배열에 저장합니다.
+	    // 변환하여 결과 배열에 저장합니다.
 	    for (int i = 0; i < numbersAsString.Length; i++)
 	    {
 		    if (result is int[] ints)

@@ -36,6 +36,7 @@ public class UnitModel : MonoBehaviour
         }
 
         this.unit = unit;
+        _deadFlag = false;
         
         #region EVENTS
 
@@ -64,14 +65,11 @@ public class UnitModel : MonoBehaviour
     {
         if (_deadFlag) return;
         
-        //if hp is over 0, trigger GET_GIT1, else DIE
-        if (unit.stat.GetStat(StatType.CurHp) > 0)
+        animator.SetTrigger(GET_HIT1);
+        //if hp is 0, die
+        if (unit.hp <= 0)
         {
-            animator.SetTrigger(GET_HIT1);
-        }
-        else
-        {
-            animator.SetTrigger(DIE);
+            animator.SetBool(DIE, true);
             _deadFlag = true;
         }
     }

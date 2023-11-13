@@ -15,7 +15,8 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     private int _currentSkillIndex;
     private bool _isInteractableButton;
 
-    static private List<SkillKeywordPool> _keywordTooltips = new List<SkillKeywordPool>();
+    static private SkillKeywordPool _keywordTooltips = new SkillKeywordPool();
+    private int _keywordTooltipCount = 0;
     private KeywordScript _keyword;
 
     // Start is called before the first frame update
@@ -25,9 +26,8 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         _currentSkillIndex = 0;
         _isInteractableButton = false;
 
-        var kw = new SkillKeywordPool();
-        kw.Init("Prefab/Keyword Tooltip", _skillKeywordTooltipContainer.transform, 0);
-        _keywordTooltips.Add(kw);
+        _keywordTooltips = new SkillKeywordPool();
+        _keywordTooltips.Init("Prefab/Keyword Tooltip", _skillKeywordTooltipContainer.transform, 0);
     }
 
     public void SetSkillTooltip(Vector3 pos, int skillIndex)
@@ -109,13 +109,13 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     private void SetKeywordTooltips()
     {
         if (_keyword == null) return;
-        var t = _keywordTooltips[0].Set();
-        t.tooltip.SetSkillKeywordTooltip(_keyword.index, _keyword.name, _keyword.description);
-        Vector3 pos = Vector3.zero;
-        t.Instance.GetComponent<RectTransform>().localPosition = pos;
+        var t = _keywordTooltips.Set();
+        t.tooltip.SetSkillKeywordTooltip(_keywordTooltipCount++, _keyword.name, _keyword.description);
     }
     public override void CloseUI()
     {
+        _keywordTooltipCount = 0;
+        _keywordTooltips.Reset();
         _skillKeywordTooltipContainer.SetActive(false);
         base.CloseUI();
     }

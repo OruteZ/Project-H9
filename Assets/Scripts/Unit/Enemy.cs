@@ -44,9 +44,9 @@ public class Enemy : Unit
         ai.Operate();
     }
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, Unit attacker = null)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, attacker);
         UIManager.instance.onActionChanged.Invoke();
     }
     

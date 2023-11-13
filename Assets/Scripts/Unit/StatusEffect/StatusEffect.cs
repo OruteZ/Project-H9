@@ -5,8 +5,13 @@ using UnityEngine.Events;
 
 public abstract class StatusEffect : IDisplayableEffect
 {
+    protected StatusEffect(Unit creator)
+    {
+        this.creator = creator;
+    }
+    
     protected UnitStatusEffectController controller;
-    public UnityEvent OnStackChanged => controller.OnStatusEffectChanged;
+    public UnityEvent OnStackChanged => controller?.OnStatusEffectChanged;
     
     private int _damage;
     protected int Damage
@@ -15,9 +20,11 @@ public abstract class StatusEffect : IDisplayableEffect
         set
         {
             _damage = value;
-            OnStackChanged.Invoke();
+            OnStackChanged?.Invoke();
         }
     }
+
+    protected Unit creator;
 
     #region ABSTRACT
     public abstract StatusEffectType GetStatusEffectType();
@@ -48,7 +55,7 @@ public abstract class StatusEffect : IDisplayableEffect
     }
 
 
-    public string GetEffectName()
+    public string GetName()
     {
         return GetStatusEffectType().ToString();
     }

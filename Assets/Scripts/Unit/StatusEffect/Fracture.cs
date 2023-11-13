@@ -3,6 +3,12 @@
     //duration system like stun
     private int _duration;
     
+    //constructor that initialize duration
+    public Fracture(int duration, Unit creator) : base(creator)
+    {
+        _duration = duration;
+    }
+    
     public override StatusEffectType GetStatusEffectType()
     {
         return StatusEffectType.Fracture;

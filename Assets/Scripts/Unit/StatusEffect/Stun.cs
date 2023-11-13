@@ -2,7 +2,7 @@
 {
     private int _duration;
     
-    public Stun(int duration)
+    public Stun(int duration, Unit creator) : base(creator)
     {
         _duration = duration;
     }

@@ -111,9 +111,10 @@ public abstract class Unit : MonoBehaviour, IUnit
         SelectAction(GetAction<IdleAction>());
         
         onTurnStart.Invoke(this);
+        if (hp <= 0) DeadCall(this);
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage, Unit attacker)
     {
         if (gameObject == null) return;
         
@@ -127,16 +128,18 @@ public abstract class Unit : MonoBehaviour, IUnit
             _hasDead = true;
             onAnyUnitActionFinished.AddListener(DeadCall);
 
-            _attacker = FieldSystem.turnSystem.turnOwner;
+            _killer = attacker;
         }
     }
 
-    private Unit _attacker = null;
+    private Unit _killer;
     public void DeadCall(Unit unit)
     {
         onDead.Invoke(this);
-        _attacker.onKill.Invoke(this);
-        
+
+        // ReSharper disable once Unity.NoNullPropagation
+        _killer?.onKill.Invoke(this);
+
         onAnyUnitActionFinished.RemoveListener(DeadCall);
         Invoke(nameof(DestroyThis), 2f);
     }

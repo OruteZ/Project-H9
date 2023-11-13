@@ -64,6 +64,8 @@ public class Player : Unit
 
     public override void StartTurn()
     {
+        base.StartTurn();
+        
         if (GameManager.instance.CompareState(GameState.World))
         {
             SelectAction(GetAction<MoveAction>());
@@ -143,10 +145,10 @@ public class Player : Unit
 #endif
         }
     }
-    
-    public override void TakeDamage(int damage)
+
+    public override void TakeDamage(int damage, Unit attacker)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, attacker);
 
         UIManager.instance.onPlayerStatChanged.Invoke();
         GameManager.instance.playerStat = stat;

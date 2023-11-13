@@ -21,6 +21,7 @@ public class UnitStatusEffectController
     public void AddStatusEffect(StatusEffect statusEffect)
     {
         if (_statusEffects is null) _statusEffects = new List<StatusEffect>();
+        statusEffect.Setup(this);
         
         //find same type in list
         foreach (var effect in _statusEffects)

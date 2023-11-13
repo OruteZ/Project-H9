@@ -32,7 +32,7 @@ public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
     }
     
     #region IDISPLAYABLE_EFFECT
-    public string GetEffectName()
+    public string GetName()
     {
         return GetEffectType().ToString();
     }

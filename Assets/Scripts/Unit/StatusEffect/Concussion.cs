@@ -7,7 +7,7 @@
     //checking effected bool value
     private bool _isEffected = false;
     
-    public Concussion(int duration)
+    public Concussion(int duration, Unit creator) : base(creator)
     {
         _duration = duration;
     }

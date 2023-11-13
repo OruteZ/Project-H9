@@ -14,12 +14,13 @@ public interface IUnit
     /// 해당 유닛이 턴을 시작합니다.
     /// </summary>
     void StartTurn();
-    
+
     /// <summary>
     /// damage 만큼 피해를 입습니다.
     /// </summary>
     /// <param name="damage">피해량</param>
-    void TakeDamage(int damage);
+    /// <param name="attacker">공격을 가한 개체입니다.</param>
+    void TakeDamage(int damage, Unit attacker = null);
 
     /// <summary>
     /// Unit의 상태를 설정합니다.

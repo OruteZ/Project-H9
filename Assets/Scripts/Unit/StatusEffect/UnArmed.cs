@@ -1,6 +1,13 @@
 ﻿public class UnArmed : StatusEffect
 {
     private int _duration;
+    
+    //constructor that initialize duration
+    public UnArmed(int duration, Unit creator) : base(creator)
+    {
+        _duration = duration;
+    }
+    
     public override StatusEffectType GetStatusEffectType()
     {
         return StatusEffectType.UnArmed;

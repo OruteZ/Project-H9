@@ -5,7 +5,7 @@ using Mono.Collections.Generic;
 
 public class Bleeding : StatusEffect
 {
-    public Bleeding(int damage)
+    public Bleeding(int damage, Unit creator) : base(creator)
     {
         Damage = damage;
     }
@@ -19,7 +19,7 @@ public class Bleeding : StatusEffect
 
     public override void OnTurnStarted()
     {
-        controller.GetUnit().TakeDamage(Damage);
+        controller.GetUnit().TakeDamage(Damage, creator);
     }
     
     public override void OnTurnFinished() { }

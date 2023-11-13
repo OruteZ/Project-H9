@@ -6,13 +6,10 @@ public class Burning : StatusEffect
 {
     private readonly SortedSet<StackInfo> _stackInfos = new (new StackCompare());
 
-    public Burning(int damage, int duration)
+    public Burning(int damage, int duration, Unit creator) : base(creator)
     {
         AddStack(damage, duration);
     }
-
-    public Burning()
-    { }
 
     public override StatusEffectType GetStatusEffectType() => StatusEffectType.Burning;
 
@@ -28,7 +25,7 @@ public class Burning : StatusEffect
     public override void OnTurnStarted()
     {
         //unit takes damage by stack * 1;
-        controller.GetUnit().TakeDamage(Damage);
+        controller.GetUnit().TakeDamage(Damage, creator);
     }
 
     public override void OnTurnFinished()

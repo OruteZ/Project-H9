@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class StatusEffectTester : MonoBehaviour
 {
-    [SerializeField] private int _stack;
-    [SerializeField] private int _duration;
+    [SerializeField] private int damage;
+    [SerializeField] private int duration;
     [SerializeField] private StatusEffectType type;
     
     public void Effect()
@@ -15,28 +15,28 @@ public class StatusEffectTester : MonoBehaviour
         switch (type)
         {
             case StatusEffectType.Bleeding:
-                effect = new Bleeding(_stack, null);
+                effect = new Bleeding(damage, null);
                 break;
             case StatusEffectType.Burning:
-                effect = new Burning(_stack, _duration, null);
+                effect = new Burning(damage, duration, null);
                 break;
             case StatusEffectType.Stun:
-                effect = new Stun(_duration, null);
+                effect = new Stun(duration, null);
                 break;
             case StatusEffectType.UnArmed:
-                effect = new UnArmed(_duration, null);
+                effect = new UnArmed(duration, null);
                 break;
             case StatusEffectType.Concussion:
                 //duration
-                effect = new Concussion(_duration, null);
+                effect = new Concussion(duration, null);
                 break;
             case StatusEffectType.Fracture:
                 //duration
-                effect = new Fracture(_duration, null);
+                effect = new Fracture(duration, null);
                 break;
             case StatusEffectType.Blind:
                 //duration
-                effect = new Blind(_duration, null);
+                effect = new Blind(duration, null);
                 break;
             case StatusEffectType.None:
             default:

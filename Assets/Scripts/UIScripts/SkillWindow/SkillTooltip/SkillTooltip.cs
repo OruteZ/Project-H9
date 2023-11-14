@@ -16,6 +16,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     private bool _isInteractableButton;
 
     static private SkillKeywordPool _keywordTooltips = new SkillKeywordPool();
+    private List<SkillKeywordWrapper> _activeKeywordTooltips = new List<SkillKeywordWrapper>();
     private int _keywordTooltipCount = 0;
     private KeywordScript _keyword;
 
@@ -99,6 +100,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        CloseUI();
         _skillKeywordTooltipContainer.SetActive(false);
     }
     public void SetKeywordTooltipContents(KeywordScript kw)
@@ -112,11 +114,15 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         var t = _keywordTooltips.Set();
         t.tooltip.SetSkillKeywordTooltip(_keywordTooltipCount++, _keyword.name, _keyword.description);
     }
-    public override void CloseUI()
+    public void ClearKeywordTooltips()
     {
         _keywordTooltipCount = 0;
         _keywordTooltips.Reset();
         _skillKeywordTooltipContainer.SetActive(false);
+    }
+    public override void CloseUI()
+    {
+        ClearKeywordTooltips();
         base.CloseUI();
     }
 }

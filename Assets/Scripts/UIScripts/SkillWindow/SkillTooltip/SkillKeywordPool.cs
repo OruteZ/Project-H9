@@ -6,7 +6,6 @@ using TMPro;
 public class SkillKeywordWrapper : ObjectPoolWrapper<RectTransform>
 {
     public SkillKeywordTooltip tooltip;
-    public Vector3 StartWorldPosition;
 
     public SkillKeywordWrapper(RectTransform instance, float lifeTime, SkillKeywordTooltip t) : base(instance, lifeTime)
     {
@@ -15,6 +14,7 @@ public class SkillKeywordWrapper : ObjectPoolWrapper<RectTransform>
 
     public override void Reset()
     {
+        tooltip.CloseUI();
         base.Reset();
     }
 }

@@ -21,9 +21,7 @@ public class SkillDescriptionScript
         SubstituteDescriptionValues(skiilIndex);
         if (substitutedDescription[0] == '\"') 
         {
-            Debug.Log(substitutedDescription);
             substitutedDescription = substitutedDescription.Substring(1, substitutedDescription.Length - 2);
-            Debug.Log(substitutedDescription);
 
         }
         if (keywordIndex.Count != 0)

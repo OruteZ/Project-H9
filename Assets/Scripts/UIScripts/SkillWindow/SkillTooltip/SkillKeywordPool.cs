@@ -25,6 +25,7 @@ public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
     {
         base.Init(objectKey, parent, generalLifeTime, expectedSize, rootName);
         _root.transform.localPosition = Vector3.zero;
+        _root.transform.localScale = Vector3.one;
 
         SupplyPool(expectedSize / 2);
     }

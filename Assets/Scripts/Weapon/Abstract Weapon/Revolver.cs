@@ -71,12 +71,12 @@ public class Revolver : Weapon
     private void NonCriticalAttack(Unit target)
     {
         int damage = GetFinalDamage();
-        target.GetDamage(damage);
+        target.TakeDamage(damage, unit);
     }
 
     private void CriticalAttack(Unit target)
     {
         int damage = GetFinalCriticalDamage();
-        target.GetDamage(damage);
+        target.TakeDamage(damage, unit);
     }
 }

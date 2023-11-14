@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class FanningAction : BaseAction
+public class FanningAction : BaseAction, IShootingActionKind
 {
     //todo : 애니메이션 확정되면 다 Frame단위 Int로 변경
     private const float TURNING_TIME = 0.5f;
@@ -56,6 +56,7 @@ public class FanningAction : BaseAction
     {
         if (unit.weapon.currentAmmo == 0) return false;
         if (unit.hasAttacked) return false;
+        if (unit.HasStatus(StatusEffectType.UnArmed)) return false;
 
         return true;
     }

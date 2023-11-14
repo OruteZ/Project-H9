@@ -65,6 +65,7 @@ public interface IUnitAction {
 }
 
 public enum ActionType {
+    None,
     Move,
     Spin,
     Attack,
@@ -72,5 +73,5 @@ public enum ActionType {
     Idle,
     Reload,
     Fanning,
-    None,
+    StopBleeding,
 }

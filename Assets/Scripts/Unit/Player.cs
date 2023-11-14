@@ -21,12 +21,14 @@ public class Player : Unit
         TileEffectManager.instance.SetPlayer(this);
 
         onSelectedChanged.AddListener(() => UIManager.instance.onActionChanged.Invoke());
+        FieldSystem.onStageAwake.AddListener(ReloadSight);
     }
     public void Update()
     {
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
         if (UIManager.instance.isMouseOverUI) return;
+        if (HasStatus(StatusEffectType.Stun)) FieldSystem.turnSystem.EndTurn(); 
 
         var isMouseOnTile = TryGetMouseOverTilePos(out var onMouseTilePos);
 
@@ -62,22 +64,18 @@ public class Player : Unit
 
     public override void StartTurn()
     {
-#if UNITY_EDITOR
-        Debug.Log("Player Turn Started");
-#endif
+        base.StartTurn();
         
-        hasAttacked = false;
-        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
-        if (GameManager.instance.CompareState(GameState.Combat))
-        {
-            animator.SetTrigger(START_TURN);
-            SelectAction(GetAction<IdleAction>());
-        }
-        else
+        if (GameManager.instance.CompareState(GameState.World))
         {
             SelectAction(GetAction<MoveAction>());
             ReloadSight();
         }
+    }
+
+    public void EndTurn()
+    {
+        FieldSystem.turnSystem.EndTurn();
     }
 
     public void ContinueWorldTurn()
@@ -147,10 +145,10 @@ public class Player : Unit
 #endif
         }
     }
-    
-    public override void GetDamage(int damage)
+
+    public override void TakeDamage(int damage, Unit attacker)
     {
-        base.GetDamage(damage);
+        base.TakeDamage(damage, attacker);
 
         UIManager.instance.onPlayerStatChanged.Invoke();
         GameManager.instance.playerStat = stat;
@@ -162,8 +160,6 @@ public class Player : Unit
             unit.isVisible = FieldSystem.tileSystem.VisionCheck(hexPosition, unit.hexPosition) &&
                              Hex.Distance(hexTransform.position, unit.hexPosition) <= stat.sightRange;
         }
-        
-//        Debug.Log("On Any Unit Moved : Invoke");
     }
 
     private void OnMoved(Unit unit)

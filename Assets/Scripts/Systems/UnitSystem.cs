@@ -197,6 +197,7 @@ public class UnitSystem : MonoBehaviour
 
     private void OnUnitDead(Unit unit)
     {
+        Debug.Log($"OnUnitDeadCall : {unit.name}");
         RemoveUnit(unit);
         onAnyUnitDead.Invoke(unit);
         

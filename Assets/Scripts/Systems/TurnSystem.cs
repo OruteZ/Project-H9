@@ -34,7 +34,6 @@ private void Awake()
     {
         Debug.Log("Finish Turn Call");
 
-        //todo : combat finish check
         var player = FieldSystem.unitSystem.GetPlayer();
         if (player is not null)
         {

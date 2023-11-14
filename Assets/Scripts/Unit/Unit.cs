@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using PassiveSkill;
@@ -17,24 +12,37 @@ public enum UnitType
 [RequireComponent(typeof(HexTransform))]
 public abstract class Unit : MonoBehaviour, IUnit
 {
-    [HideInInspector] 
+    #region SIMPLIFY
+    public int currentActionPoint => stat.GetStat(StatType.CurActionPoint);
+    public int hp => stat.GetStat(StatType.CurHp);
+
+    public Transform hand => _unitModel.hand;
+    public Transform back => _unitModel.back;
+    public Transform waist => _unitModel.waist;
+    
+    public Animator animator => _unitModel.animator;
+    #endregion
+
+    public string unitName;
+    
     public HexTransform hexTransform;
 
     //차후에 Skinned Mesh Renderer로 변경하면 됨
     public SkinnedMeshRenderer visual;
     public WeaponModel weaponModel;
-    public Transform hand;
-    public Transform back;
-    public Transform waist;
+    
+    private UnitModel _unitModel;
+    public UnitStat stat;
+    public Weapon weapon;
 
-    [Header("Status")] 
-    [SerializeField] public UnitStat stat;
-
-    public int hp => stat.GetStat(StatType.CurHp);
     private List<Passive> _passiveList;
+    public bool hasAttacked;
+    public int currentRound;
 
     // ReSharper disable once InconsistentNaming
     public static readonly UnityEvent<Unit> onAnyUnitActionFinished = new UnityEvent<Unit>();
+    [HideInInspector] public UnityEvent<Unit> onTurnStart; // me
+    [HideInInspector] public UnityEvent<Unit> onTurnEnd; // me
     [HideInInspector] public UnityEvent<IUnitAction> onFinishAction; //action
     [HideInInspector] public UnityEvent onBusyChanged;
     [HideInInspector] public UnityEvent<int, int> onCostChanged; // before, after
@@ -47,76 +55,19 @@ public abstract class Unit : MonoBehaviour, IUnit
     [HideInInspector] public UnityEvent<Unit, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
     [HideInInspector] public UnityEvent<Unit> onKill; // target
     [HideInInspector] public UnityEvent onSelectedChanged;
+    [HideInInspector] public UnityEvent onStatusEffectChanged;
 
     private IUnitAction[] _unitActionArray; // All Unit Actions attached to this Unit
     protected IUnitAction activeUnitAction; // Currently active action
     private bool _isBusy;
     private bool _hasDead;
-    
-    public string unitName;
 
-    public int currentActionPoint => stat.GetStat(StatType.CurActionPoint);
-
-    public Weapon weapon;
-
-    private GameObject _damageEffect = null;
-
-    public GameObject damageEffect => _damageEffect ? _damageEffect :
-        (_damageEffect = Resources.Load("Prefab/Damage Floater") as GameObject);
-    public abstract void StartTurn();
-
-    public virtual void GetDamage(int damage)
-    {
-        if (gameObject == null) return;
-
-        animator.SetTrigger(GET_HIT1);
-        CameraController.ShakeCamera();
-        
-        stat.Consume(StatType.CurHp, damage);
-        onHit.Invoke(this, damage);
-
-        Service.SetText(damage.ToString(), transform.position);
-
-        if (hp <= 0 && _hasDead is false)
-        {
-            _hasDead = true;
-            animator.SetBool(DIE, true);
-            onAnyUnitActionFinished.AddListener(DeadCall);
-
-            _attacker = FieldSystem.turnSystem.turnOwner;
-        }
-    }
-
-    private Unit _attacker = null;
-    public void DeadCall(Unit unit)
-    {
-        onDead.Invoke(this);
-        _attacker.onKill.Invoke(this);
-        
-        onAnyUnitActionFinished.RemoveListener(DeadCall);
-        Invoke(nameof(DestroyThis), 2f);
-    }
-
-    public bool hasAttacked;
-
-    public int currentRound;
-
-    public Vector3Int hexPosition
-    {
-        get => hexTransform.position;
-        set
-        {
-            bool hasMoved = hexTransform.position != value;
-            hexTransform.position = value;
-            
-            if(hasMoved) onMoved?.Invoke(this);
-        }
-    }
-    public virtual void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList)
+    public virtual void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel,
+        List<Passive> passiveList)
     {
         unitName = newName;
         stat = unitStat;
-        
+
         _unitActionArray = GetComponents<IUnitAction>();
         foreach (IUnitAction action in _unitActionArray)
         {
@@ -131,27 +82,78 @@ public abstract class Unit : MonoBehaviour, IUnit
                 Debug.LogError("passive is null");
                 break;
             }
+
             passive.Setup();
         }
 
         var model = Instantiate(unitModel, transform);
         visual = model.GetComponentInChildren<SkinnedMeshRenderer>();
-        hand = model.GetComponent<UnitModel>().hand;
-        if (hand == null)
-        {
-            Debug.LogError("Hand is NULL");
-        }
-
-        waist = model.GetComponent<UnitModel>().waist;
-        if (waist == null)
-        {
-            Debug.LogError("Waist (Hip) is NULL");
-        }
+        _unitModel = model.GetComponent<UnitModel>();
+        _unitModel.Setup(this);
         
         EquipWeapon(newWeapon);
         // FieldSystem.onCombatAwake.AddListener(() => {animator.SetTrigger(START);});
 
         onFinishAction.AddListener((action) => onAnyUnitActionFinished.Invoke(this));
+
+        _seController = new UnitStatusEffectController(this);
+    }
+
+    public virtual void StartTurn()
+    {
+#if UNITY_EDITOR
+        Debug.Log(unitName + " Turn Started");
+#endif
+        
+        hasAttacked = false;
+        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
+        
+        SelectAction(GetAction<IdleAction>());
+        
+        onTurnStart.Invoke(this);
+        if (hp <= 0) DeadCall(this);
+    }
+
+    public virtual void TakeDamage(int damage, Unit attacker)
+    {
+        if (gameObject == null) return;
+        
+        stat.Consume(StatType.CurHp, damage);
+        onHit.Invoke(FieldSystem.turnSystem.turnOwner, damage);
+
+        Service.SetText(damage.ToString(), transform.position);
+
+        if (hp <= 0 && _hasDead is false)
+        {
+            _hasDead = true;
+            onAnyUnitActionFinished.AddListener(DeadCall);
+
+            _killer = attacker;
+        }
+    }
+
+    private Unit _killer;
+    public void DeadCall(Unit unit)
+    {
+        onDead.Invoke(this);
+
+        // ReSharper disable once Unity.NoNullPropagation
+        _killer?.onKill.Invoke(this);
+
+        onAnyUnitActionFinished.RemoveListener(DeadCall);
+        Invoke(nameof(DestroyThis), 2f);
+    }
+    
+    public Vector3Int hexPosition
+    {
+        get => hexTransform.position;
+        set
+        {
+            bool hasMoved = hexTransform.position != value;
+            hexTransform.position = value;
+            
+            if(hasMoved) onMoved?.Invoke(this);
+        }
     }
 
     private void EquipWeapon(Weapon newWeapon)
@@ -169,14 +171,14 @@ public abstract class Unit : MonoBehaviour, IUnit
             weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
             weaponModel.SetHandPosRot();
             newWeapon.weaponModel = weaponModel;
-            SetAnimatorController(weapon.GetWeaponType());
+            _unitModel.SetAnimator(weapon.GetWeaponType());
         }
         else
         {
             weaponModel = Instantiate(weapon.model, waist).GetComponent<WeaponModel>();
             weaponModel.SetStandPosRot();
             newWeapon.weaponModel = weaponModel;
-            SetAnimatorController(WeaponType.Null);
+            _unitModel.SetAnimator(WeaponType.Null);
         }
     }
 
@@ -207,6 +209,29 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         return _unitActionArray;
     }
+
+    public IDisplayableEffect[] GetDisplayableEffects()
+    {
+        //search passive that has displayable effect
+        var displayableEffects = new List<IDisplayableEffect>();
+        foreach (var passive in _passiveList)
+        {
+            if (passive.TryGetDisplayableEffect(out var displayableEffect))
+            {
+                displayableEffects.Add(displayableEffect);
+            }
+        }
+        
+        //search status effect that has displayable effect
+        var statusEffects = _seController.GetAllStatusEffectInfo();
+        if (statusEffects is not null)
+        {
+            displayableEffects.AddRange(statusEffects);
+        }
+        
+        return displayableEffects.ToArray();
+    }
+
     public bool isVisible
     {
         get => visual.enabled;
@@ -319,33 +344,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         onFinishShoot.Invoke(target, damage, hit, isCritical);
         return hit;
     }
-
-    private Animator _animator;
-    private static readonly int GET_HIT1 = Animator.StringToHash("GetHit1");
-    private static readonly int DIE = Animator.StringToHash("Die");
-
-    public Animator animator
-    {
-        get
-        {
-            if (_animator is null)
-            {
-                if (TryGetComponent(out _animator) is false)
-                {
-                    _animator = GetComponentInChildren<Animator>();
-                }
-            }
-
-            return _animator;
-        }
-    }
     
-    private void SetAnimatorController(WeaponType type)
-    {
-        animator.runtimeAnimatorController =
-            (RuntimeAnimatorController)Resources.Load("Animator/" + (type is WeaponType.Null ? "Standing" : type) + " Animator Controller");
-    }
-
     public void DestroyThis()
     {
         Destroy(gameObject);
@@ -409,5 +408,44 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
         onFinishAction.Invoke(action);
     }
+
+    #region STATUE EFFECT
+
+    private UnitStatusEffectController _seController;
+
+    public bool HasStatus(StatusEffectType type)
+    {
+        return _seController.HasStatusEffect(type);
+    }
+
+    public bool TryAddStatus(StatusEffect effect)
+    {
+        _seController.AddStatusEffect(effect);
+        return true;
+    }
+
+    public bool TryRemoveStatus(StatusEffectType type)
+    {
+        if (_seController.HasStatusEffect(type) is false)
+        {
+            return false;
+        }
+        
+        _seController.RemoveStatusEffect(type);
+        return true;
+    }
+
+    public bool TryRemoveStatus(StatusEffect effect)
+    {
+        if (_seController.HasStatusEffect(effect.GetStatusEffectType()) is false)
+        {
+            return false;
+        }
+
+        _seController.RemoveStatusEffect(effect);
+        return true;
+    }
+
+    #endregion
 }
 

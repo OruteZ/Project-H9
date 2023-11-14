@@ -90,6 +90,10 @@ public class TileEffectManager : Singleton<TileEffectManager>
             case ActionType.Fanning:
                 AttackTileEffect();
                 break;
+            case ActionType.None:
+                break;
+            case ActionType.StopBleeding:
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }

@@ -22,19 +22,11 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         _instance = this;
-
         _cameraDegree = transform.GetChild(0).localRotation.eulerAngles.x;
         
-        FieldSystem.onCombatAwake.AddListener(() =>
-        {
-            if (GameManager.instance.CompareState(GameState.Combat))
-            {
-                LookAtPlayer();
-            };
-        });
+        FieldSystem.onStageAwake.AddListener(OnCombatAwake);
         
         var tsf = transform;
-        
         newPosition = tsf.position;
     }
     private void Update()
@@ -94,6 +86,15 @@ public class CameraController : MonoBehaviour
         LookAtUnit(player);
     }
 
+    private void OnCombatAwake()
+    {
+        if (GameManager.instance.CompareState(GameState.Combat))
+        {
+            LookAtPlayer();
+            FieldSystem.unitSystem.GetPlayer().onHit.AddListener((u, i) => ShakeCamera());
+        }
+    }
+
     #region SHAKE
     
     [Header("Damping")]
@@ -105,7 +106,7 @@ public class CameraController : MonoBehaviour
     {
         Vector3 direction;
         
-        IEnumerator coroutine()
+        IEnumerator Coroutine()
         {
             direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
             direction.Normalize();
@@ -120,29 +121,29 @@ public class CameraController : MonoBehaviour
             _instance._shakeOffset = Vector3.zero;
         }
 
-        _instance.StartCoroutine(coroutine());
+        _instance.StartCoroutine(Coroutine());
     }
     
     #endregion
     
     #region LIMIT
+    #if UNITY_EDITOR
 
     public float maxZ, minZ, maxX, minX;
 
-    [ContextMenu("Set LU")]
     private void SetLeftUpLimit()
     {
         maxZ = transform.position.z;
         minX = transform.position.x;
     }
     
-    [ContextMenu("Set RD")]
     private void SetRightDownLimit()
     {
         maxX = transform.position.x;
         minZ = transform.position.z;
     }
 
+    #endif
     #endregion
 
     public static float GetCamDeg()

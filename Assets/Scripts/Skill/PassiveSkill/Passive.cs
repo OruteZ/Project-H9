@@ -35,7 +35,7 @@ namespace PassiveSkill
 
             return condition;
         }
-        public static IEffect CloneEffect(PassiveEffectType type, StatType stat, float amount)
+        public static IEffect CloneEffect(PassiveEffectType type, StatType stat, int amount)
         {
             IEffect effect = type switch
             {
@@ -77,6 +77,18 @@ namespace PassiveSkill
         public bool IsEffectEnable()
         {
             return _effect.IsEnable();
+        }
+        
+        public bool TryGetDisplayableEffect(out IDisplayableEffect displayableEffect)
+        {
+            if(_effect is IDisplayableEffect effect)
+            {
+                displayableEffect = effect;
+                return true;
+            }
+
+            displayableEffect = null;
+            return false;
         }
     }
 }

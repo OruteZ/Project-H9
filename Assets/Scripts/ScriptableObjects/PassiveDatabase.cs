@@ -33,7 +33,7 @@ public class PassiveDatabase : ScriptableObject
                 
                 //maxHp는 사용안하므로 CSV상 null과 대응, maxHp를 건들려면 이부분 수정해야 함
                 effectStat = (StatType)int.Parse(info[(int)PassiveColumn.EffectStat]),
-                effectAmount = float.Parse(info[(int)PassiveColumn.EffectAmount]),
+                effectAmount = int.Parse(info[(int)PassiveColumn.EffectAmount]),
             };
             
             infos.Add(curInfo);
@@ -81,7 +81,7 @@ public struct PassiveInfo
     
     public PassiveEffectType effect;
     public StatType effectStat;
-    public float effectAmount;
+    public int effectAmount;
 }
 
 internal enum PassiveColumn

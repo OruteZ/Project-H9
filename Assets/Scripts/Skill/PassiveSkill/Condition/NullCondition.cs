@@ -12,7 +12,7 @@
 
         protected override void ConditionSetup()
         {
-            FieldSystem.onCombatAwake.AddListener(() => passive.EnableCondition());
+            FieldSystem.onStageAwake.AddListener(() => passive.EnableCondition());
         }
     }
 }

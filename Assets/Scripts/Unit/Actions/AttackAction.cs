@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AttackAction : BaseAction
+public class AttackAction : BaseAction, IShootingActionKind
 {
     public override ActionType GetActionType() => ActionType.Attack;
 
@@ -24,6 +24,7 @@ public class AttackAction : BaseAction
     {
         if (weapon.currentAmmo == 0) return false;
         if (unit.hasAttacked) return false;
+        if (unit.HasStatus(StatusEffectType.UnArmed)) return false;
 
         return true;
     }

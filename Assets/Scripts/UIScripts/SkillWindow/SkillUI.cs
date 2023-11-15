@@ -23,6 +23,8 @@ public class SkillUI : UISystem
     private SkillManager _skillManager;
     private int _currentSkillIndex;
 
+    private List<int> _currentKeywordIndex = new List<int>();
+
     [Header("Skill UIs")]
     [SerializeField] private GameObject _skillWindow;//?
     [SerializeField] private GameObject _skillUIButtons;
@@ -66,6 +68,7 @@ public class SkillUI : UISystem
     /// <param name="btnIndex"> 클릭된 skill의 고유번호 </param>
     public void ClickSkillUIButton(Vector3 pos, int btnIndex)
     {
+        _currentKeywordIndex.Clear();
         _skillTooltipWindow.GetComponent<SkillTooltip>().SetSkillTooltip(pos, btnIndex);
 
         OpenPopupWindow();
@@ -154,6 +157,8 @@ public class SkillUI : UISystem
     {
         foreach (int i in keywords)
         {
+            if (_currentKeywordIndex.Contains(i)) continue;
+            _currentKeywordIndex.Add(i);
             KeywordScript kw = _skillManager.GetSkillKeyword(i);
             _skillTooltipWindow.GetComponent<SkillTooltip>().SetKeywordTooltipContents(kw);
         }

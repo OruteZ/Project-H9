@@ -164,6 +164,6 @@ public class MoveAction : BaseAction
 
     private float GetRotationSpeed()
     {
-        return unit.HasStatusEffect(StatusEffectType.Fracture) ? 0.8f : 1f * rotationSpeed;
+        return rotationSpeed;
     }
 }

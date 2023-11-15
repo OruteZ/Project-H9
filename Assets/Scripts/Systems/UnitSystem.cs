@@ -49,7 +49,6 @@ public class UnitSystem : MonoBehaviour
                 var playerPassiveList = playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, unit)).ToList();
                 #endregion
 
-                Debug.Log("???");
                 var activeList = GameManager.instance.playerActiveIndexList;
                 foreach (var activeIdx in activeList)
                 {

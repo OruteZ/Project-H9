@@ -11,20 +11,21 @@ public abstract class StatusEffect : IDisplayableEffect
     }
     
     protected UnitStatusEffectController controller;
-    public UnityEvent OnStackChanged => controller?.OnStatusEffectChanged;
+    public UnityEvent onStackChanged => controller?.OnStatusEffectChanged;
     
     private int _damage;
-    protected int Damage
+    protected int damage
     {
         get => _damage;
         set
         {
             _damage = value;
-            OnStackChanged?.Invoke();
+            onStackChanged?.Invoke();
         }
     }
 
     protected Unit creator;
+    public bool removable = false;
 
     #region ABSTRACT
     public abstract StatusEffectType GetStatusEffectType();
@@ -36,22 +37,23 @@ public abstract class StatusEffect : IDisplayableEffect
     #endregion
     public bool CanDisplay()
     {
-        return true;
+        return (removable is false);
     }
 
     public virtual void Setup(UnitStatusEffectController controller)
     {
         this.controller = controller;
+        removable = false;
     }
 
     public virtual void Delete()
     {
-        controller.RemoveStatusEffect(this);
+        removable = true;
     }
 
     public int GetStack()
     {
-        return Damage;
+        return damage;
     }
 
 

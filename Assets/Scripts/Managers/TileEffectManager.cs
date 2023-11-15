@@ -102,7 +102,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
     #region MOVE
     private void MovableTileEffect()
     {
-        int range = _player.currentActionPoint;
+        int range = _player.currentActionPoint / _player.GetAction<MoveAction>().GetCost();
         Vector3Int start = _player.hexPosition;
 
         var tiles = FieldSystem.tileSystem.GetWalkableTiles(start, range);
@@ -126,6 +126,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
     private IEnumerator MovableTileEffectCoroutine()
     {
+        int range = _player.currentActionPoint / _player.GetAction<MoveAction>().GetCost();
         while (true)
         {
             yield return null;
@@ -154,7 +155,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 continue;
             }
 
-            if(route.Count - 1 <= _player.currentActionPoint)
+            if(route.Count - 1 <= range)
             {
                 foreach (var pos in route.Select(tile => tile.hexPosition))
                 {

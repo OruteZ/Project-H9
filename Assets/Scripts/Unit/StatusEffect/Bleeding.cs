@@ -7,19 +7,19 @@ public class Bleeding : StatusEffect
 {
     public Bleeding(int damage, Unit creator) : base(creator)
     {
-        Damage = damage;
+        base.damage = damage;
     }
     public override StatusEffectType GetStatusEffectType() => StatusEffectType.Bleeding;
     
     public override StatusEffect Combine(StatusEffect other)
     {
-        Damage += other.GetStack();
+        damage += other.GetStack();
         return this;
     }
 
     public override void OnTurnStarted()
     {
-        controller.GetUnit().TakeDamage(Damage, creator);
+        controller.GetUnit().TakeDamage(damage, creator);
     }
     
     public override void OnTurnFinished() { }

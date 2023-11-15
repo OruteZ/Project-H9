@@ -21,15 +21,17 @@ public abstract class Unit : MonoBehaviour, IUnit
     public Transform waist => _unitModel.waist;
     
     public Animator animator => _unitModel.animator;
+    
+    public bool isVisible
+    {
+        get => _unitModel.isVisible;
+        set => _unitModel.isVisible = value;
+    }
     #endregion
 
     public string unitName;
     
     public HexTransform hexTransform;
-
-    //Ï∞®ÌõÑÏóê Skinned Mesh RendererÎ°ú Î≥ÄÍ≤ΩÌïòÎ©¥ Îê®
-    public SkinnedMeshRenderer visual;
-    public WeaponModel weaponModel;
     
     private UnitModel _unitModel;
     public UnitStat stat;
@@ -87,12 +89,10 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
 
         var model = Instantiate(unitModel, transform);
-        visual = model.GetComponentInChildren<SkinnedMeshRenderer>();
         _unitModel = model.GetComponent<UnitModel>();
         _unitModel.Setup(this);
         
         EquipWeapon(newWeapon);
-        // FieldSystem.onCombatAwake.AddListener(() => {animator.SetTrigger(START);});
 
         onFinishAction.AddListener((action) => onAnyUnitActionFinished.Invoke(this));
 
@@ -106,12 +106,22 @@ public abstract class Unit : MonoBehaviour, IUnit
 #endif
         
         hasAttacked = false;
-        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
         
         SelectAction(GetAction<IdleAction>());
         
         onTurnStart.Invoke(this);
+        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
         if (hp <= 0) DeadCall(this);
+    }
+
+    public void EndTurn()
+    {
+#if UNITY_EDITOR
+        Debug.Log(unitName + " Turn Ended");
+#endif
+        //unityevent
+        onTurnEnd.Invoke(this);
+        FieldSystem.turnSystem.EndTurn();
     }
 
     public virtual void TakeDamage(int damage, Unit attacker)
@@ -165,20 +175,9 @@ public abstract class Unit : MonoBehaviour, IUnit
         {
             Debug.LogError("Weapon Model Is NULL");
         }
-        
-        if (GameManager.instance.CompareState(GameState.Combat))
-        {
-            weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
-            weaponModel.SetHandPosRot();
-            newWeapon.weaponModel = weaponModel;
-            _unitModel.SetAnimator(weapon.GetWeaponType());
-        }
         else
         {
-            weaponModel = Instantiate(weapon.model, waist).GetComponent<WeaponModel>();
-            weaponModel.SetStandPosRot();
-            newWeapon.weaponModel = weaponModel;
-            _unitModel.SetAnimator(WeaponType.Null);
+            _unitModel.SetupWeaponModel(newWeapon);
         }
     }
 
@@ -232,15 +231,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         return displayableEffects.ToArray();
     }
 
-    public bool isVisible
-    {
-        get => visual.enabled;
-        set
-        {
-            visual.enabled = value;
-            weaponModel.visual = value;
-        }
-    }
+    
 
     protected bool IsMyTurn()
     {
@@ -313,12 +304,12 @@ public abstract class Unit : MonoBehaviour, IUnit
 
         if (VFXHelper.TryGetGunFireFXInfo(weapon.GetWeaponType(), out var fxGunFireKey, out var fxGunFireTime))
         {
-            var gunpointPos = weapon.weaponModel.GetGunpointPosition();
+            var gunpointPos = _unitModel.GetGunpointPosition();
             VFXManager.instance.TryInstantiate(fxGunFireKey, fxGunFireTime, gunpointPos);
         }
         if (VFXHelper.TryGetTraceOfBulletFXKey(weapon.GetWeaponType(), out var fxBulletLine, out var traceTime))
         {
-            var startPos = weapon.weaponModel.GetGunpointPosition();
+            var startPos = _unitModel.GetGunpointPosition();
             var destPos = target.transform.position + Vector3.up;
             if (!hit) destPos += new Vector3(UnityEngine.Random.value*2-1, UnityEngine.Random.value*2-1, UnityEngine.Random.value*2-1);
             VFXManager.instance.TryLineRender(fxBulletLine, traceTime, startPos, destPos);
@@ -413,13 +404,27 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     private UnitStatusEffectController _seController;
 
-    public bool HasStatus(StatusEffectType type)
+    public bool HasStatusEffect(StatusEffectType type)
     {
         return _seController.HasStatusEffect(type);
     }
 
     public bool TryAddStatus(StatusEffect effect)
     {
+        if (effect.GetDuration() <= 0 && effect.GetStatusEffectType() is not StatusEffectType.Bleeding)
+        {
+            Debug.LogError("¡ˆº”Ω√∞£¿Ã 0 ¿Ã«œ¿Œ ªÛ≈¬¿ÃªÛ");
+            return false;
+        }
+        if (effect.GetStatusEffectType() is StatusEffectType.Bleeding or StatusEffectType.Burning)
+        {
+            if (effect.GetStack() <= 0)
+            {
+                Debug.LogError("√‚«˜ ∂«¥¬ »≠ªÛø° µ•πÃ¡ˆ 0");
+                return false;
+            }
+        }
+        
         _seController.AddStatusEffect(effect);
         return true;
     }

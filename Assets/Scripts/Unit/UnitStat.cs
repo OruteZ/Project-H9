@@ -61,7 +61,8 @@ public class UnitStat : ICloneable
 
     public void Subtract(StatType type, int value)
     {
-        _additional[(int)type] += value;
+        _additional[(int)type] -= value;
+        
     }
 
     public void AddMultiplier(StatType type, int value)
@@ -71,7 +72,7 @@ public class UnitStat : ICloneable
 
     public void Add(StatType type, int value)
     {
-        _additional[(int)type] -= value;
+        _additional[(int)type] += value;
     }
 
     public void SubtractMultiplier(StatType type, int value)

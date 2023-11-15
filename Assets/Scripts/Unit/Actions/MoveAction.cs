@@ -23,8 +23,8 @@ public class MoveAction : BaseAction
 
     public override int GetCost()
     {
-        //return _path is null ? 1 : 0;
-        return 1;
+        //fracture ? 2 : 1;
+        return unit.HasStatusEffect(StatusEffectType.Fracture) ? 2 : 1;
     }
 
     public override int GetAmmoCost()
@@ -67,6 +67,14 @@ public class MoveAction : BaseAction
             Debug.Log("dest : " + _destinationPosition);
             return false;
         }
+        
+        var unitAp = unit.stat.GetStat(StatType.CurActionPoint);
+        //if dist * cost is more than ap, cant move
+        if ((_path.Count - 1) * GetCost() > unitAp)
+        {
+            Debug.Log("not enough ap");
+            return false;
+        }
 
         if (_path.Count < 1)
         {
@@ -91,7 +99,7 @@ public class MoveAction : BaseAction
             if (_path != null)
             {
                 var targetTile = _path[_currentPositionIndex];
-                if (targetTile.inSight) unit.visual.enabled = true;
+                if (targetTile.inSight) unit.isVisible = true;
             }
             else
             {
@@ -108,14 +116,14 @@ public class MoveAction : BaseAction
             //회전
             Vector3 rotateDirection = moveDirection;
             Vector3 forwardVec2 = Vector3.Slerp(transform.forward,
-                rotateDirection, rotationSpeed * Time.deltaTime);
+                rotateDirection, GetRotationSpeed() * Time.deltaTime);
 
             transform.forward = forwardVec2;
-            transform.position += moveDirection * (moveSpeed * Time.deltaTime);
+            transform.position += moveDirection * (GetMoveSpeed() * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, targetPos) < 0.1f)
             {
-                if (unit.stat.TryConsume(StatType.CurActionPoint, unit.HasStatus(StatusEffectType.Fracture) ? 2 : 1) is false)
+                if (unit.stat.TryConsume(StatType.CurActionPoint, GetCost()) is false)
                 {
                     Debug.LogError("Fail to consume");
                     #if UNITY_EDITOR
@@ -147,5 +155,15 @@ public class MoveAction : BaseAction
     {
         _path = null;
         base.ForceFinish();
+    }
+
+    private float GetMoveSpeed()
+    {
+        return unit.HasStatusEffect(StatusEffectType.Fracture) ? 0.8f : 1f * moveSpeed;
+    }
+
+    private float GetRotationSpeed()
+    {
+        return unit.HasStatusEffect(StatusEffectType.Fracture) ? 0.8f : 1f * rotationSpeed;
     }
 }

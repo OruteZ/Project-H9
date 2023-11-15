@@ -24,16 +24,22 @@
         _duration += other.GetDuration();
         return this;
     }
-    
-    //copy from Concussion.cs
-    public override void OnTurnStarted()
+
+    public override void Setup(UnitStatusEffectController controller)
     {
-        //if not effected yet, reduce sightRange half
-        if (!_isEffected)
+        base.Setup(controller);
+        
+        if (_isEffected is false)
         {
             _isEffected = true;
             controller.GetUnit().stat.SubtractMultiplier(StatType.SightRange, 50);
         }
+    }
+
+    //copy from Concussion.cs
+    public override void OnTurnStarted()
+    {
+        //do nothing
     }
     
     //copy from Concussion.cs

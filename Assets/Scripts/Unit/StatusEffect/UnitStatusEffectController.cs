@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Castle.Core;
 using Unity.VisualScripting;
 using UnityEngine.Events;
@@ -22,7 +23,6 @@ public class UnitStatusEffectController
     public void AddStatusEffect(StatusEffect statusEffect)
     {
         if (_statusEffects is null) _statusEffects = new List<StatusEffect>();
-        statusEffect.Setup(this);
         
         //find same type in list
         foreach (var effect in _statusEffects)
@@ -39,6 +39,7 @@ public class UnitStatusEffectController
         
         //else, add
         _statusEffects.Add(statusEffect);
+        statusEffect.Setup(this);
         OnStatusEffectChanged.Invoke();
     }
     
@@ -123,6 +124,15 @@ public class UnitStatusEffectController
         foreach (var statusEffect in _statusEffects)
         {
             statusEffect.OnTurnFinished();
+        }
+        
+        //find removable all
+        bool removeAny = _statusEffects.Any((effect) => effect.removable);
+        _statusEffects.RemoveAll((effect) => effect.removable);
+
+        if (removeAny)
+        {
+            OnStatusEffectChanged.Invoke();
         }
     }
     

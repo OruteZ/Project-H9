@@ -29,7 +29,7 @@ public class StopBleedingAction : BaseAction
 
     public override bool IsSelectable()
     {
-        if (unit.HasStatus(StatusEffectType.Bleeding)) return true;
+        if (unit.HasStatusEffect(StatusEffectType.Bleeding)) return true;
         else return false;
     }
 

@@ -56,7 +56,7 @@ public class FanningAction : BaseAction, IShootingActionKind
     {
         if (unit.weapon.currentAmmo == 0) return false;
         if (unit.hasAttacked) return false;
-        if (unit.HasStatus(StatusEffectType.UnArmed)) return false;
+        if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
 
         return true;
     }

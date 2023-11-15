@@ -55,7 +55,7 @@ public class WeaponModel : MonoBehaviour
         transform.SetLocalPositionAndRotation(handPositionOffset, handRotationOffset); 
     }
 
-    public void SetStandPosRot()
+    public void SetWaistPosRot()
     {
         transform.SetLocalPositionAndRotation(standPositionOffset, standRotationOffset); 
     }
@@ -66,7 +66,7 @@ public class WeaponModel : MonoBehaviour
         return transform.position; // ÃÑÀÇ ÁÂÇ¥ ±×´ë·Î ¹İÈ¯
     }
 
-    public bool visual
+    public bool isVisible
     {
         get => _meshRendererList[0].enabled;
         set

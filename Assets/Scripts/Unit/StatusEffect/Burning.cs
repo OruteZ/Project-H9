@@ -25,22 +25,18 @@ public class Burning : StatusEffect
     public override void OnTurnStarted()
     {
         //unit takes damage by stack * 1;
-        controller.GetUnit().TakeDamage(Damage, creator);
+        controller.GetUnit().TakeDamage(damage, creator);
     }
 
     public override void OnTurnFinished()
     {
-        int currentTurn = FieldSystem.turnSystem.turnNumber;
-        while (_stackInfos.Count > 0)
+        foreach (var stackInfo in _stackInfos)
         {
-            var info = _stackInfos.First();
-            if (info.finishTurn <= currentTurn)
-            {
-                Damage -= info.damage;
-                _stackInfos.Remove(info);
-            }
-            else break;
+            stackInfo.duration -= 1;
         }
+        
+        //find stackInfo that duration is 0, and remove it
+        _stackInfos.RemoveWhere((info) => info.duration <= 0);
 
         //if queue is empty, delete this status effect.
         if (_stackInfos.Count == 0)
@@ -51,23 +47,22 @@ public class Burning : StatusEffect
 
     public override int GetDuration()
     {
-        return _stackInfos.Last().finishTurn - FieldSystem.turnSystem.turnNumber;
+        return _stackInfos.Last().duration;
     }
 
     #region PRIVATE
     private void AddStack(int damage, int duration)
     {
-        duration += FieldSystem.turnSystem.turnNumber;
-        AddStack(new StackInfo{damage = damage, finishTurn = duration});
+        AddStack(new StackInfo{damage = damage, duration = duration});
     }
 
     private void AddStack(StackInfo info)
     {
-        Damage += info.damage;
+        damage += info.damage;
         
         foreach (var stackInfo in _stackInfos)
         {
-            if (stackInfo.finishTurn == info.finishTurn)
+            if (stackInfo.duration == info.duration)
             {
                 stackInfo.damage += info.damage;
                 return;
@@ -83,13 +78,14 @@ public class Burning : StatusEffect
 internal class StackInfo
 {
     public int damage;
-    public int finishTurn;
+    public int duration;
 }
 
 internal class StackCompare : IComparer<StackInfo>
 {
-    public int Compare(StackInfo big, StackInfo small)
+    //sort by duration, biggest duration is last at sortedset
+    public int Compare(StackInfo x, StackInfo y)
     {
-        return big.finishTurn - small.finishTurn;
+        return x.duration.CompareTo(y.duration);
     }
 }

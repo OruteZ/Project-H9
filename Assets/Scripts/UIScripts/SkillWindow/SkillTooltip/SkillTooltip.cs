@@ -27,7 +27,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         _isInteractableButton = false;
 
         _keywordTooltips = new SkillKeywordPool();
-        _keywordTooltips.Init("Prefab/Keyword Tooltip", _skillKeywordTooltipContainer.transform, 0);
+            _keywordTooltips.Init("Prefab/Keyword Tooltip", _skillKeywordTooltipContainer.transform, 0);
     }
 
     public void SetSkillTooltip(Vector3 pos, int skillIndex)

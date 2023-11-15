@@ -15,12 +15,14 @@ public class Player : Unit
     {
         base.SetUp(newName, unitStat, newWeapon, unitModel, passiveList);
         
-        FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         onMoved.AddListener(OnMoved);
+        onStatusEffectChanged.AddListener(OnStatusEffectChanged);
+        FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnChanged);
+        onSelectedChanged.AddListener(() => UIManager.instance.onActionChanged.Invoke());
+        
         TileEffectManager.instance.SetPlayer(this);
 
-        onSelectedChanged.AddListener(() => UIManager.instance.onActionChanged.Invoke());
         FieldSystem.onStageAwake.AddListener(ReloadSight);
     }
     public void Update()
@@ -28,7 +30,7 @@ public class Player : Unit
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
         if (UIManager.instance.isMouseOverUI) return;
-        if (HasStatus(StatusEffectType.Stun)) FieldSystem.turnSystem.EndTurn(); 
+        if (HasStatusEffect(StatusEffectType.Stun)) EndTurn();
 
         var isMouseOnTile = TryGetMouseOverTilePos(out var onMouseTilePos);
 
@@ -71,11 +73,6 @@ public class Player : Unit
             SelectAction(GetAction<MoveAction>());
             ReloadSight();
         }
-    }
-
-    public void EndTurn()
-    {
-        FieldSystem.turnSystem.EndTurn();
     }
 
     public void ContinueWorldTurn()
@@ -122,11 +119,16 @@ public class Player : Unit
         return false;
     }
 
+    private int _cacheSightRange = -1;
     public void ReloadSight()
     {
+        int availableMaxSightRange =
+            Mathf.Max(_cacheSightRange, stat.sightRange);
+        _cacheSightRange = stat.sightRange;
+        
         //한칸 움직일때마다 호출되므로, 보였다가 시야에서 사라지는 경우는 sightRange + 1로 탐색 범위에 포함 시킬 수 있음
         IEnumerable<Tile> allTile =
-            FieldSystem.tileSystem.GetTilesInRange(hexPosition, stat.sightRange + 1);
+            FieldSystem.tileSystem.GetTilesInRange(hexPosition, availableMaxSightRange + 1);
 
         foreach (var tile in allTile)
         {
@@ -153,6 +155,8 @@ public class Player : Unit
         UIManager.instance.onPlayerStatChanged.Invoke();
         GameManager.instance.playerStat = stat;
     }
+    
+    #region UNITY_EVENT
     private void OnAnyUnitMoved(Unit unit)
     {
         if(unit is not Player)
@@ -175,4 +179,10 @@ public class Player : Unit
     {
         if(IsMyTurn() is false) SelectAction(GetAction<IdleAction>());
     }
+    
+    private void OnStatusEffectChanged()
+    {
+        ReloadSight();
+    }
+    #endregion
 }

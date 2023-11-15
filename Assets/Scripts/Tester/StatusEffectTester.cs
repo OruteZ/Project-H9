@@ -43,6 +43,9 @@ public class StatusEffectTester : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
 
-        FieldSystem.unitSystem.GetPlayer().TryAddStatus(effect);
+        if (FieldSystem.unitSystem.GetPlayer().TryAddStatus(effect) is false)
+        {
+            Debug.Log("상태이상 적용 실패");
+        }
     }
 }

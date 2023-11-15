@@ -23,14 +23,26 @@
         return this;
     }
 
-    public override void OnTurnStarted()
+    public override void Setup(UnitStatusEffectController controller)
     {
-        //if not effected yet, reduce actionPoint
+        base.Setup(controller);
+        
         if (!_isEffected)
         {
             _isEffected = true;
             controller.GetUnit().stat.Subtract(StatType.MaxActionPoint, ACTION_POINT_REDUCE);
+
+            if (controller.GetUnit() == FieldSystem.turnSystem.turnOwner)
+            {
+                //if this unit is turnOwner, then consume ap
+                controller.GetUnit().stat.TryConsume(StatType.CurActionPoint, ACTION_POINT_REDUCE);
+            }
         }
+    }
+
+    public override void OnTurnStarted()
+    {
+        //do notihing
     }
 
     public override void OnTurnFinished()

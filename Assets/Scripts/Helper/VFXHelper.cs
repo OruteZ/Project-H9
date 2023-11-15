@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public static class VFXHelper 
 {
     public static bool TryGetGunFireFXInfo(WeaponType type, out string fxKey, out float time)
@@ -59,6 +58,21 @@ public static class VFXHelper
                 fxKey = "Prefab/VFX/FX_BloodSplat_01";
                 time = 2.5f;
                 return true;
+        }
+
+        return false;
+    }
+    
+    public static bool TryGetStatusEffectFXKey(StatusEffectType type, out string fxKey, out float time)
+    {
+        fxKey = string.Empty;
+        time = default;
+        
+        if (type is StatusEffectType.Bleeding or StatusEffectType.Burning or StatusEffectType.Stun)
+        {
+            fxKey = "Prefab/VFX/FX_" + type.ToString();
+            time = -1;
+            return true;
         }
 
         return false;

@@ -35,7 +35,6 @@ public abstract class Weapon
     
     public UnitStat unitStat => unit.stat;
     public Unit unit;
-    public WeaponModel weaponModel;
 
     protected const float SHOTGUN_OVER_RANGE_PENALTY = 3f;
     protected const float REVOLVER_OVER_RANGE_PENALTY = 2f;
@@ -63,5 +62,6 @@ public enum WeaponType
     Character,
     Revolver,
     Repeater,
-    Shotgun
+    Shotgun,
+    Unarmed,
 }

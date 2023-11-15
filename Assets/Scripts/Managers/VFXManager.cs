@@ -85,7 +85,7 @@ public class VFXManager : Generic.Singleton<VFXManager>
     /// <param name="position"></param>
     /// <param name="space"></param>
     /// <returns></returns>
-    public bool TryInstantiate(string key, float limitTime, Vector3 position, Space space = Space.World)
+    public bool TryInstantiate(string key, float limitTime, Vector3 position, Space space = Space.World, Transform parent = null)
     {
         GameObject result = default;
         if (!_caches.ContainsKey(key))
@@ -101,6 +101,9 @@ public class VFXManager : Generic.Singleton<VFXManager>
 
         result = Instantiate(_caches[key]);
         _instances.Add(new VFXWrapper(key, result, limitTime, position, space));
+        if (parent is not null)
+            result.transform.SetParent(parent);
+        
         return true;
     }
 
@@ -128,6 +131,11 @@ public class VFXManager : Generic.Singleton<VFXManager>
         line.SetPosition(0, start);
         line.SetPosition(1, dest);
         return true;
+    }
+
+    public GameObject GetLastInstantiated()
+    {
+        return _instances[^1].Instance;
     }
 
     #region private

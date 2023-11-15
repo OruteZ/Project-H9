@@ -56,7 +56,8 @@ public class TurnUI : UISystem
     {
         if (IsButtonInteractable())
         {
-            FieldSystem.turnSystem.EndTurn();
+            var player = FieldSystem.unitSystem.GetPlayer();
+            player.EndTurn();
         }
     }
 

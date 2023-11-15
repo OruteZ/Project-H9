@@ -61,7 +61,7 @@ public class CombatActionUI : UISystem
         _idleButton.SetActive(false);
         _actionTooltipWindow.GetComponent<CombatActionTooltip>().CloseUI();
 
-        UIManager.instance.onActionChanged.AddListener(() => SetActionButtons());
+        UIManager.instance.onActionChanged.AddListener(SetActionButtons);
     }
 
     private void Update()

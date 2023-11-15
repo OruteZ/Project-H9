@@ -107,11 +107,12 @@ public abstract class Unit : MonoBehaviour, IUnit
         
         hasAttacked = false;
         
-        SelectAction(GetAction<IdleAction>());
-        
         onTurnStart.Invoke(this);
+        
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
+        
         if (hp <= 0) DeadCall(this);
+        else SelectAction(GetAction<IdleAction>());
     }
 
     public void EndTurn()
@@ -119,7 +120,6 @@ public abstract class Unit : MonoBehaviour, IUnit
 #if UNITY_EDITOR
         Debug.Log(unitName + " Turn Ended");
 #endif
-        //unityevent
         onTurnEnd.Invoke(this);
         FieldSystem.turnSystem.EndTurn();
     }

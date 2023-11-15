@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.IO;
+using ExcelDataReader;
+using System.Text;
 
 public class CsvConvertor : EditorWindow
 {
@@ -101,18 +103,79 @@ public class CsvConvertor : EditorWindow
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Convert", GUILayout.Width(150)))
         {
-            bool isWork = true;
+
             var files = _excelDirectoryInfo.GetFiles();
+            Debug.Log($"Converting {files.Length}개 후보");
+            var count = 0;
+
             foreach (var file in files)
             {
-                
+                if (file.Extension == ".xlsx")
+                {
+                    var streamer = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
+
+                    using (var reader = ExcelReaderFactory.CreateReader(streamer))
+                    {
+                        #region 주석: 모든 시트 혹은 시트 이름 참조가 필요한 경우
+                        /*
+                        var tables = reader.AsDataSet().Tables;
+                        for (var sheetIndex = 0; sheetIndex < tables.Count; sheetIndex++)
+                        {
+                            var sheet = tables[sheetIndex];
+
+                            //시트 이름 필터링 가능
+                            Debug.Log($"Sheet[{sheetIndex}] Name: {sheet.TableName}");
+
+                            for (var rowIndex = 0; rowIndex < sheet.Rows.Count; rowIndex++)
+                            {
+                                // 행 가져오기
+                                var slot = sheet.Rows[rowIndex];
+                                for (var columnIndex = 0; columnIndex < slot.ItemArray.Length; columnIndex++)
+                                {
+                                    var item = slot.ItemArray[columnIndex];
+                                    // 열 가져오기
+                                    Debug.Log($"slot[{rowIndex}][{columnIndex}] : {item}");
+                                }
+                            }
+                        }
+                        */
+                        #endregion
+
+                        StringBuilder sb = new StringBuilder();
+                        var newName = $"{_destinationDirectory}/{file.Name.Replace(".xlsx", ".csv")}";
+
+                        var table = reader.AsDataSet().Tables[0];
+                        for (var rowIndex = 0; rowIndex < table.Rows.Count; rowIndex++)
+                        {
+                            // 행 가져오기
+                            var slot = table.Rows[rowIndex];
+                            string[] line = new string[slot.ItemArray.Length];
+                            for (var columnIndex = 0; columnIndex < slot.ItemArray.Length; columnIndex++)
+                            {
+                                var item = slot.ItemArray[columnIndex];
+                                line[columnIndex] = item.ToString();
+                            }
+                            sb.AppendLine(string.Join(',', line));
+                        }
+
+                        bool isAppend = false; // true일시 파일에 데이터 추가, false일 시 파일에 덮어쓰기 
+                        StreamWriter outStream = new StreamWriter(newName, isAppend, Encoding.UTF8);
+                        outStream.Write(sb);
+                        outStream.Close();
+
+                        reader.Dispose();
+                        reader.Close();
+                        count++;
+                    }
+                }
             }
 
-            if (isWork)
+            if (0 < count)
             {
                 string time = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss"));
                 _executedLog += $"{time}@:{_startDirectory}@:{_destinationDirectory}@:" ;
                 EditorPrefs.SetString(EXEUTED_LOG, _executedLog);
+                Debug.Log($"{count}/{files.Length} 개 변환 완료");
             }
         }
         GUILayout.EndHorizontal();

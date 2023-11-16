@@ -85,8 +85,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         unit.animator.SetTrigger(IDLE);
         
         isActive = false;
-        UIManager.instance.onActionChanged.Invoke();
         unit.FinishAction();
+        UIManager.instance.onActionChanged.Invoke();
     }
 
     protected virtual IEnumerator ExecuteCoroutine()

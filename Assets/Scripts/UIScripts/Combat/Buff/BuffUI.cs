@@ -8,12 +8,17 @@ public class BuffUI : UISystem
     [SerializeField] private GameObject _DebuffUI;
     [SerializeField] private PassiveDatabase passiveDB;
 
+    private List<IDisplayableEffect> _currentBuffs = new List<IDisplayableEffect>();
+    private List<IDisplayableEffect> _currentDebuffs = new List<IDisplayableEffect>();
+
     private new void Awake()
     {
         base.Awake();
         _BuffUI.SetActive(false);
         _DebuffUI.SetActive(false);
 
+        UIManager.instance.onPlayerStatChanged.AddListener(SetBuffDebuffUI);
+        UIManager.instance.onActionChanged.AddListener(SetBuffDebuffUI);
         UIManager.instance.onTurnChanged.AddListener(SetBuffDebuffUI);
     }
     public override void OpenUI()
@@ -25,96 +30,45 @@ public class BuffUI : UISystem
     public void SetBuffDebuffUI()
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player == null) return;
         IDisplayableEffect[] playerBuffs = player.GetDisplayableEffects();
+        _currentBuffs.Clear();
+        _currentDebuffs.Clear();
         foreach (IDisplayableEffect effect in playerBuffs) 
         {
-            Debug.Log(effect.GetName() + " / " + effect.GetDuration() + " / " + effect.GetStack() + " / " + effect.CanDisplay());
+            if (effect is StatusEffect) 
+            {
+                _currentDebuffs.Add(effect);
+            }
+            else
+            {
+                _currentBuffs.Add(effect);
+            }
         }
-        SetBuffUI();
-        //SetDebuffUI();
+        SetBuffUI(_BuffUI, _currentBuffs, true);
+        SetBuffUI(_DebuffUI, _currentDebuffs, false);
     }
-    private void SetBuffUI()
+    private void SetBuffUI(GameObject UI, List<IDisplayableEffect> currentState, bool isBuff)
     {
-        _BuffUI.SetActive(true);
-        for (int i = 0; i < _BuffUI.transform.childCount; i++)
+        UI.SetActive(true);
+        for (int i = 0; i < UI.transform.childCount; i++)
         {
-            _BuffUI.transform.GetChild(i).GetComponent<BuffUIElement>().CloseUI();
+            UI.transform.GetChild(i).GetComponent<BuffUIElement>().CloseUI();
         }
         int buffCount = 0;
 
-        Player player = FieldSystem.unitSystem.GetPlayer();
-        List<int> passiveList = GameManager.instance.playerPassiveIndexList;
-        List<int> buffs = new List<int>();
-        foreach (int index in passiveList)
+        foreach (IDisplayableEffect effect in currentState)
         {
-            PassiveSkill.Passive passive = passiveDB.GetPassive(index, player);
-            Debug.Log(passive.IsEffectEnable());
-            //if (passive.IsEffectEnable())
-            if (true)
+            Debug.Log(effect.GetIndex() +" / "+effect.CanDisplay());
+            if (effect.CanDisplay())
             {
-                if (buffCount >= _BuffUI.transform.childCount)
-                {
-                    buffs.RemoveAt(0);
-                    buffCount--;
-                }
-                buffs.Add(index);
-                buffCount++;
+                UI.transform.GetChild(buffCount++).GetComponent<BuffUIElement>().SetBuffUIElement(effect, isBuff);
             }
         }
 
-        for (int i = 0; i < _BuffUI.transform.childCount; i++)
-        {
-            if (i < buffCount)
-            {
-                _BuffUI.transform.GetChild(i).GetComponent<BuffUIElement>().SetBuffUIElement(buffs[i], true, 0);
-            }
-        }
         if (buffCount == 0)
         {
-            _BuffUI.SetActive(false);
-        }
-    }
-    private void SetDebuffUI()
-    {
-        _DebuffUI.SetActive(true);
-        for (int i = 0; i < _DebuffUI.transform.childCount; i++)
-        {
-            _DebuffUI.transform.GetChild(i).GetComponent<BuffUIElement>().CloseUI();
-        }
-        int debuffCount = 0;
-
-        Player player = FieldSystem.unitSystem.GetPlayer();
-        IDisplayableEffect[] playerBuffs = player.GetDisplayableEffects();
-
-        List<int> passiveList = GameManager.instance.playerPassiveIndexList;
-        List<int> buffs = new List<int>();
-        foreach (int index in passiveList)
-        {
-            PassiveSkill.Passive passive = passiveDB.GetPassive(index, player);
-            Debug.Log(passive.IsEffectEnable());
-            //if (passive.IsEffectEnable())
-            if (true)
-            {
-                if (debuffCount >= _DebuffUI.transform.childCount)
-                {
-                    buffs.RemoveAt(0);
-                    debuffCount--;
-                }
-                buffs.Add(index);
-                debuffCount++;
-            }
-        }
-
-        for (int i = 0; i < _DebuffUI.transform.childCount; i++)
-        {
-            if (i < debuffCount)
-            {
-                _DebuffUI.transform.GetChild(i).GetComponent<BuffUIElement>().SetBuffUIElement(buffs[i], true, 0);
-            }
-        }
-        if (debuffCount == 0)
-        {
-            _DebuffUI.SetActive(false);
+            UI.SetActive(false);
         }
     }
 }

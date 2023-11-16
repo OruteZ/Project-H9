@@ -33,7 +33,7 @@ public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
     
     #region IDISPLAYABLE_EFFECT
 
-    public int GetName()
+    public int GetIndex()
     {
         return passive.index;
     }

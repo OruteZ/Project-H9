@@ -10,13 +10,13 @@ public class BuffUIElement : UIElement
     [SerializeField] private GameObject _buffEffect;
     [SerializeField] private GameObject _buffText;
 
-    private int _currentSkillIndex;
+    public int skillIndex { get; private set; }
 
-    public void SetBuffUIElement(int skillIndex, bool isBuff, int duration) 
+    public void SetBuffUIElement(IDisplayableEffect effect, bool isBuff) 
     {
         OpenUI();
         Debug.Log("UI On");
-        _currentSkillIndex = skillIndex;
+        skillIndex = effect.GetIndex();
         /* buff image setting */
 
         if (isBuff)
@@ -27,8 +27,8 @@ public class BuffUIElement : UIElement
         {
             _buffEffect.GetComponent<Image>().color = UICustomColor.DebuffColor;
         }
-        string durationText = duration.ToString();
-        if (duration == 0) 
+        string durationText = effect.GetDuration().ToString();
+        if (effect.GetDuration() <= 0 || effect.GetDuration() >= 100) 
         {
             durationText = "";
         }

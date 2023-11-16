@@ -6,7 +6,7 @@ public static class UICustomColor
     private static readonly Color32 whiteColor = new Color32(251, 251, 251, 255);
     private static readonly Color32 grayColor = new Color32(128, 128, 128, 255);
     private static readonly Color32 blackColor = new Color32(0, 0, 0, 255);
-    private static readonly Color32 redColor = new Color32(251, 251, 251, 255);
+    private static readonly Color32 redColor = new Color32(160, 32, 64, 255);
     private static readonly Color32 orangeColor = new Color32(199, 94, 8, 255);
     private static readonly Color32 yellowColor = new Color32(240, 240, 0, 255);
     private static readonly Color32 greenColor = new Color32(18, 219, 36, 255);

@@ -5,7 +5,7 @@ using TMPro;
 
 public class CombatActionTooltip : UIElement
 {
-    private const int COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION = 115;
+    private const int COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION = 265;
 
     void Start()
     {
@@ -27,7 +27,7 @@ public class CombatActionTooltip : UIElement
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = actionName;
         transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = actionDescription;
 
-        pos.y += COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION * Camera.main.pixelHeight / 1080.0f;
+        pos.y = COMBAT_ACTION_TOOLTIP_Y_POSITION_CORRECTION * Camera.main.pixelHeight / 1080.0f;
         GetComponent<RectTransform>().position = pos;
     }
 }

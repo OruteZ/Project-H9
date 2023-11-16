@@ -70,7 +70,6 @@ public class EnemyHpUIElement : UIElement
     /// <param name="enemy"> 해당 체력바로 설정할 적 개체 </param>
     public void SetEnemyHpUI(Enemy enemy)
     {
-        gameObject.SetActive(true);
 
         _enemyUIPrevPos = Vector3.zero;
         int maxHp = enemy.stat.maxHp;
@@ -87,6 +86,7 @@ public class EnemyHpUIElement : UIElement
         _frontHpBar.value = curHp;
 
         _enemy = enemy;
+        gameObject.SetActive(true);
     }
     public void ClearEnemyHpUI()
     {

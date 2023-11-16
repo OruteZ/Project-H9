@@ -13,8 +13,8 @@ public class ActiveDatabase : ScriptableObject
     ActionType GetActionRange(int index)
     {
         if (index is >= 22001 and <= 22003) return ActionType.Fanning;
-        if (index is 12001) return ActionType.Dynamite;
-        if (index is 12002) return ActionType.StopBleeding;
+        if (index is 12002) return ActionType.Dynamite;
+        if (index is 12003) return ActionType.StopBleeding;
 
         return ActionType.None;
     }
@@ -59,6 +59,9 @@ public class ActiveDatabase : ScriptableObject
                         break;
                     case ActionType.Dynamite:
                         unit.AddComponent<DynamiteAction>().SetAmount(info.amounts);
+                        break;
+                    case ActionType.StopBleeding:
+                        unit.AddComponent<StopBleedingAction>().SetAmount(info.amounts);
                         break;
                 }
 

@@ -49,7 +49,7 @@ public class PassiveDatabase : ScriptableObject
             {
                 var trigger = Passive.CloneTrigger(info.condition, info.conditionAmount);
                 var effect = Passive.CloneEffect(info.effect, info.effectStat, info.effectAmount);
-                return new Passive(owner, trigger, effect);
+                return new Passive(owner, index, trigger, effect);
             }
         }
 

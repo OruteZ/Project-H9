@@ -32,9 +32,10 @@ public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
     }
     
     #region IDISPLAYABLE_EFFECT
-    public string GetName()
+
+    public int GetName()
     {
-        return GetEffectType().ToString();
+        return passive.index;
     }
 
     public int GetStack()

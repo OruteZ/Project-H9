@@ -6,7 +6,7 @@ public interface IDisplayableEffect
 {
     public const int NONE = int.MaxValue;
 
-    public string GetName();
+    public int GetName();
     public int GetStack();
     public int GetDuration();
 

@@ -5,8 +5,8 @@
         private int _amount;
         private StatType _statType;
         
-        private Passive _passive;
-        public Unit unit => _passive.unit;
+        protected Passive passive;
+        protected Unit unit => passive.unit;
         protected bool enable;
 
         public BaseEffect(StatType statType, int amount)
@@ -17,7 +17,7 @@
     
         public void Setup(Passive passive)
         {
-            _passive = passive;
+            this.passive = passive;
             EffectSetup();
         }
 

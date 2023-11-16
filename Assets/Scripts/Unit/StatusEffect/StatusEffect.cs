@@ -57,9 +57,9 @@ public abstract class StatusEffect : IDisplayableEffect
     }
 
 
-    public string GetName()
+    public int GetName()
     {
-        return GetStatusEffectType().ToString();
+        return (int)GetStatusEffectType();
     }
     
     #region STATIC
@@ -78,14 +78,15 @@ public abstract class StatusEffect : IDisplayableEffect
     #endregion
 }
 
+//대응되는 keyword인덱스
 public enum StatusEffectType
 {
-    None,
-    Burning,
-    Bleeding,
-    Stun,
-    UnArmed,
-    Concussion,
-    Fracture,
-    Blind,
+    None = 0,
+    Burning = 10,
+    Bleeding = 11,
+    Stun = 12,
+    UnArmed = 13,
+    Concussion = 15,
+    Fracture = 16,
+    Blind = 17,
 }

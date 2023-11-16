@@ -50,12 +50,14 @@ namespace PassiveSkill
         private readonly ICondition _condition;
         private readonly IEffect _effect;
         public readonly Unit unit;
+        public readonly int index;
     
-        public Passive(Unit unit, ICondition condition, IEffect effect)
+        public Passive(Unit unit, int index, ICondition condition, IEffect effect)
         {
             this.unit = unit;
             _condition = condition;
             _effect = effect;
+            this.index = index;
         }
     
         public void EnableCondition()

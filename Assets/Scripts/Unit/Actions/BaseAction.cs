@@ -76,6 +76,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
             case ActionType.Fanning:
                 unit.animator.ResetTrigger(FANNING);
                 break;
+            case ActionType.StopBleeding:
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }

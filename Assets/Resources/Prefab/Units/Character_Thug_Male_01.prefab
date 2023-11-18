@@ -1134,7 +1134,7 @@ Animator:
   m_GameObject: {fileID: 8346860575773991373}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a3bb33a0286354148916d767d4a40334, type: 3}
-  m_Controller: {fileID: 9100000, guid: 715b71be143cfa44999f3d3ffcd7653d, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1157,13 +1157,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3a6dbf815a0294db3e0b2ae16b65f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponModel: {fileID: 0}
-  root: {fileID: 0}
+  root: {fileID: 8346860574620685176}
   hand: {fileID: 8346860575776564518}
-  back: {fileID: 0}
+  chest: {fileID: 8346860574445903015}
   waist: {fileID: 8346860575901220761}
-  triggerFinger: {fileID: 0}
+  triggerFinger: {fileID: 8346860575691009516}
   head: {fileID: 8346860574312851109}
+  weaponModel: {fileID: 0}
   animator: {fileID: 0}
   unit: {fileID: 0}
 --- !u!1 &8346860575776564519

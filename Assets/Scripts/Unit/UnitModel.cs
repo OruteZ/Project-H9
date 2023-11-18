@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -20,20 +21,20 @@ public class UnitModel : MonoBehaviour
     private static readonly int FRACTURED = Animator.StringToHash("Injured");
     #endregion
     
-    //find visual that SkinMeshRenderer is attached to
-    private SkinnedMeshRenderer _visual;
-
-    public WeaponModel weaponModel;
-
+    [Header("Transform")]
     public Transform root;
     public Transform hand;
-    public Transform back;
+    public Transform chest;
     public Transform waist;
     public Transform triggerFinger;
     public Transform head;
-
+    
+    [Space(10 )]
+    public WeaponModel weaponModel;
     public Animator animator;
     public Unit unit;
+    
+    private SkinnedMeshRenderer _visual;
 
     public void Setup(Unit unit)
     {
@@ -184,7 +185,7 @@ public class UnitModel : MonoBehaviour
             {
                 if (fx.Key == StatusEffectType.Bleeding)
                 {
-                    Destroy(fx.Value);
+                    StartCoroutine(ParticleDestroyCoroutine(0.5f, fx.Value));
                     _statusEffectFX.Remove(fx.Key);
                     break;
                 }
@@ -212,7 +213,7 @@ public class UnitModel : MonoBehaviour
             {
                 if (fx.Key == StatusEffectType.Stun)
                 {
-                    Destroy(fx.Value);
+                    StartCoroutine(ParticleDestroyCoroutine(0.5f, fx.Value));
                     _statusEffectFX.Remove(fx.Key);
                     break;
                 }
@@ -240,13 +241,27 @@ public class UnitModel : MonoBehaviour
             {
                 if (fx.Key == StatusEffectType.Burning)
                 {
-                    Destroy(fx.Value);
+                    StartCoroutine(ParticleDestroyCoroutine(0.5f, fx.Value));
                     _statusEffectFX.Remove(fx.Key);
                     break;
                 }
             }
         }
-        
+
+        IEnumerator ParticleDestroyCoroutine(float time, GameObject fx)
+        {
+            //while 'time', scale lerp to 0
+            float timer = 0;
+            while (timer < time)
+            {
+                timer += Time.deltaTime;
+                fx.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, timer / time);
+                yield return null;
+            }
+            
+            Destroy(fx);
+        }
+
         #endregion
     }
     
@@ -265,4 +280,67 @@ public class UnitModel : MonoBehaviour
         weaponModel.isVisible = isVisible;
     }
     #endregion
+    
+    #if UNITY_EDITOR
+    
+    [ContextMenu("Setup")]
+    private void Setup()
+    {
+        RemoveDisabled();
+        SetTransform();
+    }
+
+    public void RemoveDisabled()
+    {
+        //find disabled object and remove
+        var list = new List<Transform>();
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.activeSelf is false)
+            {
+                list.Add(child);
+            }
+        }
+        
+        foreach (var child in list)
+        {
+            DestroyImmediate(child.gameObject, true);
+        }
+    }
+    
+    public void SetTransform()
+    {
+        //set all transform
+        Transform tsf = null;
+
+        //root
+        root = TryFind("Root", transform, out tsf) ? tsf : null;
+        hand = TryFind("IndexFinger_01 1", transform, out tsf) ? tsf : null;
+        chest = TryFind("Spine_03", transform, out tsf) ? tsf : null;
+        waist = TryFind("Hips", transform, out tsf) ? tsf : null;
+        triggerFinger = TryFind("IndexFinger_04", transform, out tsf) ? tsf : null;
+        head = TryFind("Head", transform, out tsf) ? tsf : null;
+    }
+    
+    private bool TryFind(string path, Transform current, out Transform target)
+    {
+        //using recursion, find transform
+        if (current.name == path)
+        {
+            target = current;
+            return true;
+        }
+        
+        foreach (Transform child in current)
+        {
+            if (TryFind(path, child, out target))
+            {
+                return true;
+            }
+        }
+        
+        target = null;
+        return false;
+    }
+    #endif
 }

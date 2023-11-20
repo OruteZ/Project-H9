@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class BuffUI : UISystem
 {
+    [SerializeField] private GameObject _BuffDebuffWindow;
     [SerializeField] private GameObject _BuffUI;
     [SerializeField] private GameObject _DebuffUI;
+    [SerializeField] private GameObject _buffTooltipWindow;
     [SerializeField] private PassiveDatabase passiveDB;
 
     private List<IDisplayableEffect> _currentBuffs = new List<IDisplayableEffect>();
@@ -70,5 +72,24 @@ public class BuffUI : UISystem
         {
             UI.SetActive(false);
         }
+    }
+
+    public void ShowBuffITooltip(GameObject icon)
+    {
+        Vector3 pos = icon.GetComponent<RectTransform>().position;
+        IDisplayableEffect effect = icon.GetComponent<BuffUIElement>().displayedEffect;
+        if (effect == null) return;
+
+        RectTransform rt = _BuffDebuffWindow.GetComponent<RectTransform>();
+        pos.y = rt.position.y + rt.sizeDelta.y + 5; 
+        _buffTooltipWindow.GetComponent<BuffTooltip>().SetBuffTooltip(effect, pos);
+    }
+    public void HideBuffUITooltip()
+    {
+        _buffTooltipWindow.GetComponent<CombatActionTooltip>().CloseUI();
+    }
+    public GameObject GetBuffWindow() 
+    {
+        return _BuffDebuffWindow;
     }
 }

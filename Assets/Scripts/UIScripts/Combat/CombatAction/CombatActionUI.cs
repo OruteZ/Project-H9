@@ -72,7 +72,7 @@ public class CombatActionUI : UISystem
             if (Input.GetKeyDown(_shortCutKey[i]))
             {
                 _player = FieldSystem.unitSystem.GetPlayer();
-                if (_actionButtons[i].GetComponent<ActionSelectButtonElement>()._action == null)
+                if (_actionButtons[i].GetComponent<ActionSelectButtonElement>().displayedAction == null)
                 {
                     _idleButton.GetComponent<ActionSelectButtonElement>().OnClickActionSeleteButton();
                 }
@@ -161,7 +161,7 @@ public class CombatActionUI : UISystem
             if (isSelectedSomeAction)
             {
                 bool isActiveAction = _selectedAction.IsActive();
-                bool isActiveActionButton = (_actionButtons[i].GetComponent<ActionSelectButtonElement>()._action.GetActionType() == selectedActionType);
+                bool isActiveActionButton = (_actionButtons[i].GetComponent<ActionSelectButtonElement>().displayedAction.GetActionType() == selectedActionType);
                 
 //                Debug.Log(isActiveAction + " " + isActiveActionButton);
                 if (!isActiveAction && isActiveActionButton)
@@ -235,7 +235,7 @@ public class CombatActionUI : UISystem
     public void ShowActionUITooltip(GameObject button)
     {
         Vector3 pos = button.GetComponent<RectTransform>().position;
-        IUnitAction action = button.GetComponent<ActionSelectButtonElement>()._action;
+        IUnitAction action = button.GetComponent<ActionSelectButtonElement>().displayedAction;
         if (action == null) return;
 
         _actionTooltipWindow.GetComponent<CombatActionTooltip>().SetCombatActionTooltip(action, _selectedAction, pos);
@@ -253,7 +253,7 @@ public class CombatActionUI : UISystem
     {
         foreach (GameObject btn in _actionButtons) 
         {
-            if (btn.GetComponent<ActionSelectButtonElement>()._action == null) continue;
+            if (btn.GetComponent<ActionSelectButtonElement>().displayedAction == null) continue;
             if (_idleButton.activeSelf) return true;
             if (btn.GetComponent<ActionSelectButtonElement>().IsInteractable()) 
             {

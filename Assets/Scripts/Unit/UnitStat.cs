@@ -141,6 +141,16 @@ public class UnitStat : ICloneable
             _multiplier[i] = multiplier[i];
         }
     }
+    
+    public int GetAdditional(StatType type)
+    {
+        return _additional[(int)type];
+    }
+    
+    public int GetMultiplier(StatType type)
+    {
+        return _multiplier[(int)type];
+    }
 }
 
 

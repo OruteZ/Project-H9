@@ -70,24 +70,25 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
             texts.GetComponent<CharacterTooltipText>().CloseUI();
         }
         if (info.statName == "Name") return;
-        bool isExistCharacterStat = (info.statValues["CharacterStat"] != 0);
-        bool isExistWeaponStat = (info.statValues["WeaponStat"] != 0);
-        bool isExistSkillStat = (info.statValues["SkillStat"] != 0);
+        bool isExistCharacterStat = (info.statValues[UIStatType.Character] != 0);
+        bool isExistWeaponStat = (info.statValues[UIStatType.Weapon] != 0);
+        bool isExistSkillAddStat = (info.statValues[UIStatType.SkillAdd] != 0);
+        bool isExistSkillMultiStat = (info.statValues[UIStatType.SkillAdd] != 0);
         bool[] isExist =
         {
             isExistCharacterStat,
-            (isExistCharacterStat && (isExistWeaponStat || isExistSkillStat)), 
+            (isExistCharacterStat && (isExistWeaponStat || isExistSkillAddStat)), 
             isExistWeaponStat,
-            ((isExistCharacterStat || isExistWeaponStat) && (isExistSkillStat)),
-            isExistSkillStat 
+            ((isExistCharacterStat || isExistWeaponStat) && (isExistSkillAddStat)),
+            isExistSkillAddStat
         };
-        List<(string, float)> tooltipTexts = new List<(string, float)>()
+        List<(UIStatType, float)> tooltipTexts = new List<(UIStatType, float)>()
         {
-            ( "CharacterStat", info.GetCorrectedValue(info.statValues["CharacterStat"]) ),
-            ( "+", 0 ),
-            ( "WeaponStat", info.GetCorrectedValue(info.statValues["WeaponStat"]) ),
-            ( "+", 0 ),
-            ( "SkillStat", info.GetCorrectedValue(info.statValues["SkillStat"]) )
+            ( UIStatType.Character, info.GetCorrectedValue(info.statValues[UIStatType.Character]) ),
+            ( UIStatType.PlusSign, 0 ),
+            ( UIStatType.Weapon, info.GetCorrectedValue(info.statValues[UIStatType.Weapon]) ),
+            ( UIStatType.PlusSign, 0 ),
+            ( UIStatType.SkillAdd, info.GetCorrectedValue(info.statValues[UIStatType.SkillAdd]) )
         };
 
         float tooltipWidth = 0;

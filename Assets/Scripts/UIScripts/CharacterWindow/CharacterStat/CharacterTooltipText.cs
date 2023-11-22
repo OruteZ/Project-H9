@@ -34,11 +34,11 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
         }
     }
 
-    public void SetCharacterTooltipText(string statName, string statType, float value, float xPosition) 
+    public void SetCharacterTooltipText(string statName, UIStatType statType, float value, float xPosition) 
     {
         OpenUI();
         string valueStr = "";
-        if (statType == "CharacterStat") 
+        if (statType == UIStatType.Character) 
         {
             valueStr = value.ToString();
             GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
@@ -62,23 +62,29 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
             }
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = str;
         }
-        else if (statType == "WeaponStat")
+        else if (statType == UIStatType.Weapon)
         {
             valueStr = value.ToString();
             GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = "장착 무기 보너스";
         }
-        else if (statType == "SkillStat")
+        else if (statType == UIStatType.SkillAdd)
         {
             valueStr = value.ToString();
             GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = "스킬 보너스";
         }
-        else
+        else if (statType == UIStatType.PlusSign)
         {
             valueStr = "+";
+            GetComponent<TextMeshProUGUI>().color = Color.white;
+            _subTooltipText.GetComponent<TextMeshProUGUI>().text = "";
+        }
+        else if (statType == UIStatType.MultiSign)
+        {
+            valueStr = "*";
             GetComponent<TextMeshProUGUI>().color = Color.white;
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = "";
         }

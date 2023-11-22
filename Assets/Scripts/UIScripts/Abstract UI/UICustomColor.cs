@@ -46,7 +46,7 @@ public static class UICustomColor
         string g = string.Format("{0:X2}", color.g);
         string b = string.Format("{0:X2}", color.b);
 
-        string result = r.Replace("0x", "") + g.Replace("0x", "") + b.Replace("0x", "");
+        string result = (r + g + b).Replace("0x", "");
         return result.ToUpper();
     }
 }

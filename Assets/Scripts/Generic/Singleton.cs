@@ -33,6 +33,7 @@ namespace Generic
                 if (gameObject != _instance.gameObject)
                 {
                     Destroy(gameObject);
+                    return;
                 }
             }
             

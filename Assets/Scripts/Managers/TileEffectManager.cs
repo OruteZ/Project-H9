@@ -92,7 +92,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 break;
             case ActionType.None:
                 break;
-            case ActionType.StopBleeding:
+            case ActionType.Hemostasis:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

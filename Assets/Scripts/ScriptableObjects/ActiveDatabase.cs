@@ -14,7 +14,7 @@ public class ActiveDatabase : ScriptableObject
     {
         if (index is >= 22001 and <= 22003) return ActionType.Fanning;
         if (index is 12002) return ActionType.Dynamite;
-        if (index is 12003) return ActionType.StopBleeding;
+        if (index is 12003) return ActionType.Hemostasis;
 
         return ActionType.None;
     }
@@ -60,8 +60,8 @@ public class ActiveDatabase : ScriptableObject
                     case ActionType.Dynamite:
                         unit.AddComponent<DynamiteAction>().SetAmount(info.amounts);
                         break;
-                    case ActionType.StopBleeding:
-                        unit.AddComponent<StopBleedingAction>().SetAmount(info.amounts);
+                    case ActionType.Hemostasis:
+                        unit.AddComponent<HemostasisAction>().SetAmount(info.amounts);
                         break;
                 }
 
@@ -92,5 +92,11 @@ public struct ActiveInfo
     public int index;
     public ActionType action;
     public float[] amounts;
+
+    public string commentary;
+    public int damage;
+    public int cost;
+    public int range;
+    public int radius;
 }
 

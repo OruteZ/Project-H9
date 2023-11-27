@@ -52,19 +52,11 @@ public class ActiveDatabase : ScriptableObject
                 var info = infos[i];
                 
                 Debug.Log("Add Component");
-                switch (info.action)
-                {
-                    case ActionType.Fanning:
-                        unit.AddComponent<FanningAction>().SetAmount(info.amounts);
-                        break;
-                    case ActionType.Dynamite:
-                        unit.AddComponent<DynamiteAction>().SetAmount(info.amounts);
-                        break;
-                    case ActionType.Hemostasis:
-                        unit.AddComponent<HemostasisAction>().SetAmount(info.amounts);
-                        break;
-                }
+                string componentName = info.action + "Action";
+                IUnitAction action = 
+                    unit.gameObject.AddComponent(Type.GetType(componentName)) as IUnitAction;
 
+                action?.SetData(info);
                 break;
             }
         }
@@ -96,6 +88,7 @@ public struct ActiveInfo
     public string commentary;
     public int damage;
     public int cost;
+    public int ammoCost; 
     public int range;
     public int radius;
 }

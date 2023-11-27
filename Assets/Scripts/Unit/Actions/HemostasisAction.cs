@@ -17,20 +17,11 @@ public class HemostasisAction : BaseAction
         return true;
     }
 
-    public override int GetAmmoCost()
-    {
-        return 0;
-    }
-
-    public override int GetCost()
-    {
-        return 1;
-    }
-
     public override bool IsSelectable()
     {
         if (unit.HasStatusEffect(StatusEffectType.Bleeding)) return true;
-        else return false;
+        
+        return false;
     }
 
     public override bool CanExecute()

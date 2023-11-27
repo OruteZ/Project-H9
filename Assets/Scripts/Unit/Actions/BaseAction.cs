@@ -12,7 +12,24 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     protected static readonly int FANNING = Animator.StringToHash("Fanning");
     protected static readonly int RELOAD = Animator.StringToHash("Reload");
     protected static readonly int DYNAMITE = Animator.StringToHash("Dynamite");
+
+    [SerializeField] protected int cost;
+    [SerializeField] protected int ammoCost;
+    [SerializeField] protected int range;
+    [SerializeField] protected int radius;
+    [SerializeField] protected int damage;
     
+    public void SetData(ActiveInfo info)
+    {
+        cost = info.cost;
+        ammoCost = info.ammoCost;
+        range = info.range;
+        radius = info.radius;
+        damage = info.damage;
+        
+        SetAmount(info.amounts);
+    }
+
     public abstract ActionType GetActionType();
     public abstract bool CanExecute();
 
@@ -28,9 +45,9 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         StartCoroutine(Coroutine());
     }
     public abstract void SetTarget(Vector3Int targetPos);
-    public abstract int GetAmmoCost();
+    public virtual int GetAmmoCost() => ammoCost;
 
-    public abstract int GetCost();
+    public virtual int GetCost() => cost;
 
     public abstract bool IsSelectable();
 
@@ -100,6 +117,6 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         FinishAction();
     }
 
-    public virtual void SetAmount(float[] amounts)
+    protected virtual void SetAmount(float[] amounts)
     { }
 }

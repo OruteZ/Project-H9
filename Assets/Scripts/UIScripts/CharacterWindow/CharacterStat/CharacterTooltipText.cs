@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
@@ -34,13 +35,11 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
         }
     }
 
-    public void SetCharacterTooltipText(string statName, UIStatType statType, float value, float xPosition) 
+    public void SetCharacterTooltipText(string statName, UIStatType statType, string valueStr) 
     {
         OpenUI();
-        string valueStr = "";
         if (statType == UIStatType.Character) 
         {
-            valueStr = value.ToString();
             GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
             string str = "캐릭터 보너스";
@@ -61,46 +60,31 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
                 }
             }
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = str;
+            _isSetContents = true;
         }
         else if (statType == UIStatType.Weapon)
         {
-            valueStr = value.ToString();
             GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = "장착 무기 보너스";
+            _isSetContents = true;
         }
-        else if (statType == UIStatType.SkillAdd)
+        else if (statType == UIStatType.Skill)
         {
-            valueStr = value.ToString();
             GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = "스킬 보너스";
+            _isSetContents = true;
         }
-        else if (statType == UIStatType.PlusSign)
+        else
         {
-            valueStr = "+";
             GetComponent<TextMeshProUGUI>().color = Color.white;
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = "";
+            _isSetContents = false;
         }
-        else if (statType == UIStatType.MultiSign)
-        {
-            valueStr = "*";
-            GetComponent<TextMeshProUGUI>().color = Color.white;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().text = "";
-        }
-        _isSetContents = (valueStr != "+");
+
         GetComponent<TextMeshProUGUI>().text = valueStr;
-
-
-        Vector2 size = GetComponent<RectTransform>().sizeDelta;
-        size.x = 15;
-
-        Vector3 pos = GetComponent<RectTransform>().localPosition;
-        pos.x = xPosition * size.x;
-        GetComponent<RectTransform>().localPosition = pos;
-
-        size.x *= value.ToString().Length;
-        GetComponent<RectTransform>().sizeDelta = size;
+        GetComponent<ContentSizeFitter>().SetLayoutHorizontal();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

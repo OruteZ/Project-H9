@@ -46,7 +46,6 @@ public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
     {
         for (int i = 0; i < size; i++)
         {
-            Debug.Log(_prefab);
             var ins = GameObject.Instantiate(_prefab, Vector3.zero, _prefab.transform.rotation) as GameObject;
             ins.transform.SetParent(_root, false);
             ins.GetComponent<RectTransform>().localPosition = Vector3.zero;

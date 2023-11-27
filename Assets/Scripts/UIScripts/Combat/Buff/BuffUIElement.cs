@@ -16,7 +16,6 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
     public void SetBuffUIElement(IDisplayableEffect effect, bool isBuff) 
     {
         OpenUI();
-        Debug.Log("UI On");
         displayedEffect = effect;
         /* buff image setting */
 

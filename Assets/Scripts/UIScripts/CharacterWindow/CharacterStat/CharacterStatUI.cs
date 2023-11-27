@@ -7,11 +7,9 @@ using TMPro;
 public enum UIStatType
 {
     Character,
-    SkillAdd,
-    SkillMulti,
+    Skill,
     Weapon,
-    PlusSign,
-    MultiSign
+    Sign
 }
 public class CharacterStatUIInfo
 {
@@ -46,8 +44,7 @@ public class CharacterStatUIInfo
         statValues = new Dictionary<UIStatType, float>() 
         {
             {UIStatType.Character,   0.0f},
-            {UIStatType.SkillAdd,    0.0f},
-            {UIStatType.SkillMulti,  0.0f},
+            {UIStatType.Skill,       0.0f},
             {UIStatType.Weapon,      0.0f}
         };
     }
@@ -156,48 +153,59 @@ public class CharacterStatUI : UISystem
         SetCharacterStatText();
         SetWeaponStatText();
     }
-    private void SetStatInfo(Player player) 
+    private void SetStatInfo(Player player)
     {
+        //player
         UnitStat stat = player.stat;
         Weapon weapon = player.weapon;
-        //player
+        WeaponType weaponType = weapon.GetWeaponType();
+        if (stat is null) return;
+
+        List<(string, StatType)> _strAndType = new List<(string, StatType)>()
+        {
+            ("HP",                  StatType.MaxHp),
+            ("Concentration",       StatType.Concentration),
+            ("Sight Range",         StatType.SightRange),
+            ("Speed",               StatType.Speed),
+            ("Action Point",        StatType.MaxActionPoint),
+            ("Additional Hit Rate", StatType.AdditionalHitRate),
+            ("Critical Chance",     StatType.CriticalChance)
+        };
+        if (weaponType is WeaponType.Revolver)
+        {
+            _strAndType.Add(("Additional Damage", StatType.RevolverAdditionalDamage));
+            _strAndType.Add(("Additional Range", StatType.RevolverAdditionalRange));
+            _strAndType.Add(("Critical Damage", StatType.RevolverCriticalDamage));
+        }
+        else if (weaponType is WeaponType.Repeater)
+        {
+            _strAndType.Add(("Additional Damage", StatType.RepeaterAdditionalDamage));
+            _strAndType.Add(("Additional Range", StatType.RepeaterAdditionalRange));
+            _strAndType.Add(("Critical Damage", StatType.RepeaterCriticalDamage));
+        }
+        else if (weaponType is WeaponType.Shotgun)
+        {
+            _strAndType.Add(("Additional Damage", StatType.ShotgunAdditionalDamage));
+            _strAndType.Add(("Additional Range", StatType.ShotgunAdditionalRange));
+            _strAndType.Add(("Critical Damage", StatType.ShotgunCriticalDamage));
+        }
+
         //level
         characterStatInfo["Level"].SetStatValue(UIStatType.Character, GameManager.instance.level);
         characterStatInfo["Exp"].SetStatValue(UIStatType.Character, GameManager.instance.curExp);
 
         //basic stat
-        characterStatInfo["HP"].SetStatValue(UIStatType.Character, stat.GetStat(StatType.MaxHp));
-        //characterStatInfo["HP"].SetStatValue("WeaponStat", weapon.bonusStat.maxHp); //¿¹½Ã
-        characterStatInfo["Concentration"].SetStatValue(UIStatType.Character, stat.concentration);
-        characterStatInfo["Sight Range"].SetStatValue(UIStatType.Character, stat.sightRange);
-        characterStatInfo["Speed"].SetStatValue(UIStatType.Character, stat.speed);
-        characterStatInfo["Action Point"].SetStatValue(UIStatType.Character, stat.maxActionPoint);
+        for (int i = 0; i < _strAndType.Count; i++)
+        {
+            float originalStat = stat.GetOriginalStat(_strAndType[i].Item2);
+            float buffedStat = stat.GetStat(_strAndType[i].Item2);
+            characterStatInfo[_strAndType[i].Item1].SetStatValue(UIStatType.Character, originalStat);
+            characterStatInfo[_strAndType[i].Item1].SetStatValue(UIStatType.Skill, buffedStat - originalStat);
+        }
 
         //bonus stat
-        characterStatInfo["Additional Hit Rate"].SetStatValue(UIStatType.Character, stat.additionalHitRate);
         characterStatInfo["Additional Hit Rate"].SetStatValue(UIStatType.Weapon, weapon.hitRate);
-        characterStatInfo["Critical Chance"].SetStatValue(UIStatType.Character, stat.criticalChance);
         characterStatInfo["Critical Chance"].SetStatValue(UIStatType.Weapon, weapon.criticalChance);
-
-        WeaponType weaponType = weapon.GetWeaponType();
-        if (weaponType is WeaponType.Revolver)
-        {
-            characterStatInfo["Additional Damage"].SetStatValue(UIStatType.Character, stat.revolverAdditionalDamage);
-            characterStatInfo["Additional Range"].SetStatValue(UIStatType.Character, stat.revolverAdditionalRange);
-            characterStatInfo["Critical Damage"].SetStatValue(UIStatType.Character, stat.revolverCriticalDamage);
-        }
-        else if (weaponType is WeaponType.Repeater)
-        {
-            characterStatInfo["Additional Damage"].SetStatValue(UIStatType.Character, stat.repeaterAdditionalDamage);
-            characterStatInfo["Additional Range"].SetStatValue(UIStatType.Character, stat.repeaterAdditionalRange);
-            characterStatInfo["Critical Damage"].SetStatValue(UIStatType.Character, stat.repeaterCriticalDamage);
-        }
-        else if (weaponType is WeaponType.Shotgun)
-        {
-            characterStatInfo["Additional Damage"].SetStatValue(UIStatType.Character, stat.shotgunAdditionalDamage);
-            characterStatInfo["Additional Range"].SetStatValue(UIStatType.Character, stat.shotgunAdditionalRange);
-            characterStatInfo["Critical Damage"].SetStatValue(UIStatType.Character, stat.shotgunCriticalDamage);
-        }
         characterStatInfo["Critical Damage"].SetStatValue(UIStatType.Weapon, weapon.criticalDamage);
 
         //weapon

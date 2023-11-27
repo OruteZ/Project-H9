@@ -61,7 +61,6 @@ public class BuffUI : UISystem
 
         foreach (IDisplayableEffect effect in currentState)
         {
-            Debug.Log(effect.GetIndex() +" / "+effect.CanDisplay());
             if (effect.CanDisplay())
             {
                 UI.transform.GetChild(buffCount++).GetComponent<BuffUIElement>().SetBuffUIElement(effect, isBuff);

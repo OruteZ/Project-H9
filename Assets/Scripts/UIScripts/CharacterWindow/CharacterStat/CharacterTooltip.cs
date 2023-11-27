@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
@@ -13,7 +14,7 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
 
     private CharacterStatTextElement _textElement;
 
-    [SerializeField] private GameObject[] _CharacterStatTooltipTexts;
+    [SerializeField] private GameObject _CharacterStatTooltipTexts;
     void Start()
     {
         isMouseOver = false;
@@ -65,58 +66,56 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
 
 
         //Text Setting
-        foreach (GameObject texts in _CharacterStatTooltipTexts) 
+        for (int i = 0; i < _CharacterStatTooltipTexts.transform.childCount; i++)
         {
-            texts.GetComponent<CharacterTooltipText>().CloseUI();
+            _CharacterStatTooltipTexts.transform.GetChild(i).GetComponent<CharacterTooltipText>().CloseUI();
         }
         if (info.statName == "Name") return;
         bool isExistCharacterStat = (info.statValues[UIStatType.Character] != 0);
         bool isExistWeaponStat = (info.statValues[UIStatType.Weapon] != 0);
-        bool isExistSkillAddStat = (info.statValues[UIStatType.SkillAdd] != 0);
-        bool isExistSkillMultiStat = (info.statValues[UIStatType.SkillAdd] != 0);
-        bool[] isExist =
+        bool isExistSkillStat = (info.statValues[UIStatType.Skill] != 0);
+        bool[] isExistStat =
         {
             isExistCharacterStat,
-            (isExistCharacterStat && (isExistWeaponStat || isExistSkillAddStat)), 
+            isExistSkillStat,
             isExistWeaponStat,
-            ((isExistCharacterStat || isExistWeaponStat) && (isExistSkillAddStat)),
-            isExistSkillAddStat
         };
-        List<(UIStatType, float)> tooltipTexts = new List<(UIStatType, float)>()
+        List<(UIStatType, string)> tooltipTexts = new List<(UIStatType, string)>()
         {
-            ( UIStatType.Character, info.GetCorrectedValue(info.statValues[UIStatType.Character]) ),
-            ( UIStatType.PlusSign, 0 ),
-            ( UIStatType.Weapon, info.GetCorrectedValue(info.statValues[UIStatType.Weapon]) ),
-            ( UIStatType.PlusSign, 0 ),
-            ( UIStatType.SkillAdd, info.GetCorrectedValue(info.statValues[UIStatType.SkillAdd]) )
+            ( UIStatType.Character, info.GetCorrectedValue(info.statValues[UIStatType.Character]).ToString() ),
+            ( UIStatType.Skill,     info.GetCorrectedValue(info.statValues[UIStatType.Skill]).ToString() ),
+            ( UIStatType.Weapon,    info.GetCorrectedValue(info.statValues[UIStatType.Weapon]).ToString() )
         };
+        (UIStatType, string) plusSign = (UIStatType.Sign, "+");
 
-        float tooltipWidth = 0;
-        for (int i = 0; i < isExist.Length; i++)
+        List<(UIStatType, string)> existText = new List<(UIStatType, string)>();
+        for (int i = 0; i < isExistStat.Length; i++)
         {
-            if (isExist[i])
+            if (isExistStat[i]) 
             {
-                tooltipWidth += tooltipTexts[i].Item2.ToString().Length;
+                if (existText.Count != 0 && existText.Count % 2 == 1) 
+                {
+                    existText.Add(plusSign);
+                }
+                existText.Add(tooltipTexts[i]);
+            } 
+        }
+
+        for (int i = 0; i < _CharacterStatTooltipTexts.transform.childCount; i++)
+        {
+            GameObject textObject = _CharacterStatTooltipTexts.transform.GetChild(i).gameObject;
+            if (i < existText.Count)
+            {
+                textObject.SetActive(true);
+                textObject.GetComponent<CharacterTooltipText>().SetCharacterTooltipText(info.statName, existText[i].Item1, existText[i].Item2);
+            }
+            else 
+            {
+                textObject.SetActive(false);
             }
         }
-        float leftXPosition = -(tooltipWidth / 2);
-        int tooltipCount = 0;
-        for (int i = 0; i < isExist.Length; i++)
-        {
-            if (isExist[i])
-            {
-                float calculatedXPosition = leftXPosition + tooltipTexts[i].Item2.ToString().Length / 2.0f;
-                _CharacterStatTooltipTexts[tooltipCount++].GetComponent<CharacterTooltipText>()
-                    .SetCharacterTooltipText(info.statName, tooltipTexts[i].Item1, tooltipTexts[i].Item2, calculatedXPosition);
-                leftXPosition += tooltipTexts[i].Item2.ToString().Length;
-            }
-        }
-        if (tooltipWidth == 0)
-        {
-            float calculatedXPosition = leftXPosition + tooltipTexts[0].Item2.ToString().Length / 2.0f;
-            _CharacterStatTooltipTexts[0].GetComponent<CharacterTooltipText>()
-                       .SetCharacterTooltipText(info.statName, tooltipTexts[0].Item1, tooltipTexts[0].Item2, 0);
-        }
+        _CharacterStatTooltipTexts.GetComponent<HorizontalLayoutGroup>().CalculateLayoutInputHorizontal();
+        _CharacterStatTooltipTexts.GetComponent<HorizontalLayoutGroup>().SetLayoutHorizontal();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

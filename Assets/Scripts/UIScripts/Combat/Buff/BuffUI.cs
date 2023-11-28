@@ -12,6 +12,19 @@ public class BuffUI : UISystem
 
     private List<IDisplayableEffect> _currentBuffs = new List<IDisplayableEffect>();
     private List<IDisplayableEffect> _currentDebuffs = new List<IDisplayableEffect>();
+    private List<StatusEffectType> _debuffSortPriority = new List<StatusEffectType>()
+    {
+        StatusEffectType.Stun,
+        StatusEffectType.UnArmed,
+        //StatusEffectType.Taunted,
+        StatusEffectType.Concussion,
+        StatusEffectType.Fracture,
+        StatusEffectType.Blind,
+        StatusEffectType.Bleeding,
+        StatusEffectType.Burning
+    };
+
+    [SerializeField] private List<Sprite> _debuffIconSprites;
 
     private new void Awake()
     {
@@ -48,7 +61,23 @@ public class BuffUI : UISystem
             }
         }
         SetBuffUI(_BuffUI, _currentBuffs, true);
+        SortDebuff();
         SetBuffUI(_DebuffUI, _currentDebuffs, false);
+    }
+    private void SortDebuff()
+    {
+        List<IDisplayableEffect> sortedList = new List<IDisplayableEffect>();
+        for (int i = 0; i < _debuffSortPriority.Count; i++) 
+        {
+            for (int j = 0; j < _currentDebuffs.Count; j++)
+            {
+                if (((StatusEffect)_currentDebuffs[j]).GetStatusEffectType() == _debuffSortPriority[i]) 
+                {
+                    sortedList.Add(_currentDebuffs[j]);
+                }
+            }
+        }
+        _currentDebuffs = sortedList;
     }
     private void SetBuffUI(GameObject UI, List<IDisplayableEffect> currentState, bool isBuff)
     {
@@ -90,5 +119,16 @@ public class BuffUI : UISystem
     public GameObject GetBuffWindow() 
     {
         return _BuffDebuffWindow;
+    }
+
+    public Sprite GetDebuffIconSprite(StatusEffectType effType) 
+    {
+        if ((int)effType >= 10 && (int)effType <= 17) 
+        {
+            Debug.Log(effType);
+            return _debuffIconSprites[(int)effType - 10];
+        }
+        Debug.LogError("상태 이상 아이콘을 찾을 수 없습니다.");
+        return null;
     }
 }

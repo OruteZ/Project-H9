@@ -76,7 +76,7 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
         bool isExistSkillStat = (info.statValues[UIStatType.Skill] != 0);
         bool[] isExistStat =
         {
-            isExistCharacterStat,
+            true,
             isExistSkillStat,
             isExistWeaponStat,
         };
@@ -91,6 +91,7 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
         List<(UIStatType, string)> existText = new List<(UIStatType, string)>();
         for (int i = 0; i < isExistStat.Length; i++)
         {
+            //if (isExistStat[i])
             if (isExistStat[i]) 
             {
                 if (existText.Count != 0 && existText.Count % 2 == 1) 

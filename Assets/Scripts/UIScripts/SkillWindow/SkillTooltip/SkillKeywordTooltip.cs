@@ -17,7 +17,6 @@ public class SkillKeywordTooltip : UIElement
         pos.y = -(rt.sizeDelta.y + 10) * order;
         GetComponent<RectTransform>().localPosition = pos;
 
-        Debug.Log(name);
         _keywordNameText.GetComponent<TextMeshProUGUI>().text = name;
         _keywordDescriptionText.GetComponent<TextMeshProUGUI>().text = description;
     }

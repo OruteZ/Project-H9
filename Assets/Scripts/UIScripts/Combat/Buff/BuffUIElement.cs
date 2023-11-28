@@ -17,8 +17,14 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
     {
         OpenUI();
         displayedEffect = effect;
-        /* buff image setting */
+        // buff image setting
+        if (effect is StatusEffect sEffect) 
+        {
+            Sprite icon = UIManager.instance.combatUI.buffUI.GetDebuffIconSprite(sEffect.GetStatusEffectType());
+            _buffImage.GetComponent<Image>().sprite = icon;
+        }
 
+        //Outline Effect Setting
         if (isBuff)
         {
             _buffEffect.GetComponent<Image>().color = UICustomColor.BuffColor;
@@ -27,8 +33,16 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
         {
             _buffEffect.GetComponent<Image>().color = UICustomColor.DebuffColor;
         }
-        string durationText = effect.GetDuration().ToString();
-        if (effect.GetDuration() <= 0 || effect.GetDuration() >= 100) 
+
+        //Text Setting
+        int duration = effect.GetDuration();
+        if (effect is Bleeding) 
+        {
+            duration = effect.GetStack();
+        }
+
+        string durationText = duration.ToString();
+        if (duration <= 0 || duration >= 100)
         {
             durationText = "";
         }

@@ -194,7 +194,6 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     {
         if (displayedAction is not null)
         {
-            Debug.Log(gameObject.transform.position);
             UIManager.instance.combatUI.combatActionUI.ShowActionUITooltip(this.gameObject);
         }
     }

@@ -24,7 +24,7 @@ public abstract class StatusEffect : IDisplayableEffect
         }
     }
 
-    protected Unit creator;
+    protected readonly Unit creator;
     public bool removable = false;
 
     #region ABSTRACT

@@ -1,4 +1,4 @@
-﻿public interface IShootingActionKind
+﻿public interface IShootingAction
 {
     
 }

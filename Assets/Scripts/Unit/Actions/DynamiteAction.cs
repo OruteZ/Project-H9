@@ -15,22 +15,12 @@ public class DynamiteAction : BaseAction
     public override void SetTarget(Vector3Int targetPos)
     {
         _center = targetPos;
-        _targets = FieldSystem.unitSystem.GetUnitListInRange(targetPos, explosionRange);
+        _targets = FieldSystem.unitSystem.GetUnitListInRange(targetPos, radius);
     }
 
     public override bool CanExecuteImmediately()
     {
         return false;
-    }
-
-    public override int GetAmmoCost()
-    {
-        return 0;
-    }
-
-    public override int GetCost()
-    {
-        return 1;
     }
 
     public override bool IsSelectable()
@@ -46,7 +36,7 @@ public class DynamiteAction : BaseAction
             return false;
         }
 
-        if (throwingRange < Hex.Distance(unit.hexPosition, _center))
+        if (range < Hex.Distance(unit.hexPosition, _center))
         {
             Debug.LogWarning("Too Far to throw bomb");
             return false;
@@ -55,21 +45,8 @@ public class DynamiteAction : BaseAction
         return true;
     }
 
-    public override void SetAmount(float[] amounts)
-    {
-        if (amounts.Length is not 3)
-        {
-            Debug.LogError($"Dynamite Action needs 3 amounts. length of amounts is {amounts.Length}");
-            return;
-        }
-
-        damage = (int)amounts[0];
-        explosionRange = (int)amounts[1];
-        throwingRange = (int)amounts[2];
-    }
-
-    public int GetExplosionRange() => explosionRange;
-    public int GetThrowingRange() => Mathf.Clamp(throwingRange, 0, unit.stat.sightRange);
+    public int GetExplosionRange() => radius;
+    public int GetThrowingRange() => Mathf.Clamp(range, 0, unit.stat.sightRange);
 
     protected override IEnumerator ExecuteCoroutine()
     {
@@ -81,10 +58,6 @@ public class DynamiteAction : BaseAction
 
     private Vector3Int _center;
     private List<Unit> _targets;
-
-    [SerializeField] private int damage;
-    [SerializeField] private int explosionRange;
-    [SerializeField] private int throwingRange;
 
     private void Explode()
     {

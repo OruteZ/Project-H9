@@ -30,7 +30,7 @@ public class Player : Unit
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
         if (UIManager.instance.isMouseOverUI) return;
-        if (HasStatusEffect(StatusEffectType.Stun)) EndTurn();
+        // if (HasStatusEffect(StatusEffectType.Stun)) EndTurn();
 
         var isMouseOnTile = TryGetMouseOverTilePos(out var onMouseTilePos);
 

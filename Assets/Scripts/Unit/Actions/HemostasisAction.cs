@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StopBleedingAction : BaseAction
+public class HemostasisAction : BaseAction
 {
     public override ActionType GetActionType()
     {
-        return ActionType.StopBleeding;
+        return ActionType.Hemostasis;
     }
 
     public override void SetTarget(Vector3Int targetPos)
@@ -17,20 +17,11 @@ public class StopBleedingAction : BaseAction
         return true;
     }
 
-    public override int GetAmmoCost()
-    {
-        return 0;
-    }
-
-    public override int GetCost()
-    {
-        return 1;
-    }
-
     public override bool IsSelectable()
     {
         if (unit.HasStatusEffect(StatusEffectType.Bleeding)) return true;
-        else return false;
+        
+        return false;
     }
 
     public override bool CanExecute()

@@ -364,6 +364,8 @@ public abstract class Unit : MonoBehaviour, IUnit
             Debug.Log("Cost is loss, Cost is " + action.GetCost());
             return;
         }
+        if (HasStatusEffect(StatusEffectType.Stun)) return;
+        
 #if UNITY_EDITOR
         Debug.Log("Select Action : " + action);
 #endif

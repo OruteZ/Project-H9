@@ -426,6 +426,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
         
         _seController.AddStatusEffect(effect);
+        UIManager.instance.onPlayerStatChanged.Invoke();
         return true;
     }
 

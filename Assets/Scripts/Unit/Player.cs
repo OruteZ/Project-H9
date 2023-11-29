@@ -53,7 +53,6 @@ public class Player : Unit
             SetBusy();
 
             var actionSuccess = TryExecuteUnitAction(onMouseTilePos);
-            Debug.Log("actionSuccess: " + actionSuccess);
             
             if(actionSuccess is false) ClearBusy();
         }

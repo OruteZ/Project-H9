@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public enum UIStatType
+{
+    Character,
+    Skill,
+    Weapon,
+    Sign
+}
 public class CharacterStatUIInfo
 {
     private Dictionary<string, string> _statNameTransleation = new Dictionary<string, string>()
@@ -26,23 +33,23 @@ public class CharacterStatUIInfo
             {"Range",                   "무기 사거리" },
             {"",                        "" },
     };
-    //이걸 이런 식으로 여기 이러는 게 맞나?
+    //이걸 이런 식으로 여기 이러는 게 맞나? 스탯 스크립트 테이블이 필요할 듯?
 
     public string statName { get; private set; }
-    public Dictionary<string, float> statValues { get; private set; }
+    public Dictionary<UIStatType, float> statValues { get; private set; }
 
     public CharacterStatUIInfo(string name) 
     {
         statName = name;
-        statValues = new Dictionary<string, float>() 
+        statValues = new Dictionary<UIStatType, float>() 
         {
-            {"CharacterStat",   0.0f},
-            {"WeaponStat",      0.0f},
-            {"SkillStat",       0.0f}
+            {UIStatType.Character,   0.0f},
+            {UIStatType.Skill,       0.0f},
+            {UIStatType.Weapon,      0.0f}
         };
     }
 
-    public void SetStatValue(string statType, float value) 
+    public void SetStatValue(UIStatType statType, float value) 
     {
         if (!statValues.ContainsKey(statType)) 
         {
@@ -146,55 +153,66 @@ public class CharacterStatUI : UISystem
         SetCharacterStatText();
         SetWeaponStatText();
     }
-    private void SetStatInfo(Player player) 
+    private void SetStatInfo(Player player)
     {
+        //player
         UnitStat stat = player.stat;
         Weapon weapon = player.weapon;
-        //player
-        //level
-        characterStatInfo["Level"].SetStatValue("CharacterStat", GameManager.instance.level);
-        characterStatInfo["Exp"].SetStatValue("CharacterStat", GameManager.instance.curExp);
-
-        //basic stat
-        characterStatInfo["HP"].SetStatValue("CharacterStat", stat.GetStat(StatType.MaxHp));
-        //characterStatInfo["HP"].SetStatValue("WeaponStat", weapon.bonusStat.maxHp); //예시
-        characterStatInfo["Concentration"].SetStatValue("CharacterStat", stat.concentration);
-        characterStatInfo["Sight Range"].SetStatValue("CharacterStat", stat.sightRange);
-        characterStatInfo["Speed"].SetStatValue("CharacterStat", stat.speed);
-        characterStatInfo["Action Point"].SetStatValue("CharacterStat", stat.maxActionPoint);
-
-        //bonus stat
-        characterStatInfo["Additional Hit Rate"].SetStatValue("CharacterStat", stat.additionalHitRate);
-        characterStatInfo["Additional Hit Rate"].SetStatValue("WeaponStat", weapon.hitRate);
-        characterStatInfo["Critical Chance"].SetStatValue("CharacterStat", stat.criticalChance);
-        characterStatInfo["Critical Chance"].SetStatValue("WeaponStat", weapon.criticalChance);
-
         WeaponType weaponType = weapon.GetWeaponType();
+        if (stat is null) return;
+
+        List<(string, StatType)> _strAndType = new List<(string, StatType)>()
+        {
+            ("HP",                  StatType.MaxHp),
+            ("Concentration",       StatType.Concentration),
+            ("Sight Range",         StatType.SightRange),
+            ("Speed",               StatType.Speed),
+            ("Action Point",        StatType.MaxActionPoint),
+            ("Additional Hit Rate", StatType.AdditionalHitRate),
+            ("Critical Chance",     StatType.CriticalChance)
+        };
         if (weaponType is WeaponType.Revolver)
         {
-            characterStatInfo["Additional Damage"].SetStatValue("CharacterStat", stat.revolverAdditionalDamage);
-            characterStatInfo["Additional Range"].SetStatValue("CharacterStat", stat.revolverAdditionalRange);
-            characterStatInfo["Critical Damage"].SetStatValue("CharacterStat", stat.revolverCriticalDamage);
+            _strAndType.Add(("Additional Damage", StatType.RevolverAdditionalDamage));
+            _strAndType.Add(("Additional Range", StatType.RevolverAdditionalRange));
+            _strAndType.Add(("Critical Damage", StatType.RevolverCriticalDamage));
         }
         else if (weaponType is WeaponType.Repeater)
         {
-            characterStatInfo["Additional Damage"].SetStatValue("CharacterStat", stat.repeaterAdditionalDamage);
-            characterStatInfo["Additional Range"].SetStatValue("CharacterStat", stat.repeaterAdditionalRange);
-            characterStatInfo["Critical Damage"].SetStatValue("CharacterStat", stat.repeaterCriticalDamage);
+            _strAndType.Add(("Additional Damage", StatType.RepeaterAdditionalDamage));
+            _strAndType.Add(("Additional Range", StatType.RepeaterAdditionalRange));
+            _strAndType.Add(("Critical Damage", StatType.RepeaterCriticalDamage));
         }
         else if (weaponType is WeaponType.Shotgun)
         {
-            characterStatInfo["Additional Damage"].SetStatValue("CharacterStat", stat.shotgunAdditionalDamage);
-            characterStatInfo["Additional Range"].SetStatValue("CharacterStat", stat.shotgunAdditionalRange);
-            characterStatInfo["Critical Damage"].SetStatValue("CharacterStat", stat.shotgunCriticalDamage);
+            _strAndType.Add(("Additional Damage", StatType.ShotgunAdditionalDamage));
+            _strAndType.Add(("Additional Range", StatType.ShotgunAdditionalRange));
+            _strAndType.Add(("Critical Damage", StatType.ShotgunCriticalDamage));
         }
-        characterStatInfo["Critical Damage"].SetStatValue("WeaponStat", weapon.criticalDamage);
+
+        //level
+        characterStatInfo["Level"].SetStatValue(UIStatType.Character, GameManager.instance.level);
+        characterStatInfo["Exp"].SetStatValue(UIStatType.Character, GameManager.instance.curExp);
+
+        //basic stat
+        for (int i = 0; i < _strAndType.Count; i++)
+        {
+            float originalStat = stat.GetOriginalStat(_strAndType[i].Item2);
+            float buffedStat = stat.GetStat(_strAndType[i].Item2);
+            characterStatInfo[_strAndType[i].Item1].SetStatValue(UIStatType.Character, originalStat);
+            characterStatInfo[_strAndType[i].Item1].SetStatValue(UIStatType.Skill, buffedStat - originalStat);
+        }
+
+        //bonus stat
+        characterStatInfo["Additional Hit Rate"].SetStatValue(UIStatType.Weapon, weapon.hitRate);
+        characterStatInfo["Critical Chance"].SetStatValue(UIStatType.Weapon, weapon.criticalChance);
+        characterStatInfo["Critical Damage"].SetStatValue(UIStatType.Weapon, weapon.criticalDamage);
 
         //weapon
-        characterStatInfo["Name"].SetStatValue("WeaponStat", weapon.nameIndex);
-        characterStatInfo["Ammo"].SetStatValue("WeaponStat", weapon.maxAmmo);
-        characterStatInfo["Damage"].SetStatValue("WeaponStat", weapon.weaponDamage);
-        characterStatInfo["Range"].SetStatValue("WeaponStat", weapon.weaponRange);
+        characterStatInfo["Name"].SetStatValue(UIStatType.Weapon, weapon.nameIndex);
+        characterStatInfo["Ammo"].SetStatValue(UIStatType.Weapon, weapon.maxAmmo);
+        characterStatInfo["Damage"].SetStatValue(UIStatType.Weapon, weapon.weaponDamage);
+        characterStatInfo["Range"].SetStatValue(UIStatType.Weapon, weapon.weaponRange);
     }
     private void SetCharacterLevelText()
     {

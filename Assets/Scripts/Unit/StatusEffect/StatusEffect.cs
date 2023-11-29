@@ -57,7 +57,7 @@ public abstract class StatusEffect : IDisplayableEffect
     }
 
 
-    public int GetName()
+    public int GetIndex()
     {
         return (int)GetStatusEffectType();
     }

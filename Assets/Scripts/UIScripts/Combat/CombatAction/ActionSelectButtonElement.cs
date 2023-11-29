@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
-    public IUnitAction _action { get; private set; }
+    public IUnitAction displayedAction { get; private set; }
 
     [SerializeField] private GameObject _skillImage;
     [SerializeField] private GameObject _highlightEffect;
@@ -45,19 +45,19 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     /// <param name="player"> 해당 버튼을 수행할 플레이어 캐릭터 개체 </param>
     public void SetActionSelectButton(IUnitAction action, Player player)
     {
-        _action = action;
+        this.displayedAction = action;
 
         //Button selectable Setting
         // 플레이어의 턴이 아닌 경우 - 선택 불가
         // 플레이어가 이미 행동을 실행 중인 경우 - 선택 불가
         // 플레이어가 어떤 행동을 선택했는데, 해당 버튼의 행동이 선택된 행동이 아닐 경우 - 선택 불가. 단, Idle버튼은 제외.
         // SetCostIcons() 메소드에서 Cost가 부족하다고 판단되면 - 선택 불가
-        _isSelectable = _action.IsSelectable();
+        _isSelectable = this.displayedAction.IsSelectable();
         IUnitAction playerSelectedAction = player.GetSelectedAction();
         
         bool isPlayerTurn = FieldSystem.turnSystem.turnOwner is Player;
         bool isPlayerSelectAction = (playerSelectedAction.GetActionType() != ActionType.Idle);
-        bool isSelectedAction = (playerSelectedAction.GetActionType() == _action.GetActionType());
+        bool isSelectedAction = (playerSelectedAction.GetActionType() == this.displayedAction.GetActionType());
         bool isIdleAction = (action.GetActionType() == ActionType.Idle);
         bool isActiveAction = playerSelectedAction.IsActive();
         if ((!isPlayerTurn) || isActiveAction || (isPlayerSelectAction && !isSelectedAction && !isIdleAction))
@@ -120,7 +120,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     /// </summary>
     public void OffActionSelectButton()
     {
-        _action = null;
+        displayedAction = null;
         //Button selectable Setting
         _isSelectable = false;
         _isEnoughCost = false;
@@ -140,10 +140,10 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
 
     private void SetCostIcons(int playerCurrentAp, int playerCurrentAmmo)
     {
-        int apCost = _action.GetCost();
+        int apCost = displayedAction.GetCost();
         //MoveAction의 GetCost는 이전 턴에 MoveAction이 소모한 AP를 반환하는 상태라 임시방편으로 작성
-        if (_action.GetActionType() is ActionType.Move) apCost = 1;
-        int ammoCost = _action.GetAmmoCost();
+        //if (action.GetActionType() is ActionType.Move) apCost = 1;
+        int ammoCost = displayedAction.GetAmmoCost();
 
         Color32 ApColor = UICustomColor.ActionAPColor;
         Color32 AmmoColor = UICustomColor.ActionAmmoColor;
@@ -179,11 +179,11 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     {
         if (!GetComponent<Button>().IsInteractable()) return;
         if (FieldSystem.unitSystem.IsCombatFinish(out var none)) return;
-        bool isIdleButton = (_action.GetActionType() == ActionType.Idle);
+        bool isIdleButton = (displayedAction.GetActionType() == ActionType.Idle);
         bool isActiveSelectedAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
         if (isIdleButton && isActiveSelectedAction) return;
 
-        FieldSystem.unitSystem.GetPlayer().SelectAction(_action);
+        FieldSystem.unitSystem.GetPlayer().SelectAction(displayedAction);
     }
 
     /// <summary>
@@ -192,7 +192,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     /// <param name="eventData"></param>
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_action is not null)
+        if (displayedAction is not null)
         {
             UIManager.instance.combatUI.combatActionUI.ShowActionUITooltip(this.gameObject);
         }
@@ -204,7 +204,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     /// <param name="eventData"></param>
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (_action is not null)
+        if (displayedAction is not null)
         {
             UIManager.instance.combatUI.combatActionUI.HideActionUITooltip();
         }

@@ -124,7 +124,6 @@ public class SkillUI : UISystem
 
         if (_skill.skillLevel > 0)
         {
-            Debug.Log(_skill.skillInfo.index);
             _skillElement.SetSkillArrow();
         }
     }

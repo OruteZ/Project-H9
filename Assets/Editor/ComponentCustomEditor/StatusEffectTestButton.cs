@@ -15,7 +15,8 @@ using UnityEngine;
             if (GUILayout.Button("Effect Player") && EditorApplication.isPlaying)
             {
                 tester.Effect();
-            }
+                //UIManager.instance.onPlayerStatChanged.Invoke();
+        }
         
             if (GUILayout.Button("Debug Effect") && EditorApplication.isPlaying)
             {
@@ -31,7 +32,7 @@ using UnityEngine;
                 {
                     if (status.CanDisplay() is false) continue;
                 
-                    Debug.Log($"{status.GetName()} : {status.GetStack()}stack : {status.GetDuration()}duration");
+                    Debug.Log($"{status.GetIndex()} : {status.GetStack()}stack : {status.GetDuration()}duration");
                 }
             }
         }

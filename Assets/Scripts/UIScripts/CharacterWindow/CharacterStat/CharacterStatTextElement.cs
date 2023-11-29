@@ -13,6 +13,9 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
     private bool _isOpenTooltip = false;
     public bool isMouseOver { get; private set; }
     private float _mouseOverCount = 0.0f;
+
+    private bool _isTooltipOpenable = true;
+    private string[] _tooltipExceptionStrings = { "Level", "Exp", "Name" };
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +27,7 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
     // Update is called once per frame
     void Update()
     {
-        if (_nameText.text == "Level" || _nameText.text == "Exp") return;
+        if (!_isTooltipOpenable) return;
         if (isMouseOver && !_isOpenTooltip && _isSetContents) 
         {
             _mouseOverCount += Time.deltaTime;
@@ -40,6 +43,14 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
         _nameText.text = info.statName;
         _contentsText.text = info.GetFinalStatValueString();
         _isSetContents = (_nameText.text != "");
+
+        foreach (string compStr in _tooltipExceptionStrings) 
+        {
+            if (compStr == info.statName) 
+            {
+                _isTooltipOpenable = false;
+            }
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -19,21 +19,21 @@ public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
     {
         if (enable) return;
         enable = true;
-        
-        unit.stat.Subtract(GetStatType(), GetAmount());
+
+        unit.stat.Add(GetStatType(), GetAmount());
     }
 
     public override void OnConditionDisable()
     {
         if (enable is false) return;
         enable = false;
-        
-        unit.stat.Add(GetStatType(), GetAmount());
+
+        unit.stat.Subtract(GetStatType(), GetAmount());
     }
     
     #region IDISPLAYABLE_EFFECT
 
-    public int GetName()
+    public int GetIndex()
     {
         return passive.index;
     }

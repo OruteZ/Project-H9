@@ -88,7 +88,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
         _skillKeywordScripts = new List<KeywordScript>();
         for (int i = 0; i < skillKeywordTable.Count; i++)
         {
-            KeywordScript script = new KeywordScript(int.Parse(skillKeywordTable[i][0]), skillKeywordTable[i][(int)_language], skillKeywordTable[i][(int)_language + 3], skillKeywordTable[i][3] == "1");
+            KeywordScript script = new KeywordScript(int.Parse(skillKeywordTable[i][0]), skillKeywordTable[i][(int)_language], skillKeywordTable[i][(int)ScriptLanguage.English], skillKeywordTable[i][(int)_language + 3], skillKeywordTable[i][3] == "1");
             _skillKeywordScripts.Add(script);
         }
     }
@@ -222,6 +222,18 @@ public class SkillManager : Generic.Singleton<SkillManager>
                 return script;
             }
         }
+        return null;
+    }
+    public KeywordScript FindSkillKeywordByName(string name)
+    {
+        foreach (KeywordScript script in _skillKeywordScripts)
+        {
+            if (script.Ename == name)
+            {
+                return script;
+            }
+        }
+        Debug.Log("키워드 탐색 실패");
         return null;
     }
     public int FindUpgradeSkillIndex(SkillInfo sInfo, ActionType type)

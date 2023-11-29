@@ -32,7 +32,9 @@ public class TurnUI : UISystem
         int currentTurn = 0;
         if (GameManager.instance.CompareState(GameState.Combat))
         {
-            currentTurn = FieldSystem.unitSystem.GetPlayer().currentRound;
+            Player player = FieldSystem.unitSystem.GetPlayer();
+            if (player is null) return;
+            currentTurn = player.currentRound;
         }
         else 
         {

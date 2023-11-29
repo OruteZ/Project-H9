@@ -53,7 +53,10 @@ public class SkillTreeElement : UIElement
             UICustomColor.SkillIconLearnableColor,
             UICustomColor.SkillIconLearnedColor
         };
-        yield return new WaitForSeconds(speed);
+        if (state != 2)
+        {
+            yield return new WaitForSeconds(speed);
+        }
         _effectImage.color = effectColor[state];
         yield break;
     }

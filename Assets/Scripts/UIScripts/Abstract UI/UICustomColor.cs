@@ -6,7 +6,7 @@ public static class UICustomColor
     private static readonly Color32 whiteColor = new Color32(251, 251, 251, 255);
     private static readonly Color32 grayColor = new Color32(128, 128, 128, 255);
     private static readonly Color32 blackColor = new Color32(0, 0, 0, 255);
-    private static readonly Color32 redColor = new Color32(251, 251, 251, 255);
+    private static readonly Color32 redColor = new Color32(160, 32, 64, 255);
     private static readonly Color32 orangeColor = new Color32(199, 94, 8, 255);
     private static readonly Color32 yellowColor = new Color32(240, 240, 0, 255);
     private static readonly Color32 greenColor = new Color32(18, 219, 36, 255);
@@ -46,7 +46,7 @@ public static class UICustomColor
         string g = string.Format("{0:X2}", color.g);
         string b = string.Format("{0:X2}", color.b);
 
-        string result = r.Replace("0x", "") + g.Replace("0x", "") + b.Replace("0x", "");
+        string result = (r + g + b).Replace("0x", "");
         return result.ToUpper();
     }
 }

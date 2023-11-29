@@ -10,13 +10,15 @@ using UnityEditor;
 public class ActiveDatabase : ScriptableObject
 {
     #region STATIC
-    ActionType GetActionRange(int index)
+    ActionType GetActionRange(string actionName)
     {
-        if (index is >= 22001 and <= 22003) return ActionType.Fanning;
-        if (index is 12002) return ActionType.Dynamite;
-        if (index is 12003) return ActionType.Hemostasis;
-
-        return ActionType.None;
+        return actionName switch
+        {
+            "Fanning" => ActionType.Fanning,
+            "Dynamite" => ActionType.Dynamite,
+            "Hemostasis" => ActionType.Hemostasis,
+            _ => ActionType.None
+        };
     }
     #endregion
     
@@ -35,8 +37,14 @@ public class ActiveDatabase : ScriptableObject
             var curInfo = new ActiveInfo
             {
                 index = int.Parse(info[0]),
-                action = GetActionRange(int.Parse(info[0])),
-                amounts = FileRead.ConvertStringToArray<float>(info[2])
+                action = GetActionRange(info[(int)Column.Effect]),
+                amounts = FileRead.ConvertStringToArray<float>(info[(int)Column.EffectAmount]),
+                commentary = info[(int)Column.Commentary],
+                damage = int.Parse(info[(int)Column.Damage]),
+                cost = int.Parse(info[(int)Column.Cost]),
+                range = int.Parse(info[(int)Column.Range]),
+                radius = int.Parse(info[(int)Column.Radius]),
+                // ammoCost = int.Parse(info[(int)Column.AmmoCost]),
             };
             
             infos.Add(curInfo);
@@ -91,5 +99,18 @@ public struct ActiveInfo
     public int ammoCost; 
     public int range;
     public int radius;
+}
+
+internal enum Column
+{
+    Index,
+    Effect,
+    EffectAmount,
+    Commentary, 
+    Damage,
+    Cost,
+    Range,
+    Radius,
+    AmmoCost,
 }
 

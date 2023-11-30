@@ -5,7 +5,14 @@ using UnityEngine;
 
 public interface IUnitAction {
     ActionType GetActionType();
-    
+
+    /// <summary>
+    /// UnitAction의 Damage, range, cost와 같은 값들을 설정합니다.
+    /// UnitDatabase의 GetAction함수에서 Action을 반환 하기 전 호출됩니다.
+    /// </summary>
+    /// <param name="info"> 해당 Active Action의 정보입니다.</param>
+    void SetData(ActiveInfo info);
+
     /// <summary>
     /// UnitAction의 초기값을 설정합니다.
     /// </summary>
@@ -73,5 +80,5 @@ public enum ActionType {
     Idle,
     Reload,
     Fanning,
-    StopBleeding,
+    Hemostasis,
 }

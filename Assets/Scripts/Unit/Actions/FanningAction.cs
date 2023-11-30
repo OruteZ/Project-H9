@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class FanningAction : BaseAction, IShootingActionKind
+public class FanningAction : BaseAction, IShootingAction
 {
     //todo : 애니메이션 확정되면 다 Frame단위 Int로 변경
     private const float TURNING_TIME = 0.5f;
@@ -16,7 +16,7 @@ public class FanningAction : BaseAction, IShootingActionKind
 
     private float _hitRateModifier;
 
-    public override void SetAmount(float[] amounts)
+    protected override void SetAmount(float[] amounts)
     {
         if (amounts.Length is not 1)
         {
@@ -35,11 +35,6 @@ public class FanningAction : BaseAction, IShootingActionKind
     {
         _target = FieldSystem.unitSystem.GetUnit(targetPos);
         Debug.Log("Panning Target : " + _target);
-    }
-
-    public override int GetCost()
-    {
-        return 4;
     }
 
     public override int GetAmmoCost()

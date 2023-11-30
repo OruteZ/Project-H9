@@ -27,7 +27,7 @@ public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
     {
         if (enable is false) return;
         enable = false;
-
+        
         unit.stat.Subtract(GetStatType(), GetAmount());
     }
     

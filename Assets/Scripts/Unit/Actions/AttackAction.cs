@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AttackAction : BaseAction, IShootingActionKind
+public class AttackAction : BaseAction, IShootingAction
 {
     public override ActionType GetActionType() => ActionType.Attack;
 

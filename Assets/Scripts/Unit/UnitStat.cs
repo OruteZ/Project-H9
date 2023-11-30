@@ -44,6 +44,12 @@ public class UnitStat : ICloneable
 
     public int GetStat(StatType type)
     {
+        if (IsAllStat(type))
+        {
+            Debug.LogError("Trying to access AllStat, but it's not allowed");
+            return -999999;
+        }
+        
         int idx = (int)type;
         
         return Mathf.RoundToInt((original[idx] + _additional[idx]) * (_multiplier[idx] / 100f));
@@ -51,32 +57,94 @@ public class UnitStat : ICloneable
 
     public int GetOriginalStat(StatType type)
     {
+        if (IsAllStat(type))
+        {
+            Debug.LogError("Trying to access AllStat, but it's not allowed");
+            return -999999;
+        }
+        
         return original[(int)type];
     }
 
     public void SetOriginalStat(StatType type, int value)
     {
-        original[(int)type] = value;
-    }
-
-    public void Subtract(StatType type, int value)
-    {
-        _additional[(int)type] -= value;
+        //is all stat type, convert to array and set value
+        if (IsAllStat(type))
+        {
+            StatType[] eachType = ConvertAllTypeToEachArray(type);
+            foreach (var statType in eachType)
+            {
+                original[(int)statType] = value;
+            }
+            return;
+        }
         
-    }
-
-    public void AddMultiplier(StatType type, int value)
-    {
-        _multiplier[(int)type] += value;
+        original[(int)type] = value;
     }
 
     public void Add(StatType type, int value)
     {
+        //is all stat type, convert to array and set value
+        if (IsAllStat(type))
+        {
+            StatType[] eachType = ConvertAllTypeToEachArray(type);
+            foreach (var statType in eachType)
+            {
+                _additional[(int)statType] += value;
+            }
+            return;
+        }
+        
         _additional[(int)type] += value;
+    }
+
+    public void AddMultiplier(StatType type, int value)
+    {
+        //is all stat type, convert to array and set value
+        if (IsAllStat(type))
+        {
+            StatType[] eachType = ConvertAllTypeToEachArray(type);
+            foreach (var statType in eachType)
+            {
+                _multiplier[(int)statType] += value;
+            }
+            return;
+        }
+        
+        _multiplier[(int)type] += value;
+    }
+
+    public void Subtract(StatType type, int value)
+    {
+        //is all stat type, convert to array and set value
+        if (IsAllStat(type))
+        {
+            StatType[] eachType = ConvertAllTypeToEachArray(type);
+            foreach (var statType in eachType)
+            {
+                _additional[(int)statType] -= value;
+            }
+
+            return;
+        }
+
+        _additional[(int)type] -= value;
     }
 
     public void SubtractMultiplier(StatType type, int value)
     {
+        //is all stat type, convert to array and set value
+        if (IsAllStat(type))
+        {
+            StatType[] eachType = ConvertAllTypeToEachArray(type);
+            foreach (var statType in eachType)
+            {
+                _multiplier[(int)statType] -= value;
+            }
+
+            return;
+        }
+        
         _multiplier[(int)type] -= value;
     }
 
@@ -142,37 +210,66 @@ public class UnitStat : ICloneable
         }
     }
     
-    public int GetAdditional(StatType type)
+    public static bool IsAllStat(StatType type)
     {
-        return _additional[(int)type];
+        return type is StatType.AllAdditionalDamage or StatType.AllAdditionalRange or StatType.AllCriticalDamage;
     }
-    
-    public int GetMultiplier(StatType type)
+
+    public static StatType[] ConvertAllTypeToEachArray(StatType allType)
     {
-        return _multiplier[(int)type];
+        //if it is not all stat type, return null
+        if (IsAllStat(allType) is false) return null;
+        
+        StatType[] eachType = new StatType[3];
+        switch (allType)
+        {
+            case StatType.AllAdditionalDamage:
+                eachType[0] = StatType.RevolverAdditionalDamage;
+                eachType[1] = StatType.RepeaterAdditionalDamage;
+                eachType[2] = StatType.ShotgunAdditionalDamage;
+                break;
+            case StatType.AllAdditionalRange:
+                eachType[0] = StatType.RevolverAdditionalRange;
+                eachType[1] = StatType.RepeaterAdditionalRange;
+                eachType[2] = StatType.ShotgunAdditionalRange;
+                break;
+            case StatType.AllCriticalDamage:
+                eachType[0] = StatType.RevolverCriticalDamage;
+                eachType[1] = StatType.RepeaterCriticalDamage;
+                eachType[2] = StatType.ShotgunCriticalDamage;
+                break;
+        }
+        
+        return eachType;
     }
 }
 
 
 public enum StatType
 {
-    MaxHp, // 0
-    CurHp, // 1
-    Concentration, // 2
-    SightRange, // 3
-    Speed, // 4
-    MaxActionPoint,// 5
-    CurActionPoint, //6
-    AdditionalHitRate,// 7
-    CriticalChance,// 8
-    RevolverAdditionalDamage,// 9
-    RepeaterAdditionalDamage,// 10
-    ShotgunAdditionalDamage,// 11
-    RevolverAdditionalRange,// 12
-    RepeaterAdditionalRange,// 13
-    ShotgunAdditionalRange,// 14
-    RevolverCriticalDamage,// 15
-    RepeaterCriticalDamage,// 16
-    ShotgunCriticalDamage,// 18
-    Length,
+    Null = 0,
+    MaxHp = 1,
+    CurHp = 2,
+    Concentration = 3,
+    SightRange = 4,
+    Speed = 5,
+    MaxActionPoint = 6,
+    CurActionPoint = 7,
+    AdditionalHitRate = 8,
+    CriticalChance = 9,
+    
+    RevolverAdditionalDamage = 10,
+    RevolverAdditionalRange = 11,
+    RevolverCriticalDamage = 12,
+    RepeaterAdditionalDamage = 13,
+    RepeaterAdditionalRange = 14,
+    RepeaterCriticalDamage = 15,
+    ShotgunAdditionalDamage = 16,
+    ShotgunAdditionalRange = 17,
+    ShotgunCriticalDamage = 18,
+    Length = 19,
+    
+    AllAdditionalDamage = 19,
+    AllAdditionalRange = 20,
+    AllCriticalDamage = 21,
 }

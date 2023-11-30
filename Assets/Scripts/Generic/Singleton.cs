@@ -47,6 +47,11 @@ namespace Generic
             }
         }
 
+        private void OnDestroy()
+        {
+            _instance = null;
+        }
+
         // [RuntimeInitializeOnLoadMethod]
         // private static void RuntimeInitializeOnLoad()
         // {

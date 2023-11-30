@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.UI;
 
 public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private GameObject _skillTooltipTexts;
     [SerializeField] private GameObject _skillTooltipNameText;
     [SerializeField] private GameObject _skillTooltipDescriptionText;
     [SerializeField] private GameObject _skillTooltipButtonText;
@@ -17,7 +19,6 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 
     static private SkillKeywordPool _keywordTooltips = new SkillKeywordPool();
     private List<SkillKeywordWrapper> _activeKeywordTooltips = new List<SkillKeywordWrapper>();
-    private int _keywordTooltipCount = 0;
     private KeywordScript _keyword;
 
     // Start is called before the first frame update
@@ -29,6 +30,16 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 
         _keywordTooltips = new SkillKeywordPool();
         _keywordTooltips.Init("Prefab/Keyword Tooltip", _skillKeywordTooltipContainer.transform, 0);
+    }
+    private void Update()
+    {
+        if (_skillKeywordTooltipContainer.activeSelf)
+        {
+            GameObject rootGameObject = _skillKeywordTooltipContainer.transform.GetChild(0).gameObject;
+            if (rootGameObject is null) return;
+            rootGameObject.GetComponent<VerticalLayoutGroup>().CalculateLayoutInputVertical();
+            rootGameObject.GetComponent<VerticalLayoutGroup>().SetLayoutVertical();
+        }
     }
 
     public void SetSkillTooltip(Vector3 pos, int skillIndex)
@@ -46,37 +57,39 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 
         _skillTooltipNameText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillName(_currentSkillIndex);
         _skillTooltipDescriptionText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillDescription(_currentSkillIndex);
+        _skillTooltipDescriptionText.GetComponent<ContentSizeFitter>().SetLayoutVertical();
+        _skillTooltipTexts.GetComponent<ContentSizeFitter>().SetLayoutVertical();
 
         TextMeshProUGUI buttonText = _skillTooltipButtonText.GetComponent<TextMeshProUGUI>();
-        if (GameManager.instance.CompareState(GameState.World))
+        if (currentSkill.isLearnable)
         {
-            if (currentSkill.isLearnable)
+            if (_skillManager.IsEnoughSkillPoint())
             {
-                if (_skillManager.IsEnoughSkillPoint())
+                if (GameManager.instance.CompareState(GameState.World))
                 {
-                    _isInteractableButton = true;
                     buttonText.text = "습득";
+                    _isInteractableButton = true;
                 }
                 else
                 {
-                    buttonText.text = "스킬 포인트 부족";
+                    buttonText.text = "전투 중 스킬 습득 불가";
                 }
             }
             else
             {
-                if (currentSkill.isLearned)
-                {
-                    buttonText.text = "습득 완료";
-                }
-                else
-                {
-                    buttonText.text = "습득 불가";
-                }
+                buttonText.text = "스킬 포인트 부족";
             }
         }
-        else 
+        else
         {
-            buttonText.text = "전투 중 스킬 습득 불가";
+            if (currentSkill.isLearned)
+            {
+                buttonText.text = "습득 완료";
+            }
+            else
+            {
+                buttonText.text = "습득 불가";
+            }
         }
     }
 
@@ -88,7 +101,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     {
         if (_isInteractableButton && _skillManager.LearnSkill(_currentSkillIndex))
         {
-            UIManager.instance.skillUI.UpdateAllSkillUINode();
+            UIManager.instance.skillUI.UpdateRelatedSkillNodes(_currentSkillIndex);
         }
         SetSkillTooltip(GetComponent<RectTransform>().position, _currentSkillIndex);
     }
@@ -106,18 +119,19 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     public void SetKeywordTooltipContents(KeywordScript kw)
     {
         _keyword = kw;
-        SetKeywordTooltips();
+        SetKeywordTooltipsText();
     }
-    private void SetKeywordTooltips()
+    private void SetKeywordTooltipsText()
     {
         if (_keyword == null) return;
         var t = _keywordTooltips.Set();
-        t.tooltip.SetSkillKeywordTooltip(_keywordTooltipCount++, _keyword.name, _keyword.description);
+        t.tooltip.SetSkillKeywordTooltip(_keyword.name, _keyword.GetDescription(), _activeKeywordTooltips.Count);
+        _activeKeywordTooltips.Add(t);
     }
     public void ClearKeywordTooltips()
     {
-        _keywordTooltipCount = 0;
         _keywordTooltips.Reset();
+        _activeKeywordTooltips.Clear();
         _skillKeywordTooltipContainer.SetActive(false);
     }
     public override void CloseUI()

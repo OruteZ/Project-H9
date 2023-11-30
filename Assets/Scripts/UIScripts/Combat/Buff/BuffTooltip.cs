@@ -40,6 +40,6 @@ public class BuffTooltip : UIElement
     {
         KeywordScript kw = SkillManager.instance.GetSkillKeyword(effect.GetIndex());
         _buffName = kw.name;
-        _buffDesc = kw.description;
+        _buffDesc = kw.GetDescription();
     }
 }

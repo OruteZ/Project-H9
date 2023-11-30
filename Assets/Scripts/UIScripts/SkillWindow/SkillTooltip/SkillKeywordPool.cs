@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class SkillKeywordWrapper : ObjectPoolWrapper<RectTransform>
 {
@@ -21,20 +22,18 @@ public class SkillKeywordWrapper : ObjectPoolWrapper<RectTransform>
 
 public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
 {
-    public override void Init(string objectKey, Transform parent, float generalLifeTime, uint expectedSize = 10, string rootName = "")
+    public override void Init(string objectKey, Transform parent, float generalLifeTime, uint expectedSize = 20, string rootName = "")
     {
         base.Init(objectKey, parent, generalLifeTime, expectedSize, rootName);
         _root.transform.localPosition = Vector3.zero;
         _root.transform.localScale = Vector3.one;
 
-        SupplyPool(expectedSize / 2);
+        SupplyPool(expectedSize);
+        _root.transform.gameObject.AddComponent<VerticalLayoutGroup>();
     }
 
     public override SkillKeywordWrapper Set()
     {
-        if (_limitSize > _pool.Count || 0 == _pool.Count)
-            SupplyPool(_limitSize);
-
         var target = _pool.Dequeue();
         target.Enable = false;
         target.Instance.gameObject.SetActive(true);

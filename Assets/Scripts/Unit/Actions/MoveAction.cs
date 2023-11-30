@@ -24,7 +24,6 @@ public class MoveAction : BaseAction
     public override int GetCost()
     {
         //fracture ? 2 : 1;
-        Debug.Log(unit.HasStatusEffect(StatusEffectType.Fracture));
         return unit.HasStatusEffect(StatusEffectType.Fracture) ? 2 : 1;
     }
 

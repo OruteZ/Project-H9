@@ -71,12 +71,13 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
             _CharacterStatTooltipTexts.transform.GetChild(i).GetComponent<CharacterTooltipText>().CloseUI();
         }
         if (info.statName == "Name") return;
-        bool isExistCharacterStat = (info.statValues[UIStatType.Character] != 0);
+        //bool isExistCharacterStat = (info.statValues[UIStatType.Character] != 0);
+        bool isExistCharacterStat = !(info.statName == "Ammo" || info.statName == "Damage" || info.statName == "Range");
         bool isExistWeaponStat = (info.statValues[UIStatType.Weapon] != 0);
         bool isExistSkillStat = (info.statValues[UIStatType.Skill] != 0);
         bool[] isExistStat =
         {
-            true,
+            isExistCharacterStat,
             isExistSkillStat,
             isExistWeaponStat,
         };

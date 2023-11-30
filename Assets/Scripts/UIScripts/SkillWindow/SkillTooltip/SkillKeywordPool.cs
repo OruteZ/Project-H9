@@ -36,6 +36,7 @@ public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
     {
         var target = _pool.Dequeue();
         target.Enable = false;
+        target.Instance.transform.SetAsLastSibling();
         target.Instance.gameObject.SetActive(true);
         _working.Add(target);
         return target;

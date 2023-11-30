@@ -10,8 +10,6 @@ public class KeywordScript
     public string description { get; private set; }
     public bool isStatusEffect { get; private set; }
 
-    public List<int> keywordIndex { get; private set; }
-
     private static string _substitutedDescription = "";
     public KeywordScript(int idx, string str1, string str2, string str3, bool isEff)
     {
@@ -20,8 +18,6 @@ public class KeywordScript
         Ename = str2;
         description = str3;
         isStatusEffect = isEff;
-
-        keywordIndex = new List<int>();
     }
     public string GetDescription()
     {
@@ -32,10 +28,6 @@ public class KeywordScript
             _substitutedDescription = _substitutedDescription.Substring(1, _substitutedDescription.Length - 2);
 
         }
-        if (keywordIndex.Count != 0)
-        {
-            UIManager.instance.skillUI.SetKeywordTooltipContents(keywordIndex);
-        }
         return _substitutedDescription;
     }
     private void SubstituteKeyword()
@@ -43,7 +35,6 @@ public class KeywordScript
         string origin = _substitutedDescription;
         string[] split = { "<keyword:", ">" };
         string result = "";
-        keywordIndex.Clear();
         while (origin.Contains(split[0]))
         {
             int startIndex = origin.IndexOf(split[0]);
@@ -53,7 +44,6 @@ public class KeywordScript
             string afterString = GetSubString(origin, endIndex + split[1].Length, origin.Length);
             result += beforeString;
             string highlightColor = UICustomColor.GetColorHexCode(UICustomColor.PlayerStatColor);
-            keywordIndex.Add(int.Parse(middleString));
             string keyword = SkillManager.instance.GetSkillKeyword(int.Parse(middleString)).name;
             result += string.Format("<color=#{0}>{1}</color>", highlightColor, keyword);
             origin = afterString;

@@ -44,7 +44,7 @@ public class ActiveDatabase : ScriptableObject
                 cost = int.Parse(info[(int)Column.Cost]),
                 range = int.Parse(info[(int)Column.Range]),
                 radius = int.Parse(info[(int)Column.Radius]),
-                // ammoCost = int.Parse(info[(int)Column.AmmoCost]),
+                ammoCost = 0//int.Parse(info[(int)Column.AmmoCost]),
             };
             
             infos.Add(curInfo);

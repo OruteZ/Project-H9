@@ -89,19 +89,19 @@ public class SkillDescriptionScript
                 }
                 else if (valueName == "damage")
                 {
-                    //value = info.damage;
+                    value = info.damage;
                 }
                 else if (valueName == "cost")
                 {
-                    //value = info.cost;
+                    value = info.cost;
                 }
                 else if (valueName == "range")
                 {
-                    //value = info.range;
+                    value = info.range;
                 }
                 else if (valueName == "radius")
                 {
-                    //value = info.radius;
+                    value = info.radius;
                 }
             }
             else

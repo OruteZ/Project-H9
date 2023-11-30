@@ -17,7 +17,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     public int hp => stat.GetStat(StatType.CurHp);
 
     public Transform hand => _unitModel.hand;
-    public Transform back => _unitModel.back;
+    public Transform chest => _unitModel.chest;
     public Transform waist => _unitModel.waist;
     
     public Animator animator => _unitModel.animator;

@@ -7,15 +7,13 @@ using UnityEngine.Events;
 public class UnitStatusEffectController
 {
     private readonly Unit _unit;
-    public ref UnityEvent OnStatusEffectChanged => ref _unit.onStatusEffectChanged;
-
-    private bool _unitTurn;
-    
+    public ref UnityEvent onStatusEffectChanged => ref _unit.onStatusEffectChanged;
     private List<StatusEffect> _statusEffects = new ();
 
     public UnitStatusEffectController(Unit unit)
     {
         _unit = unit;
+        
         unit.onTurnStart.AddListener((u) => OnTurnStart());
         unit.onTurnEnd.AddListener((u) => OnTurnFinished());
     }
@@ -32,7 +30,7 @@ public class UnitStatusEffectController
                 //combine
                 _statusEffects.Remove(effect);
                 _statusEffects.Add(effect + statusEffect);
-                OnStatusEffectChanged.Invoke();
+                onStatusEffectChanged.Invoke();
                 return;
             }
         }
@@ -40,7 +38,7 @@ public class UnitStatusEffectController
         //else, add
         _statusEffects.Add(statusEffect);
         statusEffect.Setup(this);
-        OnStatusEffectChanged.Invoke();
+        onStatusEffectChanged.Invoke();
     }
     
     public void RemoveStatusEffect(StatusEffect statusEffect)
@@ -53,7 +51,7 @@ public class UnitStatusEffectController
             if (effect.GetStatusEffectType() == statusEffect.GetStatusEffectType())
             {
                 _statusEffects.Remove(effect);
-                OnStatusEffectChanged.Invoke();
+                onStatusEffectChanged.Invoke();
                 return;
             }
         }
@@ -67,7 +65,7 @@ public class UnitStatusEffectController
             if (effect.GetStatusEffectType() == type)
             {
                 _statusEffects.Remove(effect);
-                OnStatusEffectChanged.Invoke();
+                onStatusEffectChanged.Invoke();
                 return;
             }
         }
@@ -107,8 +105,6 @@ public class UnitStatusEffectController
 
     private void OnTurnStart()
     {
-        _unitTurn = true;
-        
         //use for, every IStatusEffect call OnTurnStart
         foreach (var statusEffect in _statusEffects)
         {
@@ -118,8 +114,6 @@ public class UnitStatusEffectController
 
     private void OnTurnFinished()
     {
-        _unitTurn = false;
-        
         //every IStatusEffect call OnTurnFinished
         foreach (var statusEffect in _statusEffects)
         {
@@ -132,7 +126,7 @@ public class UnitStatusEffectController
 
         if (removeAny)
         {
-            OnStatusEffectChanged.Invoke();
+            onStatusEffectChanged.Invoke();
         }
     }
     

@@ -11,7 +11,7 @@ public abstract class StatusEffect : IDisplayableEffect
     }
     
     protected UnitStatusEffectController controller;
-    public UnityEvent onStackChanged => controller?.OnStatusEffectChanged;
+    public UnityEvent onStackChanged => controller?.onStatusEffectChanged;
     
     private int _damage;
     protected int damage

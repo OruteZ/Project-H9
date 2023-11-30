@@ -35,40 +35,6 @@ public class SkillDescriptionScript
         }
         return _substitutedDescription;
     }
-    private void SubstituteDescriptionValues(int skillIndex)  //대입할 수가 설명 맨 앞에 오는 경우 오류 가능성 높음.
-    {
-        string result = "";
-        char[] splitChar = { '{', '}' };
-        string[] splitString = _substitutedDescription.Split(splitChar);
-        bool isSubstitutableValue = false;
-        foreach (string str in splitString)
-        {
-            if (!isSubstitutableValue)
-            {
-                result += str;
-            }
-            else
-            {
-                string amountText;
-                if (SkillManager.instance.GetSkill(skillIndex).skillInfo.IsPassive())
-                {
-                    //현재 effectAmount가 배열 형식이 아닌 1개의 변수만을 지니고 있는데,
-                    //기획 측의 말에 따르면 여러 변수가 저장될 수도 있다고 해서 만약 구조가 변경되면 이 부분도 수정해야 함.
-                    PassiveInfo info = SkillManager.instance.passiveDB.GetPassiveInfo(skillIndex);
-                    amountText = info.effectAmount.ToString();
-                }
-                else
-                {
-                    ActiveInfo info = SkillManager.instance.activeDB.GetActiveInfo(skillIndex);
-                    amountText = info.amounts[int.Parse(str)].ToString();
-                }
-                string highlightColor = UICustomColor.GetColorHexCode(UICustomColor.PlayerStatColor);
-                result += string.Format("<color=#{0}>{1}</color>", highlightColor, amountText);
-            }
-            isSubstitutableValue = !isSubstitutableValue;
-        }
-        _substitutedDescription = result;
-    }
     private void SubstituteKeyword()
     {
         string origin = _substitutedDescription;
@@ -123,15 +89,19 @@ public class SkillDescriptionScript
                 }
                 else if (valueName == "damage")
                 {
+                    //value = info.damage;
                 }
                 else if (valueName == "cost")
                 {
+                    //value = info.cost;
                 }
                 else if (valueName == "range")
                 {
+                    //value = info.range;
                 }
                 else if (valueName == "radius")
                 {
+                    //value = info.radius;
                 }
             }
             else
@@ -148,4 +118,39 @@ public class SkillDescriptionScript
         }
         _substitutedDescription = result + origin;
     }
+
+    //private void SubstituteDescriptionValues(int skillIndex)  //대입할 수가 설명 맨 앞에 오는 경우 오류 가능성 높음.
+    //{
+    //    string result = "";
+    //    char[] splitChar = { '{', '}' };
+    //    string[] splitString = _substitutedDescription.Split(splitChar);
+    //    bool isSubstitutableValue = false;
+    //    foreach (string str in splitString)
+    //    {
+    //        if (!isSubstitutableValue)
+    //        {
+    //            result += str;
+    //        }
+    //        else
+    //        {
+    //            string amountText;
+    //            if (SkillManager.instance.GetSkill(skillIndex).skillInfo.IsPassive())
+    //            {
+    //                //현재 effectAmount가 배열 형식이 아닌 1개의 변수만을 지니고 있는데,
+    //                //기획 측의 말에 따르면 여러 변수가 저장될 수도 있다고 해서 만약 구조가 변경되면 이 부분도 수정해야 함.
+    //                PassiveInfo info = SkillManager.instance.passiveDB.GetPassiveInfo(skillIndex);
+    //                amountText = info.effectAmount.ToString();
+    //            }
+    //            else
+    //            {
+    //                ActiveInfo info = SkillManager.instance.activeDB.GetActiveInfo(skillIndex);
+    //                amountText = info.amounts[int.Parse(str)].ToString();
+    //            }
+    //            string highlightColor = UICustomColor.GetColorHexCode(UICustomColor.PlayerStatColor);
+    //            result += string.Format("<color=#{0}>{1}</color>", highlightColor, amountText);
+    //        }
+    //        isSubstitutableValue = !isSubstitutableValue;
+    //    }
+    //    _substitutedDescription = result;
+    //}
 }

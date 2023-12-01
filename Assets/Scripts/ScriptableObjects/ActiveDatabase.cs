@@ -36,7 +36,7 @@ public class ActiveDatabase : ScriptableObject
         {
             var curInfo = new ActiveInfo
             {
-                index = int.Parse(info[0]),
+                index = int.Parse(info[(int)Column.Index]),
                 action = GetActionRange(info[(int)Column.Effect]),
                 amounts = FileRead.ConvertStringToArray<float>(info[(int)Column.EffectAmount]),
                 commentary = info[(int)Column.Commentary],

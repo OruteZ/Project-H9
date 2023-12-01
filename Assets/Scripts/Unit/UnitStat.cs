@@ -150,6 +150,9 @@ public class UnitStat : ICloneable
 
     public void ResetModifier()
     {
+        _additional = new int[(int)StatType.Length];
+        _multiplier = new int[(int)StatType.Length];
+        
         for (int i = 0; i < (int)StatType.Length; i++)
         {
             _additional[i] = 0;

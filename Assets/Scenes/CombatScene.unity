@@ -337,6 +337,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df925ac8b091684682c6931a44c4f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
 --- !u!114 &8809603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +354,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3cc784cd3504643a6ddc38c4871420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
 --- !u!114 &8809604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,6 +371,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb8c1692a078274687545adece96562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
   rotationSpeed: 10
   moveSpeed: 4
 --- !u!114 &8809605
@@ -378,7 +393,7 @@ MonoBehaviour:
   unitName: 
   hexTransform: {fileID: 0}
   stat:
-    original: 
+    original: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   hasAttacked: 0
   currentRound: 0
   onTurnStart:
@@ -451,6 +466,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4903b8c0073cb0e4d85cbf51c73842c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
 --- !u!43 &13246649
 Mesh:
   m_ObjectHideFlags: 0
@@ -20921,7 +20941,6 @@ GameObject:
   - component: {fileID: 1066030854}
   - component: {fileID: 1066030853}
   - component: {fileID: 1066030852}
-  - component: {fileID: 1066030851}
   - component: {fileID: 1066030850}
   - component: {fileID: 1066030849}
   - component: {fileID: 1066030856}
@@ -20963,7 +20982,7 @@ MonoBehaviour:
   unitName: 
   hexTransform: {fileID: 0}
   stat:
-    original: 
+    original: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   hasAttacked: 0
   currentRound: 0
   onTurnStart:
@@ -21026,18 +21045,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position: {x: 7, y: 3, z: -10}
---- !u!114 &1066030851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1066030847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59fe5d302d351f344b1dfbc903d7df96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1066030852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21050,6 +21057,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df925ac8b091684682c6931a44c4f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
 --- !u!114 &1066030853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21062,6 +21074,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3cc784cd3504643a6ddc38c4871420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
 --- !u!114 &1066030854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21074,6 +21091,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb8c1692a078274687545adece96562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
   rotationSpeed: 10
   moveSpeed: 4
 --- !u!114 &1066030855
@@ -21088,6 +21110,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4903b8c0073cb0e4d85cbf51c73842c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
 --- !u!136 &1066030856
 CapsuleCollider:
   m_ObjectHideFlags: 0

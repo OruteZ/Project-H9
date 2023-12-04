@@ -113,23 +113,37 @@ public class GameManager : Generic.Singleton<GameManager>
             return;
         }
 
-        int USIPosition = -1;
         if (skillInfo.IsActive())
         {
-            ActiveInfo aInfo = SkillManager.instance.activeDB.GetActiveInfo(skillInfo.index);
-            int upgSkillIndex = SkillManager.instance.FindUpgradeSkillIndex(skillInfo, aInfo.action);
-            USIPosition = list.IndexOf(upgSkillIndex);
+            ActionType addedActionType = SkillManager.instance.activeDB.GetActiveInfo(skillInfo.index).action;
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                ActionType actionType = SkillManager.instance.activeDB.GetActiveInfo(list[i]).action;
+                if (addedActionType == actionType) 
+                {
+                    list.RemoveAt(i);
+                }
+            }
         }
+        list.Add(skillInfo.index);
 
-        if (USIPosition == -1)
-        {
-            list.Add(skillInfo.index);
-        }
-        else
-        {
-            list.RemoveAt(USIPosition);
-            list.Insert(USIPosition, skillInfo.index);
-        }
+        //int USIPosition = -1;
+        //if (skillInfo.IsActive())
+        //{
+        //    ActiveInfo aInfo = SkillManager.instance.activeDB.GetActiveInfo(skillInfo.index);
+        //    int upgSkillIndex = SkillManager.instance.FindUpgradeSkillIndex(skillInfo, aInfo.action);
+        //    USIPosition = list.IndexOf(upgSkillIndex);
+        //}
+
+        //if (USIPosition == -1)
+        //{
+        //    list.Add(skillInfo.index);
+        //}
+        //else
+        //{
+        //    list.RemoveAt(USIPosition);
+        //    list.Insert(USIPosition, skillInfo.index);
+        //}
     }
 
     public void Update()

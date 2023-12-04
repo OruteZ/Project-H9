@@ -70,7 +70,6 @@ public class GameManager : Generic.Singleton<GameManager>
         worldTurn = FieldSystem.turnSystem.turnNumber;
 
         playerWorldPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
-        //SceneManager.LoadScene(combatSceneName);
         ChangeState(GameState.Combat);
         LoadingManager.instance.LoadingScene(combatSceneName);
     }
@@ -93,7 +92,6 @@ public class GameManager : Generic.Singleton<GameManager>
         if (CompareState(state)) return;
 
         _currentState = state;
-        //UIManager.instance.ChangeScenePrepare(state);
     }
 
     public void AddPlayerSkillListElement(SkillInfo skillInfo)
@@ -107,12 +105,8 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             list = playerActiveIndexList;
         }
-        if (list.IndexOf(skillInfo.index) != -1)
-        {
-            Debug.Log("동일한 스킬 연속 습득 오류");
-            return;
-        }
 
+        int previousSkillPositionIndex = -1;
         if (skillInfo.IsActive())
         {
             ActionType addedActionType = SkillManager.instance.activeDB.GetActiveInfo(skillInfo.index).action;
@@ -122,28 +116,18 @@ public class GameManager : Generic.Singleton<GameManager>
                 if (addedActionType == actionType) 
                 {
                     list.RemoveAt(i);
+                    previousSkillPositionIndex = i;
                 }
             }
         }
-        list.Add(skillInfo.index);
-
-        //int USIPosition = -1;
-        //if (skillInfo.IsActive())
-        //{
-        //    ActiveInfo aInfo = SkillManager.instance.activeDB.GetActiveInfo(skillInfo.index);
-        //    int upgSkillIndex = SkillManager.instance.FindUpgradeSkillIndex(skillInfo, aInfo.action);
-        //    USIPosition = list.IndexOf(upgSkillIndex);
-        //}
-
-        //if (USIPosition == -1)
-        //{
-        //    list.Add(skillInfo.index);
-        //}
-        //else
-        //{
-        //    list.RemoveAt(USIPosition);
-        //    list.Insert(USIPosition, skillInfo.index);
-        //}
+        if (previousSkillPositionIndex == -1)
+        {
+            list.Add(skillInfo.index);
+        }
+        else
+        {
+            list.Insert(previousSkillPositionIndex, skillInfo.index);
+        }
     }
 
     public void Update()

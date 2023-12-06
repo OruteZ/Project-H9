@@ -17,9 +17,8 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     private int _currentSkillIndex;
     private bool _isInteractableButton;
 
-    static private SkillKeywordPool _keywordTooltips = new SkillKeywordPool();
+    static private SkillKeywordPool _keywordTooltips = null;
     private List<SkillKeywordWrapper> _activeKeywordTooltips = new List<SkillKeywordWrapper>();
-    private KeywordScript _keyword;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +27,11 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         _currentSkillIndex = 0;
         _isInteractableButton = false;
 
-        _keywordTooltips = new SkillKeywordPool();
-        _keywordTooltips.Init("Prefab/Keyword Tooltip", _skillKeywordTooltipContainer.transform, 0);
+        if (_keywordTooltips == null)
+        {
+            _keywordTooltips = new SkillKeywordPool();
+            _keywordTooltips.Init("Prefab/Keyword Tooltip", _skillKeywordTooltipContainer.transform, 0);
+        }
     }
     private void Update()
     {
@@ -47,7 +49,6 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         OpenUI();
         if (_currentSkillIndex != skillIndex) 
         {
-            _keyword = null;
             _currentSkillIndex = skillIndex;
         }
         _isInteractableButton = false;
@@ -101,6 +102,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     {
         if (_isInteractableButton && _skillManager.LearnSkill(_currentSkillIndex))
         {
+            
             UIManager.instance.skillUI.UpdateRelatedSkillNodes(_currentSkillIndex);
         }
         SetSkillTooltip(GetComponent<RectTransform>().position, _currentSkillIndex);
@@ -108,24 +110,19 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _skillKeywordTooltipContainer.SetActive(_keyword != null);
+        _skillKeywordTooltipContainer.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        CloseUI();
         _skillKeywordTooltipContainer.SetActive(false);
+        CloseUI();
     }
-    public void SetKeywordTooltipContents(KeywordScript kw)
+    public void SetKeywordTooltipContents(KeywordScript keyword)
     {
-        _keyword = kw;
-        SetKeywordTooltipsText();
-    }
-    private void SetKeywordTooltipsText()
-    {
-        if (_keyword == null) return;
+        if (keyword == null) return;
         var t = _keywordTooltips.Set();
-        t.tooltip.SetSkillKeywordTooltip(_keyword.name, _keyword.GetDescription(), _activeKeywordTooltips.Count);
+        t.tooltip.SetSkillKeywordTooltip(keyword.name, keyword.GetDescription(), _activeKeywordTooltips.Count);
         _activeKeywordTooltips.Add(t);
     }
     public void ClearKeywordTooltips()

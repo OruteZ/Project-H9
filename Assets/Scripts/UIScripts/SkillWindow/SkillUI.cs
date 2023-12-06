@@ -41,12 +41,12 @@ public class SkillUI : UISystem
         _skillManager = SkillManager.instance;
         skillTooltip = _skillTooltipWindow.GetComponent<SkillTooltip>();
         //GetComponent<Image>().sprite = ;
-        UpdateSkillWindow();
+        UpdateAllSkillUINode();
     }
     public override void OpenUI() 
     {
         base.OpenUI();
-        UpdateSkillWindow();
+        UpdateAllSkillUINode();
     }
     public override void CloseUI()
     {
@@ -86,20 +86,17 @@ public class SkillUI : UISystem
         _skillTooltipWindow.GetComponent<SkillTooltip>().CloseUI();
     }
 
-    public void UpdateSkillWindow()
-    {
-        UpdateAllSkillUINode();
-        UpdateSkillPointUI();
-    }
     public void UpdateAllSkillUINode()
     {
+        UpdateSkillPointUI();
         for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
         {
             UpdateSkillUINode(_skillUIButtons.transform.GetChild(i).gameObject);
         }
     }
-    public void UpdateRelatedSkillNodes(int index) 
+    public void UpdateRelatedSkillNodes(int index)
     {
+        UpdateSkillPointUI();
         GameObject targetNode = FindSkillNode(index);
         UpdateSkillUINode(targetNode);
 

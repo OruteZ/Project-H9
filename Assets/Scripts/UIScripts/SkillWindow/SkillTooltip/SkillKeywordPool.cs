@@ -10,18 +10,21 @@ public class SkillKeywordWrapper : ObjectPoolWrapper<RectTransform>
 
     public SkillKeywordWrapper(RectTransform instance, float lifeTime, SkillKeywordTooltip t) : base(instance, lifeTime)
     {
+        Debug.Log(instance);
         tooltip = t;
     }
 
     public override void Reset()
     {
-        tooltip.CloseUI();
         base.Reset();
+        tooltip.CloseUI();
+        Debug.Log(Instance.name);
     }
 }
 
 public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
 {
+    int count = 0;
     public override void Init(string objectKey, Transform parent, float generalLifeTime, uint expectedSize = 20, string rootName = "")
     {
         base.Init(objectKey, parent, generalLifeTime, expectedSize, rootName);
@@ -35,10 +38,13 @@ public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
     public override SkillKeywordWrapper Set()
     {
         var target = _pool.Dequeue();
+
+        //Debug.Log("Dequeue " + target.Instance);
         target.Enable = false;
-        target.Instance.transform.SetAsLastSibling();
-        target.Instance.gameObject.SetActive(true);
+
         _working.Add(target);
+        target.Instance.gameObject.SetActive(true);
+        target.Instance.transform.SetAsLastSibling();
         return target;
     }
 
@@ -47,6 +53,7 @@ public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
         for (int i = 0; i < size; i++)
         {
             var ins = GameObject.Instantiate(_prefab, Vector3.zero, _prefab.transform.rotation) as GameObject;
+            ins.name = _prefab.name + " " + count++;
             ins.transform.SetParent(_root, false);
             ins.GetComponent<RectTransform>().localPosition = Vector3.zero;
             var insRect = ins.GetComponent<RectTransform>();
@@ -64,8 +71,14 @@ public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
             {
                 target.Reset();
                 _pool.Enqueue(target);
+                Debug.Log("Enqueue");
                 _working.RemoveAt(i);
             }
         }
+    }
+
+    public override void OnUpdated(float deltaTime)
+    {
+        //Debug.Log(_pool.Count);
     }
 }

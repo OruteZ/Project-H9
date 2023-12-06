@@ -37,7 +37,9 @@ public class GameSystemUI : UISystem
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
+#if UNITY_EDITOR
             playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
+#endif
         }
     }
 

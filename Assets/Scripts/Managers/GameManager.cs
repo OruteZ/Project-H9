@@ -28,6 +28,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public int level = 1;
     public int curExp = 0;
     private int maxExp => level * 100;
+    private const int LEVEL_UP_REWARD_SKILL_POINT = 1;
     public void GetExp(int exp)
     {
         curExp += exp;
@@ -44,6 +45,7 @@ public class GameManager : Generic.Singleton<GameManager>
         curExp -= maxExp;
         level++;
         playerStat.Recover(StatType.CurHp, playerStat.GetStat(StatType.MaxHp));
+        SkillManager.instance.AddSkillPoint(LEVEL_UP_REWARD_SKILL_POINT);
         if (level % 3 == 0)
         {
             UIManager.instance.gameSystemUI.playerStatLevelUpUI.OpenPlayerStatLevelUpUI();

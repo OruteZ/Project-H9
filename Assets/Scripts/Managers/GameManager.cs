@@ -7,12 +7,16 @@ using UnityEngine.SceneManagement;
 public enum GameState
 {
     Combat,
-    World
+    World,
+    Editor
 }
 public class GameManager : Generic.Singleton<GameManager>
 {
     [SerializeField]
     private GameState _currentState = GameState.World;
+
+    [SerializeField]
+    private int _currentLinkIndex = -1;
 
     [Header("Player Info")]
     public Vector3Int playerWorldPos;
@@ -63,16 +67,22 @@ public class GameManager : Generic.Singleton<GameManager>
     public int worldTurn;
 
     public bool backToWorldTrigger = false;
-    public void StartCombat(string combatSceneName)
+    public void StartCombat(string combatSceneName, int linkIndex)
     {
         //Save World Data
         worldAp = FieldSystem.unitSystem.GetPlayer().currentActionPoint;
         worldTurn = FieldSystem.turnSystem.turnNumber;
 
         playerWorldPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
-        //SceneManager.LoadScene(combatSceneName);
+        
         ChangeState(GameState.Combat);
+        _currentLinkIndex = linkIndex;
         LoadingManager.instance.LoadingScene(combatSceneName);
+    }
+    
+    public int GetLinkIndex()
+    {
+        return _currentLinkIndex;
     }
 
     public void FinishCombat()
@@ -81,6 +91,11 @@ public class GameManager : Generic.Singleton<GameManager>
 
         backToWorldTrigger = true;
         LoadingManager.instance.LoadingScene(worldSceneName);
+    }
+
+    public void SetEditor()
+    {
+        ChangeState(GameState.Editor);
     }
 
     public bool CompareState(GameState state)

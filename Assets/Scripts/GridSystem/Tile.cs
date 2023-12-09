@@ -6,7 +6,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 
 [RequireComponent(typeof(HexTransform))]
-public class Tile : MonoBehaviour
+public class Tile : MonoBehaviour, IEquatable<Tile>
 {
     private HexTransform _hexTransform;
 
@@ -34,17 +34,17 @@ public class Tile : MonoBehaviour
     [SerializeField] 
     private bool _inSight;
 
-    public List<TileObject> interactiveObjects;
+    public List<TileObject> tileObjects;
     public List<MeshRenderer> environments;
 
     public void AddObject(TileObject u)
     {
-        interactiveObjects.Add(u);
+        tileObjects.Add(u);
     }
 
     public void RemoveObject(TileObject u)
     {
-        interactiveObjects.Remove(u);
+        tileObjects.Remove(u);
     }
 
     public bool inSight
@@ -64,10 +64,10 @@ public class Tile : MonoBehaviour
 
     private void SetObjectsSight()
     {
-        for (var index = 0; index < interactiveObjects.Count; index++)
+        for (var index = 0; index < tileObjects.Count; index++)
         {
                 
-            var obj = interactiveObjects[index];
+            var obj = tileObjects[index];
             if (obj is FogOfWar fow)
             {
                 fow.SetVisible(_inSight);
@@ -120,5 +120,10 @@ public class Tile : MonoBehaviour
                 obj.materials = new [] { mat };
             }
         }
+    }
+
+    public bool Equals(Tile other)
+    {
+        return other != null && hexPosition == other.hexPosition;
     }
 }

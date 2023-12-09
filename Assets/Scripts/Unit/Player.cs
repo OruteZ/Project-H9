@@ -27,6 +27,7 @@ public class Player : Unit
     }
     public void Update()
     {
+        if (GameManager.instance.CompareState(GameState.Editor)) return;
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
         if (UIManager.instance.isMouseOverUI) return;
@@ -168,7 +169,7 @@ public class Player : Unit
     private void OnMoved(Unit unit)
     {
         ReloadSight();
-        foreach (var obj in FieldSystem.tileSystem.GetTile(hexPosition).interactiveObjects) 
+        foreach (var obj in FieldSystem.tileSystem.GetTile(hexPosition).tileObjects) 
         { 
             obj.OnCollision(unit);
         }

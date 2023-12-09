@@ -54,12 +54,14 @@ public class FieldSystem : MonoBehaviour
     {
         Debug.Log("onStageAwake");
         onStageAwake.Invoke();
-        UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI();
+        if(GameManager.instance.CompareState(GameState.Editor) is false)
+            UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI();
 
         yield return new WaitUntil(() => LoadingManager.instance.isLoadingNow is false);
 
         Debug.Log("onStageStart");
         onStageStart.Invoke();
-        turnSystem.StartTurn();
+        if(GameManager.instance.CompareState(GameState.Editor) is false) 
+            turnSystem.StartTurn();
     }
 }

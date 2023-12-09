@@ -2,9 +2,10 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class CombatEncounter : TileObject
+public class Link : TileObject
 {
-    public int encounterIndex;
+    public int linkIndex;
+    public int combatMapIndex;
     
     private bool IsEncounterEnable()
     {
@@ -22,7 +23,7 @@ public class CombatEncounter : TileObject
         
         Debug.Log("On Collision Calls");
         EncounterManager.instance.AddValue(hexPosition, FieldSystem.turnSystem.turnNumber);
-        GameManager.instance.StartCombat("CombatScene");
+        GameManager.instance.StartCombat("CombatScene" + combatMapIndex, linkIndex: linkIndex);
     }
 
     public override void SetVisible(bool value)
@@ -32,11 +33,11 @@ public class CombatEncounter : TileObject
 
     public override string[] GetArgs()
     {
-        return new [] { encounterIndex.ToString() };
+        return new [] { linkIndex.ToString() };
     }
 
     public override void SetArgs(string[] args)
     {
-        encounterIndex = int.Parse(args[0]);
+        linkIndex = int.Parse(args[0]);
     }
 }

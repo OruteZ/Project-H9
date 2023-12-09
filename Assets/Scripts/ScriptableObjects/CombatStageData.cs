@@ -6,11 +6,14 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 [System.Serializable]
 [CreateAssetMenu(fileName = "SaveFile", menuName = "ScriptableObjects/Map Save File", order = 1)]
-public class MapData : ScriptableObject
+public class CombatStageData : ScriptableObject
 {
     public TileData[] tileData;
-    public ObjectMapData[] objectData;
+    public TileObjectData[] tileObjectData;
     public EnvironmentData[] envData;
+    
+    public Vector3Int[] enemySpawnPoints;
+    public Vector3Int playerSpawnPoint;
 }
 
 /// <summary>
@@ -65,16 +68,16 @@ public struct TileData
 /// 오브젝트의 정보를 담은 데이터
 /// </summary>
 [System.Serializable]
-public struct ObjectMapData
+public struct TileObjectData
 {
     public int id;
     public Vector3 hexPosition;
     public float rotation;
     public string[] arguments;
 
-    public ObjectMapData(TileObject obj)
+    public TileObjectData(TileObject obj)
     {
-        id = obj.id;
+        id = obj.objectID;
         hexPosition = obj.hexPosition;
         rotation = obj.gameObject.transform.localRotation.y;
         arguments = obj.GetArgs();

@@ -14,10 +14,13 @@ public class UnitSystem : MonoBehaviour
     [SerializeField] private PassiveDatabase passiveDB;
     [SerializeField] private ActiveDatabase activeDB;
     [SerializeField] private BehaviourTreeDatabase aiDB;
+    [SerializeField] private EncounterDatabase linkDB;
     
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
     public UnityEvent<Unit> onAnyUnitDead;
+    
+    [SerializeField] private Transform unitParent;
 
     private int _totalExp;
     
@@ -33,7 +36,30 @@ public class UnitSystem : MonoBehaviour
         {
             units.Add(unit);
         }
+
+        //get all link data
+        if (GameManager.instance.CompareState(GameState.Combat))
+        {
+            var linkDataIdx = GameManager.instance.GetLinkIndex();
+            var linkData = linkDB.GetData(linkDataIdx);
         
+            //create enemy by link data
+            foreach (var enemyIdx in linkData.enemiesIndex)
+            {
+                //instantiate GameObject
+                var enemy = new GameObject($"Enemy_{enemyIdx}");
+                enemy.transform.SetParent(unitParent);
+            
+                //get enemy data
+                var info = enemyDB.GetInfo(enemyIdx);
+            
+                //add component
+                var enemyComponent = enemy.AddComponent<Enemy>();
+                enemyComponent.dataIndex = enemyIdx;
+                enemyComponent.hexPosition = Hex.zero; //todo : set position
+            }
+        }
+
         foreach (var unit in units)
         {
             if (unit is Player p)

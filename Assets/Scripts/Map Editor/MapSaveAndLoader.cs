@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapSaveAndLoader : MonoBehaviour
 {
-    public MapData saveData;
+    public CombatStageData saveData;
     
     [ContextMenu("Save Current map")]
     public void SaveMap()
@@ -39,10 +39,10 @@ public class MapSaveAndLoader : MonoBehaviour
         }
 
         var objects = objParent.GetComponentsInChildren<TileObject>();
-        saveData.objectData = new ObjectMapData[objects.Length];
+        saveData.tileObjectData = new TileObjectData[objects.Length];
         for (int i = 0; i < objects.Length; i++)
         {
-            saveData.objectData[i] = new ObjectMapData(objects[i]);
+            saveData.tileObjectData[i] = new TileObjectData(objects[i]);
         }
     }
 

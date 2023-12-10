@@ -23,7 +23,7 @@ public class Link : TileObject
         
         Debug.Log("On Collision Calls");
         EncounterManager.instance.AddValue(hexPosition, FieldSystem.turnSystem.turnNumber);
-        GameManager.instance.StartCombat("CombatScene" + combatMapIndex, linkIndex: linkIndex);
+        GameManager.instance.StartCombat(combatMapIndex, linkIndex: linkIndex);
     }
 
     public override void SetVisible(bool value)

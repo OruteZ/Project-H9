@@ -36,19 +36,6 @@ public abstract class TileObject : MonoBehaviour
             hexTransform.position = value;
         }
     }
-
-    public static TileObject Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
-    {
-        var tile = tileSystem.GetTile(pos);
-        if (tile == null) return null;
-    
-        var tileObj = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity).GetComponent<TileObject>();
-        tileObj.hexPosition = pos;
-        tileObj.SetUp();
-        
-        return tileObj;
-    }
-
     private void Awake()
     {
         hexTransform ??= GetComponent<HexTransform>();

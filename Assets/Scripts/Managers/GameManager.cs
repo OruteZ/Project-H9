@@ -12,9 +12,12 @@ public enum GameState
 }
 public class GameManager : Generic.Singleton<GameManager>
 {
+    const string COMBAT_SCENE_NAME = "CombatScene";
+    
     [SerializeField]
     private GameState _currentState = GameState.World;
 
+    [SerializeField] private CombatStageData _stageData;
     [SerializeField]
     private int _currentLinkIndex = -1;
 
@@ -67,7 +70,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public int worldTurn;
 
     public bool backToWorldTrigger = false;
-    public void StartCombat(string combatSceneName, int linkIndex)
+    public void StartCombat(int stageIndex, int linkIndex)
     {
         //Save World Data
         worldAp = FieldSystem.unitSystem.GetPlayer().currentActionPoint;
@@ -77,12 +80,18 @@ public class GameManager : Generic.Singleton<GameManager>
         
         ChangeState(GameState.Combat);
         _currentLinkIndex = linkIndex;
-        LoadingManager.instance.LoadingScene(combatSceneName);
+        _stageData = Resources.Load<CombatStageData>($"Map Data/Stage {stageIndex}");
+        LoadingManager.instance.LoadingScene(COMBAT_SCENE_NAME);
     }
     
     public int GetLinkIndex()
     {
         return _currentLinkIndex;
+    }
+    
+    public CombatStageData GetStageData()
+    {
+        return _stageData;
     }
 
     public void FinishCombat()

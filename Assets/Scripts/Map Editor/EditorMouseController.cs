@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Castle.Core;
 using Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -104,5 +105,10 @@ public class EditorMouseController : MonoBehaviour
     public IEnumerable<Tile> GetSelectedTiles()
     {
         return _selectedTiles;
+    }
+
+    public void ClearCommand()
+    {
+        commands.Clear();
     }
 }

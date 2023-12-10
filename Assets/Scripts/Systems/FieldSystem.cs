@@ -8,8 +8,6 @@ using UnityEngine.Events;
 
 public class FieldSystem : MonoBehaviour
 {
-    private static FieldSystem _instance;
-    
     public static TileSystem tileSystem;
     public static TurnSystem turnSystem;
     public static UnitSystem unitSystem;
@@ -36,7 +34,6 @@ public class FieldSystem : MonoBehaviour
     private void Awake()
     {
         Debug.Log("Field System : Awake");
-        _instance = this;
         tileSystem = GetComponent<TileSystem>();
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();

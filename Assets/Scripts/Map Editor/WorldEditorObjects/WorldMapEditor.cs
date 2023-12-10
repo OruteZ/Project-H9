@@ -70,7 +70,7 @@ public class WorldMapEditor : MonoBehaviour
             var link = child.GetComponent<Link>();
             if (link == null) continue;
             
-            var linkData = new LinkData
+            var linkData = new LinkObjectData
             {
                 pos = link.hexPosition,
                 linkIndex = link.linkIndex,

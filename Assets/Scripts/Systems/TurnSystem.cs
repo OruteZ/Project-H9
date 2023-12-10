@@ -102,8 +102,6 @@ public class TurnSystem : MonoBehaviour
             UIManager.instance.combatUI.turnOrderUI.SetTurnOrderUI(turnOrder);
             turnOwner = turnOrder[0];
         }
-        
-        Debug.LogWarning("Turn Owner : " + turnOwner.gameObject.name);
     }
     private float CalculateTurnOrderValue(int currentRound, int speed) 
     {

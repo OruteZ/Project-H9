@@ -7,11 +7,11 @@ using UnityEngine;
 public class WorldObjectData : ScriptableObject
 {
     [SerializeField] 
-    public List<LinkData> links = new ();
+    public List<LinkObjectData> links = new ();
 }
 
 [Serializable]
-public struct LinkData
+public struct LinkObjectData
 {
     public Vector3Int pos;
 

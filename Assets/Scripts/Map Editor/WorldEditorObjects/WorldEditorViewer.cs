@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WorldEditorViewer : MonoBehaviour
 {
-    #region GAMEOBJECTS
     private WorldMapEditor _worldMapEditor;
     private EditorMouseController _editorMouseController;
     
@@ -38,16 +37,8 @@ public class WorldEditorViewer : MonoBehaviour
         // find all selected tiles not in tile viewer objects and add
         foreach (var tile in selectedTilesPositions)
         {
-            bool isFound = false;
-            foreach (var view in _tileViewerObjs)
-            {
-                if (view.position == tile)
-                {
-                    isFound = true;
-                    break;
-                }
-            }
-            
+            bool isFound = _tileViewerObjs.Any(view => view.position == tile);
+
             if (!isFound)
             {
                 var tileViewer = Instantiate(tileViewerObj, transform);
@@ -60,14 +51,6 @@ public class WorldEditorViewer : MonoBehaviour
             }
         }
     }
-    
-    #endregion
-    
-    #region UI
-
-    private Canvas _canvas;
-    
-    #endregion
     
     private void Awake()
     {

@@ -39,11 +39,8 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent onPlayerSkillChanged;
     [HideInInspector] public UnityEvent onActionChanged;
 
-    private new void Awake()
+    protected override void Awake()
     {
-        if(loading is not null) loading.SetActive(true);
-
-        base.Awake();
         _worldCanvas.enabled = true;
         _combatCanvas.enabled = false;
         _characterCanvas.enabled = false;
@@ -66,6 +63,9 @@ public class UIManager : Generic.Singleton<UIManager>
         {
             ChangeScene(GameState.Combat);
         }
+
+        if (loading) loading.SetActive(true);
+        base.Awake();
     }
     void Update()
     {
@@ -179,6 +179,7 @@ public class UIManager : Generic.Singleton<UIManager>
     /// <param name="gameState"> 전환할 씬에 대응되는 gameState </param>
     public void ChangeScene(GameState gameState)
     {
+        _UIState = gameState;
         //if (prevSceneName == currentSceneName) return;
         //Debug.Log("Current State is " + gameState);
         switch (gameState)

@@ -108,6 +108,13 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
             GameObject textObject = _CharacterStatTooltipTexts.transform.GetChild(i).gameObject;
             if (i < existText.Count)
             {
+                //공백 추가 (UI 자동 정렬 시 텍스트의 뒤에 붙은 공백은 인식을 못해서 앞에다가 붙임.)
+                if (i != 0)
+                {
+                    (UIStatType, string) tmpItem = existText[i];
+                    tmpItem.Item2 = ' ' + tmpItem.Item2;
+                    existText[i] = tmpItem;
+                }
                 textObject.SetActive(true);
                 textObject.GetComponent<CharacterTooltipText>().SetCharacterTooltipText(info.statName, existText[i].Item1, existText[i].Item2);
             }

@@ -34,9 +34,8 @@ public class CombatWindowUI : UISystem
     public BuffUI buffUI { get; private set; }
 
     // Start is called before the first frame update
-    private new void Awake()
+    private void Awake()
     {
-        base.Awake();
         
         combatActionUI = GetComponent<CombatActionUI>();
         magazineUI = GetComponent<MagazineUI>();

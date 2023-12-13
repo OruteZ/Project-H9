@@ -51,7 +51,6 @@ private void Awake()
     {
         if (GameManager.instance.backToWorldTrigger)
         {
-            Debug.LogWarning("Continue turn");
             GameManager.instance.backToWorldTrigger = false;
             ((Player)turnOwner).ContinueWorldTurn();
         }
@@ -102,8 +101,6 @@ private void Awake()
             UIManager.instance.combatUI.turnOrderUI.SetTurnOrderUI(turnOrder);
             turnOwner = turnOrder[0];
         }
-        
-        Debug.LogWarning("Turn Owner : " + turnOwner.gameObject.name);
     }
     private float CalculateTurnOrderValue(int currentRound, int speed) 
     {

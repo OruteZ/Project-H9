@@ -11,10 +11,9 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
     [SerializeField] private float fadeDuration;
     private new void Awake()
     {
-        base.Awake();
-        
         canvas = GetComponentInChildren<Canvas>(includeInactive:true);
         progress = GetComponentInChildren<Slider>(includeInactive:true);
+        base.Awake();
     }
 
     private void Start()

@@ -8,6 +8,7 @@ public class BuffUI : UISystem
     [SerializeField] private GameObject _BuffUI;
     [SerializeField] private GameObject _DebuffUI;
     [SerializeField] private GameObject _buffTooltipWindow;
+    private IDisplayableEffect _currentTooltipEffect;
     [SerializeField] private PassiveDatabase passiveDB;
 
     private List<IDisplayableEffect> _currentBuffs = new List<IDisplayableEffect>();
@@ -26,9 +27,8 @@ public class BuffUI : UISystem
 
     [SerializeField] private List<Sprite> _debuffIconSprites;
 
-    private new void Awake()
+    private void Awake()
     {
-        base.Awake();
         _BuffUI.SetActive(false);
         _DebuffUI.SetActive(false);
 
@@ -88,13 +88,19 @@ public class BuffUI : UISystem
         }
         int buffCount = 0;
 
+        bool isExistTooltipEffect = false;
         foreach (IDisplayableEffect effect in currentState)
         {
             if (effect.CanDisplay())
             {
                 UI.transform.GetChild(buffCount++).GetComponent<BuffUIElement>().SetBuffUIElement(effect, isBuff);
+                if (effect == _currentTooltipEffect)
+                {
+                    isExistTooltipEffect = true;
+                }
             }
         }
+        if (!isExistTooltipEffect) HideBuffUITooltip();
 
         if (buffCount == 0)
         {
@@ -106,7 +112,8 @@ public class BuffUI : UISystem
     {
         Vector3 pos = icon.GetComponent<RectTransform>().position;
         IDisplayableEffect effect = icon.GetComponent<BuffUIElement>().displayedEffect;
-        if (effect == null) return;
+        if (effect == null || effect == _currentTooltipEffect) return;
+        _currentTooltipEffect = effect;
 
         RectTransform rt = _BuffDebuffWindow.GetComponent<RectTransform>();
         pos.y = rt.position.y + rt.sizeDelta.y + 5; 
@@ -114,7 +121,7 @@ public class BuffUI : UISystem
     }
     public void HideBuffUITooltip()
     {
-        _buffTooltipWindow.GetComponent<CombatActionTooltip>().CloseUI();
+        _buffTooltipWindow.GetComponent<BuffTooltip>().CloseUI();
     }
     public GameObject GetBuffWindow() 
     {
@@ -123,7 +130,7 @@ public class BuffUI : UISystem
 
     public Sprite GetDebuffIconSprite(StatusEffectType effType) 
     {
-        if ((int)effType >= 10 && (int)effType <= 17) 
+        if ((int)effType >= (int)StatusEffectType.Burning && (int)effType <= (int)StatusEffectType.Blind) 
         {
             Debug.Log(effType);
             return _debuffIconSprites[(int)effType - 10];

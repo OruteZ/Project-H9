@@ -10,7 +10,6 @@ public class SkillKeywordWrapper : ObjectPoolWrapper<RectTransform>
 
     public SkillKeywordWrapper(RectTransform instance, float lifeTime, SkillKeywordTooltip t) : base(instance, lifeTime)
     {
-        Debug.Log(instance);
         tooltip = t;
     }
 
@@ -18,7 +17,6 @@ public class SkillKeywordWrapper : ObjectPoolWrapper<RectTransform>
     {
         base.Reset();
         tooltip.CloseUI();
-        Debug.Log(Instance.name);
     }
 }
 
@@ -39,7 +37,6 @@ public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
     {
         var target = _pool.Dequeue();
 
-        //Debug.Log("Dequeue " + target.Instance);
         target.Enable = false;
 
         _working.Add(target);
@@ -71,7 +68,6 @@ public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
             {
                 target.Reset();
                 _pool.Enqueue(target);
-                Debug.Log("Enqueue");
                 _working.RemoveAt(i);
             }
         }

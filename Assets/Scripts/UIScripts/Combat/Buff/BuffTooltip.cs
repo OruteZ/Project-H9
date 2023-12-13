@@ -5,8 +5,9 @@ using TMPro;
 
 public class BuffTooltip : UIElement
 {
-    string _buffName = "";
-    string _buffDesc = "";
+    private string _buffName = "";
+    private string _buffDesc = "";
+    public IDisplayableEffect currentTooltipEffect { get; private set; }
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class BuffTooltip : UIElement
     {
         OpenUI();
 
+        currentTooltipEffect = effect;
         if (effect is StatusEffect)
         {
             SetDebuffText(effect);

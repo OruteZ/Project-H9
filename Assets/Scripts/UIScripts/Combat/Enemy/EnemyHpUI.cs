@@ -14,9 +14,8 @@ public class EnemyHpUI : UISystem
 
     private List<Enemy> _enemies = new List<Enemy>();
 
-    private new void Awake()
+    private void Awake()
     {
-        base.Awake();
 
         _enemyHpBars = new List<GameObject>();
         EnemyHpBarObjectPooling(10);

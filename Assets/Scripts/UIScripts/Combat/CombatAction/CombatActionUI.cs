@@ -38,11 +38,10 @@ public class CombatActionUI : UISystem
     };
 
     // Start is called before the first frame update
-    public new void Awake()
+    private void Awake()
     {
-        base.Awake();
-
-        _gameState = GameState.World;   
+        SetGameState();
+        UIManager.instance.onSceneChanged.AddListener(SetGameState);
 
         //Find Action Buttons & Put in to '_actionButtons'
         _actionButtons = new List<GameObject>();
@@ -65,9 +64,21 @@ public class CombatActionUI : UISystem
         UIManager.instance.onActionChanged.AddListener(SetActionButtons);
     }
 
+    private void SetGameState() 
+    {
+        if (GameManager.instance.CompareState(GameState.Combat))
+        {
+            _gameState = GameState.Combat;
+        }
+        else
+        {
+            _gameState = GameState.World;
+        }
+    }
+
     private void Update()
     {
-        if (!GameManager.instance.CompareState(GameState.Combat)) return;
+        if (_gameState != GameState.Combat) return;
         for (int i = 0; i <= _actionButtons.Count; i++)
         {
             if (Input.GetKeyDown(_shortCutKey[i]))

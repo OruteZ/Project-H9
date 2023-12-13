@@ -14,7 +14,12 @@ public enum ScriptLanguage
 /// </summary>
 public class SkillManager : Generic.Singleton<SkillManager>
 {
-    const int REQUIRED_SKILL_POINT = 1;
+    private const int REQUIRED_SKILL_POINT = 1;
+#if UNITY_EDITOR
+    private const int INITIAL_SKILL_POINT = 10;
+#else
+    private const int INITIAL_SKILL_POINT = 1;
+#endif
     public PassiveDatabase passiveDB;
     public ActiveDatabase activeDB;
 
@@ -29,10 +34,10 @@ public class SkillManager : Generic.Singleton<SkillManager>
     private new void Awake()
     {
         base.Awake();
-        
+
         InitSkills();
         InitSkillScripts();
-        _skillPoint = 10;    //test
+        _skillPoint = INITIAL_SKILL_POINT;
     }
 
     private void InitSkills()

@@ -145,8 +145,8 @@ public class EnemyStatUI : UISystem
                       enemyStat.sightRange.ToString() + '\n' +
                       enemyStat.speed.ToString() + '\n' +
                       enemyStat.maxActionPoint.ToString() + '\n' +
-                      enemyStat.additionalHitRate.ToString() + '\n' +
-                      enemyStat.criticalChance.ToString();
+                      enemyStat.additionalHitRate.ToString() + "%\n" +
+                      enemyStat.criticalChance.ToString() +'%';
 
         _enemyStatText.GetComponent<TextMeshProUGUI>().text = text;
     }

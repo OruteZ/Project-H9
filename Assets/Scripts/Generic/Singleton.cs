@@ -5,7 +5,7 @@ namespace Generic
 {
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        private static T _instance;
+        private static T _instance = null;
 
         public static T instance
         {
@@ -15,7 +15,6 @@ namespace Generic
             
                 //없으면 동일 타입의 오브젝트 탐색
                 _instance = (T)FindObjectOfType(typeof(T));
-
                 if (_instance is not null) return _instance;
             
                 //찾아도 없으면 오브젝트 생성
@@ -26,17 +25,21 @@ namespace Generic
             }
         }
 
-        protected void Awake()
+        protected virtual void Awake()
         {
-            if (_instance != null)
+            if (_instance is not null)
             {
                 if (gameObject != _instance.gameObject)
                 {
-                    Destroy(gameObject);
+                    DestroyImmediate(gameObject);
                     return;
                 }
             }
-            
+            else 
+            {
+                _instance = instance;
+            }
+
             if (transform.parent != null && transform.root != null)
             {
                 DontDestroyOnLoad(transform.root.gameObject);
@@ -47,7 +50,7 @@ namespace Generic
             }
         }
 
-        private void OnDestroy()
+        protected void OnDestroy()
         {
             _instance = null;
         }

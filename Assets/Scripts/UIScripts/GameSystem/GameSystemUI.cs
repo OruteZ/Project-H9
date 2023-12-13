@@ -11,7 +11,7 @@ public class GameSystemUI : UISystem
     public TurnUI turnUI { get; private set; }
     public PlayerStatLevelUpUI playerStatLevelUpUI { get; private set; }
 
-    private new void Awake()
+    private void Awake()
     {
         playerSummaryStatUI = GetComponent<PlayerSummaryStatUI>();
         playerHpUI = GetComponent<PlayerHpUI>();

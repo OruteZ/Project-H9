@@ -12,7 +12,7 @@ public class TurnUI : UISystem
     [SerializeField] private GameObject _turnText;
     [SerializeField] private GameObject _endTurnButton;
 
-    private new void Awake()
+    private void Awake()
     {
         UIManager.instance.onActionChanged.AddListener(SetEndTurnButton);
     }

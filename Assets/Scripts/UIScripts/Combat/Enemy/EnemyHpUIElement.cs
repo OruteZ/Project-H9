@@ -9,6 +9,8 @@ public class EnemyHpUIElement : UIElement
     private Slider _frontHpBar;
     private Slider _backHpBar;
     private TextMeshProUGUI _hpText;
+    private GameObject _debuffs;
+    private float HP_BAR_MOVE_SPEED = 2;
 
     private Enemy _enemy;
     private Vector3 _enemyUIPrevPos;
@@ -20,26 +22,42 @@ public class EnemyHpUIElement : UIElement
         _backHpBar = transform.GetChild(0).GetComponent<Slider>();
         _frontHpBar = transform.GetChild(1).GetComponent<Slider>();
         _hpText = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        _debuffs = transform.GetChild(3).gameObject;
 
-        _enemy = null;
+        ClearEnemyHpUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_enemy == null) 
-        {
-            ClearEnemyHpUI();
-            return;
-        }
+        if (!gameObject.activeInHierarchy) return;
+
+        //Hp Fill Setting
+        float barValue = _backHpBar.value;
+        LerpCalculation.CalculateLerpValue(ref barValue, _frontHpBar.value, HP_BAR_MOVE_SPEED);
+        _backHpBar.value = barValue;
 
         //UI On & Off
-        _backHpBar.gameObject.SetActive(_enemy.isVisible);
-        _frontHpBar.gameObject.SetActive(_enemy.isVisible);
-        _hpText.gameObject.SetActive(_enemy.isVisible);
-        if (!_enemy.isVisible) return;
+        bool isUIVisible;
+        if (_enemy == null)
+        {
+            isUIVisible = (_backHpBar.value > 0);
+            if (!isUIVisible) 
+            {
+                ClearEnemyHpUI();
+            }      
+        }
+        else
+        {
+            isUIVisible = _enemy.isVisible;
+        }
+        _backHpBar.gameObject.SetActive(isUIVisible);
+        _frontHpBar.gameObject.SetActive(isUIVisible);
+        _hpText.gameObject.SetActive(isUIVisible);
+        _debuffs.gameObject.SetActive(isUIVisible);
 
         //UI Position Setting
+        if (_enemy == null) return;
         Vector3 enemyPositionHeightCorrection = _enemy.transform.position;
         enemyPositionHeightCorrection.y += 1.8f;
         Vector3 uiPosition = Camera.main.WorldToScreenPoint(enemyPositionHeightCorrection);
@@ -49,17 +67,6 @@ public class EnemyHpUIElement : UIElement
             GetComponent<RectTransform>().position = uiPosition;
 
             _enemyUIPrevPos = uiPosition;
-        }
-
-        //Hp Fill Setting
-        float threshold = 0.01f;
-        if (Mathf.Abs(_frontHpBar.value - _backHpBar.value) > threshold)
-        {
-            _backHpBar.value = Mathf.Lerp(_backHpBar.value, _frontHpBar.value, Time.deltaTime * 2);
-        }
-        else
-        {
-            _frontHpBar.value = _backHpBar.value;
         }
     }
 
@@ -84,6 +91,21 @@ public class EnemyHpUIElement : UIElement
         if (curHpText < 0) curHpText = 0;
         _hpText.text = curHpText.ToString() + " / " + maxHp.ToString();
         _frontHpBar.value = curHp;
+
+        IDisplayableEffect[] debuffList = enemy.GetDisplayableEffects();
+        for (int i = 0; i < _debuffs.transform.childCount; i++)
+        {
+            if (debuffList.Length > i)
+            {
+                _debuffs.transform.GetChild(i).gameObject.SetActive(true);
+                _debuffs.transform.GetChild(i).GetComponent<BuffUIElement>().SetBuffUIElement(debuffList[i], false);
+                Debug.Log("debuffed!");
+            }
+            else
+            {
+                _debuffs.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
 
         _enemy = enemy;
         gameObject.SetActive(true);

@@ -58,7 +58,7 @@ public class CombatWindowUI : UISystem
 
     public override void ClosePopupWindow()
     {
-        enemyStatUI.CloseEnemyStatUI();
+        enemyStatUI.ClosePopupWindow();
     }
 
     /// <summary>

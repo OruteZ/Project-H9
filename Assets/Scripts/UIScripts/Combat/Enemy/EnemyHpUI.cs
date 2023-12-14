@@ -44,7 +44,7 @@ public class EnemyHpUI : UISystem
         {
             EnemyHpBarObjectPooling(10);
         }
-        InitEnemyHpUIs();
+        //InitEnemyHpUIs();
         for (int i = 0; i < _enemies.Count; i++) 
         {
             if (_enemies[i].stat.GetStat(StatType.CurHp) <= 0) 

@@ -66,7 +66,6 @@ public class Tile : MonoBehaviour, IEquatable<Tile>
     {
         for (var index = 0; index < tileObjects.Count; index++)
         {
-                
             var obj = tileObjects[index];
             if (obj is FogOfWar fow)
             {

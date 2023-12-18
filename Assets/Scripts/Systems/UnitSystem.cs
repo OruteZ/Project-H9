@@ -42,8 +42,17 @@ public class UnitSystem : MonoBehaviour
             var enemyCount = linkData.combatEnemy.Length;
 
             var mapSpawnData = GameManager.instance.GetStageData();
-            mapSpawnData.TryGetEnemyPoints(linkDataIdx, out var enemySpawnPoints);
-            mapSpawnData.TryGetPlayerPoint(linkDataIdx, out var playerSpawnPoint);
+            if (!mapSpawnData.TryGetEnemyPoints(linkDataIdx, out var enemySpawnPoints))
+            {
+                Debug.LogError("해당 링크의 Enemy Spawn Point is null");
+                return;
+            }
+
+            if (!mapSpawnData.TryGetPlayerPoint(linkDataIdx, out var playerSpawnPoint))
+            {
+                Debug.LogError("해당 링크의 Player Spawn Point is null");
+                return;
+            }
             
             //create player
             var player = Instantiate(playerPrefab, unitParent).GetComponent<Player>();

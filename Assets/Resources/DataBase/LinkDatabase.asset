@@ -14,20 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataBase:
   - index: 0
-    groupNameIndex: 700
+    groupNameIndex: 0
     combatEnemy: 00000000
+    model: {fileID: 3908126545092858998, guid: 539b94f4f2d9ad344b419d557efa6135, type: 3}
   - index: 1
-    groupNameIndex: 701
+    groupNameIndex: 1
     combatEnemy: 01000000
-  - index: 1
-    groupNameIndex: 702
-    combatEnemy: 02000000
+    model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
   - index: 2
-    groupNameIndex: 703
+    groupNameIndex: 1
+    combatEnemy: 02000000
+    model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
+  - index: 3
+    groupNameIndex: 1
     combatEnemy: 03000000
+    model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
   - index: 4
-    groupNameIndex: 704
-    combatEnemy: 0100000002000000
+    groupNameIndex: 2
+    combatEnemy: 04000000
+    model: {fileID: 1830787700065114, guid: dbbd35cb7d217034ca6e8b14a8c9da48, type: 3}
   - index: 5
-    groupNameIndex: 705
-    combatEnemy: 010000000200000003000000
+    groupNameIndex: 2
+    combatEnemy: 05000000
+    model: {fileID: 1930506485524798, guid: f7b944500ba277f418b2efff428244ff, type: 3}
+  - index: 6
+    groupNameIndex: 3
+    combatEnemy: 01000000
+    model: {fileID: 0}

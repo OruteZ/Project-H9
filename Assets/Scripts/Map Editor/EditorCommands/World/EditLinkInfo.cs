@@ -51,6 +51,7 @@ public class EditLinkInfo : IEditorCommand
     
     public void ApplyIndexes(int linkIndex, int combatMapIndex)
     {
+        
         //set link index and combat map index
         foreach (var link in _links)
         {

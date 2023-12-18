@@ -137,14 +137,12 @@ public struct TileData
 [System.Serializable]
 public struct TileObjectData
 {
-    public int id;
     public Vector3Int hexPosition;
     public float rotation;
     public string[] arguments;
 
     public TileObjectData(TileObject obj)
     {
-        id = obj.objectID;
         hexPosition = obj.hexPosition;
         rotation = obj.gameObject.transform.localRotation.y;
         arguments = obj.GetArgs();

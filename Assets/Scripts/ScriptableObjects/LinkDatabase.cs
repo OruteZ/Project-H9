@@ -28,6 +28,7 @@ public class LinkDatabase : ScriptableObject
                 index = int.Parse(data[(int)LinkColumn.Index]),
                 groupNameIndex = int.Parse(data[(int)LinkColumn.GroupNameIndex]),
                 combatEnemy = FileRead.ConvertStringToArray<int>(data[(int)LinkColumn.CombatEnemy]),
+                model = Resources.Load<GameObject>("Prefab/Units/"+data[(int)LinkColumn.Model]),
             };
             
             dataBase.Add(newData);
@@ -52,6 +53,8 @@ public struct LinkData
     public int index;
     public int groupNameIndex;
     public int[] combatEnemy;
+
+    public GameObject model;
 }
 
 internal enum LinkColumn
@@ -59,4 +62,5 @@ internal enum LinkColumn
     Index,
     GroupNameIndex,
     CombatEnemy,
+    Model,
 }

@@ -10,8 +10,6 @@ public abstract class TileObject : MonoBehaviour
     [SerializeField] 
     private bool vision;
     
-    public int objectID;
-    
     public HexTransform hexTransform;
     public Renderer meshRenderer;
 
@@ -48,7 +46,6 @@ public abstract class TileObject : MonoBehaviour
         if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
         
         SetTile(tile);
-        //meshRenderer.enabled = GameManager.instance.CompareState(GameState.World);
         vision = IsVisible();
     }
 
@@ -70,6 +67,9 @@ public abstract class TileObject : MonoBehaviour
 
     public virtual void SetVisible(bool value)
     {
+        //if editor mode, value always true
+        if (GameManager.instance.CompareState(GameState.Editor)) value = true;
+        
         meshRenderer.enabled = value;
         vision = value;
     }
@@ -90,6 +90,7 @@ public abstract class TileObject : MonoBehaviour
         if (TryGetComponent(out meshRenderer) is false)
         {
             meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+            if(meshRenderer is null) meshRenderer = GetComponentInChildren<MeshRenderer>();
         }
     }
 }

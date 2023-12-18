@@ -4,7 +4,19 @@ using UnityEngine.Rendering;
 
 public class Link : TileObject
 {
-    public int linkIndex;
+    private static LinkDatabase _linkDatabase;
+    
+    private int _linkIndex;
+
+    public int linkIndex
+    {
+        get => _linkIndex;
+        set
+        {
+            _linkIndex = value;
+            ReloadModel();
+        }
+    }
     public int combatMapIndex;
 
     private bool _vision;
@@ -30,6 +42,9 @@ public class Link : TileObject
 
     public override void SetVisible(bool value)
     {
+        //if editor mode, value always true
+        if (GameManager.instance.CompareState(GameState.Editor)) value = true;
+        
         meshRenderer.enabled = value && IsEncounterEnable();
         _vision = value;
     }
@@ -51,5 +66,37 @@ public class Link : TileObject
         //Link는 World Object라서 한번 밝혀지면 상관이 없지만 
         //턴이 바뀜에 따라서 안보이는게 보일 수 있으니 확인 해줘야 함
         FieldSystem.turnSystem.onTurnChanged.AddListener(() => SetVisible(_vision));
+    }
+
+    private void ReloadModel()
+    {
+        //load link database
+        _linkDatabase ??= Resources.Load<LinkDatabase>("Database/LinkDatabase");
+        //check null
+        if (_linkDatabase == null)
+        {
+            Debug.LogError("LinkDatabase is null");
+            return;
+        }
+
+        //remove all child
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        //get model from link database and instantiate
+        var model = Instantiate(_linkDatabase.GetData(linkIndex).model, transform);
+        
+        //set model local position zero
+        model.transform.localPosition = Vector3.zero;
+        
+        //set model local rotation zero
+        model.transform.localRotation = Quaternion.identity;
+        
+        //set model's animator to "Const Standing Idle" by load Resource
+        var animator = model.GetComponent<Animator>();
+        animator.runtimeAnimatorController = 
+            Resources.Load<RuntimeAnimatorController>("Animator/Const Standing Idle");
     }
 }

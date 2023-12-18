@@ -14,13 +14,17 @@ public static class Service
         _rootCanvas.name = "WorldTextCanvas";
         GameObject.DontDestroyOnLoad(_rootCanvas);
 
-        var common = new DamageFloaterManager();
-        common.Init("Prefab/Damage Floater", _rootCanvas, 0.4f);
-        _floaters.Add(common);
+        var commonDmg = new DamageFloaterManager();
+        commonDmg.Init("Prefab/Damage Floater", _rootCanvas, 0.5f);
+        var ciriticalDmg = new DamageFloaterManager();
+        ciriticalDmg.Init("Prefab/Damage Floater Critical", _rootCanvas, 0.5f);
+
+        _floaters.Add(commonDmg);
+        _floaters.Add(ciriticalDmg);
     }
-    public static void SetText(string text, Vector3 position)
+    public static void SetText(int index, string text, Vector3 position)
     {
-        var t = _floaters[0].Set();
+        var t = _floaters[index].Set();
         var randValue = new Vector3(Random.value - 0.5f, Random.value, Random.value) * 2.0f;
       
         t.TMP.text = text;

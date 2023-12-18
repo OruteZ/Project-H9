@@ -9,8 +9,6 @@ using UnityEngine.EventSystems;
 
 public class Player : Unit
 {
-    private static readonly int START_TURN = Animator.StringToHash("StartTurn");
-
     public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList)
     {
         base.SetUp(newName, unitStat, newWeapon, unitModel, passiveList);

@@ -131,6 +131,8 @@ public class Player : Unit
 
         foreach (var tile in allTile)
         {
+            if(GameManager.instance.CompareState(GameState.World) && tile.inSight) continue;
+            
             tile.inSight = 
                 FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition) &&
                 Hex.Distance(hexTransform.position, tile.hexPosition) <= stat.sightRange;

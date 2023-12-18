@@ -73,18 +73,8 @@ public class Tile : MonoBehaviour
                 fow.SetVisible(_inSight);
                 if (_inSight) index--;
             }
-                
-                
-            //Combat일때만 value 따라감
-            else if (GameManager.instance.CompareState(GameState.Combat))
-            {
-                obj.SetVisible(_inSight);
-            }
-            //월드Scene일 경우 무조건 true
-            else
-            {
-                obj.SetVisible(true);
-            }
+            
+            else obj.SetVisible(_inSight);
         }
     }
 
@@ -112,7 +102,7 @@ public class Tile : MonoBehaviour
                     obj.materials = new [] { mat };
                 }
             }
-            else
+            else //World Scene
             {
                 if (obj.materials.Length == 1) continue;
 

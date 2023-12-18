@@ -25,6 +25,7 @@ public class CameraController : MonoBehaviour
         _cameraDegree = transform.GetChild(0).localRotation.eulerAngles.x;
         
         FieldSystem.onStageAwake.AddListener(OnCombatAwake);
+        FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnChanged);
         
         var tsf = transform;
         newPosition = tsf.position;
@@ -39,11 +40,6 @@ public class CameraController : MonoBehaviour
         Vector3 movePosition = MovingPosition();
 
         transform.position = movePosition + _shakeOffset;
-
-        // if (Input.GetKey(KeyCode.Q)) newRotation *= Quaternion.Euler(Vector3.up * rotationAmount);
-        // if (Input.GetKey(KeyCode.E)) newRotation *= Quaternion.Euler(Vector3.up * -rotationAmount);
-        //
-        // transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * movementTime);
     }
 
     private Vector3 MovingPosition()
@@ -63,8 +59,6 @@ public class CameraController : MonoBehaviour
         newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
         
         var movePosition = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
-        
-
         return movePosition;
     }
 
@@ -75,7 +69,6 @@ public class CameraController : MonoBehaviour
         worldPos.z += -10f;
 
         newPosition = worldPos;
-        //transform.position = worldPos;
     }
 
     private void LookAtPlayer()
@@ -93,6 +86,14 @@ public class CameraController : MonoBehaviour
             LookAtPlayer();
             FieldSystem.unitSystem.GetPlayer().onHit.AddListener((u, i) => ShakeCamera());
         }
+    }
+
+    private void OnTurnChanged()
+    {
+        //if combat state, look at turn owner
+        if (GameManager.instance.CompareState(GameState.Combat))
+            LookAtUnit(FieldSystem.turnSystem.turnOwner);   
+
     }
 
     #region SHAKE

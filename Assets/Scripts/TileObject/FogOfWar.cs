@@ -10,18 +10,11 @@ public class FogOfWar : TileObject
 
     private const float TO_CAM = 0.5f;
 
-    public void VisualSet()
-    {
-        // Vector3 camPos = Camera.main.transform.position;
-        //
-        // transform.position = Vector3.Lerp(transform.position, camPos, TO_CAM);
-        // transform.localScale *= TO_CAM;
-    }
-
     public new void SetVisible(bool value)
     {
         if (value)
         {
+            GameManager.instance.AddPioneeredWorldTile(hexPosition);
             RemoveSelf();
         }
 

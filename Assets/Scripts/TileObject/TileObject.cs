@@ -42,7 +42,7 @@ public abstract class TileObject : MonoBehaviour
         meshRenderer ??= GetComponent<MeshRenderer>();
     }
     
-    public void SetUp()
+    public virtual void SetUp()
     {
         tile = FieldSystem.tileSystem.GetTile(hexPosition);
         if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");

@@ -12,7 +12,9 @@ public enum GameState
 }
 public class GameManager : Generic.Singleton<GameManager>
 {
-    const string COMBAT_SCENE_NAME = "CombatScene";
+    private static string COMBAT_SCENE_NAME = "CombatScene";
+    
+    private HashSet<Vector3Int> _pioneeredWorldTileSet;
     
     [SerializeField]
     private GameState _currentState = GameState.World;
@@ -154,6 +156,25 @@ public class GameManager : Generic.Singleton<GameManager>
             list.RemoveAt(USIPosition);
             list.Insert(USIPosition, skillInfo.index);
         }
+    }
+    
+    public bool IsPioneeredWorldTile(Vector3Int tilePos)
+    {
+        return _pioneeredWorldTileSet.Contains(tilePos);
+    }
+
+    public void AddPioneeredWorldTile(Vector3Int tilePos)
+    {
+        if (_pioneeredWorldTileSet.Contains(tilePos)) return;
+        
+        _pioneeredWorldTileSet.Add(tilePos);
+    }
+    
+    private new void Awake()
+    {
+        base.Awake();
+        
+        _pioneeredWorldTileSet = new ();
     }
 
     public void Update()

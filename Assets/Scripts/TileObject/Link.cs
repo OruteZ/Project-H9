@@ -6,6 +6,8 @@ public class Link : TileObject
 {
     public int linkIndex;
     public int combatMapIndex;
+
+    private bool _vision;
     
     private bool IsEncounterEnable()
     {
@@ -29,6 +31,7 @@ public class Link : TileObject
     public override void SetVisible(bool value)
     {
         meshRenderer.enabled = value && IsEncounterEnable();
+        _vision = value;
     }
 
     public override string[] GetArgs()
@@ -39,5 +42,14 @@ public class Link : TileObject
     public override void SetArgs(string[] args)
     {
         linkIndex = int.Parse(args[0]);
+    }
+    
+    public override void SetUp()
+    {
+        base.SetUp();
+        
+        //Link는 World Object라서 한번 밝혀지면 상관이 없지만 
+        //턴이 바뀜에 따라서 안보이는게 보일 수 있으니 확인 해줘야 함
+        FieldSystem.turnSystem.onTurnChanged.AddListener(() => SetVisible(_vision));
     }
 }

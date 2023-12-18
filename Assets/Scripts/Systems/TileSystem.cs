@@ -75,11 +75,11 @@ public class TileSystem : MonoBehaviour
         foreach (Tile t in tilesInChildren)
         {
             AddTile(t);
-            if (GameManager.instance.CompareState(GameState.World))
+            if (GameManager.instance.CompareState(GameState.World) && 
+                GameManager.instance.IsPioneeredWorldTile(t.hexPosition) is false)
             {
                 var fow = Instantiate(worldFogOfWarPrefab, fogs).GetComponent<FogOfWar>(); 
                 fow.hexPosition = t.hexPosition;
-                fow.VisualSet();
             }
         }
 

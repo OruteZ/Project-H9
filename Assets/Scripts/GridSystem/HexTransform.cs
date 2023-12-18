@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 // ReSharper disable InconsistentNaming
 
-public class HexTransform : MonoBehaviour
+public class HexTransform : MonoBehaviour, IEquatable<HexTransform>
 {
     [SerializeField]
     private Vector3Int _position;
@@ -34,5 +34,10 @@ public class HexTransform : MonoBehaviour
     private void ResetPosition()
     {
         position = Hex.Round(Hex.World2Hex(transform.position));
+    }
+
+    public bool Equals(HexTransform other)
+    {
+        return position == other.position;
     }
 }

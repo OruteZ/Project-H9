@@ -14,26 +14,85 @@ public class UnitSystem : MonoBehaviour
     [SerializeField] private PassiveDatabase passiveDB;
     [SerializeField] private ActiveDatabase activeDB;
     [SerializeField] private BehaviourTreeDatabase aiDB;
+    [SerializeField] private LinkDatabase linkDB;
     
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
     public UnityEvent<Unit> onAnyUnitDead;
-
+    
+    [SerializeField] private Transform unitParent;
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject enemyPrefab;
+    
     private int _totalExp;
     
+    
     /// <summary>
-    /// 자식오브젝트에 존재하는 모든 Unit을 찾아 Units에 등록합니다.
+    /// 유닛을 생성하고, 유닛의 데이터를 초기화합니다.
     /// </summary>
     public void SetUpUnits()
     {
         _totalExp = 0;
-        
-        var childUnits = GetComponentsInChildren<Unit>();
-        foreach (var unit in childUnits)
+
+        //get all link data and instantiate enemy
+        if (GameManager.instance.CompareState(GameState.Combat))
         {
-            units.Add(unit);
+            var linkDataIdx = GameManager.instance.GetLinkIndex();
+            var linkData = linkDB.GetData(linkDataIdx);
+            var enemyCount = linkData.combatEnemy.Length;
+
+            var mapSpawnData = GameManager.instance.GetStageData();
+            mapSpawnData.TryGetEnemyPoints(linkDataIdx, out var enemySpawnPoints);
+            mapSpawnData.TryGetPlayerPoint(linkDataIdx, out var playerSpawnPoint);
+            
+            //create player
+            var player = Instantiate(playerPrefab, unitParent).GetComponent<Player>();
+            player.hexPosition = playerSpawnPoint;
+            units.Add(player);
+            
+            //random spawn enemy by spawn points
+            var enemySpawnPointList = enemySpawnPoints.ToList();
+            
+            //if count is not same, throw error
+            if (enemyCount != enemySpawnPointList.Count)
+            {
+                Debug.LogError("Enemy Count is not same with spawn point count");
+                throw new Exception();
+                return;
+            }
+            
+            for (int i = 0; i < enemyCount; i++)
+            {
+                var enemyIdx = linkData.combatEnemy[i];
+                
+                //instantiate GameObject
+                var enemy = Instantiate(enemyPrefab, unitParent).GetComponent<Enemy>();
+                
+                //set enemy idx
+                enemy.dataIndex = enemyIdx;
+                enemy.gameObject.name = (i + 1) + "Enemy : " + enemyIdx;
+
+                enemy.hexPosition = enemySpawnPointList[UnityEngine.Random.Range(0, enemySpawnPointList.Count)];
+                enemySpawnPointList.Remove(enemy.hexPosition);
+                
+                units.Add(enemy);
+            }
         }
-        
+        else if (GameManager.instance.CompareState(GameState.World))
+        {
+            //find childeren unit
+            var childCount = unitParent.childCount;
+            units = new List<Unit>(childCount);
+            for (int i = 0; i < childCount; i++)
+            {
+                var child = unitParent.GetChild(i);
+                if (child.TryGetComponent(out Unit unit))
+                {
+                    units.Add(unit);
+                }
+            }
+        }
+
         foreach (var unit in units)
         {
             if (unit is Player p)

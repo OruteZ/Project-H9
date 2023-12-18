@@ -13,7 +13,7 @@ public class TurnSystem : MonoBehaviour
     public Unit turnOwner;  
     public int turnNumber;
 
-private void Awake()
+    private void Awake()
     {
         turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.worldTurn : 0;
         onTurnChanged.AddListener(() => { turnNumber++;});
@@ -64,11 +64,11 @@ private void Awake()
     }
     private void CalculateTurnOwner()
     {
-        if (GameManager.instance.CompareState(GameState.World))
+        if (GameManager.instance.CompareState(GameState.Combat) is false)
         {
             turnOwner = FieldSystem.unitSystem.GetPlayer();
         }
-        else if (GameManager.instance.CompareState(GameState.Combat))
+        else
         {
             const int ORDER_LENGTH = 12;
             
@@ -102,8 +102,6 @@ private void Awake()
             UIManager.instance.combatUI.turnOrderUI.SetTurnOrderUI(turnOrder);
             turnOwner = turnOrder[0];
         }
-        
-        Debug.LogWarning("Turn Owner : " + turnOwner.gameObject.name);
     }
     private float CalculateTurnOrderValue(int currentRound, int speed) 
     {

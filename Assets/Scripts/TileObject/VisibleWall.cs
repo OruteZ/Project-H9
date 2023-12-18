@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VisibleWall : TileObject
 {
-    public override void SetTile(Tile t)
+    protected override void SetTile(Tile t)
     {
         Debug.Log("Se tTile call");
         base.SetTile(t);

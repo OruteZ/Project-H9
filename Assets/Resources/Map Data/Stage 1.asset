@@ -1,0 +1,1520 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456fa8a8767d6f34e86700ddf9a99d26, type: 3}
+  m_Name: Stage 1
+  m_EditorClassIdentifier: 
+  tileData:
+  - hexPosition: {x: 0, y: 0, z: 0}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 1, y: 0, z: -1}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 2, y: 0, z: -2}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 3, y: 0, z: -3}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 4, y: 0, z: -4}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 5, y: 0, z: -5}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 6, y: 0, z: -6}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 7, y: 0, z: -7}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 8, y: 0, z: -8}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 9, y: 0, z: -9}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 10, y: 0, z: -10}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 11, y: 0, z: -11}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 0, y: 1, z: -1}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 1, y: 1, z: -2}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 2, y: 1, z: -3}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 3, y: 1, z: -4}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 4, y: 1, z: -5}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 5, y: 1, z: -6}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 6, y: 1, z: -7}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 7, y: 1, z: -8}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 8, y: 1, z: -9}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 9, y: 1, z: -10}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 10, y: 1, z: -11}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 11, y: 1, z: -12}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -1, y: 2, z: -1}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 0, y: 2, z: -2}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 1, y: 2, z: -3}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 2, y: 2, z: -4}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 3, y: 2, z: -5}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 4, y: 2, z: -6}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 5, y: 2, z: -7}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 6, y: 2, z: -8}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 7, y: 2, z: -9}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 8, y: 2, z: -10}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 9, y: 2, z: -11}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 10, y: 2, z: -12}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -1, y: 3, z: -2}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 0, y: 3, z: -3}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 1, y: 3, z: -4}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 2, y: 3, z: -5}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 3, y: 3, z: -6}
+    visible: 0
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 4, y: 3, z: -7}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 5, y: 3, z: -8}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 6, y: 3, z: -9}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 7, y: 3, z: -10}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 8, y: 3, z: -11}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 9, y: 3, z: -12}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 10, y: 3, z: -13}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -2, y: 4, z: -2}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -1, y: 4, z: -3}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 0, y: 4, z: -4}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 1, y: 4, z: -5}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 2, y: 4, z: -6}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 3, y: 4, z: -7}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 4, y: 4, z: -8}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 5, y: 4, z: -9}
+    visible: 0
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 6, y: 4, z: -10}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 7, y: 4, z: -11}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 8, y: 4, z: -12}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 9, y: 4, z: -13}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -2, y: 5, z: -3}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -1, y: 5, z: -4}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 0, y: 5, z: -5}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 1, y: 5, z: -6}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 2, y: 5, z: -7}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 3, y: 5, z: -8}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 4, y: 5, z: -9}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 5, y: 5, z: -10}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 6, y: 5, z: -11}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 7, y: 5, z: -12}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 8, y: 5, z: -13}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 9, y: 5, z: -14}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -3, y: 6, z: -3}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -2, y: 6, z: -4}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -1, y: 6, z: -5}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 0, y: 6, z: -6}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 1, y: 6, z: -7}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 2, y: 6, z: -8}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 3, y: 6, z: -9}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 4, y: 6, z: -10}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 5, y: 6, z: -11}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 6, y: 6, z: -12}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 7, y: 6, z: -13}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 8, y: 6, z: -14}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: -3, y: 7, z: -4}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -2, y: 7, z: -5}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: -1, y: 7, z: -6}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 0, y: 7, z: -7}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 1, y: 7, z: -8}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 2, y: 7, z: -9}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 3, y: 7, z: -10}
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
+    gridVisible: 1
+  - hexPosition: {x: 4, y: 7, z: -11}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 5, y: 7, z: -12}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 6, y: 7, z: -13}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 7, y: 7, z: -14}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  - hexPosition: {x: 8, y: 7, z: -15}
+    visible: 1
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 1
+  tileObjectData: []
+  envData:
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 0
+    hexPosition: {x: 0, y: 0, z: 0}
+    height: -0.7
+    position: {x: 0, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 100, y: 14.9, z: 100}
+  - material: {fileID: 2100000, guid: e60302d84b6108e4a8e0d3b9ca1c8b5b, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 4, z: -9}
+    height: 0.51
+    position: {x: 12.124355, y: 0.51, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 10, z: 1.73}
+  - material: {fileID: 2100000, guid: e60302d84b6108e4a8e0d3b9ca1c8b5b, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 3, z: -6}
+    height: 0.51
+    position: {x: 7.7942286, y: 0.51, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 10, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 0, z: 0}
+    height: -0.7
+    position: {x: 0, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 1, y: 0, z: -1}
+    height: -0.7
+    position: {x: 1.7320508, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 2, y: 0, z: -2}
+    height: -0.7
+    position: {x: 3.4641016, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 0, z: -3}
+    height: -0.7
+    position: {x: 5.196152, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 0, z: -4}
+    height: -0.7
+    position: {x: 6.928203, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 0, z: -5}
+    height: -0.7
+    position: {x: 8.660254, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 0, z: -6}
+    height: -0.7
+    position: {x: 10.392304, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 7, y: 0, z: -7}
+    height: -0.7
+    position: {x: 12.124355, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 0, z: -8}
+    height: -0.7
+    position: {x: 13.856406, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 9, y: 0, z: -9}
+    height: -0.7
+    position: {x: 15.588457, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 10, y: 0, z: -10}
+    height: -0.7
+    position: {x: 17.320507, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 11, y: 0, z: -11}
+    height: -0.7
+    position: {x: 19.052559, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 1, z: -1}
+    height: -0.7
+    position: {x: 0.8660254, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 1, y: 1, z: -2}
+    height: -0.7
+    position: {x: 2.598076, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 2, y: 1, z: -3}
+    height: -0.7
+    position: {x: 4.330127, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 1, z: -4}
+    height: -0.7
+    position: {x: 6.0621777, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 1, z: -5}
+    height: -0.7
+    position: {x: 7.7942286, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 1, z: -6}
+    height: -0.7
+    position: {x: 9.526279, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 1, z: -7}
+    height: -0.7
+    position: {x: 11.25833, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 7, y: 1, z: -8}
+    height: -0.7
+    position: {x: 12.990381, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 1, z: -9}
+    height: -0.7
+    position: {x: 14.722431, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 9, y: 1, z: -10}
+    height: -0.7
+    position: {x: 16.454483, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 10, y: 1, z: -11}
+    height: -0.7
+    position: {x: 18.186533, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 11, y: 1, z: -12}
+    height: -0.7
+    position: {x: 19.918585, y: -0.7, z: -1.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -1, y: 2, z: -1}
+    height: -0.7
+    position: {x: 0, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 2, z: -2}
+    height: -0.7
+    position: {x: 1.7320508, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 1, y: 2, z: -3}
+    height: -0.7
+    position: {x: 3.4641016, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 2, y: 2, z: -4}
+    height: -0.7
+    position: {x: 5.196152, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 2, z: -5}
+    height: -0.7
+    position: {x: 6.928203, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 2, z: -6}
+    height: -0.7
+    position: {x: 8.660254, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 2, z: -7}
+    height: -0.7
+    position: {x: 10.392304, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 2, z: -8}
+    height: -0.7
+    position: {x: 12.124355, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 7, y: 2, z: -9}
+    height: -0.7
+    position: {x: 13.856406, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 2, z: -10}
+    height: -0.7
+    position: {x: 15.588457, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 9, y: 2, z: -11}
+    height: -0.7
+    position: {x: 17.320507, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 10, y: 2, z: -12}
+    height: -0.7
+    position: {x: 19.052559, y: -0.7, z: -3}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -1, y: 3, z: -2}
+    height: -0.7
+    position: {x: 0.8660254, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 3, z: -3}
+    height: -0.7
+    position: {x: 2.598076, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 1, y: 3, z: -4}
+    height: -0.7
+    position: {x: 4.330127, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 2, y: 3, z: -5}
+    height: -0.7
+    position: {x: 6.0621777, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 3, z: -6}
+    height: -0.7
+    position: {x: 7.7942286, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 3, z: -7}
+    height: -0.7
+    position: {x: 9.526279, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 3, z: -8}
+    height: -0.7
+    position: {x: 11.25833, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 3, z: -9}
+    height: -0.7
+    position: {x: 12.990381, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 7, y: 3, z: -10}
+    height: -0.7
+    position: {x: 14.722431, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 3, z: -11}
+    height: -0.7
+    position: {x: 16.454483, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 9, y: 3, z: -12}
+    height: -0.7
+    position: {x: 18.186533, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 10, y: 3, z: -13}
+    height: -0.7
+    position: {x: 19.918585, y: -0.7, z: -4.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -2, y: 4, z: -2}
+    height: -0.7
+    position: {x: 0, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -1, y: 4, z: -3}
+    height: -0.7
+    position: {x: 1.7320508, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 4, z: -4}
+    height: -0.7
+    position: {x: 3.4641016, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 1, y: 4, z: -5}
+    height: -0.7
+    position: {x: 5.196152, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 2, y: 4, z: -6}
+    height: -0.7
+    position: {x: 6.928203, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 4, z: -7}
+    height: -0.7
+    position: {x: 8.660254, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 4, z: -8}
+    height: -0.7
+    position: {x: 10.392304, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 4, z: -9}
+    height: -0.7
+    position: {x: 12.124355, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 4, z: -10}
+    height: -0.7
+    position: {x: 13.856406, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 7, y: 4, z: -11}
+    height: -0.7
+    position: {x: 15.588457, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 4, z: -12}
+    height: -0.7
+    position: {x: 17.320507, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 9, y: 4, z: -13}
+    height: -0.7
+    position: {x: 19.052559, y: -0.7, z: -6}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -2, y: 5, z: -3}
+    height: -0.7
+    position: {x: 0.8660254, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -1, y: 5, z: -4}
+    height: -0.7
+    position: {x: 2.598076, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 5, z: -5}
+    height: -0.7
+    position: {x: 4.330127, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 1, y: 5, z: -6}
+    height: -0.7
+    position: {x: 6.0621777, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 2, y: 5, z: -7}
+    height: -0.7
+    position: {x: 7.7942286, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 5, z: -8}
+    height: -0.7
+    position: {x: 9.526279, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 5, z: -9}
+    height: -0.7
+    position: {x: 11.25833, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 5, z: -10}
+    height: -0.7
+    position: {x: 12.990381, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 5, z: -11}
+    height: -0.7
+    position: {x: 14.722431, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 7, y: 5, z: -12}
+    height: -0.7
+    position: {x: 16.454483, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 5, z: -13}
+    height: -0.7
+    position: {x: 18.186533, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 9, y: 5, z: -14}
+    height: -0.7
+    position: {x: 19.918585, y: -0.7, z: -7.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -3, y: 6, z: -3}
+    height: -0.7
+    position: {x: 0, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -2, y: 6, z: -4}
+    height: -0.7
+    position: {x: 1.7320508, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -1, y: 6, z: -5}
+    height: -0.7
+    position: {x: 3.4641016, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 6, z: -6}
+    height: -0.7
+    position: {x: 5.196152, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 1, y: 6, z: -7}
+    height: -0.7
+    position: {x: 6.928203, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 2, y: 6, z: -8}
+    height: -0.7
+    position: {x: 8.660254, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 6, z: -9}
+    height: -0.7
+    position: {x: 10.392304, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 6, z: -10}
+    height: -0.7
+    position: {x: 12.124355, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 6, z: -11}
+    height: -0.7
+    position: {x: 13.856406, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 6, z: -12}
+    height: -0.7
+    position: {x: 15.588457, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 7, y: 6, z: -13}
+    height: -0.7
+    position: {x: 17.320507, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 6, z: -14}
+    height: -0.7
+    position: {x: 19.052559, y: -0.7, z: -9}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -3, y: 7, z: -4}
+    height: -0.7
+    position: {x: 0.8660254, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -2, y: 7, z: -5}
+    height: -0.7
+    position: {x: 2.598076, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -1, y: 7, z: -6}
+    height: -0.7
+    position: {x: 4.330127, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 7, z: -7}
+    height: -0.7
+    position: {x: 6.0621777, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 1, y: 7, z: -8}
+    height: -0.7
+    position: {x: 7.7942286, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 2, y: 7, z: -9}
+    height: -0.7
+    position: {x: 9.526279, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 7, z: -10}
+    height: -0.7
+    position: {x: 11.25833, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 7, z: -11}
+    height: -0.7
+    position: {x: 12.990381, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 7, z: -12}
+    height: -0.7
+    position: {x: 14.722431, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 7, z: -13}
+    height: -0.7
+    position: {x: 16.454483, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 7, y: 7, z: -14}
+    height: -0.7
+    position: {x: 18.186533, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 7, z: -15}
+    height: -0.7
+    position: {x: 19.918585, y: -0.7, z: -10.5}
+    rotation: 0
+    scale: {x: 1.73, y: 15, z: 1.73}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 7, z: -15}
+    height: 0
+    position: {x: 19.918585, y: 0, z: -10.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 7, z: -13}
+    height: 0
+    position: {x: 16.454483, y: 0, z: -10.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 7, z: -12}
+    height: 0
+    position: {x: 14.722431, y: 0, z: -10.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 7, y: 7, z: -14}
+    height: 0
+    position: {x: 18.186533, y: 0, z: -10.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 7, z: -11}
+    height: 0
+    position: {x: 12.990381, y: 0, z: -10.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 6, z: -14}
+    height: 0
+    position: {x: 19.052559, y: 0, z: -9}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 7, y: 6, z: -13}
+    height: 0
+    position: {x: 17.320507, y: 0, z: -9}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 6, z: -12}
+    height: 0
+    position: {x: 15.588457, y: 0, z: -9}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 6, z: -11}
+    height: 0
+    position: {x: 13.856406, y: 0, z: -9}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 8, y: 7, z: -15}
+    height: 0
+    position: {x: 19.918585, y: 0, z: -10.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 1, y: 0, z: -1}
+    height: 0
+    position: {x: 1.7320508, y: 0, z: 0}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 0, z: 0}
+    height: 0
+    position: {x: 0, y: 0, z: 0}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 0, z: -3}
+    height: 0
+    position: {x: 5.196152, y: 0, z: 0}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 0, z: -4}
+    height: 0
+    position: {x: 6.928203, y: 0, z: 0}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 6, y: 0, z: -6}
+    height: 0
+    position: {x: 10.392304, y: 0, z: 0}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 5, y: 0, z: -5}
+    height: 0
+    position: {x: 8.660254, y: 0, z: 0}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 1, y: 1, z: -2}
+    height: 0
+    position: {x: 2.598076, y: 0, z: -1.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 1, z: -1}
+    height: 0
+    position: {x: 0.8660254, y: 0, z: -1.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 4, y: 1, z: -5}
+    height: 0
+    position: {x: 7.7942286, y: 0, z: -1.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 3, y: 1, z: -4}
+    height: 0
+    position: {x: 6.0621777, y: 0, z: -1.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 2, y: 1, z: -3}
+    height: 0
+    position: {x: 4.330127, y: 0, z: -1.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 2, z: -2}
+    height: 0
+    position: {x: 1.7320508, y: 0, z: -3}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -1, y: 2, z: -1}
+    height: 0
+    position: {x: 0, y: 0, z: -3}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: -1, y: 3, z: -2}
+    height: 0
+    position: {x: 0.8660254, y: 0, z: -4.5}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: da23a6c2a7ba3e94d978f731b0da222b, type: 2}
+    mesh: {fileID: 4300000, guid: cff56dfd46a673f4494e94fba5b6fdf2, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 2, y: 0, z: -2}
+    height: 0
+    position: {x: 3.4641016, y: 0, z: 0}
+    rotation: 136.59999
+    scale: {x: 0.40000004, y: 0.39999998, z: 0.40000004}
+  - material: {fileID: 2100000, guid: e4739197ddcfbab489e1d405ef527455, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 1
+    hexPosition: {x: 0, y: 0, z: 0}
+    height: -0.7
+    position: {x: 0, y: -0.7, z: 0}
+    rotation: 0
+    scale: {x: 100, y: 14.9, z: 100}
+  enemySpawnPoints:
+  - list:
+    - {x: 2, y: 5, z: -7}
+  - list:
+    - {x: 2, y: 5, z: -7}
+  - list:
+    - {x: 7, y: 3, z: -10}
+  - list:
+    - {x: 6, y: 2, z: -8}
+  - list:
+    - {x: 2, y: 6, z: -8}
+    - {x: 1, y: 4, z: -5}
+  - list:
+    - {x: 6, y: 4, z: -10}
+    - {x: 8, y: 2, z: -10}
+    - {x: 6, y: 2, z: -8}
+  playerSpawnPoint:
+  - {x: 5, y: 3, z: -8}
+  - {x: 6, y: 2, z: -8}
+  - {x: 0, y: 4, z: -4}
+  - {x: 1, y: 3, z: -4}
+  - {x: 1, y: 5, z: -6}
+  - {x: 0, y: 5, z: -5}

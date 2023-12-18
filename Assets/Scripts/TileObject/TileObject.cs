@@ -10,7 +10,7 @@ public abstract class TileObject : MonoBehaviour
     [SerializeField] 
     private bool vision;
     
-    public int id;
+    public int objectID;
     
     public HexTransform hexTransform;
     public Renderer meshRenderer;
@@ -18,20 +18,24 @@ public abstract class TileObject : MonoBehaviour
     protected Tile tile;
     public Vector3Int hexPosition
     {
-        get => hexTransform.position;
-        set => hexTransform.position = value;
-    } 
-    
-    public static void Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
-    {
-        var tile = tileSystem.GetTile(pos);
-        if (tile == null) return;
-    
-        var tileObj = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity).GetComponent<TileObject>();
-        tileObj.hexPosition = pos;
-        tileObj.SetUp();
+        get
+        {
+            if (hexTransform is null)
+            {
+                TryGetComponent(out hexTransform);
+            }
+            
+            return hexTransform.position;
+        }
+        set
+        {
+            if (hexTransform is null)
+            {
+                TryGetComponent(out hexTransform);
+            } 
+            hexTransform.position = value;
+        }
     }
-
     private void Awake()
     {
         hexTransform ??= GetComponent<HexTransform>();
@@ -44,11 +48,11 @@ public abstract class TileObject : MonoBehaviour
         if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
         
         SetTile(tile);
-        meshRenderer.enabled = GameManager.instance.CompareState(GameState.World);
+        //meshRenderer.enabled = GameManager.instance.CompareState(GameState.World);
         vision = IsVisible();
     }
 
-    public virtual void SetTile(Tile t)
+    protected virtual void SetTile(Tile t)
     {
         t.AddObject(this);
         tile = t;

@@ -16,24 +16,22 @@ using UnityEngine;
             {
                 tester.Effect();
                 //UIManager.instance.onPlayerStatChanged.Invoke();
-        }
-        
-            if (GUILayout.Button("Debug Effect") && EditorApplication.isPlaying)
+            }
+            
+            if (!GUILayout.Button("Debug Effect") || !EditorApplication.isPlaying) return;
+            //get all status from player
+            //print status
+            var player = FieldSystem.unitSystem.GetPlayer();
+            
+            //get all displayable status
+            var statusList = player.GetDisplayableEffects();
+            
+            //print displayable status's stack, duration, name if canDisplay
+            foreach (var status in statusList)
             {
-                //get all status from player
-                //print status
-                var player = FieldSystem.unitSystem.GetPlayer();
-            
-                //get all displayable status
-                var statusList = player.GetDisplayableEffects();
-            
-                //print displayable status's stack, duration, name if canDisplay
-                foreach (var status in statusList)
-                {
-                    if (status.CanDisplay() is false) continue;
+                if (status.CanDisplay() is false) continue;
                 
-                    Debug.Log($"{status.GetIndex()} : {status.GetStack()}stack : {status.GetDuration()}duration");
-                }
+                Debug.Log($"{status.GetIndex()} : {status.GetStack()}stack : {status.GetDuration()}duration");
             }
         }
     }

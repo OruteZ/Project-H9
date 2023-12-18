@@ -8,8 +8,6 @@ using UnityEngine.Events;
 
 public class FieldSystem : MonoBehaviour
 {
-    private static FieldSystem _instance;
-    
     public static TileSystem tileSystem;
     public static TurnSystem turnSystem;
     public static UnitSystem unitSystem;
@@ -36,7 +34,6 @@ public class FieldSystem : MonoBehaviour
     private void Awake()
     {
         Debug.Log("Field System : Awake");
-        _instance = this;
         tileSystem = GetComponent<TileSystem>();
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();
@@ -54,12 +51,14 @@ public class FieldSystem : MonoBehaviour
     {
         Debug.Log("onStageAwake");
         onStageAwake.Invoke();
-        UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI();
+        if(GameManager.instance.CompareState(GameState.Editor) is false)
+            UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI();
 
         yield return new WaitUntil(() => LoadingManager.instance.isLoadingNow is false);
 
         Debug.Log("onStageStart");
         onStageStart.Invoke();
-        turnSystem.StartTurn();
+        if(GameManager.instance.CompareState(GameState.Editor) is false) 
+            turnSystem.StartTurn();
     }
 }

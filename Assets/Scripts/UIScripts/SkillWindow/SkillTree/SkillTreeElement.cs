@@ -11,7 +11,8 @@ public class SkillTreeElement : UIElement
     [SerializeField] private int skillIndex;
     [SerializeField] private List<GameObject> _postLine;
 
-    [SerializeField] private Image _effectImage;
+    [SerializeField] private Image _learnableEffectImage;
+    [SerializeField] private Image _activeEffectImage;
     [SerializeField] private Image _SkillImage;
 
     private SkillIcon _skillIcon;
@@ -21,7 +22,7 @@ public class SkillTreeElement : UIElement
     {
         ClearPostArrowList();
         effectSpeed = 10;
-        StartCoroutine(EffectColorChange((int)SkillUI.LearnStatus.NotLearnable, 0));
+        StartCoroutine(EffectColorChange((int)LearnStatus.NotLearnable, 0));
 
         _skillIcon = _SkillImage.GetComponent<SkillIcon>();
         _skillIcon.SetSkillIndex(skillIndex);
@@ -41,23 +42,32 @@ public class SkillTreeElement : UIElement
     /// skillUI에서 스킬트리UI들의 상태를 갱신할 때 실행됩니다.
     /// </summary>
     /// <param name="state"> 스킬트리UI의 상태 </param>
-    public void SetSkillButtonEffect(int state) 
+    public void SetSkillButtonEffect(LearnStatus state)
     {
         StartCoroutine(EffectColorChange(state, 1 / effectSpeed));
     }
-    IEnumerator EffectColorChange(int state, float speed)
+    IEnumerator EffectColorChange(LearnStatus state, float speed)
     {
+        if (state != LearnStatus.NotLearnable)
+        {
+            _activeEffectImage.color = UICustomColor.Invisible;
+        }
+        else
+        {
+            _activeEffectImage.color = UICustomColor.Opaque;
+        }
+
         Color32[] effectColor =
         {
             UICustomColor.SkillIconNotLearnedColor,
             UICustomColor.SkillIconLearnableColor,
             UICustomColor.SkillIconLearnedColor
         };
-        if (state != 2)
+        if (state != LearnStatus.Learned)
         {
             yield return new WaitForSeconds(speed);
         }
-        _effectImage.color = effectColor[state];
+        _learnableEffectImage.color = effectColor[(int)state];
         yield break;
     }
     /// <summary>

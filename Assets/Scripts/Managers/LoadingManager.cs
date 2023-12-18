@@ -11,8 +11,6 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
     [SerializeField] private float fadeDuration;
     private new void Awake()
     {
-        base.Awake();
-        
         canvas = GetComponentInChildren<Canvas>(includeInactive:true);
         progress = GetComponentInChildren<Slider>(includeInactive:true);
         
@@ -22,6 +20,7 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
             Debug.LogError("LoadingManager의 Canvas 또는 Slider가 비어있습니다.");
             Destroy(this);
         }
+        base.Awake();
     }
 
     private void Start()

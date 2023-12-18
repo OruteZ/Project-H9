@@ -3,22 +3,23 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
+/// 스킬의 습득 상태를 정의합니다.
+/// NotLearnable = 배울 수 없음.
+/// Learnable = 배울 수 있음.
+/// Learned = 배움. (더 이상 못 배움)
+/// </summary>
+public enum LearnStatus
+{
+    NotLearnable,
+    Learnable,
+    Learned
+};
+
+/// <summary>
 /// 스킬 트리 및 스킬 습득 등을 관리하는 스킬창 UI 전반에 대한 기능을 수행하는 클래스
 /// </summary>
 public class SkillUI : UISystem
 {
-    /// <summary>
-    /// 스킬의 습득 상태를 정의합니다.
-    /// NotLearnable = 배울 수 없음.
-    /// Learnable = 배울 수 있음.
-    /// Learned = 배움. (더 이상 못 배움)
-    /// </summary>
-    public enum LearnStatus
-    {
-        NotLearnable,
-        Learnable,
-        Learned
-    };
 
     private SkillManager _skillManager;
     private int _currentSkillIndex;
@@ -33,16 +34,19 @@ public class SkillUI : UISystem
 
     [SerializeField] private GameObject[] _skillRootNodes;
 
+    public SkillTooltip skillTooltip { get; private set; }
+
     void Start()
     {
         _skillManager = SkillManager.instance;
+        skillTooltip = _skillTooltipWindow.GetComponent<SkillTooltip>();
         //GetComponent<Image>().sprite = ;
-        UpdateSkillWindow();
+        UpdateAllSkillUINode();
     }
     public override void OpenUI() 
     {
         base.OpenUI();
-        UpdateSkillWindow();
+        UpdateAllSkillUINode();
     }
     public override void CloseUI()
     {
@@ -82,25 +86,22 @@ public class SkillUI : UISystem
         _skillTooltipWindow.GetComponent<SkillTooltip>().CloseUI();
     }
 
-    public void UpdateSkillWindow()
-    {
-        UpdateAllSkillUINode();
-        UpdateSkillPointUI();
-    }
     public void UpdateAllSkillUINode()
     {
+        UpdateSkillPointUI();
         for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
         {
             UpdateSkillUINode(_skillUIButtons.transform.GetChild(i).gameObject);
         }
     }
-    public void UpdateRelatedSkillNodes(int index) 
+    public void UpdateRelatedSkillNodes(int index)
     {
+        UpdateSkillPointUI();
         GameObject targetNode = FindSkillNode(index);
         UpdateSkillUINode(targetNode);
 
         List<GameObject> arrows = targetNode.GetComponent<SkillTreeElement>().GetPostArrow();
-        foreach (GameObject arrow in arrows) 
+        foreach (GameObject arrow in arrows)
         {
             UpdateSkillUINode(arrow.GetComponent<SkillTreeArrow>().GetPostSkillNode());
         }
@@ -116,11 +117,11 @@ public class SkillUI : UISystem
         {
             state = LearnStatus.Learned;
         }
-        if (_skill.isLearnable)
+        if (_skill.isLearnable && GameManager.instance.CompareState(GameState.World))
         {
             state = LearnStatus.Learnable;
         }
-        _skillElement.SetSkillButtonEffect((int)state);
+        _skillElement.SetSkillButtonEffect(state);
 
         if (_skill.skillLevel > 0)
         {

@@ -37,6 +37,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public int level = 1;
     public int curExp = 0;
     private int maxExp => level * 100;
+    private const int LEVEL_UP_REWARD_SKILL_POINT = 1;
     public void GetExp(int exp)
     {
         curExp += exp;
@@ -53,6 +54,7 @@ public class GameManager : Generic.Singleton<GameManager>
         curExp -= maxExp;
         level++;
         playerStat.Recover(StatType.CurHp, playerStat.GetStat(StatType.MaxHp));
+        SkillManager.instance.AddSkillPoint(LEVEL_UP_REWARD_SKILL_POINT);
         if (level % 3 == 0)
         {
             UIManager.instance.gameSystemUI.playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
@@ -79,7 +81,6 @@ public class GameManager : Generic.Singleton<GameManager>
         worldTurn = FieldSystem.turnSystem.turnNumber;
 
         playerWorldPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
-        
         ChangeState(GameState.Combat);
         _currentLinkIndex = linkIndex;
         _stageData = Resources.Load<CombatStageData>($"Map Data/Stage {stageIndex}");
@@ -119,7 +120,6 @@ public class GameManager : Generic.Singleton<GameManager>
         if (CompareState(state)) return;
 
         _currentState = state;
-        //UIManager.instance.ChangeScenePrepare(state);
     }
 
     public void AddPlayerSkillListElement(SkillInfo skillInfo)
@@ -133,28 +133,28 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             list = playerActiveIndexList;
         }
-        if (list.IndexOf(skillInfo.index) != -1)
-        {
-            Debug.Log("동일한 스킬 연속 습득 오류");
-            return;
-        }
 
-        int USIPosition = -1;
+        int previousSkillPositionIndex = -1;
         if (skillInfo.IsActive())
         {
-            ActiveInfo aInfo = SkillManager.instance.activeDB.GetActiveInfo(skillInfo.index);
-            int upgSkillIndex = SkillManager.instance.FindUpgradeSkillIndex(skillInfo, aInfo.action);
-            USIPosition = list.IndexOf(upgSkillIndex);
+            ActionType addedActionType = SkillManager.instance.activeDB.GetActiveInfo(skillInfo.index).action;
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                ActionType actionType = SkillManager.instance.activeDB.GetActiveInfo(list[i]).action;
+                if (addedActionType == actionType) 
+                {
+                    list.RemoveAt(i);
+                    previousSkillPositionIndex = i;
+                }
+            }
         }
-
-        if (USIPosition == -1)
+        if (previousSkillPositionIndex == -1)
         {
             list.Add(skillInfo.index);
         }
         else
         {
-            list.RemoveAt(USIPosition);
-            list.Insert(USIPosition, skillInfo.index);
+            list.Insert(previousSkillPositionIndex, skillInfo.index);
         }
     }
     

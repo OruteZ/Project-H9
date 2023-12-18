@@ -30,6 +30,7 @@ public class PlayerStatLevelInfo
         {
             stat.SetOriginalStat(StatType.SightRange, 
                 stat.GetOriginalStat(StatType.SightRange) + statIncreaseValue);
+            FieldSystem.unitSystem.GetPlayer().ReloadSight();
         }
         else if (statName == "Speed")
         {

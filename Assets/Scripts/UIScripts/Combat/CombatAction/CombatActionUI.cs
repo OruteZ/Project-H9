@@ -19,6 +19,7 @@ public class CombatActionUI : UISystem
 
     private List<GameObject> _actionButtons;
     private IUnitAction _selectedAction;
+    public GameObject selectedButton { get; private set; }
 
     private KeyCode[] _shortCutKey = 
     {   
@@ -37,11 +38,10 @@ public class CombatActionUI : UISystem
     };
 
     // Start is called before the first frame update
-    public new void Awake()
+    private void Awake()
     {
-        base.Awake();
-
-        _gameState = GameState.World;   
+        SetGameState();
+        UIManager.instance.onSceneChanged.AddListener(SetGameState);
 
         //Find Action Buttons & Put in to '_actionButtons'
         _actionButtons = new List<GameObject>();
@@ -64,9 +64,21 @@ public class CombatActionUI : UISystem
         UIManager.instance.onActionChanged.AddListener(SetActionButtons);
     }
 
+    private void SetGameState() 
+    {
+        if (GameManager.instance.CompareState(GameState.Combat))
+        {
+            _gameState = GameState.Combat;
+        }
+        else
+        {
+            _gameState = GameState.World;
+        }
+    }
+
     private void Update()
     {
-        if (!GameManager.instance.CompareState(GameState.Combat)) return;
+        if (_gameState != GameState.Combat) return;
         for (int i = 0; i <= _actionButtons.Count; i++)
         {
             if (Input.GetKeyDown(_shortCutKey[i]))
@@ -155,6 +167,13 @@ public class CombatActionUI : UISystem
         }
 
         //Set Button On/Off Status & Set Active Action Button(On Idle Button, Off Seleced Action Button)
+        bool isSelectedSomeAction = (selectedActionType != ActionType.Idle);
+        if (isSelectedSomeAction)
+        {
+            _idleButton.SetActive(true);
+            _idleButton.transform.position = selectedButton.transform.position;
+            selectedButton.GetComponent<ActionSelectButtonElement>().OffActionSelectButton();
+        }
         for (int i = 0; i < _actionButtons.Count; i++)
         {
             bool isInitButton = (SortedActions.Count > i);
@@ -163,21 +182,12 @@ public class CombatActionUI : UISystem
                 _actionButtons[i].GetComponent<ActionSelectButtonElement>().OffActionSelectButton();
                 continue;
             }
-            bool isSelectedSomeAction = (selectedActionType != ActionType.Idle);
-            if (isSelectedSomeAction)
+            if(_actionButtons[i] != selectedButton)
             {
-                bool isActiveAction = _selectedAction.IsActive();
-                bool isActiveActionButton = (_actionButtons[i].GetComponent<ActionSelectButtonElement>().displayedAction.GetActionType() == selectedActionType);
-                
-//                Debug.Log(isActiveAction + " " + isActiveActionButton);
-                if (!isActiveAction && isActiveActionButton)
-                {
-                    _idleButton.SetActive(true);
-                    _idleButton.transform.position = _actionButtons[i].transform.position;
-                    _actionButtons[i].GetComponent<ActionSelectButtonElement>().OffActionSelectButton();
-                }
+
             }
         }
+
     }
     private List<IUnitAction> SortActions(IUnitAction[] playerActions)
     {
@@ -231,6 +241,11 @@ public class CombatActionUI : UISystem
         }
 
         return actions;
+    }
+
+    public void SetSelectedActionButton(GameObject selectedBtn)
+    {
+        selectedButton = selectedBtn;
     }
 
     /// <summary>

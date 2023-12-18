@@ -12,9 +12,13 @@ public class TurnUI : UISystem
     [SerializeField] private GameObject _turnText;
     [SerializeField] private GameObject _endTurnButton;
 
+    private void Awake()
+    {
+        UIManager.instance.onActionChanged.AddListener(SetEndTurnButton);
+    }
+
     private void Update()
     {
-        SetEndTurnButton();
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {

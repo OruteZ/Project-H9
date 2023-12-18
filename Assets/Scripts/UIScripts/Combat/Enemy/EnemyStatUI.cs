@@ -19,7 +19,7 @@ public class EnemyStatUI : UISystem
 
     private const float WINDOW_X_POSITION_CORRECTION = 300;
 
-    private bool _isOpenedUI = false;
+    private bool _isOpenedTooltipWindow = false;
     private Enemy _enemy;
 
     public override void CloseUI()
@@ -30,13 +30,13 @@ public class EnemyStatUI : UISystem
 
     public override void OpenPopupWindow()
     {
-        _isOpenedUI = true;
+        _isOpenedTooltipWindow = true;
         UIManager.instance.previousLayer = 3;
         _enemyStatWindow.SetActive(true);
     }
     public override void ClosePopupWindow()
     {
-        _isOpenedUI = false;
+        _isOpenedTooltipWindow = false;
         UIManager.instance.previousLayer = 1;
         CloseEnemyStatUI();
     }
@@ -49,18 +49,25 @@ public class EnemyStatUI : UISystem
             Vector3Int enemyPos;
             if (IsMouseClickedEnemy(out enemyPos))
             {
-                Debug.Log("Click");
-                SetEnemyStatUI((Enemy)FieldSystem.unitSystem.GetUnit(enemyPos));
+                //Debug.Log("Enemy Click");
+                Enemy enemy = (Enemy)FieldSystem.unitSystem.GetUnit(enemyPos);
+                if (enemy.isVisible)
+                {
+                    SetEnemyStatUI(enemy);
+                }
             }
         }
-        if (_isOpenedUI)
+        if (_isOpenedTooltipWindow)
         {
-            if (_enemy is null) 
+            if (_enemy is null)
             {
                 ClosePopupWindow();
                 return;
             }
-            SetEnemyStatUIPosition(_enemy.transform.position);
+            else
+            {
+                SetEnemyStatUIPosition(_enemy.transform.position);
+            }
         }
     }
     /// <summary>
@@ -145,8 +152,8 @@ public class EnemyStatUI : UISystem
                       enemyStat.sightRange.ToString() + '\n' +
                       enemyStat.speed.ToString() + '\n' +
                       enemyStat.maxActionPoint.ToString() + '\n' +
-                      enemyStat.additionalHitRate.ToString() + '\n' +
-                      enemyStat.criticalChance.ToString();
+                      enemyStat.additionalHitRate.ToString() + "%\n" +
+                      enemyStat.criticalChance.ToString() +'%';
 
         _enemyStatText.GetComponent<TextMeshProUGUI>().text = text;
     }

@@ -51,7 +51,6 @@ public class TurnSystem : MonoBehaviour
     {
         if (GameManager.instance.backToWorldTrigger)
         {
-            Debug.LogWarning("Continue turn");
             GameManager.instance.backToWorldTrigger = false;
             ((Player)turnOwner).ContinueWorldTurn();
         }

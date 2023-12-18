@@ -32,9 +32,6 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         //_sprites = Resources.LoadAll<Sprite>("Sprite/" + _textures.name);
 
         _isSelectable = true;
-
-        //_APCostUIInitColor = _APCostUI.GetComponent<Image>().color;
-        //_AmmoCostUIInitColor = _AmmoCostUI.GetComponent<Image>().color;
     }
 
     /// <summary>
@@ -50,17 +47,16 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         //Button selectable Setting
         // 플레이어의 턴이 아닌 경우 - 선택 불가
         // 플레이어가 이미 행동을 실행 중인 경우 - 선택 불가
-        // 플레이어가 어떤 행동을 선택했는데, 해당 버튼의 행동이 선택된 행동이 아닐 경우 - 선택 불가. 단, Idle버튼은 제외.
+        // 플레이어가 어떤 행동을 선택했는데, 해당 버튼이 선택된 버튼이 아닐 경우 - 선택 불가. 단, Idle버튼은 제외.
         // SetCostIcons() 메소드에서 Cost가 부족하다고 판단되면 - 선택 불가
         _isSelectable = this.displayedAction.IsSelectable();
         IUnitAction playerSelectedAction = player.GetSelectedAction();
         
         bool isPlayerTurn = FieldSystem.turnSystem.turnOwner is Player;
         bool isPlayerSelectAction = (playerSelectedAction.GetActionType() != ActionType.Idle);
-        bool isSelectedAction = (playerSelectedAction.GetActionType() == this.displayedAction.GetActionType());
         bool isIdleAction = (action.GetActionType() == ActionType.Idle);
         bool isActiveAction = playerSelectedAction.IsActive();
-        if ((!isPlayerTurn) || isActiveAction || (isPlayerSelectAction && !isSelectedAction && !isIdleAction))
+        if ((!isPlayerTurn) || isActiveAction || (isPlayerSelectAction && !isIdleAction))
         {
             _isSelectable = false;
         }
@@ -183,6 +179,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         bool isActiveSelectedAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
         if (isIdleButton && isActiveSelectedAction) return;
 
+        UIManager.instance.combatUI.combatActionUI.SetSelectedActionButton(gameObject);
         FieldSystem.unitSystem.GetPlayer().SelectAction(displayedAction);
     }
 

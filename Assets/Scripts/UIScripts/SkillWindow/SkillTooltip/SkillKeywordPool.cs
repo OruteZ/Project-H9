@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class SkillKeywordWrapper : ObjectPoolWrapper<RectTransform>
 {
@@ -14,31 +15,33 @@ public class SkillKeywordWrapper : ObjectPoolWrapper<RectTransform>
 
     public override void Reset()
     {
-        tooltip.CloseUI();
         base.Reset();
+        tooltip.CloseUI();
     }
 }
 
 public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
 {
-    public override void Init(string objectKey, Transform parent, float generalLifeTime, uint expectedSize = 10, string rootName = "")
+    int count = 0;
+    public override void Init(string objectKey, Transform parent, float generalLifeTime, uint expectedSize = 20, string rootName = "")
     {
         base.Init(objectKey, parent, generalLifeTime, expectedSize, rootName);
         _root.transform.localPosition = Vector3.zero;
         _root.transform.localScale = Vector3.one;
 
-        SupplyPool(expectedSize / 2);
+        SupplyPool(expectedSize);
+        _root.transform.gameObject.AddComponent<VerticalLayoutGroup>();
     }
 
     public override SkillKeywordWrapper Set()
     {
-        if (_limitSize > _pool.Count || 0 == _pool.Count)
-            SupplyPool(_limitSize);
-
         var target = _pool.Dequeue();
+
         target.Enable = false;
-        target.Instance.gameObject.SetActive(true);
+
         _working.Add(target);
+        target.Instance.gameObject.SetActive(true);
+        target.Instance.transform.SetAsLastSibling();
         return target;
     }
 
@@ -47,6 +50,7 @@ public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
         for (int i = 0; i < size; i++)
         {
             var ins = GameObject.Instantiate(_prefab, Vector3.zero, _prefab.transform.rotation) as GameObject;
+            ins.name = _prefab.name + " " + count++;
             ins.transform.SetParent(_root, false);
             ins.GetComponent<RectTransform>().localPosition = Vector3.zero;
             var insRect = ins.GetComponent<RectTransform>();
@@ -67,5 +71,10 @@ public class SkillKeywordPool : ObjectPool<RectTransform, SkillKeywordWrapper>
                 _working.RemoveAt(i);
             }
         }
+    }
+
+    public override void OnUpdated(float deltaTime)
+    {
+        //Debug.Log(_pool.Count);
     }
 }

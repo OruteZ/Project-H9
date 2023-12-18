@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandler
+public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
     [SerializeField] private GameObject _buffImage;
     [SerializeField] private GameObject _buffEffect;
@@ -62,6 +62,14 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
         if (displayedEffect is not null)
         {
             UIManager.instance.combatUI.buffUI.HideBuffUITooltip();
+        }
+    }
+
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        if (displayedEffect is not null)
+        {
+            UIManager.instance.combatUI.buffUI.ShowBuffITooltip(this.gameObject);
         }
     }
 }

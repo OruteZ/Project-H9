@@ -103,8 +103,12 @@ public class ItemManager : Generic.Singleton<ItemManager>
     private Inventory _inventory;
     public int money { get; private set; }
 
-    void Start()
+    public GameObject inst;
+
+    private new void Awake()
     {
+        base.Awake();
+
         InitItemInfo();
         _inventory = new Inventory();
         money = 10;

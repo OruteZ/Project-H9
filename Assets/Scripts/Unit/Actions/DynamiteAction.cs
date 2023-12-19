@@ -64,7 +64,6 @@ public class DynamiteAction : BaseAction
         foreach(var target in _targets)
         {
             target.TakeDamage(damage, unit);
-            target.TryAddStatus(new Burning(damage, 10, unit));  //for test
         }
     }
 

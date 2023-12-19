@@ -12,11 +12,13 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
     [SerializeField] private GameObject _buffText;
 
     public IDisplayableEffect displayedEffect { get; private set; }
+    private bool _isPlayer = false;
 
-    public void SetBuffUIElement(IDisplayableEffect effect, bool isBuff) 
+    public void SetBuffUIElement(IDisplayableEffect effect, bool isBuff, bool isPlayer) 
     {
         OpenUI();
         displayedEffect = effect;
+        _isPlayer = isPlayer;
         // buff image setting
         if (effect is StatusEffect sEffect) 
         {
@@ -51,7 +53,7 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (displayedEffect is not null)
+        if (displayedEffect is not null && _isPlayer)
         {
             UIManager.instance.combatUI.buffUI.ShowBuffITooltip(this.gameObject);
         }
@@ -59,7 +61,7 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (displayedEffect is not null)
+        if (displayedEffect is not null && _isPlayer)
         {
             UIManager.instance.combatUI.buffUI.HideBuffUITooltip();
         }
@@ -67,7 +69,7 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerMove(PointerEventData eventData)
     {
-        if (displayedEffect is not null)
+        if (displayedEffect is not null && _isPlayer)
         {
             UIManager.instance.combatUI.buffUI.ShowBuffITooltip(this.gameObject);
         }

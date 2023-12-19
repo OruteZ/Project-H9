@@ -93,7 +93,7 @@ public class BuffUI : UISystem
         {
             if (effect.CanDisplay())
             {
-                UI.transform.GetChild(buffCount++).GetComponent<BuffUIElement>().SetBuffUIElement(effect, isBuff);
+                UI.transform.GetChild(buffCount++).GetComponent<BuffUIElement>().SetBuffUIElement(effect, isBuff, true);
                 if (effect == _currentTooltipEffect)
                 {
                     isExistTooltipEffect = true;

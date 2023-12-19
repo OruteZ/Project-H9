@@ -23,12 +23,14 @@ public class Repeater : Weapon
     {
         int damage = GetFinalDamage();
         target.TakeDamage(damage, unit);
+        Service.SetText(index:0, damage.ToString(), target.transform.position);
     }
 
     private void CriticalAttack(Unit target)
     {
         int damage = GetFinalCriticalDamage();
         target.TakeDamage(damage, unit);
+        Service.SetText(index:1, damage.ToString(), target.transform.position);
     }
 
     public override WeaponType GetWeaponType() => WeaponType.Repeater;

@@ -131,8 +131,6 @@ public abstract class Unit : MonoBehaviour, IUnit
         stat.Consume(StatType.CurHp, damage);
         onHit.Invoke(FieldSystem.turnSystem.turnOwner, damage);
 
-        Service.SetText(damage.ToString(), transform.position);
-
         if (hp <= 0 && _hasDead is false)
         {
             _hasDead = true;
@@ -327,7 +325,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
         else
         {
-            Service.SetText("MISS", target.transform.position);
+            Service.SetText(index:0, "MISS", target.transform.position);
         }
         weapon.currentAmmo--;
 

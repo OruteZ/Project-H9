@@ -37,6 +37,11 @@ public class LinkDatabase : ScriptableObject
 
     public LinkData GetData(int index)
     {
+        if (index == 0)
+        {
+            Debug.LogWarning("Trying to get Null Link Data");
+        }
+        
         foreach (var d in dataBase)
         {
             if (d.index == index) return d;

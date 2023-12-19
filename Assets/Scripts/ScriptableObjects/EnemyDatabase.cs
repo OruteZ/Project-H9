@@ -81,6 +81,11 @@ public class EnemyDatabase : ScriptableObject
 
     public EnemyData GetInfo(int index)
     {
+        if (index == 0)
+        {
+            Debug.LogWarning("Trying to get Null Enemy Data");
+        }
+        
         foreach (var data in enemyInfos)
         {
             if (data.index == index) return data;

@@ -9,8 +9,6 @@ using UnityEngine.EventSystems;
 
 public class Player : Unit
 {
-    private static readonly int START_TURN = Animator.StringToHash("StartTurn");
-
     public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList)
     {
         base.SetUp(newName, unitStat, newWeapon, unitModel, passiveList);
@@ -27,6 +25,7 @@ public class Player : Unit
     }
     public void Update()
     {
+        if (GameManager.instance.CompareState(GameState.Editor)) return;
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
         if (UIManager.instance.isMouseOverUI) return;
@@ -131,6 +130,8 @@ public class Player : Unit
 
         foreach (var tile in allTile)
         {
+            if(GameManager.instance.CompareState(GameState.World) && tile.inSight) continue;
+            
             tile.inSight = 
                 FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition) &&
                 Hex.Distance(hexTransform.position, tile.hexPosition) <= stat.sightRange;
@@ -168,7 +169,7 @@ public class Player : Unit
     private void OnMoved(Unit unit)
     {
         ReloadSight();
-        foreach (var obj in FieldSystem.tileSystem.GetTile(hexPosition).interactiveObjects) 
+        foreach (var obj in FieldSystem.tileSystem.GetTile(hexPosition).tileObjects) 
         { 
             obj.OnCollision(unit);
         }

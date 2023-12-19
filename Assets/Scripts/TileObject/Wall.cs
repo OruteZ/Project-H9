@@ -11,8 +11,8 @@ public class Wall : TileObject
     public bool visible;
     public bool walkable;
     public bool rayThroughable;
-    
-    public override void SetTile(Tile t)
+
+    protected override void SetTile(Tile t)
     {
         Debug.Log("Se tTile call");
         base.SetTile(t);

@@ -13,6 +13,13 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
     {
         canvas = GetComponentInChildren<Canvas>(includeInactive:true);
         progress = GetComponentInChildren<Slider>(includeInactive:true);
+        
+        //if one of two is null, remove this
+        if (canvas is null || progress is null)
+        {
+            Debug.LogError("LoadingManager의 Canvas 또는 Slider가 비어있습니다.");
+            Destroy(this);
+        }
         base.Awake();
     }
 

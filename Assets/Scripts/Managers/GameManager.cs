@@ -7,12 +7,21 @@ using UnityEngine.SceneManagement;
 public enum GameState
 {
     Combat,
-    World
+    World,
+    Editor
 }
 public class GameManager : Generic.Singleton<GameManager>
 {
+    private static string COMBAT_SCENE_NAME = "CombatScene";
+    
+    private HashSet<Vector3Int> _pioneeredWorldTileSet;
+    
     [SerializeField]
     private GameState _currentState = GameState.World;
+
+    [SerializeField] private CombatStageData _stageData;
+    [SerializeField]
+    private int _currentLinkIndex = -1;
 
     [Header("Player Info")]
     public Vector3Int playerWorldPos;
@@ -65,7 +74,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public int worldTurn;
 
     public bool backToWorldTrigger = false;
-    public void StartCombat(string combatSceneName)
+    public void StartCombat(int stageIndex, int linkIndex)
     {
         //Save World Data
         worldAp = FieldSystem.unitSystem.GetPlayer().currentActionPoint;
@@ -73,7 +82,19 @@ public class GameManager : Generic.Singleton<GameManager>
 
         playerWorldPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
         ChangeState(GameState.Combat);
-        LoadingManager.instance.LoadingScene(combatSceneName);
+        _currentLinkIndex = linkIndex;
+        _stageData = Resources.Load<CombatStageData>($"Map Data/Stage {stageIndex}");
+        LoadingManager.instance.LoadingScene(COMBAT_SCENE_NAME);
+    }
+    
+    public int GetLinkIndex()
+    {
+        return _currentLinkIndex;
+    }
+    
+    public CombatStageData GetStageData()
+    {
+        return _stageData;
     }
 
     public void FinishCombat()
@@ -82,6 +103,11 @@ public class GameManager : Generic.Singleton<GameManager>
 
         backToWorldTrigger = true;
         LoadingManager.instance.LoadingScene(worldSceneName);
+    }
+
+    public void SetEditor()
+    {
+        ChangeState(GameState.Editor);
     }
 
     public bool CompareState(GameState state)
@@ -130,6 +156,25 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             list.Insert(previousSkillPositionIndex, skillInfo.index);
         }
+    }
+    
+    public bool IsPioneeredWorldTile(Vector3Int tilePos)
+    {
+        return _pioneeredWorldTileSet.Contains(tilePos);
+    }
+
+    public void AddPioneeredWorldTile(Vector3Int tilePos)
+    {
+        if (_pioneeredWorldTileSet.Contains(tilePos)) return;
+        
+        _pioneeredWorldTileSet.Add(tilePos);
+    }
+    
+    private new void Awake()
+    {
+        base.Awake();
+        
+        _pioneeredWorldTileSet = new ();
     }
 
     public void Update()

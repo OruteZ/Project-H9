@@ -10,45 +10,52 @@ public abstract class TileObject : MonoBehaviour
     [SerializeField] 
     private bool vision;
     
-    public int id;
-    
     public HexTransform hexTransform;
     public Renderer meshRenderer;
 
     protected Tile tile;
     public Vector3Int hexPosition
     {
-        get => hexTransform.position;
-        set => hexTransform.position = value;
-    } 
-    
-    public static void Spawn(TileSystem tileSystem, Vector3Int pos, GameObject obj)
-    {
-        var tile = tileSystem.GetTile(pos);
-        if (tile == null) return;
-    
-        var tileObj = Instantiate(obj, Hex.Hex2World(pos), Quaternion.identity).GetComponent<TileObject>();
-        tileObj.hexPosition = pos;
-        tileObj.SetUp();
+        get
+        {
+            if (hexTransform is null)
+            {
+                TryGetComponent(out hexTransform);
+            }
+            
+            return hexTransform.position;
+        }
+        set
+        {
+            if (hexTransform is null)
+            {
+                TryGetComponent(out hexTransform);
+            } 
+            hexTransform.position = value;
+        }
     }
-
     private void Awake()
     {
         hexTransform ??= GetComponent<HexTransform>();
-        meshRenderer ??= GetComponent<MeshRenderer>();
+        InitRenderer();
     }
-    
-    public void SetUp()
+
+    protected virtual void InitRenderer()
+    {
+        TryGetComponent(out meshRenderer);
+        meshRenderer ??= GetComponentInChildren<Renderer>();
+    }
+
+    public virtual void SetUp()
     {
         tile = FieldSystem.tileSystem.GetTile(hexPosition);
         if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
         
         SetTile(tile);
-        meshRenderer.enabled = GameManager.instance.CompareState(GameState.World);
         vision = IsVisible();
     }
 
-    public virtual void SetTile(Tile t)
+    protected virtual void SetTile(Tile t)
     {
         t.AddObject(this);
         tile = t;
@@ -66,6 +73,9 @@ public abstract class TileObject : MonoBehaviour
 
     public virtual void SetVisible(bool value)
     {
+        //if editor mode, value always true
+        if (GameManager.instance.CompareState(GameState.Editor)) value = true;
+        
         meshRenderer.enabled = value;
         vision = value;
     }
@@ -78,14 +88,4 @@ public abstract class TileObject : MonoBehaviour
 
     public abstract string[] GetArgs();
     public abstract void SetArgs(string[] args);
-
-    [ContextMenu("Set MeshRenderer")]
-    public void SetMesh()
-    {
-        hexTransform = GetComponent<HexTransform>();
-        if (TryGetComponent(out meshRenderer) is false)
-        {
-            meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        }
-    }
 }

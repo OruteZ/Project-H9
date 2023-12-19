@@ -49,10 +49,12 @@ public class EnemyDatabase : ScriptableObject
             curData.stat = new UnitStat();
             curData.weaponIndex = int.Parse(data[(int)Col.EquippedWeapon]);
             curData.btIndex = int.Parse(data[(int)Col.BehaviorPattern]);
-            //curData.model = Resources.Load("Prefab/Units/" + data[(int)Col.ModelFile]) as GameObject,
+            curData.model = Resources.Load("Prefab/Units/" + data[(int)Col.ModelFile]) as GameObject;   
 
             curData.rewardGold = int.Parse(data[(int)Col.RewardGold]);
             curData.rewardExp = int.Parse(data[(int)Col.RewardXP]);
+            curData.rewardItem = data[(int)Col.RewardItem];
+            curData.rewardWeapon = data[(int)Col.RewardWeapon];
 
             curData.stat.SetOriginalStat(StatType.MaxHp, int.Parse(data[(int)Col.Hp]));
             curData.stat.SetOriginalStat(StatType.CurHp, int.Parse(data[(int)Col.Hp]));
@@ -79,6 +81,11 @@ public class EnemyDatabase : ScriptableObject
 
     public EnemyData GetInfo(int index)
     {
+        if (index == 0)
+        {
+            Debug.LogWarning("Trying to get Null Enemy Data");
+        }
+        
         foreach (var data in enemyInfos)
         {
             if (data.index == index) return data;

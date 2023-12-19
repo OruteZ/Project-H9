@@ -115,7 +115,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             }
             else //GameState.World
             {
-                bool containsFog = tile.interactiveObjects.OfType<FogOfWar>().Any();
+                bool containsFog = tile.tileObjects.OfType<FogOfWar>().Any();
                 if (containsFog) continue;
             }
             SetEffectBase(tile.hexPosition, TileEffectType.Normal);

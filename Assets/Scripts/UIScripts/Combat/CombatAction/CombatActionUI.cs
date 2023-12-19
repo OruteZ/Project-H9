@@ -117,11 +117,17 @@ public class CombatActionUI : UISystem
         _player = FieldSystem.unitSystem.GetPlayer();
         if (_player == null) 
         {
-            //Debug.Log("플레이어를 찾지 못해 행동창을 구성하지 못했습니다.");
+            Debug.LogError("플레이어를 찾지 못해 행동창을 구성하지 못했습니다.");
             return;
         }
         IUnitAction[] playerActions = _player.GetUnitActionArray();
-
+        if(playerActions == null) 
+        {
+            Debug.LogError("플레이어의 액션을 찾지 못해 행동창을 구성하지 못했습니다.");
+            return;
+        }
+        
+        
         //Init Button UIs
         for (int i = 0; i < _actionButtons.Count; i++)
         {

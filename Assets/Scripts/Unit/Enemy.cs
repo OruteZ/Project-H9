@@ -9,6 +9,7 @@ public class Enemy : Unit
 {
     [Header("Index")]
     public int dataIndex;
+    
     [SerializeField] private BehaviourTree ai;
     private static readonly int IDLE = Animator.StringToHash("Idle");
     private static readonly int START_TURN = Animator.StringToHash("StartTurn");

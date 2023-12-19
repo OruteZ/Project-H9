@@ -107,6 +107,7 @@ public class CsvConvertor : EditorWindow
             var files = _excelDirectoryInfo.GetFiles();
             Debug.Log($"Converting {files.Length}°³ ÈÄº¸");
             var count = 0;
+            const string DOUBLE_QUOTES = "\"";
 
             foreach (var file in files)
             {
@@ -153,6 +154,10 @@ public class CsvConvertor : EditorWindow
                             for (var columnIndex = 0; columnIndex < slot.ItemArray.Length; columnIndex++)
                             {
                                 var item = slot.ItemArray[columnIndex];
+                                var stringedItem = item.ToString();
+                                if (stringedItem.Contains(","))
+                                    stringedItem = DOUBLE_QUOTES + stringedItem + DOUBLE_QUOTES;
+
                                 line[columnIndex] = item.ToString();
                             }
                             sb.AppendLine(string.Join(',', line));

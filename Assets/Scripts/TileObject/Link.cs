@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.Rendering;
 
 public class Link : TileObject
@@ -101,6 +102,15 @@ public class Link : TileObject
         animator.runtimeAnimatorController = 
             Resources.Load<RuntimeAnimatorController>("Animator/Const Standing Idle");
     }
-    
-    
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (GameManager.instance.CompareState(GameState.Editor)) return;
+        if (_linkIndex == 0)
+        {
+            Debug.LogError("link index가 0입니다! 플레이를 끄고 빨리 고치세요 휴먼!");
+        }
+    }
+#endif
 }

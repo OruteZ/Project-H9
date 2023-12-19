@@ -37,9 +37,15 @@ public abstract class TileObject : MonoBehaviour
     private void Awake()
     {
         hexTransform ??= GetComponent<HexTransform>();
-        meshRenderer ??= GetComponent<MeshRenderer>();
+        InitRenderer();
     }
-    
+
+    protected virtual void InitRenderer()
+    {
+        TryGetComponent(out meshRenderer);
+        meshRenderer ??= GetComponentInChildren<Renderer>();
+    }
+
     public virtual void SetUp()
     {
         tile = FieldSystem.tileSystem.GetTile(hexPosition);

@@ -100,4 +100,6 @@ public class Link : TileObject
         animator.runtimeAnimatorController = 
             Resources.Load<RuntimeAnimatorController>("Animator/Const Standing Idle");
     }
+    
+    
 }

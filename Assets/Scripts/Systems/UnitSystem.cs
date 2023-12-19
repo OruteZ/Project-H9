@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PassiveSkill;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -73,6 +74,14 @@ public class UnitSystem : MonoBehaviour
             for (int i = 0; i < enemyCount; i++)
             {
                 var enemyIdx = linkData.combatEnemy[i];
+                if (enemyIdx == 0)
+                {
+                    // null enemy exception
+                    Debug.LogError("Enemy Index is 0 : Null Enemy");
+                    EditorApplication.isPaused = true;
+                    throw new Exception();
+                    return;
+                }
                 
                 //instantiate GameObject
                 var enemy = Instantiate(enemyPrefab, unitParent).GetComponent<Enemy>();

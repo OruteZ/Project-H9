@@ -8,6 +8,7 @@ public class Link : TileObject
 {
     private static LinkDatabase _linkDatabase;
     
+    [SerializeField]
     private int _linkIndex;
 
     public int linkIndex

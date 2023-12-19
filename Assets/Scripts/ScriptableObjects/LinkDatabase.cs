@@ -43,7 +43,7 @@ public class LinkDatabase : ScriptableObject
         }
 
         Debug.LogError("There is no Link Data that has index " + index);
-        return dataBase[0];
+        throw new Exception();
     }
 }
 

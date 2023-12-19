@@ -82,15 +82,4 @@ public abstract class TileObject : MonoBehaviour
 
     public abstract string[] GetArgs();
     public abstract void SetArgs(string[] args);
-
-    [ContextMenu("Set MeshRenderer")]
-    public void SetMesh()
-    {
-        hexTransform = GetComponent<HexTransform>();
-        if (TryGetComponent(out meshRenderer) is false)
-        {
-            meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-            if(meshRenderer is null) meshRenderer = GetComponentInChildren<MeshRenderer>();
-        }
-    }
 }

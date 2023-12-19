@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -80,10 +82,9 @@ public class Link : TileObject
         }
 
         //remove all child
-        foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
+        var children = new Stack<GameObject>();
+        foreach (Transform child in transform) children.Push(child.gameObject);
+        while (children.Count > 0) DestroyImmediate(children.Pop());
 
         //get model from link database and instantiate
         var model = Instantiate(_linkDatabase.GetData(linkIndex).model, transform);

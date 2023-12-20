@@ -201,6 +201,10 @@ public class CharacterStatUI : UISystem
         {
             float originalStat = stat.GetOriginalStat(_strAndType[i].Item2);
             float buffedStat = stat.GetStat(_strAndType[i].Item2);
+            if (_strAndType[i].Item2 == StatType.CriticalChance) 
+            {
+                Debug.Log(originalStat + " / " + buffedStat);
+            }
             characterStatInfo[_strAndType[i].Item1].SetStatValue(UIStatType.Character, originalStat);
             characterStatInfo[_strAndType[i].Item1].SetStatValue(UIStatType.Skill, buffedStat - originalStat);
         }

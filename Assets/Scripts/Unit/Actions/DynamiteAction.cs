@@ -50,8 +50,12 @@ public class DynamiteAction : BaseAction
 
     protected override IEnumerator ExecuteCoroutine()
     {
+        unit.animator.ResetTrigger(IDLE);
+        unit.animator.SetTrigger(DYNAMITE);
+        
+        yield return new WaitForSeconds(1f);
+        
         Explode();
-        yield break;
     }
 
     #region PRIVATE

@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +30,11 @@ public class LinkDatabase : ScriptableObject
                 combatEnemy = FileRead.ConvertStringToArray<int>(data[(int)LinkColumn.CombatEnemy]),
                 model = Resources.Load<GameObject>("Prefab/Units/"+data[(int)LinkColumn.Model]),
             };
+            //if model is null, set NULL_MODEL
+            if (newData.model == null)
+            {
+                newData.model = Resources.Load<GameObject>("Prefab/Units/NULL");
+            }
             
             dataBase.Add(newData);
         }

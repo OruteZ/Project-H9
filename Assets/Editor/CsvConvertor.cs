@@ -158,7 +158,7 @@ public class CsvConvertor : EditorWindow
                                 if (stringedItem.Contains(","))
                                     stringedItem = DOUBLE_QUOTES + stringedItem + DOUBLE_QUOTES;
 
-                                line[columnIndex] = item.ToString();
+                                line[columnIndex] = stringedItem;
                             }
                             sb.AppendLine(string.Join(',', line));
                         }

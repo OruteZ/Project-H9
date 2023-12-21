@@ -12,9 +12,9 @@ public class PlayerSummaryStatUI : UISystem
     private UnitStat _playerStat;
     private Unit _player;
 
-    [SerializeField] private GameObject _actionPointText;
-    [SerializeField] private GameObject _healthPointText;
-    [SerializeField] private GameObject _ConcentrationText;
+    [SerializeField] private GameObject _healthPointUI;
+    [SerializeField] private GameObject _ConcentrationUI;
+    [SerializeField] private GameObject _actionPointUI;
 
     // Start is called before the first frame update
     void Start()
@@ -50,18 +50,10 @@ public class PlayerSummaryStatUI : UISystem
         if (_player is null) return;
         
         _playerStat = _player.stat;
-        
-        _healthPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.curHp.ToString() + " / " + _playerStat.GetStat(StatType.MaxHp).ToString();
-        _ConcentrationText.GetComponent<TextMeshProUGUI>().text = _playerStat.concentration.ToString();
-        _actionPointText.GetComponent<TextMeshProUGUI>().text = _playerStat.GetStat(StatType.CurActionPoint).ToString() + " / " + _playerStat.GetStat(StatType.MaxActionPoint).ToString();
-        if (_player.currentActionPoint == 0)
-        {
-            _actionPointText.GetComponent<TextMeshProUGUI>().color = Color.red;
-        }
-        else
-        {
-            _actionPointText.GetComponent<TextMeshProUGUI>().color = Color.white;
-        }
+
+        _healthPointUI.GetComponent<PlayerSummaryStatElement>().SetPlayerSummaryUI("Health Point", _playerStat.curHp.ToString() + " / " + _playerStat.GetStat(StatType.MaxHp).ToString());
+        _ConcentrationUI.GetComponent<PlayerSummaryStatElement>().SetPlayerSummaryUI("Concentration", _playerStat.concentration.ToString());
+        _actionPointUI.GetComponent<PlayerSummaryStatElement>().SetPlayerSummaryUI("Action Point", _playerStat.GetStat(StatType.CurActionPoint).ToString() + " / " + _playerStat.GetStat(StatType.MaxActionPoint).ToString());
 
         GetComponent<PlayerHpUI>().SetHpUI();
     }

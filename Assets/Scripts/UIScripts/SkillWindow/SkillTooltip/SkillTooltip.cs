@@ -117,7 +117,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerExit(PointerEventData eventData)
     {
         _skillKeywordTooltipContainer.SetActive(false);
-        CloseUI();
+        //CloseUI();
     }
     public void SetKeywordTooltipContents(KeywordScript keyword)
     {

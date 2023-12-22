@@ -451,6 +451,11 @@ public abstract class Unit : MonoBehaviour, IUnit
         _seController.RemoveStatusEffect(effect);
         return true;
     }
+    
+    public bool TryGetStatusEffect(StatusEffectType type, out StatusEffect effect)
+    {
+        return _seController.TryGetStatusEffect(type, out effect);
+    }
 
     #endregion
 }

@@ -12,13 +12,7 @@ public class ActiveDatabase : ScriptableObject
     #region STATIC
     ActionType GetActionRange(string actionName)
     {
-        return actionName switch
-        {
-            "Fanning" => ActionType.Fanning,
-            "Dynamite" => ActionType.Dynamite,
-            "Hemostasis" => ActionType.Hemostasis,
-            _ => ActionType.None
-        };
+        return Enum.TryParse<ActionType>(actionName, out var type) ? type : ActionType.None;
     }
     #endregion
     

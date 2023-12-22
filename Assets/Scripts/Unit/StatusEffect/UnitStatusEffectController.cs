@@ -98,6 +98,27 @@ public class UnitStatusEffectController
 
         return false;
     }
+    
+    public bool TryGetStatusEffect(StatusEffectType type, out StatusEffect statusEffect)
+    {
+        if (_statusEffects is null)
+        {
+            statusEffect = null;
+            return false;
+        }
+        
+        foreach (var effect in _statusEffects)
+        {
+            if (effect.GetStatusEffectType() == type)
+            {
+                statusEffect = effect;
+                return true;
+            }
+        }
+
+        statusEffect = null;
+        return false;
+    }
 
     public Unit GetUnit() => _unit;
     

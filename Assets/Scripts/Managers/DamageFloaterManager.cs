@@ -63,7 +63,7 @@ public class DamageFloaterManager : ObjectPool<RectTransform, DamageFlaoterWrapp
             if (target.Enable)
                 continue;
 
-            target.Instance.anchoredPosition += Vector2.up * target.FloatingSpeed * deltaTime;
+            target.Instance.anchoredPosition += Vector2.up * (target.FloatingSpeed * deltaTime);
             var lerp = Mathf.Lerp(target.Instance.localScale.x, target.ScaleEnd, deltaTime * target.ScaleSpeed);
             target.Instance.localScale = Vector3.one * lerp;
 

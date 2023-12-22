@@ -14,7 +14,7 @@ public abstract class StatusEffect : IDisplayableEffect
     public UnityEvent onStackChanged => controller?.onStatusEffectChanged;
     
     private int _damage;
-    protected int damage
+    public int damage
     {
         get => _damage;
         set

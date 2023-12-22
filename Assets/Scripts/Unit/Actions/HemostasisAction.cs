@@ -31,10 +31,13 @@ public class HemostasisAction : BaseAction
 
     protected override IEnumerator ExecuteCoroutine()
     {
-        unit.animator.SetTrigger(DYNAMITE);
+        unit.animator.SetTrigger(IDLE);
         
         yield return new WaitForSeconds(0);
 
-        unit.TryRemoveStatus(StatusEffectType.Bleeding);
+        if (unit.TryGetStatusEffect(StatusEffectType.Bleeding, out var bleeding))
+        {
+            bleeding.damage--;
+        }
     }
 }

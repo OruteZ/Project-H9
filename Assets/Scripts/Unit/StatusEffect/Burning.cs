@@ -9,6 +9,14 @@ public class Burning : StatusEffect
     public Burning(int damage, int duration, Unit creator) : base(creator)
     {
         AddStack(damage, duration);
+        onStackChanged.AddListener(() =>
+        {
+            //if stack is 0, delete this status effect
+            if (damage <= 0)
+            {
+                Delete();
+            }
+        });
     }
 
     public override StatusEffectType GetStatusEffectType() => StatusEffectType.Burning;

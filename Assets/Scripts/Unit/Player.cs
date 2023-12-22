@@ -56,7 +56,7 @@ public class Player : Unit
             if(actionSuccess is false) ClearBusy();
         }
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && GameManager.instance.CompareState(GameState.Combat))
         {
             SelectAction(GetAction<IdleAction>());
         }

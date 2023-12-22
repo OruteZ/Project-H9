@@ -16,11 +16,11 @@ public static class Service
 
         var commonDmg = new DamageFloaterManager();
         commonDmg.Init("Prefab/Damage Floater", _rootCanvas, 0.5f);
-        var ciriticalDmg = new DamageFloaterManager();
-        ciriticalDmg.Init("Prefab/Damage Floater Critical", _rootCanvas, 0.5f);
+        var criticalDmg = new DamageFloaterManager();
+        criticalDmg.Init("Prefab/Damage Floater Critical", _rootCanvas, 0.5f);
 
         _floaters.Add(commonDmg);
-        _floaters.Add(ciriticalDmg);
+        _floaters.Add(criticalDmg);
     }
     public static void SetText(int index, string text, Vector3 position)
     {

@@ -11,10 +11,14 @@ public class TurnUI : UISystem
 {
     [SerializeField] private GameObject _turnText;
     [SerializeField] private GameObject _endTurnButton;
+    [SerializeField] private GameObject _endTurnButtonEffect;
+
+    private bool _isEndTurnHighlighted = false;
 
     private void Awake()
     {
         UIManager.instance.onActionChanged.AddListener(SetEndTurnButton);
+        _endTurnButtonEffect.GetComponent<Animator>().enabled = false;
     }
 
     private void Update()
@@ -48,10 +52,24 @@ public class TurnUI : UISystem
     }
     public void SetEndTurnButton() 
     {
-        Color color = UICustomColor.NormalStateColor;
+        _isEndTurnHighlighted = false;
+           Color color = UICustomColor.NormalStateColor;
         if (!IsButtonInteractable()) color = UICustomColor.DisableStateColor;
-        else if (IsButtonHighlighted()) color = UICustomColor.HighlightStateColor;
+        else if (IsButtonHighlighted())
+        {
+            _isEndTurnHighlighted = true;
+            _endTurnButtonEffect.GetComponent<Animator>().enabled = true;
+            _endTurnButtonEffect.GetComponent<Animator>().Play("Inner FadeOut Effect");
+            color = UICustomColor.HighlightStateColor;
+        }
+
+
         _endTurnButton.GetComponent<Image>().color = color;
+        if (!_isEndTurnHighlighted)
+        {
+            _endTurnButtonEffect.GetComponent<Animator>().Rebind();
+            _endTurnButtonEffect.GetComponent<Animator>().enabled = false;
+        } 
     }
 
     /// <summary>

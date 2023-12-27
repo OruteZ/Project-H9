@@ -92,8 +92,16 @@ public class CameraController : MonoBehaviour
     {
         //if combat state, look at turn owner
         if (GameManager.instance.CompareState(GameState.Combat))
-            LookAtUnit(FieldSystem.turnSystem.turnOwner);   
-
+        {
+            var owner = FieldSystem.turnSystem.turnOwner;
+            if (owner is null) return;
+            
+            //if visible
+            if(owner.isVisible)
+                LookAtUnit(owner);
+            else
+                LookAtPlayer();
+        }
     }
 
     #region SHAKE

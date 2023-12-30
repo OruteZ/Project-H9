@@ -56,10 +56,10 @@ public class SkillTreeEditor : EditorWindow
         skillTreeNode.transform.SetParent(skillButtons, false);
         return skillTreeNode;
     }
-    private GameObject InstantiateSkillArrow()
+    private GameObject InstantiateSkillArrow(int preIndex, int postIndex)
     {
         GameObject skillTreeArrow = PrefabUtility.InstantiatePrefab(skillArrowPrefab) as GameObject;
-        skillTreeArrow.name = skillArrowPrefab.name + " (" + skillArrows.childCount + ")";
+        skillTreeArrow.name = skillArrowPrefab.name + " (" + preIndex + "-" + postIndex + ")";
         skillTreeArrow.transform.SetParent(skillArrows, false);
         return skillTreeArrow;
     }
@@ -73,7 +73,7 @@ public class SkillTreeEditor : EditorWindow
             SkillTreeElement preNode = selectedObject.GetComponent<SkillTreeElement>();
             if (preNode is not null) 
             {
-                GameObject skillArrow = InstantiateSkillArrow();
+                GameObject skillArrow = InstantiateSkillArrow(selectedObject.transform.GetSiblingIndex(), skillTreeNode.transform.GetSiblingIndex());
                 skillArrow.GetComponent<SkillTreeArrow>().SetSkillTreeArrow(selectedObject, skillTreeNode);
                 Vector3 pos = selectedObject.GetComponent<RectTransform>().localPosition;
                 pos.x += 200;

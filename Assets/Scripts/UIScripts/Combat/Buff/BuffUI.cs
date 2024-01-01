@@ -93,7 +93,7 @@ public class BuffUI : UISystem
         {
             if (effect.CanDisplay())
             {
-                UI.transform.GetChild(buffCount++).GetComponent<BuffUIElement>().SetBuffUIElement(effect, isBuff);
+                UI.transform.GetChild(buffCount++).GetComponent<BuffUIElement>().SetBuffUIElement(effect, isBuff, true);
                 if (effect == _currentTooltipEffect)
                 {
                     isExistTooltipEffect = true;
@@ -112,7 +112,7 @@ public class BuffUI : UISystem
     {
         Vector3 pos = icon.GetComponent<RectTransform>().position;
         IDisplayableEffect effect = icon.GetComponent<BuffUIElement>().displayedEffect;
-        if (effect == null || effect == _currentTooltipEffect) return;
+        if (effect == null) return;
         _currentTooltipEffect = effect;
 
         RectTransform rt = _BuffDebuffWindow.GetComponent<RectTransform>();

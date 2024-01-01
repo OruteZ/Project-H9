@@ -51,7 +51,7 @@ public class EnemyStatUI : UISystem
             {
                 //Debug.Log("Enemy Click");
                 Enemy enemy = (Enemy)FieldSystem.unitSystem.GetUnit(enemyPos);
-                if (enemy.isVisible)
+                if (enemy is not null && enemy.isVisible)
                 {
                     SetEnemyStatUI(enemy);
                 }

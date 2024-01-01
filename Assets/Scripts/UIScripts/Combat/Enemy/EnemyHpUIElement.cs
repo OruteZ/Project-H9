@@ -98,7 +98,7 @@ public class EnemyHpUIElement : UIElement
             if (debuffList.Length > i)
             {
                 _debuffs.transform.GetChild(i).gameObject.SetActive(true);
-                _debuffs.transform.GetChild(i).GetComponent<BuffUIElement>().SetBuffUIElement(debuffList[i], false);
+                _debuffs.transform.GetChild(i).GetComponent<BuffUIElement>().SetBuffUIElement(debuffList[i], false, false);
                 Debug.Log("debuffed!");
             }
             else

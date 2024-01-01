@@ -35,9 +35,9 @@ MonoBehaviour:
     gridVisible: 1
   - hexPosition: {x: 4, y: 0, z: -4}
     visible: 1
-    walkable: 1
+    walkable: 0
     rayThroughable: 1
-    gridVisible: 1
+    gridVisible: 0
   - hexPosition: {x: 5, y: 0, z: -5}
     visible: 1
     walkable: 1
@@ -69,10 +69,10 @@ MonoBehaviour:
     rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 2, y: 1, z: -3}
-    visible: 1
-    walkable: 1
-    rayThroughable: 1
-    gridVisible: 1
+    visible: 0
+    walkable: 0
+    rayThroughable: 0
+    gridVisible: 0
   - hexPosition: {x: 3, y: 1, z: -4}
     visible: 1
     walkable: 1
@@ -80,9 +80,9 @@ MonoBehaviour:
     gridVisible: 1
   - hexPosition: {x: 4, y: 1, z: -5}
     visible: 1
-    walkable: 1
+    walkable: 0
     rayThroughable: 1
-    gridVisible: 1
+    gridVisible: 0
   - hexPosition: {x: 5, y: 1, z: -6}
     visible: 1
     walkable: 1
@@ -134,9 +134,9 @@ MonoBehaviour:
     rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 5, y: 2, z: -7}
-    visible: 1
-    walkable: 1
-    rayThroughable: 1
+    visible: 0
+    walkable: 0
+    rayThroughable: 0
     gridVisible: 1
   - hexPosition: {x: 6, y: 2, z: -8}
     visible: 1
@@ -165,14 +165,14 @@ MonoBehaviour:
     gridVisible: 1
   - hexPosition: {x: 2, y: 3, z: -5}
     visible: 1
-    walkable: 1
+    walkable: 0
     rayThroughable: 1
-    gridVisible: 1
+    gridVisible: 0
   - hexPosition: {x: 3, y: 3, z: -6}
     visible: 1
-    walkable: 1
+    walkable: 0
     rayThroughable: 1
-    gridVisible: 1
+    gridVisible: 0
   - hexPosition: {x: 4, y: 3, z: -7}
     visible: 1
     walkable: 1
@@ -215,9 +215,9 @@ MonoBehaviour:
     gridVisible: 1
   - hexPosition: {x: 2, y: 4, z: -6}
     visible: 1
-    walkable: 1
+    walkable: 0
     rayThroughable: 1
-    gridVisible: 1
+    gridVisible: 0
   - hexPosition: {x: 3, y: 4, z: -7}
     visible: 1
     walkable: 1
@@ -255,9 +255,9 @@ MonoBehaviour:
     gridVisible: 1
   - hexPosition: {x: 1, y: 5, z: -6}
     visible: 1
-    walkable: 1
+    walkable: 0
     rayThroughable: 1
-    gridVisible: 1
+    gridVisible: 0
   - hexPosition: {x: 2, y: 5, z: -7}
     visible: 1
     walkable: 1
@@ -721,8 +721,8 @@ MonoBehaviour:
     mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
     hexPositioned: 0
     hexPosition: {x: 0, y: 0, z: 0}
-    height: -0.75
-    position: {x: 10.392304, y: -0.75, z: 0}
+    height: -1.15
+    position: {x: 10.392304, y: -1.15, z: 0}
     rotation: 0
     scale: {x: 100, y: 15, z: 100}
   - material: {fileID: 2100000, guid: 73b56c95ded863249b249e6df28d0918, type: 2}

@@ -44,13 +44,16 @@ public class EnemyHpUI : UISystem
         {
             EnemyHpBarObjectPooling(10);
         }
-        //InitEnemyHpUIs();
-        for (int i = 0; i < _enemies.Count; i++) 
+        for (int i = 0; i < _enemyHpBars.Count; i++) 
         {
-            if (_enemies[i].stat.GetStat(StatType.CurHp) <= 0) 
+            if (i < _enemies.Count)
             {
+                _enemyHpBars[i].GetComponent<EnemyHpUIElement>().SetEnemyHpUI(_enemies[i]);
             }
-            _enemyHpBars[i].GetComponent<EnemyHpUIElement>().SetEnemyHpUI(_enemies[i]);
+            else
+            {
+                _enemyHpBars[i].GetComponent<EnemyHpUIElement>().ClearEnemyHpUI();
+            }
         }
     }
     private void InitEnemyHpUIs()

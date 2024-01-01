@@ -34,7 +34,8 @@ public class PlayerSummaryStatElement : UIElement, IPointerEnterHandler, IPointe
             }
             else
             {
-                _statText.GetComponent<TextMeshProUGUI>().color = Color.white;
+                //_statText.GetComponent<TextMeshProUGUI>().color = Color.white;
+                _statText.GetComponent<TextMeshProUGUI>().color = UICustomColor.ActionAPColor;
             }
         }
     }

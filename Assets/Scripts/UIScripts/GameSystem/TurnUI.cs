@@ -18,6 +18,7 @@ public class TurnUI : UISystem
     private void Awake()
     {
         UIManager.instance.onActionChanged.AddListener(SetEndTurnButton);
+        UIManager.instance.onTurnChanged.AddListener(SetEndTurnButton);
         _endTurnButtonEffect.GetComponent<Animator>().enabled = false;
     }
 

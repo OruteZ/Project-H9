@@ -11,39 +11,46 @@ namespace PassiveSkill
         #region STATIC
         public static ICondition CloneTrigger(ConditionType type, float amount)
         {
-            ICondition condition = type switch
+            //return condition using switch
+            ICondition ret = type switch
             {
                 ConditionType.Null => new NullCondition(amount),
-                ConditionType.TargetHpMax => new TargetHpMax(amount),
-                ConditionType.TargetLowHp => new TargetLowHp(amount),
-                ConditionType.TargetHighHp => new TargetHighHp(amount),
-                ConditionType.TargetHpIs => new TargetHpIs(amount),
-                ConditionType.LowAmmo => new LowAmmo(amount),
-                ConditionType.HighAmmo => new HighAmmo(amount),
-                ConditionType.AmmoIs => new AmmoIs(amount),
-                ConditionType.LessTargetRange => new LessTargetRange(amount),
-                ConditionType.MoreTargetRange => new MoreTargetRange(amount),
-                ConditionType.SameTargetRange => new SameTargetRange(amount),
-                ConditionType.LowHp => new LowHp(amount),
-                ConditionType.HighHp => new HighHp(amount),
-                ConditionType.HpIs => new HpIs(amount),
-                ConditionType.ReloadedInThisTurn => new ReloadedInThisTurn(amount),
-                ConditionType.MovedInThisTurn => new MovedInThisTurn(amount),
-                ConditionType.NotMovedInThisTurn => new NotMovedInThisTurn(amount),
+                ConditionType.TargetHpMax => new TargetHpMaxCondition(amount),
+                ConditionType.TargetLowHp => new TargetLowHpCondition(amount),
+                ConditionType.TargetHighHp => new TargetHighHpCondition(amount),
+                ConditionType.TargetHpIs => new TargetHpIsCondition(amount),
+                ConditionType.LowAmmo => new LowAmmoCondition(amount),
+                ConditionType.HighAmmo => new HighAmmoCondition(amount),
+                ConditionType.AmmoIs => new AmmoIsCondition(amount),
+                ConditionType.LessTargetRange => new LessTargetRangeCondition(amount),
+                ConditionType.MoreTargetRange => new MoreTargetRangeCondition(amount),
+                ConditionType.SameTargetRange => new SameTargetRangeCondition(amount),
+                ConditionType.LowHp => new LowHpCondition(amount),
+                ConditionType.HighHp => new HighHpCondition(amount),
+                ConditionType.HpIs => new HpIsCondition(amount),
+                ConditionType.ReloadedInThisTurn => new ReloadedInThisTurnCondition(amount),
+                ConditionType.MovedInThisTurn => new MovedInThisTurnCondition(amount),
+                ConditionType.NotMovedInThisTurn => new NotMovedInThisTurnCondition(amount),
+                ConditionType.Revenge => new RevengeCondition(amount),
+                ConditionType.Dying => new DyingCondition(amount),
+                ConditionType.Snipe => new SnipeCondition(amount),
+                ConditionType.Fighter => new FighterCondition(amount),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 
-            return condition;
+            return ret;
         }
         public static IEffect CloneEffect(PassiveEffectType type, StatType stat, int amount)
         {
-            IEffect effect = type switch
+            IEffect ret = type switch
             {
                 PassiveEffectType.StatUpDependedOnCondition => new StatUpDependedOnCondition(stat, amount),
+                PassiveEffectType.InfinityShootPoint => new InfinityShootPoint(stat, amount),
+                PassiveEffectType.LightFootStep => new LightFootStep(stat, amount),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 
-            return effect;
+            return ret;
         }
         #endregion
         
@@ -60,12 +67,12 @@ namespace PassiveSkill
             this.index = index;
         }
     
-        public void EnableCondition()
+        public void Enable()
         {
             _effect.OnConditionEnable();
         }
 
-        public void DisableCondition()
+        public void Disable()
         {
             _effect.OnConditionDisable();
         }
@@ -91,6 +98,22 @@ namespace PassiveSkill
 
             displayableEffect = null;
             return false;
+        }
+        
+        public ConditionType GetConditionType()
+        {
+            return _condition.GetConditionType();
+        }
+        
+        public PassiveEffectType GetEffectType()
+        {
+            return _effect.GetEffectType();
+        }
+
+        public void Delete()
+        {
+            _effect.OnDelete();
+            _condition.OnDelete();
         }
     }
 }

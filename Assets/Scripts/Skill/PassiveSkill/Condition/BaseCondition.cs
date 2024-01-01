@@ -30,6 +30,11 @@ namespace PassiveSkill
 
         public abstract ConditionType GetConditionType();
         protected abstract void ConditionSetup();
+        
+        public virtual void OnDelete()
+        {
+            
+        }
     }
 }
 

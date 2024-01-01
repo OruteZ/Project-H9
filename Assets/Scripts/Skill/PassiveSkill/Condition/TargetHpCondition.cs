@@ -1,6 +1,6 @@
 ﻿namespace PassiveSkill
 {
-    public class TargetHighHp : BaseCondition 
+    public class TargetHighHpCondition : BaseCondition 
     {
         public override ConditionType GetConditionType()
         {
@@ -13,22 +13,22 @@
             unit.onFinishShoot.AddListener(TargetOff);
         }
 
-        public TargetHighHp(float amt) : base(amt)
+        public TargetHighHpCondition(float amt) : base(amt)
         { }
 
         private void SetTarget(Unit target)
         {
-            if(target.hp >= amount) passive.EnableCondition();
-            else passive.DisableCondition();
+            if(target.hp >= amount) passive.Enable();
+            else passive.Disable();
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.DisableCondition();
+            passive.Disable();
         }
     }
     
-    public class TargetHpIs : BaseCondition
+    public class TargetHpIsCondition : BaseCondition
     {
         public override ConditionType GetConditionType()
         {
@@ -41,24 +41,24 @@
             unit.onFinishShoot.AddListener(TargetOff);
         }
 
-        public TargetHpIs(float amt) : base(amt)
+        public TargetHpIsCondition(float amt) : base(amt)
         { }
 
         private void SetTarget(Unit target)
         {
-            if(target.hp == (int)amount) passive.EnableCondition();
-            else passive.DisableCondition();
+            if(target.hp == (int)amount) passive.Enable();
+            else passive.Disable();
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.DisableCondition();
+            passive.Disable();
         }
     }
     
-    public class TargetLowHp : BaseCondition
+    public class TargetLowHpCondition : BaseCondition
     {
-        public TargetLowHp(float amt) : base(amt)
+        public TargetLowHpCondition(float amt) : base(amt)
         { }
         
         public override ConditionType GetConditionType()
@@ -74,20 +74,20 @@
 
         private void SetTarget(Unit target)
         {
-            if(target.hp <= amount) passive.EnableCondition();
-            else passive.DisableCondition();
+            if(target.hp <= amount) passive.Enable();
+            else passive.Disable();
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.DisableCondition();
+            passive.Disable();
         }
     }
 
     
-    public class TargetHpMax : BaseCondition
+    public class TargetHpMaxCondition : BaseCondition
     {
-        public TargetHpMax(float amt) : base(amt)
+        public TargetHpMaxCondition(float amt) : base(amt)
         { }
         
         public override ConditionType GetConditionType()
@@ -103,13 +103,13 @@
 
         private void SetTarget(Unit target)
         {
-            if(target.hp == target.stat.GetStat(StatType.MaxHp)) passive.EnableCondition();
+            if(target.hp == target.stat.GetStat(StatType.MaxHp)) passive.Enable();
             // else passive.DisableCondition();
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.DisableCondition();
+            passive.Disable();
         }
     }
 }

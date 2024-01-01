@@ -53,6 +53,15 @@ public class DynamiteAction : BaseAction
         unit.animator.ResetTrigger(IDLE);
         unit.animator.SetTrigger(DYNAMITE);
         
+        //look at target
+        unit.transform.LookAt(FieldSystem.tileSystem.GetTile(_center).transform);
+        
+        //rotation of z and x set 0
+        var euler = unit.transform.eulerAngles;
+        euler.x = 0;
+        euler.z = 0;
+        unit.transform.eulerAngles = euler;
+        
         yield return new WaitForSeconds(1f);
         
         Explode();
@@ -68,6 +77,8 @@ public class DynamiteAction : BaseAction
         foreach(var target in _targets)
         {
             target.TakeDamage(damage, unit);
+            if(target.HasDead()) continue;
+            
             target.TryAddStatus(new Burning(damage, 10, unit));  //for test
         }
     }

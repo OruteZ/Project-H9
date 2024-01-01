@@ -13,7 +13,7 @@
 
         protected override void ConditionSetup()
         {
-            unit.onDead.AddListener((_) => passive.EnableCondition());
+            unit.onDead.AddListener((_) => passive.Enable());
         }
     }
 }

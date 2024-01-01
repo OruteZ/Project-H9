@@ -1,6 +1,6 @@
 ﻿namespace PassiveSkill
 {
-    public class AmmoIs : BaseCondition
+    public class AmmoIsCondition : BaseCondition
     {
         public override ConditionType GetConditionType() => ConditionType.AmmoIs;
 
@@ -11,15 +11,15 @@
 
         private void CheckAmmo(int bef, int aft)
         {
-            if(aft == (int)amount) passive.EnableCondition();
-            else passive.DisableCondition();
+            if(aft == (int)amount) passive.Enable();
+            else passive.Disable();
         }
 
-        public AmmoIs(float amt) : base(amt)
+        public AmmoIsCondition(float amt) : base(amt)
         { }
     }
     
-    public class HighAmmo : BaseCondition
+    public class HighAmmoCondition : BaseCondition
     {
         public override ConditionType GetConditionType() => ConditionType.HighAmmo;
 
@@ -30,15 +30,15 @@
 
         private void CheckAmmo(int bef, int aft)
         {
-            if(aft >= (int)amount) passive.EnableCondition();
-            else passive.DisableCondition();
+            if(aft >= (int)amount) passive.Enable();
+            else passive.Disable();
         }
 
-        public HighAmmo(float amt) : base(amt)
+        public HighAmmoCondition(float amt) : base(amt)
         { }
     }
     
-    public class LowAmmo : BaseCondition
+    public class LowAmmoCondition : BaseCondition
     {
         public override ConditionType GetConditionType() => ConditionType.LowAmmo;
 
@@ -49,11 +49,11 @@
 
         private void CheckAmmo(int bef, int aft)
         {
-            if(aft <= (int)amount) passive.EnableCondition();
-            else passive.DisableCondition();
+            if(aft <= (int)amount) passive.Enable();
+            else passive.Disable();
         }
 
-        public LowAmmo(float amt) : base(amt)
+        public LowAmmoCondition(float amt) : base(amt)
         { }
     }
 }

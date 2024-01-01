@@ -26,12 +26,12 @@
                 var target = FieldSystem.unitSystem.GetUnit(pos);
                 if (target is Enemy)
                 {
-                    passive.EnableCondition();
+                    passive.Enable();
                     return;
                 }
             }
             
-            passive.DisableCondition();
+            passive.Disable();
         }
     }
 }

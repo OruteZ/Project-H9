@@ -38,24 +38,28 @@ public class MapSaveAndLoader : MonoBehaviour
         }
 
         var tiles = tileParent.GetComponentsInChildren<Tile>();
-        saveData.tileData = new TileData[tiles.Length];
+        var tileList = new TileData[tiles.Length];
         for (var i = 0; i < tiles.Length; i++)
         {
-            saveData.tileData[i]= new TileData(tiles[i]);
+            tileList[i]= new TileData(tiles[i]);
         }
 
         var objects = tileObjParent.GetComponentsInChildren<TileObject>();
-        saveData.tileObjectData = new TileObjectData[objects.Length];
+        var tileObjList = new TileObjectData[objects.Length];
         for (int i = 0; i < objects.Length; i++)
         {
-            saveData.tileObjectData[i] = new TileObjectData(objects[i]);
+            tileObjList[i] = new TileObjectData(objects[i]);
         }
         
-        saveData.envData = new EnvironmentData[envParent.transform.childCount];
+        var envDataList = new EnvironmentData[envParent.transform.childCount];
         for (int i = 0; i < envParent.transform.childCount; i++)
         {
-            saveData.envData[i] = new EnvironmentData(envParent.transform.GetChild(i).gameObject);
+            envDataList[i] = new EnvironmentData(envParent.transform.GetChild(i).gameObject);
         }
+        
+        saveData.SetTileDataList(tileList.ToList());
+        saveData.SetTileObjectDataList(tileObjList.ToList());
+        saveData.SetEnvDataList(envDataList.ToList());
     }
 
     [ContextMenu("Load Current map")]
@@ -106,7 +110,7 @@ public class MapSaveAndLoader : MonoBehaviour
         
         
         //instantiate tiles
-        foreach (var tileData in saveData.tileData)
+        foreach (var tileData in saveData.GetTileDataList())
         {
             var tile = Instantiate(tilePrefab, tileParent.transform).GetComponent<Tile>();
             tile.visible = tileData.visible;
@@ -123,7 +127,7 @@ public class MapSaveAndLoader : MonoBehaviour
         layout.LayoutGrid();
         
         //instantiate tile objects
-        // foreach (var tileObjectData in saveData.tileObjectData)
+        // foreach (var tileObjectData in saveData.GetTileObjectDataList()
         {
             // var tileObject = Instantiate(tileObjectPrefabs[tileObjectData.id], tileObjParent.transform).GetComponent<TileObject>();
             // tileObject.hexPosition = tileObjectData.hexPosition;
@@ -133,7 +137,7 @@ public class MapSaveAndLoader : MonoBehaviour
         }
         
         //instantiate environments
-        foreach (var envData in saveData.envData)
+        foreach (var envData in saveData.GetEnvDataList())
         {
             var envObj = new GameObject();
             var meshRenderer = envObj.AddComponent<MeshRenderer>();

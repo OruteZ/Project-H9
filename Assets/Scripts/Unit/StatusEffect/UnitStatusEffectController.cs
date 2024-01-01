@@ -50,8 +50,7 @@ public class UnitStatusEffectController
         {
             if (effect.GetStatusEffectType() == statusEffect.GetStatusEffectType())
             {
-                _statusEffects.Remove(effect);
-                onStatusEffectChanged.Invoke();
+                effect.removable = true;
                 return;
             }
         }
@@ -69,6 +68,14 @@ public class UnitStatusEffectController
                 return;
             }
         }
+    }
+    
+    public void RemoveAllStatusEffect()
+    {
+        if (_statusEffects is null) return;
+        
+        _statusEffects.Clear();
+        onStatusEffectChanged.Invoke();
     }
     
     public List<IDisplayableEffect> GetAllStatusEffectInfo()
@@ -141,6 +148,11 @@ public class UnitStatusEffectController
             statusEffect.OnTurnFinished();
         }
         
+        LazyRemove();
+    }
+
+    private void LazyRemove()
+    {
         //find removable all
         bool removeAny = _statusEffects.Any((effect) => effect.removable);
         _statusEffects.RemoveAll((effect) => effect.removable);

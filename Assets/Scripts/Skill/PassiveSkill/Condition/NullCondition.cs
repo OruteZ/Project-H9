@@ -12,7 +12,18 @@
 
         protected override void ConditionSetup()
         {
-            FieldSystem.onStageAwake.AddListener(() => passive.EnableCondition());
+            FieldSystem.onStageAwake.AddListener(EnablePassive);
+        }
+
+        public override void OnDelete()
+        {
+            base.OnDelete();
+            FieldSystem.onStageAwake.RemoveListener(EnablePassive);
+        }
+        
+        private void EnablePassive()
+        {
+            passive.Enable();
         }
     }
 }

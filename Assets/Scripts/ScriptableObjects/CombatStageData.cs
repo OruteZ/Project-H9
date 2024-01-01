@@ -17,15 +17,51 @@ public class CombatStageData : ScriptableObject
         return FindObjectOfType<LinkDatabase>().Length();
     }
     
-    public TileData[] tileData;
-    public TileObjectData[] tileObjectData;
-    public EnvironmentData[] envData;
+    [SerializeField] private TileData[] tileData;
+    [SerializeField] private TileObjectData[] tileObjectData;
+    [SerializeField] private EnvironmentData[] envData;
     
     [SerializeField]
     private List<PositionList> enemySpawnPoints;
     
     [SerializeField]
     private List<Vector3Int> playerSpawnPoint;
+    
+    public List<TileData> GetTileDataList()
+    {
+        //return deep copy of data list
+        return tileData.ToList();
+    }
+    
+    public List<TileObjectData> GetTileObjectDataList()
+    {
+        //return copy of data list
+        return tileObjectData.ToList();
+    }
+    
+    public List<EnvironmentData> GetEnvDataList()
+    {
+        //return copy of data list
+        return envData.ToList();
+    }
+    
+    public void SetTileDataList(List<TileData> list)
+    {
+        tileData = list.ToArray();
+        EditorUtility.SetDirty(this);
+    }
+    
+    public void SetTileObjectDataList(List<TileObjectData> list)
+    {
+        tileObjectData = list.ToArray();
+        EditorUtility.SetDirty(this);
+    }
+    
+    public void SetEnvDataList(List<EnvironmentData> list)
+    {
+        envData = list.ToArray();
+        EditorUtility.SetDirty(this);
+    }
 
     public bool TryGetEnemyPoints(int linkIndex, out Vector3Int[] points)
     {

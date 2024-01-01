@@ -18,16 +18,13 @@ public class EnvTileGenerator : MonoBehaviour
 
         foreach (var tile in tiles)
         {
-            EnvObject envObject = Instantiate(envTile, _envParent.transform).GetComponent<EnvObject>();
+            HexTransform envObject = Instantiate(envTile, _envParent.transform).GetComponent<HexTransform>();
+            envObject.name = $"Ground_{tile.hexPosition.x}_{tile.hexPosition.y}_{tile.hexPosition.z}";
 
             // var worldPos = envObject.transform.position;
             // envObject.transform.position = worldPos;
             
-            envObject.hexPosition = tile.hexPosition;
-            envObject.OnSetting();
-
-            envObject.GetComponent<MeshRenderer>().material.color = 
-                new Color(tile.walkable ? 1 : 0, tile.visible ? 1 : 0, tile.rayThroughable ? 1 : 0);
+            envObject.position = tile.hexPosition;
         }   
     }
 

@@ -50,7 +50,7 @@ public class FanningAction : BaseAction, IShootingAction
     public override bool IsSelectable()
     {
         if (unit.weapon.currentAmmo == 0) return false;
-        if (unit.hasAttacked) return false;
+        if (unit.CheckAttackTrigger()) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
 
         return true;
@@ -97,6 +97,6 @@ public class FanningAction : BaseAction, IShootingAction
 
         yield return new WaitForSeconds(COOL_OFF_TIME);
         
-        unit.hasAttacked = true;
+        unit.SetAttacked();
     }
 }

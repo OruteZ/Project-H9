@@ -7,6 +7,7 @@
         bool IsEnable();
         void OnConditionEnable();
         void OnConditionDisable();
+        void OnDelete();
     }
     
 
@@ -14,5 +15,7 @@
     {
         Null,
         StatUpDependedOnCondition,
+        InfinityShootPoint,
+        LightFootStep
     }
 }

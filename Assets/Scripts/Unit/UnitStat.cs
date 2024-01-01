@@ -31,7 +31,9 @@ public class UnitStat : ICloneable
 
     [SerializeField]
     private int[] original = new int[(int)StatType.Length];
+    [SerializeField]
     private int[] _additional = new int[(int)StatType.Length];
+    [SerializeField]
     private int[] _multiplier = new int[(int)StatType.Length];
 
     public object Clone()
@@ -96,6 +98,7 @@ public class UnitStat : ICloneable
         }
         
         _additional[(int)type] += value;
+        Debug.Log("Test");
     }
 
     public void AddMultiplier(StatType type, int value)

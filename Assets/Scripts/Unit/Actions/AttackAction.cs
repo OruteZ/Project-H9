@@ -23,7 +23,7 @@ public class AttackAction : BaseAction, IShootingAction
     public override bool IsSelectable()
     {
         if (weapon.currentAmmo == 0) return false;
-        if (unit.hasAttacked) return false;
+        if (unit.CheckAttackTrigger()) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
 
         return true;
@@ -80,8 +80,6 @@ public class AttackAction : BaseAction, IShootingAction
     {
         unit.animator.SetTrigger(IDLE);
         
-        unit.hasAttacked = true;
-        
         float timer = 1f;
         while ((timer -= Time.deltaTime) > 0)
         {
@@ -107,5 +105,6 @@ public class AttackAction : BaseAction, IShootingAction
         while (cnt-- > 0) yield return null;
         
         unit.animator.SetTrigger(IDLE);
+        unit.SetAttacked();
     }
 }

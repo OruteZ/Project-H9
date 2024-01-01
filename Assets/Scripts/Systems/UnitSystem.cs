@@ -115,6 +115,10 @@ public class UnitSystem : MonoBehaviour
                 }
                 
                 var playerPassiveList = playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, unit)).ToList();
+                
+                //remove passive that has null condition && world state
+                if(GameManager.instance.CompareState(GameState.World)) 
+                    playerPassiveList.RemoveAll(pas => pas.GetConditionType() is not ConditionType.Null);
                 #endregion
 
                 var activeList = GameManager.instance.playerActiveIndexList;
@@ -124,6 +128,7 @@ public class UnitSystem : MonoBehaviour
                 }
                 p.AddComponent<IdleAction>();
 
+                GameManager.instance.playerStat.ResetModifier();
                 p.SetUp("Player", GameManager.instance.playerStat, 
                     weaponDB.Clone(GameManager.instance.playerWeaponIndex),
                     GameManager.instance.playerModel, playerPassiveList);

@@ -20,7 +20,7 @@
         {
             //if deadUnit is Enemy unit and this unit is Enemy unit, enable passive
             if (deadUnit is Enemy && unit is Enemy)
-                passive.EnableCondition();
+                passive.Enable();
         }
     }
 }

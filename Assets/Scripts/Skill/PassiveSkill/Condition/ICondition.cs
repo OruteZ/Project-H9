@@ -5,6 +5,8 @@
         void Setup(Passive passive);
         ConditionType GetConditionType();
         void SetAmount(float amount);
+        
+        void OnDelete();
     }
 
     public enum ConditionType

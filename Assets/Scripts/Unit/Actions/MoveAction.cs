@@ -34,7 +34,7 @@ public class MoveAction : BaseAction
 
     public override bool IsSelectable()
     {
-        if (unit.hasAttacked) return false;
+        if (unit.CheckAttackMoveTrigger()) return false;
 
         return true;
     }

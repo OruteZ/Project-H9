@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using PassiveSkill;
@@ -38,7 +39,12 @@ public abstract class Unit : MonoBehaviour, IUnit
     public Weapon weapon;
 
     private List<Passive> _passiveList;
-    public bool hasAttacked;
+    public List<int> passiveIndexList;
+    
+    private bool _hasAttacked;
+    public bool infiniteActionPointTrigger;
+    public bool lightFootTrigger;
+    
     public int currentRound;
 
     // ReSharper disable once InconsistentNaming
@@ -86,6 +92,8 @@ public abstract class Unit : MonoBehaviour, IUnit
             }
 
             passive.Setup();
+            
+            passiveIndexList.Add(passive.index);
         }
 
         var model = Instantiate(unitModel, transform);
@@ -95,6 +103,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         EquipWeapon(newWeapon);
 
         onFinishAction.AddListener((action) => onAnyUnitActionFinished.Invoke(this));
+        FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
 
         _seController = new UnitStatusEffectController(this);
     }
@@ -105,7 +114,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         Debug.Log(unitName + " Turn Started");
 #endif
         
-        hasAttacked = false;
+        _hasAttacked = false;
         
         onTurnStart.Invoke(this);
         
@@ -229,7 +238,10 @@ public abstract class Unit : MonoBehaviour, IUnit
         return displayableEffects.ToArray();
     }
 
-    
+    public Passive[] GetAllPassiveList()
+    {
+        return _passiveList.ToArray();
+    }
 
     protected bool IsMyTurn()
     {
@@ -399,6 +411,17 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
         onFinishAction.Invoke(action);
     }
+    
+    // 한 턴에 한번만 사격 가능합니다. "단 Infinite Action Point 스킬을 배우지 않았을 경우"
+    public bool CheckAttackTrigger() => _hasAttacked && infiniteActionPointTrigger is false;
+    
+    // 사격 후 이동이 불가합니다. "단 Light Foot 스킬을 배우지 않았을 경우"
+    public bool CheckAttackMoveTrigger() => _hasAttacked && lightFootTrigger is false;
+
+    public void SetAttacked()
+    {
+        _hasAttacked = true;
+    }
 
     #region STATUE EFFECT
 
@@ -457,6 +480,24 @@ public abstract class Unit : MonoBehaviour, IUnit
         return _seController.TryGetStatusEffect(type, out effect);
     }
 
+    #endregion
+    
+    #region UNITY_EVENT
+
+    private void OnCombatFinish(bool playerWin)
+    {
+        // disable all status effect, and passive
+        _seController.RemoveAllStatusEffect();
+
+        foreach (var passive in _passiveList)
+        {
+            passive.Delete();
+            passive.Disable();
+        }
+
+        _passiveList.Clear();
+        stat.ResetModifier();
+    }
     #endregion
 }
 

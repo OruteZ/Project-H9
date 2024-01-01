@@ -33,7 +33,10 @@
         public abstract void OnConditionEnable();
         public abstract void OnConditionDisable();
         
-        
+        public virtual void OnDelete()
+        {
+            
+        }
         
         private void SetTypeAndAmount(StatType statType, int amount)
         {

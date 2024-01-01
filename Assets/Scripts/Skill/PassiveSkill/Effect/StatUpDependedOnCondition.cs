@@ -50,6 +50,8 @@ public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
 
     public bool CanDisplay()
     {
+        if (passive is null) return false;
+        if (passive.GetConditionType() is ConditionType.Null) return false;
         return enable;
     }
     #endregion

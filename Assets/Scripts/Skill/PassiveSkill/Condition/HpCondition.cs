@@ -1,6 +1,6 @@
 ﻿namespace PassiveSkill
 {
-    public class HpIs : BaseCondition
+    public class HpIsCondition : BaseCondition
     {
         public override ConditionType GetConditionType() => ConditionType.HpIs;
 
@@ -12,16 +12,16 @@
         private void CheckHp(int before, int after)
         {
             if (after == (int)amount)
-                passive.EnableCondition();
+                passive.Enable();
             else
-                passive.DisableCondition();
+                passive.Disable();
         }
 
-        public HpIs(float amt) : base(amt)
+        public HpIsCondition(float amt) : base(amt)
         { }
     }
     
-    public class HighHp : BaseCondition 
+    public class HighHpCondition : BaseCondition 
     {
         public override ConditionType GetConditionType() => ConditionType.HighHp;
 
@@ -33,16 +33,16 @@
         private void CheckHp(int before, int after)
         {
             if (after >= (int)amount)
-                passive.EnableCondition();
+                passive.Enable();
             else
-                passive.DisableCondition();
+                passive.Disable();
         }
 
-        public HighHp(float amt) : base(amt)
+        public HighHpCondition(float amt) : base(amt)
         { }
     }
     
-    public class LowHp : BaseCondition 
+    public class LowHpCondition : BaseCondition 
     {
         public override ConditionType GetConditionType() => ConditionType.LowHp;
 
@@ -54,12 +54,12 @@
         private void CheckHp(int before, int after)
         {
             if (after <= (int)amount)
-                passive.EnableCondition();
+                passive.Enable();
             else
-                passive.DisableCondition();
+                passive.Disable();
         }
 
-        public LowHp(float amt) : base(amt)
+        public LowHpCondition(float amt) : base(amt)
         { }
     }
 }

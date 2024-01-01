@@ -1,6 +1,6 @@
 ﻿namespace PassiveSkill
 {
-    public class LessTargetRange : BaseCondition 
+    public class LessTargetRangeCondition : BaseCondition 
     {
         public override ConditionType GetConditionType()
         {
@@ -13,24 +13,24 @@
             unit.onFinishShoot.AddListener(TargetOff);
         }
 
-        public LessTargetRange(float amt) : base(amt)
+        public LessTargetRangeCondition(float amt) : base(amt)
         { }
 
         private void SetTarget(Unit target)
         {
             var dist = Hex.Distance(unit.hexPosition, target.hexPosition);
             
-            if(dist <= amount) passive.EnableCondition();
-            else passive.DisableCondition();
+            if(dist <= amount) passive.Enable();
+            else passive.Disable();
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.DisableCondition();
+            passive.Disable();
         }
     }
     
-    public class MoreTargetRange : BaseCondition
+    public class MoreTargetRangeCondition : BaseCondition
     {
         public override ConditionType GetConditionType()
         {
@@ -43,26 +43,26 @@
             unit.onFinishShoot.AddListener(TargetOff);
         }
 
-        public MoreTargetRange(float amt) : base(amt)
+        public MoreTargetRangeCondition(float amt) : base(amt)
         { }
 
         private void SetTarget(Unit target)
         {
             var dist = Hex.Distance(unit.hexPosition, target.hexPosition);
             
-            if(dist >= (int)amount) passive.EnableCondition();
-            else passive.DisableCondition();
+            if(dist >= (int)amount) passive.Enable();
+            else passive.Disable();
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.DisableCondition();
+            passive.Disable();
         }
     }
     
-    public class SameTargetRange : BaseCondition
+    public class SameTargetRangeCondition : BaseCondition
     {
-        public SameTargetRange(float amt) : base(amt)
+        public SameTargetRangeCondition(float amt) : base(amt)
         { }
         
         public override ConditionType GetConditionType()
@@ -80,13 +80,13 @@
         {
             var dist = Hex.Distance(unit.hexPosition, target.hexPosition);
             
-            if(dist == (int)amount) passive.EnableCondition();
-            else passive.DisableCondition();
+            if(dist == (int)amount) passive.Enable();
+            else passive.Disable();
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.DisableCondition();
+            passive.Disable();
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace PassiveSkill
 {
-    public class MovedInThisTurn : BaseCondition
+    public class MovedInThisTurnCondition : BaseCondition
     {
-        public MovedInThisTurn(float amt) : base(amt)
+        public MovedInThisTurnCondition(float amt) : base(amt)
         { }
 
         public override ConditionType GetConditionType()
@@ -21,18 +21,18 @@ namespace PassiveSkill
         //---
         private void CheckAction(IUnitAction unitAction)
         {
-            if (unitAction is MoveAction) passive.EnableCondition();
+            if (unitAction is MoveAction) passive.Enable();
         }
 
         private void ClearFlag()
         {
-            passive.DisableCondition();
+            passive.Disable();
         }
     }
     
-    public class NotMovedInThisTurn : BaseCondition
+    public class NotMovedInThisTurnCondition : BaseCondition
     {
-        public NotMovedInThisTurn(float amt) : base(amt)
+        public NotMovedInThisTurnCondition(float amt) : base(amt)
         { }
 
         public override ConditionType GetConditionType()
@@ -49,22 +49,22 @@ namespace PassiveSkill
         //---
         private void CheckAction(IUnitAction unitAction)
         {
-            if (unitAction is MoveAction) passive.DisableCondition();
+            if (unitAction is MoveAction) passive.Disable();
         }
 
         private void ClearFlag()
         {
             if (FieldSystem.turnSystem.turnOwner == unit)
             {
-                passive.EnableCondition();
+                passive.Enable();
             }
         }
     }
     
     
-    public class ReloadedInThisTurn : BaseCondition
+    public class ReloadedInThisTurnCondition : BaseCondition
     {
-        public ReloadedInThisTurn(float amt) : base(amt)
+        public ReloadedInThisTurnCondition(float amt) : base(amt)
         { }
 
         public override ConditionType GetConditionType()
@@ -81,12 +81,12 @@ namespace PassiveSkill
         //---
         private void CheckAction(IUnitAction unitAction)
         {
-            if (unitAction is ReloadAction) passive.EnableCondition();
+            if (unitAction is ReloadAction) passive.Enable();
         }
 
         private void ClearFlag()
         {
-            passive.DisableCondition();
+            passive.Disable();
         }
     }
 }

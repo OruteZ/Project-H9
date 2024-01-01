@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TileSystem : MonoBehaviour
@@ -64,7 +65,7 @@ public class TileSystem : MonoBehaviour
 
     /// <summary>
     /// 자식 오브젝트로 존재하는 Tile과 TileObject를 모두 관리하고, 전장의 안개를 생성합니다.
-    /// 이 함수가 호출되기 전 까지 타일에 대한 접근은 NullReference Exception을 유발합니다.
+    /// 이 함수가 호출되기 전 까지 타일에 대한 접근은 Null Reference Exception을 유발합니다.
     /// </summary>
     public void SetUpTilesAndObjects()
     {
@@ -100,7 +101,8 @@ public class TileSystem : MonoBehaviour
         
         foreach (Tile t in GetAllTiles())
         {
-            t.inSight = false;
+            t.inSight = GameManager.instance.IsPioneeredWorldTile(t.hexPosition) && 
+                        GameManager.instance.CompareState(GameState.World);
         }
 
 

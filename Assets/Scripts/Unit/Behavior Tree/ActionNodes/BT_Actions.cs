@@ -11,7 +11,7 @@ namespace BT
 
         public override INode.ENodeState Evaluate()
         {
-            tree.GetUnit().animator.Play("Idle");
+            // tree.GetUnit().animator.Play("Idle");
             tree.GetUnit().EndTurn();
             return INode.ENodeState.Success;
         }

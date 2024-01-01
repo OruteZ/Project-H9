@@ -15,7 +15,7 @@
     {
         Null,
         StatUpDependedOnCondition,
+        LightFootStep,
         InfinityShootPoint,
-        LightFootStep
     }
 }

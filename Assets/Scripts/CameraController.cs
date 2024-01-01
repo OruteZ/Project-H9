@@ -83,9 +83,9 @@ public class CameraController : MonoBehaviour
 
     private void OnCombatAwake()
     {
+        LookAtPlayer();
         if (GameManager.instance.CompareState(GameState.Combat))
         {
-            LookAtPlayer();
             FieldSystem.unitSystem.GetPlayer().onHit.AddListener((u, i) => ShakeCamera());
         }
     }

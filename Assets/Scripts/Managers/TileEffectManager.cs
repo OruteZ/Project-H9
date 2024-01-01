@@ -179,6 +179,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         var units = FieldSystem.unitSystem.units.Where(
             unit => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) && unit is not Player);
 
+        //white range tile
         foreach (var tile in tiles)
         {
             if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
@@ -187,9 +188,12 @@ public class TileEffectManager : Singleton<TileEffectManager>
             _effectsBase.Add(tile.hexPosition, go);
         }
 
+        //target range tile
         foreach (var unit in units)
         {
             if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, unit.hexPosition) is false) continue;
+            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
+            if (Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
 
             var go = Instantiate((_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, unit.hexPosition) ? 
                 attackUnitEffect : attackOutOfRangeEffect), Hex.Hex2World(unit.hexPosition), Quaternion.identity);

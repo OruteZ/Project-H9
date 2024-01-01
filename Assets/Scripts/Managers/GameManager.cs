@@ -14,7 +14,7 @@ public class GameManager : Generic.Singleton<GameManager>
 {
     private static string COMBAT_SCENE_NAME = "CombatScene";
     
-    private HashSet<Vector3Int> _pioneeredWorldTileSet;
+    private HashSet<Vector3Int> _discoveredWorldTileSet;
     
     [SerializeField]
     private GameState _currentState = GameState.World;
@@ -160,21 +160,26 @@ public class GameManager : Generic.Singleton<GameManager>
     
     public bool IsPioneeredWorldTile(Vector3Int tilePos)
     {
-        return _pioneeredWorldTileSet.Contains(tilePos);
+        return _discoveredWorldTileSet.Contains(tilePos);
+    }
+    
+    public List<Vector3Int> GetPioneeredWorldTileList()
+    {
+        return new List<Vector3Int>(_discoveredWorldTileSet);
     }
 
     public void AddPioneeredWorldTile(Vector3Int tilePos)
     {
-        if (_pioneeredWorldTileSet.Contains(tilePos)) return;
+        if (_discoveredWorldTileSet.Contains(tilePos)) return;
         
-        _pioneeredWorldTileSet.Add(tilePos);
+        _discoveredWorldTileSet.Add(tilePos);
     }
     
     private new void Awake()
     {
         base.Awake();
         
-        _pioneeredWorldTileSet = new ();
+        _discoveredWorldTileSet = new ();
     }
 
     public void Update()

@@ -102,6 +102,7 @@ public class UnitModel : MonoBehaviour
                                                       " Animator Controller");
         
         animator.SetTrigger(IDLE);
+        animator.ResetTrigger(IDLE);
     }
 
 

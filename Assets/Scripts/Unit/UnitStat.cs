@@ -30,11 +30,11 @@ public class UnitStat : ICloneable
     public float repeaterCriticalDamage => GetStat(StatType.RepeaterCriticalDamage);
 
     [SerializeField]
-    private int[] original = new int[(int)StatType.Length];
+    private int[] original = new int[(int)StatType.Length - 3];
     [SerializeField]
-    private int[] _additional = new int[(int)StatType.Length];
+    private int[] _additional = new int[(int)StatType.Length - 3];
     [SerializeField]
-    private int[] _multiplier = new int[(int)StatType.Length];
+    private int[] _multiplier = new int[(int)StatType.Length - 3];
 
     public object Clone()
     {
@@ -153,10 +153,10 @@ public class UnitStat : ICloneable
 
     public void ResetModifier()
     {
-        _additional = new int[(int)StatType.Length];
-        _multiplier = new int[(int)StatType.Length];
+        _additional = new int[(int)StatType.Length - 3];
+        _multiplier = new int[(int)StatType.Length - 3];
         
-        for (int i = 0; i < (int)StatType.Length; i++)
+        for (int i = 0; i < (int)StatType.Length - 3; i++)
         {
             _additional[i] = 0;
             _multiplier[i] = 100;
@@ -208,7 +208,7 @@ public class UnitStat : ICloneable
 
     public void DeepCopy(int[] original, int[] additional, int[] multiplier)
     {
-        for (int i = 0; i < (int)StatType.Length; i++)
+        for (int i = 0; i < (int)StatType.Length - 3; i++)
         {
             this.original[i] = original[i];
             _additional[i] = additional[i];
@@ -273,9 +273,8 @@ public enum StatType
     ShotgunAdditionalDamage = 16,
     ShotgunAdditionalRange = 17,
     ShotgunCriticalDamage = 18,
-    Length = 19,
-    
     AllAdditionalDamage = 19,
     AllAdditionalRange = 20,
     AllCriticalDamage = 21,
+    Length,
 }

@@ -128,6 +128,8 @@ namespace BT
         {
             var unit = tree.GetUnit();
 
+            if (_route is null) return true;
+
             if (unit.hexPosition == _route[_curIndex].hexPosition)
             {
                 return false;

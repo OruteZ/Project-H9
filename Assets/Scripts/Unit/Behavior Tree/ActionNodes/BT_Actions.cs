@@ -165,8 +165,8 @@ namespace BT
 
         public override INode.ENodeState Evaluate()
         {
-            Unit unit = tree.GetUnit();
-            Player target = FieldSystem.unitSystem.GetPlayer();
+            Enemy unit = (Enemy)tree.GetUnit();
+            var target = tree.playerPosMemory;
 
             var action = unit.GetAction<AttackAction>();
             if (action is null)
@@ -174,12 +174,12 @@ namespace BT
                 return INode.ENodeState.Failure;
             }
 
-            if (!((Enemy)unit).TrySelectAction(action))
+            if (!unit.TrySelectAction(action))
             {
                 return INode.ENodeState.Failure;
             }
 
-            if (!((Enemy)unit).TryExecute(target.hexPosition))
+            if (!unit.TryExecute(target))
             {
                 return INode.ENodeState.Failure;
             }

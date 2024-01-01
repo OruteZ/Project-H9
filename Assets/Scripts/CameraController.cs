@@ -16,6 +16,8 @@ public class CameraController : MonoBehaviour
     private float _cameraDegree;
 
     public Vector3 newPosition;
+    
+    public float maxZ, minZ, maxX, minX;
 
     [Space(1)] public float lookAtOffset;
 
@@ -138,7 +140,6 @@ public class CameraController : MonoBehaviour
     #region LIMIT
     #if UNITY_EDITOR
 
-    public float maxZ, minZ, maxX, minX;
 
     private void SetLeftUpLimit()
     {

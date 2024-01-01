@@ -77,6 +77,11 @@ public class UnitSystem : MonoBehaviour
                 //instantiate GameObject
                 var enemy = Instantiate(enemyPrefab, unitParent).GetComponent<Enemy>();
                 
+                //set enemy rotation y randomly
+                var rot = enemy.transform.rotation.eulerAngles;
+                rot.y = UnityEngine.Random.Range(0, 360);
+                enemy.transform.rotation = Quaternion.Euler(rot);
+                
                 //set enemy idx
                 enemy.dataIndex = enemyIdx;
                 enemy.gameObject.name = (i + 1) + " Enemy : " + enemyIdx;

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Castle.Core;
 using Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.Events;
 

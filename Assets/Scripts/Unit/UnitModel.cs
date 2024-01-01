@@ -41,7 +41,8 @@ public class UnitModel : MonoBehaviour
         if (TryGetComponent(out animator) is false)
         {
             Debug.LogError("Animator is null");
-            EditorApplication.isPaused = true;
+            throw new Exception();
+            return;
         }
 
         this.unit = unit;

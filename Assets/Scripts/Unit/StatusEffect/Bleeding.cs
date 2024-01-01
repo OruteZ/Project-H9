@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
-using Mono.Collections.Generic;
 
 public class Bleeding : StatusEffect
 {

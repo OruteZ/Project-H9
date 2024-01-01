@@ -119,8 +119,13 @@ public abstract class Unit : MonoBehaviour, IUnit
         onTurnStart.Invoke(this);
         
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
+
+        if (hp <= 0)
+        {
+            EndTurn();
+            DeadCall(this);
+        }
         
-        if (hp <= 0) DeadCall(this);
         else SelectAction(GetAction<IdleAction>());
     }
 
@@ -245,6 +250,7 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     protected bool IsMyTurn()
     {
+        if (hp <= 0) return false;
         return FieldSystem.turnSystem.turnOwner == this;
     }
 
@@ -253,7 +259,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         bool hasChanged = _isBusy is false;
         _isBusy = true;
         
-        if(hasChanged) onBusyChanged.Invoke();
+        if(hasChanged) onBusyChanged.Invoke();  
     }
 
     protected void ClearBusy()

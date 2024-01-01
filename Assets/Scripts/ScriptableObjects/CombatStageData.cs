@@ -48,19 +48,29 @@ public class CombatStageData : ScriptableObject
     public void SetTileDataList(List<TileData> list)
     {
         tileData = list.ToArray();
+        #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
+        #endif
     }
     
     public void SetTileObjectDataList(List<TileObjectData> list)
     {
         tileObjectData = list.ToArray();
+        
+        
+#if UNITY_EDITOR
         EditorUtility.SetDirty(this);
+        
+#endif
     }
     
     public void SetEnvDataList(List<EnvironmentData> list)
     {
         envData = list.ToArray();
+        
+        #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
+        #endif
     }
 
     public bool TryGetEnemyPoints(int linkIndex, out Vector3Int[] points)
@@ -100,7 +110,9 @@ public class CombatStageData : ScriptableObject
         }
         
         enemySpawnPoints[linkIndex].list = points.ToList();
+        #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
+        #endif
     }
     
     public void SetPlayerPoint(int linkIndex, Vector3Int point)
@@ -115,7 +127,10 @@ public class CombatStageData : ScriptableObject
         }
 
         playerSpawnPoint[linkIndex] = point;
+        
+        #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
+        #endif
     }
 }
 

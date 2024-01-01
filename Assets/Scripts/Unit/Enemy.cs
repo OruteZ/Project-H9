@@ -29,7 +29,12 @@ public class Enemy : Unit
         if (ai is null)
         {
             Debug.LogError("Ai is null");
+            
+            #if UNITY_EDITOR
             EditorApplication.isPaused = true;
+            #else
+            throw new System.Exception("Ai is null");
+            #endif
         }
 
         this.ai = Instantiate(ai);

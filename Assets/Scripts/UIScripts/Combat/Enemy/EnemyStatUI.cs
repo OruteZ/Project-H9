@@ -42,6 +42,7 @@ public class EnemyStatUI : UISystem
     }
     private void Update()
     {
+        if (!GameManager.instance.CompareState(GameState.Combat)) return;
         if (Input.GetMouseButtonDown(1))
         {
             Player player = FieldSystem.unitSystem.GetPlayer();

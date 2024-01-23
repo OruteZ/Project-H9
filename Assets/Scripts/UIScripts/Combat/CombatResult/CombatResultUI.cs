@@ -63,7 +63,7 @@ public class CombatResultUI : UISystem
             _WinOrLoseText.GetComponent<TextMeshProUGUI>().text = "Game Over";
         }
         _ResultText.GetComponent<TextMeshProUGUI>().text = "Earned EXP: " + earnedExp;
-        UIManager.instance.gameSystemUI.playerExpUI.SetPlayerExpUI(GameManager.instance.curExp + earnedExp);
+        UIManager.instance.gameSystemUI.playerInfoUI.expUI.GetComponent<PlayerExpUI>().SetPlayerExpUI(GameManager.instance.curExp + earnedExp);
         earnedExp = 0;
     }
     private void CloseCombatResultUI()

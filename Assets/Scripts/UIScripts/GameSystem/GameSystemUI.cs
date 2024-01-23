@@ -4,25 +4,19 @@ using UnityEngine;
 
 public class GameSystemUI : UISystem
 {
-    public PlayerSummaryStatUI playerSummaryStatUI { get; private set; }
-    public PlayerHpUI playerHpUI { get; private set; }
-    public PlayerExpUI playerExpUI { get; private set; }
+    public PlayerInfoUI playerInfoUI { get; private set; }
     public QuestUI questUI { get; private set; }
     public TurnUI turnUI { get; private set; }
     public PlayerStatLevelUpUI playerStatLevelUpUI { get; private set; }
 
     private void Awake()
     {
-        playerSummaryStatUI = GetComponent<PlayerSummaryStatUI>();
-        playerHpUI = GetComponent<PlayerHpUI>();
-        playerExpUI = GetComponent<PlayerExpUI>();
+        playerInfoUI = GetComponent<PlayerInfoUI>();
         questUI = GetComponent<QuestUI>();
         turnUI = GetComponent<TurnUI>();
         playerStatLevelUpUI = GetComponent<PlayerStatLevelUpUI>();
 
-        uiSubsystems.Add(playerSummaryStatUI);
-        uiSubsystems.Add(playerHpUI);
-        uiSubsystems.Add(playerExpUI);
+        uiSubsystems.Add(playerInfoUI);
         uiSubsystems.Add(questUI);
         uiSubsystems.Add(turnUI);
         uiSubsystems.Add(playerStatLevelUpUI);

@@ -422,10 +422,10 @@ public abstract class Unit : MonoBehaviour, IUnit
         onFinishAction.Invoke(action);
     }
     
-    // ÇÑ ÅÏ¿¡ ÇÑ¹ø¸¸ »ç°Ý °¡´ÉÇÕ´Ï´Ù. "´Ü Infinite Action Point ½ºÅ³À» ¹è¿ìÁö ¾Ê¾ÒÀ» °æ¿ì"
+    // í•œ í„´ì— í•œë²ˆë§Œ ì‚¬ê²© ê°€ëŠ¥í•©ë‹ˆë‹¤. "ë‹¨ Infinite Action Point ìŠ¤í‚¬ì„ ë°°ìš°ì§€ ì•Šì•˜ì„ ê²½ìš°"
     public bool CheckAttackTrigger() => _hasAttacked && infiniteActionPointTrigger is false;
     
-    // »ç°Ý ÈÄ ÀÌµ¿ÀÌ ºÒ°¡ÇÕ´Ï´Ù. "´Ü Light Foot ½ºÅ³À» ¹è¿ìÁö ¾Ê¾ÒÀ» °æ¿ì"
+    // ì‚¬ê²© í›„ ì´ë™ì´ ë¶ˆê°€í•©ë‹ˆë‹¤. "ë‹¨ Light Foot ìŠ¤í‚¬ì„ ë°°ìš°ì§€ ì•Šì•˜ì„ ê²½ìš°"
     public bool CheckAttackMoveTrigger() => _hasAttacked && lightFootTrigger is false;
 
     public void SetAttacked()
@@ -446,14 +446,14 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         if (effect.GetDuration() <= 0 && effect.GetStatusEffectType() is not StatusEffectType.Bleeding)
         {
-            Debug.LogError("Áö¼Ó½Ã°£ÀÌ 0 ÀÌÇÏÀÎ »óÅÂÀÌ»ó");
+            Debug.LogError("ì§€ì†ì‹œê°„ì´ 0 ì´í•˜ì¸ ìƒíƒœì´ìƒ");
             return false;
         }
         if (effect.GetStatusEffectType() is StatusEffectType.Bleeding or StatusEffectType.Burning)
         {
             if (effect.GetStack() <= 0)
             {
-                Debug.LogError("ÃâÇ÷ ¶Ç´Â È­»ó¿¡ µ¥¹ÌÁö 0");
+                Debug.LogError("ì¶œí˜ˆ ë˜ëŠ” í™”ìƒì— ë°ë¯¸ì§€ 0");
                 return false;
             }
         }

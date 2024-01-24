@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 
 /// <summary>
-/// ÀüÅõ ½Ã ÀûÀÇ ½ºÅÝÀ» È®ÀÎÇÒ ¼ö ÀÖ´Â Àû ½ºÅÝÃ¢ UI¸¦ Ç¥½ÃÇÏ´Â ±â´ÉÀ» ¼öÇàÇÏ´Â Å¬·¡½º
+/// ì „íˆ¬ ì‹œ ì ì˜ ìŠ¤í…Ÿì„ í™•ì¸í•  ìˆ˜ ìžˆëŠ” ì  ìŠ¤í…Ÿì°½ UIë¥¼ í‘œì‹œí•˜ëŠ” ê¸°ëŠ¥ì„ ìˆ˜í–‰í•˜ëŠ” í´ëž˜ìŠ¤
 /// </summary>
 public class EnemyStatUI : UISystem
 {
@@ -71,10 +71,10 @@ public class EnemyStatUI : UISystem
         }
     }
     /// <summary>
-    /// Àû ½ºÅÝÃ¢À» ¼³Á¤ÇÕ´Ï´Ù.
-    /// ÇÃ·¹ÀÌ¾î°¡ Idle »óÅÂÀÏ ¶§ Àû À¯´ÖÀ» Å¬¸¯ÇÏ¸é ÇØ´ç Àû À¯´Ö ¿·¿¡ ÀûÀÇ ½ºÅÝÃ¢ UI°¡ »ý¼ºµË´Ï´Ù.
+    /// ì  ìŠ¤í…Ÿì°½ì„ ì„¤ì •í•©ë‹ˆë‹¤.
+    /// í”Œë ˆì´ì–´ê°€ Idle ìƒíƒœì¼ ë•Œ ì  ìœ ë‹›ì„ í´ë¦­í•˜ë©´ í•´ë‹¹ ì  ìœ ë‹› ì˜†ì— ì ì˜ ìŠ¤í…Ÿì°½ UIê°€ ìƒì„±ë©ë‹ˆë‹¤.
     /// </summary>
-    /// <param name="enemy"> Å¬¸¯ÇÑ Àû À¯´Ö </param>
+    /// <param name="enemy"> í´ë¦­í•œ ì  ìœ ë‹› </param>
     public void SetEnemyStatUI(Enemy enemy)
     {
         OpenPopupWindow();
@@ -193,7 +193,7 @@ public class EnemyStatUI : UISystem
     }
 
     /// <summary>
-    /// Àû ½ºÅÝÃ¢ UI¸¦ ´Ý½À´Ï´Ù.
+    /// ì  ìŠ¤í…Ÿì°½ UIë¥¼ ë‹«ìŠµë‹ˆë‹¤.
     /// </summary>
     public void CloseEnemyStatUI()
     {

@@ -15,25 +15,25 @@ public class CharacterStatUIInfo
 {
     private Dictionary<string, string> _statNameTransleation = new Dictionary<string, string>()
     {
-            {"Level",                   "·¹º§" },
-            {"Exp",                     "°æÇèÄ¡" },
-            {"HP",                      "Ã¼·Â" },
-            {"Concentration",           "ÁıÁß·Â" },
-            {"Sight Range",             "½Ã¾ß ¹üÀ§" },
-            {"Speed",                   "¼Óµµ" },
-            {"Action Point",            "Çàµ¿ Æ÷ÀÎÆ®" },
-            {"Additional Hit Rate",     "Ãß°¡ ¸íÁß·ü" },
-            {"Critical Chance",         "Ä¡¸íÅ¸ È®·ü" },
-            {"Additional Damage",       "Ãß°¡ µ¥¹ÌÁö" },
-            {"Additional Range",        "Ãß°¡ »ç°Å¸®" },
-            {"Critical Damage",         "Ä¡¸íÅ¸ µ¥¹ÌÁö" },
-            {"Name",                    "¹«±â ÀÌ¸§" },
-            {"Ammo",                    "¹«±â ÅºÃ¢ ¿ë·®" },
-            {"Damage",                  "¹«±â µ¥¹ÌÁö" },
-            {"Range",                   "¹«±â »ç°Å¸®" },
+            {"Level",                   "ë ˆë²¨" },
+            {"Exp",                     "ê²½í—˜ì¹˜" },
+            {"HP",                      "ì²´ë ¥" },
+            {"Concentration",           "ì§‘ì¤‘ë ¥" },
+            {"Sight Range",             "ì‹œì•¼ ë²”ìœ„" },
+            {"Speed",                   "ì†ë„" },
+            {"Action Point",            "í–‰ë™ í¬ì¸íŠ¸" },
+            {"Additional Hit Rate",     "ì¶”ê°€ ëª…ì¤‘ë¥ " },
+            {"Critical Chance",         "ì¹˜ëª…íƒ€ í™•ë¥ " },
+            {"Additional Damage",       "ì¶”ê°€ ë°ë¯¸ì§€" },
+            {"Additional Range",        "ì¶”ê°€ ì‚¬ê±°ë¦¬" },
+            {"Critical Damage",         "ì¹˜ëª…íƒ€ ë°ë¯¸ì§€" },
+            {"Name",                    "ë¬´ê¸° ì´ë¦„" },
+            {"Ammo",                    "ë¬´ê¸° íƒ„ì°½ ìš©ëŸ‰" },
+            {"Damage",                  "ë¬´ê¸° ë°ë¯¸ì§€" },
+            {"Range",                   "ë¬´ê¸° ì‚¬ê±°ë¦¬" },
             {"",                        "" },
     };
-    //ÀÌ°É ÀÌ·± ½ÄÀ¸·Î ¿©±â ÀÌ·¯´Â °Ô ¸Â³ª? ½ºÅÈ ½ºÅ©¸³Æ® Å×ÀÌºíÀÌ ÇÊ¿äÇÒ µí?
+    //ì´ê±¸ ì´ëŸ° ì‹ìœ¼ë¡œ ì—¬ê¸° ì´ëŸ¬ëŠ” ê²Œ ë§ë‚˜? ìŠ¤íƒ¯ ìŠ¤í¬ë¦½íŠ¸ í…Œì´ë¸”ì´ í•„ìš”í•  ë“¯?
 
     public string statName { get; private set; }
     public Dictionary<UIStatType, float> statValues { get; private set; }
@@ -53,7 +53,7 @@ public class CharacterStatUIInfo
     {
         if (!statValues.ContainsKey(statType)) 
         {
-            Debug.LogError("Àß¸øµÈ Å° ¹ë·ù ÀÔ·Â");
+            Debug.LogError("ì˜ëª»ëœ í‚¤ ë°¸ë¥˜ ì…ë ¥");
             return;
         }
         statValues[statType] = value;
@@ -91,7 +91,7 @@ public class CharacterStatUIInfo
 }
 
 /// <summary>
-/// Ä³¸¯ÅÍ Á¤º¸ Ã¢¿¡¼­ Ä³¸¯ÅÍÀÇ ½ºÅİ ¹× ÀåºñÇÏ°í ÀÖ´Â ¹«±âÀÇ ½ºÅİ Á¤º¸¸¦ Ç¥½ÃÇÏ´Â ±â´ÉÀ» ±¸ÇöÇÑ Å¬·¡½º
+/// ìºë¦­í„° ì •ë³´ ì°½ì—ì„œ ìºë¦­í„°ì˜ ìŠ¤í…Ÿ ë° ì¥ë¹„í•˜ê³  ìˆëŠ” ë¬´ê¸°ì˜ ìŠ¤í…Ÿ ì •ë³´ë¥¼ í‘œì‹œí•˜ëŠ” ê¸°ëŠ¥ì„ êµ¬í˜„í•œ í´ë˜ìŠ¤
 /// </summary>
 public class CharacterStatUI : UISystem
 {

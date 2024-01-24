@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç ³²Àº ÅºÃ¢À» Ç¥½ÃÇØÁÖ´Â ±â´ÉÀ» ¼öÇàÇÏ´Â Å¬·¡½º
+/// í”Œë ˆì´ì–´ì˜ í˜„ìž¬ ë‚¨ì€ íƒ„ì°½ì„ í‘œì‹œí•´ì£¼ëŠ” ê¸°ëŠ¥ì„ ìˆ˜í–‰í•˜ëŠ” í´ëž˜ìŠ¤
 /// </summary>
 public class MagazineUI : UISystem
 {
@@ -18,7 +18,7 @@ public class MagazineUI : UISystem
     private void Update()
     {
         //for test
-        SetMagazineText();  //ÆÐ´×¾×¼Ç µî°ú °°Àº °æ¿ì ±âÁ¸ ¹æ½ÄÀ¸·Î´Â ÃÑ¾ËÀÌ ½Ç½Ã°£À¸·Î ÁÙ¾îµéÁö ¾Ê±â ¶§¹®¿¡, °ü·Ã ¹®Á¦°¡ ÇØ°áµÉ ¶§ ±îÁö À¯Áö
+        SetMagazineText();  //íŒ¨ë‹ì•¡ì…˜ ë“±ê³¼ ê°™ì€ ê²½ìš° ê¸°ì¡´ ë°©ì‹ìœ¼ë¡œëŠ” ì´ì•Œì´ ì‹¤ì‹œê°„ìœ¼ë¡œ ì¤„ì–´ë“¤ì§€ ì•Šê¸° ë•Œë¬¸ì—, ê´€ë ¨ ë¬¸ì œê°€ í•´ê²°ë  ë•Œ ê¹Œì§€ ìœ ì§€
     }
     public override void OpenUI()
     {
@@ -30,9 +30,9 @@ public class MagazineUI : UISystem
     }
 
     /// <summary>
-    /// ÅºÃ¢ ¼ö UI¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-    /// ¾×¼ÇÀ» ½ÃÀÛµÉ ¶§, ³¡³¯ ¶§, ¼±ÅÃÇÒ ¶§ ½ÇÇàµË´Ï´Ù.
-    /// ÇöÀç Å×½ºÆ®¿ëÀ¸·Î ¸Å ÇÁ·¹ÀÓ¸¶´Ù ¾÷µ¥ÀÌÆ®µÇ°í ÀÖ½À´Ï´Ù.
+    /// íƒ„ì°½ ìˆ˜ UIë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+    /// ì•¡ì…˜ì„ ì‹œìž‘ë  ë•Œ, ëë‚  ë•Œ, ì„ íƒí•  ë•Œ ì‹¤í–‰ë©ë‹ˆë‹¤.
+    /// í˜„ìž¬ í…ŒìŠ¤íŠ¸ìš©ìœ¼ë¡œ ë§¤ í”„ë ˆìž„ë§ˆë‹¤ ì—…ë°ì´íŠ¸ë˜ê³  ìžˆìŠµë‹ˆë‹¤.
     /// </summary>
     public void SetMagazineText(int beforeAmmo, int afterAmmo) 
     {

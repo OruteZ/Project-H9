@@ -42,21 +42,21 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
         {
             GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
-            string str = "ƒ≥∏Ø≈Õ ∫∏≥ Ω∫";
+            string str = "Ï∫êÎ¶≠ÌÑ∞ Î≥¥ÎÑàÏä§";
             if (statName == "Additional Hit Rate" || statName == "Critical Chance" || statName == "Critical Damage")
             {
                 WeaponType playerWeaponType = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
                 if (playerWeaponType == WeaponType.Revolver)
                 {
-                    str += " (∏Æ∫ºπˆ)";
+                    str += " (Î¶¨Î≥ºÎ≤Ñ)";
                 }
                 else if (playerWeaponType == WeaponType.Repeater)
                 {
-                    str += " (∏Æ««≈Õ)";
+                    str += " (Î¶¨ÌîºÌÑ∞)";
                 }
                 else if (playerWeaponType == WeaponType.Shotgun)
                 {
-                    str += " (º¶∞«)";
+                    str += " (ÏÉ∑Í±¥)";
                 }
             }
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = str;
@@ -66,14 +66,14 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
         {
             GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().text = "¿Â¬¯ π´±‚ ∫∏≥ Ω∫";
+            _subTooltipText.GetComponent<TextMeshProUGUI>().text = "Ïû•Ï∞© Î¨¥Í∏∞ Î≥¥ÎÑàÏä§";
             _isSetContents = true;
         }
         else if (statType == UIStatType.Skill)
         {
             GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().text = "Ω∫≈≥ ∫∏≥ Ω∫";
+            _subTooltipText.GetComponent<TextMeshProUGUI>().text = "Ïä§ÌÇ¨ Î≥¥ÎÑàÏä§";
             _isSetContents = true;
         }
         else

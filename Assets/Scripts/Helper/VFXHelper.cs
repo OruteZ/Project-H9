@@ -36,7 +36,7 @@ public static class VFXHelper
         {
             case WeaponType.Null: return false;
             default:
-                // ÃÑ±â Á¾·ù¿¡ »ó°ü¾øÀÌ °°Àº ÅºÈ¯ ±ËÀû
+                // ì´ê¸° ì¢…ë¥˜ì— ìƒê´€ì—†ì´ ê°™ì€ íƒ„í™˜ ê¶¤ì 
                 fxKey = "Prefab/VFX/BulletLineRender";
                 time = 0.1f;
                 return true;
@@ -54,7 +54,7 @@ public static class VFXHelper
         {
             case WeaponType.Null: return false;
             default:
-                // ÃÑ±â Á¾·ù¿¡ »ó°ü¾øÀÌ °°Àº ÃâÇ÷
+                // ì´ê¸° ì¢…ë¥˜ì— ìƒê´€ì—†ì´ ê°™ì€ ì¶œí˜ˆ
                 fxKey = "Prefab/VFX/FX_BloodSplat_01";
                 time = 2.5f;
                 return true;

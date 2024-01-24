@@ -49,12 +49,14 @@ public class CameraController : MonoBehaviour
         Vector3 direction = Vector3.zero;
 
         movementSpeed = Input.GetKey(KeyCode.LeftShift) ? fastSpeed : normalSpeed;
-
-        if (Input.GetKey(KeyCode.W)) direction += transform.forward;
-        if (Input.GetKey(KeyCode.A)) direction -= transform.right;
-        if (Input.GetKey(KeyCode.D)) direction += transform.right;
-        if (Input.GetKey(KeyCode.S)) direction -= transform.forward;
+        
+        //check mouse on edge each direction
+        if (IsMouseOnEdge(Direction.Right)) direction += Vector3.right;
+        if (IsMouseOnEdge(Direction.Left)) direction += Vector3.left;
+        if (IsMouseOnEdge(Direction.Up)) direction += Vector3.forward;
+        if (IsMouseOnEdge(Direction.Down)) direction += Vector3.back;
         direction.Normalize();
+        
         newPosition += direction * (movementSpeed * Time.deltaTime);
 
         newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
@@ -159,5 +161,31 @@ public class CameraController : MonoBehaviour
     public static float GetCamDeg()
     {
         return _instance._cameraDegree;
+    }
+
+    private enum Direction
+    {
+        Right,
+        Left,
+        Up,
+        Down
+    }
+    
+    private bool IsMouseOnEdge(Direction dir)
+    {
+        //if mouse is on edge, return true
+        switch (dir)
+        {
+            case Direction.Right:
+                return Input.mousePosition.x >= Screen.width - 1;
+            case Direction.Left:
+                return Input.mousePosition.x <= 1;
+            case Direction.Up:
+                return Input.mousePosition.y >= Screen.height - 1;
+            case Direction.Down:
+                return Input.mousePosition.y <= 1;
+            default:
+                return false;
+        }
     }
 }

@@ -13,6 +13,7 @@ public class CharacterUI : UISystem
     /// 캐릭터의 스텟 및 무기 스텟을 표시하는 기능
     /// </summary>
     public CharacterStatUI characterStatUI { get; private set; }
+    public PassiveSkillListUI passiveSkillListUI { get; private set; }
     /// <summary>
     /// 캐릭터가 습득한 스킬을 캐릭터 창에 표시하는 기능
     /// </summary>
@@ -28,13 +29,15 @@ public class CharacterUI : UISystem
     void Start()
     {
         characterStatUI = GetComponent<CharacterStatUI>();
+        passiveSkillListUI = GetComponent<PassiveSkillListUI>();
         learnedSkillUI = GetComponent<LearnedSkillUI>();
         itemListUI = GetComponent<ItemListUI>();
         SetMoneyText();
 
         uiSubsystems.Add(characterStatUI);
-        uiSubsystems.Add(learnedSkillUI);
-        uiSubsystems.Add(itemListUI);
+        uiSubsystems.Add(passiveSkillListUI);
+        //uiSubsystems.Add(learnedSkillUI);
+        //uiSubsystems.Add(itemListUI);
     }
 
     public override void ClosePopupWindow()

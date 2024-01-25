@@ -96,10 +96,7 @@ public class CharacterStatUIInfo
 public class CharacterStatUI : UISystem
 {
     //Character Stat
-    [Header("Character Stat UI")]
-    [SerializeField] private GameObject _characterLevelTexts;
-    [SerializeField] private GameObject _characterStatTexts;
-    [SerializeField] private GameObject _weaponStatTexts;
+    [SerializeField] private GameObject _characterStatUIElements;
     static int _textIndex;
 
     public GameObject _characterStatTooltip;
@@ -108,16 +105,16 @@ public class CharacterStatUI : UISystem
         "Level",
         "Exp",
         "HP",
-        "Concentration",
         "Sight Range",
         "Speed",
         "Action Point",
-        "",
+        "Concentration",
         "Additional Hit Rate",
-        "Critical Chance",
         "Additional Damage",
-        "Additional Range",
+        "Critical Chance",
         "Critical Damage",
+        "",
+        "Additional Range",
         "Name",
         "Ammo",
         "Damage",
@@ -150,10 +147,8 @@ public class CharacterStatUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
 
         SetStatInfo(player);
-        _textIndex = 0;
-        SetCharacterLevelText();
+        _textIndex = 2;
         SetCharacterStatText();
-        SetWeaponStatText();
     }
     private void SetStatInfo(Player player)
     {
@@ -166,29 +161,29 @@ public class CharacterStatUI : UISystem
         List<(string, StatType)> _strAndType = new List<(string, StatType)>()
         {
             ("HP",                  StatType.MaxHp),
-            ("Concentration",       StatType.Concentration),
             ("Sight Range",         StatType.SightRange),
             ("Speed",               StatType.Speed),
             ("Action Point",        StatType.MaxActionPoint),
+            ("Concentration",       StatType.Concentration),
             ("Additional Hit Rate", StatType.AdditionalHitRate),
             ("Critical Chance",     StatType.CriticalChance)
         };
         if (weaponType is WeaponType.Revolver)
         {
             _strAndType.Add(("Additional Damage", StatType.RevolverAdditionalDamage));
-            _strAndType.Add(("Additional Range", StatType.RevolverAdditionalRange));
+            _strAndType.Add(("Critical Chance", StatType.CriticalChance));
             _strAndType.Add(("Critical Damage", StatType.RevolverCriticalDamage));
         }
         else if (weaponType is WeaponType.Repeater)
         {
             _strAndType.Add(("Additional Damage", StatType.RepeaterAdditionalDamage));
-            _strAndType.Add(("Additional Range", StatType.RepeaterAdditionalRange));
+            _strAndType.Add(("Critical Chance", StatType.CriticalChance));
             _strAndType.Add(("Critical Damage", StatType.RepeaterCriticalDamage));
         }
         else if (weaponType is WeaponType.Shotgun)
         {
             _strAndType.Add(("Additional Damage", StatType.ShotgunAdditionalDamage));
-            _strAndType.Add(("Additional Range", StatType.ShotgunAdditionalRange));
+            _strAndType.Add(("Critical Chance", StatType.CriticalChance));
             _strAndType.Add(("Critical Damage", StatType.ShotgunCriticalDamage));
         }
 
@@ -220,34 +215,18 @@ public class CharacterStatUI : UISystem
         characterStatInfo["Damage"].SetStatValue(UIStatType.Weapon, weapon.weaponDamage);
         characterStatInfo["Range"].SetStatValue(UIStatType.Weapon, weapon.weaponRange);
     }
-    private void SetCharacterLevelText()
-    {
-        for (int i = 0; i < _characterLevelTexts.transform.childCount; i++)
-        {
-            _characterLevelTexts.transform.GetChild(i)
-                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[_textIndex++]]);
-        }
-    }
     private void SetCharacterStatText()
     {
-        for (int i = 0; i < _characterStatTexts.transform.childCount; i++) 
+        for (int i = 0; i < _characterStatUIElements.transform.childCount; i++) 
         {
-            _characterStatTexts.transform.GetChild(i)
-                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[_textIndex++]]);
-        }
-    }
-    private void SetWeaponStatText()
-    {
-        for (int i = 0; i < _weaponStatTexts.transform.childCount; i++)
-        {
-            _weaponStatTexts.transform.GetChild(i)
+            _characterStatUIElements.transform.GetChild(i)
                 .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[_textIndex++]]);
         }
     }
 
-    public void OpenCharacterTooltip(CharacterStatTextElement textElement, string name, float yPosition) 
+    public void OpenCharacterTooltip(CharacterStatTextElement textElement, string name, Vector3 pos) 
     {
-        _characterStatTooltip.GetComponent<CharacterTooltip>().SetCharacterTooltip(textElement, characterStatInfo[name], yPosition);
+        _characterStatTooltip.GetComponent<CharacterTooltip>().SetCharacterTooltip(textElement, characterStatInfo[name], pos);
     }
     public void CloseCharacterTooltip()
     {

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class PlayerExpUI : UISystem
+public class PlayerExpUI : UIElement
 {
     [SerializeField] private GameObject _playerExpBar;
     [SerializeField] private GameObject _playerLevelUpBar;
@@ -21,7 +21,7 @@ public class PlayerExpUI : UISystem
         _targetCurrentExpText = 0;
         _playerExpBar.GetComponent<PlayerExpBar>().SetPlayerExpBar(0, "0 / 100");
         UIManager.instance.onPlayerStatChanged.AddListener(() => SetPlayerExpUI(GameManager.instance.curExp));
-        _playerLevelUpBar.SetActive(false);
+        //_playerLevelUpBar.SetActive(false);
     }
     void Update()
     {
@@ -62,9 +62,9 @@ public class PlayerExpUI : UISystem
     }
     IEnumerator ShowLevelUpText() 
     {
-        _playerLevelUpBar.SetActive(true);
+        //_playerLevelUpBar.SetActive(true);
         yield return new WaitForSeconds(2.0f);
-        _playerLevelUpBar.SetActive(false);
+        //_playerLevelUpBar.SetActive(false);
         yield break;
     }
 }

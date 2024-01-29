@@ -113,10 +113,14 @@ public class PlayerStatLevelUpElement : UIElement, IPointerEnterHandler, IPointe
         GetComponent<RectTransform>().localScale = Vector3.one;
     }
 
+    public void SetSelectedState(bool isSelected) 
+    {
+        _isSelected = isSelected;
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         bool isSelectedSomeCard = UIManager.instance.gameSystemUI.playerStatLevelUpUI.isSelectedSomeCard;
-        if (isSelectedSomeCard && !_isSelected) return;
+        //if (isSelectedSomeCard && !_isSelected) return;
         _isMouseOver = true;
     }
 

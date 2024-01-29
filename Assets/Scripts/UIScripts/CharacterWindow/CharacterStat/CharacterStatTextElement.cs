@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
-    private TextMeshProUGUI _nameText;
-    private TextMeshProUGUI _contentsText;
+    private Image _statIcon;
+    private TextMeshProUGUI _statText;
+    private string _statName;
 
     private bool _isSetContents = false;
     private bool _isOpenTooltip = false;
@@ -17,11 +19,11 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
     private bool _isTooltipOpenable = true;
     private string[] _tooltipExceptionStrings = { "Level", "Exp", "Name" };
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         isMouseOver = false;
-        _nameText = GetComponent<TextMeshProUGUI>();
-        _contentsText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        _statIcon = transform.GetChild(0).GetComponent<Image>();
+        _statText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -34,15 +36,16 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
             if (_mouseOverCount > 0.5f) 
             {
                 _isOpenTooltip = true;
-                UIManager.instance.characterUI.characterStatUI.OpenCharacterTooltip(this, _nameText.text, GetComponent<RectTransform>().position.y);
+                UIManager.instance.characterUI.characterStatUI.OpenCharacterTooltip(this, _statName, GetComponent<RectTransform>().position);
             }
         }
     }
     public void SetCharacterStatText(CharacterStatUIInfo info)
     {
-        _nameText.text = info.statName;
-        _contentsText.text = info.GetFinalStatValueString();
-        _isSetContents = (_nameText.text != "");
+        if (_statIcon is null) return;
+        _statName = info.statName;
+        _statText.text = info.GetFinalStatValueString();
+        _isSetContents = (_statName != "");
 
         foreach (string compStr in _tooltipExceptionStrings) 
         {
@@ -55,8 +58,7 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _nameText.color = UICustomColor.TextHighlightColor;
-        _contentsText.color = UICustomColor.TextHighlightColor;
+        _statText.color = UICustomColor.TextHighlightColor;
 
         _isOpenTooltip = false;
         isMouseOver = true;
@@ -64,8 +66,7 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        _nameText.color = Color.white;
-        _contentsText.color = Color.white;
+        _statText.color = Color.white;
 
         _isOpenTooltip = false;
         isMouseOver = false;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 플레이어 Hp아이콘UI 각각의 기능을 구현한 클래스
 /// </summary>
-public class PlayerHpUIElement : MonoBehaviour
+public class PlayerHpUIElement : UIElement
 {
     [SerializeField] private Sprite _playerHpFillSprite;
     [SerializeField] private Sprite _playerHpEmptySprite;

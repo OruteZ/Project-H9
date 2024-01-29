@@ -14,8 +14,8 @@ public class PlayerExpBar : UIElement, IPointerEnterHandler, IPointerExitHandler
     }
     public void SetPlayerExpBar(float barValue, string text)
     {
-        GetComponent<Slider>().value = barValue;
-        _playerExpText.GetComponent<TextMeshProUGUI>().text = text;
+        GetComponent<Image>().fillAmount = barValue;
+        _playerExpText.GetComponent<TextMeshProUGUI>().text = "Exp: " + text;
 
     }
 

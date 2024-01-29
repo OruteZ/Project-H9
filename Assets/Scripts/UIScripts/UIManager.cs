@@ -25,8 +25,9 @@ public class UIManager : Generic.Singleton<UIManager>
     [SerializeField] private Canvas _pauseMenuCanvas;
     [SerializeField] private Canvas _debugCanvas;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool isMouseOverUI;
+    [HideInInspector]
     public int previousLayer = 1;
 
     private GameState _UIState;
@@ -70,32 +71,35 @@ public class UIManager : Generic.Singleton<UIManager>
     void Update()
     {
         isMouseOverUI = EventSystem.current.IsPointerOverGameObject();
+        int currentLayer = previousLayer;
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            currentLayer = 1;
+        }
         if (Input.GetMouseButtonDown(0))
         {
-            int currentLayer = GetPointerOverUILayer();
-            if (previousLayer > currentLayer)
-            {
-                if (currentLayer <= 1)
-                {
-                    SetCharacterCanvasState(false);
-                    SetSkillCanvasState(false);
-                    SetPauseMenuCanvasState(false);
-                    combatUI.ClosePopupWindow();
-                }
-                else if (currentLayer == 2) 
-                {
-                    characterUI.ClosePopupWindow();
-                    skillUI.ClosePopupWindow();
-                }
-            }
-
-            previousLayer = currentLayer;
+            currentLayer = GetPointerOverUILayer();
         }
 
+        if (previousLayer > currentLayer)
+        {
+            if (currentLayer <= 1)
+            {
+                SetCharacterCanvasState(false);
+                SetSkillCanvasState(false);
+                SetPauseMenuCanvasState(false);
+                combatUI.ClosePopupWindow();
+            }
+            else if (currentLayer == 2)
+            {
+                characterUI.ClosePopupWindow();
+                skillUI.ClosePopupWindow();
+            }
+        }
+        previousLayer = currentLayer;
     }
 
-    //아래 캔버스 켜고끄는 것들 UIInteraction 삭제 후 전부 private로 전환 예정.
-    public void SetCanvasState(Canvas canvas, UISystem uiSys, bool isOn)
+    private void SetCanvasState(Canvas canvas, UISystem uiSys, bool isOn)
     {
         if (canvas.enabled && isOn)
         {

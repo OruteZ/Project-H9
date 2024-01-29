@@ -15,6 +15,8 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
     private CharacterStatTextElement _textElement;
 
     [SerializeField] private GameObject _CharacterStatTooltipTexts;
+
+    private const int STAT_TOOLTIP_YPOSITION_CORRECTION = 80;
     void Start()
     {
         isMouseOver = false;
@@ -51,7 +53,7 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
             yield break;
         }
     }
-    public void SetCharacterTooltip(CharacterStatTextElement textElement, CharacterStatUIInfo info, float yPosition)
+    public void SetCharacterTooltip(CharacterStatTextElement textElement, CharacterStatUIInfo info, Vector3 position)
     {
         if (nameText == info.statName) return;
 
@@ -60,8 +62,8 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
         nameText = info.statName;
         _textElement = textElement;
         _tooltipNameText.GetComponent<TextMeshProUGUI>().text = info.GetTranslateStatName();
-        Vector3 pos = GetComponent<RectTransform>().position;
-        pos.y = yPosition;
+        Vector3 pos = position;
+        pos.y -= STAT_TOOLTIP_YPOSITION_CORRECTION;
         GetComponent<RectTransform>().position = pos;
 
 

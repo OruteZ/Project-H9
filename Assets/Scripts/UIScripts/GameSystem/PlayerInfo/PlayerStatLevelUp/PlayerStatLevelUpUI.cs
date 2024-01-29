@@ -207,11 +207,18 @@ public class PlayerStatLevelUpUI : UISystem
 
     public void ClickStatCard(int cardNumber, bool isSelected) 
     {
-        if (isSelectedSomeCard && selectedCardNumber != cardNumber) return;
+        //if (isSelectedSomeCard && selectedCardNumber != cardNumber) return;
         isSelectedSomeCard = isSelected;
         if (isSelected)
         {
             selectedCardNumber = cardNumber;
+            for (int i = 0; i < _statCards.Length; i++)
+            {
+                if (i != selectedCardNumber)
+                {
+                    _statCards[i].GetComponent<PlayerStatLevelUpElement>().SetSelectedState(false);
+                }
+            }
         }
         else
         {

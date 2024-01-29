@@ -69,6 +69,7 @@ namespace PassiveSkill
     
         public void Enable()
         {
+            if(IsEffectEnable() && _condition is NullCondition) return;
             _effect.OnConditionEnable();
         }
 

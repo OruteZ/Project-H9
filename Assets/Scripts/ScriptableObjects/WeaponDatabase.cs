@@ -27,7 +27,7 @@ public class WeaponDatabase : ScriptableObject
         Weapon weapon = data.type switch
         {
             WeaponType.Null => null,
-            WeaponType.Character => new Character(),
+            WeaponType.Character => new Melee(),
             WeaponType.Revolver => new Revolver(),
             WeaponType.Repeater => new Repeater(),
             WeaponType.Shotgun => new Shotgun(),

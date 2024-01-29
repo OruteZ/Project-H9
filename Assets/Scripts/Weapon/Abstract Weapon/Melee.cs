@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : Weapon
+public class Melee : Weapon
 {
     public override void Attack(Unit target, out bool isCritical)
     {

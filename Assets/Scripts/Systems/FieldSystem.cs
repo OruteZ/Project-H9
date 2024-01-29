@@ -13,19 +13,19 @@ public class FieldSystem : MonoBehaviour
     public static UnitSystem unitSystem;
 
     /// <summary>
-    /// Stage°¡ ·ÎµùµÇ¾úÀ»¶§ ¹Ù·Î È£ÃâµÇ´Â ÀÌº¥Æ®ÀÔ´Ï´Ù.
+    /// Stageê°€ ë¡œë”©ë˜ì—ˆì„ë•Œ ë°”ë¡œ í˜¸ì¶œë˜ëŠ” ì´ë²¤íŠ¸ì…ë‹ˆë‹¤.
     /// </summary>
     private static UnityEvent _onStageAwake;
     public static UnityEvent onStageAwake => _onStageAwake ??= new UnityEvent();
 
     /// <summary>
-    /// StageÀÇ Fade-inÀÌ ¿ÏÀüÈ÷ ³¡³­ ÈÄ InvokeµÇ´Â ÀÌº¥Æ®ÀÔ´Ï´Ù. 
+    /// Stageì˜ Fade-inì´ ì™„ì „íˆ ëë‚œ í›„ Invokeë˜ëŠ” ì´ë²¤íŠ¸ì…ë‹ˆë‹¤. 
     /// </summary>
     private static UnityEvent _onStageStart;
     public static UnityEvent onStageStart => _onStageStart ??= new UnityEvent();
     
     /// <summary>
-    /// CombatScene¿¡¼­ Stage°¡ ³¡³µÀ»¶§ È£ÃâµÇ´Â ÀÌº¥Æ®ÀÔ´Ï´Ù. WorldScene¿¡¼­ È£ÃâµÇÁö ¾Ê½À´Ï´Ù.
+    /// CombatSceneì—ì„œ Stageê°€ ëë‚¬ì„ë•Œ í˜¸ì¶œë˜ëŠ” ì´ë²¤íŠ¸ì…ë‹ˆë‹¤. WorldSceneì—ì„œ í˜¸ì¶œë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     /// </summary>
     private static UnityEvent<bool> _onCombatFinish;
     public static UnityEvent<bool> onCombatFinish => _onCombatFinish ??= new UnityEvent<bool> ();

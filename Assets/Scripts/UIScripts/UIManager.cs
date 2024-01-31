@@ -27,7 +27,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     //[HideInInspector]
     public bool isMouseOverUI;
-    [HideInInspector]
+    //[HideInInspector]
     public int previousLayer = 1;
 
     private GameState _UIState;
@@ -92,6 +92,7 @@ public class UIManager : Generic.Singleton<UIManager>
             }
             else if (currentLayer == 2)
             {
+                Debug.Log("click");
                 characterUI.ClosePopupWindow();
                 skillUI.ClosePopupWindow();
             }

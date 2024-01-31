@@ -13,45 +13,39 @@ public class CharacterUI : UISystem
     /// 캐릭터의 스텟 및 무기 스텟을 표시하는 기능
     /// </summary>
     public CharacterStatUI characterStatUI { get; private set; }
-    public PassiveSkillListUI passiveSkillListUI { get; private set; }
     /// <summary>
-    /// 캐릭터가 습득한 스킬을 캐릭터 창에 표시하는 기능
+    /// 캐릭터의 패시브 스킬을 표시하는 기능
     /// </summary>
-    public LearnedSkillUI learnedSkillUI { get; private set; }
+    public PassiveSkillListUI passiveSkillListUI { get; private set; }
     /// <summary>
     /// 캐릭터의 인벤토리 및 아이템을 표시하는 기능
     /// </summary>
-    public ItemListUI itemListUI { get; private set; }
-
-    [SerializeField] private GameObject _moneyText;
+    public ItemUI itemUI { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
         characterStatUI = GetComponent<CharacterStatUI>();
         passiveSkillListUI = GetComponent<PassiveSkillListUI>();
-        learnedSkillUI = GetComponent<LearnedSkillUI>();
-        itemListUI = GetComponent<ItemListUI>();
+        itemUI = GetComponent<ItemUI>();
         SetMoneyText();
 
         uiSubsystems.Add(characterStatUI);
         uiSubsystems.Add(passiveSkillListUI);
-        //uiSubsystems.Add(learnedSkillUI);
-        //uiSubsystems.Add(itemListUI);
+        uiSubsystems.Add(itemUI);
     }
 
     public override void ClosePopupWindow()
     {
-        itemListUI.ClosePopupWindow();
+        itemUI.ClosePopupWindow();
     }
 
     /// <summary>
     /// 플레이어의 소지금을 UI로 표시합니다.
-    /// 아이템 매니저에서 소지금이 변동할 때 작동합니다.
     /// </summary>
     public void SetMoneyText()
     {
-        string moneyText = ItemManager.instance.money.ToString();
-        _moneyText.GetComponent<TextMeshProUGUI>().text = "Money: " + moneyText + "$";
+        //string moneyText = ItemManager.instance.money.ToString();
+        //_moneyText.GetComponent<TextMeshProUGUI>().text = "Money: " + moneyText + "$";
     }
 }

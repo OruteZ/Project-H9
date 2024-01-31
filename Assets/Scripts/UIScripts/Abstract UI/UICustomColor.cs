@@ -12,6 +12,7 @@ public static class UICustomColor
     private static readonly Color32 greenColor = new Color32(18, 219, 36, 255);
     private static readonly Color32 blueColor = new Color32(64, 192, 224, 255);
 
+    public static readonly Color32 TransparentColor = new Color32(255, 255, 255, 0);
 
     public static readonly Color32 PlayerColor = new Color32(0, 0, 0, 0);
     public static readonly Color32 EnemyColor = new Color32(0, 0, 0, 0);

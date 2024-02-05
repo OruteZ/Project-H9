@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Inventory.Item;
 using UnityEngine;
 using UnityEngine.Events;
 

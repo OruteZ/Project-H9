@@ -12,8 +12,8 @@ public enum GameState
 }
 public class GameManager : Generic.Singleton<GameManager>
 {
-    private static string COMBAT_SCENE_NAME = "CombatScene";
-    
+    private const string COMBAT_SCENE_NAME = "CombatScene";
+
     private HashSet<Vector3Int> _discoveredWorldTileSet;
     
     [SerializeField]

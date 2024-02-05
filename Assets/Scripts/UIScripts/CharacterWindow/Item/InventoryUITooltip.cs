@@ -19,7 +19,7 @@ public class InventoryUITooltip : UIElement
 
         GetComponent<RectTransform>().position = pos;
 
-        _itemNameText.GetComponent<TextMeshProUGUI>().text = item.GetName();
-        _itemDescriptionText.GetComponent<TextMeshProUGUI>().text = item.GetDescription();
+        _itemNameText.GetComponent<TextMeshProUGUI>().text = item.GetData().nameIdx.ToString();
+        _itemDescriptionText.GetComponent<TextMeshProUGUI>().text = item.GetData().descriptionIdx.ToString();
     }
 }

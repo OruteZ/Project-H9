@@ -18,8 +18,10 @@ public class InventoryUIElement : UIElement, IPointerClickHandler
         //_itemIcon.GetComponent<Image>().sprite = ?
         _itemIcon.GetComponent<Image>().color = Color.white;
 
-        string countText = item.GetStack().ToString();
-        if (item.GetStack() == 0) 
+        var data = item.GetData();
+        
+        string countText = item.GetStackCount().ToString();
+        if (item.GetStackCount() == 0) 
         {
             countText = "";
         }

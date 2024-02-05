@@ -1,40 +1,43 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Serialization;
 
-namespace Inventory.Inventory
+[Serializable]
+public class Inventory : IInventory
 {
-    public class Inventory : ScriptableObject, IInventory
+    private int _gold;
+    
+    [SerializeField]
+    private List<IItem> _items = new();
+
+    public void AddItem(IItem item)
     {
-        private List<IItem> items = new List<IItem>();
+        _items.Add(item);
+    }
 
-        public void AddItem(IItem item)
-        {
-            items.Add(item);
-        }
+    public void DeleteItem(IItem item)
+    {
+        _items.Remove(item);
+    }
 
-        public void DeleteItem(IItem item)
-        {
-            items.Remove(item);
-        }
+    public IEnumerable<IItem> GetItems()
+    {
+        return _items;
+    }
 
-        public IEnumerable<IItem> GetItems()
-        {
-            return items;
-        }
+    public int GetItemCount(IItem item)
+    {
+        return _items.Count(i => i.Equals(item));
+    }
 
-        public int GetItemCount(IItem item)
+    public int GetItemCount(int itemIndex)
+    {
+        if (itemIndex < 0 || itemIndex >= _items.Count)
         {
-            return items.Count(i => i.Equals(item));
+            throw new ArgumentOutOfRangeException(nameof(itemIndex));
         }
-
-        public int GetItemCount(int itemIndex)
-        {
-            if (itemIndex < 0 || itemIndex >= items.Count)
-            {
-                throw new System.ArgumentOutOfRangeException(nameof(itemIndex));
-            }
-            return items.Count(i => i.Equals(items[itemIndex]));
-        }
+        return _items.Count(i => i.Equals(_items[itemIndex]));
     }
 }

@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
-namespace Inventory.Item
-{
     [Serializable]
     public abstract class Item : IItem
     {
@@ -11,9 +8,16 @@ namespace Inventory.Item
         private readonly List<IItemAttribute> _attributes = new List<IItemAttribute>();
         protected int stackCount = 1;
 
-        protected Item(ItemData data)
+        public static Item CreateItem(ItemData data)
         {
-            _data = data;
+            //read item type
+            switch (data.type)
+            {
+                case ItemType.Weapon:
+                    return new WeaponItem(data);
+            }
+            
+            return null;
         }
 
         public ItemData GetData() => _data;
@@ -46,4 +50,3 @@ namespace Inventory.Item
             return null;
         }
     }
-}

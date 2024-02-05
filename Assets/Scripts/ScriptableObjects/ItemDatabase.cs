@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,19 +6,19 @@ using UnityEngine;
 public class ItemDatabase : ScriptableObject
 {
     [SerializeField]
-    private List<ItemData> itemList;
+    private List<ItemData> _itemList;
 
     [ContextMenu("Read Csv")]
     public void ReadCsv()
     {
         var dataList = FileRead.Read("ItemTable");
 
-        if (itemList is null) itemList = new List<ItemData>();
-        else itemList.Clear();
+        if (_itemList is null) _itemList = new List<ItemData>();
+        else _itemList.Clear();
 
         foreach(var data in dataList)
         {
-            var curData = CreateInstance<ItemData>();
+            ItemData curData = new ItemData();
             curData.id = int.Parse(data[(int)ItemColumn.Id]);
             curData.nameIdx = int.Parse(data[(int)ItemColumn.NameIdx]);
             curData.stackAble = bool.Parse(data[(int)ItemColumn.StackAble]);
@@ -26,13 +27,13 @@ public class ItemDatabase : ScriptableObject
             curData.icon = Resources.Load<Texture2D>(data[(int)ItemColumn.IconPath]);
             curData.descriptionIdx = int.Parse(data[(int)ItemColumn.DescriptionIdx]);
 
-            itemList.Add(curData);
+            _itemList.Add(curData);
         }
     }
 
     public ItemData GetItemData(int id)
     {
-        foreach (var item in itemList)
+        foreach (var item in _itemList)
         {
             if (item.id == id) return item;
         }
@@ -42,8 +43,11 @@ public class ItemDatabase : ScriptableObject
     }
 }
 
-public class ItemData : ScriptableObject
+[Serializable]
+public class ItemData
 {
+    public ItemType type;
+    
     public int id;
     public int nameIdx;
 
@@ -64,4 +68,10 @@ public enum ItemColumn
     Usable,
     IconPath,
     DescriptionIdx,
+}
+
+public enum ItemType
+{
+    Weapon,
+    Consumable,
 }

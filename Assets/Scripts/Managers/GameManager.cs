@@ -14,6 +14,35 @@ public class GameManager : Generic.Singleton<GameManager>
 {
     private const string COMBAT_SCENE_NAME = "CombatScene";
 
+    public IInventory playerInventory = new Inventory();
+    [SerializeField]
+    public ItemDatabase itemDatabase;
+    
+    #region ITEM_TEST
+    public void AddItem(int id)
+    {
+        if (itemDatabase == null)
+        {
+            Debug.LogError("ItemDatabase is not initialized");
+            return;
+        }
+
+        ItemData itemData = itemDatabase.GetItemData(id);
+
+        if (itemData == null)
+        {
+            Debug.LogError($"No item data found for id {id}");
+            return;
+        }
+
+        Item item = Item.CreateItem(itemData);
+
+        playerInventory.AddItem(item);
+
+        Debug.Log("Added item to inventory");
+    }//a
+    #endregion
+
     private HashSet<Vector3Int> _discoveredWorldTileSet;
     
     [SerializeField]
@@ -186,5 +215,12 @@ public class GameManager : Generic.Singleton<GameManager>
     {
         var deltaTime = Time.deltaTime;
         Service.OnUpdated(deltaTime);
+        
+        #region ITEM_TEST
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            AddItem(1);
+        }
+        #endregion
     }
 }

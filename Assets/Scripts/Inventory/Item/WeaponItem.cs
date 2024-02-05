@@ -1,17 +1,14 @@
-namespace Inventory.Item
+public class WeaponItem : Item
 {
-    public class WeaponItem : Item
+    public WeaponItem(ItemData data)
+    { }
+
+
+    public override bool TryEquip()
     {
-        public WeaponItem(ItemData data) : base(data)
-        { }
+        GameManager.instance.playerWeaponIndex =
+            GetData().id;
 
-
-        public override bool TryEquip()
-        {
-            GameManager.instance.playerWeaponIndex =
-                GetData().id;
-
-            return true;
-        }
+        return true;
     }
 }

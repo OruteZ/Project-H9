@@ -11,7 +11,6 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
-    public IUnitAction displayedAction { get; private set; }
 
     [SerializeField] private GameObject _skillImage;
     [SerializeField] private GameObject _highlightEffect;
@@ -24,6 +23,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     [SerializeField] private Texture2D _textures; //test Texture. 이동, 공격, 장전, 패닝 순서
     private ActionType[] normalActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload };
     public Sprite[] _sprites;
+    public IUnitAction displayedAction { get; private set; }
 
     private bool _isSelectable;
     private bool _isEnoughCost;
@@ -47,8 +47,8 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         //Button selectable Setting
         // 플레이어의 턴이 아닌 경우 - 선택 불가
         // 플레이어가 이미 행동을 실행 중인 경우 - 선택 불가
-        // 플레이어가 어떤 행동을 선택했는데, 해당 버튼이 선택된 버튼이 아닐 경우 - 선택 불가. 단, Idle버튼은 제외.
-        // SetCostIcons() 메소드에서 Cost가 부족하다고 판단되면 - 선택 불가
+        // 플레이어가 어떤 행동을 선택했는데, 해당 버튼이 선택된 버튼이 아닐 경우 - 선택 불가. 단, Idle(Cancel)버튼은 제외.
+        // + SetCostIcons() 메소드에서 Cost가 부족하다고 판단되면 - 선택 불가
         _isSelectable = this.displayedAction.IsSelectable();
         IUnitAction playerSelectedAction = player.GetSelectedAction();
         
@@ -179,7 +179,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
         bool isActiveSelectedAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
         if (isIdleButton && isActiveSelectedAction) return;
 
-        UIManager.instance.combatUI.combatActionUI.SetSelectedActionButton(gameObject);
+        UIManager.instance.combatUI.combatActionUI_legacy.SetSelectedActionButton(gameObject);
         FieldSystem.unitSystem.GetPlayer().SelectAction(displayedAction);
     }
 
@@ -191,7 +191,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     {
         if (displayedAction is not null)
         {
-            UIManager.instance.combatUI.combatActionUI.ShowActionUITooltip(this.gameObject);
+            UIManager.instance.combatUI.combatActionUI_legacy.ShowActionUITooltip(this.gameObject);
         }
     }
 
@@ -203,7 +203,7 @@ public class ActionSelectButtonElement : UIElement, IPointerEnterHandler, IPoint
     {
         if (displayedAction is not null)
         {
-            UIManager.instance.combatUI.combatActionUI.HideActionUITooltip();
+            UIManager.instance.combatUI.combatActionUI_legacy.HideActionUITooltip();
         }
     }
 

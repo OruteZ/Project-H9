@@ -33,11 +33,4 @@ public interface IInventory
     /// <param name="itemIndex"> 개수를 확인할 아이템의 고유번호 </param>
     /// <returns></returns>
     public int GetItemCount(int itemIndex);
-
-    /// <summary>
-    /// 인벤토리에 있는 아이템들 중, 해당 아이템의 개수를 반환합니다.
-    /// </summary>
-    /// <param name="itemName"> 개수를 확인할 아이템의 이름 </param>
-    /// <returns></returns>
-    public int GetItemCount(string itemName);
 }

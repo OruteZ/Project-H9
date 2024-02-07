@@ -27,7 +27,7 @@ public class ItemUI : UISystem
     {
         if (_inventoryUI is null) return;
         //_inventory 불러오기
-        _inventory = null;
+        _inventory = GameManager.instance.playerInventory;
         if (_inventory is null) return;
 
         int cnt = 0;

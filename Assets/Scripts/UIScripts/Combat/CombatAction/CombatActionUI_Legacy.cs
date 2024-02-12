@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// 행동창 UI를 표시 및 작동과 관련된 기능을 구현한 클래스
 /// 개선점: 액션 버튼 UI 자체를 하나의 클래스로 조직화해서 관리해도 될 듯? 지금은 조금 번잡한 느낌
 /// </summary>
-public class CombatActionUI : UISystem
+public class CombatActionUI_Legacy : UISystem
 {
     [SerializeField] private GameObject _combatActionWindow;
     [SerializeField] private GameObject _actionTooltipWindow;
@@ -61,7 +61,7 @@ public class CombatActionUI : UISystem
         _idleButton.SetActive(false);
         _actionTooltipWindow.GetComponent<CombatActionTooltip>().CloseUI();
 
-        UIManager.instance.onActionChanged.AddListener(SetActionButtons);
+        //UIManager.instance.onActionChanged.AddListener(SetActionButtons);
     }
 
     private void SetGameState() 

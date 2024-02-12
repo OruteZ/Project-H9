@@ -29,8 +29,9 @@ public class UIManager : Generic.Singleton<UIManager>
     public bool isMouseOverUI;
     //[HideInInspector]
     public int previousLayer = 1;
+    public int currentLayer = 0;
 
-    private GameState _UIState;
+    public GameState UIState { get; private set; }
 
     public GameObject loading; //test
 
@@ -59,8 +60,8 @@ public class UIManager : Generic.Singleton<UIManager>
         SetCanvasState(_skillCanvas, skillUI, false);
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
 
-        _UIState = GameState.World;
-        if (!GameManager.instance.CompareState(_UIState)) 
+        UIState = GameState.World;
+        if (!GameManager.instance.CompareState(UIState)) 
         {
             ChangeScene(GameState.Combat);
         }
@@ -71,18 +72,25 @@ public class UIManager : Generic.Singleton<UIManager>
     void Update()
     {
         isMouseOverUI = EventSystem.current.IsPointerOverGameObject();
-        int currentLayer = previousLayer;
-        if (Input.GetKeyDown(KeyCode.Escape)) 
-        {
-            currentLayer = 1;
-        }
         if (Input.GetMouseButtonDown(0))
         {
             currentLayer = GetPointerOverUILayer();
         }
-
+        else
+        {
+            currentLayer = previousLayer;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            currentLayer = 1;
+        }
+        SetUILayer();
+    }
+    public void SetUILayer()
+    {
         if (previousLayer > currentLayer)
         {
+            //Debug.Log(previousLayer+"->"+currentLayer);
             if (currentLayer <= 1)
             {
                 SetCharacterCanvasState(false);
@@ -92,7 +100,6 @@ public class UIManager : Generic.Singleton<UIManager>
             }
             else if (currentLayer == 2)
             {
-                Debug.Log("click");
                 characterUI.ClosePopupWindow();
                 skillUI.ClosePopupWindow();
             }
@@ -184,7 +191,7 @@ public class UIManager : Generic.Singleton<UIManager>
     /// <param name="gameState"> 전환할 씬에 대응되는 gameState </param>
     public void ChangeScene(GameState gameState)
     {
-        _UIState = gameState;
+        UIState = gameState;
         //if (prevSceneName == currentSceneName) return;
         //Debug.Log("Current State is " + gameState);
         switch (gameState)

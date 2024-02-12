@@ -12,6 +12,10 @@ public class CombatWindowUI : UISystem
     /// <summary>
     /// 캐릭터의 행동창 UI의 표시 및 상호작용과 관련된 기능
     /// </summary>
+    public CombatActionUI_Legacy combatActionUI_legacy { get; private set; }
+    /// <summary>
+    /// 캐릭터의 행동창 UI의 표시 및 상호작용과 관련된 기능
+    /// </summary>
     public CombatActionUI combatActionUI { get; private set; }
     /// <summary>
     /// 현재 장비한 무기의 장탄 수를 표시하는 기능
@@ -36,7 +40,8 @@ public class CombatWindowUI : UISystem
     // Start is called before the first frame update
     private void Awake()
     {
-        
+
+        combatActionUI_legacy = GetComponent<CombatActionUI_Legacy>();
         combatActionUI = GetComponent<CombatActionUI>();
         magazineUI = GetComponent<MagazineUI>();
         enemyHpUI = GetComponent<EnemyHpUI>();
@@ -46,6 +51,7 @@ public class CombatWindowUI : UISystem
         combatResultUI = GetComponent<CombatResultUI>();
         buffUI = GetComponent<BuffUI>();
 
+        uiSubsystems.Add(combatActionUI_legacy);
         uiSubsystems.Add(combatActionUI);
         uiSubsystems.Add(magazineUI);
         uiSubsystems.Add(enemyHpUI);

@@ -10,7 +10,7 @@ public class PassiveSkillListElement : UIElement, IPointerEnterHandler, IPointer
     [SerializeField] private GameObject _skillIcon;
     [SerializeField] private GameObject _skillName;
 
-    private int _skillIndex;
+    [SerializeField] private int _skillIndex;
 
     public void SetPassiveSkillListElement(PassiveInfo info)
     {

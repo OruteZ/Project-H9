@@ -34,6 +34,7 @@ public class PassiveSkillListUI : UISystem
             PassiveDatabase passiveDB = SkillManager.instance.passiveDB;
             var t = _listPool.Set();
             t.Instance.GetComponent<PassiveSkillListElement>().SetPassiveSkillListElement(passiveDB.GetPassiveInfo(passiveList[i]));
+            t.Instance.transform.SetAsLastSibling();
         }
     }
 

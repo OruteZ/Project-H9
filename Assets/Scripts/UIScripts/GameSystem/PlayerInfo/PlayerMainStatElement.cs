@@ -7,28 +7,26 @@ using TMPro;
 public class PlayerMainStatElement : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject _statText;
-    [SerializeField] private GameObject _statTooltip;
 
-    private string _statName = "";
+    public string statName { get; private set; }
 
     private void Awake()
     {
-        _statTooltip.SetActive(false);
+        statName = "";
     }
 
     public void SetPlayerMainStatUI(string statName, string displayedText) 
     {
-        _statName = statName;
+        this.statName = statName;
         _statText.GetComponent<TextMeshProUGUI>().text = displayedText;
-        _statTooltip.SetActive(false);
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _statTooltip.SetActive(true);
+        UIManager.instance.gameSystemUI.playerInfoUI.statUI.GetComponent<PlayerMainStatUI>().ShowMainStatTooltip(this.gameObject);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _statTooltip.SetActive(false);
+        UIManager.instance.gameSystemUI.playerInfoUI.statUI.GetComponent<PlayerMainStatUI>().HideMainStatTooltip();
     }
 }

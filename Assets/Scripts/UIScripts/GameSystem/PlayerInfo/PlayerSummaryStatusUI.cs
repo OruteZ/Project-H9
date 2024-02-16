@@ -47,7 +47,7 @@ public class PlayerSummaryStatusUI : UIElement
 
         _healthPointUI.GetComponent<PlayerHpUI>().SetHpUI();
         _actionPointUI.GetComponent<PlayerApUI>().SetApUI();
-        _magazineUI.GetComponent<PlayerMagazineUI>().SetMagazineUI();
+        _magazineUI.GetComponent<PlayerMagazineUI>().SetMagazineUI(false);
         _concentrationUI.GetComponent<PlayerConcentrationUI>().SetConcentrationUI();
     }
 }

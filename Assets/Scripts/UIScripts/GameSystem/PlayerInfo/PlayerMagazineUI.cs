@@ -6,7 +6,7 @@ public class PlayerMagazineUI : UIElement
 {
     private int MAGAZINE_SIZE = 6;
     private int MAGAZINE_COUNT = 7;
-    public void SetMagazineUI()
+    public void SetMagazineUI(bool isOnlyDisplayMaxMagazine)
     {
         if (transform.childCount != MAGAZINE_COUNT) 
         {
@@ -24,6 +24,11 @@ public class PlayerMagazineUI : UIElement
             {
                 filledCnt = curBullet;
                 existCnt = maxBullet;
+            }
+
+            if (isOnlyDisplayMaxMagazine) 
+            {
+                filledCnt = existCnt;
             }
             transform.GetChild(i).GetComponent<PlayerMagazineUIElement>().SetPlayerMagUIElement(existCnt, filledCnt);
 

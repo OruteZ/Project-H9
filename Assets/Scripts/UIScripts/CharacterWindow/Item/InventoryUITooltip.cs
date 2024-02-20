@@ -11,11 +11,11 @@ public class InventoryUITooltip : UIElement
     private IItem _item = null;
     public void SetInventoryUITooltip(IItem item, Vector3 pos)
     {
-        //gameObject.SetActive(_item != item);
+        gameObject.SetActive(item is not null);
         if (!gameObject.activeSelf) return;
-        
-        UIManager.instance.previousLayer = 3;
+
         _item = item;
+        UIManager.instance.previousLayer = 3;
 
         GetComponent<RectTransform>().position = pos;
 

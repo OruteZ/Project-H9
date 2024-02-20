@@ -15,9 +15,25 @@ MonoBehaviour:
   _itemList:
   - type: 0
     id: 1
-    nameIdx: 0
+    nameIdx: 1
     stackAble: 0
-    equipAble: 0
+    equipAble: 1
     usable: 0
-    icon: {fileID: 2800000, guid: f6299e83740fe8f4fbe5130ebe788b53, type: 3}
-    descriptionIdx: 0
+    icon: {fileID: 2800000, guid: e30d7baabfb292c4f9687033f726d8a4, type: 3}
+    descriptionIdx: 1
+  - type: 0
+    id: 2
+    nameIdx: 2
+    stackAble: 0
+    equipAble: 1
+    usable: 0
+    icon: {fileID: 2800000, guid: 451cccb0eaa2acf43b799e06bb8af4e3, type: 3}
+    descriptionIdx: 2
+  - type: 1
+    id: 3
+    nameIdx: 3
+    stackAble: 1
+    equipAble: 0
+    usable: 1
+    icon: {fileID: 2800000, guid: 7f880088b8d835346b97973cf5c5b186, type: 3}
+    descriptionIdx: 3

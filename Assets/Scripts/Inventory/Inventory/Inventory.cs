@@ -15,11 +15,13 @@ public class Inventory : IInventory
     public void AddItem(IItem item)
     {
         _items.Add(item);
+        UIManager.instance.onInventoryChanged.Invoke();
     }
 
     public void DeleteItem(IItem item)
     {
         _items.Remove(item);
+        UIManager.instance.onInventoryChanged.Invoke();
     }
 
     public IEnumerable<IItem> GetItems()

@@ -215,11 +215,19 @@ public class GameManager : Generic.Singleton<GameManager>
     {
         var deltaTime = Time.deltaTime;
         Service.OnUpdated(deltaTime);
-        
+
         #region ITEM_TEST
         if (Input.GetKeyDown(KeyCode.A))
         {
             AddItem(1);
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            AddItem(2);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            AddItem(3);
         }
         #endregion
     }

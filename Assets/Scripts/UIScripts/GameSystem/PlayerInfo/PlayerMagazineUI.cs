@@ -13,8 +13,18 @@ public class PlayerMagazineUI : UIElement
             Debug.LogError("배치된 UI 요소 개수와 코드 상 상수가 다릅니다.");
             return;
         }
-        int maxBullet = FieldSystem.unitSystem.GetPlayer().weapon.maxAmmo;
-        int curBullet = FieldSystem.unitSystem.GetPlayer().weapon.currentAmmo;
+        int maxBullet;
+        int curBullet;
+        if (isOnlyDisplayMaxMagazine)
+        {
+            maxBullet = FieldSystem.unitSystem.GetWeaponData(GameManager.instance.playerWeaponIndex).weaponAmmo;
+            curBullet = maxBullet;
+        }
+        else 
+        {
+            maxBullet = FieldSystem.unitSystem.GetPlayer().weapon.maxAmmo;
+            curBullet = FieldSystem.unitSystem.GetPlayer().weapon.currentAmmo;
+        }
 
         for (int i = 0; i < transform.childCount; i++) 
         {
@@ -26,10 +36,6 @@ public class PlayerMagazineUI : UIElement
                 existCnt = maxBullet;
             }
 
-            if (isOnlyDisplayMaxMagazine) 
-            {
-                filledCnt = existCnt;
-            }
             transform.GetChild(i).GetComponent<PlayerMagazineUIElement>().SetPlayerMagUIElement(existCnt, filledCnt);
 
             maxBullet -= MAGAZINE_SIZE;

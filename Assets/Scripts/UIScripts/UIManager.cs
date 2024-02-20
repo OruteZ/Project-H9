@@ -40,6 +40,8 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent onPlayerStatChanged;
     [HideInInspector] public UnityEvent onPlayerSkillChanged;
     [HideInInspector] public UnityEvent onActionChanged;
+    [HideInInspector] public UnityEvent onInventoryChanged;
+    [HideInInspector] public UnityEvent onWeaponChanged;
 
     protected override void Awake()
     {
@@ -216,5 +218,11 @@ public class UIManager : Generic.Singleton<UIManager>
     private void ChangeUIToCombatScene()
     {
         SetCombatCanvasState(true);
+    }
+
+    public void SetUILayerToNormal() 
+    {
+        currentLayer = 0;
+        SetUILayer();
     }
 }

@@ -6,8 +6,6 @@ using TMPro;
 
 public class EquipmentUI : UISystem
 {
-    [SerializeField] private GameObject _equippedWeaponCell;
-
     [SerializeField] private GameObject _weaponNameText;
     [SerializeField] private GameObject _weaponImage;
     [SerializeField] private GameObject _weaponMagazine;
@@ -17,23 +15,17 @@ public class EquipmentUI : UISystem
     // Start is called before the first frame update
     void Start()
     {
-        Player player = FieldSystem.unitSystem.GetPlayer();
-
-        //fix later - find weapon's Iitem
-        IItem playerWeapon = null;//player.weapon;
-        _equippedWeaponCell.GetComponent<InventoryUIElement>().SetInventoryUIElement(playerWeapon);
         SetEquipmentUI();
+        UIManager.instance.onWeaponChanged.AddListener(SetEquipmentUI);
     }
 
     public void SetEquipmentUI() 
     {
-        Player player = FieldSystem.unitSystem.GetPlayer();
-        Weapon weapon = player.weapon;
-        Debug.Log(weapon.nameIndex);
+        WeaponData data = FieldSystem.unitSystem.GetWeaponData(GameManager.instance.playerWeaponIndex);
 
-        _weaponNameText.GetComponent<TextMeshProUGUI>().text = weapon.nameIndex.ToString(); //fix later - load name by index
+        _weaponNameText.GetComponent<TextMeshProUGUI>().text = data.weaponNameIndex.ToString();
         int imgIdx = 0;
-        switch (weapon.GetWeaponType()) 
+        switch (data.type) 
         {
             case WeaponType.Revolver:
                 {
@@ -52,6 +44,12 @@ public class EquipmentUI : UISystem
                 }
         }
         _weaponImage.GetComponent<Image>().sprite = _tmpWeaponImage[imgIdx];
+        _weaponMagazine.GetComponent<PlayerMagazineUI>().SetMagazineUI(true);
+    }
+    private void ClearEquipmentUI()
+    {
+        _weaponNameText.GetComponent<TextMeshProUGUI>().text = "Null";
+        _weaponImage.GetComponent<Image>().sprite = null;
         _weaponMagazine.GetComponent<PlayerMagazineUI>().SetMagazineUI(true);
     }
 

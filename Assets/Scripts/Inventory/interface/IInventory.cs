@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public interface IInventory
 {
@@ -33,4 +34,6 @@ public interface IInventory
     /// <param name="itemIndex"> 개수를 확인할 아이템의 고유번호 </param>
     /// <returns></returns>
     public int GetItemCount(int itemIndex);
+    
+    public static UnityEvent OnInventoryChanged = OnInventoryChanged ?? new UnityEvent();
 }

@@ -1,6 +1,6 @@
 public class WeaponItem : Item
 {
-    public WeaponItem(ItemData data)
+    public WeaponItem(ItemData data) : base(data)
     { }
 
 

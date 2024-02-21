@@ -4,33 +4,33 @@ using System.Net;
 using UnityEngine;
 
 /// <summary>
-/// ÀüÅõ ¾À ÀÔÀå ½Ã ÇÊ¿äÇÑ UIÀÇ ¿©·¯ ±â´ÉÀ» ¹­¾î¼­ °ü¸®ÇÏ´Â Å¬·¡½º
-/// ÀÌ¸§ÀÌ °ãÃÄ¼­ CombatWindowUI¶ó°í ¸í¸íÇßÀ¸³ª, ¸íÄª ÀÏ°ü¼ºÀ» »ı°¢ÇÏ¸é CombatUI°¡ ¸ÂÀ½.
+/// ì „íˆ¬ ì”¬ ì…ì¥ ì‹œ í•„ìš”í•œ UIì˜ ì—¬ëŸ¬ ê¸°ëŠ¥ì„ ë¬¶ì–´ì„œ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤
+/// ì´ë¦„ì´ ê²¹ì³ì„œ CombatWindowUIë¼ê³  ëª…ëª…í–ˆìœ¼ë‚˜, ëª…ì¹­ ì¼ê´€ì„±ì„ ìƒê°í•˜ë©´ CombatUIê°€ ë§ìŒ.
 /// </summary>
 public class CombatWindowUI : UISystem
 {
     /// <summary>
-    /// Ä³¸¯ÅÍÀÇ Çàµ¿Ã¢ UIÀÇ Ç¥½Ã ¹× »óÈ£ÀÛ¿ë°ú °ü·ÃµÈ ±â´É
+    /// ìºë¦­í„°ì˜ í–‰ë™ì°½ UIì˜ í‘œì‹œ ë° ìƒí˜¸ì‘ìš©ê³¼ ê´€ë ¨ëœ ê¸°ëŠ¥
     /// </summary>
     public CombatActionUI_Legacy combatActionUI_legacy { get; private set; }
     /// <summary>
-    /// Ä³¸¯ÅÍÀÇ Çàµ¿Ã¢ UIÀÇ Ç¥½Ã ¹× »óÈ£ÀÛ¿ë°ú °ü·ÃµÈ ±â´É
+    /// ìºë¦­í„°ì˜ í–‰ë™ì°½ UIì˜ í‘œì‹œ ë° ìƒí˜¸ì‘ìš©ê³¼ ê´€ë ¨ëœ ê¸°ëŠ¥
     /// </summary>
     public CombatActionUI combatActionUI { get; private set; }
     /// <summary>
-    /// ÇöÀç ÀåºñÇÑ ¹«±âÀÇ ÀåÅº ¼ö¸¦ Ç¥½ÃÇÏ´Â ±â´É
+    /// í˜„ì¬ ì¥ë¹„í•œ ë¬´ê¸°ì˜ ì¥íƒ„ ìˆ˜ë¥¼ í‘œì‹œí•˜ëŠ” ê¸°ëŠ¥
     /// </summary>
     public MagazineUI magazineUI { get; private set; }
     /// <summary>
-    /// ÀûµéÀÇ Ã¼·Â¹Ù¸¦ Ç¥½ÃÇÏ´Â ±â´É
+    /// ì ë“¤ì˜ ì²´ë ¥ë°”ë¥¼ í‘œì‹œí•˜ëŠ” ê¸°ëŠ¥
     /// </summary>
     public EnemyHpUI enemyHpUI { get; private set; }
     /// <summary>
-    /// ÀûµéÀÇ ½ºÅİÀ» Ç¥½ÃÇÏ´Â ½ºÅİÃ¢°ú °ü·ÃµÈ ±â´É
+    /// ì ë“¤ì˜ ìŠ¤í…Ÿì„ í‘œì‹œí•˜ëŠ” ìŠ¤í…Ÿì°½ê³¼ ê´€ë ¨ëœ ê¸°ëŠ¥
     /// </summary>
     public EnemyStatUI enemyStatUI { get; private set; }
     /// <summary>
-    /// ÇöÀç ½ÃÀÛµÇ´Â ÅÏ ÁÖÀÎ¿¡ ¸ÂÃç¼­ È­¸é Áß¾Ó¿¡ ÅØ½ºÆ®¸¦ Ãâ·ÂÇÏ´Â ±â´É
+    /// í˜„ì¬ ì‹œì‘ë˜ëŠ” í„´ ì£¼ì¸ì— ë§ì¶°ì„œ í™”ë©´ ì¤‘ì•™ì— í…ìŠ¤íŠ¸ë¥¼ ì¶œë ¥í•˜ëŠ” ê¸°ëŠ¥
     /// </summary>
     public StartTurnTextUI startTurnTextUI { get; private set; }
     public TurnOrderUI turnOrderUI { get; private set; }
@@ -68,9 +68,9 @@ public class CombatWindowUI : UISystem
     }
 
     /// <summary>
-    /// ÀüÅõ UI¸¦ °»½ÅÇÕ´Ï´Ù.
-    /// Æ¯Á¤ÇÑ ¾×¼ÇÀÌ ½ÇÇàµÉ ¶§, ¾×¼ÇÀÌ Á¾·áµÉ ¶§ ½ÇÇàµË´Ï´Ù.
-    /// ÇÃ·¹ÀÌ¾î°¡ Æ¯Á¤ÇÑ ¾×¼ÇÀ» ¼±ÅÃÇÒ ¶§¿¡µµ ½ÇÇàµË´Ï´Ù.
+    /// ì „íˆ¬ UIë¥¼ ê°±ì‹ í•©ë‹ˆë‹¤.
+    /// íŠ¹ì •í•œ ì•¡ì…˜ì´ ì‹¤í–‰ë  ë•Œ, ì•¡ì…˜ì´ ì¢…ë£Œë  ë•Œ ì‹¤í–‰ë©ë‹ˆë‹¤.
+    /// í”Œë ˆì´ì–´ê°€ íŠ¹ì •í•œ ì•¡ì…˜ì„ ì„ íƒí•  ë•Œì—ë„ ì‹¤í–‰ë©ë‹ˆë‹¤.
     /// </summary>
     //public void SetCombatUI()
     //{

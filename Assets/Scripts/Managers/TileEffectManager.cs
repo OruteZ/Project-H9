@@ -43,6 +43,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
     public GameObject attackTileEffect;
     public GameObject attackOutOfRangeEffect;
     public GameObject attackUnitEffect;
+    public GameObject attackSweetSpotEffect;
     public RectTransform aimEffectRectTsf; 
     public RectTransform combatCanvas;
     public RectTransform aimEffect;
@@ -184,8 +185,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         {
             if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
 
-            var go =Instantiate(attackTileEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
-            _effectsBase.Add(tile.hexPosition, go);
+            SetEffectBase(tile.hexPosition, attackTileEffect);
         }
 
         //target range tile
@@ -195,10 +195,31 @@ public class TileEffectManager : Singleton<TileEffectManager>
             if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
             if (Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
 
-            var go = Instantiate((_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, unit.hexPosition) ? 
-                attackUnitEffect : attackOutOfRangeEffect), Hex.Hex2World(unit.hexPosition), Quaternion.identity);
+            if (_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, unit.hexPosition))
+            {
+                SetEffectBase(unit.hexPosition, attackUnitEffect);
+            }
+            else
+            {
+                SetEffectBase(unit.hexPosition, attackOutOfRangeEffect);
+            }
+        }
+        
+        //if weapon type is repeater, show sweet spot
+        if (_player.weapon is Repeater repeater)
+        {
+            var sweetSpot = (repeater).GetSweetSpot();
+            //remove tiles in sweet spot range circle
+            foreach (var pos in FieldSystem.tileSystem.GetTilesOutLine(_player.hexPosition, sweetSpot))
+            {
+                if (_effectsBase.ContainsKey(pos.hexPosition))
+                {
+                    Destroy(_effectsBase[pos.hexPosition]);
+                    _effectsBase.Remove(pos.hexPosition);
+                }
                 
-            _effectsBase.Add(unit.hexPosition, go);
+                SetEffectBase(pos.hexPosition, attackSweetSpotEffect);
+            }
         }
 
         _curCoroutine = StartCoroutine(AttackTargetEffectCoroutine());
@@ -328,6 +349,15 @@ public class TileEffectManager : Singleton<TileEffectManager>
         worldPosition.y += 0.02f;
         
         var gObject = Instantiate(GetEffect(type), worldPosition, Quaternion.identity);
+        _effectsBase.Add(position, gObject);
+    }
+    
+    private void SetEffectBase(Vector3Int position, GameObject effect)
+    {
+        Vector3 worldPosition = Hex.Hex2World(position);
+        worldPosition.y += 0.02f;
+        
+        var gObject = Instantiate(effect, worldPosition, Quaternion.identity);
         _effectsBase.Add(position, gObject);
     }
     

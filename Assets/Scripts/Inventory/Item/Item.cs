@@ -5,8 +5,14 @@ using UnityEngine;
     public abstract class Item : IItem
     {
         private readonly ItemData _data;
-        private readonly List<IItemAttribute> _attributes = new List<IItemAttribute>();
-        protected int stackCount = 1;
+        private readonly List<IItemAttribute> _attributes;
+        protected int stackCount;
+        public Item(ItemData data)
+        {
+            _data = data;
+            _attributes = new List<IItemAttribute>();
+            stackCount = 1;
+        }
 
         public static Item CreateItem(ItemData data)
         {

@@ -221,6 +221,11 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             AddItem(1);
         }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            ((Inventory)playerInventory).PrintItems();
+        }
         #endregion
     }
 }

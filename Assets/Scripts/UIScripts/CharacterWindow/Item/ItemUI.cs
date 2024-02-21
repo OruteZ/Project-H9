@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemUI : UISystem
@@ -21,6 +22,7 @@ public class ItemUI : UISystem
         ClosePopupWindow();
         SetInventoryUI();
         //SetInventory를 호출할 이벤트에 AddListner(SetInventory) 추가
+        IInventory.OnInventoryChanged.AddListener(SetInventoryUI);
     }
 
     private void SetInventoryUI() 
@@ -32,16 +34,13 @@ public class ItemUI : UISystem
 
         int cnt = 0;
         IEnumerable<IItem> items = _inventory.GetItems();
-        while (true) 
-        {
-            if (items is null) break;
+        foreach(IItem item in items) {
             if (cnt > _inventoryUI.transform.childCount) break;
 
-            _inventoryUI.transform.GetChild(cnt).GetComponent<InventoryUIElement>().SetInventoryUIElement(items.GetEnumerator().Current);
-
-            items.GetEnumerator().MoveNext();
+            _inventoryUI.transform.GetChild(cnt).GetComponent<InventoryUIElement>().SetInventoryUIElement(item);
             cnt++;
         }
+        
         for (int i = cnt; i < _inventoryUI.transform.childCount; i++)
         {
             _inventoryUI.transform.GetChild(i).GetComponent<InventoryUIElement>().ClearInventoryUIElement();

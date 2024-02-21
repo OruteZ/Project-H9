@@ -38,7 +38,7 @@ public abstract class Weapon
 
     protected const float SHOTGUN_OVER_RANGE_PENALTY = 3f;
     protected const float REVOLVER_OVER_RANGE_PENALTY = 2f;
-    protected const float REPEATER_OVER_RANGE_PENALTY = 2f;
+    protected const float REPEATER_OVER_RANGE_PENALTY = 1.25f;
     
    
     /// <summary>

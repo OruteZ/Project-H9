@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class Repeater : Weapon
 {
+     public override WeaponType GetWeaponType() => WeaponType.Repeater;
+    public override float GetDistancePenalty() => 5;
+    public override int GetRange()
+    {
+        return weaponRange + unitStat.revolverAdditionalRange;
+    }
+
     public override void Attack(Unit target, out bool isCritical)
     {
         Debug.Log("Weapon attack Call" + " : " + nameIndex);
 
-        isCritical = Random.value < unitStat.criticalChance + criticalChance;
+        isCritical = Random.value * 100 < unitStat.criticalChance + criticalChance;
         if (isCritical)
         {
             CriticalAttack(target);
@@ -17,6 +24,42 @@ public class Repeater : Weapon
         {
             NonCriticalAttack(target);
         }
+        //UIManager.instance.combatUI.enemyHpUI.SetEnemyHpBars(); //test
+    }
+
+    public override int GetFinalDamage()
+    {
+        return Mathf.RoundToInt(weaponDamage + unitStat.revolverAdditionalDamage);
+    }
+
+    public override int GetFinalCriticalDamage()
+    {
+        float dmg = weaponDamage + unitStat.revolverAdditionalDamage;
+        dmg += dmg * ((unitStat.revolverCriticalDamage + criticalDamage) * 0.01f);
+
+        return Mathf.RoundToInt(dmg);
+    }
+
+    public override float GetFinalHitRate(Unit target)
+    {
+        int range = weaponRange + unitStat.revolverAdditionalRange;
+        int distance = Hex.Distance(unit.hexPosition, target.hexPosition);
+
+        float finalHitRate = (hitRate + unitStat.concentration * 
+            (100 - distance * (IsSweetSpot(distance) ? 0 : GetDistancePenalty()) *
+            (distance > range ? REPEATER_OVER_RANGE_PENALTY : 1)
+            )) * 0.01f;
+
+        finalHitRate = Mathf.Round(10 * finalHitRate) * 0.1f;
+        finalHitRate = Mathf.Clamp(finalHitRate, 0, 100);
+
+        UIManager.instance.debugUI.SetDebugUI
+            (finalHitRate, unit, target, distance, weaponRange,
+                unitStat.revolverAdditionalRange,
+                (IsSweetSpot(distance) ? 0 : GetDistancePenalty()) *
+                (distance > range ? REPEATER_OVER_RANGE_PENALTY : 1));
+        
+        return finalHitRate;
     }
 
     private void NonCriticalAttack(Unit target)
@@ -32,51 +75,15 @@ public class Repeater : Weapon
         target.TakeDamage(damage, unit);
         Service.SetText(index:1, damage.ToString(), target.transform.position);
     }
-
-    public override WeaponType GetWeaponType() => WeaponType.Repeater;
-    public override int GetFinalDamage()
+    
+    public int GetSweetSpot()
     {
-        return Mathf.RoundToInt(weaponDamage + unitStat.repeaterAdditionalDamage);
+        //todo : get sweet spot from data 
+        return GetRange() - 1;
     }
-
-    public override int GetFinalCriticalDamage()
+    
+    private bool IsSweetSpot(int distance)
     {
-        float dmg = weaponDamage + unitStat.repeaterAdditionalDamage;
-        dmg += dmg * (unitStat.repeaterCriticalDamage + criticalDamage);
-
-        return Mathf.RoundToInt(dmg);
-    }
-
-    public override float GetFinalHitRate(Unit target)
-    {
-        int range = weaponRange + unitStat.repeaterAdditionalRange;
-        int distance = Hex.Distance(unit.hexPosition, target.hexPosition);
-
-        float hitRate = this.hitRate + unitStat.concentration * (100 - distance * GetDistancePenalty() *
-                (distance > range ? REPEATER_OVER_RANGE_PENALTY : 1)
-            ) * 0.01f;
-
-        hitRate = Mathf.Round(10 * hitRate) * 0.1f;
-        hitRate = Mathf.Clamp(hitRate, 0, 100);
-
-        // #if UNITY_EDITOR
-        // Debug.Log("Hit rate = " + hitRate);
-        // #endif
-
-        UIManager.instance.debugUI.SetDebugUI(
-            hitRate, unit, target, distance, weaponRange, unitStat.repeaterAdditionalRange, 
-            GetDistancePenalty() * (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
-        
-        return hitRate * 0.01f;
-    }
-
-    public override float GetDistancePenalty()
-    {
-        return 4;
-    }
-
-    public override int GetRange()
-    {
-        return weaponRange + unitStat.repeaterAdditionalRange;
+        return distance == GetSweetSpot();
     }
 }

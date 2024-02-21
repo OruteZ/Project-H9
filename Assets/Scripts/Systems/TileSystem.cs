@@ -210,6 +210,20 @@ public class TileSystem : MonoBehaviour
 
         return ret;
     }
+    
+    public IEnumerable<Tile> GetTilesOutLine(Vector3Int start, int range_)
+    {
+        var list = Hex.GetCircleLineGridList(range_, start);
+        
+        var ret = new List<Tile>();
+        foreach (var t in list)
+        {
+            var tile = GetTile(t);
+            if (tile is not null) ret.Add(tile);
+        }
+
+        return ret;
+    }
 
     /// <summary>
     /// start지점에서 destination 까지의 경로를 리스트에 저장하여 반환합니다.

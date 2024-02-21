@@ -223,8 +223,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5610185880250016912}
-  m_LocalRotation: {x: -0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 1.15, y: 3.11, z: 0}
+  m_LocalRotation: {x: 0.38480732, y: -0.38480732, z: 0.5932313, w: -0.5932313}
+  m_LocalPosition: {x: 2.4, y: 4.75, z: -1.54}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -234,7 +234,7 @@ Transform:
   - {fileID: 6906953570896713979}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 65.93999, z: 270}
 --- !u!33 &5595985509762720262
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Gunpoint: {fileID: 6906953570896713979}
-  trigger: {fileID: 0}
+  trigger: {fileID: 5608105144929958946}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   handRotationOffset: {x: -0.38480735, y: 0.38480735, z: -0.59323126, w: 0.59323126}

@@ -152,6 +152,31 @@ public static class Hex
         }
         return results;
     }
+    
+    /// <summary>
+    /// 중심점에서 직선거리가 일정 거리인 모든 Hex좌표를 List로 반환합니다.
+    /// </summary>
+    /// <param name="range">직선거리</param>
+    /// <param name="center">중심점의 Hex좌표</param>
+    /// <returns>범위 내부 Hex좌표들의 List</returns>
+    public static List<Vector3Int> GetCircleLineGridList(int range, Vector3Int center)
+    {
+        var results = new List<Vector3Int>();
+        for (var x = -range; x <= range; x++)
+        {
+            for (var y = Mathf.Max(-range, -x - range); y <= Mathf.Min(range, -x + range); y++)
+            {
+                var z = -x - y;
+                var hex = center + new Vector3Int(x, y, z);
+                if (Distance(center, hex) == range)
+                {
+                    results.Add(hex);
+                }
+            }
+        }
+        return results;
+    }
+
 
     /// <summary>
     /// 가로 세로가 주어진 직사각형 모양의 Grid List를 반환합니다.

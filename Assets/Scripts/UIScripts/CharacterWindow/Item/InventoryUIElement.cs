@@ -14,6 +14,11 @@ public class InventoryUIElement : UIElement, IPointerClickHandler
 
     public void SetInventoryUIElement(IItem item) 
     {
+        if (item is null)
+        {
+            return;
+        }
+        
         _item = item;
         //_itemIcon.GetComponent<Image>().sprite = ?
         _itemIcon.GetComponent<Image>().color = Color.white;

@@ -9,6 +9,7 @@ public class InventoryDragUI : InventoryUIElement, IPointerUpHandler
     private bool _isDragging = false;
     private void Start()
     {
+        _itemFrame = null;
         gameObject.SetActive(false);
     }
     private void Update()
@@ -34,11 +35,5 @@ public class InventoryDragUI : InventoryUIElement, IPointerUpHandler
     {
         gameObject.SetActive(false);
         _isDragging = false;
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        Debug.Log("test");
-        UIManager.instance.characterUI.itemUI.StopDragInventoryElement();
     }
 }

@@ -5,13 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHandler
+public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject _itemIcon;
     [SerializeField] protected GameObject _itemCountText;
+    [SerializeField] protected GameObject _itemFrame;
 
     public Item item { get; private set; }
-    public int idx;
+    //public int idx;
     private void Awake()
     {
         item = null;
@@ -25,7 +26,7 @@ public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHand
             return;
         }
         this.item = item;
-        idx = item.GetData().id;
+        //idx = item.GetData().id;
         Texture2D texture = item.GetData().icon;
         _itemIcon.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         _itemIcon.GetComponent<Image>().color = Color.white;
@@ -49,19 +50,32 @@ public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (item is null) return;
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             UIManager.instance.characterUI.itemUI.StartDragInventoryElement(this.gameObject);
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            UIManager.instance.characterUI.itemUI.OpenInventoryTooltip(item, GetComponent<RectTransform>().position);
+            //UIManager.instance.characterUI.itemUI.OpenInventoryTooltip(item, GetComponent<RectTransform>().position);
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         UIManager.instance.characterUI.itemUI.StopDragInventoryElement();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_itemFrame is null) return;
+        _itemFrame.SetActive(true);
+        UIManager.instance.characterUI.itemUI.OpenInventoryTooltip(item, GetComponent<RectTransform>().position);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (_itemFrame is null) return;
+        _itemFrame.SetActive(false);
+        UIManager.instance.characterUI.itemUI.ClosePopupWindow();
     }
 }

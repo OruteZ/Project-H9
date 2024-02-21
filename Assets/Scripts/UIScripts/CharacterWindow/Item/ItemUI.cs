@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ItemUI : UISystem
 {
@@ -31,6 +32,11 @@ public class ItemUI : UISystem
         SetInventoryUI();
         UIManager.instance.onInventoryChanged.AddListener(SetInventoryUI);
     }
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        ClosePopupWindow();
+    }
 
     public void SetInventoryUI() 
     {
@@ -55,6 +61,7 @@ public class ItemUI : UISystem
             _inventoryUI.transform.GetChild(cnt++).GetComponent<InventoryUIElement>().SetInventoryUIElement((Item)items[i]);
             if (cnt >= _inventoryUI.transform.childCount) break;
         }
+        ClosePopupWindow();
     }
     private void SetMoneyUI() 
     {
@@ -62,22 +69,52 @@ public class ItemUI : UISystem
     }
     public void OpenInventoryTooltip(Item item, Vector3 pos)
     {
+        _sortButton.GetComponent<InventorySortButtonUI>().CloseTooltip();
         _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(item, pos);
     }
     public override void ClosePopupWindow()
     {
-        _inventoryTooltip.SetActive(false);
         _sortButton.GetComponent<InventorySortButtonUI>().CloseTooltip();
+        if (!IsMouseOverTooltip(_sortButton.transform.GetChild(1).gameObject))
+        {
+            //is it necessary?
+        }
+        if (!IsMouseOverTooltip(_inventoryTooltip))
+        {
+            _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+        }
+    }
+    private bool IsMouseOverTooltip(GameObject tooltip)
+    {
+        GraphicRaycaster gr = GetComponent<GraphicRaycaster>();
+        PointerEventData ped = new PointerEventData(null);
+        ped.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        gr.Raycast(ped, results);
+        foreach (RaycastResult r in results)
+        {
+            if (r.gameObject == tooltip)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void StartDragInventoryElement(GameObject element) 
     {
         _draggedItem = element.GetComponent<InventoryUIElement>().item;
+        if (_draggedItem is null) 
+        {
+            ClosePopupWindow();
+            return;
+        }
         _originalDraggedElement = element;
         element.GetComponent<InventoryUIElement>().ClearInventoryUIElement();
         _draggedElement.GetComponent<InventoryDragUI>().SetInventoryUIElement(_draggedItem);
         _draggedElement.GetComponent<InventoryDragUI>().StartDragging();
         _draggedElement.GetComponent<RectTransform>().position = element.GetComponent<RectTransform>().position;
+        ClosePopupWindow();
     }
 
     public void StopDragInventoryElement()

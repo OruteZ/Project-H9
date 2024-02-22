@@ -31,10 +31,29 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
 
         UIManager.instance.previousLayer = 3;
 
-        _itemNameText.GetComponent<TextMeshProUGUI>().text = item.GetData().nameIdx.ToString();
-        _itemDescriptionText.GetComponent<TextMeshProUGUI>().text = item.GetData().descriptionIdx.ToString();
+        SetInventoryTooltipText(item);
 
         gameObject.SetActive(true);
+    }
+    private void SetInventoryTooltipText(IItem item)
+    {
+
+        ItemData iData = item.GetData();
+        _itemNameText.GetComponent<TextMeshProUGUI>().text = iData.nameIdx.ToString();
+        string description = "";
+        if (item is WeaponItem)
+        {
+            WeaponData wData = FieldSystem.unitSystem.GetWeaponData(iData.id);
+            string weaponTypeText = wData.type.ToString();
+            string weaponDamageText = wData.weaponDamage.ToString() + " Damage";
+            string weaponRangeText = wData.weaponRange.ToString() + " Range";
+            string weaponEffect = "Effect: " + iData.descriptionIdx.ToString();
+            description = weaponTypeText + "\n" + weaponDamageText + "\n" + weaponRangeText + "\n\n" + weaponEffect;
+        }
+
+        _itemDescriptionText.GetComponent<TextMeshProUGUI>().text = description;
+        _itemDescriptionText.GetComponent<ContentSizeFitter>().SetLayoutVertical();
+        GetComponent<ContentSizeFitter>().SetLayoutVertical();
     }
     public override void CloseUI()
     {

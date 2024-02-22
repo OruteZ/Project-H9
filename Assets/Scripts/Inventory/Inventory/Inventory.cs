@@ -16,12 +16,14 @@ public class Inventory : IInventory
     {
         _items.Add(item);
         IInventory.OnInventoryChanged?.Invoke();
+        UIManager.instance.onInventoryChanged.Invoke();
     }
 
     public void DeleteItem(IItem item)
     {
         _items.Remove(item);
         IInventory.OnInventoryChanged?.Invoke();
+        UIManager.instance.onInventoryChanged.Invoke();
     }
 
     public IEnumerable<IItem> GetItems()

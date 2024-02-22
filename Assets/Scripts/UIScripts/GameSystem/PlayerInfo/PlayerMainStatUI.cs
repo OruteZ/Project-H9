@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class PlayerMainStatUI : UIElement
 {
-    [SerializeField] private GameObject AtkText;
-    [SerializeField] private GameObject SightText;
-    [SerializeField] private GameObject SpeedText;
-    [SerializeField] private GameObject AddHRText;
-    [SerializeField] private GameObject CritChanceText;
-    [SerializeField] private GameObject CritDmgText;
-    
+    [SerializeField] private GameObject _atkText;
+    [SerializeField] private GameObject _sightText;
+    [SerializeField] private GameObject _speedText;
+    [SerializeField] private GameObject _addHRText;
+    [SerializeField] private GameObject _critChanceText;
+    [SerializeField] private GameObject _critDmgText;
+
+    [SerializeField] private GameObject _statTooltip;
+
+    private void Start()
+    {
+        HideMainStatTooltip();
+    }
     public void SetMainStatUI() 
     {
         UnitStat stat = GameManager.instance.playerStat;
@@ -32,11 +38,19 @@ public class PlayerMainStatUI : UIElement
             dmg += stat.shotgunAdditionalDamage;
             criDmg += stat.shotgunCriticalDamage;
         }
-        AtkText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Damage", dmg.ToString());   //여기 정확히 뭘 기재해야 하나? 
-        SightText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Sight Range", stat.sightRange.ToString());
-        SpeedText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Speed", stat.speed.ToString());
-        AddHRText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Additional Hit Rate", stat.additionalHitRate.ToString() + "%");
-        CritChanceText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Critical Rate", stat.criticalChance.ToString() + "%");
-        CritDmgText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Critical Damage", (criDmg / 100.0f).ToString() + "x");
+        _atkText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Damage", dmg.ToString());   //여기 정확히 뭘 기재해야 하나? 
+        _sightText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Sight Range", stat.sightRange.ToString());
+        _speedText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Speed", stat.speed.ToString());
+        _addHRText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Additional Hit Rate", stat.additionalHitRate.ToString() + "%");
+        _critChanceText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Critical Rate", stat.criticalChance.ToString() + "%");
+        _critDmgText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Critical Damage", (criDmg / 100.0f).ToString() + "x");
+    }
+    public void ShowMainStatTooltip(GameObject textObj) 
+    {
+        _statTooltip.GetComponent<PlayerMainStatTooltip>().SetPlayerMainStatTooltip(textObj);
+    }
+    public void HideMainStatTooltip() 
+    {
+        _statTooltip.GetComponent<PlayerMainStatTooltip>().CloseUI();
     }
 }

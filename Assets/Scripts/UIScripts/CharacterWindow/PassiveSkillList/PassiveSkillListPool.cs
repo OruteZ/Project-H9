@@ -6,6 +6,11 @@ public class PassiveSkillListWrapper : ObjectPoolWrapper<RectTransform>
     public PassiveSkillListWrapper(RectTransform instance, float lifeTime) : base(instance, lifeTime)
     {
     }
+    public override void Reset()
+    {
+        Instance.GetComponent<PassiveSkillListElement>().CloseUI();
+        base.Reset();
+    }
 }
 public class PassiveSkillListPool : ObjectPool<RectTransform, PassiveSkillListWrapper>
 {

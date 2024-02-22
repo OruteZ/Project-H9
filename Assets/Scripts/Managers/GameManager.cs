@@ -221,8 +221,16 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             AddItem(1);
         }
-
         if (Input.GetKeyDown(KeyCode.S))
+        {
+            AddItem(2);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            AddItem(3);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
         {
             ((Inventory)playerInventory).PrintItems();
         }

@@ -8,7 +8,7 @@ public class WeaponItem : Item
     {
         GameManager.instance.playerWeaponIndex =
             GetData().id;
-
+        UIManager.instance.onWeaponChanged.Invoke();
         return true;
     }
 }

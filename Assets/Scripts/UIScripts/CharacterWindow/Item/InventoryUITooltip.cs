@@ -1,25 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.UI;
 
-public class InventoryUITooltip : UIElement
+public class InventoryUITooltip : UIElement,IPointerExitHandler
 {
     [SerializeField] private GameObject _itemNameText;
     [SerializeField] private GameObject _itemDescriptionText;
 
     private IItem _item = null;
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        UIManager.instance.characterUI.itemUI.ClosePopupWindow();
+    }
+
     public void SetInventoryUITooltip(IItem item, Vector3 pos)
     {
-        //gameObject.SetActive(_item != item);
-        if (!gameObject.activeSelf) return;
-        
-        UIManager.instance.previousLayer = 3;
-        _item = item;
+        if (_item == item && GetComponent<RectTransform>().position == pos) return;
 
+        if (item is null)
+        {
+            CloseUI();
+            return;
+        }
+        _item = item;
         GetComponent<RectTransform>().position = pos;
 
-        _itemNameText.GetComponent<TextMeshProUGUI>().text = item.GetData().nameIdx.ToString();
-        _itemDescriptionText.GetComponent<TextMeshProUGUI>().text = item.GetData().descriptionIdx.ToString();
+        UIManager.instance.previousLayer = 3;
+
+        SetInventoryTooltipText(item);
+
+        gameObject.SetActive(true);
+    }
+    private void SetInventoryTooltipText(IItem item)
+    {
+
+        ItemData iData = item.GetData();
+        _itemNameText.GetComponent<TextMeshProUGUI>().text = iData.nameIdx.ToString();
+        string description = "";
+        if (item is WeaponItem)
+        {
+            WeaponData wData = FieldSystem.unitSystem.GetWeaponData(iData.id);
+            string weaponTypeText = wData.type.ToString();
+            string weaponDamageText = wData.weaponDamage.ToString() + " Damage";
+            string weaponRangeText = wData.weaponRange.ToString() + " Range";
+            string weaponEffect = "Effect: " + iData.descriptionIdx.ToString();
+            description = weaponTypeText + "\n" + weaponDamageText + "\n" + weaponRangeText + "\n\n" + weaponEffect;
+        }
+
+        _itemDescriptionText.GetComponent<TextMeshProUGUI>().text = description;
+        _itemDescriptionText.GetComponent<ContentSizeFitter>().SetLayoutVertical();
+        GetComponent<ContentSizeFitter>().SetLayoutVertical();
+    }
+    public override void CloseUI()
+    {
+        _item = null;
+        gameObject.SetActive(false);
     }
 }

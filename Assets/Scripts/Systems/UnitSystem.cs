@@ -293,4 +293,9 @@ public class UnitSystem : MonoBehaviour
         units.Remove(unit);
         unit.onMoved.RemoveListener(OnUnitMoved);
     }
+
+    public WeaponData GetWeaponData(int index) 
+    {
+        return weaponDB.GetData(index);
+    }
 }

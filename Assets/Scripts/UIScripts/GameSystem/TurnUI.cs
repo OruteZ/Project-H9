@@ -110,7 +110,7 @@ public class TurnUI : UISystem
         }
         else
         {
-            return !UIManager.instance.combatUI.combatActionUI_legacy.IsThereSeletableButton();
+            return !UIManager.instance.combatUI.combatActionUI.IsThereSeletableButton();
         }
     }
 }

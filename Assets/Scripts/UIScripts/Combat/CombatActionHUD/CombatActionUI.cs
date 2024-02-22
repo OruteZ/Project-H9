@@ -19,12 +19,14 @@ public enum CombatActionType
 public class CombatActionUI : UISystem
 {
     [SerializeField] private GameObject _backgroundImage;
-    [SerializeField] private GameObject _baseActionSet;
-    [SerializeField] private GameObject _skillActionSet;
+    [SerializeField] private GameObject _baseActionBundle;
+    [SerializeField] private GameObject _skillActionBundle;
     [SerializeField] private GameObject _buttonTooltip;
 
-    private GameObject _displayedActionSet = null;
-    private GameObject _activeActionSet = null;
+    private const int SKILL_BUTTON_INDEX = 3;
+
+    private GameObject _displayedActionBundle = null;
+    private GameObject _activeActionBundle = null;
     private Dictionary<CombatActionType, IUnitAction> _baseActions = new Dictionary<CombatActionType, IUnitAction>();
     private List<IUnitAction> _skillActions = new List<IUnitAction>();
     private IUnitAction _idleAction;
@@ -46,13 +48,13 @@ public class CombatActionUI : UISystem
     {
         base.CloseUI();
         _backgroundImage.SetActive(false);
-        _baseActionSet.SetActive(false);
-        _skillActionSet.SetActive(false);
+        _baseActionBundle.SetActive(false);
+        _skillActionBundle.SetActive(false);
         _buttonTooltip.SetActive(false);
     }
     private void Awake()
     {
-        UIManager.instance.onTurnChanged.AddListener(() => SetActionSet(_displayedActionSet, false));
+        UIManager.instance.onTurnChanged.AddListener(() => SetActionBundle(_displayedActionBundle, false));
         UIManager.instance.onSceneChanged.AddListener(InitActions);
     }
     private void Start()
@@ -71,8 +73,8 @@ public class CombatActionUI : UISystem
         playerChestPosition.y += player.GetComponent<CapsuleCollider>().center.y;
         Vector2 screenPos = Camera.main.WorldToScreenPoint(playerChestPosition);
         _backgroundImage.GetComponent<RectTransform>().position = screenPos;
-        _baseActionSet.GetComponent<RectTransform>().position = screenPos;
-        _skillActionSet.GetComponent<RectTransform>().position = screenPos;
+        _baseActionBundle.GetComponent<RectTransform>().position = screenPos;
+        _skillActionBundle.GetComponent<RectTransform>().position = screenPos;
 
         bool isActive = true;
         if ((Input.GetMouseButtonDown(0) && !IsMouseOverActionUI()) || Input.GetKeyDown(_openKey)) 
@@ -81,23 +83,23 @@ public class CombatActionUI : UISystem
             {
                 isActive = false;
             }
-            if (Input.GetKeyDown(_openKey) && _baseActionSet.activeSelf)
+            if (Input.GetKeyDown(_openKey) && _baseActionBundle.activeSelf)
             {
                 isActive = false;
             }
             bool isActiveSelectedAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
             if (isActiveSelectedAction) return;
-            SetActionSet(_baseActionSet, isActive);
+            SetActionBundle(_baseActionBundle, isActive);
         }
 
 
-        if (_activeActionSet is not null)
+        if (_activeActionBundle is not null)
         {
             for (int i = 0; i < _shortCutKey.Length; i++)
             {
-                if (Input.GetKeyDown(_shortCutKey[i]) && i < _activeActionSet.transform.childCount)
+                if (Input.GetKeyDown(_shortCutKey[i]) && i < _activeActionBundle.transform.childCount)
                 {
-                    _activeActionSet.transform.GetChild(i).GetComponent<CombatActionButtonElement>().OnClickCombatSelectButton();
+                    _activeActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().OnClickCombatSelectButton();
                     break;
                 }
             }
@@ -133,60 +135,57 @@ public class CombatActionUI : UISystem
             return;
         }
         _baseActions.Clear();
-        _baseActions.Add(CombatActionType.Move, ba[0]);
-        _baseActions.Add(CombatActionType.Attack, ba[1]);
-        _baseActions.Add(CombatActionType.Reload, ba[2]);
+        CombatActionType[] baseCombatActionType = { CombatActionType.Move, CombatActionType.Attack, CombatActionType.Reload };
+        for (int i = 0; i < baseCombatActionType.Length; i++)
+        {
+            _baseActions.Add(baseCombatActionType[i], ba[i]);
+            _baseActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetcombatActionButton(baseCombatActionType[i], i, ba[i]);
+        }
         _idleAction = ba[3];
 
         //skill action
         _skillActions.Clear();
-        for (int i = 0; i < _skillActionSet.transform.childCount; i++)
+        for (int i = 0; i < _skillActionBundle.transform.childCount; i++)
         {
             if (i < actions.Count)
             {
                 _skillActions.Add(actions[i]);
-                _skillActionSet.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetcombatActionButton(CombatActionType.PlayerSkill, i, actions[i].GetActionType());
-                _skillActionSet.transform.GetChild(i).gameObject.SetActive(true);
+                _skillActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetcombatActionButton(CombatActionType.PlayerSkill, i, actions[i]);
+                _skillActionBundle.transform.GetChild(i).gameObject.SetActive(true);
             }
             else 
             {
-                _skillActionSet.transform.GetChild(i).gameObject.SetActive(false);
+                _skillActionBundle.transform.GetChild(i).gameObject.SetActive(false);
             }
         }
     }
 
-    private void SetActionSet(GameObject set, bool isDisplayed)
+    private void SetActionBundle(GameObject bundle, bool isDisplayed)
     {
         if (UIManager.instance.UIState != GameState.Combat) return;
         if (FieldSystem.turnSystem.turnOwner is not Player) return;
         _buttonTooltip.GetComponent<CombatActionButtonTooltip>().CloseUI();
-        if (set is null) 
-        {
-            return;
-            _activeActionSet = null;
-            _displayedActionSet = null;
-            FieldSystem.unitSystem.GetPlayer().SelectAction(_idleAction);
+        if (bundle is null) return;
+        UpdateButtonSeletable();
 
-        }
-
-        _activeActionSet = set;
+        _activeActionBundle = bundle;
         if (isDisplayed)
         {
-            _displayedActionSet = set;
+            _displayedActionBundle = bundle;
             FieldSystem.unitSystem.GetPlayer().SelectAction(_idleAction);
             _selectedActionType = CombatActionType.Null;
         }
         else
         {
-            _displayedActionSet = null;
+            _displayedActionBundle = null;
             //_buttonTooltip.GetComponent<CombatActionButtonTooltip>().CloseUI();
         }
-        _baseActionSet.SetActive(false);
-        _skillActionSet.SetActive(false);
+        _baseActionBundle.SetActive(false);
+        _skillActionBundle.SetActive(false);
         _backgroundImage.SetActive(isDisplayed);
-        if (_displayedActionSet is not null) _displayedActionSet.SetActive(isDisplayed);
+        if (_displayedActionBundle is not null) _displayedActionBundle.SetActive(isDisplayed);
     }
-    public void TakeAction(CombatActionType actionType, int btnIdx)
+    public void SelectAction(CombatActionType actionType, int btnIdx)
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (FieldSystem.turnSystem.turnOwner is not Player) return;
@@ -202,23 +201,23 @@ public class CombatActionUI : UISystem
                     {
                         FieldSystem.unitSystem.GetPlayer().SelectAction(_baseActions[actionType]);
                         _selectedActionType = actionType;
-                        SetActionSet(_displayedActionSet, false);
+                        SetActionBundle(_displayedActionBundle, false);
                     }
                     else
                     {
                         if (_selectedActionType != actionType)
                         {
                             _selectedActionType = CombatActionType.Null;
-                            TakeAction(actionType, btnIdx);
+                            SelectAction(actionType, btnIdx);
                             return;
                         }
-                        SetActionSet(_activeActionSet, true);
+                        SetActionBundle(_activeActionBundle, true);
                     }
                     break;
                 }
             case CombatActionType.Skills:
                 {
-                    SetActionSet(_skillActionSet, true);
+                    SetActionBundle(_skillActionBundle, true);
                     break;
                 }
             case CombatActionType.Items:
@@ -237,17 +236,17 @@ public class CombatActionUI : UISystem
                     {
                         FieldSystem.unitSystem.GetPlayer().SelectAction(_skillActions[btnIdx]);
                         _selectedActionType = actionType;
-                        SetActionSet(_displayedActionSet, false);
+                        SetActionBundle(_displayedActionBundle, false);
                     }
                     else
                     {
                         if (_selectedActionType != actionType)
                         {
                             _selectedActionType = CombatActionType.Null;
-                            TakeAction(actionType, btnIdx);
+                            SelectAction(actionType, btnIdx);
                             return;
                         }
-                        SetActionSet(_activeActionSet, true);
+                        SetActionBundle(_activeActionBundle, true);
                     }
                     break;
                 }
@@ -286,5 +285,49 @@ public class CombatActionUI : UISystem
         }
 
         return false;
+    }
+
+    public bool IsThereSeletableButton()
+    {
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player is null) return true;
+        if (player.GetSelectedAction() is not null && player.GetSelectedAction() != _idleAction) return true;
+
+        UpdateButtonSeletable();
+        for (int i = 0; i < _baseActionBundle.transform.childCount; i++) 
+        {
+            GameObject btn = _baseActionBundle.transform.GetChild(i).gameObject;
+            if (btn.GetComponent<CombatActionButtonElement>().IsInteractable())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void UpdateButtonSeletable()
+    {
+        bool isThereSeletableSkill = false;
+        for (int i = 0; i < _skillActionBundle.transform.childCount; i++)
+        {
+            GameObject btn = _skillActionBundle.transform.GetChild(i).gameObject;
+            if (!btn.activeSelf) break;
+            btn.GetComponent<CombatActionButtonElement>().SetInteractable();
+            if (btn.GetComponent<CombatActionButtonElement>().IsInteractable()) 
+            {
+                isThereSeletableSkill = true;
+            }
+        }
+
+        _baseActionBundle.transform.GetChild(0).GetComponent<CombatActionButtonElement>().SetInteractable();
+        _baseActionBundle.transform.GetChild(1).GetComponent<CombatActionButtonElement>().SetInteractable();
+        _baseActionBundle.transform.GetChild(2).GetComponent<CombatActionButtonElement>().SetInteractable();
+        _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable(isThereSeletableSkill);
+        _baseActionBundle.transform.GetChild(4).GetComponent<CombatActionButtonElement>().SetInteractable(false);
+        _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(false);
+    }
+
+    public void ShowRequiredCost(IUnitAction action) 
+    {
+
     }
 }

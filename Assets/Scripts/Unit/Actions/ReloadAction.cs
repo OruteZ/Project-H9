@@ -58,6 +58,7 @@ public class ReloadAction : BaseAction
         {
             if (weapon.maxAmmo <= weapon.currentAmmo) weapon.currentAmmo = weapon.maxAmmo;
             else weapon.currentAmmo++;
+            UIManager.instance.onActionChanged.Invoke();
 
             yield return new WaitForSeconds(RELOAD_TIME);
         }

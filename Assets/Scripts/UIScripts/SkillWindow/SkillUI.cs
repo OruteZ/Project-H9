@@ -40,7 +40,7 @@ public class SkillUI : UISystem
     {
         _skillManager = SkillManager.instance;
         skillTooltip = _skillTooltipWindow.GetComponent<SkillTooltip>();
-        //GetComponent<Image>().sprite = ;
+        //GetComponent<Image>().sprite = null;
         UpdateAllSkillUINode();
     }
     public override void OpenUI() 
@@ -132,7 +132,7 @@ public class SkillUI : UISystem
     {
         foreach (GameObject root in _skillRootNodes) 
         {
-            GameObject findResult = root.GetComponent<SkillTreeElement>().FindSkillNode(index);
+            GameObject findResult = root.GetComponent<SkillTreeElement>().rFindSkillNodeAtChildren(index);
             if (findResult != null) 
             {
                 return findResult;

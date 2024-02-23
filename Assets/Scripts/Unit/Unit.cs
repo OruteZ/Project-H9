@@ -350,6 +350,7 @@ public abstract class Unit : MonoBehaviour, IUnit
             Service.SetText(index:0, "MISS", target.transform.position);
         }
         weapon.currentAmmo--;
+        UIManager.instance.onPlayerStatChanged.Invoke();
 
         int damage = hit ? isCritical ? weapon.GetFinalCriticalDamage() : weapon.GetFinalDamage() : 0;
         onFinishShoot.Invoke(target, damage, hit, isCritical);

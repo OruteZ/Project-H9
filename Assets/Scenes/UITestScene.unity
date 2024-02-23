@@ -34231,7 +34231,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769345936}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -36569,7 +36569,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802384498}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -47428,7 +47428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00009211729, y: -0.00003504753}
+  m_AnchoredPosition: {x: -14852.909, y: -1960.0549}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1011859506
@@ -50543,7 +50543,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1680714151}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.96666664
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -57137,7 +57137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -37899350, y: 14851704}
+  m_AnchoredPosition: {x: -38053456, y: 14909221}
   m_SizeDelta: {x: 763.6692, y: 456.5049}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1224619894
@@ -75064,6 +75064,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ap UI Element
+      objectReference: {fileID: 0}
+    - target: {fileID: 7581156899261578876, guid: e99c04441a9e5e24295f523863213cfe,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e99c04441a9e5e24295f523863213cfe, type: 3}

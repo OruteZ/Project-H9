@@ -24,6 +24,7 @@ public class UIManager : Generic.Singleton<UIManager>
     [SerializeField] private Canvas _skillCanvas;
     [SerializeField] private Canvas _pauseMenuCanvas;
     [SerializeField] private Canvas _debugCanvas;
+    [SerializeField] private Canvas _logCanvas;
 
     //[HideInInspector]
     public bool isMouseOverUI;
@@ -38,7 +39,7 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent onSceneChanged;
     [HideInInspector] public UnityEvent onTurnChanged;
     [HideInInspector] public UnityEvent onPlayerStatChanged;
-    [HideInInspector] public UnityEvent onPlayerSkillChanged;
+    [HideInInspector] public UnityEvent onPlayerSkillChangd;
     [HideInInspector] public UnityEvent onActionChanged;
     [HideInInspector] public UnityEvent onInventoryChanged;
     [HideInInspector] public UnityEvent onWeaponChanged;
@@ -50,6 +51,7 @@ public class UIManager : Generic.Singleton<UIManager>
         _characterCanvas.enabled = false;
         _skillCanvas.enabled = false;
         _pauseMenuCanvas.enabled = false;
+        _logCanvas.enabled = true;
 
         gameSystemUI = _worldCanvas.GetComponent<GameSystemUI>();
         combatUI = _combatCanvas.GetComponent<CombatWindowUI>();

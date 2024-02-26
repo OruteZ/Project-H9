@@ -32,18 +32,6 @@ public class LogUI : UISystem
         InstantiateText();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ChangedPlayerStat();
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            ChangedTurn();
-        }
-    }
-
     public override void CloseUI()
     {
         base.CloseUI();
@@ -74,7 +62,6 @@ public class LogUI : UISystem
 
     private void InstantiateText()
     {
-        _builder.Append("<color:red>새로운 영역입니다.</color>\n");
         var target = Instantiate(_defaultTextPrefab);
         target.transform.SetParent(_logPanel);
         _textCaches.Add(target.GetComponent<TMP_Text>());

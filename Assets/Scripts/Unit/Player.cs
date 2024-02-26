@@ -45,8 +45,8 @@ public class Player : Unit
                 //transform.localRotation = Quaternion.Euler(curRotation);
             }
         }
-        
-        
+
+
         if (Input.GetMouseButtonDown(0) && isMouseOnTile) 
         {
             SetBusy();

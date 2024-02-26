@@ -8,14 +8,17 @@ public class PlayerApUI : UIElement
     {
         int maxAp = GameManager.instance.playerStat.maxActionPoint;
         int curAp = FieldSystem.unitSystem.GetPlayer().currentActionPoint;
+        int flickerCnt = UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedApUsage;
         bool isExist = true;
         bool isFilled = true;
-        for (int i = 0; i < transform.childCount; i++) 
+        bool isFlickering = false;
+        for (int i = 0; i < transform.childCount; i++)
         {
+            if (i >= curAp - flickerCnt) isFlickering = true;
             if (i >= curAp) isFilled = false;
             if (i >= maxAp) isExist = false;
 
-            transform.GetChild(i).GetComponent<PlayerApUIElement>().SetApUIElement(isExist, isFilled);
+            transform.GetChild(i).GetComponent<PlayerApUIElement>().SetApUIElement(isExist, isFilled, isFlickering);
         }
     }
 }

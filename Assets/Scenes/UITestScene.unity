@@ -23416,6 +23416,10 @@ MonoBehaviour:
   _actionPointUI: {fileID: 1240024092}
   _magazineUI: {fileID: 1251058736}
   _concentrationUI: {fileID: 1287830438}
+  expectedHpUsage: 0
+  expectedApUsage: 0
+  expectedMagUsage: 0
+  expectedConcenUsage: 0
 --- !u!224 &554890446
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36569,7 +36573,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802384498}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -36697,10 +36701,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbae9e1ef44a3644942ab422c00a0bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portraitUI: {fileID: 1863731538}
-  expUI: {fileID: 1790789236}
-  statUI: {fileID: 1838470371}
-  statusUI: {fileID: 554890444}
+  portraitUI: {fileID: 1863731543}
+  expUI: {fileID: 1790789240}
+  mainStatUI: {fileID: 1838470373}
+  summaryStatusUI: {fileID: 554890445}
 --- !u!224 &802384507
 RectTransform:
   m_ObjectHideFlags: 0
@@ -47428,7 +47432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -14852.909, y: -1960.0549}
+  m_AnchoredPosition: {x: -1771258.5, y: -55929.152}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1011859506
@@ -57137,7 +57141,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -38053456, y: 14909221}
+  m_AnchoredPosition: {x: -41111460, y: 16102297}
   m_SizeDelta: {x: 763.6692, y: 456.5049}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1224619894
@@ -75065,11 +75069,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ap UI Element
       objectReference: {fileID: 0}
-    - target: {fileID: 7581156899261578876, guid: e99c04441a9e5e24295f523863213cfe,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e99c04441a9e5e24295f523863213cfe, type: 3}
 --- !u!224 &1657021070 stripped
@@ -92144,7 +92143,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &1985263084
 MonoBehaviour:

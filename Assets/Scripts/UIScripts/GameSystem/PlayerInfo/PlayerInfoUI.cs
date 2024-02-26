@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class PlayerInfoUI : UISystem
 {
-    public GameObject portraitUI;
-    public GameObject expUI;
-    public GameObject statUI;
-    public GameObject statusUI;
+    public PlayerPortraitUI portraitUI;
+    public PlayerExpUI expUI;
+    public PlayerMainStatUI mainStatUI;
+    public PlayerSummaryStatusUI summaryStatusUI;
 
     // Start is called before the first frame update
     void Start()
     {
         UIManager.instance.onPlayerStatChanged.AddListener(SetPlayerInfoUI);
-        UIManager.instance.onTurnChanged.AddListener(SetPlayerInfoUI);
+        UIManager.instance.onSceneChanged.AddListener(SetPlayerInfoUI);
         UIManager.instance.onActionChanged.AddListener(SetPlayerInfoUI);
     }
 
     private void SetPlayerInfoUI()
     {
-        portraitUI.GetComponent<PlayerPortraitUI>().SetPortraitUI();
-        statUI.GetComponent<PlayerMainStatUI>().SetMainStatUI();
-        statusUI.GetComponent<PlayerSummaryStatusUI>().SetCurrentStatusUI();
+        portraitUI.SetPortraitUI();
+        mainStatUI.SetMainStatUI();
+        summaryStatusUI.SetCurrentStatusUI();
     }
 }

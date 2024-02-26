@@ -39,6 +39,8 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent onSceneChanged;
     [HideInInspector] public UnityEvent onTurnChanged;
     [HideInInspector] public UnityEvent onPlayerStatChanged;
+    [HideInInspector] public UnityEvent<int> onGetExp;
+    [HideInInspector] public UnityEvent<int> onLevelUp;
     [HideInInspector] public UnityEvent onPlayerSkillChangd;
     [HideInInspector] public UnityEvent onActionChanged;
     [HideInInspector] public UnityEvent onInventoryChanged;

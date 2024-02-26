@@ -26,9 +26,11 @@ public class LogUI : UISystem
 
     private void Awake()
     {
-        UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat);
+        UIManager.instance.onLevelUp.AddListener(ChangedLevel);
+        UIManager.instance.onGetExp.AddListener(ChangedExp);
         UIManager.instance.onTurnChanged.AddListener(ChangedTurn);
         UIManager.instance.onActionChanged.AddListener(ChangedAction);
+        //UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat); // 모든 플레이어 스탯변화 추적하기 힘들어 일단 주석처리
         InstantiateText();
     }
 
@@ -40,6 +42,17 @@ public class LogUI : UISystem
     public override void OpenUI()
     {
         base.OpenUI();
+    }
+
+    private void ChangedExp(int exp)
+    {
+        _builder.Append($"{exp} 경험치를 얻었습니다..\n");
+        UpdateText();
+    }
+    private void ChangedLevel(int level)
+    {
+        _builder.Append($"레벨업! {level} 레벨이 되었습니다.\n");
+        UpdateText();
     }
 
     private void ChangedPlayerStat()

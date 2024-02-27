@@ -98,7 +98,6 @@ public class UnitStat : ICloneable
         }
         
         _additional[(int)type] += value;
-        Debug.Log("Test");
     }
 
     public void AddMultiplier(StatType type, int value)

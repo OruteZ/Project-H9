@@ -22,11 +22,11 @@ public class PlayerMainStatElement : UIElement, IPointerEnterHandler, IPointerEx
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UIManager.instance.gameSystemUI.playerInfoUI.statUI.GetComponent<PlayerMainStatUI>().ShowMainStatTooltip(this.gameObject);
+        UIManager.instance.gameSystemUI.playerInfoUI.mainStatUI.GetComponent<PlayerMainStatUI>().ShowMainStatTooltip(this.gameObject);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        UIManager.instance.gameSystemUI.playerInfoUI.statUI.GetComponent<PlayerMainStatUI>().HideMainStatTooltip();
+        UIManager.instance.gameSystemUI.playerInfoUI.mainStatUI.GetComponent<PlayerMainStatUI>().HideMainStatTooltip();
     }
 }

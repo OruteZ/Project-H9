@@ -326,8 +326,16 @@ public class CombatActionUI : UISystem
         _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(false);
     }
 
-    public void ShowRequiredCost(IUnitAction action) 
+    public void ShowRequiredCost(IUnitAction action)
     {
-
+        UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedApUsage = action.GetCost();
+        UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedMagUsage = action.GetAmmoCost();
+        UIManager.instance.onPlayerStatChanged.Invoke();
+    }
+    public void ClearRequiredCost()
+    {
+        UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedApUsage = 0;
+        UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedMagUsage = 0;
+        UIManager.instance.onPlayerStatChanged.Invoke();
     }
 }

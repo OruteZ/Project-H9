@@ -128,6 +128,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
     private IEnumerator MovableTileEffectCoroutine()
     {
         int range = _player.currentActionPoint / _player.GetAction<MoveAction>().GetCost();
+        int prevRouteLength = -1;
         while (true)
         {
             yield return null;
@@ -167,6 +168,15 @@ public class TileEffectManager : Singleton<TileEffectManager>
             {
                 ClearEffect(_effectsRelatedTarget);
             }
+
+            if (prevRouteLength != route.Count)
+            {
+                Debug.Log("route set");
+                UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedApUsage = route.Count - 1;
+                UIManager.instance.onPlayerStatChanged.Invoke();
+            }
+            prevRouteLength = route.Count;
+
         }
         // ReSharper disable once IteratorNeverReturns
     }

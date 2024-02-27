@@ -22,7 +22,7 @@ public class SkillTreeElement : UIElement
     {
         ClearPostArrowList();
         effectSpeed = 10;
-        StartCoroutine(EffectColorChange((int)LearnStatus.NotLearnable, 0));
+        StartCoroutine(ChangeEffectColor((int)LearnStatus.NotLearnable, 0));
 
         _skillIcon = _SkillImage.GetComponent<SkillIcon>();
         _skillIcon.SetSkillIndex(skillIndex);
@@ -44,9 +44,9 @@ public class SkillTreeElement : UIElement
     /// <param name="state"> 스킬트리UI의 상태 </param>
     public void SetSkillButtonEffect(LearnStatus state)
     {
-        StartCoroutine(EffectColorChange(state, 1 / effectSpeed));
+        StartCoroutine(ChangeEffectColor(state, 1 / effectSpeed));
     }
-    IEnumerator EffectColorChange(LearnStatus state, float speed)
+    IEnumerator ChangeEffectColor(LearnStatus state, float speed)
     {
         if (state != LearnStatus.NotLearnable)
         {
@@ -88,7 +88,7 @@ public class SkillTreeElement : UIElement
     {
         return skillIndex;
     }
-    public GameObject FindSkillNode(int index) 
+    public GameObject rFindSkillNodeAtChildren(int index) 
     {
         if (index == skillIndex)
         {
@@ -99,7 +99,7 @@ public class SkillTreeElement : UIElement
             foreach (GameObject arrow in _postLine) 
             {
                 GameObject postNode = arrow.GetComponent<SkillTreeArrow>().GetPostSkillNode();
-                GameObject findResult = postNode.GetComponent<SkillTreeElement>().FindSkillNode(index);
+                GameObject findResult = postNode.GetComponent<SkillTreeElement>().rFindSkillNodeAtChildren(index);
                 if (findResult != null) 
                 {
                     return findResult;

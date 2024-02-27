@@ -96,5 +96,9 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
     public void OnPointerExit(PointerEventData eventData)
     {
         UIManager.instance.combatUI.combatActionUI.HideActionUITooltip();
+        if (buttonAction is not null)
+        {
+            UIManager.instance.combatUI.combatActionUI.ClearRequiredCost();
+        }
     }
 }

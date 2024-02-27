@@ -31,7 +31,6 @@ public class PlayerSummaryStatusUI : UIElement
     }
     private void InitExpectedValues() 
     {
-        Debug.Log("init");
         expectedHpUsage = 0;
         expectedApUsage = 0;
         expectedMagUsage = 0;

@@ -14,13 +14,6 @@ using UnityEngine;
             stackCount = 1;
         }
 
-    //for ui test
-    public Item(ItemData d) 
-    {
-        _data = d;
-    }
-    //test end
-
         public static Item CreateItem(ItemData data)
         {
             //read item type

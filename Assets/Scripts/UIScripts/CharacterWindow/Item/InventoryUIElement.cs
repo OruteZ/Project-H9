@@ -9,7 +9,7 @@ public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHand
 {
     [SerializeField] private GameObject _itemIcon;
     [SerializeField] protected GameObject _itemCountText;
-    [SerializeField] protected GameObject _itemFrame;
+    [SerializeField] protected GameObject _itemFrame = null;
 
     public Item item { get; private set; }
     //public int idx;

@@ -171,7 +171,6 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
             if (prevRouteLength != route.Count)
             {
-                Debug.Log("route set");
                 UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedApUsage = route.Count - 1;
                 UIManager.instance.onPlayerStatChanged.Invoke();
             }

@@ -44,6 +44,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
     public GameObject attackOutOfRangeEffect;
     public GameObject attackUnitEffect;
     public GameObject attackSweetSpotEffect;
+    public GameObject attackSweetSpotUnitEffect;
     public RectTransform aimEffectRectTsf; 
     public RectTransform combatCanvas;
     public RectTransform aimEffect;
@@ -229,6 +230,23 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 
                 SetEffectBase(pos.hexPosition, attackSweetSpotEffect);
             }
+            
+            //remove units in sweet spot range circle
+            foreach (var unit in FieldSystem.unitSystem.units)
+            {
+                if (unit is Player) continue;
+                if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
+                if (sweetSpot == Hex.Distance(_player.hexPosition, unit.hexPosition))
+                {
+                    if (_effectsBase.ContainsKey(unit.hexPosition))
+                    {
+                        Destroy(_effectsBase[unit.hexPosition]);
+                        _effectsBase.Remove(unit.hexPosition);
+                    }
+                    
+                    SetEffectBase(unit.hexPosition, attackSweetSpotUnitEffect);
+                }
+            }
         }
 
         _curCoroutine = StartCoroutine(AttackTargetEffectCoroutine());
@@ -255,6 +273,28 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 continue;
             }
             
+            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, newTarget.hexPosition) is false)
+            {
+                aimEffectRectTsf.gameObject.SetActive(false);
+                yield return null;
+                continue;
+            }
+            
+            if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, newTarget.hexPosition) is false)
+            {
+                aimEffectRectTsf.gameObject.SetActive(false);
+                yield return null;
+                continue;
+            }
+            
+            if (Hex.Distance(_player.hexPosition, newTarget.hexPosition) > _player.weapon.GetRange()
+                && _player.weapon is Shotgun)
+            {
+                aimEffectRectTsf.gameObject.SetActive(false);
+                yield return null;
+                continue;
+            }
+
             targetUnit = newTarget;
             
             aimEffectRectTsf.gameObject.SetActive(true);

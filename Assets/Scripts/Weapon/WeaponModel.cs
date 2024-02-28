@@ -68,7 +68,7 @@ public class WeaponModel : MonoBehaviour
 
     public bool isVisible
     {
-        get => _meshRendererList[0].enabled;
+        get => _meshRendererList[0] && _meshRendererList[0].enabled;
         set
         {
             foreach (var r in _meshRendererList)

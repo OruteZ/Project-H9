@@ -4,34 +4,84 @@ using UnityEngine;
 
 public class Shotgun : Weapon
 {
-    public override void Attack(Unit target, out bool isCritical)
+    private Vector3Int _targetHex;
+    public override WeaponType GetWeaponType() => WeaponType.Shotgun;
+    public override float GetDistancePenalty() => 2;
+    public override int GetRange()
     {
-        throw new System.NotImplementedException();
+        return weaponRange + unitStat.shotgunAdditionalDamage;
     }
 
-    public override WeaponType GetWeaponType() => WeaponType.Shotgun;
+    public override void Attack(Unit target, out bool isCritical)
+    {
+        Debug.Log("Weapon attack Call" + " : " + nameIndex);
+
+        isCritical = Random.value * 100 < unitStat.criticalChance + criticalChance;
+        if (isCritical)
+        {
+            CriticalAttack(target);
+        }
+        else
+        {
+            NonCriticalAttack(target);
+        }
+        //UIManager.instance.combatUI.enemyHpUI.SetEnemyHpBars(); //test
+    }
+
     public override int GetFinalDamage()
     {
-        throw new System.NotImplementedException();
+        float baseDamage = (weaponDamage + unitStat.shotgunAdditionalDamage);
+
+        int range = GetRange();
+        int distance = Hex.Distance(unit.hexPosition, _targetHex);
+
+        int value = range - distance;
+        int damage = Mathf.RoundToInt(baseDamage * Mathf.Pow(2, value));
+        
+        return damage;
     }
 
     public override int GetFinalCriticalDamage()
     {
-        throw new System.NotImplementedException();
+        float dmg = GetFinalDamage();
+        dmg += dmg * ((unitStat.shotgunCriticalDamage + criticalDamage) * 0.01f);
+
+        return Mathf.RoundToInt(dmg);
     }
 
     public override float GetFinalHitRate(Unit target)
     {
-        throw new System.NotImplementedException();
+        int range = GetRange();
+        int distance = Hex.Distance(unit.hexPosition, target.hexPosition);
+        
+        _targetHex = target.hexPosition;
+
+        float finalHitRate = distance <= range ? 100 : 0;
+
+        #if UNITY_EDITOR
+        //Debug.Log("Hit rate = " + finalHitRate);
+        #endif
+
+        UIManager.instance.debugUI.SetDebugUI
+            (finalHitRate, unit, target, distance, weaponRange,
+                unitStat.revolverAdditionalRange,
+                GetDistancePenalty() *
+                (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
+        
+        return finalHitRate;
     }
 
-    public override float GetDistancePenalty()
+    private void NonCriticalAttack(Unit target)
     {
-        throw new System.NotImplementedException();
+        int damage = GetFinalDamage();
+        target.TakeDamage(damage, unit);
+        Service.SetText(index:0, damage.ToString(), target.transform.position);
     }
 
-    public override int GetRange()
+    private void CriticalAttack(Unit target)
     {
-        throw new System.NotImplementedException();
+        int damage = GetFinalCriticalDamage();
+        target.TakeDamage(damage, unit);
+        Service.SetText(index:1, damage.ToString(), target.transform.position);
     }
 }

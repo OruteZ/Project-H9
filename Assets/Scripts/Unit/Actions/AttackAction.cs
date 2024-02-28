@@ -67,7 +67,17 @@ public class AttackAction : BaseAction, IShootingAction
             Debug.Log("There is wall. cant attack");
             return false;
         }
-        
+
+        if (weapon.GetWeaponType() == WeaponType.Shotgun)
+        {
+            // if distance is greater than range, return false
+            if (Hex.Distance(unit.hexPosition, _target.hexPosition) > weapon.GetRange())
+            {
+                Debug.Log("Distance is greater than range, cant attack");
+                return false;
+            }
+        }
+
         return true;
     }
 

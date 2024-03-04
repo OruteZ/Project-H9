@@ -9,6 +9,7 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
 {
     [SerializeField] private GameObject _actionButton;
     [SerializeField] private GameObject _actionButtonActiveEffect;
+    [SerializeField] private GameObject _actionButtonHighlightEffect;
     [SerializeField] private GameObject _actionButtonIcon;
     [SerializeField] private GameObject _actionButtonNumber;
 
@@ -23,7 +24,8 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
     void Start()
     {
         buttonAction = null;
-        if (actionType != CombatActionType.Null) 
+        _actionButtonHighlightEffect.SetActive(false);
+        if (actionType != CombatActionType.PlayerSkill) 
         {
             //_actionButtonIcon.GetComponent<Image>().sprite = ;
             _actionButtonNumber.GetComponent<TextMeshProUGUI>().text = ((int)actionType).ToString();
@@ -31,8 +33,9 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
         }
     }
 
-    public void SetcombatActionButton(CombatActionType actionType, int btnNumber, IUnitAction action) 
+    public void SetcombatActionButton(CombatActionType actionType, int btnNumber, IUnitAction action)
     {
+        _actionButtonHighlightEffect.SetActive(false);
         this.actionType = actionType;
         _buttonIndex = btnNumber;
         _actionButtonNumber.GetComponent<TextMeshProUGUI>().text = (btnNumber + 1).ToString();
@@ -87,6 +90,7 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        _actionButtonHighlightEffect.SetActive(_isSelectable);
         UIManager.instance.combatUI.combatActionUI.ShowActionUITooltip(gameObject);
         if (buttonAction is not null)
         {
@@ -95,6 +99,7 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
     }
     public void OnPointerExit(PointerEventData eventData)
     {
+        _actionButtonHighlightEffect.SetActive(false);
         UIManager.instance.combatUI.combatActionUI.HideActionUITooltip();
         if (buttonAction is not null)
         {

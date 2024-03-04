@@ -306,22 +306,23 @@ public class CombatActionUI : UISystem
     }
     private void UpdateButtonSeletable()
     {
-        bool isThereSeletableSkill = false;
-        for (int i = 0; i < _skillActionBundle.transform.childCount; i++)
-        {
-            GameObject btn = _skillActionBundle.transform.GetChild(i).gameObject;
-            if (!btn.activeSelf) break;
-            btn.GetComponent<CombatActionButtonElement>().SetInteractable();
-            if (btn.GetComponent<CombatActionButtonElement>().IsInteractable()) 
-            {
-                isThereSeletableSkill = true;
-            }
-        }
+        //bool isThereSeletableSkill = false;
+        //for (int i = 0; i < _skillActionBundle.transform.childCount; i++)
+        //{
+        //    GameObject btn = _skillActionBundle.transform.GetChild(i).gameObject;
+        //    if (!btn.activeSelf) break;
+        //    btn.GetComponent<CombatActionButtonElement>().SetInteractable();
+        //    if (btn.GetComponent<CombatActionButtonElement>().IsInteractable()) 
+        //    {
+        //        isThereSeletableSkill = true;
+        //    }
+        //}
+        bool isSkillExist = _skillActionBundle.transform.GetChild(0).gameObject.activeSelf;
 
         _baseActionBundle.transform.GetChild(0).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(1).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(2).GetComponent<CombatActionButtonElement>().SetInteractable();
-        _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable(isThereSeletableSkill);
+        _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable(isSkillExist);
         _baseActionBundle.transform.GetChild(4).GetComponent<CombatActionButtonElement>().SetInteractable(false);
         _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(false);
     }

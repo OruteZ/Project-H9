@@ -45,8 +45,8 @@ public class SkillUI : UISystem
     }
     public override void OpenUI() 
     {
-        base.OpenUI();
         UpdateAllSkillUINode();
+        base.OpenUI();
     }
     public override void CloseUI()
     {

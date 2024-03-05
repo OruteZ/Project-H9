@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public class SkillDescriptionScript
 {
@@ -14,7 +15,7 @@ public class SkillDescriptionScript
         description = str;
         keywordIndex = new List<int>();
     }
-    public string GetDescription(int skillIndex)
+    public string GetDescription(int skillIndex, out List<int> keywords)
     {
         _substitutedDescription = description;
         SubstituteKeyword();
@@ -31,7 +32,11 @@ public class SkillDescriptionScript
         }
         if (keywordIndex.Count != 0)
         {
-            UIManager.instance.skillUI.SetKeywordTooltipContents(keywordIndex);
+            keywords = keywordIndex.Distinct().ToList();    //중복 제거
+        }
+        else
+        {
+            keywords = null;
         }
         return _substitutedDescription;
     }

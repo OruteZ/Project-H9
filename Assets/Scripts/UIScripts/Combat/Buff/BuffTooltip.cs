@@ -36,7 +36,7 @@ public class BuffTooltip : UIElement
     private void SetBuffText(IDisplayableEffect effect)
     {
         _buffName = SkillManager.instance.GetSkillName(effect.GetIndex());
-        _buffDesc = SkillManager.instance.GetSkillDescription(effect.GetIndex());
+        _buffDesc = SkillManager.instance.GetSkillDescription(effect.GetIndex(), out var k);
     }
     private void SetDebuffText(IDisplayableEffect effect)
     {

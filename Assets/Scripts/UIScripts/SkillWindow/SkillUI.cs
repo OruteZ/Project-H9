@@ -155,6 +155,7 @@ public class SkillUI : UISystem
 
     public void SetKeywordTooltipContents(List<int> keywords) 
     {
+        if (keywords is null) return;
         foreach (int i in keywords)
         {
             if (_currentKeywordIndex.Contains(i)) continue;

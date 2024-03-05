@@ -15,14 +15,15 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
 
     public CombatActionType actionType = CombatActionType.Null;
     public string buttonName { get; private set; }
+    public int buttonIndex { get; private set; }
     public IUnitAction buttonAction { get; private set; }
 
-    private int _buttonIndex = 0;
     private bool _isSelectable = true;
 
     // Start is called before the first frame update
     void Start()
     {
+        buttonIndex = 0;
         buttonAction = null;
         _actionButtonHighlightEffect.SetActive(false);
         if (actionType != CombatActionType.PlayerSkill) 
@@ -37,8 +38,9 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
     {
         _actionButtonHighlightEffect.SetActive(false);
         this.actionType = actionType;
-        _buttonIndex = btnNumber;
+        buttonIndex = btnNumber;
         _actionButtonNumber.GetComponent<TextMeshProUGUI>().text = (btnNumber + 1).ToString();
+        if (action is null) return;
         buttonName = action.GetActionType().ToString();
         buttonAction = action;
         SetInteractable();
@@ -48,7 +50,7 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
     {
         if (IsInteractable())
         {
-            UIManager.instance.combatUI.combatActionUI.SelectAction(actionType, _buttonIndex);
+            UIManager.instance.combatUI.combatActionUI.SelectAction(actionType, buttonIndex);
         }
     }
     public override bool IsInteractable()
@@ -80,12 +82,15 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
             _isSelectable = false;
         }
         _actionButtonActiveEffect.SetActive(!_isSelectable);
+        _actionButtonHighlightEffect.SetActive(false);
     }
     public void SetInteractable(bool isInteractable)
     {
         if (buttonAction is not null) return;
         _isSelectable = isInteractable;
         _actionButtonActiveEffect.SetActive(!_isSelectable);
+        _actionButtonHighlightEffect.SetActive(false);
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)

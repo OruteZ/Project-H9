@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuffUI : UISystem
 {
@@ -63,6 +64,8 @@ public class BuffUI : UISystem
         SetBuffUI(_BuffUI, _currentBuffs, true);
         SortDebuff();
         SetBuffUI(_DebuffUI, _currentDebuffs, false);
+        _BuffDebuffWindow.GetComponent<VerticalLayoutGroup>().CalculateLayoutInputVertical();
+        _BuffDebuffWindow.GetComponent<VerticalLayoutGroup>().SetLayoutVertical();
     }
     private void SortDebuff()
     {
@@ -116,7 +119,8 @@ public class BuffUI : UISystem
         _currentTooltipEffect = effect;
 
         RectTransform rt = _BuffDebuffWindow.GetComponent<RectTransform>();
-        pos.y = rt.position.y + rt.sizeDelta.y + 5; 
+        Debug.Log(rt.position.y + " / " + rt.sizeDelta.y);
+        pos.y = rt.position.y + (rt.sizeDelta.y + 5) * UIManager.instance.GetCanvasScale();
         _buffTooltipWindow.GetComponent<BuffTooltip>().SetBuffTooltip(effect, pos);
     }
     public void HideBuffUITooltip()

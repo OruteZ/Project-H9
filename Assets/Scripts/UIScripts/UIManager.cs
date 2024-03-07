@@ -225,4 +225,9 @@ public class UIManager : Generic.Singleton<UIManager>
         currentLayer = 0;
         SetUILayer();
     }
+
+    public float GetCanvasScale() 
+    {
+        return _worldCanvas.scaleFactor;
+    }
 }

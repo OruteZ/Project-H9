@@ -16,7 +16,6 @@ public class BuffTooltip : UIElement
 
     public void SetBuffTooltip(IDisplayableEffect effect, Vector3 pos)
     {
-        OpenUI();
 
         currentTooltipEffect = effect;
         if (effect is StatusEffect)
@@ -32,6 +31,7 @@ public class BuffTooltip : UIElement
         transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _buffDesc;
 
         GetComponent<RectTransform>().position = pos;
+        OpenUI();
     }
     private void SetBuffText(IDisplayableEffect effect)
     {

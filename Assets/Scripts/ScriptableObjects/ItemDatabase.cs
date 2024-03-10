@@ -46,10 +46,12 @@ public class ItemDatabase : ScriptableObject
 [Serializable]
 public class ItemData
 {
-    public ItemType type;
-    
     public int id;
     public int nameIdx;
+    public ItemType type;
+    public int itemMaxStorage;
+    public int itemRange;
+    public int itemEffect;
 
     public bool stackAble;
     public bool equipAble;

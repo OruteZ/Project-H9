@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 
 public interface IItem
@@ -18,7 +19,8 @@ public interface IItem
     /// <summary>
     /// 아이템을 사용할 수 있을경우, 사용합니다.
     /// </summary>
-    public void Use();
+    public bool Use(Unit user);
+    public bool Use(Unit user, Vector3Int target);
     
     /// <summary>
     /// 아이템의 스택 개수를 반환합니다.

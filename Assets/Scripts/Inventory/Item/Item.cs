@@ -28,7 +28,9 @@ using UnityEngine;
 
         public ItemData GetData() => _data;
         public IEnumerable<IItemAttribute> GetAttributes() => _attributes;
-        public virtual void Use() { }
+        public bool Use(Unit user) => Use(user, Vector3Int.zero);
+        public abstract bool Use(Unit user, Vector3Int target);
+        
         public int GetStackCount() => stackCount;
         public abstract bool TryEquip();
 

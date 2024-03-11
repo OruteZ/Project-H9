@@ -23,13 +23,15 @@ public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHand
         //_itemIcon.GetComponent<Image>().sprite = ?
         if (item is null) 
         {
-            Debug.Log("InventoryUI: item is null");
             return;
         }
         this.item = item;
         //idx = item.GetData().id;
         Texture2D texture = item.GetData().icon;
-        _itemIcon.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        if (texture is not null)
+        {
+            _itemIcon.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        }
         _itemIcon.GetComponent<Image>().color = Color.white;
 
         var data = item.GetData();

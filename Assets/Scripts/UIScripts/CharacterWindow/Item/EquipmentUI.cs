@@ -21,23 +21,23 @@ public class EquipmentUI : UISystem
 
     public void SetEquipmentUI() 
     {
-        WeaponData data = FieldSystem.unitSystem.GetWeaponData(GameManager.instance.playerWeaponIndex);
+        ItemData data = GameManager.instance.itemDatabase.GetItemData(GameManager.instance.playerWeaponIndex);
 
-        _weaponNameText.GetComponent<TextMeshProUGUI>().text = data.weaponNameIndex.ToString();
+        _weaponNameText.GetComponent<TextMeshProUGUI>().text = data.nameIdx.ToString();
         int imgIdx = 0;
-        switch (data.type) 
+        switch (data.itemType) 
         {
-            case WeaponType.Revolver:
+            case ItemType.Revolver:
                 {
                     imgIdx = 0;
                     break;
                 }
-            case WeaponType.Repeater:
+            case ItemType.Repeater:
                 {
                     imgIdx = 1;
                     break;
                 }
-            case WeaponType.Shotgun:
+            case ItemType.Shotgun:
                 {
                     imgIdx = 2;
                     break;

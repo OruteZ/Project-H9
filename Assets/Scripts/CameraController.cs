@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 public class CameraController : MonoBehaviour
 {
@@ -58,6 +59,8 @@ public class CameraController : MonoBehaviour
         direction.Normalize();
         
         newPosition += direction * (movementSpeed * Time.deltaTime);
+        DragCamera();
+        
 
         newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
         newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
@@ -186,6 +189,23 @@ public class CameraController : MonoBehaviour
                 return Input.mousePosition.y <= 1;
             default:
                 return false;
+        }
+    }
+    
+    private Vector3 _lastMousePosition;
+    private void DragCamera()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            _lastMousePosition = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 delta = Input.mousePosition - _lastMousePosition;
+            delta = new Vector3(delta.x, 0, delta.y);
+            newPosition -= delta * movementSpeed * Time.deltaTime;
+            _lastMousePosition = Input.mousePosition;
         }
     }
 }

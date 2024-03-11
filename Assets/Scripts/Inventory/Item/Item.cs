@@ -16,26 +16,53 @@ using UnityEngine;
 
         public static Item CreateItem(ItemData data)
         {
-            //read item type
-            switch (data.type)
-            {
-                case ItemType.Weapon:
-                    return new WeaponItem(data);
-            }
+            //create item by ItemType
+            Item item = null;
             
-            return null;
+            switch (data.itemType)
+            {
+                case ItemType.Null:
+                    break;
+                case ItemType.Etc:
+                    break;
+                case ItemType.Character:
+                case ItemType.Revolver:
+                case ItemType.Repeater:
+                case ItemType.Shotgun:
+                    item = new WeaponItem(data);
+                    break;
+                case ItemType.Heal:
+                    item = new HealItem(data);
+                    break;
+                case ItemType.Damage:
+                    break;
+                case ItemType.Cleanse:
+                    break;
+                case ItemType.Buff:
+                    item = new BuffItem(data);
+                    break;
+                case ItemType.Debuff:
+                    item = new DebuffItem(data);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return item;
         }
 
         public ItemData GetData() => _data;
         public IEnumerable<IItemAttribute> GetAttributes() => _attributes;
-        public virtual void Use() { }
+        public bool Use(Unit user) => Use(user, Vector3Int.zero);
+        public abstract bool Use(Unit user, Vector3Int target);
+        
         public int GetStackCount() => stackCount;
         public abstract bool TryEquip();
 
         public bool TrySplit(int count, out IItem newItem)
         {
             newItem = null;
-            if (count > 0 && _data.stackAble && count < stackCount)
+            if (count > 0 && count < stackCount)
             {
                 stackCount -= count;
                 newItem = (Item)MemberwiseClone();
@@ -47,12 +74,13 @@ using UnityEngine;
 
         public static Item operator +(Item item1, Item item2)
         {
-            if (item1.GetData().id == item2.GetData().id && item1.GetData().stackAble)
+            //check same id and max storage
+            if (item1.GetData().id == item2.GetData().id && item1.stackCount + item2.stackCount <= item1.GetData().itemMaxStorage)
             {
                 item1.stackCount += item2.stackCount;
                 return item1;
             }
             Debug.LogError("Cannot stack items");
-            return null;
+            return item1;
         }
     }

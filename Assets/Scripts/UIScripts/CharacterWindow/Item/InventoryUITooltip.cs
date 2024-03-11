@@ -47,8 +47,8 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
             string weaponTypeText = wData.type.ToString();
             string weaponDamageText = wData.weaponDamage.ToString() + " Damage";
             string weaponRangeText = wData.weaponRange.ToString() + " Range";
-            string weaponEffect = "Effect: " + iData.descriptionIdx.ToString();
-            description = weaponTypeText + "\n" + weaponDamageText + "\n" + weaponRangeText + "\n\n" + weaponEffect;
+            // string weaponEffect = "Effect: " + iData.descriptionIdx.ToString();
+            // description = weaponTypeText + "\n" + weaponDamageText + "\n" + weaponRangeText + "\n\n" + weaponEffect;
         }
 
         _itemDescriptionText.GetComponent<TextMeshProUGUI>().text = description;

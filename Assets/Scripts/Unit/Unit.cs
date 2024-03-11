@@ -299,6 +299,16 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         return _hasDead;
     }
+    
+    public void SelectItem(IItem item)
+    {
+        if (item is null) return;
+        if (item.IsUsable()) return;
+        
+        var itemUsingAction = GetAction<ItemUsingAction>();
+        itemUsingAction.SetItem(item);
+        SelectAction(itemUsingAction);
+    }
 
     protected bool TryExecuteUnitAction(Vector3Int targetPosition)
     {

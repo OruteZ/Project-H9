@@ -32,7 +32,12 @@ public interface IItem
     public bool TrySplit(int count, out IItem newItem);
 
     /// <summary>
-    /// Target 좌표를 지정하는 Action을 해야 하는지에 대해 여부를 반환합니다.
+    /// 이 아이템을 사용하는 행동이 Immediate하게 실행되어야 하는지 여부를 반환합니다.
     /// </summary>
-    /// <returns></returns>
+    public bool IsImmediate();
+    
+    /// <summary>
+    /// 해당 아이템이 사용가능한지 여부를 반환합니다.
+    /// </summary>
+    public bool IsUsable();
 }

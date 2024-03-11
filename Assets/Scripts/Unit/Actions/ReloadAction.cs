@@ -34,6 +34,7 @@ public class ReloadAction : BaseAction
 
     public override bool IsSelectable()
     {
+        if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
         return weapon.currentAmmo < weapon.maxAmmo;
     }
 

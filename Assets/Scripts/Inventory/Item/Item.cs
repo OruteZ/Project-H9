@@ -72,6 +72,28 @@ using UnityEngine;
             return false;
         }
 
+        public bool IsImmediate()
+        {
+            return GetData().itemType is ItemType.Buff or ItemType.Cleanse or ItemType.Heal;
+        }
+
+        public bool IsUsable()
+        {
+            switch (GetData().itemType)
+            {
+                case ItemType.Null:
+                case ItemType.Etc:
+                case ItemType.Character:
+                case ItemType.Revolver:
+                case ItemType.Repeater:
+                case ItemType.Shotgun:
+                    return false;
+                //else : return true;
+                default:
+                    return true;
+            }
+        }
+
         public static Item operator +(Item item1, Item item2)
         {
             //check same id and max storage

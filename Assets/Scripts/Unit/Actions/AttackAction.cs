@@ -25,6 +25,7 @@ public class AttackAction : BaseAction, IShootingAction
         if (weapon.currentAmmo == 0) return false;
         if (unit.CheckAttackTrigger()) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
+        if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
 
         return true;
     }

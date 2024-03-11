@@ -55,7 +55,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     protected Unit unit;
     protected bool isActive;
-    public void SetUp(Unit unit)
+    public virtual void SetUp(Unit unit)
     {
         this.unit = unit;
     }

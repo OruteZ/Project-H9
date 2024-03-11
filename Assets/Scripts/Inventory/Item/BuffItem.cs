@@ -27,18 +27,43 @@ public class BuffItem : Item
 
 public class ItemBuff : IDisplayableEffect
 {
+    private int _itemIndex;
     private readonly StatType _statType;
     private readonly int _amount;
     private int _duration;
     
     private Unit _unit;
 
-    public ItemBuff(StatType statType, int amount, int duration, Unit unit)
+    public bool Add(ItemBuff other)
     {
+        //if index is different, return false
+        if (_itemIndex != other._itemIndex) return false;
+        
+        //add duration
+        _duration += other._duration;
+        return true;
+    }
+
+    public ItemBuff(int index, StatType statType, int amount, int duration, Unit unit)
+    {
+        _itemIndex = index;
         _statType = statType;
         _amount = amount;
         _duration = duration;
         _unit = unit;
+        
+        //get units buffs
+        var buffs = _unit.GetDisplayableEffects();
+        foreach (var buff in buffs)
+        {
+            if (buff is ItemBuff itemBuff)
+            {
+                if (itemBuff.Add(this))
+                {
+                    return;
+                }
+            }
+        }
         
         Setup();
     }

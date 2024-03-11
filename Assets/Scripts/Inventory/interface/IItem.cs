@@ -30,4 +30,9 @@ public interface IItem
     
     public bool TryEquip();
     public bool TrySplit(int count, out IItem newItem);
+
+    /// <summary>
+    /// Target 좌표를 지정하는 Action을 해야 하는지에 대해 여부를 반환합니다.
+    /// </summary>
+    /// <returns></returns>
 }

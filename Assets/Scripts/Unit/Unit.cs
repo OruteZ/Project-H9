@@ -46,6 +46,8 @@ public abstract class Unit : MonoBehaviour, IUnit
     public bool lightFootTrigger;
     
     public int currentRound;
+    
+    private List<IDisplayableEffect> _displayableEffects;
 
     // ReSharper disable once InconsistentNaming
     public static readonly UnityEvent<Unit> onAnyUnitActionFinished = new UnityEvent<Unit>();
@@ -106,6 +108,8 @@ public abstract class Unit : MonoBehaviour, IUnit
         FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
 
         _seController = new UnitStatusEffectController(this);
+        
+        _displayableEffects = new List<IDisplayableEffect>();
     }
 
     public virtual void StartTurn()
@@ -224,7 +228,17 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         return _unitActionArray;
     }
-
+    
+    public void AddDisplayableEffect(IDisplayableEffect effect)
+    {
+        _displayableEffects.Add(effect);
+    }
+    
+    public void RemoveDisplayableEffect(IDisplayableEffect effect)
+    {
+        _displayableEffects.Remove(effect);
+    }
+    
     public IDisplayableEffect[] GetDisplayableEffects()
     {
         //search passive that has displayable effect
@@ -243,6 +257,9 @@ public abstract class Unit : MonoBehaviour, IUnit
         {
             displayableEffects.AddRange(statusEffects);
         }
+        
+        //add displayable other effects
+        displayableEffects.AddRange(_displayableEffects);
         
         return displayableEffects.ToArray();
     }

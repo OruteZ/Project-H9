@@ -18,6 +18,7 @@ public class CombatResultUI : UISystem
     {
         FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
         UIManager.instance.onSceneChanged.AddListener(CloseCombatResultUI);
+        //UIManager.instance.onTSceneChanged.AddListener(null);
         _ResultWindow.SetActive(false);
     }
 

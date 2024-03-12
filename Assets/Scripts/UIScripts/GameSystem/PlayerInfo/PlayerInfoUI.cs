@@ -14,6 +14,7 @@ public class PlayerInfoUI : UISystem
     {
         UIManager.instance.onPlayerStatChanged.AddListener(SetPlayerInfoUI);
         UIManager.instance.onSceneChanged.AddListener(SetPlayerInfoUI);
+        //UIManager.instance.onTSceneChanged.AddListener(null);
         UIManager.instance.onActionChanged.AddListener(SetPlayerInfoUI);
     }
 

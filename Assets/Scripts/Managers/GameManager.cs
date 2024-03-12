@@ -75,6 +75,7 @@ public class GameManager : Generic.Singleton<GameManager>
             LevelUp();
         }
         UIManager.instance.onPlayerStatChanged.Invoke();
+        UIManager.instance.onGetExp.Invoke(exp);
     }
     private void LevelUp()
     {
@@ -87,6 +88,7 @@ public class GameManager : Generic.Singleton<GameManager>
         if (level % 3 == 0)
         {
             UIManager.instance.gameSystemUI.playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
+            UIManager.instance.onLevelUp.Invoke(level);
         }
     }
     public int GetMaxExp()

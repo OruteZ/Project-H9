@@ -14,7 +14,7 @@ public class BuffItem : Item
         int amount = GetData().itemEffectAmount;
         int duration = GetData().itemEffectDuration;
 
-        var itemBuff = new ItemBuff(statType, amount, duration, user);
+        var itemBuff = new ItemBuff(GetData().id, statType, amount, duration, user);
 
         return true;
     }
@@ -27,12 +27,12 @@ public class BuffItem : Item
 
 public class ItemBuff : IDisplayableEffect
 {
-    private int _itemIndex;
+    private readonly int _itemIndex;
     private readonly StatType _statType;
     private readonly int _amount;
-    private int _duration;
+    private readonly Unit _unit;
     
-    private Unit _unit;
+    private int _duration;
 
     public bool Add(ItemBuff other)
     {

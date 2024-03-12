@@ -81,4 +81,5 @@ public enum ActionType {
     Reload,
     Fanning,
     Hemostasis,
+    ItemUsing
 }

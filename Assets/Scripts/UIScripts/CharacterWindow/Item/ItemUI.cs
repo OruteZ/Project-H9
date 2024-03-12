@@ -12,6 +12,7 @@ public class ItemUI : UISystem
 
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject _inventoryTooltip;
+    [SerializeField] private GameObject _inventoryButtons;
     [SerializeField] private GameObject _draggedElement;
     [SerializeField] private GameObject _equippedElement;
 
@@ -77,17 +78,30 @@ public class ItemUI : UISystem
     }
     public void OpenInventoryTooltip(Item item, Vector3 pos)
     {
+        if (_inventoryButtons.gameObject.activeSelf is true) return;
+        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(item, pos);
+    }
+    public void OpenInventoryInteraction(Item item, Vector3 pos)
+    {
+        if (item == _equippedItem) return;
+        _inventoryButtons.GetComponent<InventoryInteractionUI>().SetInventoryInteractionUI(item, pos);
+        pos.x += _inventoryButtons.GetComponent<RectTransform>().sizeDelta.x;
         _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(item, pos);
     }
     public override void ClosePopupWindow()
     {
-        if (!IsMouseOverTooltip(_inventoryTooltip))
+        if (UIManager.instance.currentLayer != 3)
+        {
+            _inventoryButtons.GetComponent<InventoryInteractionUI>().CloseUI();
+        }
+        if (!IsMouseOverTooltip(_inventoryTooltip) && _inventoryButtons.gameObject.activeSelf is false)
         {
             _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
         }
     }
     private bool IsMouseOverTooltip(GameObject tooltip)
     {
+        if (tooltip.gameObject.activeSelf is false) return false;
         GraphicRaycaster gr = GetComponent<GraphicRaycaster>();
         PointerEventData ped = new PointerEventData(null);
         ped.position = Input.mousePosition;

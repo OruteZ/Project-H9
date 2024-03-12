@@ -39,7 +39,19 @@ public class Inventory : IInventory
         List<IItem> itemList = GetCorrectTypeItemList(additem.GetData().itemType);
         if (additem.GetData().itemMaxStorage > 1)
         {
-            //stack operation?
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                if (itemList[i] is null) continue;
+                bool isStackFull = (itemList[i].GetData().itemMaxStorage <= itemList[i].GetStackCount());
+                if (isStackFull) continue;
+                bool isSameItem = (itemList[i].GetData().id == additem.GetData().id);
+                if (isSameItem)
+                {
+                    itemList[i] = (Item)itemList[i] + (Item)additem;
+                    IInventory.OnInventoryChanged?.Invoke();
+                    return;
+                }
+            }
         }
         for (int i = 0; i < itemList.Count; i++)
         {

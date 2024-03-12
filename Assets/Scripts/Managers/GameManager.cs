@@ -227,7 +227,7 @@ public class GameManager : Generic.Singleton<GameManager>
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            AddItem(308);
+            AddItem(601);
         }
 
         if (Input.GetKeyDown(KeyCode.F))

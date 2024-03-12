@@ -113,7 +113,7 @@ public class CombatActionUI : UISystem
         if (player is null) return;
 
         List<IUnitAction> actions = new List<IUnitAction>(player.GetUnitActionArray());
-        ActionType[] baseActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload, ActionType.Idle };
+        ActionType[] baseActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload, ActionType.Idle, ActionType.ItemUsing };
 
         List<IUnitAction> ba = new List<IUnitAction>();
         for (int j = 0; j < baseActionType.Length; j++)
@@ -132,8 +132,8 @@ public class CombatActionUI : UISystem
         //basic action
         if (ba.Count != baseActionType.Length)
         {
-            Debug.LogError("Player에 기본 액션이 없습니다." + ba.Count + " != " + baseActionType.Length);
-            return;
+            Debug.LogError("Player에 기본 액션이 없거나 잘 못 들어가 있습니다." + ba.Count + " != " + baseActionType.Length);
+            //return;
         }
         _baseActions.Clear();
         CombatActionType[] baseCombatActionType = { CombatActionType.Move, CombatActionType.Attack, CombatActionType.Reload };

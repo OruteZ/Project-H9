@@ -220,8 +220,8 @@ public class UIManager : Generic.Singleton<UIManager>
                     break;
                 }
         }
-        onTSceneChanged.Invoke(gameState);
-        onSceneChanged.Invoke();
+        onTSceneChanged?.Invoke(gameState);
+        onSceneChanged?.Invoke();
     }
     private void ChangeUIToWorldScene()
     {

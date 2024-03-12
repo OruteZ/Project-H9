@@ -56,7 +56,7 @@ public class CombatActionUI : UISystem
     {
         UIManager.instance.onTurnChanged.AddListener(() => SetActionBundle(_displayedActionBundle, false));
         UIManager.instance.onSceneChanged.AddListener(InitActions);
-        UIManager.instance.onTSceneChanged.AddListener(null);
+        //UIManager.instance.onTSceneChanged.AddListener(null);
     }
     private void Start()
     {

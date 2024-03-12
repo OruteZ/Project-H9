@@ -42,7 +42,7 @@ public class CombatActionUI_Legacy : UISystem
     {
         SetGameState();
         UIManager.instance.onSceneChanged.AddListener(SetGameState);
-        UIManager.instance.onTSceneChanged.AddListener(null);
+        //UIManager.instance.onTSceneChanged.AddListener(null);
 
         //Find Action Buttons & Put in to '_actionButtons'
         _actionButtons = new List<GameObject>();

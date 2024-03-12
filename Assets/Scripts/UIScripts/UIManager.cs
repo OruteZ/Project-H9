@@ -36,15 +36,22 @@ public class UIManager : Generic.Singleton<UIManager>
 
     public GameObject loading; //test
 
+    [HideInInspector] public UnityEvent<GameState> onTSceneChanged;
     [HideInInspector] public UnityEvent onSceneChanged;
     [HideInInspector] public UnityEvent onTurnChanged;
+    [HideInInspector] public UnityEvent onCombatStarted; // UnityEvent<string/int> onSceneChanged 를 만들어서 합치는걸 권장
+    [HideInInspector] public UnityEvent<Unit> onTurnStarted;
     [HideInInspector] public UnityEvent onPlayerStatChanged;
     [HideInInspector] public UnityEvent<int> onGetExp;
     [HideInInspector] public UnityEvent<int> onLevelUp;
     [HideInInspector] public UnityEvent onPlayerSkillChangd;
     [HideInInspector] public UnityEvent onActionChanged;
+    [HideInInspector] public UnityEvent<Unit, int> onTakeDamaged;
+    [HideInInspector] public UnityEvent<Unit> onReloaded;
+    [HideInInspector] public UnityEvent<Unit> onTryAttack;
     [HideInInspector] public UnityEvent onInventoryChanged;
     [HideInInspector] public UnityEvent onWeaponChanged;
+    [HideInInspector] public UnityEvent<Unit, BaseAction> onStartAction;
 
     protected override void Awake()
     {
@@ -213,6 +220,7 @@ public class UIManager : Generic.Singleton<UIManager>
                     break;
                 }
         }
+        onTSceneChanged.Invoke(gameState);
         onSceneChanged.Invoke();
     }
     private void ChangeUIToWorldScene()

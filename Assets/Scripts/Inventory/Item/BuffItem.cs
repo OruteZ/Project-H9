@@ -14,7 +14,7 @@ public class BuffItem : Item
         int amount = GetData().itemEffectAmount;
         int duration = GetData().itemEffectDuration;
 
-        var itemBuff = new ItemBuff(statType, amount, duration, user);
+        var itemBuff = new ItemBuff(GetData().id, statType, amount, duration, user);
 
         return true;
     }
@@ -27,18 +27,43 @@ public class BuffItem : Item
 
 public class ItemBuff : IDisplayableEffect
 {
+    private readonly int _itemIndex;
     private readonly StatType _statType;
     private readonly int _amount;
-    private int _duration;
+    private readonly Unit _unit;
     
-    private Unit _unit;
+    private int _duration;
 
-    public ItemBuff(StatType statType, int amount, int duration, Unit unit)
+    public bool Add(ItemBuff other)
     {
+        //if index is different, return false
+        if (_itemIndex != other._itemIndex) return false;
+        
+        //add duration
+        _duration += other._duration;
+        return true;
+    }
+
+    public ItemBuff(int index, StatType statType, int amount, int duration, Unit unit)
+    {
+        _itemIndex = index;
         _statType = statType;
         _amount = amount;
         _duration = duration;
         _unit = unit;
+        
+        //get units buffs
+        var buffs = _unit.GetDisplayableEffects();
+        foreach (var buff in buffs)
+        {
+            if (buff is ItemBuff itemBuff)
+            {
+                if (itemBuff.Add(this))
+                {
+                    return;
+                }
+            }
+        }
         
         Setup();
     }

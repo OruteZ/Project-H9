@@ -34,6 +34,7 @@ public class ReloadAction : BaseAction
 
     public override bool IsSelectable()
     {
+        if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
         return weapon.currentAmmo < weapon.maxAmmo;
     }
 
@@ -51,6 +52,7 @@ public class ReloadAction : BaseAction
     {
         unit.animator.ResetTrigger(IDLE);
         unit.animator.SetTrigger(RELOAD);
+        UIManager.instance.onReloaded.Invoke(unit);
 
         yield return new WaitForSeconds(ANIM_TIME);
 

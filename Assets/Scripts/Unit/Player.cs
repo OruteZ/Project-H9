@@ -34,15 +34,12 @@ public class Player : Unit
         var isMouseOnTile = TryGetMouseOverTilePos(out var onMouseTilePos);
 
         if (isMouseOnTile && GetSelectedAction().GetActionType() is
-                ActionType.Attack or ActionType.Fanning)
+                ActionType.Attack or ActionType.Fanning or ActionType.ItemUsing)
         {
             var target = FieldSystem.unitSystem.GetUnit(onMouseTilePos);
             if (target is not Player and not null)
             {
                 transform.LookAt(Hex.Hex2World(onMouseTilePos), Vector3.up);
-                // var curRotation = transform.localRotation.eulerAngles;
-                // curRotation.z = curRotation.x = 0;
-                //transform.localRotation = Quaternion.Euler(curRotation);
             }
         }
 
@@ -155,7 +152,7 @@ public class Player : Unit
         UIManager.instance.onPlayerStatChanged.Invoke();
         GameManager.instance.playerStat = stat;
     }
-    
+
     #region UNITY_EVENT
     private void OnAnyUnitMoved(Unit unit)
     {

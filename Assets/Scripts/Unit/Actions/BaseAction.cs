@@ -35,6 +35,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     public void Execute()
     {
+        UIManager.instance.onStartAction.Invoke(unit, this);
         IEnumerator Coroutine()
         {
             yield return ExecuteCoroutine();
@@ -55,7 +56,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     protected Unit unit;
     protected bool isActive;
-    public void SetUp(Unit unit)
+    public virtual void SetUp(Unit unit)
     {
         this.unit = unit;
     }

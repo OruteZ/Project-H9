@@ -25,6 +25,8 @@ public class DynamiteAction : BaseAction
 
     public override bool IsSelectable()
     {
+        if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
+        
         return GetCost() <= unit.currentActionPoint;
     }
 

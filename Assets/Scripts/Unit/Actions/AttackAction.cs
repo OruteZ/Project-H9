@@ -25,6 +25,7 @@ public class AttackAction : BaseAction, IShootingAction
         if (weapon.currentAmmo == 0) return false;
         if (unit.CheckAttackTrigger()) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
+        if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
 
         return true;
     }
@@ -88,6 +89,7 @@ public class AttackAction : BaseAction, IShootingAction
 
     protected override IEnumerator ExecuteCoroutine()
     {
+        UIManager.instance.onTryAttack.Invoke(unit);
         unit.animator.SetTrigger(IDLE);
         
         float timer = 1f;

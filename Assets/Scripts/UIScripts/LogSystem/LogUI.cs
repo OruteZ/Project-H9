@@ -95,7 +95,7 @@ public class LogUI : UISystem
             case ActionType.Dynamite: actionType = "다이너마이트"; break;
             case ActionType.Fanning: actionType = "패닝"; break;
             case ActionType.Hemostasis: actionType = "지혈"; break;
-            case ActionType.Move: actionType = "공격"; break;
+            case ActionType.Move: actionType = "이동"; break;
             case ActionType.Reload: actionType = "재장전"; break;
             default: break;
         }

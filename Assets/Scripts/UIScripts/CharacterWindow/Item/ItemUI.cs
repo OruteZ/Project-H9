@@ -12,13 +12,15 @@ public class ItemUI : UISystem
 
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject _inventoryTooltip;
-    [SerializeField] private GameObject _inventoryButtons;
+    [SerializeField] private GameObject _inventoryInteractionButtons;
     [SerializeField] private GameObject _draggedElement;
     [SerializeField] private GameObject _equippedElement;
 
     private ItemType _displayInventoryType = ItemType.Revolver;
 
+    private GameObject _interactionElement;
     private GameObject _originalDraggedElement;
+    private Item _interactionItem = null;
     private Item _draggedItem = null;
     private Item _equippedItem = null;
 
@@ -43,6 +45,7 @@ public class ItemUI : UISystem
     {
         base.OpenUI();
         ClosePopupWindow();
+        SetInventoryUI();
     }
 
     public void SetInventoryUI() 
@@ -78,23 +81,26 @@ public class ItemUI : UISystem
     }
     public void OpenInventoryTooltip(Item item, Vector3 pos)
     {
-        if (_inventoryButtons.gameObject.activeSelf is true) return;
+        if (_inventoryInteractionButtons.gameObject.activeSelf is true) return;
         _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(item, pos);
     }
-    public void OpenInventoryInteraction(Item item, Vector3 pos)
+    public void OpenInventoryInteraction(GameObject ui)
     {
-        if (item == _equippedItem) return;
-        _inventoryButtons.GetComponent<InventoryInteractionUI>().SetInventoryInteractionUI(item, pos);
-        pos.x += _inventoryButtons.GetComponent<RectTransform>().sizeDelta.x;
-        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(item, pos);
+        _interactionElement = ui;
+        _interactionItem = ui.GetComponent<InventoryUIElement>().item;
+        Vector3 pos = ui.GetComponent<RectTransform>().position;
+        if (_interactionItem == _equippedItem) return;
+        _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().SetInventoryInteractionUI(_interactionItem, pos);
+        pos.x += _inventoryInteractionButtons.GetComponent<RectTransform>().sizeDelta.x;
+        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(_interactionItem, pos);
     }
     public override void ClosePopupWindow()
     {
         if (UIManager.instance.currentLayer != 3)
         {
-            _inventoryButtons.GetComponent<InventoryInteractionUI>().CloseUI();
+            _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         }
-        if (!IsMouseOverTooltip(_inventoryTooltip) && _inventoryButtons.gameObject.activeSelf is false)
+        if (!IsMouseOverTooltip(_inventoryTooltip) && _inventoryInteractionButtons.gameObject.activeSelf is false)
         {
             _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
         }
@@ -184,9 +190,11 @@ public class ItemUI : UISystem
         _draggedElement.GetComponent<InventoryDragUI>().ClearInventoryUIElement();
         _draggedElement.GetComponent<InventoryDragUI>().StopDragging();
         _draggedElement.GetComponent<RectTransform>().position = Vector3.zero;
+
+        SetInventoryUI();
     }
 
-    private int GetInventoryUIIndex(GameObject element)
+    public int GetInventoryUIIndex(GameObject element)
     {
         for (int i = 0; i < _inventoryUI.transform.childCount; i++)
         {
@@ -213,5 +221,25 @@ public class ItemUI : UISystem
     {
         _displayInventoryType = ItemType.Etc;
         SetInventoryUI();
+    }
+
+    public void ClickUseItemBtn()
+    {
+        if (_inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().isEqipable)
+        {
+            GameManager.instance.playerInventory.EqipItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
+        }
+        else 
+        {
+            GameManager.instance.playerInventory.UseItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
+        }
+    }
+    public void ClickSellItemBtn()
+    {
+        Debug.Log("2");
+    }
+    public void ClickRemoveItemBtn()
+    {
+        Debug.Log("3");
     }
 }

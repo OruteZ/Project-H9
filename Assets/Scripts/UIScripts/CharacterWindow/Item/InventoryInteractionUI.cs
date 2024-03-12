@@ -6,10 +6,11 @@ using TMPro;
 public class InventoryInteractionUI : UIElement
 {
     [SerializeField] private GameObject _useBtn;
-    private bool _isEqipable = true;
+    public bool isEqipable { get; private set; }
 
     private void Awake()
     {
+        isEqipable = true;
         CloseUI();
     }
 
@@ -20,13 +21,14 @@ public class InventoryInteractionUI : UIElement
             CloseUI();
             return;
         }
+
         switch (item.GetData().itemType)
         {
             case ItemType.Revolver:
             case ItemType.Repeater:
             case ItemType.Shotgun:
                 {
-                    _isEqipable = true;
+                    isEqipable = true;
                     _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Eqip";
                     break;
                 }
@@ -36,13 +38,13 @@ public class InventoryInteractionUI : UIElement
             case ItemType.Buff:
             case ItemType.Debuff:
                 {
-                    _isEqipable = false;
+                    isEqipable = false;
                     _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Use";
                     break;
                 }
             default: 
                 {
-                    return;
+                    break;
                 }
         }
 
@@ -50,18 +52,5 @@ public class InventoryInteractionUI : UIElement
         UIManager.instance.currentLayer = 3;
         UIManager.instance.SetUILayer();
         OpenUI();
-    }
-
-    public void ClickUseItemBtn() 
-    {
-        Debug.Log("1");
-    }
-    public void ClickSellItemBtn()
-    {
-        Debug.Log("2");
-    }
-    public void ClickRemoveItemBtn()
-    {
-        Debug.Log("3");
     }
 }

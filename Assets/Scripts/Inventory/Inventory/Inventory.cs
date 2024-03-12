@@ -80,7 +80,6 @@ public class Inventory : IInventory
     }
     public void SwapItem(ItemType type, int start, int end)
     {
-        Debug.Log(start + " <-> " + end);
         List<IItem> itemList = GetCorrectTypeItemList(type);
         IItem tmpItem = itemList[end];
         itemList[end] = itemList[start];
@@ -88,13 +87,29 @@ public class Inventory : IInventory
     }
     public void EqipItem(ItemType type, int index)
     {
-        if (type is not ItemType.Revolver && type is not ItemType.Repeater && type is not ItemType.Shotgun) return;
-
-        Debug.Log(index + " postion eqipped, " + _equippedItem.GetData().id +" unequipped");
         List<IItem> itemList = GetCorrectTypeItemList(type);
-        IItem tmpItem = _equippedItem;
-        _equippedItem = itemList[index];
-        itemList[index] = tmpItem;
+        if (itemList != _weaponItems) return;
+
+        if (((WeaponItem)itemList[index]).TryEquip())
+        {
+            IItem tmpItem = _equippedItem;
+            _equippedItem = itemList[index];
+            itemList[index] = tmpItem;
+        }
+    }
+    public void UseItem(ItemType type, int index)
+    {
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player is null) return;
+
+        List<IItem> itemList = GetCorrectTypeItemList(type);
+        if (itemList != _consumableItems) return;
+
+        if (itemList[index].IsUsable())
+        {
+            Debug.Log("selecet");
+            player.SelectItem(itemList[index]);
+        }
     }
 
     public IEnumerable<IItem> GetItems()

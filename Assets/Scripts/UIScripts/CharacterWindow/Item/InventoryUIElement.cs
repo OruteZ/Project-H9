@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject _itemIcon;
     [SerializeField] protected GameObject _itemCountText;
@@ -59,7 +59,7 @@ public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHand
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            UIManager.instance.characterUI.itemUI.OpenInventoryInteraction(item, GetComponent<RectTransform>().position);
+            UIManager.instance.characterUI.itemUI.OpenInventoryInteraction(gameObject);
         }
     }
 
@@ -72,9 +72,6 @@ public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHand
         if (_itemFrame is null) return;
         _itemFrame.SetActive(true);
         UIManager.instance.characterUI.itemUI.OpenInventoryTooltip(item, GetComponent<RectTransform>().position);
-    }
-    public void OnPointerClick(PointerEventData eventData)
-    {
     }
     public void OnPointerExit(PointerEventData eventData)
     {

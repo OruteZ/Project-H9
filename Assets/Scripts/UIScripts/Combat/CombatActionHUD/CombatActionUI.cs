@@ -134,7 +134,7 @@ public class CombatActionUI : UISystem
         if (ba.Count != baseActionType.Length)
         {
             Debug.LogError("Player에 기본 액션이 없거나 잘 못 들어가 있습니다." + ba.Count + " != " + baseActionType.Length);
-            //return;
+            return;
         }
         _baseActions.Clear();
         CombatActionType[] baseCombatActionType = { CombatActionType.Move, CombatActionType.Attack, CombatActionType.Reload };

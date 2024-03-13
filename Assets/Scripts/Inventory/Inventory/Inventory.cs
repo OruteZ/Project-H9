@@ -34,22 +34,22 @@ public class Inventory : IInventory
         }
     }
 
-    public void AddItem(IItem additem)
+    public void AddItem(IItem item)
     {
-        if (additem is null) return;
+        if (item is null) return;
         
-        List<IItem> itemList = GetCorrectTypeItemList(additem.GetData().itemType);
-        if (additem.GetData().itemMaxStorage > 1)
+        List<IItem> itemList = GetCorrectTypeItemList(item.GetData().itemType);
+        if (item.GetData().itemMaxStorage > 1)
         {
             for (int i = 0; i < itemList.Count; i++)
             {
                 if (itemList[i] is null) continue;
                 bool isStackFull = (itemList[i].GetData().itemMaxStorage <= itemList[i].GetStackCount());
                 if (isStackFull) continue;
-                bool isSameItem = (itemList[i].GetData().id == additem.GetData().id);
+                bool isSameItem = (itemList[i].GetData().id == item.GetData().id);
                 if (isSameItem)
                 {
-                    itemList[i] = (Item)itemList[i] + (Item)additem;
+                    itemList[i] = (Item)itemList[i] + (Item)item;
                     IInventory.OnInventoryChanged?.Invoke();
                     return;
                 }
@@ -59,7 +59,7 @@ public class Inventory : IInventory
         {
             if (itemList[i] is null)
             {
-                itemList[i] = additem;
+                itemList[i] = item;
                 IInventory.OnInventoryChanged?.Invoke();
                 return;
             }

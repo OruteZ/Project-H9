@@ -224,9 +224,11 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             //add all item
             var allItems = itemDatabase.GetAllItemData();
-            
-            foreach (var itemData in allItems)
+
+            for (int i = 1; i < allItems.Capacity; i++)
             {
+                ItemData itemData = allItems[i];
+                //Debug.Log(itemData.id);
                 AddItem(itemData.id);
             }
         }

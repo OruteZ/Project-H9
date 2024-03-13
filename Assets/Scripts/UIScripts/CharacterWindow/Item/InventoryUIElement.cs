@@ -11,8 +11,9 @@ public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHand
     [SerializeField] protected GameObject _itemCountText;
     [SerializeField] protected GameObject _itemFrame = null;
 
+    [SerializeField] private Sprite _nullImage;
+
     public Item item { get; private set; }
-    //public int idx;
     private void Awake()
     {
         item = null;
@@ -26,12 +27,12 @@ public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHand
             return;
         }
         this.item = item;
-        //idx = item.GetData().id;
         Sprite texture = item.GetData().icon;
-        if (texture is not null)
+        if (texture == null)
         {
-            _itemIcon.GetComponent<Image>().sprite = texture;
+            texture = _nullImage;
         }
+        _itemIcon.GetComponent<Image>().sprite = texture;
         _itemIcon.GetComponent<Image>().color = Color.white;
 
         var data = item.GetData();

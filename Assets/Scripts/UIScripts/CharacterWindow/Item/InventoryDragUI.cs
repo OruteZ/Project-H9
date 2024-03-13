@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class InventoryDragUI : InventoryUIElement, IPointerUpHandler
 {
     private bool _isDragging = false;
-    private void Start()
+    private void Awake()
     {
         _itemFrame = null;
         gameObject.SetActive(false);

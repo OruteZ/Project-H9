@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8432919960963151392}
   - component: {fileID: 8432919960963151395}
   - component: {fileID: 8432919960963151402}
+  - component: {fileID: 56924622339835832}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
@@ -137,7 +138,11 @@ MonoBehaviour:
   hexTransform: {fileID: 0}
   stat:
     original: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  hasAttacked: 0
+    _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+  passiveIndexList: 
+  infiniteActionPointTrigger: 0
+  lightFootTrigger: 0
   currentRound: 0
   onTurnStart:
     m_PersistentCalls:
@@ -200,3 +205,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &56924622339835832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec67effbdea9414c890e6075c3bc7ccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0

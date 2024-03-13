@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-    [Serializable]
-    public abstract class Item : IItem
-    {
-        private readonly ItemData _data;
+[Serializable]
+public abstract class Item : IItem
+{
+    private readonly ItemData _data;
         private readonly List<IItemAttribute> _attributes;
         protected int stackCount;
         public Item(ItemData data)
@@ -22,8 +22,11 @@ using UnityEngine;
             switch (data.itemType)
             {
                 case ItemType.Null:
+                    //exception
+                    Debug.LogError("ItemType is Null, index is " + data.id);
                     break;
                 case ItemType.Etc:
+                    item = new EtcItem(data);
                     break;
                 case ItemType.Character:
                 case ItemType.Revolver:
@@ -35,8 +38,10 @@ using UnityEngine;
                     item = new HealItem(data);
                     break;
                 case ItemType.Damage:
+                    item = new DamageItem(data);
                     break;
                 case ItemType.Cleanse:
+                    item = new CleanseItem(data);
                     break;
                 case ItemType.Buff:
                     item = new BuffItem(data);

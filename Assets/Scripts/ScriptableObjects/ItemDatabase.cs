@@ -37,9 +37,11 @@ public class ItemDatabase : ScriptableObject
             curData.weaponCriticalDamage = int.Parse(data[14]);
             curData.weaponSkill = int.Parse(data[15]);
             curData.itemTooltip = int.Parse(data[16]);
-            curData.icon = Resources.Load<Texture2D>("ItemIcon/" + data[17]);
+            curData.icon = Resources.Load<Sprite>("ItemIcon/" + data[17]);
             curData.itemModel = Resources.Load<GameObject>("Prefab/Item/" + data[18]);   
 
+            if(curData.icon is null) curData.icon = Resources.Load<Sprite>($"ItemIcon/Default");
+            
             _itemList.Add(curData);
         }
     }
@@ -53,6 +55,11 @@ public class ItemDatabase : ScriptableObject
 
         Debug.LogError("There is no item that has id " + id);
         return null;
+    }
+    
+    public List<ItemData> GetAllItemData()
+    {
+        return _itemList;
     }
 }
 
@@ -76,7 +83,7 @@ public class ItemData
     public int weaponCriticalDamage;
     public int weaponSkill;
     public int itemTooltip;
-    public Texture2D icon;
+    public Sprite icon;
     public GameObject itemModel;
 }
 

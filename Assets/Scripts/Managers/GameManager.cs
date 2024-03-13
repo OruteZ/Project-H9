@@ -219,22 +219,16 @@ public class GameManager : Generic.Singleton<GameManager>
         Service.OnUpdated(deltaTime);
         
         #region ITEM_TEST
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            AddItem(306);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            AddItem(307);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            AddItem(601);
-        }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
-            ((Inventory)playerInventory).PrintItems();
+            //add all item
+            var allItems = itemDatabase.GetAllItemData();
+            
+            foreach (var itemData in allItems)
+            {
+                AddItem(itemData.id);
+            }
         }
         #endregion
     }

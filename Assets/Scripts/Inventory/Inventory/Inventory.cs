@@ -36,6 +36,8 @@ public class Inventory : IInventory
 
     public void AddItem(IItem additem)
     {
+        if (additem is null) return;
+        
         List<IItem> itemList = GetCorrectTypeItemList(additem.GetData().itemType);
         if (additem.GetData().itemMaxStorage > 1)
         {

@@ -27,10 +27,10 @@ public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHand
         }
         this.item = item;
         //idx = item.GetData().id;
-        Texture2D texture = item.GetData().icon;
+        Sprite texture = item.GetData().icon;
         if (texture is not null)
         {
-            _itemIcon.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            _itemIcon.GetComponent<Image>().sprite = texture;
         }
         _itemIcon.GetComponent<Image>().color = Color.white;
 

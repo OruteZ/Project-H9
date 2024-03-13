@@ -71,7 +71,8 @@ public class WeaponDatabase : ScriptableObject
 
         foreach (var d in dataList)
         {
-            if((ItemType) Enum.Parse(typeof(ItemType), d[2]) is not ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun) continue;
+            if((ItemType) Enum.Parse(typeof(ItemType), d[2]) 
+               is not (ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun)) continue;
             
             var curData = new WeaponData
             {
@@ -89,6 +90,12 @@ public class WeaponDatabase : ScriptableObject
                 weaponScript = int.Parse(d[15]),
                 weaponModel = Resources.Load<GameObject>("Prefab/Item/" + d[18])
             };
+            
+            //if weaponModel is null, set default model
+            if (curData.weaponModel == null)
+            {
+                curData.weaponModel = Resources.Load<GameObject>("Prefab/Item/SM_Wep_Revolver_01");
+            }
             
             weaponList.Add(curData);
         }

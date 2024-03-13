@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6124971653560633145}
   - component: {fileID: 6124971653560633150}
   - component: {fileID: 6124971653560633151}
+  - component: {fileID: 5249381193780053080}
   - component: {fileID: 8584103021152720753}
   - component: {fileID: 1468003199610425476}
   m_Layer: 9
@@ -164,6 +165,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1df925ac8b091684682c6931a44c4f1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
+--- !u!114 &5249381193780053080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124971653560633283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec67effbdea9414c890e6075c3bc7ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 0

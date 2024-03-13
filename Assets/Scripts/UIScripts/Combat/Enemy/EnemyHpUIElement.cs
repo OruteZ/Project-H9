@@ -23,6 +23,7 @@ public class EnemyHpUIElement : UIElement
         _frontHpBar = transform.GetChild(1).GetComponent<Slider>();
         _hpText = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         _debuffs = transform.GetChild(3).gameObject;
+        GetComponent<RectTransform>().position = Vector3.zero;
 
         ClearEnemyHpUI();
     }
@@ -112,6 +113,7 @@ public class EnemyHpUIElement : UIElement
     public void ClearEnemyHpUI()
     {
         gameObject.SetActive(false);
+        GetComponent<RectTransform>().position = Vector3.zero;
         _enemy = null;
     }
 }

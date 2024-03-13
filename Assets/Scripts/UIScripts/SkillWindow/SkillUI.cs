@@ -45,8 +45,8 @@ public class SkillUI : UISystem
     }
     public override void OpenUI() 
     {
-        base.OpenUI();
         UpdateAllSkillUINode();
+        base.OpenUI();
     }
     public override void CloseUI()
     {
@@ -155,6 +155,7 @@ public class SkillUI : UISystem
 
     public void SetKeywordTooltipContents(List<int> keywords) 
     {
+        if (keywords is null) return;
         foreach (int i in keywords)
         {
             if (_currentKeywordIndex.Contains(i)) continue;

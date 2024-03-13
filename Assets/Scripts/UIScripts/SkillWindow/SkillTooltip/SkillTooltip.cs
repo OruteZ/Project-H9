@@ -58,7 +58,8 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         if (currentSkill == null) return;
 
         _skillTooltipNameText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillName(_currentSkillIndex);
-        _skillTooltipDescriptionText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillDescription(_currentSkillIndex);
+        _skillTooltipDescriptionText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillDescription(_currentSkillIndex, out var keywords);
+        UIManager.instance.skillUI.SetKeywordTooltipContents(keywords);
         _skillTooltipDescriptionText.GetComponent<ContentSizeFitter>().SetLayoutVertical();
         _skillTooltipTexts.GetComponent<ContentSizeFitter>().SetLayoutVertical();
 

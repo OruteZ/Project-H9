@@ -303,7 +303,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     public void SelectItem(IItem item)
     {
         if (item is null) return;
-        if (item.IsUsable()) return;
+        if (!item.IsUsable()) return;
         
         var itemUsingAction = GetAction<ItemUsingAction>();
         itemUsingAction.SetItem(item);

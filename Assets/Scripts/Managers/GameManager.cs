@@ -14,7 +14,7 @@ public class GameManager : Generic.Singleton<GameManager>
 {
     private const string COMBAT_SCENE_NAME = "CombatScene";
 
-    public IInventory playerInventory = new Inventory();
+    public Inventory playerInventory = new Inventory();
     [SerializeField]
     public ItemDatabase itemDatabase;
     
@@ -221,15 +221,15 @@ public class GameManager : Generic.Singleton<GameManager>
         #region ITEM_TEST
         if (Input.GetKeyDown(KeyCode.A))
         {
-            AddItem(1);
+            AddItem(306);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            AddItem(2);
+            AddItem(307);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            AddItem(3);
+            AddItem(601);
         }
 
         if (Input.GetKeyDown(KeyCode.F))

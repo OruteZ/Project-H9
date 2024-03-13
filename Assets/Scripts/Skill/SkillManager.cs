@@ -216,11 +216,15 @@ public class SkillManager : Generic.Singleton<SkillManager>
         if (skill == null || _skillNameScripts.Count <= skill.skillInfo.nameIndex) return "";
         return _skillNameScripts[skill.skillInfo.nameIndex].name;
     }
-    public string GetSkillDescription(int skillIndex)
+    public string GetSkillDescription(int skillIndex, out List<int> keywords)
     {
         Skill skill = GetSkill(skillIndex);
-        if (skill == null || _skillDescriptionScripts.Count <= skill.skillInfo.tooltipIndex) return "";
-        return _skillDescriptionScripts[skill.skillInfo.tooltipIndex].GetDescription(skillIndex);
+        if (skill == null || _skillDescriptionScripts.Count <= skill.skillInfo.tooltipIndex)
+        {
+            keywords = null;
+            return null;
+        }
+        return _skillDescriptionScripts[skill.skillInfo.tooltipIndex].GetDescription(skillIndex, out keywords);
     }
     public KeywordScript GetSkillKeyword(int keywordIndex)
     {

@@ -94,7 +94,17 @@ using UnityEngine;
             }
         }
 
-        public static Item operator +(Item item1, Item item2)
+    public virtual string GetInventoryTooltipContents()
+    {
+        ItemData data = GetData();
+        string typeText = data.itemType.ToString() + " Item";
+        string effect = "Effect: " + data.nameIdx.ToString();
+        string description = typeText + "\n\n" + effect;
+
+        return description;
+    }
+
+    public static Item operator +(Item item1, Item item2)
         {
             //check same id and max storage
             if (item1.GetData().id == item2.GetData().id && item1.stackCount + item2.stackCount <= item1.GetData().itemMaxStorage)

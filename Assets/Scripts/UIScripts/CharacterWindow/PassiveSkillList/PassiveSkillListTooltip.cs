@@ -20,7 +20,7 @@ public class PassiveSkillListTooltip : UIElement
         //PassiveInfo info = SkillManager.instance.passiveDB.GetPassiveInfo(index);
         //currentPassiveInfo = info;
         _skillName = SkillManager.instance.GetSkillName(index);
-        _skillDesc = SkillManager.instance.GetSkillDescription(index);
+        _skillDesc = SkillManager.instance.GetSkillDescription(index, out var k);
 
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _skillName;
         transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _skillDesc;

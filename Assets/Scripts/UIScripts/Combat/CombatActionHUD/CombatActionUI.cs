@@ -18,10 +18,12 @@ public enum CombatActionType
 
 public class CombatActionUI : UISystem
 {
+    [SerializeField] private GameObject _combatHUD;
     [SerializeField] private GameObject _backgroundImage;
     [SerializeField] private GameObject _baseActionBundle;
     [SerializeField] private GameObject _skillActionBundle;
-    [SerializeField] private GameObject _buttonTooltip;
+    [SerializeField] private GameObject _buttonNameTooltip;
+    [SerializeField] private GameObject _SkillTooltip;
 
     private const int SKILL_BUTTON_INDEX = 3;
 
@@ -50,7 +52,8 @@ public class CombatActionUI : UISystem
         _backgroundImage.SetActive(false);
         _baseActionBundle.SetActive(false);
         _skillActionBundle.SetActive(false);
-        _buttonTooltip.SetActive(false);
+        _buttonNameTooltip.SetActive(false);
+        _SkillTooltip.SetActive(false);
     }
     private void Awake()
     {
@@ -73,9 +76,7 @@ public class CombatActionUI : UISystem
         if (!player.TryGetComponent(out CapsuleCollider var)) return;
         playerChestPosition.y += player.GetComponent<CapsuleCollider>().center.y;
         Vector2 screenPos = Camera.main.WorldToScreenPoint(playerChestPosition);
-        _backgroundImage.GetComponent<RectTransform>().position = screenPos;
-        _baseActionBundle.GetComponent<RectTransform>().position = screenPos;
-        _skillActionBundle.GetComponent<RectTransform>().position = screenPos;
+        _combatHUD.GetComponent<RectTransform>().position = screenPos;
 
         bool isActive = true;
         if ((Input.GetMouseButtonDown(0) && !IsMouseOverActionUI()) || Input.GetKeyDown(_openKey)) 
@@ -113,7 +114,7 @@ public class CombatActionUI : UISystem
         if (player is null) return;
 
         List<IUnitAction> actions = new List<IUnitAction>(player.GetUnitActionArray());
-        ActionType[] baseActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload, ActionType.Idle };
+        ActionType[] baseActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload, ActionType.Idle, ActionType.ItemUsing };
 
         List<IUnitAction> ba = new List<IUnitAction>();
         for (int j = 0; j < baseActionType.Length; j++)
@@ -132,7 +133,7 @@ public class CombatActionUI : UISystem
         //basic action
         if (ba.Count != baseActionType.Length)
         {
-            Debug.LogError("Player에 기본 액션이 없습니다." + ba.Count + " != " + baseActionType.Length);
+            Debug.LogError("Player에 기본 액션이 없거나 잘 못 들어가 있습니다." + ba.Count + " != " + baseActionType.Length);
             return;
         }
         _baseActions.Clear();
@@ -165,7 +166,7 @@ public class CombatActionUI : UISystem
     {
         if (UIManager.instance.UIState != GameState.Combat) return;
         if (FieldSystem.turnSystem.turnOwner is not Player) return;
-        _buttonTooltip.GetComponent<CombatActionButtonTooltip>().CloseUI();
+        _buttonNameTooltip.GetComponent<CombatActionNameTooltip>().CloseUI();
         if (bundle is null) return;
         UpdateButtonSeletable();
 
@@ -184,6 +185,7 @@ public class CombatActionUI : UISystem
         _baseActionBundle.SetActive(false);
         _skillActionBundle.SetActive(false);
         _backgroundImage.SetActive(isDisplayed);
+        _SkillTooltip.SetActive(false);
         if (_displayedActionBundle is not null) _displayedActionBundle.SetActive(isDisplayed);
     }
     public void SelectAction(CombatActionType actionType, int btnIdx)
@@ -256,11 +258,19 @@ public class CombatActionUI : UISystem
 
     public void ShowActionUITooltip(GameObject btn)
     {
-        _buttonTooltip.GetComponent<CombatActionButtonTooltip>().SetCombatActionTooltip(btn);
+        if (_activeActionBundle == _skillActionBundle)
+        {
+            _SkillTooltip.GetComponent<CombatActionSkillTooltip>().SetCombatSkillTooltip(btn);
+        }
+        else
+        {
+            _buttonNameTooltip.GetComponent<CombatActionNameTooltip>().SetCombatActionTooltip(btn);
+        }
     }
     public void HideActionUITooltip() 
     {
-        _buttonTooltip.GetComponent<CombatActionButtonTooltip>().CloseUI();
+        _buttonNameTooltip.GetComponent<CombatActionNameTooltip>().CloseUI();
+        _SkillTooltip.GetComponent<CombatActionSkillTooltip>().CloseUI();
     }
     private static bool IsMouseClickedPlayer()
     {
@@ -313,16 +323,17 @@ public class CombatActionUI : UISystem
             GameObject btn = _skillActionBundle.transform.GetChild(i).gameObject;
             if (!btn.activeSelf) break;
             btn.GetComponent<CombatActionButtonElement>().SetInteractable();
-            if (btn.GetComponent<CombatActionButtonElement>().IsInteractable()) 
+            if (btn.GetComponent<CombatActionButtonElement>().IsInteractable())
             {
                 isThereSeletableSkill = true;
             }
         }
+        bool isSkillExist = _skillActionBundle.transform.GetChild(0).gameObject.activeSelf;
 
         _baseActionBundle.transform.GetChild(0).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(1).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(2).GetComponent<CombatActionButtonElement>().SetInteractable();
-        _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable(isThereSeletableSkill);
+        _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable(isSkillExist);
         _baseActionBundle.transform.GetChild(4).GetComponent<CombatActionButtonElement>().SetInteractable(false);
         _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(false);
     }

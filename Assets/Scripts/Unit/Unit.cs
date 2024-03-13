@@ -102,7 +102,11 @@ public abstract class Unit : MonoBehaviour, IUnit
         _unitModel = model.GetComponent<UnitModel>();
         _unitModel.Setup(this);
         
-        EquipWeapon(newWeapon);
+        EquipWeapon(newWeapon, true);
+        if (this is Player)
+        {
+            GameManager.instance.onPlayerWeaponChanged.AddListener(wpn => EquipWeapon(wpn));
+        }
 
         onFinishAction.AddListener((action) => onAnyUnitActionFinished.Invoke(this));
         FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
@@ -186,7 +190,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
     }
 
-    private void EquipWeapon(Weapon newWeapon)
+    private void EquipWeapon(Weapon newWeapon, bool isOnSetup = false)
     {
         newWeapon.unit = this;
         weapon = newWeapon;

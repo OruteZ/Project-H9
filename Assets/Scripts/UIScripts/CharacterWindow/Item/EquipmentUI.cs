@@ -21,7 +21,7 @@ public class EquipmentUI : UISystem
 
     public void SetEquipmentUI() 
     {
-        ItemData data = GameManager.instance.itemDatabase.GetItemData(GameManager.instance.playerWeaponIndex);
+        ItemData data = GameManager.instance.itemDatabase.GetItemData(GameManager.instance.PlayerWeaponIndex);
 
         _weaponNameText.GetComponent<TextMeshProUGUI>().text = data.nameIdx.ToString();
         int imgIdx = 0;

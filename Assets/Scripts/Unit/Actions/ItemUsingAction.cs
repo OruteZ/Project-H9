@@ -38,6 +38,7 @@ public class ItemUsingAction : BaseAction
     public override bool CanExecute()
     {
         if (_itemUsedTrigger) return false;
+        
         return _item is not null;
     }
 
@@ -56,6 +57,9 @@ public class ItemUsingAction : BaseAction
     protected override IEnumerator ExecuteCoroutine()
     {
         _item.Use(unit, _targetPos);
+        _itemUsedTrigger = true;
+        
+        GameManager.instance.playerInventory.DeleteItem(_item);
         yield return null;
     }
 

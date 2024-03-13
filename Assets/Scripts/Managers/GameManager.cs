@@ -17,6 +17,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public Inventory playerInventory = new Inventory();
     [SerializeField]
     public ItemDatabase itemDatabase;
+    public WeaponDatabase weaponDatabase;
     
     #region ITEM_TEST
     public void AddItem(int id)
@@ -55,10 +56,22 @@ public class GameManager : Generic.Singleton<GameManager>
     [Header("Player Info")]
     public Vector3Int playerWorldPos;
     public UnitStat playerStat;
-    public int playerWeaponIndex;
+    [SerializeField] private int _playerWeaponIndex;
+    public int PlayerWeaponIndex
+    {
+        get => _playerWeaponIndex;
+        set
+        {
+            _playerWeaponIndex = value;
+            Weapon weapon = weaponDatabase.Clone(value);
+            onPlayerWeaponChanged.Invoke(weapon); 
+        }
+    }
     public GameObject playerModel;
     public List<int> playerPassiveIndexList;
     public List<int> playerActiveIndexList;
+    
+    public UnityEvent<Weapon> onPlayerWeaponChanged = new UnityEvent<Weapon>();
 
     #region LEVEL
 

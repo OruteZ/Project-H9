@@ -374,6 +374,61 @@ public class TileEffectManager : Singleton<TileEffectManager>
         // ReSharper disable once IteratorNeverReturns
     }
     #endregion
+    
+    #region USING ITEM
+    
+    private void ItemTileEffect()
+    {
+        int range = _player.GetAction<ItemUsingAction>().GetItem().GetData().itemRange;
+        
+        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, range).Where(
+            tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
+
+        foreach (var tile in tiles)
+        {
+            var go =Instantiate(attackTileEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
+            _effectsBase.Add(tile.hexPosition, go);
+        }
+
+        _curCoroutine = StartCoroutine(DynamiteTargetEffectCoroutine());
+    }
+
+    private IEnumerator ItemTargetEffectCoroutine()
+    {
+        int expRange = 1;
+        int thrRange = _player.GetAction<ItemUsingAction>().GetItem().GetData().itemRange;
+        
+        while (true)
+        {
+            yield return null;
+            ClearEffect(_effectsRelatedTarget);
+
+            if (Player.TryGetMouseOverTilePos(out var target) is false)
+            {
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
+            if (FieldSystem.tileSystem.GetTile(target).visible is false)
+            {
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
+
+            if (Hex.Distance(target, _player.hexPosition) > thrRange)
+            {
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
+
+            var tiles = FieldSystem.tileSystem.GetTilesInRange(target, expRange);
+            foreach (var pos in tiles.Select(tile => tile.hexPosition)) 
+            {
+                SetEffectTarget(pos, TileEffectType.Friendly);
+            }
+        }
+        // ReSharper disable once IteratorNeverReturns
+    }
+    #endregion
     private new void Awake()
     {
         base.Awake();

@@ -63,4 +63,9 @@ public class ItemUsingAction : BaseAction
     {
         _itemUsedTrigger = false;
     }
+    
+    public IItem GetItem()
+    {
+        return _item;
+    }
 }

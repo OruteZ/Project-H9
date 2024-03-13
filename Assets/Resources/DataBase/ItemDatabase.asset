@@ -31,7 +31,7 @@ MonoBehaviour:
     weaponSkill: 0
     itemTooltip: 0
     icon: {fileID: 0}
-    itemModel: null
+    itemModel: {fileID: 0}
   - id: 306
     nameIdx: 306
     itemType: 3
@@ -49,8 +49,8 @@ MonoBehaviour:
     weaponCriticalDamage: 0
     weaponSkill: 0
     itemTooltip: 306
-    icon: {fileID: 2800000, guid: bb64cf2a14c1fba4ea91916ceb54a356, type: 3}
-    itemModel: null
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
   - id: 307
     nameIdx: 307
     itemType: 3
@@ -68,8 +68,8 @@ MonoBehaviour:
     weaponCriticalDamage: 0
     weaponSkill: 0
     itemTooltip: 307
-    icon: {fileID: 2800000, guid: e2ff8e2b6d13a354ba9261d17a7480b4, type: 3}
-    itemModel: null
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
   - id: 308
     nameIdx: 308
     itemType: 3
@@ -87,12 +87,12 @@ MonoBehaviour:
     weaponCriticalDamage: 0
     weaponSkill: 0
     itemTooltip: 308
-    icon: {fileID: 2800000, guid: 221a37c0c6c081f46a86d2735e14ca5b, type: 3}
-    itemModel: null
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
   - id: 601
     nameIdx: 601
     itemType: 6
-    itemMaxStorage: 10
+    itemMaxStorage: 999
     itemRange: 0
     sweetSpot: 0
     itemEffect: 0
@@ -106,8 +106,8 @@ MonoBehaviour:
     weaponCriticalDamage: 0
     weaponSkill: 0
     itemTooltip: 601
-    icon: {fileID: 2800000, guid: 71d484def9eb9224c99a797945799e79, type: 3}
-    itemModel: null
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
   - id: 701
     nameIdx: 701
     itemType: 7
@@ -126,14 +126,14 @@ MonoBehaviour:
     weaponSkill: 0
     itemTooltip: 701
     icon: {fileID: 0}
-    itemModel: null
+    itemModel: {fileID: 0}
   - id: 801
     nameIdx: 801
     itemType: 8
     itemMaxStorage: 999
     itemRange: 0
     sweetSpot: 0
-    itemEffect: 23
+    itemEffect: 28
     itemEffectAmount: 3
     itemEffectDuration: 0
     itemPrice: 2
@@ -145,14 +145,14 @@ MonoBehaviour:
     weaponSkill: 0
     itemTooltip: 801
     icon: {fileID: 0}
-    itemModel: null
+    itemModel: {fileID: 0}
   - id: 901
     nameIdx: 901
     itemType: 9
     itemMaxStorage: 999
     itemRange: 0
     sweetSpot: 0
-    itemEffect: 2
+    itemEffect: 3
     itemEffectAmount: 20
     itemEffectDuration: 3
     itemPrice: 2
@@ -164,14 +164,14 @@ MonoBehaviour:
     weaponSkill: 0
     itemTooltip: 901
     icon: {fileID: 0}
-    itemModel: null
+    itemModel: {fileID: 0}
   - id: 1001
     nameIdx: 1001
     itemType: 10
     itemMaxStorage: 999
     itemRange: 3
     sweetSpot: 0
-    itemEffect: 17
+    itemEffect: 22
     itemEffectAmount: 3
     itemEffectDuration: 0
     itemPrice: 3
@@ -183,7 +183,7 @@ MonoBehaviour:
     weaponSkill: 0
     itemTooltip: 1001
     icon: {fileID: 0}
-    itemModel: null
+    itemModel: {fileID: 0}
   - id: 101
     nameIdx: 101
     itemType: 1
@@ -202,4 +202,525 @@ MonoBehaviour:
     weaponSkill: 0
     itemTooltip: 101
     icon: {fileID: 0}
-    itemModel: null
+    itemModel: {fileID: 0}
+  - id: 301
+    nameIdx: 301
+    itemType: 3
+    itemMaxStorage: 1
+    itemRange: 3
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 1
+    weaponAmmo: 5
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 301
+    icon: {fileID: 0}
+    itemModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
+      type: 3}
+  - id: 302
+    nameIdx: 302
+    itemType: 3
+    itemMaxStorage: 1
+    itemRange: 3
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 1
+    weaponAmmo: 6
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 302
+    icon: {fileID: 0}
+    itemModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
+      type: 3}
+  - id: 303
+    nameIdx: 303
+    itemType: 3
+    itemMaxStorage: 1
+    itemRange: 4
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 1
+    weaponAmmo: 6
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 11005
+    itemTooltip: 303
+    icon: {fileID: 0}
+    itemModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
+      type: 3}
+  - id: 304
+    nameIdx: 304
+    itemType: 3
+    itemMaxStorage: 1
+    itemRange: 4
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 1
+    weaponAmmo: 6
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 304
+    icon: {fileID: 0}
+    itemModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
+      type: 3}
+  - id: 305
+    nameIdx: 305
+    itemType: 3
+    itemMaxStorage: 1
+    itemRange: 4
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 2
+    weaponAmmo: 6
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 305
+    icon: {fileID: 0}
+    itemModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
+      type: 3}
+  - id: 401
+    nameIdx: 401
+    itemType: 4
+    itemMaxStorage: 1
+    itemRange: 5
+    sweetSpot: 4
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 2
+    weaponAmmo: 15
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 401
+    icon: {fileID: 0}
+    itemModel: {fileID: 6516096886141431931, guid: a6974077d11936a408ec2119273df417,
+      type: 3}
+  - id: 402
+    nameIdx: 402
+    itemType: 4
+    itemMaxStorage: 1
+    itemRange: 6
+    sweetSpot: 4
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 2
+    weaponAmmo: 7
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 402
+    icon: {fileID: 0}
+    itemModel: {fileID: 6516096886141431931, guid: a6974077d11936a408ec2119273df417,
+      type: 3}
+  - id: 403
+    nameIdx: 403
+    itemType: 4
+    itemMaxStorage: 1
+    itemRange: 6
+    sweetSpot: 5
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 2
+    weaponAmmo: 15
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 403
+    icon: {fileID: 0}
+    itemModel: {fileID: 6516096886141431931, guid: a6974077d11936a408ec2119273df417,
+      type: 3}
+  - id: 404
+    nameIdx: 404
+    itemType: 4
+    itemMaxStorage: 1
+    itemRange: 7
+    sweetSpot: 5
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 3
+    weaponAmmo: 1
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 404
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 405
+    nameIdx: 405
+    itemType: 4
+    itemMaxStorage: 1
+    itemRange: 7
+    sweetSpot: 5
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 4
+    weaponAmmo: 5
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 405
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 501
+    nameIdx: 501
+    itemType: 5
+    itemMaxStorage: 1
+    itemRange: 2
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 1
+    weaponAmmo: 2
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 501
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 502
+    nameIdx: 501
+    itemType: 5
+    itemMaxStorage: 1
+    itemRange: 2
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 1
+    weaponAmmo: 2
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 11005
+    itemTooltip: 501
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 503
+    nameIdx: 501
+    itemType: 5
+    itemMaxStorage: 1
+    itemRange: 3
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 0
+    weaponDamage: 1
+    weaponAmmo: 2
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 501
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 602
+    nameIdx: 602
+    itemType: 6
+    itemMaxStorage: 999
+    itemRange: 0
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 5
+    itemEffectDuration: 0
+    itemPrice: 2
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 602
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 603
+    nameIdx: 603
+    itemType: 6
+    itemMaxStorage: 999
+    itemRange: 0
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 10
+    itemEffectDuration: 0
+    itemPrice: 5
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 603
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 604
+    nameIdx: 604
+    itemType: 6
+    itemMaxStorage: 999
+    itemRange: 0
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 25
+    itemEffectDuration: 0
+    itemPrice: 10
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 604
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 605
+    nameIdx: 605
+    itemType: 6
+    itemMaxStorage: 999
+    itemRange: 0
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 50
+    itemEffectDuration: 0
+    itemPrice: 20
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 605
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 702
+    nameIdx: 702
+    itemType: 7
+    itemMaxStorage: 999
+    itemRange: 3
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 3
+    itemEffectDuration: 0
+    itemPrice: 2
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 702
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 703
+    nameIdx: 703
+    itemType: 7
+    itemMaxStorage: 999
+    itemRange: 3
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 6
+    itemEffectDuration: 0
+    itemPrice: 5
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 703
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 704
+    nameIdx: 704
+    itemType: 7
+    itemMaxStorage: 999
+    itemRange: 3
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 10
+    itemEffectDuration: 0
+    itemPrice: 10
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 704
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 705
+    nameIdx: 705
+    itemType: 7
+    itemMaxStorage: 999
+    itemRange: 3
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 20
+    itemEffectDuration: 0
+    itemPrice: 25
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 705
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 802
+    nameIdx: 802
+    itemType: 8
+    itemMaxStorage: 999
+    itemRange: 0
+    sweetSpot: 0
+    itemEffect: 22
+    itemEffectAmount: 3
+    itemEffectDuration: 0
+    itemPrice: 5
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 802
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 803
+    nameIdx: 803
+    itemType: 8
+    itemMaxStorage: 999
+    itemRange: 0
+    sweetSpot: 0
+    itemEffect: 27
+    itemEffectAmount: 1
+    itemEffectDuration: 0
+    itemPrice: 3
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 803
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 902
+    nameIdx: 902
+    itemType: 9
+    itemMaxStorage: 999
+    itemRange: 0
+    sweetSpot: 0
+    itemEffect: 5
+    itemEffectAmount: 20
+    itemEffectDuration: 3
+    itemPrice: 10
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 902
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 903
+    nameIdx: 903
+    itemType: 9
+    itemMaxStorage: 999
+    itemRange: 0
+    sweetSpot: 0
+    itemEffect: 4
+    itemEffectAmount: 1
+    itemEffectDuration: 3
+    itemPrice: 5
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 903
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 1002
+    nameIdx: 1002
+    itemType: 10
+    itemMaxStorage: 999
+    itemRange: 1
+    sweetSpot: 0
+    itemEffect: 29
+    itemEffectAmount: 1
+    itemEffectDuration: 0
+    itemPrice: 2
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 1002
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}
+  - id: 1003
+    nameIdx: 1003
+    itemType: 10
+    itemMaxStorage: 999
+    itemRange: 3
+    sweetSpot: 0
+    itemEffect: 26
+    itemEffectAmount: 2
+    itemEffectDuration: 0
+    itemPrice: 5
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 1003
+    icon: {fileID: 0}
+    itemModel: {fileID: 0}

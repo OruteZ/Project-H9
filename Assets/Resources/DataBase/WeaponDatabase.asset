@@ -14,40 +14,97 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponList:
   - index: 306
-    weaponNameIndex: 1
-    weaponModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
-      type: 3}
-    type: 2
+    weaponNameIndex: 306
+    type: 3
+    weaponRange: 4
     weaponDamage: 1
-    weaponRange: 4
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
     weaponCriticalDamage: 0
-    weaponScript: 1
+    weaponScript: 0
+    weaponModel: {fileID: 0}
   - index: 307
-    weaponNameIndex: 2
+    weaponNameIndex: 307
+    type: 3
+    weaponRange: 4
+    weaponDamage: 2
+    weaponAmmo: 4
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponScript: 0
+    weaponModel: {fileID: 0}
+  - index: 308
+    weaponNameIndex: 308
+    type: 3
+    weaponRange: 4
+    weaponDamage: 2
+    weaponAmmo: 6
+    weaponHitRate: 0
+    weaponCriticalChance: 5
+    weaponCriticalDamage: 0
+    weaponScript: 0
+    weaponModel: {fileID: 0}
+  - index: 301
+    weaponNameIndex: 301
+    type: 3
+    weaponRange: 3
+    weaponDamage: 1
+    weaponAmmo: 5
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponScript: 0
     weaponModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
       type: 3}
-    type: 2
-    weaponDamage: 2
-    weaponRange: 4
+  - index: 302
+    weaponNameIndex: 302
+    type: 3
+    weaponRange: 3
+    weaponDamage: 1
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
     weaponCriticalDamage: 0
-    weaponScript: 2
-  - index: 308
-    weaponNameIndex: 3
+    weaponScript: 0
     weaponModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
       type: 3}
-    type: 2
-    weaponDamage: 3
+  - index: 303
+    weaponNameIndex: 303
+    type: 3
     weaponRange: 4
+    weaponDamage: 1
     weaponAmmo: 6
-    weaponHitRate: 10
+    weaponHitRate: 0
     weaponCriticalChance: 0
     weaponCriticalDamage: 0
-    weaponScript: 3
+    weaponScript: 11005
+    weaponModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
+      type: 3}
+  - index: 304
+    weaponNameIndex: 304
+    type: 3
+    weaponRange: 4
+    weaponDamage: 1
+    weaponAmmo: 6
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponScript: 0
+    weaponModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
+      type: 3}
+  - index: 305
+    weaponNameIndex: 305
+    type: 3
+    weaponRange: 4
+    weaponDamage: 2
+    weaponAmmo: 6
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponScript: 0
+    weaponModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
+      type: 3}
   weaponNameTable: []
   weaponScriptTable: []

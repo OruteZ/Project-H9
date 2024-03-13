@@ -37,8 +37,8 @@ public class ItemDatabase : ScriptableObject
             curData.weaponCriticalDamage = int.Parse(data[14]);
             curData.weaponSkill = int.Parse(data[15]);
             curData.itemTooltip = int.Parse(data[16]);
-            // curData.icon = Resources.Load<Texture2D>("ItemIcon/" + data[17]);
-            curData.itemModel = data[18];
+            curData.icon = Resources.Load<Texture2D>("ItemIcon/" + data[17]);
+            curData.itemModel = Resources.Load<GameObject>("Prefab/Item/" + data[18]);   
 
             _itemList.Add(curData);
         }
@@ -77,7 +77,7 @@ public class ItemData
     public int weaponSkill;
     public int itemTooltip;
     public Texture2D icon;
-    public string itemModel;
+    public GameObject itemModel;
 }
 
 public enum ItemType

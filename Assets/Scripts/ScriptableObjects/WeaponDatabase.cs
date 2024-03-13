@@ -26,11 +26,10 @@ public class WeaponDatabase : ScriptableObject
         var data = GetData(dataIndex);
         Weapon weapon = data.type switch
         {
-            WeaponType.Null => null,
-            WeaponType.Character => new Melee(),
-            WeaponType.Revolver => new Revolver(),
-            WeaponType.Repeater => new Repeater(),
-            WeaponType.Shotgun => new Shotgun(),
+            ItemType.Character => new Melee(),
+            ItemType.Revolver => new Revolver(),
+            ItemType.Repeater => new Repeater(),
+            ItemType.Shotgun => new Shotgun(),
             _ => throw new ArgumentOutOfRangeException()
         };
         //
@@ -65,27 +64,30 @@ public class WeaponDatabase : ScriptableObject
     [ContextMenu("Load Csv")]
     public void LoadCsv()
     {
-        var dataList = FileRead.Read("WeaponTable");
+        var dataList = FileRead.Read("ItemTable");
         
         if (weaponList is null) weaponList = new List<WeaponData>();
         else weaponList.Clear();
 
-        for (var i = 0; i < dataList.Count; i++)
+        foreach (var d in dataList)
         {
+            if((ItemType) Enum.Parse(typeof(ItemType), d[2]) is not ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun) continue;
+            
             var curData = new WeaponData
             {
-                index = int.Parse(dataList[i][0]),
-                weaponNameIndex = int.Parse(dataList[i][1]),
-                type = (WeaponType)int.Parse(dataList[i][2]),
-                weaponRange = int.Parse(dataList[i][3]),
-                weaponDamage = int.Parse(dataList[i][4]),
-                weaponAmmo = int.Parse(dataList[i][5]),
-                weaponHitRate = int.Parse(dataList[i][6]),
-                weaponCriticalChance = int.Parse(dataList[i][7]),
-                weaponCriticalDamage = int.Parse(dataList[i][8]),
-                //weaponPrice;
-                //weaponSkill;
-                weaponScript = int.Parse(dataList[i][11])
+                // 0, 1, 2, 4, 10, 11, 12, 13, 14, 16, 17, 18
+                
+                index = int.Parse(d[0]),
+                weaponNameIndex = int.Parse(d[1]),
+                type = (ItemType) Enum.Parse(typeof(ItemType), d[2]),
+                weaponRange = int.Parse(d[4]),
+                weaponDamage = int.Parse(d[10]),
+                weaponAmmo = int.Parse(d[11]),
+                weaponHitRate = int.Parse(d[12]),
+                weaponCriticalChance = int.Parse(d[13]),
+                weaponCriticalDamage = int.Parse(d[14]),
+                weaponScript = int.Parse(d[15]),
+                weaponModel = Resources.Load<GameObject>("Prefab/Item/" + d[18])
             };
             
             weaponList.Add(curData);
@@ -99,14 +101,16 @@ public class WeaponData
 {
     public int index;
     public int weaponNameIndex;
-    public GameObject weaponModel;
-    public WeaponType type;
-    public int weaponDamage;
+    public ItemType type;
+    
     public int weaponRange;
+    
+    public int weaponDamage;
     public int weaponAmmo;
     public int weaponHitRate;
     public int weaponCriticalChance;
     public int weaponCriticalDamage;
-
+    
     public int weaponScript;
+    public GameObject weaponModel;
 }

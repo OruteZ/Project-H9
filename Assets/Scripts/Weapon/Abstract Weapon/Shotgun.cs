@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shotgun : Weapon
 {
     private Vector3Int _targetHex;
-    public override WeaponType GetWeaponType() => WeaponType.Shotgun;
+    public override ItemType GetWeaponType() => ItemType.Shotgun;
     public override float GetDistancePenalty() => 2;
     public override int GetRange()
     {

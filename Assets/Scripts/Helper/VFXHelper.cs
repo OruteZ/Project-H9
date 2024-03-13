@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 public static class VFXHelper 
 {
-    public static bool TryGetGunFireFXInfo(WeaponType type, out string fxKey, out float time)
+    public static bool TryGetGunFireFXInfo(ItemType type, out string fxKey, out float time)
     {
         fxKey = string.Empty;
         time = default;
 
         switch (type)
         {
-            case WeaponType.Revolver: 
+            case ItemType.Revolver: 
                 fxKey = "Prefab/VFX/FX_GunSmoke_01";
                 time = 2.0f;
                 return true;
-            case WeaponType.Repeater: 
+            case ItemType.Repeater: 
                 fxKey = "Prefab/VFX/FX_GunSmoke_01";
                 time = 2.0f;
                 return true;
-            case WeaponType.Shotgun: 
+            case ItemType.Shotgun: 
                 fxKey = "Prefab/VFX/FX_GunSmoke_01";
                 time = 2.0f;
                 return true;
@@ -27,37 +27,41 @@ public static class VFXHelper
         return false;
     }
 
-    public static bool TryGetTraceOfBulletFXKey(WeaponType type, out string fxKey, out float time)
+    public static bool TryGetTraceOfBulletFXKey(ItemType type, out string fxKey, out float time)
     {
         fxKey = string.Empty;
         time = default;
 
         switch (type)
         {
-            case WeaponType.Null: return false;
-            default:
+            case ItemType.Revolver: 
+            case ItemType.Repeater:
+            case ItemType.Shotgun:
                 // 총기 종류에 상관없이 같은 탄환 궤적
                 fxKey = "Prefab/VFX/BulletLineRender";
                 time = 0.1f;
                 return true;
+            default: return false;
         }
 
         return false;
     }
 
-    public static bool TryGetBloodingFXKey(WeaponType shootedWeaponType, out string fxKey, out float time)
+    public static bool TryGetBloodingFXKey(ItemType shootedWeaponType, out string fxKey, out float time)
     {
         fxKey = string.Empty;
         time = default;
 
         switch (shootedWeaponType)
         {
-            case WeaponType.Null: return false;
-            default:
+            case ItemType.Revolver: 
+            case ItemType.Repeater:
+            case ItemType.Shotgun:
                 // 총기 종류에 상관없이 같은 출혈
                 fxKey = "Prefab/VFX/FX_BloodSplat_01";
                 time = 2.5f;
                 return true;
+            default: return false;
         }
 
         return false;

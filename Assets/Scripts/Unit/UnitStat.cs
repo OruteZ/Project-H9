@@ -258,20 +258,25 @@ public enum StatType
     Concentration = 3,
     SightRange = 4,
     Speed = 5,
+    
     MaxActionPoint = 6,
     CurActionPoint = 7,
+    
     AdditionalHitRate = 8,
     CriticalChance = 9,
     
     RevolverAdditionalDamage = 10,
     RevolverAdditionalRange = 11,
     RevolverCriticalDamage = 12,
+    
     RepeaterAdditionalDamage = 13,
     RepeaterAdditionalRange = 14,
     RepeaterCriticalDamage = 15,
+    
     ShotgunAdditionalDamage = 16,
     ShotgunAdditionalRange = 17,
     ShotgunCriticalDamage = 18,
+    
     AllAdditionalDamage = 19,
     AllAdditionalRange = 20,
     AllCriticalDamage = 21,

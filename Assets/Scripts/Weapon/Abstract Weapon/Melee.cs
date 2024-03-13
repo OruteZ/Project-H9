@@ -9,7 +9,7 @@ public class Melee : Weapon
         throw new System.NotImplementedException();
     }
 
-    public override WeaponType GetWeaponType()
+    public override ItemType GetWeaponType()
     {
         throw new System.NotImplementedException();
     }

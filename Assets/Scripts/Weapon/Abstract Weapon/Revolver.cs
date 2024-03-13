@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class Revolver : Weapon
 {
-    public override WeaponType GetWeaponType() => WeaponType.Revolver;
+    public override ItemType GetWeaponType() => ItemType.Revolver;
     public override float GetDistancePenalty() => 5;
     public override int GetRange()
     {

@@ -47,21 +47,11 @@ public abstract class Weapon
     /// <param name="target"></param>
     /// <param name="isCritical"></param>
     public abstract void Attack(Unit target, out bool isCritical);
-    public abstract WeaponType GetWeaponType();
+    public abstract ItemType GetWeaponType();
     public abstract int GetFinalDamage();
     public abstract int GetFinalCriticalDamage();
     public abstract float GetFinalHitRate(Unit target);
     public abstract float GetDistancePenalty();
 
     public abstract int GetRange();
-}
-
-public enum WeaponType
-{
-    Null,
-    Character,
-    Revolver,
-    Repeater,
-    Shotgun,
-    Unarmed,
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Repeater : Weapon
 {
-     public override WeaponType GetWeaponType() => WeaponType.Repeater;
+     public override ItemType GetWeaponType() => ItemType.Repeater;
     public override float GetDistancePenalty() => 5;
     public override int GetRange()
     {

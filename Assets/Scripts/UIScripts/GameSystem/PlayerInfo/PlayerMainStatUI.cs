@@ -22,18 +22,18 @@ public class PlayerMainStatUI : UIElement
         UnitStat stat = GameManager.instance.playerStat;
         int dmg = 1;
         float criDmg = 100;
-        WeaponType wT = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
-        if (wT == WeaponType.Revolver) 
+        ItemType wT = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
+        if (wT == ItemType.Revolver) 
         {
             dmg += stat.revolverAdditionalDamage;
             criDmg += stat.revolverCriticalDamage;
         }
-        else if (wT == WeaponType.Repeater)
+        else if (wT == ItemType.Repeater)
         {
             dmg += stat.repeaterAdditionalDamage;
             criDmg += stat.repeaterCriticalDamage;
         }
-        else if (wT == WeaponType.Shotgun)
+        else if (wT == ItemType.Shotgun)
         {
             dmg += stat.shotgunAdditionalDamage;
             criDmg += stat.shotgunCriticalDamage;

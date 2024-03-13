@@ -155,7 +155,7 @@ public class CharacterStatUI : UISystem
         //player
         UnitStat stat = player.stat;
         Weapon weapon = player.weapon;
-        WeaponType weaponType = weapon.GetWeaponType();
+        ItemType weaponType = weapon.GetWeaponType();
         if (stat is null) return;
 
         List<(string, StatType)> _strAndType = new List<(string, StatType)>()
@@ -168,19 +168,19 @@ public class CharacterStatUI : UISystem
             ("Additional Hit Rate", StatType.AdditionalHitRate),
             ("Critical Chance",     StatType.CriticalChance)
         };
-        if (weaponType is WeaponType.Revolver)
+        if (weaponType is ItemType.Revolver)
         {
             _strAndType.Add(("Additional Damage", StatType.RevolverAdditionalDamage));
             _strAndType.Add(("Critical Chance", StatType.CriticalChance));
             _strAndType.Add(("Critical Damage", StatType.RevolverCriticalDamage));
         }
-        else if (weaponType is WeaponType.Repeater)
+        else if (weaponType is ItemType.Repeater)
         {
             _strAndType.Add(("Additional Damage", StatType.RepeaterAdditionalDamage));
             _strAndType.Add(("Critical Chance", StatType.CriticalChance));
             _strAndType.Add(("Critical Damage", StatType.RepeaterCriticalDamage));
         }
-        else if (weaponType is WeaponType.Shotgun)
+        else if (weaponType is ItemType.Shotgun)
         {
             _strAndType.Add(("Additional Damage", StatType.ShotgunAdditionalDamage));
             _strAndType.Add(("Critical Chance", StatType.CriticalChance));

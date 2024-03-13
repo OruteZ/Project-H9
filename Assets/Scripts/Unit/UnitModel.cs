@@ -73,7 +73,7 @@ public class UnitModel : MonoBehaviour
         {
             weaponModel = Instantiate(weapon.model, waist).GetComponent<WeaponModel>();
             weaponModel.SetWaistPosRot();
-            SetAnimator(WeaponType.Null);
+            SetAnimator(ItemType.Null);
         }
     }
 
@@ -94,11 +94,11 @@ public class UnitModel : MonoBehaviour
         }
     }
     #region PRIVATE
-    private void SetAnimator(WeaponType type)
+    private void SetAnimator(ItemType type)
     {
         animator.runtimeAnimatorController =
             (RuntimeAnimatorController)Resources.Load("Animator/" 
-                                                      + (type is WeaponType.Null ? "Standing" : type) +
+                                                      + (type is ItemType.Null ? "Standing" : type) +
                                                       " Animator Controller");
         
         animator.SetTrigger(IDLE);
@@ -145,7 +145,7 @@ public class UnitModel : MonoBehaviour
     {
         if (unit.HasStatusEffect(StatusEffectType.UnArmed))
         {
-            SetAnimator(WeaponType.Unarmed);
+            SetAnimator(ItemType.Character);
         }
         else
         {

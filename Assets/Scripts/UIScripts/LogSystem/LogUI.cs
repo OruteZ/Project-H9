@@ -31,8 +31,8 @@ public class LogUI : UISystem
         UIManager.instance.onTSceneChanged.AddListener(TChangeScene);
         //UIManager.instance.onActionChanged.AddListener(ChangedAction); // 관련된 Action이 너무 많아 분리하기위해 일단 주석처리
         UIManager.instance.onTakeDamaged.AddListener(TakeDamaged);
-        //UIManager.instance.onReloaded.AddListener(Reloaded);
         UIManager.instance.onStartAction.AddListener(StartAction);
+        UIManager.instance.onNonHited.AddListener(NonHited);
         //UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat); // 모든 플레이어 스탯변화 추적하기 힘들어 일단 주석처리
         InstantiateText();
     }
@@ -70,13 +70,12 @@ public class LogUI : UISystem
         UpdateText();
     }
 
-    /*
-    private void Reloaded(Unit unit)
+    private void NonHited(Unit unit)
     {
-        _builder.Append($"{unit.unitName} 재장전.\n");
+        _builder.Append($"{unit.unitName}은 회피했다.\n");
         UpdateText();
     }
-    */
+    
     private void TChangeScene(GameState gameState)
     {
         if (gameState == GameState.Combat)

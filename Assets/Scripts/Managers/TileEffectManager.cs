@@ -395,7 +395,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
     private IEnumerator ItemTargetEffectCoroutine()
     {
-        int expRange = 1;
+        int expRange = 0;
         int thrRange = _player.GetAction<ItemUsingAction>().GetItem().GetData().itemRange;
         
         while (true)

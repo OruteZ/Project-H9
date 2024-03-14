@@ -103,7 +103,7 @@ public class ItemBuff : IDisplayableEffect
     #region IDisplayableEffect
     public int GetIndex()
     {
-        return (int)_statType;
+        return _itemIndex;
     }
 
     public int GetStack()

@@ -155,6 +155,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         if (gameObject == null) return;
         
         stat.Consume(StatType.CurHp, damage);
+        UIManager.instance.onTakeDamaged.Invoke(this, damage);
         onHit.Invoke(FieldSystem.turnSystem.turnOwner, damage);
 
         if (hp <= 0 && _hasDead is false)

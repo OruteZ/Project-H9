@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemUsingAction : BaseAction
@@ -22,7 +23,7 @@ public class ItemUsingAction : BaseAction
     {
         base.SetUp(unit);
         _itemUsedTrigger = false;
-        unit.onFinishAction.AddListener((none) => ResetUseTrigger());
+        unit.onTurnStart.AddListener((u) => ResetUseTrigger());
     }
 
     public override void SetTarget(Vector3Int targetPos)
@@ -33,12 +34,27 @@ public class ItemUsingAction : BaseAction
     public void SetItem(IItem item)
     {
         _item = item;
+        range = item.GetData().itemRange;
     }
 
     public override bool CanExecute()
     {
+        if (_item is null) return false;
         if (_itemUsedTrigger) return false;
-        return _item is not null;
+        if (_item.IsImmediate()) return true;
+        
+        if (FieldSystem.tileSystem.GetTile(_targetPos) is null)
+        {
+            Debug.LogWarning("center tile is null");
+            return false;
+        }
+        if (range < Hex.Distance(unit.hexPosition, _targetPos))
+        {
+            Debug.LogWarning("Too Far to throw bomb");
+            return false;
+        }
+
+        return true;
     }
 
     public override bool IsSelectable()
@@ -52,10 +68,25 @@ public class ItemUsingAction : BaseAction
     {
         return _item.IsImmediate();
     }
-
     protected override IEnumerator ExecuteCoroutine()
     {
+        unit.animator.ResetTrigger(IDLE);
+        unit.animator.SetTrigger(DYNAMITE);
+        
+        //look at target
+        unit.transform.LookAt(FieldSystem.tileSystem.GetTile(_targetPos).transform);
+        
+        //rotation of z and x set 0
+        var euler = unit.transform.eulerAngles;
+        euler.x = 0;
+        euler.z = 0;
+        unit.transform.eulerAngles = euler;
+        
+        yield return new WaitForSeconds(1f);
+        
         _item.Use(unit, _targetPos);
+        _itemUsedTrigger = true;
+        GameManager.instance.playerInventory.DeleteItem(_item);
         yield return null;
     }
 

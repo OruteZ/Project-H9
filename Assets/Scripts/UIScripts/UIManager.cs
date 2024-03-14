@@ -49,6 +49,7 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent<Unit, int> onTakeDamaged;
     [HideInInspector] public UnityEvent<Unit> onReloaded;
     [HideInInspector] public UnityEvent<Unit> onTryAttack;
+    [HideInInspector] public UnityEvent<Unit> onNonHited;
     [HideInInspector] public UnityEvent onInventoryChanged;
     [HideInInspector] public UnityEvent onWeaponChanged;
     [HideInInspector] public UnityEvent<Unit, BaseAction> onStartAction;

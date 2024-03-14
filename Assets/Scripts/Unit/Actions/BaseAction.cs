@@ -74,6 +74,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     {
         switch (GetActionType())
         {
+            case ActionType.None:
+                break;
             case ActionType.Move:
                 unit.animator.ResetTrigger(MOVE);
                 break;
@@ -95,6 +97,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
                 unit.animator.ResetTrigger(FANNING);
                 break;
             case ActionType.Hemostasis:
+                break;
+            case ActionType.ItemUsing:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

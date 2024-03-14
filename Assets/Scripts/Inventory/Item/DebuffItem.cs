@@ -9,7 +9,7 @@ public class DebuffItem : Item
 
     public DebuffItem(ItemData data) : base(data)
     {
-        _statusEffectType = (StatusEffectType)data.itemEffect;
+        _statusEffectType = (StatusEffectType)(data.itemEffect - StatType.Length + 10);
         _duration = data.itemEffectDuration;
         _amount = data.itemEffectAmount;
     }
@@ -18,6 +18,8 @@ public class DebuffItem : Item
     {
         // Create a new status effect based on all status effect items
         StatusEffect statusEffect = null;
+        
+        Debug.Log("Type: " + _statusEffectType);
         
         switch (_statusEffectType)
         {
@@ -38,6 +40,9 @@ public class DebuffItem : Item
                 // Assuming you have an UnArmed class similar to Burning and Fracture
                 statusEffect = new UnArmed(_duration, user);
                 break;
+            case StatusEffectType.Taunted:
+                Debug.LogError("어떤 새끼가 도발 구현 안해서 지금 못만듬 ㅇㅇ");
+                break;
             case StatusEffectType.Concussion:
                 // Assuming you have a Concussion class similar to Burning and Fracture
                 statusEffect = new Concussion(_duration, user);
@@ -49,6 +54,8 @@ public class DebuffItem : Item
                 // Assuming you have a Blind class similar to Burning and Fracture
                 statusEffect = new Blind(_duration, user);
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
         if (statusEffect != null)

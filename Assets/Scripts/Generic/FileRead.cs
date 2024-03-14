@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using System.Text.RegularExpressions;
+using UnityEditor.Rendering;
 
 /// <summary>
 /// CSV확장자로 된 각종 테이블 파일을 읽어서 string이중리스트로 반환하는 클래스
@@ -59,6 +61,8 @@ public static class FileRead
 
     public static T[] ConvertStringToArray<T>(string input)
     {
+	    if (input == "") return Array.Empty<T>();
+	    
 	    T type = default;
 	    if ((type is int or float) is false)
 	    {
@@ -71,6 +75,7 @@ public static class FileRead
 
 	    // 결과로 반환할 배열을 초기화합니다.
 	    T[] result = new T[numbersAsString.Length];
+	    if(numbersAsString.Length == 0) return result;
 
 	    // 변환하여 결과 배열에 저장합니다.
 	    for (int i = 0; i < numbersAsString.Length; i++)

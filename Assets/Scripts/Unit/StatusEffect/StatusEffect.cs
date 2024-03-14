@@ -86,6 +86,7 @@ public enum StatusEffectType
     Bleeding = 11,
     Stun = 12,
     UnArmed = 13,
+    Taunted = 14,
     Concussion = 15,
     Fracture = 16,
     Blind = 17,

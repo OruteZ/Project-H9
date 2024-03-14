@@ -135,7 +135,7 @@ public class UnitSystem : MonoBehaviour
 
                 GameManager.instance.playerStat.ResetModifier();
                 p.SetUp("Player", GameManager.instance.playerStat, 
-                    weaponDB.Clone(GameManager.instance.playerWeaponIndex),
+                    weaponDB.Clone(GameManager.instance.PlayerWeaponIndex),
                     GameManager.instance.playerModel, playerPassiveList);
                 if (GameManager.instance.CompareState(GameState.World))
                 {

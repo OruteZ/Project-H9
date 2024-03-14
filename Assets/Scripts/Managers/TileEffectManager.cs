@@ -97,7 +97,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             case ActionType.Hemostasis:
                 break;
             case ActionType.ItemUsing:
-                AttackTileEffect();
+                ItemTileEffect();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -390,12 +390,12 @@ public class TileEffectManager : Singleton<TileEffectManager>
             _effectsBase.Add(tile.hexPosition, go);
         }
 
-        _curCoroutine = StartCoroutine(DynamiteTargetEffectCoroutine());
+        _curCoroutine = StartCoroutine(ItemTargetEffectCoroutine());
     }
 
     private IEnumerator ItemTargetEffectCoroutine()
     {
-        int expRange = 1;
+        int expRange = 0;
         int thrRange = _player.GetAction<ItemUsingAction>().GetItem().GetData().itemRange;
         
         while (true)

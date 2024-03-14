@@ -26,7 +26,6 @@ public class EnemyDatabase : ScriptableObject
         RewardGold,
         RewardXP,
         RewardItem,
-        RewardWeapon
     }
     #endregion
     [SerializeField] 
@@ -49,12 +48,12 @@ public class EnemyDatabase : ScriptableObject
             curData.stat = new UnitStat();
             curData.weaponIndex = int.Parse(data[(int)Col.EquippedWeapon]);
             curData.btIndex = int.Parse(data[(int)Col.BehaviorPattern]);
-            curData.model = Resources.Load("Prefab/Units/" + data[(int)Col.ModelFile]) as GameObject;   
+            curData.model = Resources.Load("Prefab/Units/" + data[(int)Col.ModelFile]) as GameObject;  
+            curData.skillIndex = FileRead.ConvertStringToArray<int>(data[(int)Col.EnemySkill]);
 
             curData.rewardGold = int.Parse(data[(int)Col.RewardGold]);
             curData.rewardExp = int.Parse(data[(int)Col.RewardXP]);
-            curData.rewardItem = data[(int)Col.RewardItem];
-            curData.rewardWeapon = data[(int)Col.RewardWeapon];
+            curData.rewardItem = FileRead.ConvertStringToArray<int>(data[(int)Col.RewardItem]);
 
             curData.stat.SetOriginalStat(StatType.MaxHp, int.Parse(data[(int)Col.Hp]));
             curData.stat.SetOriginalStat(StatType.CurHp, int.Parse(data[(int)Col.Hp]));
@@ -109,10 +108,11 @@ public struct EnemyData
     public int weaponIndex;
     public int btIndex;
     
+    public int[] skillIndex;
+    
     public int rewardGold;
     public int rewardExp;
-    public string rewardItem;
-    public string rewardWeapon;
+    public int[] rewardItem;
 }
 
 public struct UnitModelData

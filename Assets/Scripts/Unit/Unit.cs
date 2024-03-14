@@ -379,6 +379,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
         else
         {
+            UIManager.instance.onNonHited.Invoke(target);
             Service.SetText(index:0, "MISS", target.transform.position);
         }
         weapon.currentAmmo--;

@@ -195,6 +195,9 @@ public class CameraController : MonoBehaviour
     private Vector3 _lastMousePosition;
     private void DragCamera()
     {
+        // if mouse on ui, return
+        if (UIManager.instance.isMouseOverUI) return;
+        
         if (Input.GetMouseButtonDown(0))
         {
             _lastMousePosition = Input.mousePosition;
@@ -204,7 +207,7 @@ public class CameraController : MonoBehaviour
         {
             Vector3 delta = Input.mousePosition - _lastMousePosition;
             delta = new Vector3(delta.x, 0, delta.y);
-            newPosition -= delta * movementSpeed * Time.deltaTime;
+            newPosition -= delta * (movementSpeed * Time.deltaTime);
             _lastMousePosition = Input.mousePosition;
         }
     }

@@ -64,7 +64,7 @@ public class LogUI : UISystem
         UpdateText();
     }
 
-    private void TakeDamaged(Unit unit, int damage)
+    private void TakeDamaged(Unit unit, int damage, eDamageType.Type type)
     {
         _builder.Append($"{unit.unitName}에게 {damage} 피해.\n");
         UpdateText();

@@ -162,19 +162,21 @@ public class UnitStat : ICloneable
         }
     }
 
-    public void Recover(StatType stat, int value)
+    public void Recover(StatType stat, int value, out int appliedValue)
     {
         if (stat is not StatType.CurHp and not StatType.CurActionPoint)
         {
+            appliedValue = 0;
             Debug.LogError("Can't Recover Stat that is not curHp or curAp");
             return;
         }
-
+        
         int maxValue = GetStat((StatType)((int)stat - 1));
 
         int idx = (int)stat;
 
         original[idx] = Mathf.Clamp(original[idx] + value, 0, maxValue);
+        appliedValue = original[idx] - value;
     }
 
     public void Consume(StatType stat, int value)

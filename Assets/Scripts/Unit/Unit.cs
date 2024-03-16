@@ -64,6 +64,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     [HideInInspector] public UnityEvent<Unit> onStartShoot; // target
     [HideInInspector] public UnityEvent<Unit, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
     [HideInInspector] public UnityEvent<Unit> onKill; // target
+    [HideInInspector] public UnityEvent onUnitActionDataChanged;
     [HideInInspector] public UnityEvent onSelectedChanged;
     [HideInInspector] public UnityEvent onStatusEffectChanged;
 

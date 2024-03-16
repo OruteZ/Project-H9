@@ -52,10 +52,10 @@ public class CameraController : MonoBehaviour
         movementSpeed = Input.GetKey(KeyCode.LeftShift) ? fastSpeed : normalSpeed;
         
         //check mouse on edge each direction
-        if (IsMouseOnEdge(Direction.Right)) direction += Vector3.right;
-        if (IsMouseOnEdge(Direction.Left)) direction += Vector3.left;
-        if (IsMouseOnEdge(Direction.Up)) direction += Vector3.forward;
-        if (IsMouseOnEdge(Direction.Down)) direction += Vector3.back;
+        if (IsMouseOnEdge(Direction.Right) || Input.GetKeyDown(KeyCode.D)) direction += Vector3.right;
+        if (IsMouseOnEdge(Direction.Left)|| Input.GetKeyDown(KeyCode.A)) direction += Vector3.left;
+        if (IsMouseOnEdge(Direction.Up)|| Input.GetKeyDown(KeyCode.W)) direction += Vector3.forward;
+        if (IsMouseOnEdge(Direction.Down)|| Input.GetKeyDown(KeyCode.S)) direction += Vector3.back;
         direction.Normalize();
         
         newPosition += direction * (movementSpeed * Time.deltaTime);

@@ -25,32 +25,39 @@ public class GameSystemUI : UISystem
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(HotKey.openCharacterUIKey))
         {
             OnCharacterBtnClick();
         }
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(HotKey.OpenSkillUIKey))
         {
-#if UNITY_EDITOR
-            playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
-#endif
+            OnSkillBtnClick();
         }
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.L))    //level up test button
+        {
+            playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
+        }
+#endif
     }
 
     public void OnCharacterBtnClick()
     {
+        UIManager.instance.previousLayer = 2;
         UIManager.instance.SetCharacterCanvasState(true);
         UIManager.instance.SetSkillCanvasState(false);
         UIManager.instance.SetPauseMenuCanvasState(false);
     }
     public void OnSkillBtnClick()
     {
+        UIManager.instance.previousLayer = 2;
         UIManager.instance.SetCharacterCanvasState(false);
         UIManager.instance.SetSkillCanvasState(true);
         UIManager.instance.SetPauseMenuCanvasState(false);
     }
     public void OnPauseMenuBtnClick()
     {
+        UIManager.instance.previousLayer = 2;
         UIManager.instance.SetCharacterCanvasState(false);
         UIManager.instance.SetSkillCanvasState(false);
         UIManager.instance.SetPauseMenuCanvasState(true);

@@ -7,6 +7,8 @@ public class ItemDatabase : ScriptableObject
 {
     [SerializeField]
     private List<ItemData> _itemList;
+    [SerializeField]
+    private List<ItemScript> _itemScriptList;
 
     [ContextMenu("Read Csv")]
     public void ReadCsv()
@@ -44,6 +46,21 @@ public class ItemDatabase : ScriptableObject
             
             _itemList.Add(curData);
         }
+
+        ReadScriptTable();
+    }
+    private void ReadScriptTable()
+    {
+        var dataList = FileRead.Read("ItemScriptTable");
+
+        if (_itemScriptList is null) _itemScriptList = new List<ItemScript>();
+        else _itemScriptList.Clear();
+
+        foreach (var data in dataList)
+        {
+            ItemScript curData = new ItemScript(int.Parse(data[0]), data[1], data[3]);
+            _itemScriptList.Add(curData);
+        }
     }
 
     public ItemData GetItemData(int id)
@@ -60,6 +77,17 @@ public class ItemDatabase : ScriptableObject
     public List<ItemData> GetAllItemData()
     {
         return _itemList;
+    }
+
+    public ItemScript GetItemScript(int id)
+    {
+        foreach (var script in _itemScriptList)
+        {
+            if (script.GetIndex() == id) return script;
+        }
+
+        Debug.LogError("There is no script that has id " + id);
+        return null;
     }
 }
 

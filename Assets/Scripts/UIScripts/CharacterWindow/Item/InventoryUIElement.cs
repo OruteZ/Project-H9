@@ -70,13 +70,13 @@ public class InventoryUIElement : UIElement, IPointerDownHandler, IPointerUpHand
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_itemFrame is null) return;
+        if (_itemFrame == null) return;
         _itemFrame.SetActive(true);
-        UIManager.instance.characterUI.itemUI.OpenInventoryTooltip(item, GetComponent<RectTransform>().position);
+        UIManager.instance.characterUI.itemUI.OpenInventoryTooltip(gameObject, GetComponent<RectTransform>().position);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (_itemFrame is null) return;
+        if (_itemFrame == null) return;
         _itemFrame.SetActive(false);
         UIManager.instance.characterUI.itemUI.ClosePopupWindow();
     }

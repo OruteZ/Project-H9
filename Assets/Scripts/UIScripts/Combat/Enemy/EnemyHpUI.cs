@@ -50,10 +50,6 @@ public class EnemyHpUI : UISystem
             {
                 _enemyHpBars[i].GetComponent<EnemyHpUIElement>().SetEnemyHpUI(_enemies[i]);
             }
-            else
-            {
-                _enemyHpBars[i].GetComponent<EnemyHpUIElement>().ClearEnemyHpUI();
-            }
         }
     }
     private void InitEnemyHpUIs()

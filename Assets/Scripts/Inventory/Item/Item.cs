@@ -103,7 +103,7 @@ public abstract class Item : IItem
     {
         ItemData data = GetData();
         string typeText = data.itemType.ToString() + " Item";
-        string effect = "Effect: " + data.nameIdx.ToString();
+        string effect =  GameManager.instance.itemDatabase.GetItemScript(data.nameIdx).GetDescription(data);
         string description = typeText + "\n\n" + effect;
 
         return description;

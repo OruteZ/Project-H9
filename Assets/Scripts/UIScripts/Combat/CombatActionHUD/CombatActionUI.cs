@@ -12,7 +12,7 @@ public enum CombatActionType
     Reload =    3,
     Skills =    4,
     Items =     5,
-    Run =       6,
+    Weapons =   6,
     PlayerSkill = 7
 }
 
@@ -26,6 +26,7 @@ public class CombatActionUI : UISystem
     [SerializeField] private GameObject _SkillTooltip;
 
     private const int SKILL_BUTTON_INDEX = 3;
+    private bool _isThereSeletableSkill = false;
 
     private GameObject _displayedActionBundle = null;
     private GameObject _activeActionBundle = null;
@@ -34,7 +35,7 @@ public class CombatActionUI : UISystem
     private IUnitAction _idleAction;
     private CombatActionType _selectedActionType = CombatActionType.Null;
 
-    private KeyCode _openKey = KeyCode.Tab;
+    private KeyCode _openKey = HotKey.OpenActionUIKey;
     private KeyCode[] _shortCutKey =
     {
             KeyCode.Alpha1,
@@ -57,9 +58,7 @@ public class CombatActionUI : UISystem
     }
     private void Awake()
     {
-        UIManager.instance.onTurnChanged.AddListener(() => SetActionBundle(_displayedActionBundle, false));
         UIManager.instance.onSceneChanged.AddListener(InitActions);
-        //UIManager.instance.onTSceneChanged.AddListener(null);
     }
     private void Start()
     {
@@ -112,6 +111,8 @@ public class CombatActionUI : UISystem
         if (UIManager.instance.UIState != GameState.Combat) return;
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;
+        player.onTurnStart.AddListener((u) => SetActionBundle(_baseActionBundle, true));
+        player.onFinishAction.AddListener((a) => { if (a is not IdleAction && IsThereSeletableButton()) { SetActionBundle(_baseActionBundle, true); } });
 
         List<IUnitAction> actions = new List<IUnitAction>(player.GetUnitActionArray());
         ActionType[] baseActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload, ActionType.Idle, ActionType.ItemUsing };
@@ -166,9 +167,9 @@ public class CombatActionUI : UISystem
     {
         if (UIManager.instance.UIState != GameState.Combat) return;
         if (FieldSystem.turnSystem.turnOwner is not Player) return;
+        if (!FieldSystem.unitSystem.isEnemyExist()) return;
         _buttonNameTooltip.GetComponent<CombatActionNameTooltip>().CloseUI();
         if (bundle is null) return;
-        UpdateButtonSeletable();
 
         _activeActionBundle = bundle;
         if (isDisplayed)
@@ -182,6 +183,8 @@ public class CombatActionUI : UISystem
             _displayedActionBundle = null;
             //_buttonTooltip.GetComponent<CombatActionButtonTooltip>().CloseUI();
         }
+        UpdateButtonSeletable();
+
         _baseActionBundle.SetActive(false);
         _skillActionBundle.SetActive(false);
         _backgroundImage.SetActive(isDisplayed);
@@ -228,9 +231,9 @@ public class CombatActionUI : UISystem
                     Debug.Log("Item Button Clicked");
                     break;
                 }
-            case CombatActionType.Run:
+            case CombatActionType.Weapons:
                 {
-                    Debug.Log("Run Button Clicked");
+                    Debug.Log("Weapon Button Clicked");
                     break;
                 }
             case CombatActionType.PlayerSkill:
@@ -305,8 +308,11 @@ public class CombatActionUI : UISystem
         if (player.GetSelectedAction() is not null && player.GetSelectedAction() != _idleAction) return true;
 
         UpdateButtonSeletable();
+        if (_isThereSeletableSkill) return true;
+
         for (int i = 0; i < _baseActionBundle.transform.childCount; i++) 
         {
+            if (i == SKILL_BUTTON_INDEX) continue;
             GameObject btn = _baseActionBundle.transform.GetChild(i).gameObject;
             if (btn.GetComponent<CombatActionButtonElement>().IsInteractable())
             {
@@ -317,7 +323,7 @@ public class CombatActionUI : UISystem
     }
     private void UpdateButtonSeletable()
     {
-        bool isThereSeletableSkill = false;
+        _isThereSeletableSkill = false;
         for (int i = 0; i < _skillActionBundle.transform.childCount; i++)
         {
             GameObject btn = _skillActionBundle.transform.GetChild(i).gameObject;
@@ -325,7 +331,7 @@ public class CombatActionUI : UISystem
             btn.GetComponent<CombatActionButtonElement>().SetInteractable();
             if (btn.GetComponent<CombatActionButtonElement>().IsInteractable())
             {
-                isThereSeletableSkill = true;
+                _isThereSeletableSkill = true;
             }
         }
         bool isSkillExist = _skillActionBundle.transform.GetChild(0).gameObject.activeSelf;

@@ -21,7 +21,7 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
     private bool _isSelectable = true;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         buttonIndex = 0;
         buttonAction = null;
@@ -82,6 +82,7 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
             _isSelectable = false;
         }
         _actionButtonActiveEffect.SetActive(!_isSelectable);
+
         _actionButtonHighlightEffect.SetActive(false);
     }
     public void SetInteractable(bool isInteractable)

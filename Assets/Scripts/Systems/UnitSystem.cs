@@ -298,4 +298,13 @@ public class UnitSystem : MonoBehaviour
     {
         return weaponDB.GetData(index);
     }
+
+    public bool isEnemyExist() 
+    {
+        foreach (var unit in units) 
+        {
+            if (unit is Enemy) return true;
+        }
+        return false;
+    }
 }

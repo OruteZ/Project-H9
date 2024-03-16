@@ -39,7 +39,7 @@ public class FanningAction : BaseAction, IShootingAction
 
     public override int GetAmmoCost()
     {
-        return unit.weapon.currentAmmo;
+        return Mathf.Max(unit.weapon.currentAmmo, 1);
     }
 
     public override bool CanExecuteImmediately()
@@ -61,12 +61,12 @@ public class FanningAction : BaseAction, IShootingAction
     public override bool CanExecute()
     {
         if (_target is null) return false;
-        if (IsThereWallBetweenUnitAndThis(_target.hexPosition)) return false;
+        if (IsThereWallBetweenUnitAndTarget(_target.hexPosition)) return false;
         
         return true;
     }
     
-    private bool IsThereWallBetweenUnitAndThis(Vector3Int targetPos)
+    private bool IsThereWallBetweenUnitAndTarget(Vector3Int targetPos)
     {
         return !FieldSystem.tileSystem.RayThroughCheck(unit.hexPosition, targetPos);
     }

@@ -35,7 +35,7 @@ public class UnitSystem : MonoBehaviour
     public void SetUpUnits()
     {
         _totalExp = 0;
-        rewardHelper = new CombatRewardHelper();
+        rewardHelper = new CombatRewardHelper(GameManager.instance.itemDatabase);
 
         //get all link data and instantiate enemy
         if (GameManager.instance.CompareState(GameState.Combat))

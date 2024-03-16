@@ -6,6 +6,14 @@ public class CombatRewardHelper
 {
     private int _gold;
     private readonly List<int> _rewardItems = new List<int>();
+    private readonly ItemDatabase _itemDB;
+    
+    public CombatRewardHelper(ItemDatabase itemDB)
+    {
+        _gold = 0;
+        _rewardItems.Clear();
+        _itemDB = itemDB;
+    }
 
     public void AddGold(int infoRewardGold)
     {
@@ -42,7 +50,7 @@ public class CombatRewardHelper
         // get item to player inventory
         foreach (var itemIndex in _rewardItems)
         {
-            GameManager.instance.AddItem(itemIndex);
+            GameManager.instance.playerInventory.AddItem(Item.CreateItem(_itemDB.GetItemData(itemIndex)));
         }
     }
     

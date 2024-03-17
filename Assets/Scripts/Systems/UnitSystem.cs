@@ -159,6 +159,10 @@ public class UnitSystem : MonoBehaviour
             }
             unit.onDead.AddListener(OnUnitDead);
             unit.onMoved.AddListener(OnUnitMoved);
+            
+            if(GameManager.instance.CompareState(GameState.Combat)) {
+                CameraManager.instance.CreateUnitCamera(unit);
+            }
         }
     }
 

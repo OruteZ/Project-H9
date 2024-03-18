@@ -50,7 +50,7 @@ public class ItemUsingAction : BaseAction
         }
         if (range < Hex.Distance(unit.hexPosition, _targetPos))
         {
-            Debug.LogWarning("Too Far to throw bomb");
+            Debug.LogWarning("Too Far to throw Item");
             return false;
         }
 

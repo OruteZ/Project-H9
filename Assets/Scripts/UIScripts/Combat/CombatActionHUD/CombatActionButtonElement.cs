@@ -23,18 +23,10 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
     // Start is called before the first frame update
     void Awake()
     {
-        buttonIndex = 0;
-        buttonAction = null;
-        _actionButtonHighlightEffect.SetActive(false);
-        if (actionType != CombatActionType.PlayerSkill) 
-        {
-            //_actionButtonIcon.GetComponent<Image>().sprite = ;
-            _actionButtonNumber.GetComponent<TextMeshProUGUI>().text = ((int)actionType).ToString();
-            buttonName = actionType.ToString();
-        }
+        ClearCombatActionButton();
     }
 
-    public void SetcombatActionButton(CombatActionType actionType, int btnNumber, IUnitAction action)
+    public void SetCombatActionButton(CombatActionType actionType, int btnNumber, IUnitAction action)
     {
         _actionButtonHighlightEffect.SetActive(false);
         this.actionType = actionType;
@@ -44,6 +36,18 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
         buttonName = action.GetActionType().ToString();
         buttonAction = action;
         SetInteractable();
+    }
+    public void ClearCombatActionButton()
+    {
+        buttonIndex = 0;
+        buttonAction = null;
+        _actionButtonHighlightEffect.SetActive(false);
+        if (actionType != CombatActionType.PlayerSkill)
+        {
+            //_actionButtonIcon.GetComponent<Image>().sprite = ;
+            _actionButtonNumber.GetComponent<TextMeshProUGUI>().text = ((int)actionType).ToString();
+            buttonName = actionType.ToString();
+        }
     }
 
     public void OnClickCombatSelectButton()

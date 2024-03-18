@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class CombatActionSkillCostUIElement : UIElement
+public class TooltipCostUIElement : UIElement
 {
     //[SerializeField] private GameObject _costIcon;
     [SerializeField] private GameObject _costText;

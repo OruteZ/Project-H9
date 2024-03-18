@@ -158,6 +158,7 @@ public class Skill
     {
         isLearnable = (skillInfo.precedenceIndex[0] == 0);
     }
+    
     private void InitIsLearnedPrecedeSkill()
     {
         isLearnedPrecedeSkill = new bool[skillInfo.precedenceIndex.Length];
@@ -170,6 +171,7 @@ public class Skill
             isLearnedPrecedeSkill[0] = true;
         }
     }
+    
     /// <summary>
     /// isLearnable 변수의 상태를 갱신합니다.
     /// 스킬을 최대치까지 배운 상태라면 false로 갱신합니다.

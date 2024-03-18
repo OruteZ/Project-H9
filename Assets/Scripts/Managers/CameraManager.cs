@@ -52,6 +52,7 @@ public class CameraManager : Singleton<CameraManager>
     {
         if (_currentUnitCamera != null)
         {
+            worldCamera.SetPosition(_currentUnitCamera.GetUnit().transform.position);
             _currentUnitCamera.SetPriority(0);
         }
         _currentUnitCamera = null;

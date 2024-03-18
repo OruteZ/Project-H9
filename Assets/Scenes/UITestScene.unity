@@ -1925,7 +1925,7 @@ PrefabInstance:
     - target: {fileID: 3982880505037765226, guid: b7ba82fd8e5847748b38b4327f7251e2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 91.01
       objectReference: {fileID: 0}
     - target: {fileID: 3982880505037765226, guid: b7ba82fd8e5847748b38b4327f7251e2,
         type: 3}
@@ -7302,7 +7302,7 @@ PrefabInstance:
     - target: {fileID: 467369732903991730, guid: 1bc23117af09fb84db11cfb5098f0e33,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1111572
+      value: -1126620
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc23117af09fb84db11cfb5098f0e33, type: 3}
@@ -12685,7 +12685,7 @@ PrefabInstance:
     - target: {fileID: 3982880505037765226, guid: b7ba82fd8e5847748b38b4327f7251e2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 148.99
       objectReference: {fileID: 0}
     - target: {fileID: 3982880505037765226, guid: b7ba82fd8e5847748b38b4327f7251e2,
         type: 3}
@@ -20106,69 +20106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61004d495e826ef4090f3732a6f61ae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSpeed: 10
-  fastSpeed: 20
-  movementSpeed: 10
-  movementTime: 2
-  newPosition: {x: 0, y: 0, z: 0}
-  maxZ: -23
-  minZ: -25.95
-  maxX: 24.8
-  minX: 9.7
-  lookAtOffset: 0
-  dampingCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.24352351
-      value: 0.8712402
-      inSlope: 0.6203161
-      outSlope: 0.6203161
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.16239542
-    - serializedVersion: 3
-      time: 0.4997818
-      value: 0.9947064
-      inSlope: 0.029549252
-      outSlope: 0.029549252
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.7282181
-      value: 0.8978755
-      inSlope: -0.84508884
-      outSlope: -0.84508884
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.1140244
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.001216
-      value: -0.0014143735
-      inSlope: -2.2971241
-      outSlope: -2.2971241
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.04815183
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  dampingValue: 1
-  dampingDuration: 0.5
 --- !u!4 &426316135
 Transform:
   m_ObjectHideFlags: 0
@@ -26954,7 +26891,7 @@ PrefabInstance:
     - target: {fileID: 3982880505037765226, guid: b7ba82fd8e5847748b38b4327f7251e2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 105.505005
       objectReference: {fileID: 0}
     - target: {fileID: 3982880505037765226, guid: b7ba82fd8e5847748b38b4327f7251e2,
         type: 3}
@@ -46439,7 +46376,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -51596336, y: 20094150}
+  m_AnchoredPosition: {x: -51621620, y: 20102906}
   m_SizeDelta: {x: 763.6692, y: 456.5049}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &950485934
@@ -55142,7 +55079,7 @@ PrefabInstance:
     - target: {fileID: 3982880505037765226, guid: b7ba82fd8e5847748b38b4327f7251e2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 3982880505037765226, guid: b7ba82fd8e5847748b38b4327f7251e2,
         type: 3}
@@ -59636,6 +59573,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onKill:
+    m_PersistentCalls:
+      m_Calls: []
+  onUnitActionDataChanged:
     m_PersistentCalls:
       m_Calls: []
   onSelectedChanged:
@@ -66377,7 +66317,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374692774}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -80309,7 +80249,7 @@ PrefabInstance:
     - target: {fileID: 3982880505037765226, guid: b7ba82fd8e5847748b38b4327f7251e2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 134.49501
       objectReference: {fileID: 0}
     - target: {fileID: 3982880505037765226, guid: b7ba82fd8e5847748b38b4327f7251e2,
         type: 3}
@@ -91325,7 +91265,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850782161}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}

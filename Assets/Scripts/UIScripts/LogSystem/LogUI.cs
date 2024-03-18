@@ -96,6 +96,10 @@ public class LogUI : UISystem
             case ActionType.Hemostasis: actionType = "지혈"; break;
             case ActionType.Move: actionType = "이동"; break;
             case ActionType.Reload: actionType = "재장전"; break;
+            case ActionType.ItemUsing: 
+                string itemName = ((ItemUsingAction)action).GetItem().GetData().nameIdx.ToString();
+                actionType = $"<color:yellow>{itemName}</color> 사용";
+                break;
             default: break;
         }
         _builder.Append($"{unit.unitName}의 {actionType}.\n");

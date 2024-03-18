@@ -50,7 +50,7 @@ public class ItemUsingAction : BaseAction
         }
         if (range < Hex.Distance(unit.hexPosition, _targetPos))
         {
-            Debug.LogWarning("Too Far to throw bomb");
+            Debug.LogWarning("Too Far to throw Item");
             return false;
         }
 
@@ -60,6 +60,7 @@ public class ItemUsingAction : BaseAction
     public override bool IsSelectable()
     {
         if (_itemUsedTrigger) return false;
+        if (unit.CheckAttackedTrigger()) return false;
 
         return _item is not null;
     }

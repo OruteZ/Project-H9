@@ -46,11 +46,10 @@ public class Player : Unit
 
         if (Input.GetMouseButtonDown(0) && isMouseOnTile) 
         {
-            SetBusy();
-
             var actionSuccess = TryExecuteUnitAction(onMouseTilePos);
             
             if(actionSuccess is false) ClearBusy();
+            else SetBusy();
         }
 
         if (Input.GetMouseButton(1) && GameManager.instance.CompareState(GameState.Combat))

@@ -26,6 +26,7 @@ public class UnitSystem : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
     
     private int _totalExp;
+    public CombatRewardHelper rewardHelper;
     
     
     /// <summary>
@@ -34,6 +35,7 @@ public class UnitSystem : MonoBehaviour
     public void SetUpUnits()
     {
         _totalExp = 0;
+        rewardHelper = new CombatRewardHelper(GameManager.instance.itemDatabase);
 
         //get all link data and instantiate enemy
         if (GameManager.instance.CompareState(GameState.Combat))
@@ -152,9 +154,15 @@ public class UnitSystem : MonoBehaviour
                 enemy.isVisible = false;
 
                 _totalExp += info.rewardExp;
+                rewardHelper.AddGold(info.rewardGold);
+                rewardHelper.AddItem(info.rewardItem);
             }
             unit.onDead.AddListener(OnUnitDead);
             unit.onMoved.AddListener(OnUnitMoved);
+            
+            if(GameManager.instance.CompareState(GameState.Combat)) {
+                CameraManager.instance.CreateUnitCamera(unit);
+            }
         }
     }
 
@@ -283,6 +291,7 @@ public class UnitSystem : MonoBehaviour
             if (playerWin)
             {
                 LevelSystem.ReservationExp(_totalExp);
+                rewardHelper.ApplyReward();
             }
             FieldSystem.onCombatFinish.Invoke(playerWin);
         }

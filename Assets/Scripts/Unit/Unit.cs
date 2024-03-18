@@ -64,6 +64,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     [HideInInspector] public UnityEvent<Unit> onStartShoot; // target
     [HideInInspector] public UnityEvent<Unit, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
     [HideInInspector] public UnityEvent<Unit> onKill; // target
+    [HideInInspector] public UnityEvent onUnitActionDataChanged;
     [HideInInspector] public UnityEvent onSelectedChanged;
     [HideInInspector] public UnityEvent onStatusEffectChanged;
 
@@ -457,10 +458,15 @@ public abstract class Unit : MonoBehaviour, IUnit
         onFinishAction.Invoke(action);
     }
     
-    // 한 턴에 한번만 사격 가능합니다. "단 Infinite Action Point 스킬을 배우지 않았을 경우"
-    public bool CheckAttackTrigger() => _hasAttacked && infiniteActionPointTrigger is false;
+    ///<summary>
+    /// 한 턴에 한번만 사격 가능합니다. "단 Infinite Action Point 스킬을 배우지 않았을 경우"
+    /// </summary>
+    public bool CheckAttackedTrigger() => _hasAttacked && infiniteActionPointTrigger is false;
     
-    // 사격 후 이동이 불가합니다. "단 Light Foot 스킬을 배우지 않았을 경우"
+    /// <summary>
+    /// 사격 후 이동이 불가합니다. "단 Light Foot 스킬을 배우지 않았을 경우"
+    /// </summary>
+    /// <returns></returns>
     public bool CheckAttackMoveTrigger() => _hasAttacked && lightFootTrigger is false;
 
     public void SetAttacked()

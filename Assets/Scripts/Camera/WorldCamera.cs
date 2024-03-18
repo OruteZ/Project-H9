@@ -25,19 +25,19 @@ public class WorldCamera : MonoBehaviour
     }
     private void HandleMoveEvent()
     {
-        // ¸¶¿ì½º µå·¡±×¿¡ ÀÇÇÑ ÀÌµ¿, X¿Í Z°ª¸¸À» º¯°æÇÕ´Ï´Ù.
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     _lastMousePosition = Input.mousePosition;
-        // }
-        // if (Input.GetMouseButton(0))
-        // {
-        //     Vector3 delta = Input.mousePosition - _lastMousePosition;
-        //     transform.Translate(-delta.x * (movementSpeed * Time.deltaTime), 0, -delta.y * (movementSpeed * Time.deltaTime));
-        //     _lastMousePosition = Input.mousePosition;
-        // }
+        //ë§ˆìš°ìŠ¤ ë“œë˜ê·¸ì— ì˜í•œ ì´ë™, Xì™€ Zê°’ë§Œì„ ë³€ê²½í•©ë‹ˆë‹¤.
+        if (Input.GetMouseButtonDown(0))
+        {
+            _lastMousePosition = Input.mousePosition;
+        }
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 delta = Input.mousePosition - _lastMousePosition;
+            transform.Translate(-delta.x * (movementSpeed * Time.deltaTime), 0, -delta.y * (movementSpeed * Time.deltaTime));
+            _lastMousePosition = Input.mousePosition;
+        }
 
-        // WASD Å° ÀÔ·Â¿¡ ÀÇÇÑ ÀÌµ¿
+        // WASD í‚¤ ì…ë ¥ì— ì˜í•œ ì´ë™
         Vector3 direction = new Vector3();
         if (Input.GetKey(KeyCode.W)) direction += Vector3.forward;
         if (Input.GetKey(KeyCode.S)) direction += Vector3.back;
@@ -45,14 +45,14 @@ public class WorldCamera : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) direction += Vector3.right;
         transform.Translate(direction * (movementSpeed * Time.deltaTime));
 
-        // È­¸é °¡ÀåÀÚ¸®¿¡ ¸¶¿ì½º Ä¿¼­¿¡ ÀÇÇÑ ÀÌµ¿
+        // í™”ë©´ ê°€ì¥ìë¦¬ì— ë§ˆìš°ìŠ¤ ì»¤ì„œì— ì˜í•œ ì´ë™
         Vector3 mousePosition = Input.mousePosition;
         if (mousePosition.x < 0) transform.Translate(Vector3.left * (movementSpeed * Time.deltaTime));
         if (mousePosition.x > Screen.width) transform.Translate(Vector3.right * (movementSpeed * Time.deltaTime));
         if (mousePosition.y < 0) transform.Translate(Vector3.back * (movementSpeed * Time.deltaTime));
         if (mousePosition.y > Screen.height) transform.Translate(Vector3.forward * (movementSpeed * Time.deltaTime));
         
-        // ÀÌµ¿ Á¦ÇÑ Àû¿ë
+        // ì´ë™ ì œí•œ ì ìš©
         Vector3 clampedPosition = transform.position;
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, minPosition.x, maxPosition.x);
         //clamp y value to 0

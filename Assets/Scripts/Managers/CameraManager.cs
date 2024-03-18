@@ -35,10 +35,9 @@ public class CameraManager : Singleton<CameraManager>
                 _currentUnitCamera.SetPriority(0);
             }
             unitCamera.SetPriority(10);
+            _currentUnitCamera = unitCamera;
+            worldCamera.SetPosition( _currentUnitCamera.GetUnit().transform.position);
         }
-        //set world camera transform to target camera
-        _currentUnitCamera = unitCamera;
-        worldCamera.SetPosition( _currentUnitCamera.GetUnit().transform.position);
     }
     
     public UnitCamera GetCamera(Unit unit) => _unitCameras[unit];

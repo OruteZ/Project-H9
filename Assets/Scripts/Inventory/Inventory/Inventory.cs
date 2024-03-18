@@ -33,6 +33,10 @@ public class Inventory : IInventory
             _equippedItem = item;
         }
     }
+    public IItem GetEqippedItem() 
+    {
+        return _equippedItem;
+    }
 
     public void AddItem(IItem item)
     {
@@ -111,6 +115,14 @@ public class Inventory : IInventory
             Debug.Log("select");
             player.SelectItem(itemList[index]);
         }
+    }
+    public void SellItem(ItemType type, int index)
+    {
+        List<IItem> itemList = GetCorrectTypeItemList(type);
+        if (itemList != _consumableItems) return;
+
+        _gold += itemList[index].GetData().itemPrice;
+        DeleteItem(itemList[index]);
     }
 
     public IEnumerable<IItem> GetItems()

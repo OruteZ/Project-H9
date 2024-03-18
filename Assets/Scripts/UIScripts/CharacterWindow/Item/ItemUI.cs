@@ -18,8 +18,9 @@ public class ItemUI : UISystem
 
     private ItemType _displayInventoryType = ItemType.Revolver;
 
-    private GameObject _interactionElement;
-    private GameObject _originalDraggedElement;
+    private GameObject _currentMouseOverElement = null;
+    private GameObject _interactionElement = null;
+    private GameObject _originalDraggedElement = null;
     private Item _interactionItem = null;
     private Item _draggedItem = null;
     private Item _equippedItem = null;
@@ -51,12 +52,13 @@ public class ItemUI : UISystem
     public void SetInventoryUI() 
     {
         //_inventory 불러오기
-        Inventory inventory = (Inventory)GameManager.instance.playerInventory;
+        Inventory inventory = GameManager.instance.playerInventory;
         if (inventory is null) return;
         List<IItem> items = (List<IItem>)inventory.GetItems(_displayInventoryType);
         if (items is null) return;
 
-        _equippedItem = _equippedElement.GetComponent<InventoryUIElement>().item;
+        _equippedItem = (Item)inventory.GetEqippedItem();
+        _equippedElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(_equippedItem);
         for (int i = 0; i < _inventoryUI.transform.childCount; i++)
         {
             _inventoryUI.transform.GetChild(i).GetComponent<InventoryUIElement>().ClearInventoryUIElement();
@@ -79,10 +81,11 @@ public class ItemUI : UISystem
     {
         _moneyText.GetComponent<TextMeshProUGUI>().text = GameManager.instance.playerInventory.GetMoney().ToString() + "$";
     }
-    public void OpenInventoryTooltip(Item item, Vector3 pos)
+    public void OpenInventoryTooltip(GameObject ui, Vector3 pos)
     {
         if (_inventoryInteractionButtons.gameObject.activeSelf is true) return;
-        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(item, pos);
+        _currentMouseOverElement = ui;
+        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui.GetComponent<InventoryUIElement>().item, pos);
     }
     public void OpenInventoryInteraction(GameObject ui)
     {
@@ -100,14 +103,16 @@ public class ItemUI : UISystem
         {
             _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         }
-        if (!IsMouseOverTooltip(_inventoryTooltip) && _inventoryInteractionButtons.gameObject.activeSelf is false)
+        if (!IsMouseOverUI(_inventoryTooltip) && _inventoryInteractionButtons.gameObject.activeSelf is false)
         {
             _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
         }
     }
-    private bool IsMouseOverTooltip(GameObject tooltip)
+    private bool IsMouseOverUI(GameObject ui)
     {
-        if (tooltip.gameObject.activeSelf is false) return false;
+        if (ui is null) return false;
+        if (ui.gameObject.activeSelf is false) return false;
+
         GraphicRaycaster gr = GetComponent<GraphicRaycaster>();
         PointerEventData ped = new PointerEventData(null);
         ped.position = Input.mousePosition;
@@ -115,7 +120,7 @@ public class ItemUI : UISystem
         gr.Raycast(ped, results);
         foreach (RaycastResult r in results)
         {
-            if (r.gameObject == tooltip)
+            if (r.gameObject == ui)
             {
                 return true;
             }
@@ -227,19 +232,33 @@ public class ItemUI : UISystem
     {
         if (_inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().isEqipable)
         {
+            //Item tmpItem = _interactionItem;
+            //_interactionElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(_equippedItem);
+            //_equippedElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(tmpItem);
+
             GameManager.instance.playerInventory.EqipItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
         }
         else 
         {
             GameManager.instance.playerInventory.UseItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
+            UIManager.instance.gameSystemUI.OnCharacterBtnClick();
         }
+        _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
+        _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+        SetInventoryUI();
     }
     public void ClickSellItemBtn()
     {
-        Debug.Log("2");
+        GameManager.instance.playerInventory.SellItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
+        _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
+        _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+        SetInventoryUI();
     }
     public void ClickRemoveItemBtn()
     {
-        Debug.Log("3");
+        GameManager.instance.playerInventory.DeleteItem(_interactionItem);
+        _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
+        _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+        SetInventoryUI();
     }
 }

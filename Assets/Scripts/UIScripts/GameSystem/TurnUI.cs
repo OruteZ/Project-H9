@@ -30,7 +30,7 @@ public class TurnUI : UISystem
     private void Update()
     {
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.BackQuote))
+        if (Input.GetKeyDown(HotKey.endTurnKey))
         {
             OnClickEndTurnButton();
         }

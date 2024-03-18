@@ -9,6 +9,7 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
 {
     [SerializeField] private GameObject _itemNameText;
     [SerializeField] private GameObject _itemDescriptionText;
+    private const float UI_DOMINION_TIME = 0.3f;
 
     private IItem _item = null;
 
@@ -33,22 +34,30 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
 
         SetInventoryTooltipText(item);
 
-        gameObject.SetActive(true);
+        OpenUI();
+        StartCoroutine(GetCursorDominion());
     }
     private void SetInventoryTooltipText(IItem item)
     {
-
-        ItemData iData = item.GetData();
-        _itemNameText.GetComponent<TextMeshProUGUI>().text = iData.nameIdx.ToString();
+        ItemScript script = GameManager.instance.itemDatabase.GetItemScript(item.GetData().nameIdx);
+        _itemNameText.GetComponent<TextMeshProUGUI>().text = script.GetName();
         string description = item.GetInventoryTooltipContents();
-
         _itemDescriptionText.GetComponent<TextMeshProUGUI>().text = description;
-        _itemDescriptionText.GetComponent<ContentSizeFitter>().SetLayoutVertical();
-        GetComponent<ContentSizeFitter>().SetLayoutVertical();
     }
     public override void CloseUI()
     {
         _item = null;
+        StopAllCoroutines();
+
         gameObject.SetActive(false);
+    }
+
+    private IEnumerator GetCursorDominion()
+    {
+        GetComponent<Image>().raycastTarget = false;
+        yield return new WaitForSeconds(UI_DOMINION_TIME);
+
+        GetComponent<Image>().raycastTarget = true;
+        yield break;
     }
 }

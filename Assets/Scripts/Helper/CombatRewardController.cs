@@ -45,7 +45,7 @@ public class CombatRewardHelper
     public void ApplyReward()
     {
         // get gold to player inventory
-        // GameManager.instance.playerInventory.AddGold(_gold);
+        GameManager.instance.playerInventory.AddGold(_gold);
         
         // get item to player inventory
         foreach (var itemIndex in _rewardItems)

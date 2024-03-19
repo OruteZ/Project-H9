@@ -43,6 +43,14 @@ public class SkillUI : UISystem
         //GetComponent<Image>().sprite = null;
         UpdateAllSkillUINode();
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F2)) 
+        {
+            _skillManager.AddSkillPoint(1);
+            UpdateSkillPointUI();
+        }
+    }
     public override void OpenUI() 
     {
         UpdateAllSkillUINode();

@@ -189,6 +189,10 @@ public class Inventory : IInventory
         return _elseItems;
     }
 
+    public void AddGold(int reward) 
+    {
+        _gold += reward;
+    }
     public int GetMoney() 
     {
         return _gold;

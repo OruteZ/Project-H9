@@ -81,7 +81,7 @@ public class CameraManager : Singleton<CameraManager>
     {
         //set orthographic camera
         if (Camera.main != null) Camera.main.orthographic = true;
-        worldCamera.SetPosition(GetCamera(FieldSystem.unitSystem.GetPlayer()).transform.position);
+        worldCamera.SetPosition(FieldSystem.unitSystem.GetPlayer().transform.position);
     }
 
     private void SetCombatCamOption()

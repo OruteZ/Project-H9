@@ -144,7 +144,7 @@ public class Player : Unit
         }
     }
 
-    public override void TakeDamage(int damage, Unit attacker)
+    public override void TakeDamage(int damage, Unit attacker, eDamageType.Type type = eDamageType.Type.Default)
     {
         base.TakeDamage(damage, attacker);
 

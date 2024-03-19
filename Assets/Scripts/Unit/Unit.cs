@@ -127,7 +127,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         
         onTurnStart.Invoke(this);
         
-        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint);
+        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out var appliedValue);
 
         if (hp <= 0)
         {
@@ -151,12 +151,12 @@ public abstract class Unit : MonoBehaviour, IUnit
         FieldSystem.turnSystem.EndTurn();
     }
 
-    public virtual void TakeDamage(int damage, Unit attacker)
+    public virtual void TakeDamage(int damage, Unit attacker, eDamageType.Type type = eDamageType.Type.Default)
     {
         if (gameObject == null) return;
         
         stat.Consume(StatType.CurHp, damage);
-        UIManager.instance.onTakeDamaged.Invoke(this, damage);
+        UIManager.instance.onTakeDamaged.Invoke(this, damage, type);
         onHit.Invoke(FieldSystem.turnSystem.turnOwner, damage);
 
         if (hp <= 0 && _hasDead is false)
@@ -384,7 +384,6 @@ public abstract class Unit : MonoBehaviour, IUnit
         else
         {
             UIManager.instance.onNonHited.Invoke(target);
-            Service.SetText(index:0, "MISS", target.transform.position);
         }
         weapon.currentAmmo--;
         UIManager.instance.onPlayerStatChanged.Invoke();

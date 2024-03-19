@@ -64,7 +64,7 @@ public class LogUI : UISystem
         UpdateText();
     }
 
-    private void TakeDamaged(Unit unit, int damage)
+    private void TakeDamaged(Unit unit, int damage, eDamageType.Type type)
     {
         _builder.Append($"{unit.unitName}에게 {damage} 피해.\n");
         UpdateText();
@@ -96,6 +96,12 @@ public class LogUI : UISystem
             case ActionType.Hemostasis: actionType = "지혈"; break;
             case ActionType.Move: actionType = "이동"; break;
             case ActionType.Reload: actionType = "재장전"; break;
+            case ActionType.ItemUsing: 
+                int itemIdx = ((ItemUsingAction)action).GetItem().GetData().nameIdx;
+                ItemScript script = GameManager.instance.itemDatabase.GetItemScript(itemIdx);
+                string itemName = script.GetName();
+                actionType = $"{itemName} 사용";
+                break;
             default: break;
         }
         _builder.Append($"{unit.unitName}의 {actionType}.\n");

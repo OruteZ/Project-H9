@@ -50,7 +50,7 @@ public class Enemy : Unit
         ai.Operate();
     }
 
-    public override void TakeDamage(int damage, Unit attacker = null)
+    public override void TakeDamage(int damage, Unit attacker = null,  eDamageType.Type type = eDamageType.Type.Default)
     {
         base.TakeDamage(damage, attacker);
         UIManager.instance.onActionChanged.Invoke();

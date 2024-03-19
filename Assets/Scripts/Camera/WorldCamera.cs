@@ -99,4 +99,27 @@ public class WorldCamera : MonoBehaviour
         
         transform.position = position;
     }
+
+    public void ShakeCamera(float amplitude, float frequency, float duration)
+    {
+        var perlin = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        if (perlin == null)
+        {
+            perlin = virtualCamera.AddCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        }
+        
+        perlin.m_AmplitudeGain = amplitude;
+        perlin.m_FrequencyGain = frequency;
+
+        StartCoroutine(StopShake(duration));
+    }
+
+    private IEnumerator StopShake(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        var perlin = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        perlin.m_AmplitudeGain = 0;
+        perlin.m_FrequencyGain = 0;
+    }
 }

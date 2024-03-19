@@ -44,7 +44,7 @@ public class CameraManager : Singleton<CameraManager>
     
     private void Start()
     {
-        FieldSystem.onStageStart.AddListener(OnCombatStarted);
+        FieldSystem.onStageAwake.AddListener(OnStageAwake);
     }
     
     public void LookWorldCamera()
@@ -90,8 +90,20 @@ public class CameraManager : Singleton<CameraManager>
         worldCamera.SetPosition(GetCamera(FieldSystem.unitSystem.GetPlayer()).transform.position);
     }
     
+    public void ShakeCamera(float amplitude, float frequency, float duration)
+    {
+        if (_currentUnitCamera != null)
+        {
+            _currentUnitCamera.ShakeCamera(amplitude, frequency, duration);
+        }
+        else
+        {
+            worldCamera.ShakeCamera(amplitude, frequency, duration);
+        }
+    }
+    
     #region EVENTS
-    private void OnCombatStarted()
+    private void OnStageAwake()
     {
         Init();
         

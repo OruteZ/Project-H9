@@ -20,9 +20,9 @@ public class UnitCamera : MonoBehaviour
             Destroy(gameObject);    
         });
         
-        target.onHit.AddListener((u, damage) =>
+        target.onFinishShoot.AddListener((a,b,c,d) =>
         {
-            ShakeCamera(1, 1, 0.5f);
+            CameraManager.instance.ShakeCamera(1, 1, 0.5f);
         });
     }
 

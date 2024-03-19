@@ -97,8 +97,10 @@ public class LogUI : UISystem
             case ActionType.Move: actionType = "이동"; break;
             case ActionType.Reload: actionType = "재장전"; break;
             case ActionType.ItemUsing: 
-                string itemName = ((ItemUsingAction)action).GetItem().GetData().nameIdx.ToString();
-                actionType = $"<color:yellow>{itemName}</color> 사용";
+                int itemIdx = ((ItemUsingAction)action).GetItem().GetData().nameIdx;
+                ItemScript script = GameManager.instance.itemDatabase.GetItemScript(itemIdx);
+                string itemName = script.GetName();
+                actionType = $"{itemName} 사용";
                 break;
             default: break;
         }

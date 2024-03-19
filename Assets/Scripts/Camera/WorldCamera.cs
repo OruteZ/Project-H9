@@ -10,7 +10,9 @@ public class WorldCamera : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera virtualCamera;
     
+    [SerializeField] private float dragSpeed;
     [SerializeField] private float movementSpeed;
+    
     [SerializeField] private Vector3 minPosition;
     [SerializeField] private Vector3 maxPosition;
 
@@ -22,6 +24,14 @@ public class WorldCamera : MonoBehaviour
     private void Update()
     {
         HandleMoveEvent();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            var player = FieldSystem.unitSystem.GetPlayer();
+            if (player is null) return;
+            
+            SetPosition(player.transform.position);
+        }
     }
     private void HandleMoveEvent()
     {
@@ -33,7 +43,7 @@ public class WorldCamera : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Vector3 delta = Input.mousePosition - _lastMousePosition;
-            transform.Translate(-delta.x * (movementSpeed * Time.deltaTime), 0, -delta.y * (movementSpeed * Time.deltaTime));
+            transform.Translate(-delta.x * (dragSpeed * Time.deltaTime), 0, -delta.y * (dragSpeed * Time.deltaTime));
             _lastMousePosition = Input.mousePosition;
         }
 

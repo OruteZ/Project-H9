@@ -197,6 +197,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         foreach (var tile in tiles)
         {
             if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
+            if (Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
 
             SetEffectBase(tile.hexPosition, attackTileEffect);
         }
@@ -222,32 +223,36 @@ public class TileEffectManager : Singleton<TileEffectManager>
         if (_player.weapon is Repeater repeater)
         {
             var sweetSpot = (repeater).GetSweetSpot();
-            //remove tiles in sweet spot range circle
-            foreach (var pos in FieldSystem.tileSystem.GetTilesOutLine(_player.hexPosition, sweetSpot))
+            if (sweetSpot < _player.stat.GetStat(StatType.SightRange))
             {
-                if (_effectsBase.ContainsKey(pos.hexPosition))
+                //remove tiles in sweet spot range circle
+                foreach (var pos in FieldSystem.tileSystem.GetTilesOutLine(_player.hexPosition, sweetSpot))
                 {
-                    Destroy(_effectsBase[pos.hexPosition]);
-                    _effectsBase.Remove(pos.hexPosition);
-                }
-                
-                SetEffectBase(pos.hexPosition, attackSweetSpotEffect);
-            }
-            
-            //remove units in sweet spot range circle
-            foreach (var unit in FieldSystem.unitSystem.units)
-            {
-                if (unit is Player) continue;
-                if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
-                if (sweetSpot == Hex.Distance(_player.hexPosition, unit.hexPosition))
-                {
-                    if (_effectsBase.ContainsKey(unit.hexPosition))
+                    if (_effectsBase.ContainsKey(pos.hexPosition))
                     {
-                        Destroy(_effectsBase[unit.hexPosition]);
-                        _effectsBase.Remove(unit.hexPosition);
+                        Destroy(_effectsBase[pos.hexPosition]);
+                        _effectsBase.Remove(pos.hexPosition);
                     }
+                
+                    SetEffectBase(pos.hexPosition, attackSweetSpotEffect);
+                }
+            
+                //remove units in sweet spot range circle
+                foreach (var unit in FieldSystem.unitSystem.units)
+                {
+                    if (unit is Player) continue;
+                    if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
+                    if(Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
+                    if (sweetSpot == Hex.Distance(_player.hexPosition, unit.hexPosition))
+                    {
+                        if (_effectsBase.ContainsKey(unit.hexPosition))
+                        {
+                            Destroy(_effectsBase[unit.hexPosition]);
+                            _effectsBase.Remove(unit.hexPosition);
+                        }
                     
-                    SetEffectBase(unit.hexPosition, attackSweetSpotUnitEffect);
+                        SetEffectBase(unit.hexPosition, attackSweetSpotUnitEffect);
+                    }
                 }
             }
         }
@@ -331,6 +336,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
         foreach (var tile in tiles)
         {
+            if(Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
+            
             var go =Instantiate(attackTileEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
             _effectsBase.Add(tile.hexPosition, go);
         }
@@ -368,6 +375,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             var tiles = FieldSystem.tileSystem.GetTilesInRange(target, expRange);
             foreach (var pos in tiles.Select(tile => tile.hexPosition)) 
             {
+                if(Hex.Distance(_player.hexPosition, pos) > _player.stat.sightRange) continue;
                 SetEffectTarget(pos, TileEffectType.Friendly);
             }
         }
@@ -386,6 +394,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
         foreach (var tile in tiles)
         {
+            if(Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
             var go =Instantiate(attackTileEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
             _effectsBase.Add(tile.hexPosition, go);
         }
@@ -423,6 +432,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             var tiles = FieldSystem.tileSystem.GetTilesInRange(target, expRange);
             foreach (var pos in tiles.Select(tile => tile.hexPosition)) 
             {
+                if(Hex.Distance(_player.hexPosition, pos) > _player.stat.sightRange) continue;
                 SetEffectTarget(pos, TileEffectType.Friendly);
             }
         }

@@ -44,7 +44,7 @@ public class CameraManager : Singleton<CameraManager>
     
     private void Start()
     {
-        FieldSystem.onStageAwake.AddListener(OnCombatStarted);
+        FieldSystem.onStageStart.AddListener(OnCombatStarted);
     }
     
     public void LookWorldCamera()

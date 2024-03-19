@@ -312,6 +312,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         if (item is null) return;
         if (!item.IsUsable()) return;
+        if (GameManager.instance.CompareState(GameState.Combat)) return;
         
         var itemUsingAction = GetAction<ItemUsingAction>();
         itemUsingAction.SetItem(item);

@@ -206,7 +206,7 @@ public abstract class Unit : MonoBehaviour, IUnit
             _unitModel.SetupWeaponModel(newWeapon);
         }
 
-        if(isOnSetup) ConsumeCost(4);
+        if(isOnSetup is false && GameManager.instance.CompareState(GameState.Combat)) ConsumeCost(4);
     }
 
     protected virtual void Awake()
@@ -313,7 +313,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         if (item is null) return;
         if (!item.IsUsable()) return;
-        if (GameManager.instance.CompareState(GameState.Combat)) return;
+        if (GameManager.instance.CompareState(GameState.World)) return;
         
         var itemUsingAction = GetAction<ItemUsingAction>();
         itemUsingAction.SetItem(item);

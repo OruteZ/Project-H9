@@ -79,6 +79,7 @@ public class Inventory : IInventory
             if (itemList[i].GetData().id == deleteItem.GetData().id)
             {
                 itemList[i] = null;
+                
                 IInventory.OnInventoryChanged?.Invoke();
                 return;
             }

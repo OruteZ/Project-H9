@@ -22,7 +22,7 @@ public class UnitCamera : MonoBehaviour
         
         target.onFinishShoot.AddListener((a,b,c,d) =>
         {
-            CameraManager.instance.ShakeCamera(1, 1, 0.5f);
+            ShakeCamera(5, 1, 0.1f);
         });
     }
 

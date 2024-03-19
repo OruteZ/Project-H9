@@ -87,7 +87,7 @@ public class ItemUsingAction : BaseAction
         
         _item.Use(unit, _targetPos);
         _itemUsedTrigger = true;
-        GameManager.instance.playerInventory.DeleteItem(_item);
+        if(_item.GetStackCount() == 0) GameManager.instance.playerInventory.DeleteItem(_item);
         yield return null;
     }
 

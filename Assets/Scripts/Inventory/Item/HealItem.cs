@@ -7,7 +7,10 @@ public class HealItem : Item
     
     public override bool Use(Unit user, Vector3Int target)
     {
-        user.stat.Recover(StatType.CurHp, GetData().itemEffect, out var appliedValue);
+        user.stat.Recover(StatType.CurHp, GetData().itemEffectAmount, out var appliedValue);
+
+        stackCount--;
+        
         UIManager.instance.onHealed.Invoke(user, appliedValue, eDamageType.Type.Heal);
         return true;
     }

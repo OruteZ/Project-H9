@@ -15,6 +15,8 @@ public class InventoryUIElement : InventoryUIBaseElement, IPointerDownHandler, I
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
+            if (item is EtcItem) return;
+            //if (GameManager.instance.CompareState(GameState.World)) return;
             UIManager.instance.characterUI.itemUI.OpenInventoryInteraction(gameObject);
         }
     }

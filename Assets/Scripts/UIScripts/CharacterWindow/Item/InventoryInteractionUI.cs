@@ -47,6 +47,7 @@ public class InventoryInteractionUI : UIElement
                     break;
                 }
         }
+        _useBtn.SetActive(GameManager.instance.CompareState(GameState.Combat));
 
         GetComponent<RectTransform>().position = pos;
         UIManager.instance.currentLayer = 3;

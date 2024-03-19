@@ -205,6 +205,8 @@ public abstract class Unit : MonoBehaviour, IUnit
         {
             _unitModel.SetupWeaponModel(newWeapon);
         }
+
+        if(isOnSetup) ConsumeCost(4);
     }
 
     protected virtual void Awake()

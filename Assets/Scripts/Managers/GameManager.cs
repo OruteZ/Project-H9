@@ -96,7 +96,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
         curExp -= maxExp;
         level++;
-        playerStat.Recover(StatType.CurHp, playerStat.GetStat(StatType.MaxHp));
+        playerStat.Recover(StatType.CurHp, playerStat.GetStat(StatType.MaxHp), out var appliedValue);
         SkillManager.instance.AddSkillPoint(LEVEL_UP_REWARD_SKILL_POINT);
         if (level % 3 == 0)
         {

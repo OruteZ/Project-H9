@@ -75,13 +75,11 @@ public class Shotgun : Weapon
     {
         int damage = GetFinalDamage();
         target.TakeDamage(damage, unit);
-        Service.SetText(index:0, damage.ToString(), target.transform.position);
     }
 
     private void CriticalAttack(Unit target)
     {
         int damage = GetFinalCriticalDamage();
-        target.TakeDamage(damage, unit);
-        Service.SetText(index:1, damage.ToString(), target.transform.position);
+        target.TakeDamage(damage, unit, eDamageType.Type.Critical);
     }
 }

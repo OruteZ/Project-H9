@@ -71,6 +71,8 @@ public class WeaponModel : MonoBehaviour
         get
         {
             //null check : return false
+            if (_meshRendererList is null)
+                return false;
             if (_meshRendererList.Count == 0)
                 return false;
             return _meshRendererList[0] && _meshRendererList[0].enabled;

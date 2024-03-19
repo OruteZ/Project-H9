@@ -46,7 +46,8 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent<int> onLevelUp;
     [HideInInspector] public UnityEvent onPlayerSkillChangd;
     [HideInInspector] public UnityEvent onActionChanged;
-    [HideInInspector] public UnityEvent<Unit, int> onTakeDamaged;
+    [HideInInspector] public UnityEvent<Unit, int, eDamageType.Type> onTakeDamaged;
+    [HideInInspector] public UnityEvent<Unit, int, eDamageType.Type> onHealed;
     [HideInInspector] public UnityEvent<Unit> onReloaded;
     [HideInInspector] public UnityEvent<Unit> onTryAttack;
     [HideInInspector] public UnityEvent<Unit> onNonHited;

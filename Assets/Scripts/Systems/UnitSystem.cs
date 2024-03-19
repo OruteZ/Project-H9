@@ -68,7 +68,10 @@ public class UnitSystem : MonoBehaviour
             //if count is not same, throw error
             if (enemyCount != enemySpawnPointList.Count)
             {
-                Debug.LogError("Enemy Count is not same with spawn point count");
+                Debug.LogError("Enemy Count is not same with spawn point count : " +
+                               enemyCount + " / " + enemySpawnPointList.Count
+                               + " linkDataIdx : " + linkDataIdx+
+                               " linkData.combatEnemy.Length : " + linkData.combatEnemy.Length);
                 throw new Exception();
                 return;
             }

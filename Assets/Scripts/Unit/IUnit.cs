@@ -20,7 +20,7 @@ public interface IUnit
     /// </summary>
     /// <param name="damage">피해량</param>
     /// <param name="attacker">공격을 가한 개체입니다.</param>
-    void TakeDamage(int damage, Unit attacker = null);
+    void TakeDamage(int damage, Unit attacker = null, eDamageType.Type type = eDamageType.Type.Default);
 
     /// <summary>
     /// Unit의 상태를 설정합니다.

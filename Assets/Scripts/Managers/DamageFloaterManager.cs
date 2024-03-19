@@ -37,7 +37,6 @@ public class DamageFloaterManager : ObjectPool<RectTransform, DamageFlaoterWrapp
 
         var target = _pool.Dequeue();
         target.Enable = false;
-        target.Instance.localScale = Vector3.one * target.ScaleStart;
         target.Instance.gameObject.SetActive(true);
         _working.Add(target);
         return target;

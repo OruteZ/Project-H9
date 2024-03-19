@@ -94,7 +94,13 @@ public class WeaponDatabase : ScriptableObject
             //if weaponModel is null, set default model
             if (curData.weaponModel == null)
             {
-                curData.weaponModel = Resources.Load<GameObject>("Prefab/Item/SM_Wep_Revolver_01");
+                curData.weaponModel = curData.type switch
+                {
+                    ItemType.Revolver => Resources.Load<GameObject>("Prefab/Item/SM_Wep_Revolver_01"),
+                    ItemType.Repeater => Resources.Load<GameObject>("Prefab/Item/SM_Wep_Rifle_01"),
+                    ItemType.Shotgun => Resources.Load<GameObject>("Prefab/Item/SM_Wep_Shotgun_01"),
+                    _ => curData.weaponModel
+                };
             }
             
             weaponList.Add(curData);

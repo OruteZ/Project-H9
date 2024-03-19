@@ -23,7 +23,10 @@ public class CombatActionUI : UISystem
     [SerializeField] private GameObject _baseActionBundle;
     [SerializeField] private GameObject _skillActionBundle;
     [SerializeField] private GameObject _buttonNameTooltip;
-    [SerializeField] private GameObject _SkillTooltip;
+    [SerializeField] private GameObject _skillTooltip;
+    [SerializeField] private GameObject _itemWindow;
+    [SerializeField] private GameObject _itemElements;
+    [SerializeField] private GameObject _itemTooltip;
 
     private const int SKILL_BUTTON_INDEX = 3;
     private bool _isThereSeletableSkill = false;
@@ -54,7 +57,8 @@ public class CombatActionUI : UISystem
         _baseActionBundle.SetActive(false);
         _skillActionBundle.SetActive(false);
         _buttonNameTooltip.SetActive(false);
-        _SkillTooltip.SetActive(false);
+        _skillTooltip.SetActive(false);
+        _itemWindow.SetActive(false);
     }
     private void Awake()
     {
@@ -114,6 +118,12 @@ public class CombatActionUI : UISystem
         player.onTurnStart.AddListener((u) => SetActionBundle(_baseActionBundle, true));
         player.onFinishAction.AddListener((a) => { if (a is not IdleAction && IsThereSeletableButton()) { SetActionBundle(_baseActionBundle, true); } });
 
+        LoadPlayerAction();
+    }
+    private void LoadPlayerAction()
+    {
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player is null) return;
         List<IUnitAction> actions = new List<IUnitAction>(player.GetUnitActionArray());
         ActionType[] baseActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload, ActionType.Idle, ActionType.ItemUsing };
 
@@ -131,6 +141,15 @@ public class CombatActionUI : UISystem
             }
         }
 
+        for (int i = 0; i < _baseActionBundle.transform.childCount; i++)
+        {
+            _baseActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().ClearCombatActionButton();
+        }
+        for (int i = 0; i < _skillActionBundle.transform.childCount; i++)
+        {
+            _skillActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().ClearCombatActionButton();
+        }
+
         //basic action
         if (ba.Count != baseActionType.Length)
         {
@@ -142,9 +161,10 @@ public class CombatActionUI : UISystem
         for (int i = 0; i < baseCombatActionType.Length; i++)
         {
             _baseActions.Add(baseCombatActionType[i], ba[i]);
-            _baseActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetcombatActionButton(baseCombatActionType[i], i, ba[i]);
+            _baseActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetCombatActionButton(baseCombatActionType[i], i, ba[i]);
         }
         _idleAction = ba[3];
+        //item using = ba[4]
 
         //skill action
         _skillActions.Clear();
@@ -153,10 +173,10 @@ public class CombatActionUI : UISystem
             if (i < actions.Count)
             {
                 _skillActions.Add(actions[i]);
-                _skillActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetcombatActionButton(CombatActionType.PlayerSkill, i, actions[i]);
+                _skillActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetCombatActionButton(CombatActionType.PlayerSkill, i, actions[i]);
                 _skillActionBundle.transform.GetChild(i).gameObject.SetActive(true);
             }
-            else 
+            else
             {
                 _skillActionBundle.transform.GetChild(i).gameObject.SetActive(false);
             }
@@ -188,7 +208,8 @@ public class CombatActionUI : UISystem
         _baseActionBundle.SetActive(false);
         _skillActionBundle.SetActive(false);
         _backgroundImage.SetActive(isDisplayed);
-        _SkillTooltip.SetActive(false);
+        _skillTooltip.SetActive(false);
+        _itemWindow.SetActive(false);
         if (_displayedActionBundle is not null) _displayedActionBundle.SetActive(isDisplayed);
     }
     public void SelectAction(CombatActionType actionType, int btnIdx)
@@ -228,12 +249,14 @@ public class CombatActionUI : UISystem
                 }
             case CombatActionType.Items:
                 {
-                    Debug.Log("Item Button Clicked");
+                    SetItemUI(ItemType.Heal);
+                    _itemWindow.SetActive(true);
                     break;
                 }
             case CombatActionType.Weapons:
                 {
-                    Debug.Log("Weapon Button Clicked");
+                    SetItemUI(ItemType.Revolver);
+                    _itemWindow.SetActive(true);
                     break;
                 }
             case CombatActionType.PlayerSkill:
@@ -263,7 +286,7 @@ public class CombatActionUI : UISystem
     {
         if (_activeActionBundle == _skillActionBundle)
         {
-            _SkillTooltip.GetComponent<CombatActionSkillTooltip>().SetCombatSkillTooltip(btn);
+            _skillTooltip.GetComponent<CombatActionSkillTooltip>().SetCombatSkillTooltip(btn);
         }
         else
         {
@@ -273,7 +296,7 @@ public class CombatActionUI : UISystem
     public void HideActionUITooltip() 
     {
         _buttonNameTooltip.GetComponent<CombatActionNameTooltip>().CloseUI();
-        _SkillTooltip.GetComponent<CombatActionSkillTooltip>().CloseUI();
+        _skillTooltip.GetComponent<CombatActionSkillTooltip>().CloseUI();
     }
     private static bool IsMouseClickedPlayer()
     {
@@ -324,6 +347,7 @@ public class CombatActionUI : UISystem
     private void UpdateButtonSeletable()
     {
         _isThereSeletableSkill = false;
+        LoadPlayerAction();
         for (int i = 0; i < _skillActionBundle.transform.childCount; i++)
         {
             GameObject btn = _skillActionBundle.transform.GetChild(i).gameObject;
@@ -340,8 +364,8 @@ public class CombatActionUI : UISystem
         _baseActionBundle.transform.GetChild(1).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(2).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable(isSkillExist);
-        _baseActionBundle.transform.GetChild(4).GetComponent<CombatActionButtonElement>().SetInteractable(false);
-        _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(false);
+        _baseActionBundle.transform.GetChild(4).GetComponent<CombatActionButtonElement>().SetInteractable(true);
+        _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(true);
     }
 
     public void ShowRequiredCost(IUnitAction action)
@@ -355,5 +379,46 @@ public class CombatActionUI : UISystem
         UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedApUsage = 0;
         UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedMagUsage = 0;
         UIManager.instance.onPlayerStatChanged.Invoke();
+    }
+    private void SetItemUI(ItemType type)
+    {
+        //_inventory 불러오기
+        Inventory inventory = GameManager.instance.playerInventory;
+        if (inventory is null) return;
+        List<IItem> items = (List<IItem>)inventory.GetItems(type);
+        if (items is null) return;
+
+        for (int i = 0; i < _itemElements.transform.childCount; i++)
+        {
+            _itemElements.transform.GetChild(i).GetComponent<InventoryUICombatElement>().ClearInventoryUIElement();
+        }
+        int cnt = 0;
+        for (int i = 0; i < items.Count; i++)
+        {
+            _itemElements.transform.GetChild(cnt++).GetComponent<InventoryUICombatElement>().SetInventoryUIElement((Item)items[i]);
+            if (cnt >= _itemElements.transform.childCount) break;
+        }
+
+        ClosePopupWindow();
+    }
+    public void OpenInventoryTooltip(GameObject ui, Vector3 pos)
+    {
+        _itemTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui.GetComponent<InventoryUICombatElement>().item, pos);
+    }
+    public override void ClosePopupWindow()
+    {
+        _itemTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+    }
+    public int GetInventoryUIIndex(GameObject element)
+    {
+        for (int i = 0; i < _itemElements.transform.childCount; i++)
+        {
+            if (_itemElements.transform.GetChild(i).gameObject == element)
+            {
+                return i;
+            }
+        }
+        Debug.LogError("Can't find inventory ui index");
+        return -1;
     }
 }

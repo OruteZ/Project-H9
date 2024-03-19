@@ -66,10 +66,6 @@ public class ItemUI : UISystem
         int cnt = 0;
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i] == _equippedItem)
-            {
-                //continue;
-            }
             _inventoryUI.transform.GetChild(cnt++).GetComponent<InventoryUIElement>().SetInventoryUIElement((Item)items[i]);
             if (cnt >= _inventoryUI.transform.childCount) break;
         }

@@ -218,9 +218,10 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         _hasDead = false;
     }
-    
+
     public T GetAction<T>()
     {
+        _unitActionArray = GetComponents<IUnitAction>();
         foreach (IUnitAction unitAction in _unitActionArray)
         {
             if (unitAction is T action)
@@ -236,7 +237,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         return _unitActionArray;
     }
-    
+
     public void AddDisplayableEffect(IDisplayableEffect effect)
     {
         _displayableEffects.Add(effect);

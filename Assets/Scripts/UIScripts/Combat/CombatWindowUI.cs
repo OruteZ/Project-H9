@@ -12,15 +12,7 @@ public class CombatWindowUI : UISystem
     /// <summary>
     /// 캐릭터의 행동창 UI의 표시 및 상호작용과 관련된 기능
     /// </summary>
-    public CombatActionUI_Legacy combatActionUI_legacy { get; private set; }
-    /// <summary>
-    /// 캐릭터의 행동창 UI의 표시 및 상호작용과 관련된 기능
-    /// </summary>
     public CombatActionUI combatActionUI { get; private set; }
-    /// <summary>
-    /// 현재 장비한 무기의 장탄 수를 표시하는 기능
-    /// </summary>
-    public MagazineUI magazineUI { get; private set; }
     /// <summary>
     /// 적들의 체력바를 표시하는 기능
     /// </summary>
@@ -41,9 +33,7 @@ public class CombatWindowUI : UISystem
     private void Awake()
     {
 
-        combatActionUI_legacy = GetComponent<CombatActionUI_Legacy>();
         combatActionUI = GetComponent<CombatActionUI>();
-        magazineUI = GetComponent<MagazineUI>();
         enemyHpUI = GetComponent<EnemyHpUI>();
         enemyStatUI = GetComponent<EnemyStatUI>();
         startTurnTextUI = GetComponent<StartTurnTextUI>();
@@ -51,9 +41,7 @@ public class CombatWindowUI : UISystem
         combatResultUI = GetComponent<CombatResultUI>();
         buffUI = GetComponent<BuffUI>();
 
-        uiSubsystems.Add(combatActionUI_legacy);
         uiSubsystems.Add(combatActionUI);
-        uiSubsystems.Add(magazineUI);
         uiSubsystems.Add(enemyHpUI);
         uiSubsystems.Add(enemyStatUI);
         uiSubsystems.Add(startTurnTextUI);
@@ -66,21 +54,4 @@ public class CombatWindowUI : UISystem
     {
         enemyStatUI.ClosePopupWindow();
     }
-
-    /// <summary>
-    /// 전투 UI를 갱신합니다.
-    /// 특정한 액션이 실행될 때, 액션이 종료될 때 실행됩니다.
-    /// 플레이어가 특정한 액션을 선택할 때에도 실행됩니다.
-    /// </summary>
-    //public void SetCombatUI()
-    //{
-    //    _isInCombat = GameManager.instance.CompareState(GameState.Combat);
-
-    //    if (!_isInCombat) return;
-
-    //    combatActionUI.SetActionButtons();
-    //    magazineUI.SetMagazineText();
-    //    enemyHpUI.SetEnemyHpBars();
-    //}
-
 }

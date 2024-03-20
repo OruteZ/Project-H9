@@ -17,7 +17,7 @@ public class InventoryUICombatElement : InventoryUIBaseElement, IPointerClickHan
 
         if (item is WeaponItem)
         {
-            GameManager.instance.playerInventory.EqipItem(item.GetData().itemType, UIManager.instance.combatUI.combatActionUI.GetInventoryUIIndex(gameObject));
+            GameManager.instance.playerInventory.EquipItem(item.GetData().itemType, UIManager.instance.combatUI.combatActionUI.GetInventoryUIIndex(gameObject));
         }
         else
         {

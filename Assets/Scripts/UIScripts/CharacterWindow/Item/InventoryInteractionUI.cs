@@ -6,11 +6,11 @@ using TMPro;
 public class InventoryInteractionUI : UIElement
 {
     [SerializeField] private GameObject _useBtn;
-    public bool isEqipable { get; private set; }
+    public bool isEquipable { get; private set; }
 
     private void Awake()
     {
-        isEqipable = true;
+        isEquipable = true;
         CloseUI();
     }
 
@@ -22,14 +22,15 @@ public class InventoryInteractionUI : UIElement
             return;
         }
 
+        _useBtn.SetActive(true);
         switch (item.GetData().itemType)
         {
             case ItemType.Revolver:
             case ItemType.Repeater:
             case ItemType.Shotgun:
                 {
-                    isEqipable = true;
-                    _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Eqip";
+                    isEquipable = true;
+                    _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Equip";
                     break;
                 }
             case ItemType.Heal:
@@ -38,8 +39,12 @@ public class InventoryInteractionUI : UIElement
             case ItemType.Buff:
             case ItemType.Debuff:
                 {
-                    isEqipable = false;
+                    isEquipable = false;
                     _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Use";
+                    if (GameManager.instance.CompareState(GameState.World) && item.GetData().itemType != ItemType.Heal)
+                    {
+                        _useBtn.SetActive(false);
+                    }
                     break;
                 }
             default: 
@@ -47,7 +52,6 @@ public class InventoryInteractionUI : UIElement
                     break;
                 }
         }
-        _useBtn.SetActive(GameManager.instance.CompareState(GameState.Combat));
 
         GetComponent<RectTransform>().position = pos;
         UIManager.instance.currentLayer = 3;

@@ -33,7 +33,7 @@ public class Inventory : IInventory
             _equippedItem = item;
         }
     }
-    public IItem GetEqippedItem() 
+    public IItem GetEquippedItem() 
     {
         return _equippedItem;
     }
@@ -90,7 +90,7 @@ public class Inventory : IInventory
         List<IItem> itemList = GetCorrectTypeItemList(type);
         (itemList[end], itemList[start]) = (itemList[start], itemList[end]);
     }
-    public void EqipItem(ItemType type, int index)
+    public void EquipItem(ItemType type, int index)
     {
         List<IItem> itemList = GetCorrectTypeItemList(type);
         if (itemList != _weaponItems) return;

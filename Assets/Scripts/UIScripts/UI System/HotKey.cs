@@ -8,7 +8,7 @@ public static class HotKey
     public static KeyCode endTurnKey = KeyCode.Return;  //Enter
 
     public static KeyCode openCharacterUIKey = KeyCode.I;
-    public static KeyCode OpenSkillUIKey = KeyCode.K;
-    public static KeyCode OpenActionUIKey = KeyCode.Tab;
+    public static KeyCode openSkillUIKey = KeyCode.K;
+    public static KeyCode openActionUIKey = KeyCode.Tab;
 
 }

@@ -119,7 +119,7 @@ public class BuffUI : UISystem
         _currentTooltipEffect = effect;
 
         RectTransform rt = _BuffDebuffWindow.GetComponent<RectTransform>();
-        Debug.Log(rt.position.y + " / " + rt.sizeDelta.y);
+        //Debug.Log(rt.position.y + " / " + rt.sizeDelta.y);
         pos.y = rt.position.y + (rt.sizeDelta.y + 5) * UIManager.instance.GetCanvasScale();
         _buffTooltipWindow.GetComponent<BuffTooltip>().SetBuffTooltip(effect, pos);
     }

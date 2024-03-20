@@ -57,7 +57,7 @@ public class ItemUI : UISystem
         List<IItem> items = (List<IItem>)inventory.GetItems(_displayInventoryType);
         if (items is null) return;
 
-        _equippedItem = (Item)inventory.GetEqippedItem();
+        _equippedItem = (Item)inventory.GetEquippedItem();
         _equippedElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(_equippedItem);
         for (int i = 0; i < _inventoryUI.transform.childCount; i++)
         {
@@ -168,7 +168,7 @@ public class ItemUI : UISystem
                     {
                         continue;
                     }
-                    GameManager.instance.playerInventory.EqipItem(_draggedItem.GetData().itemType, GetInventoryUIIndex(_originalDraggedElement));
+                    GameManager.instance.playerInventory.EquipItem(_draggedItem.GetData().itemType, GetInventoryUIIndex(_originalDraggedElement));
                 }
                 else
                 {
@@ -226,13 +226,13 @@ public class ItemUI : UISystem
 
     public void ClickUseItemBtn()
     {
-        if (_inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().isEqipable)
+        if (_inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().isEquipable)
         {
             //Item tmpItem = _interactionItem;
             //_interactionElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(_equippedItem);
             //_equippedElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(tmpItem);
 
-            GameManager.instance.playerInventory.EqipItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
+            GameManager.instance.playerInventory.EquipItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
         }
         else 
         {

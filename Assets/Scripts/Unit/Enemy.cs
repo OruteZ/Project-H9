@@ -52,7 +52,7 @@ public class Enemy : Unit
 
     public override void TakeDamage(int damage, Unit attacker = null,  eDamageType.Type type = eDamageType.Type.Default)
     {
-        base.TakeDamage(damage, attacker);
+        base.TakeDamage(damage, attacker, type);
         UIManager.instance.onActionChanged.Invoke();
     }
     

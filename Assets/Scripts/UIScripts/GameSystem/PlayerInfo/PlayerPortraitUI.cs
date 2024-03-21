@@ -10,6 +10,6 @@ public class PlayerPortraitUI : UIElement
     }
     public void ClickPortrait()
     {
-        
+        CameraManager.instance.worldCamera.SetPosition(FieldSystem.unitSystem.GetPlayer().transform.position);
     }
 }

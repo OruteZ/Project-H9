@@ -21,6 +21,11 @@ public class WorldCamera : MonoBehaviour
         this.movementSpeed = movementSpeed;
     }
     
+    private void Start()
+    {
+        SetPosition(FieldSystem.unitSystem.GetPlayer().transform.position);
+    }
+    
     private void Update()
     {
         HandleMoveEvent();

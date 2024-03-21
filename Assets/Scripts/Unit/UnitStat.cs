@@ -17,7 +17,8 @@ public class UnitStat : ICloneable
     public int sightRange => GetStat(StatType.SightRange); 
     public int speed => GetStat(StatType.Speed);
     public int maxActionPoint => GetStat(StatType.MaxActionPoint);
-    public float additionalHitRate => GetStat(StatType.CurActionPoint);
+    public int curActionPoint => GetStat(StatType.CurActionPoint);
+    public float additionalHitRate => GetStat(StatType.AdditionalHitRate);
     public float criticalChance => GetStat(StatType.CriticalChance);
     public int revolverAdditionalDamage => GetStat(StatType.RevolverAdditionalDamage);
     public int repeaterAdditionalDamage => GetStat(StatType.RepeaterAdditionalDamage);

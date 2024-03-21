@@ -38,7 +38,7 @@ public class CombatActionUI : UISystem
     private IUnitAction _idleAction;
     private CombatActionType _selectedActionType = CombatActionType.Null;
 
-    private KeyCode _openKey = HotKey.OpenActionUIKey;
+    private KeyCode _openKey = HotKey.openActionUIKey;
     private KeyCode[] _shortCutKey =
     {
             KeyCode.Alpha1,
@@ -50,15 +50,13 @@ public class CombatActionUI : UISystem
             KeyCode.Alpha7,
             KeyCode.Alpha8
     };
+    public bool isCombatUIOpened() 
+    {
+        return !(_displayedActionBundle == null && _activeActionBundle == null);
+    }
     public override void CloseUI()
     {
         base.CloseUI();
-        _backgroundImage.SetActive(false);
-        _baseActionBundle.SetActive(false);
-        _skillActionBundle.SetActive(false);
-        _buttonNameTooltip.SetActive(false);
-        _skillTooltip.SetActive(false);
-        _itemWindow.SetActive(false);
     }
     private void Awake()
     {
@@ -66,6 +64,12 @@ public class CombatActionUI : UISystem
     }
     private void Start()
     {
+        _backgroundImage.SetActive(false);
+        _baseActionBundle.SetActive(false);
+        _skillActionBundle.SetActive(false);
+        _buttonNameTooltip.SetActive(false);
+        _skillTooltip.SetActive(false);
+        _itemWindow.SetActive(false);
         CloseUI();
     }
 
@@ -75,29 +79,16 @@ public class CombatActionUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;
 
+        //hud position setting
         Vector3 playerChestPosition = player.transform.position;
         if (!player.TryGetComponent(out CapsuleCollider var)) return;
         playerChestPosition.y += player.GetComponent<CapsuleCollider>().center.y;
         Vector2 screenPos = Camera.main.WorldToScreenPoint(playerChestPosition);
         _combatHUD.GetComponent<RectTransform>().position = screenPos;
 
-        bool isActive = true;
-        if ((Input.GetMouseButtonDown(0) && !IsMouseOverActionUI()) || Input.GetKeyDown(_openKey)) 
-        {
-            if (Input.GetMouseButtonDown(0) && !IsMouseClickedPlayer())
-            {
-                isActive = false;
-            }
-            if (Input.GetKeyDown(_openKey) && _baseActionBundle.activeSelf)
-            {
-                isActive = false;
-            }
-            bool isActiveSelectedAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
-            if (isActiveSelectedAction) return;
-            SetActionBundle(_baseActionBundle, isActive);
-        }
+        SetCombatActionUIState();
 
-
+        //shortcut key
         if (_activeActionBundle is not null)
         {
             for (int i = 0; i < _shortCutKey.Length; i++)
@@ -110,13 +101,53 @@ public class CombatActionUI : UISystem
             }
         }
     }
+    private void SetCombatActionUIState()
+    {
+        bool isActiveSelectedAction = (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive());
+        if (!isActiveSelectedAction)
+        {
+            bool isPlayerClicked = !IsMouseOverActionUI() && (Input.GetMouseButtonDown(0) && IsMouseClickedPlayer());
+            //open key
+            if (Input.GetKeyDown(_openKey) || isPlayerClicked)
+            {
+                if (_activeActionBundle == null)
+                {
+                    SetActionBundle(_baseActionBundle, _baseActionBundle);
+                    UIManager.instance.currentLayer = 2;
+                }
+                else
+                {
+                    SetActionBundle(null, null);
+                }
+                return;
+            }
+            //cancel key
+            if (Input.GetKeyDown(HotKey.cancelKey) || isPlayerClicked)
+            {
+                if (_displayedActionBundle == null && _activeActionBundle != null)
+                {
+                    SetActionBundle(_activeActionBundle, _activeActionBundle);
+                    UIManager.instance.currentLayer = 2;
+                }
+                else if (_displayedActionBundle == _skillActionBundle)
+                {
+                    SetActionBundle(_baseActionBundle, _baseActionBundle);
+                    UIManager.instance.currentLayer = 2;
+                }
+                else if (_displayedActionBundle == _baseActionBundle)
+                {
+                    SetActionBundle(null, null);
+                }
+            }
+        }
+    }
     private void InitActions()
     {
         if (UIManager.instance.UIState != GameState.Combat) return;
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;
-        player.onTurnStart.AddListener((u) => SetActionBundle(_baseActionBundle, true));
-        player.onFinishAction.AddListener((a) => { if (a is not IdleAction && IsThereSeletableButton()) { SetActionBundle(_baseActionBundle, true); } });
+        player.onTurnStart.AddListener((u) => { SetActionBundle(_baseActionBundle, _baseActionBundle); });
+        player.onFinishAction.AddListener((a) => { if (a is not IdleAction && IsThereSeletableButton()) { SetActionBundle(_baseActionBundle, _baseActionBundle); } });
 
         LoadPlayerAction();
     }
@@ -183,25 +214,22 @@ public class CombatActionUI : UISystem
         }
     }
 
-    private void SetActionBundle(GameObject bundle, bool isDisplayed)
+    private void SetActionBundle(GameObject activeBundle, GameObject displayedBundle)
     {
         if (UIManager.instance.UIState != GameState.Combat) return;
         if (FieldSystem.turnSystem.turnOwner is not Player) return;
         if (!FieldSystem.unitSystem.isEnemyExist()) return;
         _buttonNameTooltip.GetComponent<CombatActionNameTooltip>().CloseUI();
-        if (bundle is null) return;
 
-        _activeActionBundle = bundle;
-        if (isDisplayed)
+        _activeActionBundle = activeBundle;
+        _displayedActionBundle = displayedBundle;
+
+        bool isDisplayed = (_displayedActionBundle != null);
+        bool isUIClosed = (_activeActionBundle == null && _displayedActionBundle == null);
+        if (isDisplayed || isUIClosed)
         {
-            _displayedActionBundle = bundle;
             FieldSystem.unitSystem.GetPlayer().SelectAction(_idleAction);
             _selectedActionType = CombatActionType.Null;
-        }
-        else
-        {
-            _displayedActionBundle = null;
-            //_buttonTooltip.GetComponent<CombatActionButtonTooltip>().CloseUI();
         }
         UpdateButtonSeletable();
 
@@ -218,68 +246,41 @@ public class CombatActionUI : UISystem
         if (FieldSystem.turnSystem.turnOwner is not Player) return;
         if (player.GetSelectedAction().IsActive()) return;
 
-            switch (actionType)
+        switch (actionType)
         {
             case CombatActionType.Move:
             case CombatActionType.Attack:
             case CombatActionType.Reload:
                 {
-                    if (_selectedActionType == CombatActionType.Null)
-                    {
-                        FieldSystem.unitSystem.GetPlayer().SelectAction(_baseActions[actionType]);
-                        _selectedActionType = actionType;
-                        SetActionBundle(_displayedActionBundle, false);
-                    }
-                    else
-                    {
-                        if (_selectedActionType != actionType)
-                        {
-                            _selectedActionType = CombatActionType.Null;
-                            SelectAction(actionType, btnIdx);
-                            return;
-                        }
-                        SetActionBundle(_activeActionBundle, true);
-                    }
+                    FieldSystem.unitSystem.GetPlayer().SelectAction(_baseActions[actionType]);
+                    SetActionBundle(_activeActionBundle, null);
                     break;
                 }
             case CombatActionType.Skills:
                 {
-                    SetActionBundle(_skillActionBundle, true);
+                    SetActionBundle(_skillActionBundle, _skillActionBundle);
                     break;
                 }
             case CombatActionType.Items:
                 {
                     SetItemUI(ItemType.Heal);
-                    _itemWindow.SetActive(true);
+                    _itemWindow.SetActive((_selectedActionType != actionType) || (!_itemWindow.activeSelf));
                     break;
                 }
             case CombatActionType.Weapons:
                 {
                     SetItemUI(ItemType.Revolver);
-                    _itemWindow.SetActive(true);
+                    _itemWindow.SetActive((_selectedActionType != actionType) || (!_itemWindow.activeSelf));
                     break;
                 }
             case CombatActionType.PlayerSkill:
                 {
-                    if (_selectedActionType == CombatActionType.Null)
-                    {
-                        FieldSystem.unitSystem.GetPlayer().SelectAction(_skillActions[btnIdx]);
-                        _selectedActionType = actionType;
-                        SetActionBundle(_displayedActionBundle, false);
-                    }
-                    else
-                    {
-                        if (_selectedActionType != actionType)
-                        {
-                            _selectedActionType = CombatActionType.Null;
-                            SelectAction(actionType, btnIdx);
-                            return;
-                        }
-                        SetActionBundle(_activeActionBundle, true);
-                    }
+                    FieldSystem.unitSystem.GetPlayer().SelectAction(_skillActions[btnIdx]);
+                    SetActionBundle(_activeActionBundle, null);
                     break;
                 }
         }
+        _selectedActionType = actionType;
     }
 
     public void ShowActionUITooltip(GameObject btn)

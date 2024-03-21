@@ -38,7 +38,14 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
     public void SetCharacterTooltipText(string statName, UIStatType statType, string valueStr) 
     {
         OpenUI();
-        if (statType == UIStatType.Character) 
+        if (statType == UIStatType.Base)
+        {
+            GetComponent<TextMeshProUGUI>().color = Color.white;
+            _subTooltipText.GetComponent<TextMeshProUGUI>().color = Color.white;
+            _subTooltipText.GetComponent<TextMeshProUGUI>().text = "기본 스텟";
+            _isSetContents = true;
+        }
+        else if (statType == UIStatType.Character) 
         {
             GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;

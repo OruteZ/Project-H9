@@ -68,8 +68,7 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
         //Button selectable Setting
         // 플레이어의 턴이 아닌 경우 - 선택 불가
         // 플레이어가 이미 행동을 실행 중인 경우 - 선택 불가
-        // 플레이어가 어떤 행동을 선택했는데, 해당 버튼이 선택된 버튼이 아닐 경우 - 선택 불가. 단, Idle(Cancel)버튼은 제외.
-        // Cost가 부족하다고 판단되면 - 선택 불가
+        // Cost가 부족한 경우 - 선택 불가
         _isSelectable = this.buttonAction.IsSelectable();
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;

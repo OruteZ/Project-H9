@@ -20,9 +20,10 @@ public class PlayerMainStatUI : UIElement
     public void SetMainStatUI() 
     {
         UnitStat stat = GameManager.instance.playerStat;
-        int dmg = 1;
+        Weapon weapon = FieldSystem.unitSystem.GetPlayer().weapon;
+        int dmg = weapon.weaponDamage;
         float criDmg = 100;
-        ItemType wT = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
+        ItemType wT = weapon.GetWeaponType();
         if (wT == ItemType.Revolver) 
         {
             dmg += stat.revolverAdditionalDamage;
@@ -38,7 +39,7 @@ public class PlayerMainStatUI : UIElement
             dmg += stat.shotgunAdditionalDamage;
             criDmg += stat.shotgunCriticalDamage;
         }
-        _atkText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Damage", dmg.ToString());   //여기 정확히 뭘 기재해야 하나? 
+        _atkText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Damage", dmg.ToString());
         _sightText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Sight Range", stat.sightRange.ToString());
         _speedText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Speed", stat.speed.ToString());
         _addHRText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Additional Hit Rate", stat.additionalHitRate.ToString() + "%");

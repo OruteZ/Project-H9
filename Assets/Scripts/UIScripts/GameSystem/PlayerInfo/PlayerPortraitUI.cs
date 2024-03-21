@@ -8,4 +8,8 @@ public class PlayerPortraitUI : UIElement
     public void SetPortraitUI() 
     { 
     }
+    public void ClickPortrait()
+    {
+        
+    }
 }

@@ -78,10 +78,10 @@ public class SkillUI : UISystem
     /// </summary>
     /// <param name="_transform"> 클릭된 UI요소의 위치 </param>
     /// <param name="btnIndex"> 클릭된 skill의 고유번호 </param>
-    public void ClickSkillUIButton(Vector3 pos, int btnIndex)
+    public void ClickSkillUIButton(GameObject ui)
     {
         _currentKeywordIndex.Clear();
-        _skillTooltipWindow.GetComponent<SkillTooltip>().SetSkillTooltip(pos, btnIndex);
+        _skillTooltipWindow.GetComponent<SkillTooltip>().SetSkillTooltip(ui);
 
         OpenPopupWindow();
     }

@@ -95,7 +95,11 @@ public class ItemUsingAction : BaseAction
     {
         _itemUsedTrigger = false;
     }
-    
+
+    public bool IsItemUsed() 
+    {
+        return _itemUsedTrigger;
+    }
     public IItem GetItem()
     {
         return _item;

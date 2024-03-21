@@ -36,6 +36,8 @@ public class UIManager : Generic.Singleton<UIManager>
 
     public GameObject loading; //test
 
+    public StatScript statScript;
+
     [HideInInspector] public UnityEvent<GameState> onTSceneChanged;
     [HideInInspector] public UnityEvent onSceneChanged;
     [HideInInspector] public UnityEvent onTurnChanged;
@@ -80,8 +82,9 @@ public class UIManager : Generic.Singleton<UIManager>
         {
             ChangeScene(GameState.Combat);
         }
-
         if (loading) loading.SetActive(true);
+
+        statScript = new StatScript();
         base.Awake();
     }
     void Update()
@@ -95,9 +98,20 @@ public class UIManager : Generic.Singleton<UIManager>
         {
             currentLayer = previousLayer;
         }
-        if (Input.GetKeyDown(HotKey.cancelKey))
+        if (Input.GetKeyDown(HotKey.cancelKey) && !combatUI.combatActionUI.isCombatUIOpened())
         {
-            Debug.Log("1");
+            if (currentLayer == 1)
+            {
+                if ((_characterCanvas.enabled || _skillCanvas.enabled))
+                {
+                    SetCharacterCanvasState(false);
+                    SetSkillCanvasState(false);
+                }
+                else
+                {
+                    SetPauseMenuCanvasState(!_pauseMenuCanvas.enabled);
+                }
+            }
             currentLayer = 1;
         }
         SetUILayer();
@@ -141,6 +155,8 @@ public class UIManager : Generic.Singleton<UIManager>
             {
                 uiSys.CloseUI();
                 canvas.enabled = isOn;
+                currentLayer = 1;
+                SetUILayer();
             }
         }
     }
@@ -150,10 +166,12 @@ public class UIManager : Generic.Singleton<UIManager>
     }
     public void SetCharacterCanvasState(bool isOn)
     {
+        combatUI.combatActionUI.CloseUI();
         SetCanvasState(_characterCanvas, characterUI, isOn);
     }
     public void SetSkillCanvasState(bool isOn)
     {
+        combatUI.combatActionUI.CloseUI();
         SetCanvasState(_skillCanvas, skillUI, isOn);
     }
     public void SetPauseMenuCanvasState(bool isOn)

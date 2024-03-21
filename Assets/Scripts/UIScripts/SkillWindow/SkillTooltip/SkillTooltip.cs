@@ -14,6 +14,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private GameObject _skillKeywordTooltipContainer;
 
     private SkillManager _skillManager;
+    private GameObject _currentSelectedUI = null;
     private int _currentSkillIndex;
     private bool _isInteractableButton;
 
@@ -35,24 +36,32 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     }
     private void Update()
     {
+        if (Input.mouseScrollDelta != Vector2.zero) 
+        {
+            CloseUI();
+        }
+
         if (!gameObject.activeInHierarchy) return;
         if (!_skillKeywordTooltipContainer.activeInHierarchy) return;
         if (_skillKeywordTooltipContainer.transform.childCount == 0) return;
+
         GameObject rootGameObject = _skillKeywordTooltipContainer.transform.GetChild(0).gameObject;
         if (rootGameObject is null) return;
         rootGameObject.GetComponent<VerticalLayoutGroup>().CalculateLayoutInputVertical();
         rootGameObject.GetComponent<VerticalLayoutGroup>().SetLayoutVertical();
     }
 
-    public void SetSkillTooltip(Vector3 pos, int skillIndex)
+    public void SetSkillTooltip(GameObject ui)
     {
         OpenUI();
+        _currentSelectedUI = ui;
+        int skillIndex = ui.GetComponent<SkillTreeElement>().GetSkillUIIndex();
         if (_currentSkillIndex != skillIndex) 
         {
             _currentSkillIndex = skillIndex;
         }
         _isInteractableButton = false;
-        GetComponent<RectTransform>().position = pos;
+        GetComponent<RectTransform>().position = _currentSelectedUI.GetComponent<RectTransform>().position;
         //GetComponent<RectTransform>().position = Input.mousePosition;
         Skill currentSkill = _skillManager.GetSkill(skillIndex);
         if (currentSkill == null) return;
@@ -104,10 +113,9 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     {
         if (_isInteractableButton && _skillManager.LearnSkill(_currentSkillIndex))
         {
-            
             UIManager.instance.skillUI.UpdateRelatedSkillNodes(_currentSkillIndex);
         }
-        SetSkillTooltip(GetComponent<RectTransform>().position, _currentSkillIndex);
+        SetSkillTooltip(_currentSelectedUI);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

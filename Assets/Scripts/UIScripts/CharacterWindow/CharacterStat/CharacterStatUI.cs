@@ -6,6 +6,7 @@ using TMPro;
 
 public enum UIStatType
 {
+    Base,
     Character,
     Skill,
     Weapon,
@@ -13,36 +14,15 @@ public enum UIStatType
 }
 public class CharacterStatUIInfo
 {
-    private Dictionary<string, string> _statNameTransleation = new Dictionary<string, string>()
-    {
-            {"Level",                   "레벨" },
-            {"Exp",                     "경험치" },
-            {"HP",                      "체력" },
-            {"Concentration",           "집중력" },
-            {"Sight Range",             "시야 범위" },
-            {"Speed",                   "속도" },
-            {"Action Point",            "행동 포인트" },
-            {"Additional Hit Rate",     "추가 명중률" },
-            {"Critical Chance",         "치명타 확률" },
-            {"Additional Damage",       "추가 데미지" },
-            {"Additional Range",        "추가 사거리" },
-            {"Critical Damage",         "치명타 데미지" },
-            {"Name",                    "무기 이름" },
-            {"Ammo",                    "무기 탄창 용량" },
-            {"Damage",                  "무기 데미지" },
-            {"Range",                   "무기 사거리" },
-            {"",                        "" },
-    };
-    //이걸 이런 식으로 여기 이러는 게 맞나? 스탯 스크립트 테이블이 필요할 듯?
-
     public string statName { get; private set; }
     public Dictionary<UIStatType, float> statValues { get; private set; }
 
     public CharacterStatUIInfo(string name) 
     {
         statName = name;
-        statValues = new Dictionary<UIStatType, float>() 
+        statValues = new Dictionary<UIStatType, float>()
         {
+            {UIStatType.Base,        0.0f},
             {UIStatType.Character,   0.0f},
             {UIStatType.Skill,       0.0f},
             {UIStatType.Weapon,      0.0f}
@@ -58,9 +38,9 @@ public class CharacterStatUIInfo
         }
         statValues[statType] = value;
     }
-    public string GetTranslateStatName() 
+    public string GetTranslateStatName()
     {
-        return _statNameTransleation[statName];
+        return UIManager.instance.statScript.GetStatScript(statName).name;
     }
     public float GetFinalStatValue() 
     {
@@ -110,14 +90,12 @@ public class CharacterStatUI : UISystem
         "Action Point",
         "Concentration",
         "Additional Hit Rate",
-        "Additional Damage",
+        "Damage",
         "Critical Chance",
         "Critical Damage",
         "",
-        "Additional Range",
         "Name",
         "Ammo",
-        "Damage",
         "Range"
     };
     public Dictionary<string, CharacterStatUIInfo> characterStatInfo { get; private set; }
@@ -129,7 +107,8 @@ public class CharacterStatUI : UISystem
         {
             characterStatInfo.Add(str, new CharacterStatUIInfo(str));
         }
-        UIManager.instance.onPlayerStatChanged.AddListener(() => SetStatText());
+        UIManager.instance.onPlayerStatChanged.AddListener(SetStatText);
+        UIManager.instance.onWeaponChanged.AddListener(SetStatText);
     }
 
     public override void OpenUI()
@@ -170,19 +149,19 @@ public class CharacterStatUI : UISystem
         };
         if (weaponType is ItemType.Revolver)
         {
-            _strAndType.Add(("Additional Damage", StatType.RevolverAdditionalDamage));
+            _strAndType.Add(("Damage", StatType.RevolverAdditionalDamage));
             _strAndType.Add(("Critical Chance", StatType.CriticalChance));
             _strAndType.Add(("Critical Damage", StatType.RevolverCriticalDamage));
         }
         else if (weaponType is ItemType.Repeater)
         {
-            _strAndType.Add(("Additional Damage", StatType.RepeaterAdditionalDamage));
+            _strAndType.Add(("Damage", StatType.RepeaterAdditionalDamage));
             _strAndType.Add(("Critical Chance", StatType.CriticalChance));
             _strAndType.Add(("Critical Damage", StatType.RepeaterCriticalDamage));
         }
         else if (weaponType is ItemType.Shotgun)
         {
-            _strAndType.Add(("Additional Damage", StatType.ShotgunAdditionalDamage));
+            _strAndType.Add(("Damage", StatType.ShotgunAdditionalDamage));
             _strAndType.Add(("Critical Chance", StatType.CriticalChance));
             _strAndType.Add(("Critical Damage", StatType.ShotgunCriticalDamage));
         }
@@ -210,17 +189,19 @@ public class CharacterStatUI : UISystem
         characterStatInfo["Critical Damage"].SetStatValue(UIStatType.Weapon, weapon.criticalDamage);
 
         //weapon
-        characterStatInfo["Name"].SetStatValue(UIStatType.Weapon, weapon.nameIndex);
-        characterStatInfo["Ammo"].SetStatValue(UIStatType.Weapon, weapon.maxAmmo);
-        characterStatInfo["Damage"].SetStatValue(UIStatType.Weapon, weapon.weaponDamage);
-        characterStatInfo["Range"].SetStatValue(UIStatType.Weapon, weapon.weaponRange);
+        //characterStatInfo["Name"].SetStatValue(UIStatType.Weapon, weapon.nameIndex);
+        //characterStatInfo["Ammo"].SetStatValue(UIStatType.Weapon, weapon.maxAmmo);
+
+        characterStatInfo["Damage"].SetStatValue(UIStatType.Base, weapon.weaponDamage);
+        characterStatInfo["Range"].SetStatValue(UIStatType.Base, weapon.weaponRange);
+        characterStatInfo["Critical Damage"].SetStatValue(UIStatType.Base, 100);
     }
     private void SetCharacterStatText()
     {
-        for (int i = 0; i < _characterStatUIElements.transform.childCount; i++) 
+        for (int i = 0; i < _characterStatUIElements.transform.childCount; i++)
         {
-            _characterStatUIElements.transform.GetChild(i)
-                .GetComponent<CharacterStatTextElement>().SetCharacterStatText(characterStatInfo[_stats[_textIndex++]]);
+            CharacterStatTextElement element = _characterStatUIElements.transform.GetChild(i).GetComponent<CharacterStatTextElement>();
+            element.SetCharacterStatText(characterStatInfo[_stats[_textIndex++]]);
         }
     }
 
@@ -243,7 +224,7 @@ public class CharacterStatUI : UISystem
 //Additional Hit Rate:
 //Critical Chance:
 
-//Additional Damage:
+//Damage:
 //Additional Range:
 //Critical Damage:
 

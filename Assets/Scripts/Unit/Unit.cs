@@ -194,6 +194,9 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     private void EquipWeapon(Weapon newWeapon, bool isOnSetup = false)
     {
+        bool changingInCombat = (GameManager.instance.CompareState(GameState.Combat) && isOnSetup == false);
+        if (changingInCombat && stat.curActionPoint < 4) return;
+        
         newWeapon.unit = this;
         weapon = newWeapon;
 
@@ -206,7 +209,7 @@ public abstract class Unit : MonoBehaviour, IUnit
             _unitModel.SetupWeaponModel(newWeapon);
         }
 
-        if(isOnSetup is false && GameManager.instance.CompareState(GameState.Combat)) ConsumeCost(4);
+        if (changingInCombat) ConsumeCost(4);
     }
 
     protected virtual void Awake()

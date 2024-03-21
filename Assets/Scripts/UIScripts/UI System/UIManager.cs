@@ -36,6 +36,8 @@ public class UIManager : Generic.Singleton<UIManager>
 
     public GameObject loading; //test
 
+    public StatScript statScript;
+
     [HideInInspector] public UnityEvent<GameState> onTSceneChanged;
     [HideInInspector] public UnityEvent onSceneChanged;
     [HideInInspector] public UnityEvent onTurnChanged;
@@ -80,8 +82,9 @@ public class UIManager : Generic.Singleton<UIManager>
         {
             ChangeScene(GameState.Combat);
         }
-
         if (loading) loading.SetActive(true);
+
+        statScript = new StatScript();
         base.Awake();
     }
     void Update()

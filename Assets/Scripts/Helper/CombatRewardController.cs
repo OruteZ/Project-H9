@@ -50,7 +50,7 @@ public class CombatRewardHelper
         // get item to player inventory
         foreach (var itemIndex in _rewardItems)
         {
-            GameManager.instance.playerInventory.AddItem(Item.CreateItem(_itemDB.GetItemData(itemIndex)));
+            GameManager.instance.playerInventory.TryAddItem(Item.CreateItem(_itemDB.GetItemData(itemIndex)));
         }
     }
     

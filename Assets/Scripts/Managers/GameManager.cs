@@ -38,7 +38,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
         Item item = Item.CreateItem(itemData);
 
-        playerInventory.AddItem(item);
+        playerInventory.TryAddItem(item);
 
         Debug.Log("Added item to inventory");
     }//a

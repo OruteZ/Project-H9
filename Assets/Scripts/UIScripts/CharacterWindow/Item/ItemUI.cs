@@ -75,7 +75,7 @@ public class ItemUI : UISystem
     }
     private void SetMoneyUI() 
     {
-        _moneyText.GetComponent<TextMeshProUGUI>().text = GameManager.instance.playerInventory.GetMoney().ToString() + "$";
+        _moneyText.GetComponent<TextMeshProUGUI>().text = GameManager.instance.playerInventory.GetGold().ToString() + "$";
     }
     public void OpenInventoryTooltip(GameObject ui, Vector3 pos)
     {

@@ -1,25 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// 적 체력바 표시와 관련된 기능을 구현한 클래스
 /// </summary>
 public class EnemyHpUI : UISystem
 {
-    [SerializeField] private GameObject _enemyHpBarPrefab;
     [SerializeField] private GameObject _enemyHpBarContainer;
 
-    private List<GameObject> _enemyHpBars;
+    private static EnemyHpUIPool _pool = null;
 
-    private List<Enemy> _enemies = new List<Enemy>();
+    [HideInInspector] public UnityEvent<GameObject> onEnemyHpDeleted;
 
-    private void Awake()
+    private void Start()
     {
-
-        _enemyHpBars = new List<GameObject>();
-        EnemyHpBarObjectPooling(10);
-        UIManager.instance.onActionChanged.AddListener(() => SetEnemyHpBars());
+        UIManager.instance.onActionChanged.AddListener(SetEnemyHpBars);
+        onEnemyHpDeleted.AddListener((u) => ClearEnemyHpUIElement(u));
+        if (_pool == null)
+        {
+            _pool = new EnemyHpUIPool();
+            _pool.Init("Prefab/Enemy Hp Slider", _enemyHpBarContainer.transform, 0);
+        }
     }
 
     /// <summary>
@@ -29,43 +32,27 @@ public class EnemyHpUI : UISystem
     public void SetEnemyHpBars()
     {
         List<Unit> units = FieldSystem.unitSystem.units;
-        _enemies = new List<Enemy>();
+        List<Enemy> newEnemies = new List<Enemy>();
         foreach (Unit unit in units)
         {
             if (unit is Enemy)
             {
-                _enemies.Add((Enemy)unit);
+                if (_pool.FindByEnemy((Enemy)unit) == null)
+                {
+                    newEnemies.Add((Enemy)unit);
+                }
             }
         }
 
-        //Debug.Log("적 개체 수:" + _enemies.Count);
-
-        if (_enemies.Count > _enemyHpBars.Count) 
+        for (int i = 0; i < newEnemies.Count; i++) 
         {
-            EnemyHpBarObjectPooling(10);
+            var wrapper = _pool.Set();
+            wrapper.Instance.GetComponent<EnemyHpUIElement>().InitEnemyHpUI(newEnemies[i]);
         }
-        for (int i = 0; i < _enemyHpBars.Count; i++) 
-        {
-            if (i < _enemies.Count)
-            {
-                _enemyHpBars[i].GetComponent<EnemyHpUIElement>().SetEnemyHpUI(_enemies[i]);
-            }
-        }
+        _pool.Update();
     }
-    private void InitEnemyHpUIs()
+    private void ClearEnemyHpUIElement(GameObject ui)
     {
-        foreach (GameObject hpBar in _enemyHpBars)
-        {
-            hpBar.GetComponent<EnemyHpUIElement>().ClearEnemyHpUI();
-        }
-    }
-    private void EnemyHpBarObjectPooling(int length)
-    {
-        for (int i = 0; i < length; i++)
-        {
-            GameObject ui = Instantiate(_enemyHpBarPrefab, Vector3.zero, Quaternion.identity, _enemyHpBarContainer.transform);
-            _enemyHpBars.Add(ui);
-        }
-        InitEnemyHpUIs();
+        _pool.Reset(ui);
     }
 }

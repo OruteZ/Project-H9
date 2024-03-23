@@ -17,6 +17,9 @@ public class Inventory : IInventory
     private List<IItem> _elseItems = new();
     private IItem _equippedItem = null;
 
+    public const int WEAPON_COST = 4;
+    public const int ITEM_COST = 2;
+
     public Inventory() 
     {
         for (int i = 0; i < INVENTORY_MAX_SIZE; i++)

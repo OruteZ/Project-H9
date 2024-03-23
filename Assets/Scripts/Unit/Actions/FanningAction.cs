@@ -50,7 +50,7 @@ public class FanningAction : BaseAction, IShootingAction
     public override bool IsSelectable()
     {
         if (unit.weapon.currentAmmo == 0) return false;
-        if (unit.CheckAttackedTrigger()) return false;
+        if (unit.HasStatusEffect(StatusEffectType.Recoil)) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
         if (unit.weapon.GetWeaponType() != ItemType.Revolver) return false;
         if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;

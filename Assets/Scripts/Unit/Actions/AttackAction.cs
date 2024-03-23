@@ -23,7 +23,7 @@ public class AttackAction : BaseAction, IShootingAction
     public override bool IsSelectable()
     {
         if (weapon.currentAmmo == 0) return false;
-        if (unit.CheckAttackedTrigger()) return false;
+        if (unit.HasStatusEffect(StatusEffectType.Recoil)) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
         if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
 

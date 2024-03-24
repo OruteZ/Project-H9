@@ -24,6 +24,10 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
     void Awake()
     {
         ClearCombatActionButton();
+        if (actionType != CombatActionType.Null)
+        {
+            _actionButtonIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo(actionType + " Action");
+        }
     }
 
     public void SetCombatActionButton(CombatActionType actionType, int btnNumber, IUnitAction action)

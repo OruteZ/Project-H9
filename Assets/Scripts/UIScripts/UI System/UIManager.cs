@@ -36,6 +36,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     public GameObject loading; //test
 
+    public SystemIconDatabase iconDB;
     public StatScript statScript;
 
     [HideInInspector] public UnityEvent<GameState> onTSceneChanged;
@@ -90,7 +91,7 @@ public class UIManager : Generic.Singleton<UIManager>
     void Update()
     {
         isMouseOverUI = EventSystem.current.IsPointerOverGameObject();
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !combatUI.combatActionUI.isCombatUIOpened())
         {
             currentLayer = GetPointerOverUILayer();
         }
@@ -98,21 +99,18 @@ public class UIManager : Generic.Singleton<UIManager>
         {
             currentLayer = previousLayer;
         }
-        if (Input.GetKeyDown(HotKey.cancelKey) && !combatUI.combatActionUI.isCombatUIOpened())
+        if (Input.GetKeyDown(HotKey.cancelKey))
         {
-            if (currentLayer == 1)
+            if (currentLayer <= 1 && !combatUI.combatActionUI.isCombatUIOpened())
             {
-                if ((_characterCanvas.enabled || _skillCanvas.enabled))
-                {
-                    SetCharacterCanvasState(false);
-                    SetSkillCanvasState(false);
-                }
-                else
-                {
-                    SetPauseMenuCanvasState(!_pauseMenuCanvas.enabled);
-                }
+                SetPauseMenuCanvasState(!_pauseMenuCanvas.enabled);
             }
-            currentLayer = 1;
+            if ((_characterCanvas.enabled || _skillCanvas.enabled))
+            {
+                SetCharacterCanvasState(false);
+                SetSkillCanvasState(false);
+                currentLayer = 1;
+            }
         }
         SetUILayer();
     }
@@ -155,8 +153,6 @@ public class UIManager : Generic.Singleton<UIManager>
             {
                 uiSys.CloseUI();
                 canvas.enabled = isOn;
-                currentLayer = 1;
-                SetUILayer();
             }
         }
     }
@@ -166,13 +162,13 @@ public class UIManager : Generic.Singleton<UIManager>
     }
     public void SetCharacterCanvasState(bool isOn)
     {
-        combatUI.combatActionUI.CloseUI();
         SetCanvasState(_characterCanvas, characterUI, isOn);
+        if (isOn && !_characterCanvas.enabled) previousLayer = 1;
     }
     public void SetSkillCanvasState(bool isOn)
     {
-        combatUI.combatActionUI.CloseUI();
         SetCanvasState(_skillCanvas, skillUI, isOn);
+        if (isOn && !_skillCanvas.enabled) previousLayer = 1;
     }
     public void SetPauseMenuCanvasState(bool isOn)
     {
@@ -255,7 +251,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     public void SetUILayerToNormal() 
     {
-        currentLayer = 0;
+        currentLayer = 1;
         SetUILayer();
     }
 

@@ -84,7 +84,7 @@ public class CharacterStatUI : UISystem
     {
         "Level",
         "Exp",
-        "HP",
+        "Hp",
         "Sight Range",
         "Speed",
         "Action Point",
@@ -139,7 +139,7 @@ public class CharacterStatUI : UISystem
 
         List<(string, StatType)> _strAndType = new List<(string, StatType)>()
         {
-            ("HP",                  StatType.MaxHp),
+            ("Hp",                  StatType.MaxHp),
             ("Sight Range",         StatType.SightRange),
             ("Speed",               StatType.Speed),
             ("Action Point",        StatType.MaxActionPoint),

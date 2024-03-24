@@ -43,7 +43,7 @@ public class EquipmentUI : UISystem
                     break;
                 }
         }
-        _weaponImage.GetComponent<Image>().sprite = _tmpWeaponImage[imgIdx];
+        _weaponImage.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo(data.itemType.ToString());
         _weaponMagazine.GetComponent<PlayerMagazineUI>().SetMagazineUI(true);
     }
     private void ClearEquipmentUI()

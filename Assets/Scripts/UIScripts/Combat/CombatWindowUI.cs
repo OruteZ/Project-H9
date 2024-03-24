@@ -41,7 +41,7 @@ public class CombatWindowUI : UISystem
         combatResultUI = GetComponent<CombatResultUI>();
         buffUI = GetComponent<BuffUI>();
 
-        uiSubsystems.Add(combatActionUI);
+        //uiSubsystems.Add(combatActionUI);
         uiSubsystems.Add(enemyHpUI);
         uiSubsystems.Add(enemyStatUI);
         uiSubsystems.Add(startTurnTextUI);

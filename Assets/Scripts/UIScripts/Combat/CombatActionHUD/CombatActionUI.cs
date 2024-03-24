@@ -39,7 +39,6 @@ public class CombatActionUI : UISystem
     private IUnitAction _itmeUsingAction;
     private CombatActionType _selectedActionType = CombatActionType.Null;
 
-    private KeyCode _openKey = HotKey.openActionUIKey;
     private KeyCode[] _shortCutKey =
     {
             KeyCode.Alpha1,
@@ -108,32 +107,36 @@ public class CombatActionUI : UISystem
         if (!isActiveSelectedAction)
         {
             bool isPlayerClicked = !IsMouseOverActionUI() && (Input.GetMouseButtonDown(0) && IsMouseClickedPlayer());
-            //open key
-            if (Input.GetKeyDown(_openKey) || isPlayerClicked)
+            bool isOpenKeyClicked = Input.GetKeyDown(HotKey.openActionUIKey);
+            bool isCancelKeyClicked = Input.GetKeyDown(HotKey.cancelKey);
+            if (isPlayerClicked || isOpenKeyClicked || isCancelKeyClicked)
             {
-                if (_activeActionBundle == null)
+                Debug.Log(isPlayerClicked + " / " + isOpenKeyClicked + " / " + isCancelKeyClicked);
+            }
+            //open key
+            if (isOpenKeyClicked || isPlayerClicked)
+            {
+                if (_activeActionBundle == null && _displayedActionBundle == null)
                 {
                     SetActionBundle(_baseActionBundle, _baseActionBundle);
-                    UIManager.instance.currentLayer = 2;
+                    return;
                 }
-                else
+                else if (_activeActionBundle == _displayedActionBundle)
                 {
                     SetActionBundle(null, null);
+                    return;
                 }
-                return;
             }
             //cancel key
-            if (Input.GetKeyDown(HotKey.cancelKey) || isPlayerClicked)
+            if (isCancelKeyClicked || isPlayerClicked)
             {
-                if (_displayedActionBundle == null && _activeActionBundle != null)
+                if (_activeActionBundle != null && _displayedActionBundle == null)
                 {
                     SetActionBundle(_activeActionBundle, _activeActionBundle);
-                    UIManager.instance.currentLayer = 2;
                 }
                 else if (_displayedActionBundle == _skillActionBundle)
                 {
                     SetActionBundle(_baseActionBundle, _baseActionBundle);
-                    UIManager.instance.currentLayer = 2;
                 }
                 else if (_displayedActionBundle == _baseActionBundle)
                 {
@@ -148,6 +151,7 @@ public class CombatActionUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;
         UIManager.instance.onTurnStarted.AddListener((u) => { if (u is Player) { SetActionBundle(_baseActionBundle, _baseActionBundle); } else { SetActionBundle(null, null); } });
+        FieldSystem.onCombatFinish.AddListener((b) =>SetActionBundle(null, null));
         player.onTurnStart.AddListener((u) => { SetActionBundle(_baseActionBundle, _baseActionBundle); });
         player.onFinishAction.AddListener((a) => { if (a is not IdleAction && IsThereSeletableButton()) { SetActionBundle(_baseActionBundle, _baseActionBundle); } });
 
@@ -228,6 +232,15 @@ public class CombatActionUI : UISystem
 
         bool isDisplayed = (_displayedActionBundle != null);
         bool isUIClosed = (_activeActionBundle == null && _displayedActionBundle == null);
+        if (isUIClosed)
+        {
+            UIManager.instance.previousLayer = 1;
+        }
+        else
+        {
+            UIManager.instance.previousLayer = 2;
+        }
+
         if (isDisplayed || isUIClosed)
         {
             FieldSystem.unitSystem.GetPlayer().SelectAction(_idleAction);

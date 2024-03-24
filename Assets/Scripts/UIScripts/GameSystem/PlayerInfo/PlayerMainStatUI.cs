@@ -44,7 +44,7 @@ public class PlayerMainStatUI : UIElement
         _sightText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Sight Range", stat.sightRange.ToString());
         _speedText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Speed", stat.speed.ToString());
         _addHRText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Additional Hit Rate", stat.additionalHitRate.ToString() + "%");
-        _critChanceText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Critical Rate", stat.criticalChance.ToString() + "%");
+        _critChanceText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Critical Chance", stat.criticalChance.ToString() + "%");
         _critDmgText.GetComponent<PlayerMainStatElement>().SetPlayerMainStatUI("Critical Damage", (criDmg / 100.0f).ToString() + "x");
     }
     public void ShowMainStatTooltip(GameObject textObj) 

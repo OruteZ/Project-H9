@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CombatActionSkillTooltip : UIElement
@@ -9,8 +10,10 @@ public class CombatActionSkillTooltip : UIElement
     [SerializeField] private GameObject _skillDescriptionText;
     [SerializeField] private GameObject _skillCostUI;
     [SerializeField] private GameObject _skillKeywords;
+    [SerializeField] private GameObject _skillSectionIcon;
+    [SerializeField] private GameObject _skillSectionText;
 
-    private SkillInfo _currentSkill = null;
+    private SkillInfo _currentSkillInfo = null;
     static private SkillKeywordPool _keywordPool = null;
     // Start is called before the first frame update
     void Awake()
@@ -23,12 +26,6 @@ public class CombatActionSkillTooltip : UIElement
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetCombatSkillTooltip(GameObject btn)
     {
         int btnIdx = btn.GetComponent<CombatActionButtonElement>().buttonIndex;
@@ -39,12 +36,23 @@ public class CombatActionSkillTooltip : UIElement
             Debug.LogError("저장된 action이 null이라 툴팁을 구성할 수 없습니다.");
             return;
         }
-        _currentSkill = info;
+        _currentSkillInfo = info;
 
         string name = SkillManager.instance.GetSkillName(info.index);
         string desc = SkillManager.instance.GetSkillDescription(info.index, out var keywords);
         _skillNameText.GetComponent<TextMeshProUGUI>().text = name;
         _skillDescriptionText.GetComponent<TextMeshProUGUI>().text = desc;
+
+        ItemType sectionType = ItemType.Etc + info.section;
+        bool isThereSectionCondition = (ItemType.Revolver <= sectionType && sectionType <= ItemType.Shotgun);
+        _skillSectionIcon.SetActive(isThereSectionCondition);
+        _skillSectionText.SetActive(isThereSectionCondition);
+        if (isThereSectionCondition)
+        {
+            _skillSectionIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo(sectionType.ToString());
+            _skillSectionText.GetComponent<TextMeshProUGUI>().text = sectionType.ToString();
+        }
+
 
         ActiveInfo aInfo = SkillManager.instance.activeDB.GetActiveInfo(info.index);
         _skillCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(action.GetCost(), action.GetAmmoCost());

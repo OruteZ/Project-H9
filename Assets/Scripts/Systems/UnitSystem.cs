@@ -27,8 +27,27 @@ public class UnitSystem : MonoBehaviour
     
     private int _totalExp;
     public CombatRewardHelper rewardHelper;
-    
-    
+
+    private CustomOutline.Mode[] outlineMode = { CustomOutline.Mode.NULL, CustomOutline.Mode.OutlineAll, CustomOutline.Mode.SilhouetteOnly };
+    private int modeIndex = 0;
+    private void Update()
+    {
+        if (Input.GetKeyDown(HotKey.changeOutlineModeKey)) 
+        {
+            Player player = GetPlayer();
+            if (player is null) return;
+            player.TryGetComponent(out CustomOutline outline);
+            if (outline is null) 
+            {
+                outline = player.AddComponent<CustomOutline>();
+                outline.OutlineColor = Color.red;
+            }
+
+            if (++modeIndex >= outlineMode.Length) modeIndex = 0;
+            outline.OutlineMode = outlineMode[modeIndex];
+        }
+    }
+
     /// <summary>
     /// 유닛을 생성하고, 유닛의 데이터를 초기화합니다.
     /// </summary>

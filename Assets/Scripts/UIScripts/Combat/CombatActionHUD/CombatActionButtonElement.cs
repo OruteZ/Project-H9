@@ -24,9 +24,13 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
     void Awake()
     {
         ClearCombatActionButton();
-        if (actionType != CombatActionType.Null)
+        if (actionType == CombatActionType.PlayerSkill)
         {
-            _actionButtonIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo(actionType + " Action");
+            _actionButtonIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo("Skills");
+        }
+        else if (actionType != CombatActionType.Null)
+        {
+            _actionButtonIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo(actionType.ToString());
         }
     }
 

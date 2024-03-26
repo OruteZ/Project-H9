@@ -19,7 +19,7 @@ public class PlayerMainStatElement : UIElement, IPointerEnterHandler, IPointerEx
     public void SetPlayerMainStatUI(string statName, string displayedText) 
     {
         this.statName = statName;
-        _statIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo(statName + " Stat");
+        _statIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo(statName);
         _statText.GetComponent<TextMeshProUGUI>().text = displayedText;
     }
     public void OnPointerEnter(PointerEventData eventData)

@@ -43,7 +43,7 @@ public class CharacterStatTextElement : UIElement, IPointerEnterHandler, IPointe
     public void SetCharacterStatText(CharacterStatUIInfo info)
     {
         if (_statIcon is null) return;
-        _statIcon.sprite = UIManager.instance.iconDB.GetIconInfo(info.statName + " Stat");
+        _statIcon.sprite = UIManager.instance.iconDB.GetIconInfo(info.statName);
         _statName = info.statName;
         _statText.text = info.GetFinalStatValueString();
         _isSetContents = (_statName != "");

@@ -139,6 +139,7 @@ public class ItemUI : UISystem
         _draggedElement.GetComponent<InventoryDragUI>().StartDragging();
         _draggedElement.GetComponent<RectTransform>().position = element.GetComponent<RectTransform>().position;
         ClosePopupWindow();
+        UIManager.instance.characterUI.equipmentUI.SetEquipmentParticle();
     }
 
     public void StopDragInventoryElement()
@@ -193,6 +194,7 @@ public class ItemUI : UISystem
         _draggedElement.GetComponent<RectTransform>().position = Vector3.zero;
 
         SetInventoryUI();
+        UIManager.instance.characterUI.equipmentUI.ClearEquipmentParticle();
     }
 
     public int GetInventoryUIIndex(GameObject element)

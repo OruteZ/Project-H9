@@ -21,9 +21,6 @@ public class PauseMenuUI : UISystem
     }
     public void OnResumeBtnClick()
     {
-        UIManager.instance.currentLayer = 1;
-        UIManager.instance.SetCharacterCanvasState(false);
-        UIManager.instance.SetSkillCanvasState(false);
-        UIManager.instance.SetPauseMenuCanvasState(false);
+        UIManager.instance.SetUILayer(1);
     }
 }

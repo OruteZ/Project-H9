@@ -31,13 +31,13 @@ public class EnemyStatUI : UISystem
     public override void OpenPopupWindow()
     {
         _isOpenedTooltipWindow = true;
-        UIManager.instance.previousLayer = 3;
+        UIManager.instance.SetUILayer(3);
         _enemyStatWindow.SetActive(true);
     }
     public override void ClosePopupWindow()
     {
         _isOpenedTooltipWindow = false;
-        UIManager.instance.previousLayer = 1;
+        UIManager.instance.SetUILayer(1);
         CloseEnemyStatUI();
     }
     private void Update()

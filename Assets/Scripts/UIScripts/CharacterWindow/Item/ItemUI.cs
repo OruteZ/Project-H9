@@ -139,7 +139,10 @@ public class ItemUI : UISystem
         _draggedElement.GetComponent<InventoryDragUI>().StartDragging();
         _draggedElement.GetComponent<RectTransform>().position = element.GetComponent<RectTransform>().position;
         ClosePopupWindow();
-        UIManager.instance.characterUI.equipmentUI.SetEquipmentParticle();
+        if (_draggedItem is WeaponItem)
+        {
+            UIManager.instance.characterUI.equipmentUI.SetEquipmentParticle();
+        }
     }
 
     public void StopDragInventoryElement()

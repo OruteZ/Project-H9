@@ -56,6 +56,7 @@ public class CombatActionUI : UISystem
     }
     public override void CloseUI()
     {
+        SetActionBundle(null, null);
         base.CloseUI();
     }
     private void Awake()
@@ -226,7 +227,7 @@ public class CombatActionUI : UISystem
         if (FieldSystem.turnSystem.turnOwner is not Player) return;
         if (!FieldSystem.unitSystem.isEnemyExist()) return;
         _buttonNameTooltip.GetComponent<CombatActionNameTooltip>().CloseUI();
-
+        Debug.Log(activeBundle + " / " + displayedBundle);
         _activeActionBundle = activeBundle;
         _displayedActionBundle = displayedBundle;
 
@@ -234,16 +235,16 @@ public class CombatActionUI : UISystem
         bool isUIClosed = (_activeActionBundle == null && _displayedActionBundle == null);
         if (isUIClosed)
         {
-            UIManager.instance.previousLayer = 1;
+            UIManager.instance.SetUILayer(1);
         }
         else
         {
-            UIManager.instance.previousLayer = 2;
+            UIManager.instance.SetUILayer(2);
         }
-
-        if (isDisplayed || isUIClosed)
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if ((isDisplayed || isUIClosed) && player is not null && player.GetSelectedAction() is not ItemUsingAction)
         {
-            FieldSystem.unitSystem.GetPlayer().SelectAction(_idleAction);
+            player.SelectAction(_idleAction);
             _selectedActionType = CombatActionType.Null;
         }
         UpdateButtonSeletable();

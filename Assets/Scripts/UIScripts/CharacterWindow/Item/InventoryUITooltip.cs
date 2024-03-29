@@ -31,7 +31,7 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
         _item = item;
         GetComponent<RectTransform>().position = pos;
 
-        UIManager.instance.previousLayer = 3;
+        UIManager.instance.SetUILayer(3);
 
         SetInventoryTooltipText(item);
 

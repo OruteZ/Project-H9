@@ -90,6 +90,7 @@ public class TurnUI : UISystem
         {
             var player = FieldSystem.unitSystem.GetPlayer();
             player.EndTurn();
+            UIManager.instance.SetUILayer(1);
         }
     }
 

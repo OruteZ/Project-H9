@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 스킬의 습득 상태를 정의합니다.
@@ -34,25 +35,37 @@ public class SkillUI : UISystem
 
     [SerializeField] private GameObject[] _skillRootNodes;
 
+    [SerializeField] private GameObject _skillTreeScroll;
+    private bool _isScrollInit;
     public SkillTooltip skillTooltip { get; private set; }
-
+    private void Awake()
+    {
+        _skillTreeScroll.GetComponent<Scrollbar>().value = 1;
+    }
     void Start()
     {
         _skillManager = SkillManager.instance;
         skillTooltip = _skillTooltipWindow.GetComponent<SkillTooltip>();
         //GetComponent<Image>().sprite = null;
+        _isScrollInit = false;
         UpdateAllSkillUINode();
     }
     private void Update()
     {
+        while (!_isScrollInit && _skillTreeScroll.GetComponent<Scrollbar>().value != 1)
+        {
+            _skillTreeScroll.GetComponent<Scrollbar>().value = 1;
+            if (_skillTreeScroll.GetComponent<Scrollbar>().value == 1) _isScrollInit = true;
+        }
         if (Input.GetKeyDown(KeyCode.F2)) 
         {
             _skillManager.AddSkillPoint(1);
             UpdateSkillPointUI();
         }
     }
-    public override void OpenUI() 
+    public override void OpenUI()
     {
+        _isScrollInit = false;
         UpdateAllSkillUINode();
         base.OpenUI();
     }
@@ -63,12 +76,12 @@ public class SkillUI : UISystem
     }
     public override void OpenPopupWindow()
     {
-        UIManager.instance.previousLayer = 3;
+        UIManager.instance.SetUILayer(3);
         _skillTooltipWindow.SetActive(true);
     }
     public override void ClosePopupWindow()
     {
-        UIManager.instance.previousLayer = 2;
+        UIManager.instance.SetUILayer(2);
         CloseSkillTooltip();
     }
 

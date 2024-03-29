@@ -118,6 +118,7 @@ public class Inventory : IInventory
         {
             Debug.Log("select");
             player.SelectItem(itemList[index]);
+            //UIManager.instance.SetUILayerToNormal();
         }
     }
     public void SellItem(ItemType type, int index)

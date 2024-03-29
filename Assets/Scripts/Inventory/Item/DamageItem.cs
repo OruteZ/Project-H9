@@ -15,6 +15,7 @@ public class DamageItem : Item
         if (unit == null) return false;
         
         unit.TakeDamage(GetData().itemEffectAmount, user);
+        stackCount--;
         return true;
     }
 

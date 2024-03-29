@@ -41,17 +41,18 @@ public class CombatWindowUI : UISystem
         combatResultUI = GetComponent<CombatResultUI>();
         buffUI = GetComponent<BuffUI>();
 
-        //uiSubsystems.Add(combatActionUI);
+        uiSubsystems.Add(combatActionUI);
         uiSubsystems.Add(enemyHpUI);
         uiSubsystems.Add(enemyStatUI);
         uiSubsystems.Add(startTurnTextUI);
-        uiSubsystems.Add(turnOrderUI);
+        //uiSubsystems.Add(turnOrderUI);
         uiSubsystems.Add(combatResultUI);
         uiSubsystems.Add(buffUI);
     }
 
     public override void ClosePopupWindow()
     {
+        combatActionUI.CloseUI();
         enemyStatUI.ClosePopupWindow();
     }
 }

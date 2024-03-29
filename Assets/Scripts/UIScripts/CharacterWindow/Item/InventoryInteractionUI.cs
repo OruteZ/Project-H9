@@ -54,8 +54,12 @@ public class InventoryInteractionUI : UIElement
         }
 
         GetComponent<RectTransform>().position = pos;
-        UIManager.instance.currentLayer = 3;
-        UIManager.instance.SetUILayer();
+        UIManager.instance.SetUILayer(3);
         OpenUI();
+    }
+    public override void CloseUI()
+    {
+        //UIManager.instance.SetUILayer(2);
+        base.CloseUI();
     }
 }

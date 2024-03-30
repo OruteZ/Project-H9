@@ -8,7 +8,8 @@ using TMPro;
 public class LogUI : UISystem
 {
     [SerializeField]
-    private RectTransform _logPanel;
+    private RectTransform _logPanel; // text 들을 담을 수 있으며, text 들의 합만큼의 크기를 지닐 것임.
+    private float _FixedTextedPanelHeight; // "length text 0 ~ n-1" + length text n
 
     [SerializeField]
     private GameObject _defaultTextPrefab;
@@ -35,6 +36,7 @@ public class LogUI : UISystem
         UIManager.instance.onNonHited.AddListener(NonHited);
         //UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat); // 모든 플레이어 스탯변화 추적하기 힘들어 일단 주석처리
         InstantiateText();
+        _FixedTextedPanelHeight = 0;
     }
 
     public override void CloseUI()
@@ -130,7 +132,9 @@ public class LogUI : UISystem
         {
             _builder.Clear(); // 이미 쓰여진 텍스트 오브젝트는 교체하지 않을 예정이므로, stringBuilder를 비운다.
             _beforeHeight = _textCaches[_curTextlistIndex].rectTransform.sizeDelta.y;
+            _FixedTextedPanelHeight = _FixedTextedPanelHeight + _textCaches[_curTextlistIndex].rectTransform.sizeDelta.y;
             InstantiateText();
         }
+        _logPanel.sizeDelta = new Vector2(_logPanel.sizeDelta.x, _FixedTextedPanelHeight + _textCaches[_curTextlistIndex].rectTransform.sizeDelta.y);
     }
 }

@@ -7,7 +7,7 @@ public interface IInventory
     /// 인벤토리에 아이템을 추가합니다.
     /// </summary>
     /// <param name="item"> 추가할 아이템 </param>
-    public void AddItem(IItem item);
+    public bool TryAddItem(IItem item);
 
     /// <summary>
     /// 인벤토리에서 아이템을 삭제합니다.

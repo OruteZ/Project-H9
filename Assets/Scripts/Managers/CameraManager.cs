@@ -39,8 +39,12 @@ public class CameraManager : Singleton<CameraManager>
             worldCamera.SetPosition( _currentUnitCamera.GetUnit().transform.position);
         }
     }
-    
-    public UnitCamera GetCamera(Unit unit) => _unitCameras[unit];
+
+    public UnitCamera GetCamera(Unit unit)
+    {
+        var ret = _unitCameras.TryGetValue(unit, out var unitCamera) ? unitCamera : null;
+        return ret;
+    }
     
     private void Start()
     {

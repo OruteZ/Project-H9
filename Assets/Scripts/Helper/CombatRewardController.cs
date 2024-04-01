@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Castle.Core;
 using UnityEngine;
 
 public class CombatRewardHelper
 {
     private int _gold;
+    private readonly List<Pair<int, int>> _rewardCandidates = new List<Pair<int, int>>();
     private readonly List<int> _rewardItems = new List<int>();
     private readonly ItemDatabase _itemDB;
     
@@ -28,17 +30,10 @@ public class CombatRewardHelper
             Debug.LogError("Reward Item's length is not even");
         }
         
-        // even index is item index, odd index is percent
+        _rewardCandidates.Clear();
         for (int i = 0; i < infoRewardItem.Length; i += 2)
         {
-            int index = infoRewardItem[i];
-            float percent = infoRewardItem[i + 1] * 0.01f; // in excel, percent is 0 ~ 100;
-            
-            //check percentage is success
-            if (percent >= UnityEngine.Random.Range(0, 1))
-            {
-                _rewardItems.Add(index);
-            }
+            _rewardCandidates.Add(new Pair<int, int>(infoRewardItem[i], infoRewardItem[i + 1]));
         }
     }
     
@@ -47,10 +42,31 @@ public class CombatRewardHelper
         // get gold to player inventory
         GameManager.instance.playerInventory.AddGold(_gold);
         
-        // get item to player inventory
-        foreach (var itemIndex in _rewardItems)
+        // even index is item index, odd index is percent
+        for (int i = 0; i < _rewardCandidates.Count; i++)
         {
-            GameManager.instance.playerInventory.AddItem(Item.CreateItem(_itemDB.GetItemData(itemIndex)));
+            int index = _rewardCandidates[i].First;
+            float percent = _rewardCandidates[i].Second * 0.01f; // in excel, percent is 0 ~ 100;
+            
+            //check percentage is success
+            if (percent >= UnityEngine.Random.Range(0, 1))
+            {
+                _rewardItems.Add(index);
+            }
+        }
+        
+        // get item to player inventory
+        for (var i = 0; i < _rewardItems.Count; i++)
+        {
+            var itemIndex = _rewardItems[i];
+            bool success = GameManager.instance.playerInventory.TryAddItem(Item.CreateItem(_itemDB.GetItemData(itemIndex)));
+            
+            //if fail, remove from reward list
+            if (!success)
+            {
+                _rewardItems.RemoveAt(i);
+                i--;
+            }
         }
     }
     

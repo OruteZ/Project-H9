@@ -41,24 +41,24 @@ public class Inventory : IInventory
         return _equippedItem;
     }
 
-    public void AddItem(IItem item)
+    public bool TryAddItem(IItem item)
     {
-        if (item is null) return;
+        if (item is null) return false;
         
         List<IItem> itemList = GetCorrectTypeItemList(item.GetData().itemType);
         if (item.GetData().itemMaxStorage > 1)
         {
-            for (int i = 0; i < itemList.Count; i++)
+            for (int i = 0; i < itemList.Count; i++) if(itemList[i] is not null)
             {
-                if (itemList[i] is null) continue;
                 bool isStackFull = (itemList[i].GetData().itemMaxStorage <= itemList[i].GetStackCount());
                 if (isStackFull) continue;
+                
                 bool isSameItem = (itemList[i].GetData().id == item.GetData().id);
                 if (isSameItem)
                 {
                     itemList[i] = (Item)itemList[i] + (Item)item;
                     IInventory.OnInventoryChanged?.Invoke();
-                    return;
+                    return true;
                 }
             }
         }
@@ -68,10 +68,11 @@ public class Inventory : IInventory
             {
                 itemList[i] = item;
                 IInventory.OnInventoryChanged?.Invoke();
-                return;
+                return true;
             }
         }
         Debug.LogError("Inventory is full");
+        return false;
     }
     public void DeleteItem(IItem deleteItem)
     {
@@ -198,7 +199,7 @@ public class Inventory : IInventory
     {
         _gold += reward;
     }
-    public int GetMoney() 
+    public int GetGold() 
     {
         return _gold;
     }

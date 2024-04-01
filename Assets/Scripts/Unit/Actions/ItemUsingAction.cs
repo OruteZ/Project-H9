@@ -60,7 +60,7 @@ public class ItemUsingAction : BaseAction
     public override bool IsSelectable()
     {
         if (_itemUsedTrigger) return false;
-        if (unit.CheckAttackedTrigger()) return false;
+        if (unit.HasStatusEffect(StatusEffectType.Recoil)) return false;
 
         return _item is not null;
     }

@@ -20,9 +20,8 @@ public class HemostasisAction : BaseAction
     public override bool IsSelectable()
     {
         if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
-        if (unit.HasStatusEffect(StatusEffectType.Bleeding)) return true;
-        
-        return false;
+
+        return unit.HasStatusEffect(StatusEffectType.Bleeding);
     }
 
     public override bool CanExecute()

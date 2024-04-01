@@ -41,7 +41,6 @@ public abstract class Unit : MonoBehaviour, IUnit
     private List<Passive> _passiveList;
     public List<int> passiveIndexList;
     
-    private bool _hasAttacked;
     public bool infiniteActionPointTrigger;
     public bool lightFootTrigger;
     
@@ -122,9 +121,6 @@ public abstract class Unit : MonoBehaviour, IUnit
 #if UNITY_EDITOR
         Debug.Log(unitName + " Turn Started");
 #endif
-        
-        _hasAttacked = false;
-        
         onTurnStart.Invoke(this);
         
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out var appliedValue);
@@ -476,18 +472,13 @@ public abstract class Unit : MonoBehaviour, IUnit
     ///<summary>
     /// 한 턴에 한번만 사격 가능합니다. "단 Infinite Action Point 스킬을 배우지 않았을 경우"
     /// </summary>
-    public bool CheckAttackedTrigger() => _hasAttacked && infiniteActionPointTrigger is false;
+    public bool CheckAttackedTrigger() => HasStatusEffect(StatusEffectType.Recoil) && infiniteActionPointTrigger is false;
     
     /// <summary>
     /// 사격 후 이동이 불가합니다. "단 Light Foot 스킬을 배우지 않았을 경우"
     /// </summary>
     /// <returns></returns>
-    public bool CheckAttackMoveTrigger() => _hasAttacked && lightFootTrigger is false;
-
-    public void SetAttacked()
-    {
-        _hasAttacked = true;
-    }
+    public bool CheckAttackMoveTrigger() => HasStatusEffect(StatusEffectType.Recoil) && lightFootTrigger is false;
 
     #region STATUE EFFECT
 

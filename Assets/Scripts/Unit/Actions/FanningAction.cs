@@ -98,7 +98,5 @@ public class FanningAction : BaseAction, IShootingAction
         }
 
         yield return new WaitForSeconds(COOL_OFF_TIME);
-        
-        unit.SetAttacked();
     }
 }

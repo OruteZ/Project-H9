@@ -117,6 +117,5 @@ public class AttackAction : BaseAction, IShootingAction
         while (cnt-- > 0) yield return null;
         
         unit.animator.SetTrigger(IDLE);
-        unit.SetAttacked();
     }
 }

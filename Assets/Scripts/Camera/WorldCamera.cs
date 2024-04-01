@@ -15,6 +15,8 @@ public class WorldCamera : MonoBehaviour
     
     [SerializeField] private Vector3 minPosition;
     [SerializeField] private Vector3 maxPosition;
+    
+    private bool _dragTrigger;
 
     public WorldCamera(float movementSpeed)
     {
@@ -38,19 +40,23 @@ public class WorldCamera : MonoBehaviour
             SetPosition(player.transform.position);
         }
     }
+    
     private void HandleMoveEvent()
     {
         //마우스 드래그에 의한 이동, X와 Z값만을 변경합니다.
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && UIManager.instance.isMouseOverUI is false)
         {
             _lastMousePosition = Input.mousePosition;
+            _dragTrigger = true;
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && _dragTrigger)
         {
             Vector3 delta = Input.mousePosition - _lastMousePosition;
             transform.Translate(-delta.x * (dragSpeed * Time.deltaTime), 0, -delta.y * (dragSpeed * Time.deltaTime));
             _lastMousePosition = Input.mousePosition;
         }
+
+        if (Input.GetMouseButtonUp(0)) _dragTrigger = false;
 
         // WASD 키 입력에 의한 이동
         Vector3 direction = new Vector3();
@@ -70,6 +76,7 @@ public class WorldCamera : MonoBehaviour
         // 이동 제한 적용
         Vector3 clampedPosition = transform.position;
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, minPosition.x, maxPosition.x);
+        
         //clamp y value to 0
         clampedPosition.y = 0;
         clampedPosition.z = Mathf.Clamp(clampedPosition.z, minPosition.z, maxPosition.z);

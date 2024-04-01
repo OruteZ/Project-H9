@@ -242,7 +242,8 @@ public class ItemUI : UISystem
         else 
         {
             GameManager.instance.playerInventory.UseItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
-            UIManager.instance.gameSystemUI.OnCharacterBtnClick();
+            UIManager.instance.SetUILayer(1);
+            //UIManager.instance.gameSystemUI.OnCharacterBtnClick();
         }
         _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();

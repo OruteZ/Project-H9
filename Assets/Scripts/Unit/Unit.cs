@@ -142,7 +142,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         onTurnEnd.Invoke(this);
         
         // reset idle trigger animator
-        animator.ResetTrigger("Idle");
+        animator.SetTrigger("Idle");
 
         FieldSystem.turnSystem.EndTurn();
     }

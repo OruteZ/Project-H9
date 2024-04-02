@@ -40,7 +40,7 @@ public class TurnSystem : MonoBehaviour
             if (FieldSystem.unitSystem.GetPlayer().IsBusy()) return;
         }
         
-        turnOwner.animator.ResetTrigger("Idle");
+        // turnOwner.animator.ResetTrigger("Idle");
         
         CalculateTurnOwner();
         StartTurn();

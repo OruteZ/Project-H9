@@ -2,6 +2,7 @@
 using System.Linq;
 using Castle.Core;
 using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class UnitStatusEffectController
@@ -94,7 +95,7 @@ public class UnitStatusEffectController
     public bool HasStatusEffect(StatusEffectType type)
     {
         if (_statusEffects is null) return false;
-        
+
         foreach (var statusEffect in _statusEffects)
         {
             if (statusEffect.GetStatusEffectType() == type)

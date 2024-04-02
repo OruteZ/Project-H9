@@ -141,6 +141,8 @@ public class MoveAction : BaseAction
                     yield break;
                 }
             }
+            // unit.animator.ResetTrigger(MOVE);
+            // unit.animator.SetTrigger(IDLE);
             
             yield return null;
         }

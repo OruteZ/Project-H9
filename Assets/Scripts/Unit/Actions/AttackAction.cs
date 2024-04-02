@@ -25,7 +25,6 @@ public class AttackAction : BaseAction, IShootingAction
         if (weapon.currentAmmo == 0) return false;
         if (unit.CheckAttackedTrigger()) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
-        if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
 
         return true;
     }
@@ -117,5 +116,6 @@ public class AttackAction : BaseAction, IShootingAction
         while (cnt-- > 0) yield return null;
         
         unit.animator.SetTrigger(IDLE);
+        unit.TryAddStatus(new Recoil(unit));
     }
 }

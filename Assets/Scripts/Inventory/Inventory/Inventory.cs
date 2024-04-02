@@ -99,9 +99,7 @@ public class Inventory : IInventory
 
         if (((WeaponItem)itemList[index]).TryEquip())
         {
-            IItem tmpItem = _equippedItem;
-            _equippedItem = itemList[index];
-            itemList[index] = tmpItem;
+            (_equippedItem, itemList[index]) = (itemList[index], _equippedItem);
         }
     }
     public void UseItem(ItemType type, int index)

@@ -62,7 +62,7 @@ public class ItemUsingAction : BaseAction
         if (_itemUsedTrigger) return false;
         if (unit.HasStatusEffect(StatusEffectType.Recoil)) return false;
 
-        return _item is not null;
+        return true;
     }
 
     public override bool CanExecuteImmediately()

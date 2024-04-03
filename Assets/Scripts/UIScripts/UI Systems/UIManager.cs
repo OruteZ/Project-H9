@@ -34,6 +34,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     public GameObject loading; //test
 
+    public ScriptLanguage scriptLanguage = ScriptLanguage.Korean;
     public SystemIconDatabase iconDB;
     public StatScript statScript;
 
@@ -262,4 +263,11 @@ public class UIManager : Generic.Singleton<UIManager>
     {
         return _worldCanvas.scaleFactor;
     }
+}
+
+public enum ScriptLanguage
+{
+    NULL,
+    Korean,
+    English
 }

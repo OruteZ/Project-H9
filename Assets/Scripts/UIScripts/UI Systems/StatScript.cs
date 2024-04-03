@@ -19,7 +19,7 @@ public class StatScriptInfo
 }
 public class StatScript
 {
-    public ScriptLanguage scriptLanguage = ScriptLanguage.Korean;
+    public ScriptLanguage scriptLanguage = UIManager.instance.scriptLanguage;
     private List<StatScriptInfo> _statScripts;
 
     public StatScript() 

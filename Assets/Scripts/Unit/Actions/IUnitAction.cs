@@ -69,6 +69,8 @@ public interface IUnitAction {
     public int GetAmmoCost();
 
     public void ForceFinish();
+
+    public void TossAnimationEvent(string eventString);
 }
 
 public enum ActionType {

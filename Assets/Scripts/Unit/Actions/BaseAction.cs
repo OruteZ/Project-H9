@@ -10,6 +10,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     protected static readonly int SHOOT = Animator.StringToHash("Shoot");
     protected static readonly int IDLE = Animator.StringToHash("Idle");
     protected static readonly int FANNING = Animator.StringToHash("Fanning");
+    protected static readonly int FANNING_FIRE = Animator.StringToHash("FanningFire");
+    protected static readonly int FANNING_FINISH = Animator.StringToHash("FanningFinish");
     protected static readonly int RELOAD = Animator.StringToHash("Reload");
     protected static readonly int DYNAMITE = Animator.StringToHash("Dynamite");
 
@@ -123,5 +125,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     }
 
     protected virtual void SetAmount(float[] amounts)
+    { }
+    
+    public virtual void TossAnimationEvent(string eventString)
     { }
 }

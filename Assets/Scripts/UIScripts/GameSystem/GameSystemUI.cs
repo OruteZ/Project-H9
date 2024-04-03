@@ -44,25 +44,16 @@ public class GameSystemUI : UISystem
     public void OnCharacterBtnClick()
     {
         if (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive()) return;
-        UIManager.instance.previousLayer = 2;
-        UIManager.instance.SetSkillCanvasState(false);
-        UIManager.instance.SetPauseMenuCanvasState(false);
         UIManager.instance.SetCharacterCanvasState(true);
     }
     public void OnSkillBtnClick()
     {
         if (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive()) return;
-        UIManager.instance.previousLayer = 2;
-        UIManager.instance.SetCharacterCanvasState(false);
-        UIManager.instance.SetPauseMenuCanvasState(false);
         UIManager.instance.SetSkillCanvasState(true);
     }
     public void OnPauseMenuBtnClick()
     {
         if (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive()) return;
-        UIManager.instance.previousLayer = 2;
-        UIManager.instance.SetCharacterCanvasState(false);
-        UIManager.instance.SetSkillCanvasState(false);
         UIManager.instance.SetPauseMenuCanvasState(true);
     }
 }

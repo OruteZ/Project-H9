@@ -19,6 +19,7 @@ public class CleanseItem : Item
             { 
                 //remove this status effect
                 user.TryRemoveStatus(itemDebuff);
+                stackCount--;
                 return true;
             }
         }

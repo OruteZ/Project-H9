@@ -139,6 +139,10 @@ public class ItemUI : UISystem
         _draggedElement.GetComponent<InventoryDragUI>().StartDragging();
         _draggedElement.GetComponent<RectTransform>().position = element.GetComponent<RectTransform>().position;
         ClosePopupWindow();
+        if (_draggedItem is WeaponItem)
+        {
+            UIManager.instance.characterUI.equipmentUI.SetEquipmentParticle();
+        }
     }
 
     public void StopDragInventoryElement()
@@ -193,6 +197,7 @@ public class ItemUI : UISystem
         _draggedElement.GetComponent<RectTransform>().position = Vector3.zero;
 
         SetInventoryUI();
+        UIManager.instance.characterUI.equipmentUI.ClearEquipmentParticle();
     }
 
     public int GetInventoryUIIndex(GameObject element)
@@ -237,7 +242,8 @@ public class ItemUI : UISystem
         else 
         {
             GameManager.instance.playerInventory.UseItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
-            UIManager.instance.gameSystemUI.OnCharacterBtnClick();
+            UIManager.instance.SetUILayer(1);
+            //UIManager.instance.gameSystemUI.OnCharacterBtnClick();
         }
         _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();

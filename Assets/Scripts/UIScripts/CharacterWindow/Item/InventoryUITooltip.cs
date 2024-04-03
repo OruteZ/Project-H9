@@ -11,8 +11,6 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
     [SerializeField] private GameObject _itemDescriptionText;
     [SerializeField] private GameObject _itemCostUI;
     private const float UI_DOMINION_TIME = 0.3f;
-    private const int WEAPON_COST = 4;
-    private const int ITEM_COST = 2;
 
     private IItem _item = null;
 
@@ -33,7 +31,7 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
         _item = item;
         GetComponent<RectTransform>().position = pos;
 
-        UIManager.instance.previousLayer = 3;
+        UIManager.instance.SetUILayer(3);
 
         SetInventoryTooltipText(item);
 
@@ -41,11 +39,11 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
         {
             if (item is WeaponItem)
             {
-                _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(WEAPON_COST, 0);
+                _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(Inventory.WEAPON_COST, 0);
             }
             else
             {
-                _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(ITEM_COST, 0);
+                _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(Inventory.ITEM_COST, 0);
             }
         }
         else 

@@ -16,6 +16,7 @@ public class BuffItem : Item
 
         var itemBuff = new ItemBuff(GetData().id, statType, amount, duration, user);
 
+        stackCount--;
         return true;
     }
 

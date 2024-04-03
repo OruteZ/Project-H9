@@ -9,9 +9,9 @@ public class TooltipCostUI : UIElement
         Player player = FieldSystem.unitSystem.GetPlayer();
         int curAp = player.currentActionPoint;
         int curAmmo = player.weapon.currentAmmo;
-        transform.GetChild(0).GetComponent<TooltipCostUIElement>().SetTooltipCostUIElement(apCost, apCost <= curAp);
-        transform.GetChild(1).GetComponent<TooltipCostUIElement>().SetTooltipCostUIElement(ammoCost, ammoCost <= curAmmo);
-        transform.GetChild(2).GetComponent<TooltipCostUIElement>().SetTooltipCostUIElement(0, false);
+        transform.GetChild(0).GetComponent<TooltipCostUIElement>().SetTooltipCostUIElement("Ap Cost", apCost, apCost <= curAp);
+        transform.GetChild(1).GetComponent<TooltipCostUIElement>().SetTooltipCostUIElement("Ammo Cost", ammoCost, ammoCost <= curAmmo);
+        transform.GetChild(2).GetComponent<TooltipCostUIElement>().SetTooltipCostUIElement("Etc Cost", 0, false);
         OpenUI();
     }
 }

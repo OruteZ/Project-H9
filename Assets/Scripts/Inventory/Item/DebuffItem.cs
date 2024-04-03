@@ -65,7 +65,8 @@ public class DebuffItem : Item
             targetUnit.TryAddStatus(statusEffect);
         }
         else return false;
-        
+
+        stackCount--;
         return true;
     }
 

@@ -26,8 +26,6 @@ public class BuffUI : UISystem
         StatusEffectType.Burning
     };
 
-    [SerializeField] private List<Sprite> _debuffIconSprites;
-
     private void Awake()
     {
         _BuffUI.SetActive(false);
@@ -137,7 +135,7 @@ public class BuffUI : UISystem
         if ((int)effType >= (int)StatusEffectType.Burning && (int)effType <= (int)StatusEffectType.Blind) 
         {
             Debug.Log(effType);
-            return _debuffIconSprites[(int)effType - 10];
+            return UIManager.instance.iconDB.GetIconInfo(effType.ToString());
         }
         Debug.LogError("상태 이상 아이콘을 찾을 수 없습니다.");
         return null;

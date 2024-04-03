@@ -14,7 +14,7 @@ public class EnemyHpUIElement : UIElement
     private float _hpBarMoveSpeed = HP_BAR_MOVE_MAX_SPEED;
     private float _prevEnemyHp;
 
-    private Enemy _enemy;
+    public Enemy enemy { get; private set; }
     private Vector3 _prevEnemyPos;
     private Vector3 _prevEnemyUIPos;
 
@@ -44,7 +44,7 @@ public class EnemyHpUIElement : UIElement
 
         //UI On & Off
         bool isUIVisible;
-        if (_enemy == null)
+        if (enemy == null)
         {
             isUIVisible = (_backHpBar.value > 0);
             if (!isUIVisible)
@@ -54,7 +54,7 @@ public class EnemyHpUIElement : UIElement
         }
         else
         {
-            isUIVisible = _enemy.isVisible;
+            isUIVisible = enemy.isVisible;
         }
         _backHpBar.gameObject.SetActive(isUIVisible);
         _frontHpBar.gameObject.SetActive(isUIVisible);
@@ -62,9 +62,9 @@ public class EnemyHpUIElement : UIElement
         _debuffs.gameObject.SetActive(isUIVisible);
 
         //UI Position Setting
-        if (_enemy != null) 
+        if (enemy != null) 
         {
-            _prevEnemyPos = _enemy.transform.position;
+            _prevEnemyPos = enemy.transform.position;
         } 
         Vector3 enemyPositionHeightCorrection = _prevEnemyPos;
         enemyPositionHeightCorrection.y += 1.8f;
@@ -78,13 +78,19 @@ public class EnemyHpUIElement : UIElement
         }
     }
 
+    public void InitEnemyHpUI(Enemy enemy)
+    {
+        this.enemy = enemy;
+        SetEnemyHpUI();
+    }
     /// <summary>
     /// 적 체력바의 정보를 설정합니다.
     /// EnemyHpUI가 모든 적 체력바 정보들을 설정할 때 호출됩니다.
     /// </summary>
     /// <param name="enemy"> 해당 체력바로 설정할 적 개체 </param>
-    public void SetEnemyHpUI(Enemy enemy)
+    public void SetEnemyHpUI()
     {
+        if (enemy == null) return;
         _prevEnemyUIPos = Vector3.zero;
         int maxHp = enemy.stat.maxHp;
         int curHp = enemy.stat.curHp;
@@ -98,7 +104,7 @@ public class EnemyHpUIElement : UIElement
         if (curHpText < 0) curHpText = 0;
         _hpText.text = curHpText.ToString() + " / " + maxHp.ToString();
         _frontHpBar.value = curHp;
-        if (_enemy == null)
+        if (this.enemy == null)
         {
             _backHpBar.value = curHp;
             _prevEnemyHp = curHp;
@@ -123,14 +129,14 @@ public class EnemyHpUIElement : UIElement
             }
         }
 
-        _enemy = enemy;
         gameObject.SetActive(true);
     }
-    public void ClearEnemyHpUI()
+    private void ClearEnemyHpUI()
     {
         gameObject.SetActive(false);
         GetComponent<RectTransform>().localPosition = Vector3.zero;
-        _enemy = null;
+        enemy = null;
+        UIManager.instance.combatUI.enemyHpUI.onEnemyHpDeleted.Invoke(gameObject);
     }
 
     private IEnumerator DelaySliderMove() 

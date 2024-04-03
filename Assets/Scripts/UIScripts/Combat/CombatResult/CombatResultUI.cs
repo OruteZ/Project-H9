@@ -58,22 +58,20 @@ public class CombatResultUI : UISystem
         if (isPlayerWin)
         {
             _WinOrLoseText.GetComponent<TextMeshProUGUI>().text = "You Win!";
+            string expStr = "Earned EXP: " + earnedExp + "\n";
+            string goldStr = "Earned Gold: " + FieldSystem.unitSystem.rewardHelper.GetRewardGold() + "\n";
+            string itemStr = "Earned Items: ";
+            int[] itemidxs = FieldSystem.unitSystem.rewardHelper.GetRewardItemInfos();
+            for (int i = 0; i < itemidxs.Length; i++)
+            {
+                itemStr += GameManager.instance.itemDatabase.GetItemScript(itemidxs[i]).GetName() + "\n\t";
+            }
+            _ResultText.GetComponent<TextMeshProUGUI>().text = expStr + goldStr + itemStr;
         }
         else
         {
             _WinOrLoseText.GetComponent<TextMeshProUGUI>().text = "Game Over";
         }
-        string expStr = "Earned EXP: " + earnedExp + "\n";
-        string goldStr = "Earned Gold: " + FieldSystem.unitSystem.rewardHelper.GetRewardGold() + "\n";
-        string itemStr = "Earned Items: ";
-        int[] itemidxs = FieldSystem.unitSystem.rewardHelper.GetRewardItemInfos();
-        for (int i = 0; i < itemidxs.Length; i++) 
-        {
-            itemStr += GameManager.instance.itemDatabase.GetItemScript(itemidxs[i]).GetName() + "\n\t";
-        } 
-            
-
-        _ResultText.GetComponent<TextMeshProUGUI>().text = expStr + goldStr + itemStr;
 
         UIManager.instance.gameSystemUI.playerInfoUI.expUI.GetComponent<PlayerExpUI>().SetPlayerExpUI(GameManager.instance.curExp + earnedExp);
         earnedExp = 0;

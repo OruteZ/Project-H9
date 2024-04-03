@@ -19,6 +19,7 @@ public class CustomOutline : MonoBehaviour
 
     public enum Mode
     {
+        NULL,
         OutlineAll,
         OutlineVisible,
         OutlineHidden,
@@ -330,8 +331,14 @@ public class CustomOutline : MonoBehaviour
         // Apply properties according to mode
         outlineFillMaterial.SetColor("_OutlineColor", outlineColor);
 
+        Debug.LogError(outlineMode);
         switch (outlineMode)
         {
+            case Mode.NULL:
+                outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
+                outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
+                outlineFillMaterial.SetFloat("_OutlineWidth", 0f);
+                break;
             case Mode.OutlineAll:
                 outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
                 outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);

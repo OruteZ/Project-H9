@@ -7,11 +7,14 @@ using UnityEngine.UI;
 
 public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private GameObject _skillTooltipTexts;
+    [SerializeField] private GameObject _skillTooltip;
     [SerializeField] private GameObject _skillTooltipNameText;
     [SerializeField] private GameObject _skillTooltipDescriptionText;
     [SerializeField] private GameObject _skillTooltipButtonText;
     [SerializeField] private GameObject _skillKeywordTooltipContainer;
+    [SerializeField] private GameObject _skillCostUI;
+    [SerializeField] private GameObject _skillSectionIcon;
+    [SerializeField] private GameObject _skillSectionText;
 
     private SkillManager _skillManager;
     private GameObject _currentSelectedUI = null;
@@ -68,9 +71,25 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 
         _skillTooltipNameText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillName(_currentSkillIndex);
         _skillTooltipDescriptionText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillDescription(_currentSkillIndex, out var keywords);
+        _skillCostUI.SetActive(!currentSkill.skillInfo.IsPassive());
+        if (!currentSkill.skillInfo.IsPassive())
+        {
+            ActiveInfo aInfo = _skillManager.activeDB.GetActiveInfo(currentSkill.skillInfo.index);
+            _skillCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(aInfo.cost, aInfo.ammoCost);    //ammo cost 지울 수도 있음.
+        }
+        ItemType sectionType = ItemType.Etc + currentSkill.skillInfo.section;
+        bool isThereSectionCondition = (ItemType.Revolver <= sectionType && sectionType <= ItemType.Shotgun);
+        _skillSectionIcon.SetActive(isThereSectionCondition);
+        _skillSectionText.SetActive(isThereSectionCondition);
+        if (isThereSectionCondition)
+        {
+            _skillSectionIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo(sectionType.ToString());
+            _skillSectionText.GetComponent<TextMeshProUGUI>().text = sectionType.ToString();
+        }
+
         UIManager.instance.skillUI.SetKeywordTooltipContents(keywords);
         _skillTooltipDescriptionText.GetComponent<ContentSizeFitter>().SetLayoutVertical();
-        _skillTooltipTexts.GetComponent<ContentSizeFitter>().SetLayoutVertical();
+        _skillTooltip.GetComponent<ContentSizeFitter>().SetLayoutVertical();
 
         TextMeshProUGUI buttonText = _skillTooltipButtonText.GetComponent<TextMeshProUGUI>();
         if (currentSkill.isLearnable)

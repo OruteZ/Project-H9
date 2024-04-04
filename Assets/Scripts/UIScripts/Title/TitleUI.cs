@@ -5,19 +5,14 @@ using UnityEngine;
 public class TitleUI : MonoBehaviour
 {
     [SerializeField] private GameObject _optionWindow;
+    [SerializeField] private GameObject _loadingManager;
 
     private bool _isOpenOption = false;
     private bool _isStarted = false;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _loadingManager.SetActive(true);
     }
 
     public void OnClickStartBtn()

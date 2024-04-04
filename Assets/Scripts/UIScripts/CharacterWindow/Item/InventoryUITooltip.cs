@@ -39,11 +39,11 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
         {
             if (item is WeaponItem)
             {
-                _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(Inventory.WEAPON_COST, 0);
+                _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(Inventory.WEAPON_COST, 0, false);
             }
             else
             {
-                _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(Inventory.ITEM_COST, 0);
+                _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(Inventory.ITEM_COST, 0, false);
             }
         }
         else 

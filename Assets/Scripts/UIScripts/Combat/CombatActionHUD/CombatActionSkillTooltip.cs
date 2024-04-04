@@ -55,7 +55,7 @@ public class CombatActionSkillTooltip : UIElement
 
 
         ActiveInfo aInfo = SkillManager.instance.activeDB.GetActiveInfo(info.index);
-        _skillCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(action.GetCost(), action.GetAmmoCost());
+        _skillCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(action.GetCost(), action.GetAmmoCost(), false);
 
         _keywordPool.Reset();
         if (keywords is not null)

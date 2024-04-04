@@ -2,13 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ScriptLanguage
-{
-    NULL,
-    Korean,
-    English
-}
-
 /// <summary>
 /// 게임에서 사용되는 스킬의 획득, 사용 등의 기능을 관리하는 클래스
 /// </summary>
@@ -77,6 +70,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
             Debug.Log("skill Script table을 읽어오지 못했습니다.");
             return;
         }
+        _language = UIManager.instance.scriptLanguage;
         _skillNameScripts = new List<SkillNameScript>();
         for (int i = 0; i < skillNameTable.Count; i++)
         {

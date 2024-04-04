@@ -75,7 +75,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         if (!currentSkill.skillInfo.IsPassive())
         {
             ActiveInfo aInfo = _skillManager.activeDB.GetActiveInfo(currentSkill.skillInfo.index);
-            _skillCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(aInfo.cost, aInfo.ammoCost);    //ammo cost 지울 수도 있음.
+            _skillCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(aInfo.cost, aInfo.ammoCost, true);    //ammo cost 지울 수도 있음.
         }
         ItemType sectionType = ItemType.Etc + currentSkill.skillInfo.section;
         bool isThereSectionCondition = (ItemType.Revolver <= sectionType && sectionType <= ItemType.Shotgun);

@@ -15,7 +15,7 @@ public class PassiveDatabase : ScriptableObject
     [ContextMenu("Read Csv")]
     public void ReadCsv()
     {
-        var infoList = FileRead.Read("PassiveSkillTable");
+        var infoList = FileRead.Read("PassiveSkillTable", out var columnInfo);
 
         if (infos is null) infos = new List<PassiveInfo>();
         else infos.Clear();

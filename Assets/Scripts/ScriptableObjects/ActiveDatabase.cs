@@ -21,7 +21,7 @@ public class ActiveDatabase : ScriptableObject
     [ContextMenu("Read Csv")]
     public void ReadCsv()
     {
-        var infoList = FileRead.Read("ActiveSkillTable");
+        var infoList = FileRead.Read("ActiveSkillTable", out var columnInfo);
 
         if (infos is null) infos = new List<ActiveInfo>();
         else infos.Clear();

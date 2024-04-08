@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using QUEST_EVENT = QuestInfo.QUEST_EVENT;
 
 public class QuestInit
 {
@@ -10,6 +11,7 @@ public class QuestInit
     {
         ParseLocalization(out var localizationData);
         ParseQuestInfos(in localizationData, out var questInfos);
+        // !유저데이터와 동기화하는 함수() 필요
         return questInfos;
     }
 
@@ -90,12 +92,11 @@ public class QuestInit
                 int startScript = int.Parse(line[4]);
                 int endScript = int.Parse(line[5]);
 
-                string getCondition = line[6];
-
+                QUEST_EVENT conditionBit =  ParseQuestEvent(line[6]);
                 string[] sGetConditionArguments = line[7].Replace("\"", "").Split(",");
                 int[] getConditionArguments = Array.ConvertAll(sGetConditionArguments, e => int.Parse(e));
                 int expireTurn = int.Parse(line[8]);
-                int goalType = int.Parse(line[9]);
+                QUEST_EVENT goalBit = ParseQuestEvent(line[9]);
                 string[] sgoalArguemnts = line[10].Replace("\"", "").Split(",");
                 int[] goalArguemnts = Array.ConvertAll(sgoalArguemnts, e => int.Parse(e));
 
@@ -104,16 +105,15 @@ public class QuestInit
                 int itemReward = int.Parse(line[13]);
                 int skillReward = int.Parse(line[14]);
 
-                Debug.Log($"{index} {questName} {questTooltip}");
                 questInfos.Add(new QuestInfo(index
                                             , questType
                                             , questName
                                             , questTooltip
                                             , startScript
                                             , endScript
-                                            , getCondition
+                                            , conditionBit
                                             , expireTurn
-                                            , goalType
+                                            , goalBit
                                             , goalArguemnts
                                             , moneyReward
                                             , expReward
@@ -131,5 +131,19 @@ public class QuestInit
         }
 
         return true;
+    }
+
+    private QUEST_EVENT ParseQuestEvent(string str)
+    {
+        QUEST_EVENT bitEvent = QUEST_EVENT.NULL;
+        if (str.Contains("GAME_START")) bitEvent |= QUEST_EVENT.GAME_START;
+        if (str.Contains("MOVE_TO")) bitEvent |= QUEST_EVENT.MOVE_TO;
+        if (str.Contains("QUEST_END")) bitEvent |= QUEST_EVENT.QUEST_END;
+        if (str.Contains("SCRIPT")) bitEvent |= QUEST_EVENT.SCRIPT;
+        if (str.Contains("GET_ITEM")) bitEvent |= QUEST_EVENT.GET_ITEM;
+        if (str.Contains("USE_ITEM")) bitEvent |= QUEST_EVENT.USE_ITEM;
+        if (str.Contains("KILL_LINK")) bitEvent |= QUEST_EVENT.KILL_LINK;
+        if (str.Contains("KILL_TARGET")) bitEvent |= QUEST_EVENT.KILL_TARGET;
+        return bitEvent;
     }
 }

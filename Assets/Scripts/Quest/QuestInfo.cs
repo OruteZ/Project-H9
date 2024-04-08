@@ -11,6 +11,8 @@ using UnityEngine;
 /// </summary>
 public class QuestInfo
 {
+    public enum QUEST_EVENT { NULL, GAME_START, MOVE_TO, QUEST_END, SCRIPT, GET_ITEM, USE_ITEM, KILL_LINK, KILL_TARGET }; // 퀘스트의 연결을 Bit마스크로 확인용
+
     private int _index;
     private int _questType;
     private string _questName;
@@ -19,12 +21,12 @@ public class QuestInfo
     private int _endScript;
 
     // conditions
-    private string _getCondition;
-    private int[] _getConditionArguments;
+    private QUEST_EVENT _conditionBit;
+    private int[] _conditionArguments;
     private int _expireTurn;
-    private int _goalType;
+    private QUEST_EVENT _goalBit;
     private int[] _goalArguments;
-    
+
     // rewards
     private int _moneyReward;
     private int _expReward;
@@ -34,6 +36,7 @@ public class QuestInfo
     // current infos (not table)
     private bool _isInProgress = false;
     private int _curTurn;
+    private int[] _curConditionArguments;
     private int[] _curGoalArguments;
 
     public QuestInfo(int index
@@ -42,9 +45,9 @@ public class QuestInfo
                     , string questTooltip
                     , int startScript
                     , int endScript
-                    , string getCondition
+                    , QUEST_EVENT conditionBit
                     , int expireTurn
-                    , int goalType
+                    , QUEST_EVENT goalBit
                     , int[] goalArguments
                     , int moneyReward
                     , int expReward
@@ -57,14 +60,25 @@ public class QuestInfo
         _questTooltip = questTooltip;
         _startScript = startScript;
         _endScript = endScript;
-        _getCondition = getCondition;
+        _conditionBit = conditionBit;
         _expireTurn = expireTurn;
-        _goalType = goalType;
+        _goalBit = goalBit;
         _goalArguments = goalArguments;
         _moneyReward = moneyReward;
         _expReward = expReward;
         _itemReward = itemReward;
         _skillReward = skillReward;
+    }
+
+    public bool HasConditionFlag(QUEST_EVENT target)
+    {
+        if (_conditionBit.HasFlag(target)) return true;
+        return false;
+    }
+    public bool HasGoalFlag(QUEST_EVENT target)
+    {
+        if (_goalBit.HasFlag(target)) return true;
+        return false;
     }
 
     // 게임 저장, 로드 시 현재 상황을 저장하기 위함.
@@ -74,28 +88,53 @@ public class QuestInfo
         _curGoalArguments = curGoalArguments;
     }
 
-    // 적 처치, 아이템 획득과 같은 인자가 1개씩 증가하는 Event에 할당
-    public void OnAddEvented(int i)
+    // Game Start 처럼 무슨 일이 1회성으로 벌어진 이벤트.
+    // Game start 외에 쓸 곳이 없는데, Game start 자체가 임시로 해둔 것이라 빼는 것도 고려 중.
+    public void OnOccurConditionEvented()
     {
-        _curGoalArguments[0] += i;
-        if (_curGoalArguments[0] < _goalArguments[0])
-            return;
+        if (!_isInProgress)
+        {
+            StartQuest();
+        }
+    }
 
-        _curGoalArguments[0] = _goalArguments[0]; // UI에서 표시할 때, 범위가 넘어가지 않도록 함.
-        EndQuest();
+    public void OnAddConditionEvented(int targetIndex, int value)
+    {
+        if (!_isInProgress)
+        {
+            if (AddEvent(ref _curConditionArguments, ref _conditionArguments, targetIndex, value))
+                StartQuest();
+        }
+    }
+
+    // 적 처치, 아이템 획득과 같은 KeyValue의 증가 이벤트
+    // ex. [적의번호, 적을처치해야하는 수]
+    public void OnAddGoalEvented(int targetIndex, int value)
+    {
+        if (_isInProgress)
+        {
+            if (AddEvent(ref _curGoalArguments, ref _goalArguments, targetIndex, value))
+                EndQuest();
+        }
+    }
+
+    public void OnRenewConditionEvented(int[] arguments)
+    { 
+        if (!_isInProgress)
+        {
+            if (RenewEvent(ref _curConditionArguments, ref _conditionArguments, ref arguments))
+                StartQuest();
+        }
     }
 
     // 좌표 도착처럼 모든 인자가 같아야 하는 Event에 할당
-    public void OnRenewEvented(int[] arguments)
+    public void OnRenewGoalEvented(int[] arguments)
     {
-        for (int i = 0; i < arguments.Length; i++)
+        if (_isInProgress)
         {
-            if (_goalArguments[i] != arguments[i])
-                return;
+            if (RenewEvent(ref _curGoalArguments, ref _goalArguments, ref arguments))
+                EndQuest();
         }
-
-        _curGoalArguments = arguments;
-        EndQuest();
     }
 
     public void StartQuest()
@@ -108,5 +147,35 @@ public class QuestInfo
     {
         _isInProgress = false;
         Debug.Log("퀘스트 완료, 보상 받는 코드, endScript 호출");
+    }
+
+    /// ===========================================================================
+    private bool AddEvent(ref int[] curArgument, ref int[] goalArgument, int goalType, int value)
+    {
+        if (curArgument[0] != goalType)
+            return false;
+
+        curArgument[1] += value;
+        if (curArgument[1] < goalArgument[1])
+            return false;
+
+        curArgument[1] = goalArgument[1]; // UI에서 표시할 때, 범위가 넘어가지 않도록 함.
+        return true;
+    }
+
+    private bool RenewEvent(ref int[] ownArgument, ref int[] goalArgument, ref int[] curArgument)
+    {
+        bool isSame = true;
+        for (int i = 0; i < goalArgument.Length; i++)
+        {
+            ownArgument[i] = curArgument[i];
+            if (goalArgument[i] != curArgument[i])
+                isSame = false;
+        }
+
+        if (!isSame)
+            return false;
+
+        return true;
     }
 }

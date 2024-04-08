@@ -18,6 +18,7 @@ public class GameManager : Generic.Singleton<GameManager>
     [SerializeField]
     public ItemDatabase itemDatabase;
     public WeaponDatabase weaponDatabase;
+    public List<QuestInfo> Quests;
     
     #region ITEM_TEST
     public void AddItem(int id)
@@ -118,6 +119,9 @@ public class GameManager : Generic.Singleton<GameManager>
     public int worldTurn;
 
     public bool backToWorldTrigger = false;
+
+    private UnityEvent OnGameStarted = new UnityEvent();
+
     public void StartCombat(int stageIndex, int linkIndex)
     {
         //Save World Data
@@ -224,6 +228,16 @@ public class GameManager : Generic.Singleton<GameManager>
         base.Awake();
         
         _discoveredWorldTileSet = new ();
+        var qi = new QuestInit();
+        Quests = qi.GetQuests();
+
+        foreach (var quest in Quests)
+        {
+            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GAME_START))
+                OnGameStarted.AddListener(quest.OnOccurConditionEvented);
+        }
+
+        OnGameStarted?.Invoke();
     }
 
     public void Update()

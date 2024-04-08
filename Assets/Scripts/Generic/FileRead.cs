@@ -20,8 +20,9 @@ public static class FileRead
     /// </summary>
     /// <param name="file"> 파일 이름 </param>
     /// <returns> 문자열 이중리스트로 변환된 파일의 내용 </returns>
-	public static List<List<string>> Read(string file)
+	public static List<List<string>> Read(string file, out Dictionary<string, int> columnInfo)
 	{
+        columnInfo = null;
 		TextAsset data = Resources.Load("files/" + file) as TextAsset;
         if (data == null)
         {
@@ -38,8 +39,16 @@ public static class FileRead
             return null;
         }
 
-        //string[] header = Regex.Split(lines[0], SPLIT_RE);    //for test
-		//첫 줄은 value 설명 로우로 취급하여 생략.
+        // 첫 줄인 Column Info
+        columnInfo = new Dictionary<string, int>();
+        string[] columns = Regex.Split(lines[0], SPLIT_RE);
+        for (int i = 0; i < columns.Length; i++)
+        {
+            if (!columnInfo.TryAdd(columns[i], i))
+                Debug.LogError($"ReadError: {file} has two columns at the same name");
+        }
+
+		// 두번째 줄의 데이터만 담아서, 반환
         for (int i = 1; i < lines.Length; i++)
         {
             string[] values = Regex.Split(lines[i], SPLIT_RE);
@@ -56,6 +65,7 @@ public static class FileRead
             }
             rowList.Add(columnList);
         }
+        Resources.UnloadAsset(data);
         return rowList;
 	}
 

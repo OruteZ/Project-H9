@@ -18,16 +18,4 @@ public class WeaponItem : Item
         UIManager.instance.onWeaponChanged.Invoke();
         return true;
     }
-
-    public override string GetInventoryTooltipContents()
-    {
-        ItemData data = GetData();
-        string weaponTypeText = data.itemType.ToString();
-        string weaponDamageText = data.weaponDamage.ToString() + " Damage";
-        string weaponRangeText = data.itemRange.ToString() + " Range";
-        string weaponEffect = GameManager.instance.itemDatabase.GetItemScript(data.nameIdx).GetDescription(data);
-        string description = weaponTypeText + "\n" + weaponDamageText + "\n" + weaponRangeText + "\n\n" + weaponEffect;
-
-        return description;
-    }
 }

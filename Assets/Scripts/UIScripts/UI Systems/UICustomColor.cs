@@ -13,6 +13,8 @@ public static class UICustomColor
     private static readonly Color32 blueColor = new Color32(64, 192, 224, 255);
 
     public static readonly Color32 TransparentColor = new Color32(255, 255, 255, 0);
+    public static readonly Color32 Invisible = new Color32(0, 0, 0, 0);
+    public static readonly Color32 Opaque = new Color32(0, 0, 0, 200);
 
     public static readonly Color32 PlayerColor = new Color32(0, 0, 0, 0);
     public static readonly Color32 EnemyColor = new Color32(0, 0, 0, 0);
@@ -40,9 +42,10 @@ public static class UICustomColor
 
     public static readonly Color32 BuffColor = greenColor;
     public static readonly Color32 DebuffColor = redColor;
-    
-    public static readonly Color32 Invisible = new Color32(0, 0, 0, 0);
-    public static readonly Color32 Opaque = new Color32(0, 0, 0, 200);
+
+    public static readonly Color32 QuestNameColor = new Color32(237, 146, 0, 255);
+    public static readonly Color32 ItemTextColor = QuestNameColor;
+    public static readonly Color32 SkillTextColor = QuestNameColor;
 
     public static string GetColorHexCode(Color32 color)
     {
@@ -52,5 +55,9 @@ public static class UICustomColor
 
         string result = (r + g + b).Replace("0x", "");
         return result.ToUpper();
+    }
+    public static string ChangeTextColor(string str, Color32 color) 
+    {
+        return string.Format("<color=#{0}>{1}</color>", GetColorHexCode(color), str);
     }
 }

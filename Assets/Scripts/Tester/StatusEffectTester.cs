@@ -38,6 +38,10 @@ public class StatusEffectTester : MonoBehaviour
                 //duration
                 effect = new Blind(duration, null);
                 break;
+            case StatusEffectType.Recoil:
+                //duration
+                effect = new Recoil(null);
+                break;
             case StatusEffectType.None:
             default:
                 throw new ArgumentOutOfRangeException();

@@ -115,23 +115,52 @@ public class SkillManager : Generic.Singleton<SkillManager>
         return learnedSkills;
     }
     /// <summary>
-    /// 해당 고유번호를 가진 스킬을 반환합니다.
+    /// 해당 고유번호 또는 이름를 가진 스킬을 반환합니다.
     /// </summary>
-    /// <param name="index"> 반환하고자 하는 스킬의 고유번호 </param>
+    /// <param name="index"> 반환하고자 하는 스킬의 고유번호 또는 이름 </param>
     /// <returns> 
-    /// 해당 고유번호를 가진 스킬이 존재한다면 해당 스킬을 반환합니다.
+    /// 해당 고유번호나 이름을 가진 스킬이 존재한다면 해당 스킬을 반환합니다.
     /// 아니라면 null을 반환합니다.
     /// </returns>
-    public Skill GetSkill(int index) 
+    public Skill GetSkill(int index)
     {
-        for (int i = 0; i < _skills.Count; i++) 
+        for (int i = 0; i < _skills.Count; i++)
         {
-            if (_skills[i].skillInfo.index == index) 
+            if (_skills[i].skillInfo.index == index)
             {
                 return _skills[i];
             }
         }
         Debug.Log("해당 인덱스의 스킬을 찾지 못했습니다. 인덱스: " + index);
+        return null;
+    }
+    /// <summary>
+    /// 해당 고유번호 또는 이름를 가진 스킬을 반환합니다.
+    /// </summary>
+    /// <param name="index"> 반환하고자 하는 스킬의 고유번호 또는 이름 </param>
+    /// <returns> 
+    /// 해당 고유번호나 이름을 가진 스킬이 존재한다면 해당 스킬을 반환합니다.
+    /// 아니라면 null을 반환합니다.
+    /// </returns>
+    public Skill GetSkill(string name)
+    {
+        int idx = -1;
+        for (int i = 0; i < _skillNameScripts.Count; i++) 
+        {
+            if (_skillNameScripts[i].name == name) idx = i;
+        }
+        if (idx == -1) 
+        {
+            Debug.Log("해당 이름의 스킬을 찾지 못했습니다. 이름: " + name);
+            return null;
+        }
+        for (int i = 0; i < _skills.Count; i++)
+        {
+            if (_skills[i].skillInfo.nameIndex == idx)
+            {
+                return _skills[i];
+            }
+        }
         return null;
     }
     /// <summary>

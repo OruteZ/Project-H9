@@ -234,6 +234,7 @@ public class GameManager : Generic.Singleton<GameManager>
         _discoveredWorldTileSet = new ();
         var qi = new QuestParser();
         Quests = qi.GetQuests();
+
     }
 
     private void Start()
@@ -290,6 +291,9 @@ public class GameManager : Generic.Singleton<GameManager>
                 UIManager.instance.onTurnStarted.AddListener((u) => { if (u is Player) quest.ProgressExpireTurn();});
         }
 
+        OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.StartConversation(q.StartConversation); });
+        OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.questUI.AddQuestListUI(q); });
+        OnNotifiedQuestEnd.AddListener((q) => { UIManager.instance.gameSystemUI.questUI.DeleteQuestListUI(q.Index); });
         #endregion
 
         OnGameStarted?.Invoke();

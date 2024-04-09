@@ -16,7 +16,6 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
 
     public void SetBuffUIElement(IDisplayableEffect effect, bool isBuff, bool isPlayer) 
     {
-        OpenUI();
         displayedEffect = effect;
         _isPlayer = isPlayer;
         // buff image setting
@@ -49,6 +48,7 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
             durationText = "";
         }
         _buffText.GetComponent<TextMeshProUGUI>().text = durationText;
+        OpenUI();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

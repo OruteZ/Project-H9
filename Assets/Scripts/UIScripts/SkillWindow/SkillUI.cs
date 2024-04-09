@@ -89,12 +89,12 @@ public class SkillUI : UISystem
     /// 각 SkillTreeElement들이 클릭되었을 때 실행됩니다.
     /// 스킬 툴팁창을 표시하는 기능들을 호출합니다.
     /// </summary>
-    /// <param name="_transform"> 클릭된 UI요소의 위치 </param>
+    /// <param name="pos"> 클릭된 UI요소의 위치 </param>
     /// <param name="btnIndex"> 클릭된 skill의 고유번호 </param>
-    public void ClickSkillUIButton(GameObject ui)
+    public void ClickSkillUIButton(int btnIndex, Vector3 pos)
     {
         _currentKeywordIndex.Clear();
-        _skillTooltipWindow.GetComponent<SkillTooltip>().SetSkillTooltip(ui);
+        _skillTooltipWindow.GetComponent<SkillTooltip>().SetSkillTooltip(btnIndex, pos);
 
         OpenPopupWindow();
     }

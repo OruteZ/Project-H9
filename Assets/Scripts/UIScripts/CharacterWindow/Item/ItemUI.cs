@@ -81,7 +81,7 @@ public class ItemUI : UISystem
     {
         if (_inventoryInteractionButtons.gameObject.activeSelf is true) return;
         _currentMouseOverElement = ui;
-        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui.GetComponent<InventoryUIElement>().item, pos);
+        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui.GetComponent<InventoryUIElement>().item.GetData(), pos);
     }
     public void OpenInventoryInteraction(GameObject ui)
     {
@@ -91,7 +91,7 @@ public class ItemUI : UISystem
         if (_interactionItem == _equippedItem) return;
         _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().SetInventoryInteractionUI(_interactionItem, pos);
         pos.x += _inventoryInteractionButtons.GetComponent<RectTransform>().sizeDelta.x;
-        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(_interactionItem, pos);
+        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(_interactionItem.GetData(), pos);
     }
     public override void ClosePopupWindow()
     {

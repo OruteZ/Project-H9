@@ -76,6 +76,7 @@ public class ConversationUI : UISystem
 
     public void StartConversation(int group) 
     {
+        //UIManager.instance.gameSystemUI.conversationUI.StartConversation(1);
         _groupInfo = GetConversationGroup(group);
         if (_groupInfo == null) return;
 

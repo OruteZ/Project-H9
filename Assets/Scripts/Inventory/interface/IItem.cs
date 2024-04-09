@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public interface IItem
@@ -28,6 +29,11 @@ public interface IItem
     /// <returns></returns>
     public int GetStackCount();
     
+    /// <summary>
+    /// 아이템의 스택 개수를 재설정 합니다.
+    /// </summary>
+    public void SetStackCount(int count);
+    
     public bool TryEquip();
     public bool TrySplit(int count, out IItem newItem);
 
@@ -45,4 +51,12 @@ public interface IItem
     /// 해당 아이템의 툴팁 설명을 구성하여 불러옵니다.
     /// </summary>
     public string GetInventoryTooltipContents();
+    
+    public UnityEvent OnItemChanged { get; }
+
+    public static IItem operator -(IItem item, int modify)
+    {
+        item.SetStackCount(Mathf.Max(item.GetStackCount() - modify, 0));
+        return item;
+    }
 }

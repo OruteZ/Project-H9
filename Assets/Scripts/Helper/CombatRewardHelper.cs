@@ -71,7 +71,7 @@ public class CombatRewardHelper
     }
     
     /// <summary>
-    /// ÇöÀç ÀüÅõ º¸»ó Gold¸¦ ¹ÝÈ¯ÇÕ´Ï´Ù. º¸»ó Àû¿ëÀº µû·Î ÇÏ´Ï±î ÀÐ´Âµ¥¸¸ »ç¿ëÇÏµµ·Ï ÇÕ´Ï´Ù.
+    /// í˜„ìž¬ ì „íˆ¬ ë³´ìƒ Goldë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤. ë³´ìƒ ì ìš©ì€ ë”°ë¡œ í•˜ë‹ˆê¹Œ ì½ëŠ”ë°ë§Œ ì‚¬ìš©í•˜ë„ë¡ í•©ë‹ˆë‹¤.
     /// </summary>
     /// <returns></returns>
     public int GetRewardGold()
@@ -80,7 +80,7 @@ public class CombatRewardHelper
     }
     
     /// <summary>
-    /// ÀüÅõ º¸»ó ¾ÆÀÌÅÛµéÀÇ Index¸¦ ¹ÝÈ¯ÇÕ´Ï´Ù. º¸»ó Àû¿ëÀº µû·Î ÇÏ´Ï±î ÀÐ´Âµ¥¸¸ »ç¿ëÇÏµµ·Ï ÇÕ´Ï´Ù.
+    /// ì „íˆ¬ ë³´ìƒ ì•„ì´í…œë“¤ì˜ Indexë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤. ë³´ìƒ ì ìš©ì€ ë”°ë¡œ í•˜ë‹ˆê¹Œ ì½ëŠ”ë°ë§Œ ì‚¬ìš©í•˜ë„ë¡ í•©ë‹ˆë‹¤.
     /// </summary>
     /// <returns></returns>
     public int[] GetRewardItemInfos()

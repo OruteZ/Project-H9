@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
 /// <summary>
-/// °ÔÀÓÀÇ UI ÀüÃ¼¸¦ °ü¸®ÇÏ´Â Å¬·¡½º
+/// ê²Œì„ì˜ UI ì „ì²´ë¥¼ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤
 /// </summary>
 public class UIManager : Generic.Singleton<UIManager>
 {
@@ -41,7 +41,7 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent<GameState> onTSceneChanged;
     [HideInInspector] public UnityEvent onSceneChanged;
     [HideInInspector] public UnityEvent onTurnChanged;
-    [HideInInspector] public UnityEvent onCombatStarted; // UnityEvent<string/int> onSceneChanged ¸¦ ¸¸µé¾î¼­ ÇÕÄ¡´Â°É ±ÇÀå
+    [HideInInspector] public UnityEvent onCombatStarted; // UnityEvent<string/int> onSceneChanged ë¥¼ ë§Œë“¤ì–´ì„œ í•©ì¹˜ëŠ”ê±¸ ê¶Œì¥
     [HideInInspector] public UnityEvent<Unit> onTurnStarted;
     [HideInInspector] public UnityEvent onPlayerStatChanged;
     [HideInInspector] public UnityEvent<int> onGetExp;
@@ -225,10 +225,10 @@ public class UIManager : Generic.Singleton<UIManager>
     }
 
     /// <summary>
-    /// ¾ÀÀ» ÀüÈ¯ÇÏ¿© UI »óÅÂ¸¦ º¯°æÇÕ´Ï´Ù.
-    /// GameManager¿¡¼­ ¾À ÀüÈ¯ ½Ã È£ÃâµË´Ï´Ù.
+    /// ì”¬ì„ ì „í™˜í•˜ì—¬ UI ìƒíƒœë¥¼ ë³€ê²½í•©ë‹ˆë‹¤.
+    /// GameManagerì—ì„œ ì”¬ ì „í™˜ ì‹œ í˜¸ì¶œë©ë‹ˆë‹¤.
     /// </summary>
-    /// <param name="gameState"> ÀüÈ¯ÇÒ ¾À¿¡ ´ëÀÀµÇ´Â gameState </param>
+    /// <param name="gameState"> ì „í™˜í•  ì”¬ì— ëŒ€ì‘ë˜ëŠ” gameState </param>
     public void ChangeScene(GameState gameState)
     {
         UIState = gameState;

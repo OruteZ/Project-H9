@@ -13,7 +13,8 @@ public interface IInventory
     /// 인벤토리에서 아이템을 삭제합니다.
     /// </summary>
     /// <param name="item"> 삭제할 아이템 </param>
-    public void DeleteItem(IItem item);
+    /// <param name="cnt"> 삭제할 개수, 입력하지 않을 경우 1로 제한됩니다. </param>
+    public void DeleteItem(IItem item, int cnt = 1);
 
     /// <summary>
     /// 인벤토리에 있는 아이템들을 반환합니다.

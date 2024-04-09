@@ -317,7 +317,7 @@ public abstract class Unit : MonoBehaviour, IUnit
             if (item.IsImmediate())
             {
                 item.Use(this);
-                if(item.GetStackCount() == 0) GameManager.instance.playerInventory.DeleteItem(item);
+                IInventory.OnInventoryChanged?.Invoke();
             }
 
             return;

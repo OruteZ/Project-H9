@@ -34,7 +34,7 @@ public class EnemyDatabase : ScriptableObject
     [ContextMenu("Load Csv")]
     public void LoadCsv()
     {
-        var dataList = FileRead.Read("EnemyTable");
+        var dataList = FileRead.Read("EnemyTable", out var columnInfo);
 
         if (enemyInfos is null) enemyInfos = new List<EnemyData>();
         else enemyInfos.Clear();

@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 [Serializable]
 public abstract class Item : IItem
 {
+
+    public UnityEvent OnItemChanged { get; set; }
     private readonly ItemData _data;
         private readonly List<IItemAttribute> _attributes;
         protected int stackCount;
@@ -12,6 +16,7 @@ public abstract class Item : IItem
             _data = data;
             _attributes = new List<IItemAttribute>();
             stackCount = 1;
+            OnItemChanged = new UnityEvent();
         }
 
         public static Item CreateItem(ItemData data)
@@ -62,6 +67,11 @@ public abstract class Item : IItem
         public abstract bool Use(Unit user, Vector3Int target);
         
         public int GetStackCount() => stackCount;
+        public void SetStackCount(int count)
+        {
+            stackCount = count;
+        }
+
         public abstract bool TryEquip();
 
         public bool TrySplit(int count, out IItem newItem)
@@ -110,14 +120,14 @@ public abstract class Item : IItem
     }
 
     public static Item operator +(Item item1, Item item2)
-        {
-            //check same id and max storage
-            if (item1.GetData().id == item2.GetData().id && item1.stackCount + item2.stackCount <= item1.GetData().itemMaxStorage)
-            {
-                item1.stackCount += item2.stackCount;
-                return item1;
-            }
-            Debug.LogError("Cannot stack items");
+    {
+        //check same id and max storage
+        if (item1.GetData().id == item2.GetData().id && item1.stackCount + item2.stackCount <= item1.GetData().itemMaxStorage)
+        { 
+            item1.stackCount += item2.stackCount;
             return item1;
         }
+        Debug.LogError("Cannot stack items");
+        return item1;
     }
+}

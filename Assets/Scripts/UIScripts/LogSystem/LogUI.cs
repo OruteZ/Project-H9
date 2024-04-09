@@ -23,7 +23,7 @@ public class LogUI : UISystem
     private int _curTextlistIndex = -1;
     private float _beforeHeight = 0;
 
-    private readonly int LIMIT_TEXT_LENGTH = 500;
+    private const int LIMIT_TEXT_LENGTH = 500;
 
     private void Awake()
     {

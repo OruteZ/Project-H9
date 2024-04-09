@@ -13,7 +13,7 @@ public class ItemDatabase : ScriptableObject
     [ContextMenu("Read Csv")]
     public void ReadCsv()
     {
-        var dataList = FileRead.Read("ItemTable");
+        var dataList = FileRead.Read("ItemTable", out var columnInfo);
 
         if (_itemList is null) _itemList = new List<ItemData>();
         else _itemList.Clear();
@@ -51,7 +51,7 @@ public class ItemDatabase : ScriptableObject
     }
     private void ReadScriptTable()
     {
-        var dataList = FileRead.Read("ItemScriptTable");
+        var dataList = FileRead.Read("ItemScriptTable", out var columnInfo);
 
         if (_itemScriptList is null) _itemScriptList = new List<ItemScript>();
         else _itemScriptList.Clear();

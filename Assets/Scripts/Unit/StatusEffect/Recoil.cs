@@ -24,6 +24,6 @@ public class Recoil : StatusEffect
 
     public override int GetDuration()
     {
-        return 0;
+        return 1;
     }
 }

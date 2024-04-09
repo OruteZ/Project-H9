@@ -11,7 +11,7 @@ public class LinkDatabase : ScriptableObject
     [ContextMenu("Read CSV")]
     public void ReadCsv()
     {
-        var dataList = FileRead.Read("LinkTable");
+        var dataList = FileRead.Read("LinkTable", out var columnInfo);
         if (dataList is null)
         {
             Debug.LogError("There is no LinkTable");

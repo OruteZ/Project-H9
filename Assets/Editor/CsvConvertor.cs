@@ -59,6 +59,7 @@ public class CsvConvertor : EditorWindow
                 _startDirectory = tmpPath;
                 if (OpenDirectory(_startDirectory))
                 {
+                    Debug.Log($"{_startDirectory}를 레지스터에 저장했습니다.");
                     EditorPrefs.SetString(START_DIRECTORY_KEY, _startDirectory);
                 }
             }
@@ -69,7 +70,7 @@ public class CsvConvertor : EditorWindow
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             GUI.color = Color.red;
-            GUILayout.Label($"존재하지 않는 경로입니다.");
+            GUILayout.Label($"시작 디렉토리를 찾을 수 없습니다.");
             GUI.color = backupColor;
             GUILayout.EndHorizontal();
         }
@@ -84,26 +85,28 @@ public class CsvConvertor : EditorWindow
             if (!string.IsNullOrEmpty(tmpPath) && tmpPath != _destinationDirectory)
             {
                 _destinationDirectory = tmpPath;
+                Debug.Log($"{_destinationDirectory}를 레지스터에 저장했습니다.");
                 EditorPrefs.SetString(DESTINATION_DIRECTORY_KEY, _destinationDirectory);
             }
         }
         GUILayout.EndHorizontal();
-        if (!Directory.Exists(_startDirectory))
+        if (!Directory.Exists(_destinationDirectory))
         {
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             GUI.color = Color.red;
-            GUILayout.Label($"존재하지 않는 경로입니다.");
+            GUILayout.Label($"도착 디렉토리를 찾을 수 없습니다.");
             GUI.color = backupColor;
             GUILayout.EndHorizontal();
         }
 
         // Execute
+        if (!IsValidDirectoryInfo(_excelDirectoryInfo))
+            OpenDirectory(_startDirectory);
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Convert", GUILayout.Width(150)))
         {
-
             var files = _excelDirectoryInfo.GetFiles();
             Debug.Log($"Converting {files.Length}개 후보");
             var count = 0;
@@ -205,7 +208,7 @@ public class CsvConvertor : EditorWindow
         }
         else
         {
-            EditorGUILayout.TextArea($"디렉토리 정보를 불러오는데 실패했습니다.");
+            EditorGUILayout.TextArea($"시작 디렉토리의 정보를 불러오는데 실패했습니다.");
         }
 
 

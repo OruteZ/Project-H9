@@ -74,22 +74,21 @@ public class Inventory : IInventory
         Debug.LogError("Inventory is full");
         return false;
     }
-    public void DeleteItem(IItem deleteItem)
+
+    public void DeleteItem(IItem deleteItem, int cnt = 1)
     {
         List<IItem> itemList = GetCorrectTypeItemList(deleteItem.GetData().itemType);
-        for (int i = 0; i < itemList.Count; i++)
+        foreach (var item in itemList.Where(i => i is not null))
         {
-            if (itemList[i] is null) continue;
-            if (itemList[i].GetData().id == deleteItem.GetData().id)
+            if (item.GetData().id == deleteItem.GetData().id)
             {
-                itemList[i] = null;
-                
+                item.SetStackCount(item.GetStackCount() - cnt);
                 IInventory.OnInventoryChanged?.Invoke();
                 return;
             }
         }
-        Debug.LogError("Can't find item id: " + deleteItem.GetData().id);
     }
+
     public void SwapItem(ItemType type, int start, int end)
     {
         List<IItem> itemList = GetCorrectTypeItemList(type);
@@ -102,9 +101,7 @@ public class Inventory : IInventory
 
         if (((WeaponItem)itemList[index]).TryEquip())
         {
-            IItem tmpItem = _equippedItem;
-            _equippedItem = itemList[index];
-            itemList[index] = tmpItem;
+            (_equippedItem, itemList[index]) = (itemList[index], _equippedItem);
         }
     }
     public void UseItem(ItemType type, int index)
@@ -119,7 +116,6 @@ public class Inventory : IInventory
         {
             Debug.Log("select");
             player.SelectItem(itemList[index]);
-            //UIManager.instance.SetUILayerToNormal();
         }
     }
     public void SellItem(ItemType type, int index)
@@ -127,8 +123,8 @@ public class Inventory : IInventory
         List<IItem> itemList = GetCorrectTypeItemList(type);
         if (itemList != _consumableItems) return;
 
-        _gold += itemList[index].GetData().itemPrice;
-        DeleteItem(itemList[index]);
+        AddGold(itemList[index].GetData().itemPrice);
+        itemList[index] -= 1;
     }
 
     public IEnumerable<IItem> GetItems()

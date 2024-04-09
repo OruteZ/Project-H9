@@ -9,6 +9,8 @@ public class InventoryUICombatElement : InventoryUIBaseElement, IPointerClickHan
 {
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (item is null) return;
+        
         if (item is EtcItem)
         {
             Debug.LogError("etc item trying to use");

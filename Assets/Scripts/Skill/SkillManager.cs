@@ -35,7 +35,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
     private void InitSkills()
     {
-        List<List<string>> skillTable = FileRead.Read("SkillTable");
+        List<List<string>> skillTable = FileRead.Read("SkillTable", out var columnInfo);
         if (skillTable == null) 
         {
             Debug.Log("skill table을 읽어오지 못했습니다.");
@@ -62,9 +62,9 @@ public class SkillManager : Generic.Singleton<SkillManager>
     }
     private void InitSkillScripts()
     {
-        List<List<string>> skillNameTable = FileRead.Read("SkillNameScriptTable");
-        List<List<string>> skillDescriptionTable = FileRead.Read("SkillTooltipScriptTable");
-        List<List<string>> skillKeywordTable = FileRead.Read("KeywordTable");
+        List<List<string>> skillNameTable = FileRead.Read("SkillNameScriptTable", out var nameColumnInfo);
+        List<List<string>> skillDescriptionTable = FileRead.Read("SkillTooltipScriptTable", out var descColumnInfo);
+        List<List<string>> skillKeywordTable = FileRead.Read("KeywordTable", out var keywordColumnInfo);
         if (skillNameTable == null || skillDescriptionTable == null || skillKeywordTable == null)
         {
             Debug.Log("skill Script table을 읽어오지 못했습니다.");

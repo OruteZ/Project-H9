@@ -6,10 +6,10 @@ using UnityEngine.VFX;
 
 public class FanningAction : BaseAction, IShootingAction
 {
-    //todo : 애니메이션 확정되면 다 Frame단위 Int로 변경
     private const float TURNING_TIME = 0.5f;
-    private const float SHOT_TIME = 0.1f;
-    private const float COOL_OFF_TIME = 0.5f;
+    private const float DRAW_TIME = 1f;
+    private const float SHOT_TIME = 0.15f;
+    private const float FINISH_TIME = 1f;
     
     private Unit _target;
     private int _shotCount;
@@ -53,8 +53,7 @@ public class FanningAction : BaseAction, IShootingAction
         if (unit.CheckAttackedTrigger()) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
         if (unit.weapon.GetWeaponType() != ItemType.Revolver) return false;
-        if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
-
+        
         return true;
     }
 
@@ -77,26 +76,33 @@ public class FanningAction : BaseAction, IShootingAction
         unit.animator.ResetTrigger(IDLE);
         unit.animator.SetTrigger(FANNING);
         
-        _shotCount = unit.weapon.currentAmmo;
-        
         Transform tsf;
         Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
         aimDirection.y = 0;
 
         float totalTime = 0;
-        while ((totalTime += Time.deltaTime) > TURNING_TIME)
+        while ((totalTime += Time.deltaTime) > DRAW_TIME)
         {
             transform.forward = Vector3.Lerp(tsf.forward, aimDirection, Time.deltaTime * ROTATION_SPEED);
             yield return null;
         }
         transform.forward = aimDirection;
+        
+        unit.animator.SetTrigger(FANNING_FIRE);
+        _shotCount = unit.weapon.currentAmmo;
+        yield return new WaitUntil(() => _shotCount == 0);
 
-        for (int i = 0; i < _shotCount; i++)
-        {
-            yield return new WaitForSeconds(SHOT_TIME);
-            unit.TryAttack(_target, _hitRateModifier);
-        }
+        unit.animator.SetTrigger(FANNING_FINISH);
+        yield return new WaitForSeconds(FINISH_TIME);
+        unit.TryAddStatus(new Recoil(unit));
+    }
 
-        yield return new WaitForSeconds(COOL_OFF_TIME);
+    public override void TossAnimationEvent(string eventString)
+    {
+        if (eventString != "FanningFire") return;
+        if (_shotCount <= 0) return;
+        
+        unit.TryAttack(_target, _hitRateModifier);
+        _shotCount--;
     }
 }

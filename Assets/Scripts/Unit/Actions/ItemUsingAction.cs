@@ -62,7 +62,7 @@ public class ItemUsingAction : BaseAction
         if (_itemUsedTrigger) return false;
         if (unit.HasStatusEffect(StatusEffectType.Recoil)) return false;
 
-        return _item is not null;
+        return true;
     }
 
     public override bool CanExecuteImmediately()
@@ -86,8 +86,8 @@ public class ItemUsingAction : BaseAction
         yield return new WaitForSeconds(1f);
         
         _item.Use(unit, _targetPos);
+        IInventory.OnInventoryChanged?.Invoke();
         _itemUsedTrigger = true;
-        if(_item.GetStackCount() == 0) GameManager.instance.playerInventory.DeleteItem(_item);
         yield return null;
     }
 

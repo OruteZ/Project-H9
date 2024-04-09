@@ -382,7 +382,7 @@ public class TileSystem : MonoBehaviour
     private void SetTileData()
     {
         var tiles = GetComponentsInChildren<Tile>();
-        var dataString = FileRead.Read("MapData/" + dataName);
+        var dataString = FileRead.Read("MapData/" + dataName, out var columnInfo);
         List<TileInfo> infoList = new List<TileInfo>();
         for (var i = 0; i < infoList.Count; i++)
         {

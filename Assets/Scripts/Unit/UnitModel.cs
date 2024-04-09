@@ -345,4 +345,14 @@ public class UnitModel : MonoBehaviour
         return false;
     }
     #endif
+
+    
+    /// <summary>
+    /// Animation Event를 받아 해당 UnitAction에 전달합니다. Animation Event는 각 Animation Clip에 설정되어 있습니다.
+    /// </summary>
+    /// <param name="eventStringArgument"></param>
+    public void GetAnimationEvent(string eventStringArgument)
+    {
+        unit.GetSelectedAction()?.TossAnimationEvent(eventStringArgument);
+    }
 }

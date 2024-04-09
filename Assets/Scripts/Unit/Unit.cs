@@ -142,7 +142,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         onTurnEnd.Invoke(this);
         
         // reset idle trigger animator
-        animator.ResetTrigger("Idle");
+        animator.SetTrigger("Idle");
 
         FieldSystem.turnSystem.EndTurn();
     }
@@ -317,7 +317,7 @@ public abstract class Unit : MonoBehaviour, IUnit
             if (item.IsImmediate())
             {
                 item.Use(this);
-                if(item.GetStackCount() == 0) GameManager.instance.playerInventory.DeleteItem(item);
+                IInventory.OnInventoryChanged?.Invoke();
             }
 
             return;

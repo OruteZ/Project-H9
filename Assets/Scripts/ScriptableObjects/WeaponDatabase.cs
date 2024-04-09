@@ -64,7 +64,7 @@ public class WeaponDatabase : ScriptableObject
     [ContextMenu("Load Csv")]
     public void LoadCsv()
     {
-        var dataList = FileRead.Read("ItemTable");
+        var dataList = FileRead.Read("ItemTable", out var columnInfo);
         
         if (weaponList is null) weaponList = new List<WeaponData>();
         else weaponList.Clear();

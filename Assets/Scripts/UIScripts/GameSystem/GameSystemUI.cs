@@ -8,6 +8,7 @@ public class GameSystemUI : UISystem
     public QuestUI questUI { get; private set; }
     public TurnUI turnUI { get; private set; }
     public PlayerStatLevelUpUI playerStatLevelUpUI { get; private set; }
+    public ConversationUI conversationUI { get; private set; }
 
     private void Awake()
     {
@@ -15,11 +16,13 @@ public class GameSystemUI : UISystem
         questUI = GetComponent<QuestUI>();
         turnUI = GetComponent<TurnUI>();
         playerStatLevelUpUI = GetComponent<PlayerStatLevelUpUI>();
+        conversationUI = GetComponent<ConversationUI>();
 
         uiSubsystems.Add(playerInfoUI);
         uiSubsystems.Add(questUI);
         uiSubsystems.Add(turnUI);
         uiSubsystems.Add(playerStatLevelUpUI);
+        uiSubsystems.Add(conversationUI);
     }
 
     // Update is called once per frame

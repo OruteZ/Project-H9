@@ -7,23 +7,61 @@ using UnityEngine;
 /// </summary>
 public class QuestUI : UISystem
 {
-    // Start is called before the first frame update
+    [SerializeField] private GameObject _questWindow;
+    [SerializeField] private GameObject _listElementContainer;
+    [SerializeField] private GameObject _itemTooltip;
+    [SerializeField] private GameObject _skillTooltip;
+
+    private QuestListPool _listPool = null;
+
     void Start()
     {
-        
+        _questWindow.SetActive(true);
+    }
+    public void SetQuestListUI()
+    {
+        //var quests = getQuests()
+
+        //_listPool.Reset();
+
+        //var mainQuestUI = _listPool.Set();
+        //var mainQuest = null;
+        //for (int i = 0; i < quests.Count; i++) 
+        //{
+        //    if (quests[i].isMainQuest) 
+        //    {
+        //        mainQuest = quests[i];
+        //        continue;
+        //    }
+        //    var ui = _listPool.Set();
+        //    ui.Instance.GetComponent<QuestListElement>().SetQuestListElement(quests[i]);
+        //}
+        //if (mainQuest == null) 
+        //{
+        //    Debug.LogError("메인 퀘스트가 존재하지 않아 UI에 표시할 수 없습니다.");
+        //    return;
+        //}
+        //mainQuestUI.Instance.GetComponent<QuestListElement>().SetQuestListElement(mainQuest);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddQuestListUI() 
     {
 
     }
-    public override void OpenUI()
+    public void DeleteQuestListUI(int idx) 
     {
-        base.OpenUI();
+        QuestListElement listElement = _listPool.Find(idx);
+        if (listElement == null) 
+        {
+            Debug.Log("해당 인덱스의 퀘스트가 활성화되어있지 않습니다. 인덱스: " + idx);
+            return;
+        }
+
+        listElement.CompleteQuestUI();
     }
-    public override void CloseUI()
+
+    public void ClickQuestButton()
     {
-        base.CloseUI();
+        _questWindow.SetActive(!_questWindow.activeSelf);
     }
 }

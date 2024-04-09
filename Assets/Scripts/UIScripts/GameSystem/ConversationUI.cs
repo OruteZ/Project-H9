@@ -17,7 +17,7 @@ public class ConversationUI : UISystem
     {
         _conversationWindow.SetActive(false);
 
-        List<List<string>> conversationTable = FileRead.Read("ConversationTable");
+        List<List<string>> conversationTable = FileRead.Read("ConversationTable", out var column);
         if (conversationTable == null)
         {
             Debug.LogError("대화 테이블을 찾을 수 없습니다.");

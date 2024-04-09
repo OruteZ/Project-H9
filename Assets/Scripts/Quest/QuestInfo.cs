@@ -117,7 +117,6 @@ public class QuestInfo
 
     public void OnOccurQuestConditionEvented(int targetIndex)
     {
-        Debug.Log($"Occure Quest {_index}, {targetIndex}, {_isInProgress}");
         if (!_isInProgress)
         {
             if (QuestEvent(ref _curConditionArguments, ref _conditionArguments, targetIndex))
@@ -191,7 +190,7 @@ public class QuestInfo
 
         if (!GameManager.instance.CompareState(GameState.World))
             return;
-        Debug.Log($"Áö±ÝÁÂÇ¥¤¾ {player.hexPosition}");
+
         if (_isInProgress)
         {
             if (OnPlayerEvent(ref _curGoalArguments, ref _goalArguments, player.hexPosition))

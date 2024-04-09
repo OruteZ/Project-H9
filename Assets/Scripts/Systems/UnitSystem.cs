@@ -19,6 +19,7 @@ public class UnitSystem : MonoBehaviour
     
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
+    public UnityEvent<Vector3> onPlayerMoved;
     public UnityEvent<Unit> onAnyUnitDead;
     
     [SerializeField] private Transform unitParent;

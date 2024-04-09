@@ -81,55 +81,44 @@ public class QuestInit
         {
             var line = file[i];
 
-            try
-            {
-                int index = int.Parse(line[0]);
-                int questType = int.Parse(line[1]);
-                int questNameRef = int.Parse(line[2]);
-                string questName = localizationData[questNameRef];
-                int questTooltipRef = int.Parse(line[3]);
-                string questTooltip = localizationData[questTooltipRef];
-                int startScript = int.Parse(line[4]);
-                int endScript = int.Parse(line[5]);
+            int index = int.Parse(line[0]);
+            int questType = int.Parse(line[1]);
+            int questNameRef = int.Parse(line[2]);
+            string questName = localizationData[questNameRef];
+            int questTooltipRef = int.Parse(line[3]);
+            string questTooltip = localizationData[questTooltipRef];
+            int startScript = int.Parse(line[4]);
+            int endScript = int.Parse(line[5]);
 
-                QUEST_EVENT conditionBit =  ParseQuestEvent(line[6]);
-                string[] sGetConditionArguments = line[7].Replace("\"", "").Split(",");
-                int[] getConditionArguments = Array.ConvertAll(sGetConditionArguments, e => int.Parse(e));
-                int expireTurn = int.Parse(line[8]);
-                QUEST_EVENT goalBit = ParseQuestEvent(line[9]);
-                string[] sgoalArguemnts = line[10].Replace("\"", "").Split(",");
-                int[] goalArguemnts = Array.ConvertAll(sgoalArguemnts, e => int.Parse(e));
+            QUEST_EVENT conditionBit = ParseQuestEvent(line[6]);
+            string[] sGetConditionArguments = line[7].Replace("\"", "").Split(",");
+            int[] getConditionArguments = Array.ConvertAll(sGetConditionArguments, e => int.Parse(e));
+            int expireTurn = int.Parse(line[8]);
+            QUEST_EVENT goalBit = ParseQuestEvent(line[9]);
+            string[] sgoalArguemnts = line[10].Replace("\"", "").Split(",");
+            int[] goalArguemnts = Array.ConvertAll(sgoalArguemnts, e => int.Parse(e));
 
-                int moneyReward = int.Parse(line[11]);
-                int expReward = int.Parse(line[12]);
-                int itemReward = int.Parse(line[13]);
-                int skillReward = int.Parse(line[14]);
+            int moneyReward = int.Parse(line[11]);
+            int expReward = int.Parse(line[12]);
+            int itemReward = int.Parse(line[13]);
+            int skillReward = int.Parse(line[14]);
 
-                questInfos.Add(new QuestInfo(index
-                                            , questType
-                                            , questName
-                                            , questTooltip
-                                            , startScript
-                                            , endScript
-                                            , conditionBit
-                                            , expireTurn
-                                            , goalBit
-                                            , goalArguemnts
-                                            , moneyReward
-                                            , expReward
-                                            , itemReward
-                                            , skillReward));
-            }
-            catch
-            {
-                string lineSum = "";
-                for (int j = 0; j < line.Count; j++)
-                    lineSum += $"[{j}] {line[j]}\n";
-                Debug.LogError($"QuestInfo error: ({i} line) {lineSum}");
-                return false;
-            }
+            questInfos.Add(new QuestInfo(index
+                                        , questType
+                                        , questName
+                                        , questTooltip
+                                        , startScript
+                                        , endScript
+                                        , conditionBit
+                                        , getConditionArguments
+                                        , expireTurn
+                                        , goalBit
+                                        , goalArguemnts
+                                        , moneyReward
+                                        , expReward
+                                        , itemReward
+                                        , skillReward));
         }
-
         return true;
     }
 

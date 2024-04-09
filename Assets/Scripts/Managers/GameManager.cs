@@ -121,6 +121,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public bool backToWorldTrigger = false;
 
     private UnityEvent OnGameStarted = new UnityEvent();
+    private UnityEvent<int> OnNotifiedQuestEvent = new UnityEvent<int>();
 
     public void StartCombat(int stageIndex, int linkIndex)
     {
@@ -230,11 +231,34 @@ public class GameManager : Generic.Singleton<GameManager>
         _discoveredWorldTileSet = new ();
         var qi = new QuestInit();
         Quests = qi.GetQuests();
+    }
 
+    private void Start()
+    {
+        // 게임 시작시 시작하는 퀘스트 연결
         foreach (var quest in Quests)
         {
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GAME_START))
                 OnGameStarted.AddListener(quest.OnOccurConditionEvented);
+        }
+
+        // 퀘스트 완료시 Invoke 함수 호출
+        // 퀘스트 완료시 시작하는 퀘스트 연결
+        foreach (var quest in Quests)
+        {
+            quest.OnQuestEnded.AddListener(InvokeQuestEnd);
+            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.QUEST_END))
+                OnNotifiedQuestEvent.AddListener(quest.OnOccurQuestConditionEvented);
+        }
+
+        // 퀘스트 조건의 MOVE_TO 호출
+        // 퀘스트 완료시 MOVE_TO 연결
+        foreach (var quest in Quests)
+        {
+            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
+                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener(quest.OnPlayerMovedConditionEvented);
+            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
+                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener(quest.OnPlayerMovedGoalEvented);
         }
 
         OnGameStarted?.Invoke();
@@ -260,5 +284,10 @@ public class GameManager : Generic.Singleton<GameManager>
             }
         }
         #endregion
+    }
+
+    private void InvokeQuestEnd(int questIndex)
+    {
+        OnNotifiedQuestEvent?.Invoke(questIndex);
     }
 }

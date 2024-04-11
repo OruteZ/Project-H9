@@ -46,11 +46,6 @@ public interface IItem
     /// 해당 아이템이 사용가능한지 여부를 반환합니다.
     /// </summary>
     public bool IsUsable();
-
-    /// <summary>
-    /// 해당 아이템의 툴팁 설명을 구성하여 불러옵니다.
-    /// </summary>
-    public string GetInventoryTooltipContents();
     
     public UnityEvent OnItemChanged { get; }
 

@@ -109,16 +109,6 @@ public abstract class Item : IItem
             }
         }
 
-    public virtual string GetInventoryTooltipContents()
-    {
-        ItemData data = GetData();
-        string typeText = data.itemType.ToString() + " Item";
-        string effect =  GameManager.instance.itemDatabase.GetItemScript(data.nameIdx).GetDescription(data);
-        string description = typeText + "\n\n" + effect;
-
-        return description;
-    }
-
     public static Item operator +(Item item1, Item item2)
     {
         //check same id and max storage

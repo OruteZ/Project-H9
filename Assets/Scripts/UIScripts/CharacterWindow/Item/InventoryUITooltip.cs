@@ -12,32 +12,32 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
     [SerializeField] private GameObject _itemCostUI;
     private const float UI_DOMINION_TIME = 0.3f;
 
-    private IItem _item = null;
+    private ItemData _data = null;
 
     public void OnPointerExit(PointerEventData eventData)
     {
         UIManager.instance.characterUI.itemUI.ClosePopupWindow();
     }
 
-    public void SetInventoryUITooltip(IItem item, Vector3 pos)
+    public void SetInventoryUITooltip(ItemData data, Vector3 pos)
     {
-        if (_item == item && GetComponent<RectTransform>().position == pos) return;
+        if (_data == data && GetComponent<RectTransform>().position == pos) return;
 
-        if (item is null)
+        if (data is null)
         {
             CloseUI();
             return;
         }
-        _item = item;
+        _data = data;
         GetComponent<RectTransform>().position = pos;
 
         UIManager.instance.SetUILayer(3);
 
-        SetInventoryTooltipText(item);
+        SetInventoryTooltipText(data);
 
         if (GameManager.instance.CompareState(GameState.Combat))
         {
-            if (item is WeaponItem)
+            if (data.itemType == ItemType.Revolver || data.itemType == ItemType.Repeater || data.itemType == ItemType.Shotgun)
             {
                 _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(Inventory.WEAPON_COST, 0, false);
             }
@@ -46,7 +46,7 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
                 _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(Inventory.ITEM_COST, 0, false);
             }
         }
-        else 
+        else
         {
             _itemCostUI.GetComponent<TooltipCostUI>().CloseUI();
         }
@@ -54,16 +54,16 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
         OpenUI();
         StartCoroutine(GetCursorDominion());
     }
-    private void SetInventoryTooltipText(IItem item)
+    private void SetInventoryTooltipText(ItemData data)
     {
-        ItemScript script = GameManager.instance.itemDatabase.GetItemScript(item.GetData().nameIdx);
+        ItemScript script = GameManager.instance.itemDatabase.GetItemScript(data.nameIdx);
         _itemNameText.GetComponent<TextMeshProUGUI>().text = script.GetName();
-        string description = item.GetInventoryTooltipContents();
+        string description = data.GetInventoryTooltipContents();
         _itemDescriptionText.GetComponent<TextMeshProUGUI>().text = description;
     }
     public override void CloseUI()
     {
-        _item = null;
+        _data = null;
         StopAllCoroutines();
 
         gameObject.SetActive(false);

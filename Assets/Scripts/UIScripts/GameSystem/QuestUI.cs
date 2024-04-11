@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -14,38 +12,19 @@ public class QuestUI : UISystem
 
     private QuestListPool _listPool = null;
 
-    void Start()
+    void Awake()
     {
+        _listPool = new QuestListPool();
+        _listPool.Init("Prefab/Quest List UI Element", _listElementContainer.transform, 0);
         _questWindow.SetActive(true);
     }
-    public void SetQuestListUI()
+
+    public void AddQuestListUI(QuestInfo info) 
     {
-        //var quests = getQuests()
-
-        //_listPool.Reset();
-
-        //var mainQuestUI = _listPool.Set();
-        //var mainQuest = null;
-        //for (int i = 0; i < quests.Count; i++) 
-        //{
-        //    if (quests[i].isMainQuest) 
-        //    {
-        //        mainQuest = quests[i];
-        //        continue;
-        //    }
-        //    var ui = _listPool.Set();
-        //    ui.Instance.GetComponent<QuestListElement>().SetQuestListElement(quests[i]);
-        //}
-        //if (mainQuest == null) 
-        //{
-        //    Debug.LogError("메인 퀘스트가 존재하지 않아 UI에 표시할 수 없습니다.");
-        //    return;
-        //}
-        //mainQuestUI.Instance.GetComponent<QuestListElement>().SetQuestListElement(mainQuest);
-    }
-
-    public void AddQuestListUI() 
-    {
+        var ui = _listPool.Set();
+        if (info.QuestType == 1) ui.Instance.transform.SetAsFirstSibling();
+        ui.Instance.GetComponent<QuestListElement>().SetQuestListElement(info);
+        Debug.Log(ui);
 
     }
     public void DeleteQuestListUI(int idx) 
@@ -63,5 +42,19 @@ public class QuestUI : UISystem
     public void ClickQuestButton()
     {
         _questWindow.SetActive(!_questWindow.activeSelf);
+    }
+    public void OpenItemTooltip(int index, Vector3 pos) 
+    {
+        _itemTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(GameManager.instance.itemDatabase.GetItemData(index), pos);
+    }
+    public void OpenSkillTooltip(int index, Vector3 pos)
+    {
+        _skillTooltip.GetComponent<SkillTooltip>().SetSkillTooltip(index, pos);
+    }
+    public override void ClosePopupWindow()
+    {
+        _itemTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+        _skillTooltip.GetComponent<SkillTooltip>().CloseUI();
+        base.ClosePopupWindow();
     }
 }

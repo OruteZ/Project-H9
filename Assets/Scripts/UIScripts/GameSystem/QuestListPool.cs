@@ -67,7 +67,7 @@ public class QuestListPool : ObjectPool<RectTransform, QuestListWrapper>
         for (int i = _working.Count - 1; 0 <= i; i--)
         {
             var target = _working[i];
-            if (target.Instance.GetComponent<QuestListElement>().questIndex == idx)
+            if (target.Instance.GetComponent<QuestListElement>().currentQuestInfo.Index == idx)
             {
                 return target.Instance.GetComponent<QuestListElement>();
             }
@@ -80,7 +80,7 @@ public class QuestListPool : ObjectPool<RectTransform, QuestListWrapper>
         for (int i = _working.Count - 1; 0 <= i; i--)
         {
             var target = _working[i];
-            if (target.Instance.GetComponent<QuestListElement>().questIndex == idx)
+            if (target.Instance.GetComponent<QuestListElement>().currentQuestInfo.Index == idx)
             {
                 target.Reset();
                 _pool.Enqueue(target);

@@ -17,7 +17,6 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private GameObject _skillSectionText;
 
     private SkillManager _skillManager;
-    private GameObject _currentSelectedUI = null;
     private int _currentSkillIndex;
     private bool _isInteractableButton;
 
@@ -54,19 +53,14 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         rootGameObject.GetComponent<VerticalLayoutGroup>().SetLayoutVertical();
     }
 
-    public void SetSkillTooltip(GameObject ui)
+    public void SetSkillTooltip(int index, Vector3 pos)
     {
         OpenUI();
-        _currentSelectedUI = ui;
-        int skillIndex = ui.GetComponent<SkillTreeElement>().GetSkillUIIndex();
-        if (_currentSkillIndex != skillIndex) 
-        {
-            _currentSkillIndex = skillIndex;
-        }
+        _currentSkillIndex = index;
         _isInteractableButton = false;
-        GetComponent<RectTransform>().position = _currentSelectedUI.GetComponent<RectTransform>().position;
+        GetComponent<RectTransform>().position = pos;
         //GetComponent<RectTransform>().position = Input.mousePosition;
-        Skill currentSkill = _skillManager.GetSkill(skillIndex);
+        Skill currentSkill = _skillManager.GetSkill(index);
         if (currentSkill == null) return;
 
         _skillTooltipNameText.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillName(_currentSkillIndex);
@@ -134,7 +128,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         {
             UIManager.instance.skillUI.UpdateRelatedSkillNodes(_currentSkillIndex);
         }
-        SetSkillTooltip(_currentSelectedUI);
+        SetSkillTooltip(_currentSkillIndex, GetComponent<RectTransform>().position);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

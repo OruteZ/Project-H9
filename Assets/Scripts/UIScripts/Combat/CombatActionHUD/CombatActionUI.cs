@@ -426,7 +426,7 @@ public class CombatActionUI : UISystem
     }
     public void OpenInventoryTooltip(GameObject ui, Vector3 pos)
     {
-        _itemTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui.GetComponent<InventoryUICombatElement>().item, pos);
+        _itemTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui.GetComponent<InventoryUICombatElement>().item.GetData(), pos);
     }
     public override void ClosePopupWindow()
     {

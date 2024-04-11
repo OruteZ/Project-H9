@@ -34,7 +34,7 @@ public class SkillTreeElement : UIElement
     /// </summary>
     public void OnSkillUIBtnClick()
     {
-        UIManager.instance.skillUI.ClickSkillUIButton(gameObject);
+        UIManager.instance.skillUI.ClickSkillUIButton(skillIndex, GetComponent<RectTransform>().position);
     }
 
     /// <summary>

@@ -73,20 +73,30 @@ public class ItemDatabase : ScriptableObject
         Debug.LogError("There is no item that has id " + id);
         return null;
     }
-    
+    public ItemData GetItemData(string name)
+    {
+        foreach (var item in _itemList)
+        {
+            if (GetItemScript(item.nameIdx).GetName() == name) return item;
+        }
+
+        Debug.LogError("There is no item that has name " + name);
+        return null;
+    }
+
     public List<ItemData> GetAllItemData()
     {
         return _itemList;
     }
 
-    public ItemScript GetItemScript(int id)
+    public ItemScript GetItemScript(int nameIndex)
     {
         foreach (var script in _itemScriptList)
         {
-            if (script.GetIndex() == id) return script;
+            if (script.GetIndex() == nameIndex) return script;
         }
 
-        Debug.LogError("There is no script that has id " + id);
+        Debug.LogError("There is no script that has id " + nameIndex);
         return null;
     }
 }
@@ -113,6 +123,30 @@ public class ItemData
     public int itemTooltip;
     public Sprite icon;
     public GameObject itemModel;
+
+    /// <summary>
+    /// 해당 아이템의 툴팁 설명을 구성하여 불러옵니다.
+    /// </summary>
+    public string GetInventoryTooltipContents()
+    {
+        string description = "";
+        if (itemType == ItemType.Revolver || itemType == ItemType.Repeater || itemType == ItemType.Shotgun)
+        {
+            string weaponTypeText = itemType.ToString();
+            string weaponDamageText = weaponDamage.ToString() + " Damage";
+            string weaponRangeText = itemRange.ToString() + " Range";
+            string weaponEffect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription(this);
+            description = weaponTypeText + "\n" + weaponDamageText + "\n" + weaponRangeText + "\n\n" + weaponEffect;
+        }
+        else
+        {
+            string typeText = itemType.ToString() + " Item";
+            string effect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription(this);
+            description = typeText + "\n\n" + effect;
+        }
+
+        return description;
+    }
 }
 
 public enum ItemType

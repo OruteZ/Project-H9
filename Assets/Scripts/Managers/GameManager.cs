@@ -122,7 +122,8 @@ public class GameManager : Generic.Singleton<GameManager>
     public bool backToWorldTrigger = false;
 
     private UnityEvent OnGameStarted = new UnityEvent();
-    private UnityEvent<int> OnNotifiedQuestEvent = new UnityEvent<int>();
+    private UnityEvent<QuestInfo> OnNotifiedQuestEnd = new UnityEvent<QuestInfo>();
+    private UnityEvent<QuestInfo> OnNotifiedQuestStart = new UnityEvent<QuestInfo>();
 
     public void StartCombat(int stageIndex, int linkIndex)
     {
@@ -238,43 +239,34 @@ public class GameManager : Generic.Singleton<GameManager>
     private void Start()
     {
         #region 퀘스트 관련. 나중에 옮길 예정
-        // 게임 시작시 시작하는 퀘스트 연결
         foreach (var quest in Quests)
         {
+            // 게임 시작시 시작하는 퀘스트 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GAME_START))
                 OnGameStarted.AddListener(quest.OnOccurConditionEvented);
-        }
 
-        // 퀘스트 완료시 Invoke 함수 호출
-        // 퀘스트 완료시 시작하는 퀘스트 연결
-        foreach (var quest in Quests)
-        {
+            // 퀘스트 시작시 Invoke 함수 호출
+            quest.OnQuestStarted.AddListener(InvokeQuestStart);
+
+            // 퀘스트 완료시 Invoke 함수 호출
+            // 퀘스트 완료시 시작하는 퀘스트 연결
             quest.OnQuestEnded.AddListener(InvokeQuestEnd);
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.QUEST_END))
-                OnNotifiedQuestEvent.AddListener(quest.OnOccurQuestConditionEvented);
-        }
+                OnNotifiedQuestEnd.AddListener(quest.OnOccurQuestConditionEvented);
 
-        // 퀘스트 조건, 완료의 MOVE_TO 호출, 연결
-        foreach (var quest in Quests)
-        {
+            // 퀘스트 조건, 완료의 MOVE_TO 호출, 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
                 FieldSystem.unitSystem.GetPlayer().onMoved.AddListener(quest.OnPlayerMovedConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
                 FieldSystem.unitSystem.GetPlayer().onMoved.AddListener(quest.OnPlayerMovedGoalEvented);
-        }
 
-        // 퀘스트 조건, 완료시의 KILL_LINK 호출, 연결
-        foreach (var quest in Quests)
-        {
+            // 퀘스트 조건, 완료시의 KILL_LINK 호출, 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
                 onPlayerCombatFinished.AddListener(quest.OnCountConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
                 onPlayerCombatFinished.AddListener(quest.OnCountGoalEvented);
-        }
 
-        // 퀘스트 조건, 완료시의 GET_ITEM, USE_TIEM 호출, 연결
-        foreach (var quest in Quests)
-        {
+            // 퀘스트 조건, 완료시의 GET_ITEM, USE_TIEM 호출, 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
                 IInventory.OnGetItem.AddListener(quest.OnCountConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
@@ -312,8 +304,13 @@ public class GameManager : Generic.Singleton<GameManager>
         #endregion
     }
 
-    private void InvokeQuestEnd(int questIndex)
+    private void InvokeQuestEnd(QuestInfo quest)
     {
-        OnNotifiedQuestEvent?.Invoke(questIndex);
+        OnNotifiedQuestEnd?.Invoke(quest);
+    }
+
+    private void InvokeQuestStart(QuestInfo quest)
+    {
+        OnNotifiedQuestStart?.Invoke(quest);
     }
 }

@@ -21,7 +21,9 @@ public class QuestInfo
                                 , USE_ITEM  = 1 << 5
                                 , KILL_LINK = 1 << 6
                                 , KILL_TARGET = 1 << 7 }; // 퀘스트의 연결을 Bit마스크로 확인용
-    public UnityEvent<int> OnQuestEnded = new UnityEvent<int>();
+    public UnityEvent<QuestInfo> OnQuestStarted = new UnityEvent<QuestInfo>();
+    public UnityEvent<QuestInfo> OnQuestEnded = new UnityEvent<QuestInfo>();
+    public UnityEvent OnChangedProgress = new UnityEvent();
 
     private int _index;
     private int _questType;
@@ -50,6 +52,7 @@ public class QuestInfo
     private int[] _curConditionArguments;
     private int[] _curGoalArguments;
 
+    public int Index { get => _index; }
     public int QuestType { get => _questType; }
     public string QuestName { get => _questName; }
     public string QuestTooltip { get => _questTooltip; }
@@ -130,11 +133,11 @@ public class QuestInfo
         }
     }
 
-    public void OnOccurQuestConditionEvented(int targetIndex)
+    public void OnOccurQuestConditionEvented(QuestInfo quest)
     {
         if (!_isInProgress)
         {
-            if (QuestEvent(ref _curConditionArguments, ref _conditionArguments, targetIndex))
+            if (QuestEvent(ref _curConditionArguments, ref _conditionArguments, quest.Index))
                 StartQuest();
         }
     }
@@ -241,6 +244,7 @@ public class QuestInfo
 
         _isInProgress = true;
         Debug.Log($"[{_index}]'{_questName}' 퀘스트 시작, startScript 시작, UI연동 해야됨");
+        OnQuestStarted.Invoke(this);
     }
 
     private void EndQuest() // 무조건 보상을 받는 케이스만 존재.
@@ -248,12 +252,13 @@ public class QuestInfo
         _isInProgress = false;
         _isCleared = true;
         Debug.Log($"[{_index}]'{_questName}'퀘스트 완료, 보상 받는 코드, endScript 호출, UI연동 해야됨");
-        OnQuestEnded?.Invoke(_index);
+        OnQuestEnded?.Invoke(this);
     }
 
 
     private bool QuestEvent(ref int[] curArgument, ref int[] goalArgument, int value)
     {
+        OnChangedProgress?.Invoke();
         if (goalArgument[0] != value)
             return false;
         curArgument[0] = value;
@@ -265,6 +270,7 @@ public class QuestInfo
         if (curArgument[0] != goalType)
             return false;
 
+        OnChangedProgress?.Invoke();
         curArgument[1] += value;
         if (curArgument[1] < goalArgument[1])
             return false;
@@ -279,6 +285,7 @@ public class QuestInfo
     private bool RenewEvent(ref int[] ownArgument, ref int[] goalArgument, ref int[] curArgument)
     {
         bool isSame = true;
+        OnChangedProgress?.Invoke();
         for (int i = 0; i < goalArgument.Length; i++)
         {
             ownArgument[i] = curArgument[i];
@@ -299,6 +306,7 @@ public class QuestInfo
         cur[1] = pos.y;
         cur[2] = pos.z;
 
+        OnChangedProgress?.Invoke();
         for (int i = 0; i < goal.Length; i++)
         {
             if (cur[i] != goal[i])
@@ -313,6 +321,7 @@ public class QuestInfo
         if (curArgument[0] != goalType)
             return false;
 
+        OnChangedProgress?.Invoke();
         curArgument[1] += 1;
         if (curArgument[1] < goalArgument[1])
             return false;

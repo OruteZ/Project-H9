@@ -128,7 +128,7 @@ public class QuestInit
         if (str.Contains("GAME_START")) bitEvent |= QUEST_EVENT.GAME_START;
         if (str.Contains("MOVE_TO")) bitEvent |= QUEST_EVENT.MOVE_TO;
         if (str.Contains("QUEST_END")) bitEvent |= QUEST_EVENT.QUEST_END;
-        if (str.Contains("SCRIPT")) bitEvent |= QUEST_EVENT.SCRIPT;
+        if (str.Contains("CONVERSATION")) bitEvent |= QUEST_EVENT.SCRIPT;
         if (str.Contains("GET_ITEM")) bitEvent |= QUEST_EVENT.GET_ITEM;
         if (str.Contains("USE_ITEM")) bitEvent |= QUEST_EVENT.USE_ITEM;
         if (str.Contains("KILL_LINK")) bitEvent |= QUEST_EVENT.KILL_LINK;

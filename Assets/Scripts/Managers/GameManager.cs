@@ -73,7 +73,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public List<int> playerActiveIndexList;
     
     public UnityEvent<Weapon> onPlayerWeaponChanged = new UnityEvent<Weapon>(); // 이게 왜 여깄지
-    public UnityEvent<int> onPlayerCombatFinished = new UnityEvent<int>(); // <LinkIndex>
+    public UnityEvent<int> onPlayerCombatFinished = new UnityEvent<int>(); // <LinkIndex>, Combat manager 스크립트나 Player 액션 스크립트(not player data)가 있으면 옮기고싶음
 
     #region LEVEL
 
@@ -237,6 +237,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
     private void Start()
     {
+        #region 퀘스트 관련. 나중에 옮길 예정
         // 게임 시작시 시작하는 퀘스트 연결
         foreach (var quest in Quests)
         {
@@ -284,6 +285,7 @@ public class GameManager : Generic.Singleton<GameManager>
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
                 IInventory.OnUseItem.AddListener(quest.OnCountGoalEvented);
         }
+        #endregion
 
         OnGameStarted?.Invoke();
     }

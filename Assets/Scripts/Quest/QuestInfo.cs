@@ -27,8 +27,8 @@ public class QuestInfo
     private int _questType;
     private string _questName;
     private string _questTooltip;
-    private int _startScript;
-    private int _endScript;
+    private int _startConversation;
+    private int _endConversation;
 
     // conditions
     private QUEST_EVENT _conditionBit;
@@ -50,12 +50,27 @@ public class QuestInfo
     private int[] _curConditionArguments;
     private int[] _curGoalArguments;
 
+    public int QuestType { get => _questType; }
+    public string QuestName { get => _questName; }
+    public string QuestTooltip { get => _questTooltip; }
+    public int StartConversation { get => _startConversation; }
+    public int EndConversation { get => _endConversation; }
+    public int ExpireTurn { get => _expireTurn; }
+    public QUEST_EVENT GOAL_TYPE { get => _goalBit; }
+    public int[] GoalArg{ get => _goalArguments; }
+    public int[] CurArg { get => _curGoalArguments; }
+    public int CurTurn { get => _curTurn; } // ExpireTurn에서 시작하여 0으로 향할 남은 턴. ex. {CurTurn}턴 남음!
+    public int MoneyReward { get => _moneyReward; }
+    public int ExpReward { get => _expReward; }
+    public int ItemReward { get => _itemReward; }
+    public int SKillReward { get => _skillReward; }
+
     public QuestInfo(int index
                     , int questType
                     , string questName
                     , string questTooltip
-                    , int startScript
-                    , int endScript
+                    , int startConversation
+                    , int endConversation
                     , QUEST_EVENT conditionBit
                     , int[] conditionArgument
                     , int expireTurn
@@ -70,8 +85,8 @@ public class QuestInfo
         _questType = questType;
         _questName = questName;
         _questTooltip = questTooltip;
-        _startScript = startScript;
-        _endScript = endScript;
+        _startConversation = startConversation;
+        _endConversation = endConversation;
         _conditionBit = conditionBit;
         _conditionArguments = conditionArgument;
         _expireTurn = expireTurn;

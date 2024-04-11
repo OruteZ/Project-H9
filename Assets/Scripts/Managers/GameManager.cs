@@ -72,7 +72,8 @@ public class GameManager : Generic.Singleton<GameManager>
     public List<int> playerPassiveIndexList;
     public List<int> playerActiveIndexList;
     
-    public UnityEvent<Weapon> onPlayerWeaponChanged = new UnityEvent<Weapon>();
+    public UnityEvent<Weapon> onPlayerWeaponChanged = new UnityEvent<Weapon>(); // 이게 왜 여깄지
+    public UnityEvent<int> onPlayerCombatFinished = new UnityEvent<int>(); // <LinkIndex>
 
     #region LEVEL
 
@@ -148,6 +149,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
     public void FinishCombat()
     {
+        onPlayerCombatFinished?.Invoke(GetLinkIndex());
         ChangeState(GameState.World);
 
         backToWorldTrigger = true;
@@ -251,14 +253,22 @@ public class GameManager : Generic.Singleton<GameManager>
                 OnNotifiedQuestEvent.AddListener(quest.OnOccurQuestConditionEvented);
         }
 
-        // 퀘스트 조건의 MOVE_TO 호출
-        // 퀘스트 완료시 MOVE_TO 연결
+        // 퀘스트 조건, 완료의 MOVE_TO 호출, 연결
         foreach (var quest in Quests)
         {
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
                 FieldSystem.unitSystem.GetPlayer().onMoved.AddListener(quest.OnPlayerMovedConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
                 FieldSystem.unitSystem.GetPlayer().onMoved.AddListener(quest.OnPlayerMovedGoalEvented);
+        }
+
+        // 퀘스트 조건, 완료시의 KILL_LINK 호출, 연결
+        foreach (var quest in Quests)
+        {
+            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
+                onPlayerCombatFinished.AddListener(quest.OnCountConditionEvented);
+            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
+                onPlayerCombatFinished.AddListener(quest.OnCountGoalEvented);
         }
 
         OnGameStarted?.Invoke();

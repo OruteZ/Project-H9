@@ -123,10 +123,32 @@ public class QuestInfo
                 StartQuest();
         }
     }
+    #region Count Event
+    // 전투, 살해 처럼 이벤트성으로 일어나지만 그 수는 카운트하는 이벤트
+    // ex. [아이템 인덱스, 사용해야하는 수]
+    public void OnCountConditionEvented(int targetIndex)
+    {
+        if (!_isInProgress)
+        {
+            if (CountEvent(ref _curConditionArguments, ref _conditionArguments, targetIndex))
+                StartQuest();
+        }
+    }
+
+    public void OnCountGoalEvented(int targetIndex)
+    {
+        if (_isInProgress)
+        {
+            if (CountEvent(ref _curGoalArguments, ref _goalArguments, targetIndex))
+                EndQuest();
+        }
+    }
+    #endregion
 
     #region Add Event
-    // 적 처치, 아이템 획득과 같은 KeyValue의 증가 이벤트
-    // ex. [적의번호, 적을처치해야하는 수]
+    // 아이템 획득과 같은 KeyValue의 증가 이벤트
+    // ex. [아이템 인덱스, 사용해야하는 수]
+    // Count Event로 통일할까 싶기도 함. Add로 이루어지는 일이 딱히 없네.
     public void OnAddConditionEvented(int targetIndex, int value)
     {
         if (!_isInProgress)
@@ -144,7 +166,6 @@ public class QuestInfo
                 EndQuest();
         }
     }
-
     #endregion
 
     #region Renew Event
@@ -256,6 +277,7 @@ public class QuestInfo
         return true;
     }
 
+    // 플레이어가 도달한 위치 이벤트
     private bool OnPlayerEvent(ref int[] cur, ref int[] goal, Vector3Int pos)
     {
         cur[0] = pos.x;
@@ -268,6 +290,17 @@ public class QuestInfo
                 return false;
         }
 
+        return true;
+    }
+
+    private bool CountEvent(ref int[] curArgument, ref int[] goalArgument, int goalType)
+    {
+        if (curArgument[0] != goalType)
+            return false;
+
+        curArgument[1] += 1;
+        if (curArgument[1] < goalArgument[1])
+            return false;
         return true;
     }
 }

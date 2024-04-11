@@ -58,6 +58,7 @@ public class Inventory : IInventory
                 {
                     itemList[i] = (Item)itemList[i] + (Item)item;
                     IInventory.OnInventoryChanged?.Invoke();
+                    IInventory.OnGetItem?.Invoke(item.GetData().id);
                     return true;
                 }
             }
@@ -68,6 +69,7 @@ public class Inventory : IInventory
             {
                 itemList[i] = item;
                 IInventory.OnInventoryChanged?.Invoke();
+                IInventory.OnGetItem?.Invoke(item.GetData().id);
                 return true;
             }
         }
@@ -116,6 +118,7 @@ public class Inventory : IInventory
         {
             Debug.Log("select");
             player.SelectItem(itemList[index]);
+            IInventory.OnUseItem.Invoke(itemList[index].GetData().id);
         }
     }
     public void SellItem(ItemType type, int index)

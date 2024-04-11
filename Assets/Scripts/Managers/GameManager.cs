@@ -271,6 +271,20 @@ public class GameManager : Generic.Singleton<GameManager>
                 onPlayerCombatFinished.AddListener(quest.OnCountGoalEvented);
         }
 
+        // 퀘스트 조건, 완료시의 GET_ITEM, USE_TIEM 호출, 연결
+        foreach (var quest in Quests)
+        {
+            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
+                IInventory.OnGetItem.AddListener(quest.OnCountConditionEvented);
+            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
+                IInventory.OnGetItem.AddListener(quest.OnCountGoalEvented);
+
+            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
+                IInventory.OnUseItem.AddListener(quest.OnCountConditionEvented);
+            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
+                IInventory.OnUseItem.AddListener(quest.OnCountGoalEvented);
+        }
+
         OnGameStarted?.Invoke();
     }
 

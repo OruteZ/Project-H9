@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using QUEST_EVENT = QuestInfo.QUEST_EVENT;
 
-public class QuestInit
+public class QuestParser
 {
     private readonly string QUEST_FILE_PATH = $"QuestTable";
     private readonly string QUEST_LOCALIZATION_PATH = $"QuestLocalizationTable";

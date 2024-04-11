@@ -231,7 +231,7 @@ public class GameManager : Generic.Singleton<GameManager>
         base.Awake();
         
         _discoveredWorldTileSet = new ();
-        var qi = new QuestInit();
+        var qi = new QuestParser();
         Quests = qi.GetQuests();
     }
 

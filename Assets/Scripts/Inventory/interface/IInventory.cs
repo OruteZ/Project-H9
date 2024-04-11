@@ -37,4 +37,6 @@ public interface IInventory
     public int GetItemCount(int itemIndex);
     
     public static UnityEvent OnInventoryChanged = OnInventoryChanged ?? new UnityEvent();
+    public static UnityEvent<int> OnGetItem = new UnityEvent<int>(); // <아이템인덱스>
+    public static UnityEvent<int> OnUseItem = new UnityEvent<int>(); // <아이템인덱스>
 }

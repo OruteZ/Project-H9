@@ -10,6 +10,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private GameObject _skillTooltip;
     [SerializeField] private GameObject _skillTooltipNameText;
     [SerializeField] private GameObject _skillTooltipDescriptionText;
+    [SerializeField] private GameObject _skillTooltipButton;
     [SerializeField] private GameObject _skillTooltipButtonText;
     [SerializeField] private GameObject _skillKeywordTooltipContainer;
     [SerializeField] private GameObject _skillCostUI;
@@ -85,6 +86,12 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         _skillTooltipDescriptionText.GetComponent<ContentSizeFitter>().SetLayoutVertical();
         _skillTooltip.GetComponent<ContentSizeFitter>().SetLayoutVertical();
 
+        if (gameObject.tag != "SkillUI")
+        {
+            _skillTooltipButton.SetActive(false);
+            return;
+        }
+        _skillTooltipButton.SetActive(true);
         TextMeshProUGUI buttonText = _skillTooltipButtonText.GetComponent<TextMeshProUGUI>();
         if (currentSkill.isLearnable)
         {

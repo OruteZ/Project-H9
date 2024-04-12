@@ -47,7 +47,7 @@ public class QuestListElement : UIElement
         if (_skillName != "")
         {
             int skillStart = _resultString.IndexOf(_skillName);
-            if (skillStart != -1 && tmpro.textInfo.characterInfo.Length > 0)
+            if (skillStart != -1 && tmpro.textInfo.characterInfo.Length > skillStart)
             {
                 Vector3 skillBL = _questRewardText.GetComponent<RectTransform>().position + tmpro.textInfo.characterInfo[skillStart].bottomLeft;
                 Vector3 skillTR = _questRewardText.GetComponent<RectTransform>().position + tmpro.textInfo.characterInfo[skillStart + _skillName.Length - 1].topRight;
@@ -68,7 +68,7 @@ public class QuestListElement : UIElement
     {
         currentQuestInfo = qInfo;
         _questNameText.GetComponent<TextMeshProUGUI>().text = qInfo.QuestName;
-        _questDescriptText.GetComponent<TextMeshProUGUI>().text = qInfo.QuestTooltip;
+        _questDescriptText.GetComponent<TextMeshProUGUI>().text = "- " + qInfo.QuestTooltip;
         string[] rewardTexts = { "", "", "", "" };
 
         _resultString = "Reward: ";
@@ -126,12 +126,12 @@ public class QuestListElement : UIElement
     IEnumerator CompleteQuestEffect() 
     {
         _questNameText.GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillIconLearnedColor;
-        _questDescriptText.GetComponent<TextMeshProUGUI>().color = UICustomColor.DisableStateColor;
-        _questRewardText.GetComponent<TextMeshProUGUI>().color = UICustomColor.DisableStateColor;
-        _questDescriptText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Italic;
-        _questDescriptText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
-        _questRewardText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Italic;
-        _questRewardText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
+        _questDescriptText.GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillIconLearnedColor;
+        //_questRewardText.GetComponent<TextMeshProUGUI>().color = UICustomColor.DisableStateColor;
+        //_questDescriptText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Italic;
+        //_questDescriptText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
+        //_questRewardText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Italic;
+        //_questRewardText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
 
         yield return new WaitForSeconds(2.0f);
         CloseUI();

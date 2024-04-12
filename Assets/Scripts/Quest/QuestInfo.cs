@@ -247,12 +247,20 @@ public class QuestInfo
         OnQuestStarted.Invoke(this);
     }
 
-    private void EndQuest() // 무조건 보상을 받는 케이스만 존재.
+    private void EndQuest()
     {
         _isInProgress = false;
         _isCleared = true;
-        Debug.Log($"[{_index}]'{_questName}'퀘스트 완료, 보상 받는 코드, endScript 호출, UI연동 해야됨");
         OnQuestEnded?.Invoke(this);
+
+        var itemDB = GameManager.instance.itemDatabase;
+        GameManager.instance.playerInventory.AddGold(_moneyReward);
+        if (GameManager.instance.playerInventory.TryAddItem(Item.CreateItem(itemDB.GetItemData(_itemReward))))
+        {
+            Debug.Log($"퀘스트 완료 아이템을 받을 수 없습니다.: itemcode '{_itemReward}'");
+        }
+        SkillManager.instance.LearnSkill(_skillReward);
+        LevelSystem.ReservationExp(_expReward);
     }
 
 

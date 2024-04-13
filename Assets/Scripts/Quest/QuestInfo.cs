@@ -100,6 +100,7 @@ public class QuestInfo
         _itemReward = itemReward;
         _skillReward = skillReward;
 
+        _curTurn = _expireTurn;
         _curConditionArguments = new int[_conditionArguments.Length];
         _curGoalArguments = new int[_goalArguments.Length];
     }
@@ -116,11 +117,12 @@ public class QuestInfo
     }
 
     // 게임 저장, 로드 시 현재 상황을 저장하기 위함.
-    public void SetProgress(bool isInProgress, int[] curGoalArguments, bool isCleared)
+    public void SetProgress(bool isInProgress, int[] curGoalArguments, bool isCleared, int curTurn)
     {
         _isInProgress = isInProgress;
         _curGoalArguments = curGoalArguments;
         _isCleared = isCleared;
+        _curTurn = curTurn;
     }
 
     // Game Start 처럼 무슨 일이 1회성으로 벌어진 이벤트.
@@ -236,6 +238,15 @@ public class QuestInfo
                 EndQuest();
         }
     }
+    
+    public void ProgressExpireTurn()
+    {
+        _curTurn--;
+        if (_curTurn == 0)
+        {
+            FailQuest();
+        }
+    }
 
     /// ===========================================================================
     private void StartQuest()
@@ -261,6 +272,13 @@ public class QuestInfo
         }
         SkillManager.instance.LearnSkill(_skillReward);
         LevelSystem.ReservationExp(_expReward);
+    }
+
+    private void FailQuest()
+    {
+        _isInProgress = false;
+        _isCleared = true;
+        Debug.Log($"퀘스트 실패! UI 출력");
     }
 
 

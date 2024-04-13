@@ -276,7 +276,11 @@ public class GameManager : Generic.Singleton<GameManager>
                 IInventory.OnUseItem.AddListener(quest.OnCountConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
                 IInventory.OnUseItem.AddListener(quest.OnCountGoalEvented);
+
+            if (quest.ExpireTurn != -1)
+                UIManager.instance.onTurnStarted.AddListener((u) => { if (u is Player) quest.ProgressExpireTurn();});
         }
+
         #endregion
 
         OnGameStarted?.Invoke();

@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// 수주한 퀘스트를 표시하는 기능을 구현한 클래스
@@ -9,12 +11,15 @@ public class QuestUI : UISystem
     [SerializeField] private GameObject _listElementContainer;
     [SerializeField] private GameObject _itemTooltip;
     [SerializeField] private GameObject _skillTooltip;
+    [SerializeField] private GameObject _rewardWindow;
+    [SerializeField] private GameObject _rewardText;
 
     private QuestListPool _listPool = null;
 
     void Awake()
     {
-        _listPool = new QuestListPool();
+        _rewardWindow.SetActive(false);
+           _listPool = new QuestListPool();
         _listPool.Init("Prefab/Quest List UI Element", _listElementContainer.transform, 0);
         _questWindow.SetActive(true);
     }
@@ -36,7 +41,17 @@ public class QuestUI : UISystem
             return;
         }
 
-        listElement.CompleteQuestUI();
+        listElement.CompleteQuestUI(out string rewardText);
+        StopAllCoroutines();
+        StartCoroutine(ShowRewardWindow(rewardText));
+    }
+    IEnumerator ShowRewardWindow(string rewardText) 
+    {
+        _rewardText.GetComponent<TextMeshProUGUI>().text = rewardText;
+        _rewardWindow.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        _rewardWindow.SetActive(false);
+        yield break;
     }
 
     public void ClickQuestButton()

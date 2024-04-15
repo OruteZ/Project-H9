@@ -14,7 +14,8 @@ public class QuestListElement : UIElement
 
     private bool _isDestroying = false;
 
-    private string _resultString = "";
+    private string _resultText = "";
+    private string _displayText = "";
     private string _itemName = "";
     private string _skillName = "";
 
@@ -29,7 +30,7 @@ public class QuestListElement : UIElement
         TextMeshProUGUI tmpro = _questRewardText.GetComponent<TextMeshProUGUI>();
         if (_itemName != "")
         {
-            int itemStart = _resultString.IndexOf(_itemName);
+            int itemStart = _resultText.IndexOf(_itemName);
             if (itemStart != -1 && tmpro.textInfo.characterInfo.Length > itemStart)
             {
                 Vector3 itemBL = _questRewardText.GetComponent<RectTransform>().position + tmpro.textInfo.characterInfo[itemStart].bottomLeft;
@@ -46,7 +47,7 @@ public class QuestListElement : UIElement
         }
         if (_skillName != "")
         {
-            int skillStart = _resultString.IndexOf(_skillName);
+            int skillStart = _resultText.IndexOf(_skillName);
             if (skillStart != -1 && tmpro.textInfo.characterInfo.Length > skillStart)
             {
                 Vector3 skillBL = _questRewardText.GetComponent<RectTransform>().position + tmpro.textInfo.characterInfo[skillStart].bottomLeft;
@@ -71,7 +72,7 @@ public class QuestListElement : UIElement
         _questDescriptText.GetComponent<TextMeshProUGUI>().text = "- " + qInfo.QuestTooltip;
         string[] rewardTexts = { "", "", "", "" };
 
-        _resultString = "Reward: ";
+        _resultText = "Reward: ";
         if (qInfo.MoneyReward > 0)
         {
             rewardTexts[0] = qInfo.MoneyReward.ToString() + "$";
@@ -101,26 +102,28 @@ public class QuestListElement : UIElement
                 }
                 else 
                 {
-                    _resultString += ", ";
+                    _resultText += ", ";
                 }
-                _resultString += rewardTexts[i];
+                _resultText += rewardTexts[i];
             }
         }
 
-        string displayedText = _resultString;
-        if (rewardTexts[2] != "") displayedText = displayedText.Replace(rewardTexts[2], UICustomColor.ChangeTextColor(rewardTexts[2], UICustomColor.ItemTextColor));
-        if (rewardTexts[3] != "") displayedText = displayedText.Replace(rewardTexts[3], UICustomColor.ChangeTextColor(rewardTexts[3], UICustomColor.SkillTextColor));
-        _questRewardText.GetComponent<TextMeshProUGUI>().text = displayedText;
+        _displayText = _resultText;
+        if (rewardTexts[2] != "") _displayText = _displayText.Replace(rewardTexts[2], UICustomColor.ChangeTextColor(rewardTexts[2], UICustomColor.ItemTextColor));
+        if (rewardTexts[3] != "") _displayText = _displayText.Replace(rewardTexts[3], UICustomColor.ChangeTextColor(rewardTexts[3], UICustomColor.SkillTextColor));
+        _questRewardText.GetComponent<TextMeshProUGUI>().text = _displayText;
 
         OpenUI();
     }
 
-    public void CompleteQuestUI() 
+    public void CompleteQuestUI(out string str)
     {
+        str = _displayText;
         if (!_isDestroying) 
         {
             _isDestroying = true;
             StartCoroutine(CompleteQuestEffect());
+            return;
         }
     }
     IEnumerator CompleteQuestEffect() 

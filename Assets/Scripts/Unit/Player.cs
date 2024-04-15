@@ -9,9 +9,9 @@ using UnityEngine.EventSystems;
 
 public class Player : Unit
 {
-    public override void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList)
+    public override void SetUp(int index, string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList)
     {
-        base.SetUp(newName, unitStat, newWeapon, unitModel, passiveList);
+        base.SetUp(index, newName, unitStat, newWeapon, unitModel, passiveList);
         
         onMoved.AddListener(OnMoved);
         onStatusEffectChanged.AddListener(OnStatusEffectChanged);

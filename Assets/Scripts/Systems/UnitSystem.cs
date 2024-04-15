@@ -159,7 +159,7 @@ public class UnitSystem : MonoBehaviour
                 p.AddComponent<IdleAction>();
 
                 GameManager.instance.playerStat.ResetModifier();
-                p.SetUp("Player", GameManager.instance.playerStat, 
+                p.SetUp(-1, "Player", GameManager.instance.playerStat, 
                     weaponDB.Clone(GameManager.instance.PlayerWeaponIndex),
                     GameManager.instance.playerModel, playerPassiveList);
                 if (GameManager.instance.CompareState(GameState.World))
@@ -172,7 +172,7 @@ public class UnitSystem : MonoBehaviour
                 var info = enemyDB.GetInfo(enemy.dataIndex);
                 info.stat.ResetModifier();
                 
-                enemy.SetUp("Enemy", (UnitStat)info.stat.Clone(), weaponDB.Clone(info.weaponIndex), info.model, new List<Passive>());
+                enemy.SetUp(enemy.dataIndex, "Enemy", (UnitStat)info.stat.Clone(), weaponDB.Clone(info.weaponIndex), info.model, new List<Passive>());
                 enemy.SetupAI(aiDB.GetTree(info.btIndex));
                 enemy.isVisible = false;
 

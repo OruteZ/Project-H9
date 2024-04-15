@@ -20,7 +20,7 @@ public class QuestInfo
                                 , GET_ITEM  = 1 << 4
                                 , USE_ITEM  = 1 << 5
                                 , KILL_LINK = 1 << 6
-                                , KILL_TARGET = 1 << 7 }; // 퀘스트의 연결을 Bit마스크로 확인용
+                                , KILL_UNIT = 1 << 7 }; // 퀘스트의 연결을 Bit마스크로 확인용
     public UnityEvent<QuestInfo> OnQuestStarted = new UnityEvent<QuestInfo>();
     public UnityEvent<QuestInfo> OnQuestEnded = new UnityEvent<QuestInfo>();
     public UnityEvent OnChangedProgress = new UnityEvent();
@@ -100,6 +100,7 @@ public class QuestInfo
         _itemReward = itemReward;
         _skillReward = skillReward;
 
+        _curTurn = _expireTurn;
         _curConditionArguments = new int[_conditionArguments.Length];
         _curGoalArguments = new int[_goalArguments.Length];
     }
@@ -116,11 +117,12 @@ public class QuestInfo
     }
 
     // 게임 저장, 로드 시 현재 상황을 저장하기 위함.
-    public void SetProgress(bool isInProgress, int[] curGoalArguments, bool isCleared)
+    public void SetProgress(bool isInProgress, int[] curGoalArguments, bool isCleared, int curTurn)
     {
         _isInProgress = isInProgress;
         _curGoalArguments = curGoalArguments;
         _isCleared = isCleared;
+        _curTurn = curTurn;
     }
 
     // Game Start 처럼 무슨 일이 1회성으로 벌어진 이벤트.
@@ -236,6 +238,15 @@ public class QuestInfo
                 EndQuest();
         }
     }
+    
+    public void ProgressExpireTurn()
+    {
+        _curTurn--;
+        if (_curTurn == 0)
+        {
+            FailQuest();
+        }
+    }
 
     /// ===========================================================================
     private void StartQuest()
@@ -247,12 +258,33 @@ public class QuestInfo
         OnQuestStarted.Invoke(this);
     }
 
-    private void EndQuest() // 무조건 보상을 받는 케이스만 존재.
+    private void EndQuest()
     {
         _isInProgress = false;
         _isCleared = true;
-        Debug.Log($"[{_index}]'{_questName}'퀘스트 완료, 보상 받는 코드, endScript 호출, UI연동 해야됨");
         OnQuestEnded?.Invoke(this);
+
+        var itemDB = GameManager.instance.itemDatabase;
+        if (_moneyReward != 0)
+            GameManager.instance.playerInventory.AddGold(_moneyReward);
+        if (_itemReward != 0)
+            if (GameManager.instance.playerInventory.TryAddItem(Item.CreateItem(itemDB.GetItemData(_itemReward))))
+            {
+                Debug.Log($"퀘스트 완료 아이템을 받을 수 없습니다.: itemcode '{_itemReward}'");
+            }
+        if (_skillReward != 0)
+            SkillManager.instance.LearnSkill(_skillReward);
+        if (_expReward != 0)
+        {
+            LevelSystem.GetExpImmediately(_expReward);
+        }
+    }
+
+    private void FailQuest()
+    {
+        _isInProgress = false;
+        _isCleared = true;
+        Debug.Log($"퀘스트 실패! UI 출력");
     }
 
 

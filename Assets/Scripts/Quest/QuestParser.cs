@@ -132,7 +132,7 @@ public class QuestParser
         if (str.Contains("GET_ITEM")) bitEvent |= QUEST_EVENT.GET_ITEM;
         if (str.Contains("USE_ITEM")) bitEvent |= QUEST_EVENT.USE_ITEM;
         if (str.Contains("KILL_LINK")) bitEvent |= QUEST_EVENT.KILL_LINK;
-        if (str.Contains("KILL_TARGET")) bitEvent |= QUEST_EVENT.KILL_TARGET;
+        if (str.Contains("KILL_UNIT")) bitEvent |= QUEST_EVENT.KILL_UNIT;
         return bitEvent;
     }
 }

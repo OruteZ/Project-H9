@@ -19,9 +19,9 @@ public class Enemy : Unit
         base.Awake();
     }
 
-    public override void SetUp(string newName, UnitStat unitStat, Weapon weapon, GameObject unitModel, List<Passive> passiveList)
+    public override void SetUp(int index, string newName, UnitStat unitStat, Weapon weapon, GameObject unitModel, List<Passive> passiveList)
     {
-        base.SetUp(newName, unitStat, weapon, unitModel, passiveList);
+        base.SetUp(index, newName, unitStat, weapon, unitModel, passiveList);
     }
 
     public void SetupAI(BehaviourTree ai)

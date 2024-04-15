@@ -30,6 +30,8 @@ public abstract class Unit : MonoBehaviour, IUnit
     }
     #endregion
 
+    private int _index; // 플레이어는 인덱스를 쓰지 않지만, 퀘스트 등 "이름"이 아닌 식별코드가 필요하여 index를 field로 추가해둠. 임시로 player는 -1 인덱스를 갖게 함.
+    public int Index => _index;
     public string unitName;
     
     public HexTransform hexTransform;
@@ -72,9 +74,10 @@ public abstract class Unit : MonoBehaviour, IUnit
     private bool _isBusy;
     private bool _hasDead;
 
-    public virtual void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel,
+    public virtual void SetUp(int index, string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel,
         List<Passive> passiveList)
     {
+        _index = index;
         unitName = newName;
         stat = unitStat;
 

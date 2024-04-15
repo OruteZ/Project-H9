@@ -20,7 +20,7 @@ public class QuestInfo
                                 , GET_ITEM  = 1 << 4
                                 , USE_ITEM  = 1 << 5
                                 , KILL_LINK = 1 << 6
-                                , KILL_TARGET = 1 << 7 }; // 퀘스트의 연결을 Bit마스크로 확인용
+                                , KILL_UNIT = 1 << 7 }; // 퀘스트의 연결을 Bit마스크로 확인용
     public UnityEvent<QuestInfo> OnQuestStarted = new UnityEvent<QuestInfo>();
     public UnityEvent<QuestInfo> OnQuestEnded = new UnityEvent<QuestInfo>();
     public UnityEvent OnChangedProgress = new UnityEvent();

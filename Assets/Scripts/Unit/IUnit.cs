@@ -30,7 +30,7 @@ public interface IUnit
     /// <param name="newWeapon">무기</param>
     /// <param name="unitModel"></param>
     /// <param name="passiveList">패시브 스킬의 List</param>
-    void SetUp(string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList);
+    void SetUp(int index, string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel, List<Passive> passiveList);
     
     /// <summary>
     /// 특정 타입에 해당하는 액션을 반환합니다. 가지고 있지 않을경우 NoneAction을 반환합니다.

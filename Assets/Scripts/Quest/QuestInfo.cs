@@ -265,13 +265,17 @@ public class QuestInfo
         OnQuestEnded?.Invoke(this);
 
         var itemDB = GameManager.instance.itemDatabase;
-        GameManager.instance.playerInventory.AddGold(_moneyReward);
-        if (GameManager.instance.playerInventory.TryAddItem(Item.CreateItem(itemDB.GetItemData(_itemReward))))
-        {
-            Debug.Log($"퀘스트 완료 아이템을 받을 수 없습니다.: itemcode '{_itemReward}'");
-        }
-        SkillManager.instance.LearnSkill(_skillReward);
-        LevelSystem.ReservationExp(_expReward);
+        if (_moneyReward != 0)
+            GameManager.instance.playerInventory.AddGold(_moneyReward);
+        if (_itemReward != 0)
+            if (GameManager.instance.playerInventory.TryAddItem(Item.CreateItem(itemDB.GetItemData(_itemReward))))
+            {
+                Debug.Log($"퀘스트 완료 아이템을 받을 수 없습니다.: itemcode '{_itemReward}'");
+            }
+        if (_skillReward != 0)
+            SkillManager.instance.LearnSkill(_skillReward);
+        if (_expReward != 0)
+            LevelSystem.ReservationExp(_expReward);
     }
 
     private void FailQuest()

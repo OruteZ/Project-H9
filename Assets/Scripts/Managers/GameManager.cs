@@ -247,10 +247,12 @@ public class GameManager : Generic.Singleton<GameManager>
 
             // 퀘스트 시작시 Invoke 함수 호출
             quest.OnQuestStarted.AddListener(InvokeQuestStart);
-
             // 퀘스트 완료시 Invoke 함수 호출
-            // 퀘스트 완료시 시작하는 퀘스트 연결
             quest.OnQuestEnded.AddListener(InvokeQuestEnd);
+
+            // 아마 여기쯤 StartConversation 연결 예정
+
+            // 퀘스트 완료시 시작하는 퀘스트 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.QUEST_END))
                 OnNotifiedQuestEnd.AddListener(quest.OnOccurQuestConditionEvented);
 
@@ -283,7 +285,6 @@ public class GameManager : Generic.Singleton<GameManager>
                 IInventory.OnUseItem.AddListener(quest.OnCountConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
                 IInventory.OnUseItem.AddListener(quest.OnCountGoalEvented);
-
             
             if (quest.ExpireTurn != -1)
                 UIManager.instance.onTurnStarted.AddListener((u) => { if (u is Player) quest.ProgressExpireTurn();});

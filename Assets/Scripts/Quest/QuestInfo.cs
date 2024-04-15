@@ -275,7 +275,9 @@ public class QuestInfo
         if (_skillReward != 0)
             SkillManager.instance.LearnSkill(_skillReward);
         if (_expReward != 0)
-            LevelSystem.ReservationExp(_expReward);
+        {
+            LevelSystem.GetExpImmediately(_expReward);
+        }
     }
 
     private void FailQuest()

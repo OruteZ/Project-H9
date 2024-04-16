@@ -259,13 +259,15 @@ public class GameManager : Generic.Singleton<GameManager>
 
             // 퀘스트 완료시 시작하는 퀘스트 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.QUEST_END))
-                OnNotifiedQuestEnd.AddListener(quest.OnOccurQuestConditionEvented);
+                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedConditionEvented(quest.Index));
+            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.QUEST_END))
+                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedGoalEvented(quest.Index));
 
             // 퀘스트 조건, 완료의 MOVE_TO 호출, 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
-                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener(quest.OnPlayerMovedConditionEvented);
+                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener((p) => quest.OnPositionMovedConditionEvented(p.hexPosition));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
-                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener(quest.OnPlayerMovedGoalEvented);
+                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener((p) => quest.OnPositionMovedGoalEvented(p.hexPosition));
 
             // 퀘스트 조건, 완료시의 KILL_LINK 호출, 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
@@ -275,10 +277,9 @@ public class GameManager : Generic.Singleton<GameManager>
              
             // 퀘스트 조건, 완료시의 KILL_UNIT 호출, 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
-                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>{ quest.OnCountConditionEvented(u.Index); });
+                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>quest.OnCountConditionEvented(u.Index));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
-                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>{ quest.OnCountConditionEvented(u.Index); });
-
+                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>quest.OnCountConditionEvented(u.Index));
 
             // 퀘스트 조건, 완료시의 GET_ITEM, USE_TIEM 호출, 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
@@ -290,6 +291,16 @@ public class GameManager : Generic.Singleton<GameManager>
                 IInventory.OnUseItem.AddListener(quest.OnCountConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
                 IInventory.OnUseItem.AddListener(quest.OnCountGoalEvented);
+            
+            // 플레이어 시야 내로 타일, 링크 진입시의 이벤트 연결
+            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
+                PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedConditionEvented(tile.hexPosition));
+            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
+                PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedGoalEvented(tile.hexPosition));
+            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.LINK_IN_SIGHT))
+                PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedConditionEvented(link.linkIndex));
+            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.LINK_IN_SIGHT))
+                PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedGoalEvented(link.linkIndex));
             
             if (quest.ExpireTurn != -1)
                 UIManager.instance.onTurnStarted.AddListener((u) => { if (u is Player) quest.ProgressExpireTurn();});

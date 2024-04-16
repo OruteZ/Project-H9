@@ -126,8 +126,11 @@ public class Player : Unit
 
         foreach (var tile in allTile)
         {
+            PlayerEvents.OnEnteredTileinSight?.Invoke(tile);
+            foreach (var tileObj in tile.tileObjects)
+                if (tileObj is Link) PlayerEvents.OnEnteredLinkinSight?.Invoke(tileObj as Link); // 으아악 미친코드다
             if(GameManager.instance.CompareState(GameState.World) && tile.inSight) continue;
-            
+
             tile.inSight = 
                 FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition) &&
                 Hex.Distance(hexTransform.position, tile.hexPosition) <= stat.sightRange;

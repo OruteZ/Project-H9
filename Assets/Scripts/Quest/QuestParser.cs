@@ -133,6 +133,8 @@ public class QuestParser
         if (str.Contains("USE_ITEM")) bitEvent |= QUEST_EVENT.USE_ITEM;
         if (str.Contains("KILL_LINK")) bitEvent |= QUEST_EVENT.KILL_LINK;
         if (str.Contains("KILL_UNIT")) bitEvent |= QUEST_EVENT.KILL_UNIT;
+        if (str.Contains("LINK_IN_SIGHT")) bitEvent |= QUEST_EVENT.LINK_IN_SIGHT;
+        if (str.Contains("TILE_IN_SIGHT")) bitEvent |= QUEST_EVENT.TILE_IN_SIGHT;
         return bitEvent;
     }
 }

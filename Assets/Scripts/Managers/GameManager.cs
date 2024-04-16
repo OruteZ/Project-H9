@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using DGS = System.Diagnostics;
 
 public enum GameState
 {
@@ -232,13 +233,17 @@ public class GameManager : Generic.Singleton<GameManager>
         base.Awake();
         
         _discoveredWorldTileSet = new ();
+        var watch = DGS.Stopwatch.StartNew();
         var qi = new QuestParser();
         Quests = qi.GetQuests();
+        watch.Stop();
+        Debug.Log($"Quest parse time: {watch.ElapsedMilliseconds}");
     }
 
     private void Start()
     {
         #region 퀘스트 관련. 나중에 옮길 예정
+        var watch = DGS.Stopwatch.StartNew();
         foreach (var quest in Quests)
         {
             // 게임 시작시 시작하는 퀘스트 연결
@@ -289,7 +294,8 @@ public class GameManager : Generic.Singleton<GameManager>
             if (quest.ExpireTurn != -1)
                 UIManager.instance.onTurnStarted.AddListener((u) => { if (u is Player) quest.ProgressExpireTurn();});
         }
-
+        watch.Stop();
+        Debug.Log($"Quest link time: {watch.ElapsedMilliseconds}");
         #endregion
 
         OnGameStarted?.Invoke();

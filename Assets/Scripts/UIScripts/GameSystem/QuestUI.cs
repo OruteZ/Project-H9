@@ -28,6 +28,10 @@ public class QuestUI : UISystem
     {
         var ui = _listPool.Set();
         if (info.QuestType == 1) ui.Instance.transform.SetAsFirstSibling();
+        if (info.GOAL_TYPE == QuestInfo.QUEST_EVENT.MOVE_TO) 
+        {
+            UIManager.instance.gameSystemUI.pinUI.SetPinUI(new Vector3Int(info.GoalArg[0], info.GoalArg[1], info.GoalArg[2]));
+        }
         ui.Instance.GetComponent<QuestListElement>().SetQuestListElement(info);
         Debug.Log(ui);
 
@@ -41,6 +45,7 @@ public class QuestUI : UISystem
             return;
         }
 
+        UIManager.instance.gameSystemUI.pinUI.ClearPinUI();
         listElement.CompleteQuestUI(out string rewardText);
         StopAllCoroutines();
         StartCoroutine(ShowRewardWindow(rewardText));

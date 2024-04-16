@@ -5,6 +5,7 @@ using UnityEngine;
 public class PinUI : UISystem
 {
     [SerializeField] private GameObject _pinImage;
+    public WorldCamera worldCamera;
 
     private bool _isTracking = false;
     private Vector3 _targetPos = Vector3.zero;
@@ -16,8 +17,6 @@ public class PinUI : UISystem
     }
     private void Start()
     {
-
-        SetPinUI(new Vector3Int(5, 1, -6));
     }
     // Update is called once per frame
     void Update()
@@ -56,5 +55,10 @@ public class PinUI : UISystem
         _targetPos = Vector3.zero;
         _isTracking = false;
         _pinImage.SetActive(_isTracking);
+    }
+
+    public void OnClickPin()
+    {
+        worldCamera.SetPosition(_targetPos);
     }
 }

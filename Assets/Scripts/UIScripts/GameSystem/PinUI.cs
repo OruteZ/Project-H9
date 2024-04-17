@@ -15,14 +15,11 @@ public class PinUI : UISystem
     {
         _pinImage.SetActive(false);
     }
-    private void Start()
-    {
-    }
-    // Update is called once per frame
     void Update()
     {
         if (_isTracking)
         {
+            _pinImage.SetActive(GameManager.instance.CompareState(GameState.World));
             Vector3 screenPos = Camera.main.WorldToScreenPoint(_targetPos);
             Vector3 correctedPos = ScreenOverCorrector.GetCorrectedUIPositionWithoutConsideringUISize(GetComponent<Canvas>(), screenPos, _pinImage.GetComponent<RectTransform>().sizeDelta, _pinImage.GetComponent<RectTransform>().pivot);
 

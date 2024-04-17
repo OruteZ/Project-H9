@@ -18,7 +18,8 @@ public class BuffUI : UISystem
     {
         StatusEffectType.Stun,
         StatusEffectType.UnArmed,
-        //StatusEffectType.Taunted,
+        StatusEffectType.Recoil,
+        StatusEffectType.Taunted,
         StatusEffectType.Concussion,
         StatusEffectType.Fracture,
         StatusEffectType.Blind,
@@ -48,11 +49,12 @@ public class BuffUI : UISystem
         IDisplayableEffect[] playerBuffs = player.GetDisplayableEffects();
         _currentBuffs.Clear();
         _currentDebuffs.Clear();
-        foreach (IDisplayableEffect effect in playerBuffs) 
+        foreach (IDisplayableEffect effect in playerBuffs)
         {
-            if (effect is StatusEffect) 
+            if (effect is StatusEffect)
             {
                 _currentDebuffs.Add(effect);
+                
             }
             else
             {
@@ -132,9 +134,9 @@ public class BuffUI : UISystem
 
     public Sprite GetDebuffIconSprite(StatusEffectType effType) 
     {
-        if ((int)effType >= (int)StatusEffectType.Burning && (int)effType <= (int)StatusEffectType.Blind) 
+        if ((int)effType >= (int)StatusEffectType.Burning && (int)effType <= (int)StatusEffectType.Recoil) 
         {
-            Debug.Log(effType);
+            //Debug.Log(effType);
             return UIManager.instance.iconDB.GetIconInfo(effType.ToString());
         }
         Debug.LogError("상태 이상 아이콘을 찾을 수 없습니다.");

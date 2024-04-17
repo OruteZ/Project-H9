@@ -23,9 +23,9 @@ public static class ScreenOverCorrector
 
         return result;
     }
-    public static Vector3 GetCorrectedUIPosition(Canvas canvas, GameObject ui) 
+    public static Vector3 GetCorrectedUIPosition(Canvas canvas, Vector3 pos, GameObject ui) 
     {
-        return GetCorrectedUIPosition(canvas, ui.GetComponent<RectTransform>().position, ui.GetComponent<RectTransform>().sizeDelta, ui.GetComponent<RectTransform>().pivot);
+        return GetCorrectedUIPosition(canvas, pos, ui.GetComponent<RectTransform>().sizeDelta, ui.GetComponent<RectTransform>().pivot);
     }
 
     public static Vector3 GetCorrectedUIPositionWithoutConsideringUISize(Canvas canvas, Vector3 pos, Vector3 size, Vector3 pivot)

@@ -149,7 +149,7 @@ public class QuestInfo
     {
         if (_isInProgress)
         {
-            if (AccordEvent(ref _curConditionArguments, ref _conditionArguments, index))
+            if (AccordEvent(ref _curGoalArguments, ref _goalArguments, index))
                 EndQuest();
         }
     }

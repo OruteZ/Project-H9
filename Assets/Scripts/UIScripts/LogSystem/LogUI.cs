@@ -125,6 +125,7 @@ public class LogUI : UISystem
     {
         var target = Instantiate(_defaultTextPrefab);
         target.transform.SetParent(_logPanel);
+        target.transform.localScale = Vector3.one; // 간혹 canvas의 scale이 변하는 일 때문에 설정해둠. scale 변환시킬 일 있으면 그 때 보자.
         _textCaches.Add(target.GetComponent<TMP_Text>());
         _sizeFilterCaches.Add(target.GetComponent<ContentSizeFitter>());
         _curTextlistIndex++;

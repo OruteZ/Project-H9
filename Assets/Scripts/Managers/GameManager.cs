@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using DGS = System.Diagnostics;
 
 public enum GameState
 {
@@ -72,8 +73,8 @@ public class GameManager : Generic.Singleton<GameManager>
     public List<int> playerPassiveIndexList;
     public List<int> playerActiveIndexList;
     
-    public UnityEvent<Weapon> onPlayerWeaponChanged = new UnityEvent<Weapon>(); // ÀÌ°Ô ¿Ö ¿©ƒ…Áö
-    public UnityEvent<int> onPlayerCombatFinished = new UnityEvent<int>(); // <LinkIndex>, Combat manager ½ºÅ©¸³Æ®³ª Player ¾×¼Ç ½ºÅ©¸³Æ®(not player data)°¡ ÀÖÀ¸¸é ¿Å±â°í½ÍÀ½
+    public UnityEvent<Weapon> onPlayerWeaponChanged = new UnityEvent<Weapon>(); // ï¿½Ì°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public UnityEvent<int> onPlayerCombatFinished = new UnityEvent<int>(); // <LinkIndex>, Combat manager ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ Player ï¿½×¼ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®(not player data)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½
 
     #region LEVEL
 
@@ -232,51 +233,54 @@ public class GameManager : Generic.Singleton<GameManager>
         base.Awake();
         
         _discoveredWorldTileSet = new ();
+        var watch = DGS.Stopwatch.StartNew();
         var qi = new QuestParser();
         Quests = qi.GetQuests();
+        watch.Stop();
+        Debug.Log($"Quest parse time: {watch.ElapsedMilliseconds}");
 
     }
 
     private void Start()
     {
-        #region Äù½ºÆ® °ü·Ã. ³ªÁß¿¡ ¿Å±æ ¿¹Á¤
+        #region ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½Å±ï¿½ ï¿½ï¿½ï¿½ï¿½
+        var watch = DGS.Stopwatch.StartNew();
         foreach (var quest in Quests)
         {
-            // °ÔÀÓ ½ÃÀÛ½Ã ½ÃÀÛÇÏ´Â Äù½ºÆ® ¿¬°á
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GAME_START))
                 OnGameStarted.AddListener(quest.OnOccurConditionEvented);
 
-            // Äù½ºÆ® ½ÃÀÛ½Ã Invoke ÇÔ¼ö È£Ãâ
+            // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½Û½ï¿½ Invoke ï¿½Ô¼ï¿½ È£ï¿½ï¿½
             quest.OnQuestStarted.AddListener(InvokeQuestStart);
-            // Äù½ºÆ® ¿Ï·á½Ã Invoke ÇÔ¼ö È£Ãâ
+            // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ï·ï¿½ï¿½ Invoke ï¿½Ô¼ï¿½ È£ï¿½ï¿½
             quest.OnQuestEnded.AddListener(InvokeQuestEnd);
 
-            // ¾Æ¸¶ ¿©±âÂë StartConversation ¿¬°á ¿¹Á¤
-
-            // Äù½ºÆ® ¿Ï·á½Ã ½ÃÀÛÇÏ´Â Äù½ºÆ® ¿¬°á
+            // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ï·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.QUEST_END))
-                OnNotifiedQuestEnd.AddListener(quest.OnOccurQuestConditionEvented);
+                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedConditionEvented(q.Index));
+            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.QUEST_END))
+                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedGoalEvented(q.Index));
 
-            // Äù½ºÆ® Á¶°Ç, ¿Ï·áÀÇ MOVE_TO È£Ãâ, ¿¬°á
+            // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½, ï¿½Ï·ï¿½ï¿½ï¿½ MOVE_TO È£ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
-                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener(quest.OnPlayerMovedConditionEvented);
+                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener((p) => quest.OnPositionMovedConditionEvented(p.hexPosition));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
-                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener(quest.OnPlayerMovedGoalEvented);
+                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener((p) => quest.OnPositionMovedGoalEvented(p.hexPosition));
 
-            // Äù½ºÆ® Á¶°Ç, ¿Ï·á½ÃÀÇ KILL_LINK È£Ãâ, ¿¬°á
+            // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½, ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ KILL_LINK È£ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
                 onPlayerCombatFinished.AddListener(quest.OnCountConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
                 onPlayerCombatFinished.AddListener(quest.OnCountGoalEvented);
              
-            // Äù½ºÆ® Á¶°Ç, ¿Ï·á½ÃÀÇ KILL_UNIT È£Ãâ, ¿¬°á
+            // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½, ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ KILL_UNIT È£ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
-                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>{ quest.OnCountConditionEvented(u.Index); });
+                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>quest.OnCountConditionEvented(u.Index));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
-                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>{ quest.OnCountConditionEvented(u.Index); });
+                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>quest.OnCountConditionEvented(u.Index));
 
-
-            // Äù½ºÆ® Á¶°Ç, ¿Ï·á½ÃÀÇ GET_ITEM, USE_TIEM È£Ãâ, ¿¬°á
+            // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½, ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ GET_ITEM, USE_TIEM È£ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
                 IInventory.OnGetItem.AddListener(quest.OnCountConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
@@ -287,9 +291,21 @@ public class GameManager : Generic.Singleton<GameManager>
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
                 IInventory.OnUseItem.AddListener(quest.OnCountGoalEvented);
             
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ã¾ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½, ï¿½ï¿½Å© ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
+                PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedConditionEvented(tile.hexPosition));
+            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
+                PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedGoalEvented(tile.hexPosition));
+            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.LINK_IN_SIGHT))
+                PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedConditionEvented(link.linkIndex));
+            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.LINK_IN_SIGHT))
+                PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedGoalEvented(link.linkIndex));
+            
             if (quest.ExpireTurn != -1)
                 UIManager.instance.onTurnStarted.AddListener((u) => { if (u is Player) quest.ProgressExpireTurn();});
         }
+        watch.Stop();
+        Debug.Log($"Quest link time: {watch.ElapsedMilliseconds}");
 
         OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.StartConversation(q.StartConversation); });
         OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.questUI.AddQuestListUI(q); });

@@ -8,6 +8,9 @@ using TMPro;
 public class LogUI : UISystem
 {
     [SerializeField]
+    private RectTransform _logView; // on/off 시 끄고 켜는 창
+
+    [SerializeField]
     private RectTransform _logPanel; // text 들을 담을 수 있으며, text 들의 합만큼의 크기를 지닐 것임.
     private float _FixedTextedPanelHeight; // "length text 0 ~ n-1" + length text n
 
@@ -42,11 +45,19 @@ public class LogUI : UISystem
     public override void CloseUI()
     {
         base.CloseUI();
+        _logView.gameObject.SetActive(false);
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
+        _logView.gameObject.SetActive(true);
+    }
+
+    public void ViewToggle()
+    {
+        if (_logView.gameObject.activeSelf) CloseUI();
+        else OpenUI();
     }
 
     private void ChangedExp(int exp)
@@ -114,6 +125,7 @@ public class LogUI : UISystem
     {
         var target = Instantiate(_defaultTextPrefab);
         target.transform.SetParent(_logPanel);
+        target.transform.localScale = Vector3.one; // 간혹 canvas의 scale이 변하는 일 때문에 설정해둠. scale 변환시킬 일 있으면 그 때 보자.
         _textCaches.Add(target.GetComponent<TMP_Text>());
         _sizeFilterCaches.Add(target.GetComponent<ContentSizeFitter>());
         _curTextlistIndex++;

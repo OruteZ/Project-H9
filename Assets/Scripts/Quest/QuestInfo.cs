@@ -20,7 +20,9 @@ public class QuestInfo
                                 , GET_ITEM  = 1 << 4
                                 , USE_ITEM  = 1 << 5
                                 , KILL_LINK = 1 << 6
-                                , KILL_UNIT = 1 << 7 }; // 퀘스트의 연결을 Bit마스크로 확인용
+                                , KILL_UNIT = 1 << 7 
+                                , LINK_IN_SIGHT = 1 << 8 
+                                , TILE_IN_SIGHT = 1 << 9 }; // 퀘스트의 연결을 Bit마스크로 확인용
     public UnityEvent<QuestInfo> OnQuestStarted = new UnityEvent<QuestInfo>();
     public UnityEvent<QuestInfo> OnQuestEnded = new UnityEvent<QuestInfo>();
     public UnityEvent OnChangedProgress = new UnityEvent();
@@ -135,14 +137,23 @@ public class QuestInfo
         }
     }
 
-    public void OnOccurQuestConditionEvented(QuestInfo quest)
+    public void OnAccordedConditionEvented(int index)
     {
         if (!_isInProgress)
         {
-            if (QuestEvent(ref _curConditionArguments, ref _conditionArguments, quest.Index))
+            if (AccordEvent(ref _curConditionArguments, ref _conditionArguments, index))
                 StartQuest();
         }
     }
+    public void OnAccordedGoalEvented(int index)
+    {
+        if (_isInProgress)
+        {
+            if (AccordEvent(ref _curGoalArguments, ref _goalArguments, index))
+                EndQuest();
+        }
+    }
+
     #region Count Event
     // 전투, 살해 처럼 이벤트성으로 일어나지만 그 수는 카운트하는 이벤트
     // ex. [아이템 인덱스, 사용해야하는 수]
@@ -165,53 +176,9 @@ public class QuestInfo
     }
     #endregion
 
-    #region Add Event
-    // 아이템 획득과 같은 KeyValue의 증가 이벤트
-    // ex. [아이템 인덱스, 사용해야하는 수]
-    // Count Event로 통일할까 싶기도 함. Add로 이루어지는 일이 딱히 없네.
-    public void OnAddConditionEvented(int targetIndex, int value)
-    {
-        if (!_isInProgress)
-        {
-            if (AddEvent(ref _curConditionArguments, ref _conditionArguments, targetIndex, value))
-                StartQuest();
-        }
-    }
-
-    public void OnAddGoalEvented(int targetIndex, int value)
-    {
-        if (_isInProgress)
-        {
-            if (AddEvent(ref _curGoalArguments, ref _goalArguments, targetIndex, value))
-                EndQuest();
-        }
-    }
-    #endregion
-
-    #region Renew Event
-    // 모든 인자가 같아야 하는 Event에 할당 
-    public void OnRenewConditionEvented(int[] arguments)
-    {
-        if (!_isInProgress)
-        {
-            if (RenewEvent(ref _curConditionArguments, ref _conditionArguments, ref arguments))
-                StartQuest();
-        }
-    }
-
-    public void OnRenewGoalEvented(int[] arguments)
-    {
-        if (_isInProgress)
-        {
-            if (RenewEvent(ref _curGoalArguments, ref _goalArguments, ref arguments))
-                EndQuest();
-        }
-    }
-    #endregion
-
     // 플레이어 Move 인자는 더 추가 될 가능성이 있어서 별도로 빼 둠
     // 플레이어가 World에 있을 때만, 월드가 여러 개(지역별로) 나누어질 가능성이 있어서 해당 인덱스도.
-    public void OnPlayerMovedConditionEvented(Unit player)
+    public void OnPositionMovedConditionEvented(Vector3Int position)
     {
         if (_isCleared) return;
 
@@ -220,12 +187,12 @@ public class QuestInfo
         
         if (!_isInProgress)
         {
-            if (OnPlayerEvent(ref _curConditionArguments, ref _conditionArguments, player.hexPosition))
+            if (OnPositionEvent(ref _curConditionArguments, ref _conditionArguments, position))
                 StartQuest();
         }
     }
 
-    public void OnPlayerMovedGoalEvented(Unit player)
+    public void OnPositionMovedGoalEvented(Vector3Int position)
     {
         if (_isCleared) return;
 
@@ -234,7 +201,7 @@ public class QuestInfo
 
         if (_isInProgress)
         {
-            if (OnPlayerEvent(ref _curGoalArguments, ref _goalArguments, player.hexPosition))
+            if (OnPositionEvent(ref _curGoalArguments, ref _goalArguments, position))
                 EndQuest();
         }
     }
@@ -287,8 +254,7 @@ public class QuestInfo
         Debug.Log($"퀘스트 실패! UI 출력");
     }
 
-
-    private bool QuestEvent(ref int[] curArgument, ref int[] goalArgument, int value)
+    private bool AccordEvent(ref int[] curArgument, ref int[] goalArgument, int value)
     {
         OnChangedProgress?.Invoke();
         if (goalArgument[0] != value)
@@ -297,42 +263,8 @@ public class QuestInfo
         return true;
     }
 
-    private bool AddEvent(ref int[] curArgument, ref int[] goalArgument, int goalType, int value)
-    {
-        if (curArgument[0] != goalType)
-            return false;
-
-        OnChangedProgress?.Invoke();
-        curArgument[1] += value;
-        if (curArgument[1] < goalArgument[1])
-            return false;
-
-        curArgument[1] = goalArgument[1]; // UI에서 표시할 때, 범위가 넘어가지 않도록 함.
-        return true;
-    }
-
-    // ownArgument: 직전까지의 플레이어의 위치(값)
-    // goalArrgument: 플레이어가 희망하는 위치
-    // curArgument: 플레이어가 지금 도달한 위치
-    private bool RenewEvent(ref int[] ownArgument, ref int[] goalArgument, ref int[] curArgument)
-    {
-        bool isSame = true;
-        OnChangedProgress?.Invoke();
-        for (int i = 0; i < goalArgument.Length; i++)
-        {
-            ownArgument[i] = curArgument[i];
-            if (goalArgument[i] != curArgument[i])
-                isSame = false;
-        }
-
-        if (!isSame)
-            return false;
-
-        return true;
-    }
-
     // 플레이어가 도달한 위치 이벤트
-    private bool OnPlayerEvent(ref int[] cur, ref int[] goal, Vector3Int pos)
+    private bool OnPositionEvent(ref int[] cur, ref int[] goal, Vector3Int pos)
     {
         cur[0] = pos.x;
         cur[1] = pos.y;

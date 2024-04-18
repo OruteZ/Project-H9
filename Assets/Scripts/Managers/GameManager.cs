@@ -255,13 +255,11 @@ public class GameManager : Generic.Singleton<GameManager>
             // 퀘스트 완료시 Invoke 함수 호출
             quest.OnQuestEnded.AddListener(InvokeQuestEnd);
 
-            // 아마 여기쯤 StartConversation 연결 예정
-
             // 퀘스트 완료시 시작하는 퀘스트 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.QUEST_END))
-                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedConditionEvented(quest.Index));
+                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedConditionEvented(q.Index));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.QUEST_END))
-                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedGoalEvented(quest.Index));
+                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedGoalEvented(q.Index));
 
             // 퀘스트 조건, 완료의 MOVE_TO 호출, 연결
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))

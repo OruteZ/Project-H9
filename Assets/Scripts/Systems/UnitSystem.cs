@@ -323,7 +323,7 @@ public class UnitSystem : MonoBehaviour
     private void RemoveUnit(Unit unit)
     {
         units.Remove(unit);
-        unit.onMoved.RemoveListener(OnUnitMoved);
+        unit.onMoved.RemoveAllListeners();
     }
 
     public WeaponData GetWeaponData(int index) 

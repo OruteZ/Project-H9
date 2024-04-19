@@ -278,7 +278,7 @@ public class GameManager : Generic.Singleton<GameManager>
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
                 FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>quest.OnCountConditionEvented(u.Index));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
-                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>quest.OnCountConditionEvented(u.Index));
+                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>quest.OnCountGoalEvented(u.Index));
 
             // ����Ʈ ����, �Ϸ���� GET_ITEM, USE_TIEM ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))

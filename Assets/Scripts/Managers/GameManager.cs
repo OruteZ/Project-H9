@@ -264,9 +264,9 @@ public class GameManager : Generic.Singleton<GameManager>
 
             // ����Ʈ ����, �Ϸ��� MOVE_TO ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
-                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener((p) => quest.OnPositionMovedConditionEvented(p.hexPosition));
+                PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedConditionEvented(pos));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
-                FieldSystem.unitSystem.GetPlayer().onMoved.AddListener((p) => quest.OnPositionMovedGoalEvented(p.hexPosition));
+                PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedGoalEvented(pos));
 
             // ����Ʈ ����, �Ϸ���� KILL_LINK ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_LINK))

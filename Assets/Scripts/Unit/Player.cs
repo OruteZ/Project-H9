@@ -14,6 +14,7 @@ public class Player : Unit
         base.SetUp(index, newName, unitStat, newWeapon, unitModel, passiveList);
         
         onMoved.AddListener(OnMoved);
+        onMoved.AddListener((p) =>  PlayerEvents.OnMovedPlayer?.Invoke(p.hexPosition));
         onStatusEffectChanged.AddListener(OnStatusEffectChanged);
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnChanged);

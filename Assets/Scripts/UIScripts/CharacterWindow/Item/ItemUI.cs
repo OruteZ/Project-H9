@@ -81,7 +81,7 @@ public class ItemUI : UISystem
     {
         if (_inventoryInteractionButtons.gameObject.activeSelf is true) return;
         _currentMouseOverElement = ui;
-        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui.GetComponent<InventoryUIElement>().item.GetData(), pos);
+        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui, pos);
     }
     public void OpenInventoryInteraction(GameObject ui)
     {

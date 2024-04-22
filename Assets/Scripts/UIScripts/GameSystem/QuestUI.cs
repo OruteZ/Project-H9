@@ -27,35 +27,55 @@ public class QuestUI : UISystem
     public void AddQuestListUI(QuestInfo info) 
     {
         var ui = _listPool.Set();
-        if (info.QuestType == 1) ui.Instance.transform.SetAsFirstSibling();
+        //if (info.QuestType == 1) ui.Instance.transform.SetAsFirstSibling();
         if (info.GOAL_TYPE == QuestInfo.QUEST_EVENT.MOVE_TO) 
         {
             UIManager.instance.gameSystemUI.pinUI.SetPinUI(new Vector3Int(info.GoalArg[0], info.GoalArg[1], info.GoalArg[2]));
         }
         ui.Instance.GetComponent<QuestListElement>().SetQuestListElement(info);
-        Debug.Log(ui);
+        _listPool.Sort();
 
     }
-    public void DeleteQuestListUI(int idx) 
+    public void DeleteQuestListUI(QuestInfo info) 
     {
-        QuestListElement listElement = _listPool.Find(idx);
+        QuestListElement listElement = _listPool.Find(info.Index);
         if (listElement == null) 
         {
-            Debug.Log("해당 인덱스의 퀘스트가 활성화되어있지 않습니다. 인덱스: " + idx);
+            Debug.Log("해당 인덱스의 퀘스트가 활성화되어있지 않습니다. 인덱스: " + info.Index);
             return;
         }
 
+        _listPool.Sort();
         UIManager.instance.gameSystemUI.pinUI.ClearPinUI();
+
         listElement.CompleteQuestUI(out string rewardText);
-        StopAllCoroutines();
-        StartCoroutine(ShowRewardWindow(rewardText));
+        StartCoroutine(EndQuestUI(rewardText));
     }
-    IEnumerator ShowRewardWindow(string rewardText) 
+    IEnumerator EndQuestUI(string rewardText) 
     {
         _rewardText.GetComponent<TextMeshProUGUI>().text = rewardText;
         _rewardWindow.SetActive(true);
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        var actions = player.GetUnitActionArray();
+        foreach (var a in actions) 
+        {
+            if (a is IdleAction) 
+            {
+                player.SelectAction(a);
+            }
+        }
+        
         yield return new WaitForSeconds(2.0f);
         _rewardWindow.SetActive(false);
+        yield return new WaitForSeconds(2.0f);
+        UIManager.instance.gameSystemUI.conversationUI.StartNextQuest();
+        foreach (var a in actions)
+        {
+            if (a is MoveAction)
+            {
+                player.SelectAction(a);
+            }
+        }
         yield break;
     }
 

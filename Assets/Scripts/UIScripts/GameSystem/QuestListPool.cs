@@ -90,4 +90,32 @@ public class QuestListPool : ObjectPool<RectTransform, QuestListWrapper>
         }
         Debug.LogError("해당 인덱스의 퀘스트가 활성화되어있지 않습니다. 인덱스: " + idx);
     }
+    public void Sort()
+    {
+        List<QuestListWrapper> mainQuests = new List<QuestListWrapper>();
+        List<QuestListWrapper> subQuests = new List<QuestListWrapper>();
+        for (int i = 0; i < _working.Count; i++)
+        {
+            var target = _working[i];
+            if (target.Instance.GetComponent<QuestListElement>().currentQuestInfo.QuestType == 1)
+            {
+                mainQuests.Add(target);
+            }
+            else
+            {
+                subQuests.Add(target);
+            }
+        }
+
+        for (int i = 0; i < mainQuests.Count; i++)
+        {
+            var target = mainQuests[i];
+            target.Instance.SetAsLastSibling();
+        }
+        for (int i = 0; i < subQuests.Count; i++)
+        {
+            var target = subQuests[i];
+            target.Instance.SetAsLastSibling();
+        }
+    }
 }

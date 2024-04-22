@@ -19,6 +19,15 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
         UIManager.instance.characterUI.itemUI.ClosePopupWindow();
     }
 
+    public void SetInventoryUITooltip(GameObject ui, Vector3 pos)
+    {
+        Item item = ui.GetComponent<InventoryUIBaseElement>().item;
+        if (item is not null)
+        {
+            SetInventoryUITooltip(item.GetData(), pos);
+        }
+    }
+
     public void SetInventoryUITooltip(ItemData data, Vector3 pos)
     {
         if (_data == data && GetComponent<RectTransform>().position == pos) return;

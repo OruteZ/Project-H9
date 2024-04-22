@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using TMPro;
 
-public class QuestListElement : UIElement
+public class QuestListElement : UIElement, IPointerClickHandler
 {
     [SerializeField] private GameObject _questNameText;
     [SerializeField] private GameObject _questDescriptText;
@@ -139,5 +140,13 @@ public class QuestListElement : UIElement
         yield return new WaitForSeconds(2.0f);
         CloseUI();
         yield break;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (currentQuestInfo.GOAL_TYPE == QuestInfo.QUEST_EVENT.MOVE_TO)
+        {
+            UIManager.instance.gameSystemUI.pinUI.OnClickPin();
+        }
     }
 }

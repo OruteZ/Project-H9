@@ -242,7 +242,7 @@ public class CombatActionUI : UISystem
             UIManager.instance.SetUILayer(2);
         }
         Player player = FieldSystem.unitSystem.GetPlayer();
-        if ((isDisplayed || isUIClosed) && player is not null && player.GetSelectedAction() is not ItemUsingAction)
+        if ((isDisplayed || isUIClosed) && player is not null /*&& player.GetSelectedAction() is not ItemUsingAction*/)
         {
             player.SelectAction(_idleAction);
             _selectedActionType = CombatActionType.Null;
@@ -426,7 +426,7 @@ public class CombatActionUI : UISystem
     }
     public void OpenInventoryTooltip(GameObject ui, Vector3 pos)
     {
-        _itemTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui.GetComponent<InventoryUICombatElement>().item.GetData(), pos);
+        _itemTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui, pos);
     }
     public override void ClosePopupWindow()
     {
@@ -443,5 +443,12 @@ public class CombatActionUI : UISystem
         }
         Debug.LogError("Can't find inventory ui index");
         return -1;
+    }
+    public void SeleteUsingItem()
+    {
+        if (_itemTooltip.activeSelf)
+        {
+            SetActionBundle(_activeActionBundle, null);
+        }
     }
 }

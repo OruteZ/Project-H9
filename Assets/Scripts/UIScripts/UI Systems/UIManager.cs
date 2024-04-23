@@ -28,7 +28,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     //[HideInInspector]
     public bool isMouseOverUI;
-    public int currentLayer { get; private set; }
+    public int currentLayer;/* { get; private set; }*/
 
     public GameState UIState { get; private set; }
 
@@ -93,8 +93,8 @@ public class UIManager : Generic.Singleton<UIManager>
     void Update()
     {
         //Debug.Log(currentLayer);
+        isMouseOverUI = (EventSystem.current.IsPointerOverGameObject()/* || currentLayer > 1*/);
         if (combatUI.combatActionUI.isCombatUIOpened()) return;
-        isMouseOverUI = (EventSystem.current.IsPointerOverGameObject() || currentLayer > 1);
         if (!combatUI.combatActionUI.isCombatUIOpened() && Input.GetMouseButtonDown(0))
         {
             SetUILayer(GetPointerOverUILayer());

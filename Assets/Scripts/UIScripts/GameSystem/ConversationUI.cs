@@ -86,7 +86,8 @@ public class ConversationUI : UISystem
         _isStartQuest = isQuestStarting;
         if (!_isStartQuest)
         {
-            StartNextQuest();
+            UIManager.instance.gameSystemUI.pinUI.ClearPinUI();
+            StartNextConversation();
         }
     }
     public void ProgressConversation() 
@@ -120,7 +121,7 @@ public class ConversationUI : UISystem
             _isStartQuest = _tmpIsStartQuest;
         }
     }
-    public void StartNextQuest()
+    public void StartNextConversation()
     {
         if (_questInfo == null) return;
         if (_isStartQuest)

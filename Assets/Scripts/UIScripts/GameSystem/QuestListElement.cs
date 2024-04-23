@@ -123,7 +123,14 @@ public class QuestListElement : UIElement, IPointerClickHandler
         if (!_isDestroying) 
         {
             _isDestroying = true;
-            StartCoroutine(CompleteQuestEffect());
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(CompleteQuestEffect());
+            }
+            else 
+            {
+                CloseUI();
+            }
             return;
         }
     }

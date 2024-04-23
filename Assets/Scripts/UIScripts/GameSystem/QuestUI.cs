@@ -46,7 +46,6 @@ public class QuestUI : UISystem
         }
 
         _listPool.Sort();
-        UIManager.instance.gameSystemUI.pinUI.ClearPinUI();
 
         listElement.CompleteQuestUI(out string rewardText);
         StartCoroutine(EndQuestUI(rewardText));
@@ -68,7 +67,7 @@ public class QuestUI : UISystem
         yield return new WaitForSeconds(2.0f);
         _rewardWindow.SetActive(false);
         yield return new WaitForSeconds(2.0f);
-        UIManager.instance.gameSystemUI.conversationUI.StartNextQuest();
+        UIManager.instance.gameSystemUI.conversationUI.StartNextConversation();
         foreach (var a in actions)
         {
             if (a is MoveAction)

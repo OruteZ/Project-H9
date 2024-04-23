@@ -312,7 +312,7 @@ public class GameManager : Generic.Singleton<GameManager>
         #endregion
 
         OnGameStarted?.Invoke();
-        UIManager.instance.gameSystemUI.conversationUI.StartNextQuest();    //load previous quest when start game _ fix later
+        UIManager.instance.gameSystemUI.conversationUI.StartNextConversation();    //load previous quest when start game _ fix later
     }
 
     public void Update()

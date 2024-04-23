@@ -302,7 +302,7 @@ public class GameManager : Generic.Singleton<GameManager>
                 PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedGoalEvented(link.linkIndex));
             
             if (quest.ExpireTurn != -1)
-                UIManager.instance.onTurnStarted.AddListener((u) => { if (u is Player) quest.ProgressExpireTurn();});
+                PlayerEvents.OnProcessedWorldTurn.AddListener((u) => { quest.ProgressExpireTurn();});
         }
         watch.Stop();
         Debug.Log($"Quest link time: {watch.ElapsedMilliseconds}");

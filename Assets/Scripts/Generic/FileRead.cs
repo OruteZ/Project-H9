@@ -103,4 +103,54 @@ public static class FileRead
 
 	    return result;
     }
+
+    // 사용자 언어에 따라 [인덱스, 언어1, 언어2, 언어3 ... ]을 [인덱스, 사용자 언어] 로 반환하는 코드
+    public static bool ParseLocalization(in string PATH, out Dictionary<int, string> localizationData)
+    {
+        localizationData = null;
+        var file = FileRead.Read(PATH, out var columnInfo);
+        if (file is null)
+        {
+            Debug.LogError($"There is no LocalizationTable: {PATH}");
+            return false;
+        }
+
+        int languageIndex = 0;
+        switch (UserAccount.Language)
+        {
+            case ScriptLanguage.Korean:
+                languageIndex = columnInfo["kor"];
+                break;
+            case ScriptLanguage.English:
+                languageIndex = columnInfo["eng"];
+                break;
+            case ScriptLanguage.NULL:
+                Debug.LogError("Localization is doing Before Set UserAccount Language.");
+                break;
+        };
+
+        localizationData = new Dictionary<int, string>();
+        for (int i = 0; i < file.Count; i++)
+        {
+            var line = file[i];
+
+            try
+            {
+                int index = int.Parse(line[0]);
+                string item = line[languageIndex];
+                Debug.Log($"{index} {item}");
+                localizationData.Add(index, item);
+            }
+            catch
+            {
+                string lineSum = "";
+                for (int j = 0; j < line.Count; j++)
+                    lineSum += $"[{j}] {line[j]}\n";
+                Debug.LogError($"Localization Parser error: ({i} line) {lineSum}");
+                break;
+            }
+        }
+
+        return true;
+    }
 }

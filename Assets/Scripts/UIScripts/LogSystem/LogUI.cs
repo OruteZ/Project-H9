@@ -41,7 +41,7 @@ public class LogUI : UISystem
         UIManager.instance.onStartAction.AddListener(StartAction);
         UIManager.instance.onNonHited.AddListener(NonHited);
         PlayerEvents.OnProcessedWorldTurn.AddListener(ProcessedWorldTurn);
-        UIManager.instance.onTurnStarted.AddListener(StartedTurn);
+        UIManager.instance.onStartedCombatTurn.AddListener(StartedCombatTurn);
         //UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat); // 모든 플레이어 스탯변화 추적하기 힘들어 일단 주석처리
         InstantiateText();
         _FixedTextedPanelHeight = 0;
@@ -86,7 +86,7 @@ public class LogUI : UISystem
         UpdateText();
     }
 
-    private void StartedTurn(Unit unit)
+    private void StartedCombatTurn(Unit unit)
     {
         var message = localization[4].Replace("{unitName}", unit.unitName.ToString());
         _builder.Append($"{message}\n");

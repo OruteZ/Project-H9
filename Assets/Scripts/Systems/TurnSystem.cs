@@ -96,7 +96,7 @@ public class TurnSystem : MonoBehaviour
             }
 
             turnOrder[0].currentRound++;
-            UIManager.instance.onTurnStarted.Invoke(turnOrder[0]);
+            UIManager.instance.onStartedCombatTurn.Invoke(turnOrder[0]);
             UIManager.instance.combatUI.turnOrderUI.SetTurnOrderUI(turnOrder);
             turnOwner = turnOrder[0];
         }

@@ -221,8 +221,8 @@ public class QuestInfo
         if (_isCleared) return;
 
         _isInProgress = true;
-        Debug.Log($"[{_index}]'{_questName}' 퀘스트 시작, startScript 시작, UI연동 해야됨");
-        OnQuestStarted.Invoke(this);
+        OnQuestStarted.Invoke(this);     
+        PlayerEvents.OnStartedQuest.Invoke(this);
     }
 
     private void EndQuest()
@@ -245,13 +245,14 @@ public class QuestInfo
         {
             LevelSystem.GetExpImmediately(_expReward);
         }
+        PlayerEvents.OnSuccessQuest.Invoke(this);
     }
 
     private void FailQuest()
     {
         _isInProgress = false;
         _isCleared = true;
-        Debug.Log($"퀘스트 실패! UI 출력");
+        PlayerEvents.OnFailedQuest.Invoke(this);
     }
 
     private bool AccordEvent(ref int[] curArgument, ref int[] goalArgument, int value)

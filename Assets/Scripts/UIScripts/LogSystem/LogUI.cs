@@ -42,6 +42,12 @@ public class LogUI : UISystem
         UIManager.instance.onNonHited.AddListener(NonHited);
         PlayerEvents.OnProcessedWorldTurn.AddListener(ProcessedWorldTurn);
         UIManager.instance.onStartedCombatTurn.AddListener(StartedCombatTurn);
+        PlayerEvents.OnStartedQuest.AddListener(StartedQuest);
+        PlayerEvents.OnSuccessQuest.AddListener(SuccessedQuest);
+        PlayerEvents.OnFailedQuest.AddListener(FailedQuest);
+        IInventory.OnGetItem.AddListener(GotItem);
+        PlayerEvents.OnGetMoney.AddListener(GotMoney);
+        PlayerEvents.OnLearnedSkill.AddListener(LearnedSkill);
         //UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat); // 모든 플레이어 스탯변화 추적하기 힘들어 일단 주석처리
         InstantiateText();
         _FixedTextedPanelHeight = 0;
@@ -140,6 +146,46 @@ public class LogUI : UISystem
         }
         var message = localization[10].Replace("{unitName}", unit.unitName.ToString());
         message = message.Replace("{action}", actionType.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+
+    private void StartedQuest(QuestInfo quest)
+    {
+        var message = localization[100].Replace("{questName}", quest.QuestName.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+    private void SuccessedQuest(QuestInfo quest)
+    {
+        var message = localization[101].Replace("{questName}", quest.QuestName.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+    private void FailedQuest(QuestInfo quest)
+    {
+        var message = localization[102].Replace("{questName}", quest.QuestName.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+    private void GotItem(ItemData item)
+    {
+        ItemScript script = GameManager.instance.itemDatabase.GetItemScript(item.nameIdx);
+        var message = localization[103].Replace("{itemName}", script.GetName().ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+    private void GotMoney(int money)
+    {
+        var message = localization[104].Replace("{money}", money.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+
+    }
+    private void LearnedSkill(SkillInfo skill)
+    {
+        var skillName = SkillManager.instance.GetSkillName(skill.index);
+        var message = localization[105].Replace("{skillName}", skillName.ToString());
         _builder.Append($"{message}\n");
         UpdateText();
     }

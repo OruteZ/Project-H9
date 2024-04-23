@@ -282,14 +282,14 @@ public class GameManager : Generic.Singleton<GameManager>
 
             // ����Ʈ ����, �Ϸ���� GET_ITEM, USE_TIEM ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
-                IInventory.OnGetItem.AddListener(quest.OnCountConditionEvented);
+                IInventory.OnGetItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
-                IInventory.OnGetItem.AddListener(quest.OnCountGoalEvented);
+                IInventory.OnGetItem.AddListener((i) => quest.OnCountGoalEvented(i.id)) ;
 
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
-                IInventory.OnUseItem.AddListener(quest.OnCountConditionEvented);
+                IInventory.OnUseItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
-                IInventory.OnUseItem.AddListener(quest.OnCountGoalEvented);
+                IInventory.OnUseItem.AddListener((i) => quest.OnCountGoalEvented(i.id)) ;
             
             // �÷��̾� �þ� ���� Ÿ��, ��ũ ���Խ��� �̺�Ʈ ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))

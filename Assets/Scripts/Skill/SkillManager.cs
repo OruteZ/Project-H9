@@ -199,6 +199,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
                 _skillPoint -= REQUIRED_SKILL_POINT;
                 _skills[i].LearnSkill();
+                PlayerEvents.OnLearnedSkill?.Invoke(_skills[i].skillInfo);
                 GameManager.instance.AddPlayerSkillListElement(_skills[i].skillInfo);
                 break;
             }

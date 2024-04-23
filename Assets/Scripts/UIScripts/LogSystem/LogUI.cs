@@ -37,10 +37,11 @@ public class LogUI : UISystem
         UIManager.instance.onLevelUp.AddListener(ChangedLevel);
         UIManager.instance.onGetExp.AddListener(ChangedExp);
         UIManager.instance.onTSceneChanged.AddListener(TChangeScene);
-        //UIManager.instance.onActionChanged.AddListener(ChangedAction); // 관련된 Action이 너무 많아 분리하기위해 일단 주석처리
         UIManager.instance.onTakeDamaged.AddListener(TakeDamaged);
         UIManager.instance.onStartAction.AddListener(StartAction);
         UIManager.instance.onNonHited.AddListener(NonHited);
+        PlayerEvents.OnProcessedWorldTurn.AddListener(ProcessedWorldTurn);
+        UIManager.instance.onTurnStarted.AddListener(StartedTurn);
         //UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat); // 모든 플레이어 스탯변화 추적하기 힘들어 일단 주석처리
         InstantiateText();
         _FixedTextedPanelHeight = 0;

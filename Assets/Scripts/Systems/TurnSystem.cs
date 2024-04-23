@@ -16,7 +16,7 @@ public class TurnSystem : MonoBehaviour
     private void Awake()
     {
         turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.worldTurn : 0;
-        onTurnChanged.AddListener(() => { turnNumber++;});
+        onTurnChanged.AddListener(() => { turnNumber++; if (GameManager.instance.CompareState(GameState.World)) GameManager.instance.worldTurn++; });
         onTurnChanged.AddListener(() => UIManager.instance.onTurnChanged.Invoke());
         onTurnChanged.AddListener(() => UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI());
         onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));
@@ -55,10 +55,9 @@ public class TurnSystem : MonoBehaviour
         }
         else
         {
+            onTurnChanged.Invoke(); // 유닛의 n번째 턴이 시작되기 위해 n번째 턴을 먼저 만들고 나서, 유닛의 StartTurn()
             turnOwner.StartTurn();
-            onTurnChanged.Invoke();
         }
-        UIManager.instance.onTurnChanged.Invoke();
     }
     private void CalculateTurnOwner()
     {

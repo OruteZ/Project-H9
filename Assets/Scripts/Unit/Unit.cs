@@ -121,9 +121,6 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     public virtual void StartTurn()
     {
-#if UNITY_EDITOR
-        Debug.Log(unitName + " Turn Started");
-#endif
         onTurnStart.Invoke(this);
         
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out var appliedValue);

@@ -138,7 +138,6 @@ public static class FileRead
             {
                 int index = int.Parse(line[0]);
                 string item = line[languageIndex];
-                Debug.Log($"{index} {item}");
                 localizationData.Add(index, item);
             }
             catch

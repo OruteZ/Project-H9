@@ -237,7 +237,7 @@ public class GameManager : Generic.Singleton<GameManager>
         var qi = new QuestParser();
         Quests = qi.GetQuests();
         watch.Stop();
-        Debug.Log($"Quest parse time: {watch.ElapsedMilliseconds}");
+        Debug.Log($"<color=blue>Quest parse time: {watch.ElapsedMilliseconds}</color>");
 
     }
 
@@ -305,7 +305,7 @@ public class GameManager : Generic.Singleton<GameManager>
                 PlayerEvents.OnProcessedWorldTurn.AddListener((u) => { quest.ProgressExpireTurn();});
         }
         watch.Stop();
-        Debug.Log($"Quest link time: {watch.ElapsedMilliseconds}");
+        Debug.Log($"<color=blue>Quest link time: {watch.ElapsedMilliseconds}</color>");
 
         OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.StartConversation(q.StartConversation); });
         OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.questUI.AddQuestListUI(q); });

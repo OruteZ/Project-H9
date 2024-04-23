@@ -24,7 +24,7 @@ public class QuestInfo
                                 , LINK_IN_SIGHT = 1 << 8 
                                 , TILE_IN_SIGHT = 1 << 9 }; // 퀘스트의 연결을 Bit마스크로 확인용
     public UnityEvent<QuestInfo> OnQuestStarted = new UnityEvent<QuestInfo>();
-    public UnityEvent<QuestInfo> OnQuestEnded = new UnityEvent<QuestInfo>();
+    public UnityEvent<QuestInfo> OnQuestEnded = new UnityEvent<QuestInfo>(); // 퀘스트 성공여부와 관련없이 종료
     public UnityEvent OnChangedProgress = new UnityEvent();
 
     private int _index;
@@ -150,7 +150,7 @@ public class QuestInfo
         if (_isInProgress)
         {
             if (AccordEvent(ref _curGoalArguments, ref _goalArguments, index))
-                EndQuest();
+                SuccessQuest();
         }
     }
 
@@ -171,7 +171,7 @@ public class QuestInfo
         if (_isInProgress)
         {
             if (CountEvent(ref _curGoalArguments, ref _goalArguments, targetIndex))
-                EndQuest();
+                SuccessQuest();
         }
     }
     #endregion
@@ -202,7 +202,7 @@ public class QuestInfo
         if (_isInProgress)
         {
             if (OnPositionEvent(ref _curGoalArguments, ref _goalArguments, position))
-                EndQuest();
+                SuccessQuest();
         }
     }
     
@@ -225,7 +225,7 @@ public class QuestInfo
         PlayerEvents.OnStartedQuest.Invoke(this);
     }
 
-    private void EndQuest()
+    private void SuccessQuest()
     {
         _isInProgress = false;
         _isCleared = true;
@@ -252,6 +252,7 @@ public class QuestInfo
     {
         _isInProgress = false;
         _isCleared = true;
+        OnQuestEnded?.Invoke(this);
         PlayerEvents.OnFailedQuest.Invoke(this);
     }
 

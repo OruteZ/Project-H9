@@ -229,7 +229,6 @@ public class QuestInfo
     {
         _isInProgress = false;
         _isCleared = true;
-        OnQuestEnded?.Invoke(this);
 
         var itemDB = GameManager.instance.itemDatabase;
         if (_moneyReward != 0)
@@ -246,14 +245,15 @@ public class QuestInfo
             LevelSystem.GetExpImmediately(_expReward);
         }
         PlayerEvents.OnSuccessQuest.Invoke(this);
+        OnQuestEnded?.Invoke(this);
     }
 
     private void FailQuest()
     {
         _isInProgress = false;
         _isCleared = true;
-        OnQuestEnded?.Invoke(this);
         PlayerEvents.OnFailedQuest.Invoke(this);
+        OnQuestEnded?.Invoke(this);
     }
 
     private bool AccordEvent(ref int[] curArgument, ref int[] goalArgument, int value)

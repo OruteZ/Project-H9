@@ -104,7 +104,7 @@ public class WorldCamera : MonoBehaviour
     
     public void SetPosition(Vector3 position)
     {
-        Debug.Log("SetPosition : " + position);
+        Debug.Log("Worldcamera SetPosition : " + position);
         
         //ignore y value
         position.y = 0;

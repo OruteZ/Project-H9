@@ -151,7 +151,7 @@ public class CombatActionUI : UISystem
         if (UIManager.instance.UIState != GameState.Combat) return;
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;
-        UIManager.instance.onTurnStarted.AddListener((u) => { if (u is Player) { SetActionBundle(_baseActionBundle, _baseActionBundle); } else { SetActionBundle(null, null); } });
+        UIManager.instance.onStartedCombatTurn.AddListener((u) => { if (u is Player) { SetActionBundle(_baseActionBundle, _baseActionBundle); } else { SetActionBundle(null, null); } });
         FieldSystem.onCombatFinish.AddListener((b) =>SetActionBundle(null, null));
         player.onTurnStart.AddListener((u) => { SetActionBundle(_baseActionBundle, _baseActionBundle); });
         player.onFinishAction.AddListener((a) => { if (a is not IdleAction && IsThereSeletableButton()) { SetActionBundle(_baseActionBundle, _baseActionBundle); } });

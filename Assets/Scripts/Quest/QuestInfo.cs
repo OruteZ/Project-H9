@@ -24,7 +24,7 @@ public class QuestInfo
                                 , LINK_IN_SIGHT = 1 << 8 
                                 , TILE_IN_SIGHT = 1 << 9 }; // 퀘스트의 연결을 Bit마스크로 확인용
     public UnityEvent<QuestInfo> OnQuestStarted = new UnityEvent<QuestInfo>();
-    public UnityEvent<QuestInfo> OnQuestEnded = new UnityEvent<QuestInfo>();
+    public UnityEvent<QuestInfo> OnQuestEnded = new UnityEvent<QuestInfo>(); // 퀘스트 성공여부와 관련없이 종료
     public UnityEvent OnChangedProgress = new UnityEvent();
 
     private int _index;
@@ -40,6 +40,9 @@ public class QuestInfo
     private int _expireTurn;
     private QUEST_EVENT _goalBit;
     private int[] _goalArguments;
+
+    private int[] _pinTile;
+    private int[] _createLink;
 
     // rewards
     private int _moneyReward;
@@ -64,6 +67,7 @@ public class QuestInfo
     public QUEST_EVENT GOAL_TYPE { get => _goalBit; }
     public int[] GoalArg{ get => _goalArguments; }
     public int[] CurArg { get => _curGoalArguments; }
+    public int[] Pin { get => _pinTile; }
     public int CurTurn { get => _curTurn; } // ExpireTurn에서 시작하여 0으로 향할 남은 턴. ex. {CurTurn}턴 남음!
     public int MoneyReward { get => _moneyReward; }
     public int ExpReward { get => _expReward; }
@@ -81,6 +85,8 @@ public class QuestInfo
                     , int expireTurn
                     , QUEST_EVENT goalBit
                     , int[] goalArguments
+                    , int[] pinTile
+                    , int[] createLink
                     , int moneyReward
                     , int expReward
                     , int itemReward
@@ -97,6 +103,8 @@ public class QuestInfo
         _expireTurn = expireTurn;
         _goalBit = goalBit;
         _goalArguments = goalArguments;
+        _pinTile = pinTile;
+        _createLink = createLink;
         _moneyReward = moneyReward;
         _expReward = expReward;
         _itemReward = itemReward;
@@ -150,7 +158,7 @@ public class QuestInfo
         if (_isInProgress)
         {
             if (AccordEvent(ref _curGoalArguments, ref _goalArguments, index))
-                EndQuest();
+                SuccessQuest();
         }
     }
 
@@ -171,7 +179,7 @@ public class QuestInfo
         if (_isInProgress)
         {
             if (CountEvent(ref _curGoalArguments, ref _goalArguments, targetIndex))
-                EndQuest();
+                SuccessQuest();
         }
     }
     #endregion
@@ -202,7 +210,7 @@ public class QuestInfo
         if (_isInProgress)
         {
             if (OnPositionEvent(ref _curGoalArguments, ref _goalArguments, position))
-                EndQuest();
+                SuccessQuest();
         }
     }
     
@@ -221,15 +229,14 @@ public class QuestInfo
         if (_isCleared) return;
 
         _isInProgress = true;
-        Debug.Log($"[{_index}]'{_questName}' 퀘스트 시작, startScript 시작, UI연동 해야됨");
-        OnQuestStarted.Invoke(this);
+        OnQuestStarted.Invoke(this);     
+        PlayerEvents.OnStartedQuest.Invoke(this);
     }
 
-    private void EndQuest()
+    private void SuccessQuest()
     {
         _isInProgress = false;
         _isCleared = true;
-        OnQuestEnded?.Invoke(this);
 
         var itemDB = GameManager.instance.itemDatabase;
         if (_moneyReward != 0)
@@ -245,13 +252,16 @@ public class QuestInfo
         {
             LevelSystem.GetExpImmediately(_expReward);
         }
+        PlayerEvents.OnSuccessQuest.Invoke(this);
+        OnQuestEnded?.Invoke(this);
     }
 
     private void FailQuest()
     {
         _isInProgress = false;
         _isCleared = true;
-        Debug.Log($"퀘스트 실패! UI 출력");
+        PlayerEvents.OnFailedQuest.Invoke(this);
+        OnQuestEnded?.Invoke(this);
     }
 
     private bool AccordEvent(ref int[] curArgument, ref int[] goalArgument, int value)

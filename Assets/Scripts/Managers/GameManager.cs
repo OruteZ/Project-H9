@@ -237,7 +237,7 @@ public class GameManager : Generic.Singleton<GameManager>
         var qi = new QuestParser();
         Quests = qi.GetQuests();
         watch.Stop();
-        Debug.Log($"Quest parse time: {watch.ElapsedMilliseconds}");
+        Debug.Log($"<color=blue>Quest parse time: {watch.ElapsedMilliseconds}</color>");
 
     }
 
@@ -282,14 +282,14 @@ public class GameManager : Generic.Singleton<GameManager>
 
             // ����Ʈ ����, �Ϸ���� GET_ITEM, USE_TIEM ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
-                IInventory.OnGetItem.AddListener(quest.OnCountConditionEvented);
+                IInventory.OnGetItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
-                IInventory.OnGetItem.AddListener(quest.OnCountGoalEvented);
+                IInventory.OnGetItem.AddListener((i) => quest.OnCountGoalEvented(i.id)) ;
 
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
-                IInventory.OnUseItem.AddListener(quest.OnCountConditionEvented);
+                IInventory.OnUseItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
-                IInventory.OnUseItem.AddListener(quest.OnCountGoalEvented);
+                IInventory.OnUseItem.AddListener((i) => quest.OnCountGoalEvented(i.id)) ;
             
             // �÷��̾� �þ� ���� Ÿ��, ��ũ ���Խ��� �̺�Ʈ ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
@@ -302,10 +302,10 @@ public class GameManager : Generic.Singleton<GameManager>
                 PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedGoalEvented(link.linkIndex));
             
             if (quest.ExpireTurn != -1)
-                UIManager.instance.onTurnStarted.AddListener((u) => { if (u is Player) quest.ProgressExpireTurn();});
+                PlayerEvents.OnProcessedWorldTurn.AddListener((u) => { quest.ProgressExpireTurn();});
         }
         watch.Stop();
-        Debug.Log($"Quest link time: {watch.ElapsedMilliseconds}");
+        Debug.Log($"<color=blue>Quest link time: {watch.ElapsedMilliseconds}</color>");
 
         OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.StartConversation(q.StartConversation); });
         OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.questUI.AddQuestListUI(q); });

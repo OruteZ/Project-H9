@@ -16,53 +16,10 @@ public class QuestParser
     }
 
     // private --
-    // ReadFile에 때려박아서 Localization Table은 무조건 이 코드를 거치게 만들까
-    // 사용자 언어에 따라 [인덱스, 언어1, 언어2, 언어3 ... ]을 [인덱스, 사용자 언어] 로 반환하는 코드
     private bool ParseLocalization(out Dictionary<int, string> localizationData)
     {
-        localizationData = null;
-        var file = FileRead.Read(QUEST_LOCALIZATION_PATH, out var columnInfo);
-        if (file is null)
-        {
-            Debug.LogError("There is no QuestLocalizationTable");
+        if (!FileRead.ParseLocalization(QUEST_LOCALIZATION_PATH, out localizationData))
             return false;
-        }
-
-        int languageIndex = 0;
-        switch (UserAccount.Language)
-        {
-            case ScriptLanguage.Korean:
-                languageIndex = columnInfo["kor"];
-                break;
-            case ScriptLanguage.English:
-                languageIndex = columnInfo["eng"];
-                break;
-            case ScriptLanguage.NULL:
-                Debug.LogError("Quest Localization is doing Before Set UserAccount Language.");
-                break;
-        };
-
-        localizationData = new Dictionary<int, string>();
-        for (int i = 0; i < file.Count; i++)
-        {
-            var line = file[i];
-
-            try
-            {
-                int index = int.Parse(line[0]);
-                string item = line[languageIndex];
-                localizationData.Add(index, item);
-            }
-            catch
-            {
-                string lineSum = "";
-                for (int j = 0; j < line.Count; j++)
-                    lineSum += $"[{j}] {line[j]}\n";
-                Debug.LogError($"QuestLocalization error: ({i} line) {lineSum}");
-                break;
-            }
-        }
-
         return true;
     }
 
@@ -98,10 +55,15 @@ public class QuestParser
             string[] sgoalArguemnts = line[10].Replace("\"", "").Split(",");
             int[] goalArguemnts = Array.ConvertAll(sgoalArguemnts, e => int.Parse(e));
 
-            int moneyReward = int.Parse(line[11]);
-            int expReward = int.Parse(line[12]);
-            int itemReward = int.Parse(line[13]);
-            int skillReward = int.Parse(line[14]);
+            string[] sPinTile = line[11].Replace("\"", "").Split(",");
+            int[] pinTile = !IsEmpty(sPinTile) ? Array.ConvertAll(sPinTile, e => int.Parse(e)) : new int[] { };
+            string[] sCreateLink = line[12].Replace("\"", "").Split(",");
+            int[] createLink =  !IsEmpty(sCreateLink)? Array.ConvertAll(sCreateLink, e => int.Parse(e)) : new int[] { };
+
+            int moneyReward = int.Parse(line[13]);
+            int expReward = int.Parse(line[14]);
+            int itemReward = int.Parse(line[15]);
+            int skillReward = int.Parse(line[16]);
 
             questInfos.Add(new QuestInfo(index
                                         , questType
@@ -114,12 +76,20 @@ public class QuestParser
                                         , expireTurn
                                         , goalBit
                                         , goalArguemnts
+                                        , pinTile
+                                        , createLink
                                         , moneyReward
                                         , expReward
                                         , itemReward
                                         , skillReward));
         }
         return true;
+    }
+
+    private bool IsEmpty(string[] args)
+    {
+        if (args.Length == 1 && args[0] == string.Empty) return true;
+        return false;
     }
 
     private QUEST_EVENT ParseQuestEvent(string str)

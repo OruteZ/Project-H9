@@ -25,22 +25,34 @@ public class LogUI : UISystem
     private StringBuilder _builder = new StringBuilder();
     private int _curTextlistIndex = -1;
     private float _beforeHeight = 0;
+    private readonly string LOCALIZATION_PATH = "LogLocalizationTable";
+    private Dictionary<int, string> localization;
 
     private const int LIMIT_TEXT_LENGTH = 500;
 
     private void Awake()
     {
+        FileRead.ParseLocalization(in LOCALIZATION_PATH, out localization);
+
         UIManager.instance.onLevelUp.AddListener(ChangedLevel);
         UIManager.instance.onGetExp.AddListener(ChangedExp);
         UIManager.instance.onTSceneChanged.AddListener(TChangeScene);
-        //UIManager.instance.onActionChanged.AddListener(ChangedAction); // 관련된 Action이 너무 많아 분리하기위해 일단 주석처리
         UIManager.instance.onTakeDamaged.AddListener(TakeDamaged);
         UIManager.instance.onStartAction.AddListener(StartAction);
         UIManager.instance.onNonHited.AddListener(NonHited);
+        PlayerEvents.OnProcessedWorldTurn.AddListener(ProcessedWorldTurn);
+        UIManager.instance.onStartedCombatTurn.AddListener(StartedCombatTurn);
+        PlayerEvents.OnStartedQuest.AddListener(StartedQuest);
+        PlayerEvents.OnSuccessQuest.AddListener(SuccessedQuest);
+        PlayerEvents.OnFailedQuest.AddListener(FailedQuest);
+        IInventory.OnGetItem.AddListener(GotItem);
+        PlayerEvents.OnGetMoney.AddListener(GotMoney);
+        PlayerEvents.OnLearnedSkill.AddListener(LearnedSkill);
         //UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat); // 모든 플레이어 스탯변화 추적하기 힘들어 일단 주석처리
         InstantiateText();
         _FixedTextedPanelHeight = 0;
     }
+
 
     public override void CloseUI()
     {
@@ -62,30 +74,43 @@ public class LogUI : UISystem
 
     private void ChangedExp(int exp)
     {
-        _builder.Append($"{exp} 경험치를 얻었습니다..\n");
+        var message = localization[1].Replace("{exp}", exp.ToString());
+        _builder.Append($"{message}\n");
         UpdateText();
     }
     private void ChangedLevel(int level)
     {
-        _builder.Append($"레벨업! {level} 레벨이 되었습니다.\n");
+        var message = localization[2].Replace("{level}", level.ToString());
+        _builder.Append($"{message}\n");
         UpdateText();
     }
 
-    private void StartedTurn(Unit unit)
+    private void ProcessedWorldTurn(int turn)
     {
-        _builder.Append($"{unit.unitName}의 {unit.currentRound}번째 차례\n");
+        var message = localization[3].Replace("{turn}", turn.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+
+    private void StartedCombatTurn(Unit unit)
+    {
+        var message = localization[4].Replace("{unitName}", unit.unitName.ToString());
+        _builder.Append($"{message}\n");
         UpdateText();
     }
 
     private void TakeDamaged(Unit unit, int damage, eDamageType.Type type)
     {
-        _builder.Append($"{unit.unitName}에게 {damage} 피해.\n");
+        var message = localization[5].Replace("{unitName}", unit.unitName.ToString());
+        message = message.Replace("{damage}", damage.ToString());
+        _builder.Append($"{message}\n");
         UpdateText();
     }
 
     private void NonHited(Unit unit)
     {
-        _builder.Append($"{unit.unitName}은 회피했다.\n");
+        var message = localization[6].Replace("{unitName}", unit.unitName.ToString());
+        _builder.Append($"{message}\n");
         UpdateText();
     }
     
@@ -93,31 +118,75 @@ public class LogUI : UISystem
     {
         if (gameState == GameState.Combat)
         {
-            _builder.Append("- 전투 시작 -\n");
+            var message = localization[7];
+            _builder.Append($"{message}\n");
             UpdateText();
         }
     }
 
     private void StartAction(Unit unit, BaseAction action)
     {
-        string actionType = "UnknownAction";
+        string actionType = localization[11];
         switch (action.GetActionType())
         {
-            case ActionType.Attack: actionType = "공격"; break;
-            case ActionType.Dynamite: actionType = "다이너마이트"; break;
-            case ActionType.Fanning: actionType = "패닝"; break;
-            case ActionType.Hemostasis: actionType = "지혈"; break;
-            case ActionType.Move: actionType = "이동"; break;
-            case ActionType.Reload: actionType = "재장전"; break;
+            case ActionType.Attack: actionType = localization[12]; break;
+            case ActionType.Dynamite: actionType = localization[13]; break;
+            case ActionType.Fanning: actionType = localization[14]; break;
+            case ActionType.Hemostasis: actionType = localization[15]; break;
+            case ActionType.Move: actionType = localization[16]; break;
+            case ActionType.Reload: actionType = localization[17]; break;
             case ActionType.ItemUsing: 
                 int itemIdx = ((ItemUsingAction)action).GetItem().GetData().nameIdx;
                 ItemScript script = GameManager.instance.itemDatabase.GetItemScript(itemIdx);
                 string itemName = script.GetName();
-                actionType = $"{itemName} 사용";
+                var itemMessage = localization[18].Replace("{itemName}", itemName.ToString());
+                actionType = itemMessage;
                 break;
             default: break;
         }
-        _builder.Append($"{unit.unitName}의 {actionType}.\n");
+        var message = localization[10].Replace("{unitName}", unit.unitName.ToString());
+        message = message.Replace("{action}", actionType.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+
+    private void StartedQuest(QuestInfo quest)
+    {
+        var message = localization[100].Replace("{questName}", quest.QuestName.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+    private void SuccessedQuest(QuestInfo quest)
+    {
+        var message = localization[101].Replace("{questName}", quest.QuestName.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+    private void FailedQuest(QuestInfo quest)
+    {
+        var message = localization[102].Replace("{questName}", quest.QuestName.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+    private void GotItem(ItemData item)
+    {
+        ItemScript script = GameManager.instance.itemDatabase.GetItemScript(item.nameIdx);
+        var message = localization[103].Replace("{itemName}", script.GetName().ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+    }
+    private void GotMoney(int money)
+    {
+        var message = localization[104].Replace("{money}", money.ToString());
+        _builder.Append($"{message}\n");
+        UpdateText();
+
+    }
+    private void LearnedSkill(SkillInfo skill)
+    {
+        var skillName = SkillManager.instance.GetSkillName(skill.index);
+        var message = localization[105].Replace("{skillName}", skillName.ToString());
+        _builder.Append($"{message}\n");
         UpdateText();
     }
 

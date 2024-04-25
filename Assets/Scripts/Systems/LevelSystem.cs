@@ -21,6 +21,6 @@
     /// </summary>
     public static void GetExpImmediately(int exp)
     {
-           GameManager.instance.GetExp(exp);
+        GameManager.instance.GetExp(exp);
     }
 }

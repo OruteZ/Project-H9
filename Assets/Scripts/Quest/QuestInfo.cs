@@ -67,6 +67,7 @@ public class QuestInfo
     public QUEST_EVENT GOAL_TYPE { get => _goalBit; }
     public int[] GoalArg{ get => _goalArguments; }
     public int[] CurArg { get => _curGoalArguments; }
+    public int[] Pin { get => _pinTile; }
     public int CurTurn { get => _curTurn; } // ExpireTurn에서 시작하여 0으로 향할 남은 턴. ex. {CurTurn}턴 남음!
     public int MoneyReward { get => _moneyReward; }
     public int ExpReward { get => _expReward; }

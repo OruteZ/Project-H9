@@ -56,9 +56,9 @@ public class QuestParser
             int[] goalArguemnts = Array.ConvertAll(sgoalArguemnts, e => int.Parse(e));
 
             string[] sPinTile = line[11].Replace("\"", "").Split(",");
-            int[] pinTile = Array.ConvertAll(sPinTile, e => int.Parse(e));
+            int[] pinTile = !IsEmpty(sPinTile) ? Array.ConvertAll(sPinTile, e => int.Parse(e)) : new int[] { };
             string[] sCreateLink = line[12].Replace("\"", "").Split(",");
-            int[] createLink = Array.ConvertAll(sCreateLink, e => int.Parse(e));
+            int[] createLink =  !IsEmpty(sCreateLink)? Array.ConvertAll(sCreateLink, e => int.Parse(e)) : new int[] { };
 
             int moneyReward = int.Parse(line[13]);
             int expReward = int.Parse(line[14]);
@@ -84,6 +84,12 @@ public class QuestParser
                                         , skillReward));
         }
         return true;
+    }
+
+    private bool IsEmpty(string[] args)
+    {
+        if (args.Length == 1 && args[0] == string.Empty) return true;
+        return false;
     }
 
     private QUEST_EVENT ParseQuestEvent(string str)

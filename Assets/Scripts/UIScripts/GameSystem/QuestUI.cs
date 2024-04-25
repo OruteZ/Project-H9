@@ -28,9 +28,11 @@ public class QuestUI : UISystem
     {
         var ui = _listPool.Set();
         if (info.QuestType == 1) ui.Instance.transform.SetAsFirstSibling();
-        if (info.GOAL_TYPE == QuestInfo.QUEST_EVENT.MOVE_TO) 
+        Debug.Log($"info Pin null: {info.Pin == null}");
+        Debug.Log($"info Pin len: {info.Pin.Length}");
+        if (info.Pin.Length > 0) 
         {
-            UIManager.instance.gameSystemUI.pinUI.SetPinUI(new Vector3Int(info.GoalArg[0], info.GoalArg[1], info.GoalArg[2]));
+            UIManager.instance.gameSystemUI.pinUI.SetPinUI(new Vector3Int(info.Pin[0], info.Pin[1], info.Pin[2]));
         }
         ui.Instance.GetComponent<QuestListElement>().SetQuestListElement(info);
         Debug.Log(ui);

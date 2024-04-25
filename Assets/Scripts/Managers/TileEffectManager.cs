@@ -15,6 +15,9 @@ public enum TileEffectType
     Hostile = 3,
     Impossible = 4,
     Invisible = 5,
+    Ammunition = 10,
+    Salon = 11,
+    Sheriff = 12,
 }
 
 /// <summary>
@@ -27,6 +30,10 @@ public class TileEffectManager : Singleton<TileEffectManager>
     public GameObject normalEffect;
     public GameObject impossibleEffect;
     public GameObject invisibleEffect;
+
+    public GameObject ammunitionEffect;
+    public GameObject salonEffect;
+    public GameObject sheriffEffect;
 
     private Player _player;
     private Dictionary<Vector3Int, GameObject> _effectsBase;
@@ -113,6 +120,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         var tiles = FieldSystem.tileSystem.GetWalkableTiles(start, range);
         foreach (var tile in tiles)
         {
+            TileEffectType effectType = TileEffectType.Normal;
             if (GameManager.instance.CompareState(GameState.Combat))
             {
                 if (Hex.Distance(tile.hexPosition, _player.hexPosition) > _player.stat.sightRange) continue;
@@ -122,8 +130,15 @@ public class TileEffectManager : Singleton<TileEffectManager>
             {
                 bool containsFog = tile.tileObjects.OfType<FogOfWar>().Any();
                 if (containsFog) continue;
+                foreach (var tileObject in tile.tileObjects)
+                {
+                    if (tileObject is Town)
+                    {
+                        effectType = ((Town)tileObject).GetTileEffectType();
+                    }
+                }
             }
-            SetEffectBase(tile.hexPosition, TileEffectType.Normal);
+            SetEffectBase(tile.hexPosition, effectType);
         }
 
         _curCoroutine = StartCoroutine(MovableTileEffectCoroutine());
@@ -501,6 +516,9 @@ public class TileEffectManager : Singleton<TileEffectManager>
             TileEffectType.Normal => normalEffect,
             TileEffectType.Impossible => impossibleEffect,
             TileEffectType.Invisible => invisibleEffect,
+            TileEffectType.Ammunition => ammunitionEffect,
+            TileEffectType.Salon => salonEffect,
+            TileEffectType.Sheriff => sheriffEffect,
             _ => null
         };
     }
@@ -511,6 +529,9 @@ public class TileEffectManager : Singleton<TileEffectManager>
         if (effect == hostileEffect) return TileEffectType.Hostile;
         if (effect == impossibleEffect) return TileEffectType.Impossible;
         if (effect == invisibleEffect) return TileEffectType.Invisible;
+        if (effect == ammunitionEffect) return TileEffectType.Ammunition;
+        if (effect == salonEffect) return TileEffectType.Salon;
+        if (effect == sheriffEffect) return TileEffectType.Sheriff;
         if (effect == normalEffect) return TileEffectType.Normal;
         return TileEffectType.None;
     }

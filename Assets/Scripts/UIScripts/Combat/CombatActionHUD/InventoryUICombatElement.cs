@@ -9,7 +9,7 @@ public class InventoryUICombatElement : InventoryUIBaseElement, IPointerClickHan
 {
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (item is null) return;
+        if (item == null) return;
         
         if (item is EtcItem)
         {
@@ -25,7 +25,7 @@ public class InventoryUICombatElement : InventoryUIBaseElement, IPointerClickHan
         {
             GameManager.instance.playerInventory.UseItem(item.GetData().itemType, UIManager.instance.combatUI.combatActionUI.GetInventoryUIIndex(gameObject));
         }
-        UIManager.instance.combatUI.combatActionUI.CloseUI();
+        UIManager.instance.combatUI.combatActionUI.SeleteUsingItem();
     }
     public void OnPointerEnter(PointerEventData eventData)
     {

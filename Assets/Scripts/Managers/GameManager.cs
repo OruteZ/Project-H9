@@ -307,12 +307,12 @@ public class GameManager : Generic.Singleton<GameManager>
         watch.Stop();
         Debug.Log($"<color=blue>Quest link time: {watch.ElapsedMilliseconds}</color>");
 
-        OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.StartConversation(q.StartConversation); });
-        OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.questUI.AddQuestListUI(q); });
-        OnNotifiedQuestEnd.AddListener((q) => { UIManager.instance.gameSystemUI.questUI.DeleteQuestListUI(q.Index); });
+        OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.PrepareToStartConversation(q, true); });
+        OnNotifiedQuestEnd.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.PrepareToStartConversation(q, false); });
         #endregion
 
         OnGameStarted?.Invoke();
+        UIManager.instance.gameSystemUI.conversationUI.StartNextConversation();    //load previous quest when start game _ fix later
     }
 
     public void Update()

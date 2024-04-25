@@ -9,6 +9,11 @@ public class ConversationUI : UISystem
     [SerializeField] private GameObject _speakerText;
     [SerializeField] private GameObject _contentsText;
 
+    private QuestInfo _questInfo;
+    private bool _isStartQuest;
+
+    private QuestInfo _tmpQuestInfo;
+    private bool _tmpIsStartQuest;
     private List<ConversationInfo> _conversationInfo;
     private List<ConversationInfo> _groupInfo;
     private int _sequenceNumber;
@@ -23,6 +28,8 @@ public class ConversationUI : UISystem
             Debug.LogError("대화 테이블을 찾을 수 없습니다.");
             return;
         }
+        _questInfo = null;
+        _isStartQuest = true;
         _groupInfo = null;
         _sequenceNumber = 0;
 
@@ -64,26 +71,24 @@ public class ConversationUI : UISystem
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) 
-        {
-            StartConversation(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             ProgressConversation();
         }
     }
 
-    public void StartConversation(int group) 
+    public void PrepareToStartConversation(QuestInfo info, bool isQuestStarting)
     {
-        //UIManager.instance.gameSystemUI.conversationUI.StartConversation(1);
-        _groupInfo = GetConversationGroup(group);
-        if (_groupInfo == null) return;
+        _tmpQuestInfo = _questInfo;
+        _tmpIsStartQuest = _isStartQuest;
 
-        _conversationWindow.SetActive(true);
-        _sequenceNumber = 0;
-        _speakerText.GetComponent<TextMeshProUGUI>().text = _groupInfo[0].speakerName;
-        _contentsText.GetComponent<TextMeshProUGUI>().text = _groupInfo[0].conversationText;
+        _questInfo = info;
+        _isStartQuest = isQuestStarting;
+        if (!_isStartQuest)
+        {
+            UIManager.instance.gameSystemUI.pinUI.ClearPinUI();
+            StartNextConversation();
+        }
     }
     public void ProgressConversation() 
     {
@@ -99,11 +104,44 @@ public class ConversationUI : UISystem
             _contentsText.GetComponent<TextMeshProUGUI>().text = _groupInfo[_sequenceNumber].conversationText;
         }
     }
-    private void EndConversation() 
+    private void EndConversation()
     {
         _groupInfo = null;
         _sequenceNumber = 0;
         _conversationWindow.SetActive(false);
+
+        if (_isStartQuest)
+        {
+            UIManager.instance.gameSystemUI.questUI.AddQuestListUI(_questInfo);
+        }
+        else
+        {
+            UIManager.instance.gameSystemUI.questUI.DeleteQuestListUI(_questInfo);
+            _questInfo = _tmpQuestInfo;
+            _isStartQuest = _tmpIsStartQuest;
+        }
+    }
+    public void StartNextConversation()
+    {
+        if (_questInfo == null) return;
+        if (_isStartQuest)
+        {
+            _groupInfo = GetConversationGroup(_questInfo.StartConversation);
+        }
+        else
+        {
+            _groupInfo = GetConversationGroup(_questInfo.EndConversation);
+        }
+        if (_groupInfo == null)
+        {
+            EndConversation();
+            return;
+        }
+
+        _conversationWindow.SetActive(true);
+        _sequenceNumber = 0;
+        _speakerText.GetComponent<TextMeshProUGUI>().text = _groupInfo[0].speakerName;
+        _contentsText.GetComponent<TextMeshProUGUI>().text = _groupInfo[0].conversationText;
     }
 }
 

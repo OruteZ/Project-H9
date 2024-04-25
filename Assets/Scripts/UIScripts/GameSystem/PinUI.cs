@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PinUI : UISystem
 {
@@ -19,7 +20,7 @@ public class PinUI : UISystem
     {
         if (_isTracking)
         {
-            _pinImage.SetActive(GameManager.instance.CompareState(GameState.World));
+            _pinImage.SetActive(SceneManager.GetActiveScene().name == "WorldScene" || SceneManager.GetActiveScene().name == "UITestScene");
             Vector3 screenPos = Camera.main.WorldToScreenPoint(_targetPos);
             Vector3 correctedPos = ScreenOverCorrector.GetCorrectedUIPositionWithoutConsideringUISize(GetComponent<Canvas>(), screenPos, _pinImage.GetComponent<RectTransform>().sizeDelta, _pinImage.GetComponent<RectTransform>().pivot);
 

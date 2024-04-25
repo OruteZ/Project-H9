@@ -165,7 +165,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     }
 
     private Unit _killer;
-    public void DeadCall(Unit unit)
+    protected virtual void DeadCall(Unit unit)
     {
         onDead.Invoke(this);
 
@@ -453,6 +453,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     public void FinishAction()
     {
         var action = activeUnitAction;
+
         if(activeUnitAction is not MoveAction) ConsumeCost(activeUnitAction.GetCost());
         
         ClearBusy();

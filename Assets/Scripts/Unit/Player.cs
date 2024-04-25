@@ -19,7 +19,10 @@ public class Player : Unit
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnChanged);
         onSelectedChanged.AddListener(() => UIManager.instance.onActionChanged.Invoke());
-        
+        PlayerEvents.OnStartedQuest.AddListener((quest) => OnForceFinish());
+        PlayerEvents.OnSuccessQuest.AddListener((quest) => OnForceFinish());
+        PlayerEvents.OnFailedQuest.AddListener((quest) => OnForceFinish());
+
         TileEffectManager.instance.SetPlayer(this);
 
         FieldSystem.onStageAwake.AddListener(ReloadSight);
@@ -44,7 +47,6 @@ public class Player : Unit
             }
         }
 
-
         if (Input.GetMouseButtonDown(0) && isMouseOnTile) 
         {
             var actionSuccess = TryExecuteUnitAction(onMouseTilePos);
@@ -57,6 +59,14 @@ public class Player : Unit
         {
             SelectAction(GetAction<IdleAction>());
         }
+    }
+
+    protected override void DeadCall(Unit unit)
+    {
+        PlayerEvents.OnStartedQuest.RemoveListener((quest) => OnForceFinish());
+        PlayerEvents.OnSuccessQuest.AddListener((quest) => OnForceFinish());
+        PlayerEvents.OnFailedQuest.AddListener((quest) => OnForceFinish());
+        base.DeadCall(unit);
     }
 
     public override void StartTurn()
@@ -187,6 +197,11 @@ public class Player : Unit
     private void OnStatusEffectChanged()
     {
         ReloadSight();
+    }
+
+    private void OnForceFinish()
+    {
+        this.activeUnitAction?.ForceFinish();
     }
     #endregion
 }

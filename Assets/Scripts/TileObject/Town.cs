@@ -7,7 +7,7 @@ public class Town : TileObject
     {
         NULL,
         Ammunition,
-        Salon,
+        Saloon,
         Sheriff
     }
     private int _townIndex;
@@ -52,7 +52,7 @@ public class Town : TileObject
         {
             {BuildingType.NULL,         TileEffectType.Normal },
             {BuildingType.Ammunition,   TileEffectType.Ammunition },
-            {BuildingType.Salon,        TileEffectType.Salon },
+            {BuildingType.Saloon,        TileEffectType.Saloon },
             {BuildingType.Sheriff,      TileEffectType.Sheriff },
         };
         effect.TryGetValue(buildingType, out TileEffectType effType);

@@ -16,7 +16,7 @@ public enum TileEffectType
     Impossible = 4,
     Invisible = 5,
     Ammunition = 10,
-    Salon = 11,
+    Saloon = 11,
     Sheriff = 12,
 }
 
@@ -517,7 +517,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             TileEffectType.Impossible => impossibleEffect,
             TileEffectType.Invisible => invisibleEffect,
             TileEffectType.Ammunition => ammunitionEffect,
-            TileEffectType.Salon => salonEffect,
+            TileEffectType.Saloon => salonEffect,
             TileEffectType.Sheriff => sheriffEffect,
             _ => null
         };
@@ -530,7 +530,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
         if (effect == impossibleEffect) return TileEffectType.Impossible;
         if (effect == invisibleEffect) return TileEffectType.Invisible;
         if (effect == ammunitionEffect) return TileEffectType.Ammunition;
-        if (effect == salonEffect) return TileEffectType.Salon;
+        if (effect == salonEffect) return TileEffectType.Saloon;
         if (effect == sheriffEffect) return TileEffectType.Sheriff;
         if (effect == normalEffect) return TileEffectType.Normal;
         return TileEffectType.None;

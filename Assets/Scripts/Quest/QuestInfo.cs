@@ -41,6 +41,9 @@ public class QuestInfo
     private QUEST_EVENT _goalBit;
     private int[] _goalArguments;
 
+    private int[] _pinTile;
+    private int[] _createLink;
+
     // rewards
     private int _moneyReward;
     private int _expReward;
@@ -81,6 +84,8 @@ public class QuestInfo
                     , int expireTurn
                     , QUEST_EVENT goalBit
                     , int[] goalArguments
+                    , int[] pinTile
+                    , int[] createLink
                     , int moneyReward
                     , int expReward
                     , int itemReward
@@ -97,6 +102,8 @@ public class QuestInfo
         _expireTurn = expireTurn;
         _goalBit = goalBit;
         _goalArguments = goalArguments;
+        _pinTile = pinTile;
+        _createLink = createLink;
         _moneyReward = moneyReward;
         _expReward = expReward;
         _itemReward = itemReward;

@@ -55,10 +55,15 @@ public class QuestParser
             string[] sgoalArguemnts = line[10].Replace("\"", "").Split(",");
             int[] goalArguemnts = Array.ConvertAll(sgoalArguemnts, e => int.Parse(e));
 
-            int moneyReward = int.Parse(line[11]);
-            int expReward = int.Parse(line[12]);
-            int itemReward = int.Parse(line[13]);
-            int skillReward = int.Parse(line[14]);
+            string[] sPinTile = line[11].Replace("\"", "").Split(",");
+            int[] pinTile = Array.ConvertAll(sPinTile, e => int.Parse(e));
+            string[] sCreateLink = line[12].Replace("\"", "").Split(",");
+            int[] createLink = Array.ConvertAll(sCreateLink, e => int.Parse(e));
+
+            int moneyReward = int.Parse(line[13]);
+            int expReward = int.Parse(line[14]);
+            int itemReward = int.Parse(line[15]);
+            int skillReward = int.Parse(line[16]);
 
             questInfos.Add(new QuestInfo(index
                                         , questType
@@ -71,6 +76,8 @@ public class QuestParser
                                         , expireTurn
                                         , goalBit
                                         , goalArguemnts
+                                        , pinTile
+                                        , createLink
                                         , moneyReward
                                         , expReward
                                         , itemReward

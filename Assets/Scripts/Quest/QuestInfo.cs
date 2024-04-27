@@ -231,6 +231,14 @@ public class QuestInfo
         _isInProgress = true;
         OnQuestStarted.Invoke(this);     
         PlayerEvents.OnStartedQuest.Invoke(this);
+
+        int linkIdx = _createLink[0];
+        Vector3Int linkHex = new Vector3Int(_createLink[1], _createLink[2], _createLink[3]);
+        
+        if (linkIdx <= 0)
+        {
+            FieldSystem.tileSystem.AddLink(linkHex, linkIdx);
+        }
     }
 
     private void SuccessQuest()

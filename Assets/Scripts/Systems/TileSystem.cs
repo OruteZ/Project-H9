@@ -157,7 +157,7 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// Runtime에 Link를 추가합니다.
     /// </summary>
-    public void AddLink(Vector3Int position)
+    public void AddLink(Vector3Int position, int linkIndex)
     {
         //if link that has same position with tile already exist, skip
         var tile = GetTile(position);

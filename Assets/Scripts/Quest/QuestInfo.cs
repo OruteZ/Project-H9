@@ -232,12 +232,15 @@ public class QuestInfo
         OnQuestStarted.Invoke(this);     
         PlayerEvents.OnStartedQuest.Invoke(this);
 
-        int linkIdx = _createLink[0];
-        Vector3Int linkHex = new Vector3Int(_createLink[1], _createLink[2], _createLink[3]);
-        
-        if (linkIdx <= 0)
+        if (_createLink is { Length: > 0 })
         {
-            FieldSystem.tileSystem.AddLink(linkHex, linkIdx);
+            int linkIdx = _createLink[0];
+            Vector3Int linkHex = new Vector3Int(_createLink[1], _createLink[2], _createLink[3]);
+
+            if (linkIdx <= 0)
+            {
+                FieldSystem.tileSystem.AddLink(linkHex, linkIdx);
+            }
         }
     }
 

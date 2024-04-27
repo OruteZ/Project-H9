@@ -249,7 +249,7 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             // ���� ���۽� �����ϴ� ����Ʈ ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GAME_START))
-                OnGameStarted.AddListener(quest.OnOccurConditionEvented);
+                OnGameStarted.AddListener(quest.OnConditionEventOccured);
 
             // ����Ʈ ���۽� Invoke �Լ� ȣ��
             quest.OnQuestStarted.AddListener(InvokeQuestStart);
@@ -258,15 +258,15 @@ public class GameManager : Generic.Singleton<GameManager>
 
             // ����Ʈ �Ϸ�� �����ϴ� ����Ʈ ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.QUEST_END))
-                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedConditionEvented(q.Index));
+                OnNotifiedQuestEnd.AddListener((q) => quest.OnConditionEventOccured(q.Index));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.QUEST_END))
-                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedGoalEvented(q.Index));
+                OnNotifiedQuestEnd.AddListener((q) => quest.OnGoalEventOccured(q.Index));
 
             // ����Ʈ ����, �Ϸ��� MOVE_TO ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
-                PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedConditionEvented(pos));
+                PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedConditionEvent(pos));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
-                PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedGoalEvented(pos));
+                PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedGoalEvent(pos));
 
             // ����Ʈ ����, �Ϸ���� KILL_LINK ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
@@ -293,13 +293,13 @@ public class GameManager : Generic.Singleton<GameManager>
             
             // �÷��̾� �þ� ���� Ÿ��, ��ũ ���Խ��� �̺�Ʈ ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
-                PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedConditionEvented(tile.hexPosition));
+                PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedConditionEvent(tile.hexPosition));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
-                PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedGoalEvented(tile.hexPosition));
+                PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedGoalEvent(tile.hexPosition));
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.LINK_IN_SIGHT))
-                PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedConditionEvented(link.linkIndex));
+                PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnConditionEventOccured(link.linkIndex));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.LINK_IN_SIGHT))
-                PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedGoalEvented(link.linkIndex));
+                PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnGoalEventOccured(link.linkIndex));
             
             if (quest.ExpireTurn != -1)
                 PlayerEvents.OnProcessedWorldTurn.AddListener((u) => { quest.ProgressExpireTurn();});

@@ -137,7 +137,7 @@ public class QuestInfo
 
     // Game Start 처럼 무슨 일이 1회성으로 벌어진 이벤트.
     // Game start 외에 쓸 곳이 없는데, Game start 자체가 임시로 해둔 것이라 빼는 것도 고려 중.
-    public void OnOccurConditionEvented()
+    public void OnConditionEventOccured()
     {
         if (!_isInProgress)
         {
@@ -145,7 +145,7 @@ public class QuestInfo
         }
     }
 
-    public void OnAccordedConditionEvented(int index)
+    public void OnConditionEventOccured(int index)
     {
         if (!_isInProgress)
         {
@@ -153,7 +153,7 @@ public class QuestInfo
                 StartQuest();
         }
     }
-    public void OnAccordedGoalEvented(int index)
+    public void OnGoalEventOccured(int index)
     {
         if (_isInProgress)
         {
@@ -186,7 +186,7 @@ public class QuestInfo
 
     // 플레이어 Move 인자는 더 추가 될 가능성이 있어서 별도로 빼 둠
     // 플레이어가 World에 있을 때만, 월드가 여러 개(지역별로) 나누어질 가능성이 있어서 해당 인덱스도.
-    public void OnPositionMovedConditionEvented(Vector3Int position)
+    public void OnPositionMovedConditionEvent(Vector3Int position)
     {
         if (_isCleared) return;
 
@@ -200,7 +200,7 @@ public class QuestInfo
         }
     }
 
-    public void OnPositionMovedGoalEvented(Vector3Int position)
+    public void OnPositionMovedGoalEvent(Vector3Int position)
     {
         if (_isCleared) return;
 
@@ -244,7 +244,7 @@ public class QuestInfo
         if (_itemReward != 0)
             if (GameManager.instance.playerInventory.TryAddItem(Item.CreateItem(itemDB.GetItemData(_itemReward))))
             {
-                Debug.Log($"퀘스트 완료 아이템을 받을 수 없습니다.: itemcode '{_itemReward}'");
+                Debug.Log($"퀘스트 완료 아이템을 받을 수 없습니다.: item code '{_itemReward}'");
             }
         if (_skillReward != 0)
             SkillManager.instance.LearnSkill(_skillReward);

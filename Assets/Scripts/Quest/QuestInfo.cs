@@ -232,7 +232,7 @@ public class QuestInfo
         OnQuestStarted.Invoke(this);     
         PlayerEvents.OnStartedQuest.Invoke(this);
 
-        if (_createLink is { Length: > 0 })
+        if (_createLink is { Length: 4 })
         {
             int linkIdx = _createLink[0];
             Vector3Int linkHex = new Vector3Int(_createLink[1], _createLink[2], _createLink[3]);

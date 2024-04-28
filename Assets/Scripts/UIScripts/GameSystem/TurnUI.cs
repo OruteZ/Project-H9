@@ -100,7 +100,11 @@ public class TurnUI : UISystem
         if (GameManager.instance.CompareState(GameState.Combat) && FieldSystem.unitSystem.IsCombatFinish(out var none))
             return false;
         if (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive()) return false;
-        
+        if (GameManager.instance.CompareState(GameState.World) 
+            && FieldSystem.unitSystem.GetPlayer().currentActionPoint != 0 
+            && FieldSystem.unitSystem.GetPlayer().GetSelectedAction() is not MoveAction) 
+            return false;
+
         return true;
     }
     private bool IsButtonHighlighted() 

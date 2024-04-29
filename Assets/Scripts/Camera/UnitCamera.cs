@@ -6,10 +6,11 @@ using UnityEngine;
 public class UnitCamera : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+    [SerializeField] private CinemachineTargetGroup _targetGroup;
 
     private Unit _unit;
 
-    public void SetTarget(Unit target)
+    public void SetOwner(Unit target)
     {
         _unit = target;
         _virtualCamera.Follow = target.transform;
@@ -23,6 +24,16 @@ public class UnitCamera : MonoBehaviour
         target.onFinishShoot.AddListener((a,b,c,d) =>
         {
             ShakeCamera(5, 1, 0.1f);
+        });
+        
+        target.onActionStart.AddListener((a, t) =>
+        {
+            
+        });
+        
+        target.onFinishAction.AddListener((a) =>
+        {
+            
         });
     }
 
@@ -59,5 +70,15 @@ public class UnitCamera : MonoBehaviour
     public Unit GetUnit()
     {
         return _unit;
+    }
+
+    private void CatchTarget(Transform target)
+    {
+        _targetGroup.AddMember(target, 1, 1);
+    }
+
+    private void RemoveTarget(Transform target)
+    {
+        _targetGroup.RemoveMember(target);
     }
 }

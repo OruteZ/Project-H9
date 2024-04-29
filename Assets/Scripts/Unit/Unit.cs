@@ -54,6 +54,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     public static readonly UnityEvent<Unit> onAnyUnitActionFinished = new UnityEvent<Unit>();
     [HideInInspector] public UnityEvent<Unit> onTurnStart; // me
     [HideInInspector] public UnityEvent<Unit> onTurnEnd; // me
+    [HideInInspector] public UnityEvent<IUnitAction, Vector3Int> onActionStart; // action, target position
     [HideInInspector] public UnityEvent<IUnitAction> onFinishAction; //action
     [HideInInspector] public UnityEvent onBusyChanged;
     [HideInInspector] public UnityEvent<int, int> onCostChanged; // before, after
@@ -351,6 +352,7 @@ public abstract class Unit : MonoBehaviour, IUnit
             return false;
         }
 
+        onActionStart.Invoke(activeUnitAction, targetPosition);
         activeUnitAction.Execute();
         return true;
     }

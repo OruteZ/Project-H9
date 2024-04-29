@@ -136,9 +136,13 @@ public class TownUI : UISystem
 
     public void AddTownIcon(Vector3Int pos, Town.BuildingType type) 
     {
-        Vector3Int iconPos = new Vector3Int(pos.x, pos.y - 1, pos.z + 1);
+        Vector3Int iconPos = new Vector3Int(pos.x, pos.y - 2, pos.z + 2);
         Tile t = FieldSystem.tileSystem.GetTile(iconPos);
 
+        if (t == null) 
+        {
+            Debug.LogError("Town Icon을 띄울 타일을 찾을 수 없습니다.");
+        }
         var target = _iconPool.Set();
         target.Init(t, type);
 

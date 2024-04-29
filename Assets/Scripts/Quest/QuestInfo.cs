@@ -145,7 +145,7 @@ public class QuestInfo
         }
     }
 
-    public void OnConditionEventOccured(int index)
+    public void OnAccordedConditionEvent(int index)
     {
         if (!_isInProgress)
         {
@@ -153,7 +153,7 @@ public class QuestInfo
                 StartQuest();
         }
     }
-    public void OnGoalEventOccured(int index)
+    public void OnAccordedGoalEvent(int index)
     {
         if (_isInProgress)
         {
@@ -237,7 +237,7 @@ public class QuestInfo
             int linkIdx = _createLink[0];
             Vector3Int linkHex = new Vector3Int(_createLink[1], _createLink[2], _createLink[3]);
 
-            if (linkIdx <= 0)
+            if (linkIdx > 0)
             {
                 FieldSystem.tileSystem.AddLink(linkHex, linkIdx);
             }

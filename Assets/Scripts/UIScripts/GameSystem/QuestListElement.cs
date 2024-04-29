@@ -144,14 +144,14 @@ public class QuestListElement : UIElement, IPointerClickHandler
         //_questRewardText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Italic;
         //_questRewardText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.5f);
         CloseUI();
         yield break;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (currentQuestInfo.GOAL_TYPE == QuestInfo.QUEST_EVENT.MOVE_TO)
+        if (currentQuestInfo.Pin != null)
         {
             UIManager.instance.gameSystemUI.pinUI.OnClickPin();
         }

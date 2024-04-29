@@ -91,6 +91,8 @@ public class TownUI : UISystem
         }
         if (_currentBuildingType == _previousBuildingType) return;
         if (UIManager.instance.gameSystemUI.conversationUI.isConverstating) return;
+        IUnitAction selectedAction = player.GetSelectedAction();
+        if (selectedAction is not MoveAction || ((MoveAction)selectedAction).isThereAPathLeft()) return;
 
         //player.GetSelectedAction().ForceFinish();
 

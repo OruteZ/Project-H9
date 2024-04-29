@@ -65,9 +65,9 @@ public class QuestUI : UISystem
             }
         }
         
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.5f);
         _rewardWindow.SetActive(false);
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(.5f);
         UIManager.instance.gameSystemUI.conversationUI.StartNextConversation();
         foreach (var a in actions)
         {

@@ -101,6 +101,9 @@ public class Link : TileObject
         var animator = model.GetComponent<Animator>();
         animator.runtimeAnimatorController = 
             Resources.Load<RuntimeAnimatorController>("Animator/Const Standing Idle");
+        
+        //reload renderer
+        InitRenderer();
     }
 
 #if UNITY_EDITOR

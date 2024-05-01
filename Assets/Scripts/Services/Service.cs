@@ -8,6 +8,9 @@ public static class Service
 
     static Service()
     {
+        // if current scene name is "Combat Map Editor" return
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Combat Map Editor") return;
+        
         var prefabObj = Resources.Load($"Prefab/Canvas/WorldTextCanvas") as GameObject;
         var worldCanvasObj = GameObject.Instantiate(prefabObj, Vector3.zero, Quaternion.identity);
         _rootCanvas = worldCanvasObj.transform;

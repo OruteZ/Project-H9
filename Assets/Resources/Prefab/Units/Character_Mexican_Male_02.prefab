@@ -1617,6 +1617,7 @@ GameObject:
   - component: {fileID: 4012609423791922}
   - component: {fileID: 95422791352189330}
   - component: {fileID: -3395357137408257726}
+  - component: {fileID: -27721959506520483}
   m_Layer: 0
   m_Name: Character_Mexican_Male_02
   m_TagString: Untagged
@@ -1683,6 +1684,22 @@ MonoBehaviour:
   weaponModel: {fileID: 0}
   animator: {fileID: 0}
   unit: {fileID: 0}
+--- !u!114 &-27721959506520483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930506485524798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43c545caffa489a8c14d23766c56e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunFireClip: {fileID: 8300000, guid: aeb9460740171724fb067bc605a67995, type: 3}
+  gunReloadClip: {fileID: 0}
+  gunReloadEndClip: {fileID: 0}
+  stepClip: {fileID: 8300000, guid: f55f1653ab2903c41b1627afcf0ed05f, type: 3}
 --- !u!1 &1936861966708270
 GameObject:
   m_ObjectHideFlags: 0

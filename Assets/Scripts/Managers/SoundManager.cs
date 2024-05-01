@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Generic;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
@@ -5,7 +6,7 @@ using UnityEngine.UI.Extensions;
 public class SoundManager : Singleton<SoundManager>
 {
     public AudioSource bgmSource;
-    public AudioSource sfxSource;
+    private List<AudioSource> _sfxSources;
 
     public AudioClip[] bgmClips;
     public AudioClip[] sfxClips;
@@ -18,8 +19,9 @@ public class SoundManager : Singleton<SoundManager>
     protected override void Awake()
     {
         base.Awake();
-        bgmSource = gameObject.GetOrAddComponent<AudioSource>();
-        sfxSource = gameObject.GetOrAddComponent<AudioSource>();
+        
+        bgmSource = gameObject.AddComponent<AudioSource>();
+        _sfxSources = new List<AudioSource>();
     }
 
     public void PlayBGM(int index)
@@ -35,16 +37,27 @@ public class SoundManager : Singleton<SoundManager>
         bgmSource.loop = true;
         bgmSource.Play();
     }
-
-    public void PlaySFX(int index)
+    
+    public void PlayBGM(string name)
     {
-        if (index < 0 || index >= sfxClips.Length)
+        for (int i = 0; i < bgmClips.Length; i++)
         {
-            Debug.LogError("SFX index out of range");
+            if (bgmClips[i].name != name) continue;
+            
+            PlayBGM(i);
             return;
         }
+        Debug.LogError("BGM " + name + " not found");
+    }
 
-        sfxSource.PlayOneShot(sfxClips[index], sfxVolume);
+    public void PlaySFX(AudioClip clip, Vector3 position)
+    {
+        //null check
+        if (clip == null) return;
+        
+        // 임시로 해당 위치에 효과음을 재생하는 코드, 차후 게임오브젝트를 직접 생성해서 만들어내고 
+        // 오브젝트 풀링을 통해 관리하는 방식으로 변경해야 함
+        AudioSource.PlayClipAtPoint(clip, position, sfxVolume);
     }
 
     public void StopBGM()
@@ -52,16 +65,11 @@ public class SoundManager : Singleton<SoundManager>
         bgmSource.Stop();
     }
 
-    public void StopSFX()
-    {
-        sfxSource.Stop();
-    }
-
     public void Mute()
     {
         isMute = !isMute;
         bgmSource.mute = isMute;
-        sfxSource.mute = isMute;
+        // sfxSource.mute = isMute;
     }
 
     public void SetBGMVolume(float volume)
@@ -73,6 +81,6 @@ public class SoundManager : Singleton<SoundManager>
     public void SetSFXVolume(float volume)
     {
         sfxVolume = volume;
-        sfxSource.volume = sfxVolume;
+        // sfxSource.volume = sfxVolume;
     }
 }

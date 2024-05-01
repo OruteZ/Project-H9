@@ -1267,6 +1267,7 @@ GameObject:
   - component: {fileID: 4725603330582784}
   - component: {fileID: 95422497259041482}
   - component: {fileID: 4218366811535200333}
+  - component: {fileID: -5466530646577208914}
   m_Layer: 0
   m_Name: Character_NativeAmericanWarrior_Male_03
   m_TagString: Untagged
@@ -1333,6 +1334,22 @@ MonoBehaviour:
   weaponModel: {fileID: 0}
   animator: {fileID: 0}
   unit: {fileID: 0}
+--- !u!114 &-5466530646577208914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593236879946318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43c545caffa489a8c14d23766c56e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunFireClip: {fileID: 8300000, guid: aeb9460740171724fb067bc605a67995, type: 3}
+  gunReloadClip: {fileID: 0}
+  gunReloadEndClip: {fileID: 0}
+  stepClip: {fileID: 8300000, guid: f55f1653ab2903c41b1627afcf0ed05f, type: 3}
 --- !u!1 &1593880198063502
 GameObject:
   m_ObjectHideFlags: 0

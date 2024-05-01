@@ -75,7 +75,7 @@ public class Link : TileObject
     private void ReloadModel()
     {
         //load link database
-        _linkDatabase ??= Resources.Load<LinkDatabase>("Database/LinkDatabase");
+        _linkDatabase ??= Resources.Load<LinkDatabase>($"Database/LinkDatabase");
         //check null
         if (_linkDatabase == null)
         {
@@ -113,6 +113,10 @@ public class Link : TileObject
         if (_linkIndex == 0)
         {
             Debug.LogError("link index가 0입니다! 플레이를 끄고 빨리 고치세요 휴먼!");
+        }
+        if (combatMapIndex == 0)
+        {
+            Debug.LogError("combat map index가 0입니다! 플레이를 끄고 빨리 고치세요 휴먼!");
         }
     }
 #endif

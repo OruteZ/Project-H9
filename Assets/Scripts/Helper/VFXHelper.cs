@@ -63,8 +63,6 @@ public static class VFXHelper
                 return true;
             default: return false;
         }
-
-        return false;
     }
     
     public static bool TryGetStatusEffectFXKey(StatusEffectType type, out string fxKey, out float time)

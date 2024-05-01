@@ -157,7 +157,7 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// Runtime에 Link를 추가합니다.
     /// </summary>
-    public void AddLink(Vector3Int position, int linkIndex)
+    public void AddLink(Vector3Int position, int linkIndex, int mapIndex = 1)
     {
         //if link that has same position with tile already exist, skip
         var tile = GetTile(position);
@@ -167,6 +167,7 @@ public class TileSystem : MonoBehaviour
         var obj = Instantiate(linkPrefab, tileObjParent.transform).GetComponent<Link>();
         obj.hexPosition = position;
         obj.linkIndex = linkIndex;
+        obj.combatMapIndex = mapIndex;
         obj.SetUp();
     }
 

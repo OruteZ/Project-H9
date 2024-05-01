@@ -166,6 +166,7 @@ public class TileSystem : MonoBehaviour
         
         var obj = Instantiate(linkPrefab, tileObjParent.transform).GetComponent<Link>();
         obj.hexPosition = position;
+        obj.linkIndex = linkIndex;
         obj.SetUp();
     }
 

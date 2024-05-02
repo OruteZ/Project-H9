@@ -71,7 +71,7 @@ public class TownUI : UISystem
         FieldSystem.turnSystem.EndTurn();
         CloseUI();
     }
-    //Invoke when player start idle action
+    //Invoke when player stop
     private void CheckPlayerInTown()
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
@@ -91,6 +91,7 @@ public class TownUI : UISystem
         }
         if (_currentBuildingType == _previousBuildingType) return;
         if (UIManager.instance.gameSystemUI.conversationUI.isConverstating) return;
+        if (UIManager.instance.gameSystemUI.pinUI.targetHexPos == _currentInteractPosition) return;
         IUnitAction selectedAction = player.GetSelectedAction();
         if (selectedAction is not MoveAction || ((MoveAction)selectedAction).isThereAPathLeft()) return;
 
@@ -138,15 +139,11 @@ public class TownUI : UISystem
 
     public void AddTownIcon(Vector3Int pos, Town.BuildingType type) 
     {
-        Vector3Int iconPos = new Vector3Int(pos.x, pos.y - 2, pos.z + 2);
-        Tile t = FieldSystem.tileSystem.GetTile(iconPos);
+        Vector3Int iconHexPos = new Vector3Int(pos.x, pos.y - 2, pos.z + 2);
 
-        if (t == null) 
-        {
-            Debug.LogError("Town Icon을 띄울 타일을 찾을 수 없습니다.");
-        }
+        if (_iconPool.Find(iconHexPos) != null) return;
         var target = _iconPool.Set();
-        target.Init(t, type);
+        target.Init(iconHexPos, type);
 
     }
     void Update()

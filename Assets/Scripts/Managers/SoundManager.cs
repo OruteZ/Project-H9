@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI.Extensions;
 
 public class SoundManager : Singleton<SoundManager>
@@ -8,8 +9,8 @@ public class SoundManager : Singleton<SoundManager>
     public AudioSource bgmSource;
     private List<AudioSource> _sfxSources;
 
-    public AudioClip[] bgmClips;
-    public AudioClip[] sfxClips;
+    [FormerlySerializedAs("bgmClips")] public AudioClip[] worldBgmClips;
+    public AudioClip[] combatBgmClips;
 
     public float bgmVolume = 1f;
     public float sfxVolume = 1f;
@@ -20,31 +21,57 @@ public class SoundManager : Singleton<SoundManager>
     {
         base.Awake();
         
+        //if this is null, return
+        if (this == null) return;
+        
         bgmSource = gameObject.AddComponent<AudioSource>();
         _sfxSources = new List<AudioSource>();
+        
+        FieldSystem.onStageAwake.AddListener(() =>
+        {
+            if(GameManager.instance.CompareState(GameState.World))
+                PlayBGM(worldBgmClips, Random.Range(0, worldBgmClips.Length));
+            
+            else 
+                PlayBGM(combatBgmClips, Random.Range(0, combatBgmClips.Length));
+        });
     }
 
-    public void PlayBGM(int index)
+    private void Update()
     {
-        if (index < 0 || index >= bgmClips.Length)
+        // if bgm play is at finish line, play next bgm
+        if (!bgmSource.isPlaying)
+        {
+            if(GameManager.instance.CompareState(GameState.World))
+                PlayBGM(worldBgmClips, Random.Range(0, worldBgmClips.Length));
+            
+            else 
+                PlayBGM(combatBgmClips, Random.Range(0, combatBgmClips.Length));
+        }
+    }
+
+    public void PlayBGM(AudioClip[] clips, int index)
+    {
+        if (index < 0 || index >= worldBgmClips.Length)
         {
             Debug.LogError("BGM index out of range");
             return;
         }
+        
 
-        bgmSource.clip = bgmClips[index];
+        bgmSource.clip = clips[index];
         bgmSource.volume = bgmVolume;
         bgmSource.loop = true;
         bgmSource.Play();
     }
     
-    public void PlayBGM(string name)
+    public void PlayBGM(AudioClip[] clips, string name)
     {
-        for (int i = 0; i < bgmClips.Length; i++)
+        for (int i = 0; i < clips.Length; i++)
         {
-            if (bgmClips[i].name != name) continue;
+            if (clips[i].name != name) continue;
             
-            PlayBGM(i);
+            PlayBGM(clips, i);
             return;
         }
         Debug.LogError("BGM " + name + " not found");

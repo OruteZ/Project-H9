@@ -25,7 +25,7 @@ public class UnitSFXEffector : MonoBehaviour
         };
         if (targetClip is null) return;
         
-        Debug.Log("SOUND_DEBUG: " + eventName + " is called.");
+        // Debug.Log("SOUND_DEBUG: " + eventName + " is called.");
         SoundManager.instance.PlaySFX(targetClip, transform.position);
     }
 }

@@ -168,4 +168,10 @@ public class MoveAction : BaseAction
     {
         return rotationSpeed;
     }
+
+    public bool isThereAPathLeft()
+    {
+        //Debug.Log($"{_path?.Count} - {_currentPositionIndex}");
+        return _path?.Count - 1 > _currentPositionIndex;
+    }
 }

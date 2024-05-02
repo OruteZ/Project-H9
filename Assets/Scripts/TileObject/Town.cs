@@ -11,7 +11,7 @@ public class Town : TileObject
         Sheriff
     }
     private int _townIndex;
-    [SerializeField] private BuildingType buildingType;
+    [SerializeField] private BuildingType _buildingType;
     
     protected override void SetTile(Tile t)
     {
@@ -21,15 +21,18 @@ public class Town : TileObject
         t.walkable = true;
         t.visible = true;
         t.rayThroughable = false;
+
+        UIManager.instance.gameSystemUI.townUI.AddTownIcon(hexPosition, _buildingType);
     }
 
     public override void OnCollision(Unit other)
     {
-        Debug.Log($"플레이어 진입 : {_townIndex}번 마을의 {buildingType} 건물");
+        Debug.Log($"플레이어 진입 : {_townIndex}번 마을의 {_buildingType} 건물");
 
         //other.GetSelectedAction().ForceFinish();
 
         Debug.Log("On Collision Calls");
+        UIManager.instance.onPlayerEnterTown.Invoke(hexPosition, _townIndex, _buildingType);
 
     }
 
@@ -55,7 +58,7 @@ public class Town : TileObject
             {BuildingType.Saloon,        TileEffectType.Saloon },
             {BuildingType.Sheriff,      TileEffectType.Sheriff },
         };
-        effect.TryGetValue(buildingType, out TileEffectType effType);
+        effect.TryGetValue(_buildingType, out TileEffectType effType);
         return effType;
     }
 }

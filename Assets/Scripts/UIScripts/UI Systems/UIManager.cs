@@ -56,6 +56,7 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent onInventoryChanged;
     [HideInInspector] public UnityEvent onWeaponChanged;
     [HideInInspector] public UnityEvent<Unit, BaseAction> onStartAction;
+    [HideInInspector] public UnityEvent<Vector3Int, int, Town.BuildingType> onPlayerEnterTown;
 
     protected override void Awake()
     {
@@ -97,7 +98,12 @@ public class UIManager : Generic.Singleton<UIManager>
         if (combatUI.combatActionUI.isCombatUIOpened()) return;
         if (!combatUI.combatActionUI.isCombatUIOpened() && Input.GetMouseButtonDown(0))
         {
-            SetUILayer(GetPointerOverUILayer());
+            int layer = GetPointerOverUILayer();
+            if (layer < 2 && !_characterCanvas.enabled && !_skillCanvas.enabled && !_pauseMenuCanvas.enabled)
+            {
+                gameSystemUI.CloseUI();
+            }
+            SetUILayer(layer);
         }
         else if (Input.GetKeyDown(HotKey.cancelKey))
         {
@@ -122,7 +128,7 @@ public class UIManager : Generic.Singleton<UIManager>
                     SetCanvasState(_characterCanvas, characterUI, false);
                     SetCanvasState(_skillCanvas, skillUI, false);
                     SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
-                    UIManager.instance.combatUI.CloseUI();
+                    combatUI.CloseUI();
                     break;
                 }
             case 2:

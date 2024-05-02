@@ -9,6 +9,8 @@ public class ConversationUI : UISystem
     [SerializeField] private GameObject _speakerText;
     [SerializeField] private GameObject _contentsText;
 
+    public bool isConverstating { get; private set; }
+
     private QuestInfo _questInfo;
     private bool _isStartQuest;
 
@@ -21,6 +23,7 @@ public class ConversationUI : UISystem
     private void Awake()
     {
         _conversationWindow.SetActive(false);
+        isConverstating = false;
 
         List<List<string>> conversationTable = FileRead.Read("ConversationTable", out var column);
         if (conversationTable == null)
@@ -109,6 +112,7 @@ public class ConversationUI : UISystem
         _groupInfo = null;
         _sequenceNumber = 0;
         _conversationWindow.SetActive(false);
+        isConverstating = false;
 
         if (_isStartQuest)
         {
@@ -139,6 +143,7 @@ public class ConversationUI : UISystem
         }
 
         _conversationWindow.SetActive(true);
+        isConverstating = true;
         _sequenceNumber = 0;
         _speakerText.GetComponent<TextMeshProUGUI>().text = _groupInfo[0].speakerName;
         _contentsText.GetComponent<TextMeshProUGUI>().text = _groupInfo[0].conversationText;

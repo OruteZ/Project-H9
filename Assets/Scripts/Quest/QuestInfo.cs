@@ -303,7 +303,7 @@ public class QuestInfo
 
     private bool CountEvent(ref int[] curArgument, ref int[] goalArgument, int goalType)
     {
-        if (curArgument[0] != goalType)
+        if (goalArgument[0] != goalType)
             return false;
 
         OnChangedProgress?.Invoke();

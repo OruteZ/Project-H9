@@ -8,32 +8,48 @@ public class UnitCamera : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
     [SerializeField] private CinemachineTargetGroup _targetGroup;
 
-    private Unit _unit;
+    [SerializeField] private float unitRadius = 2;
 
-    public void SetOwner(Unit target)
+    private Unit _unit;
+    private Tile _actionTargetTile;
+
+    private void Awake()
     {
-        _unit = target;
-        _virtualCamera.Follow = target.transform;
+        _targetGroup = Instantiate(new GameObject("ViewPoint")).AddComponent<CinemachineTargetGroup>();
         
-        target.onDead.AddListener((u) =>
+        _virtualCamera.Follow = _targetGroup.transform;
+        _virtualCamera.LookAt = _targetGroup.transform;
+    }
+
+    public void SetOwner(Unit owner)
+    {
+        _unit = owner;
+        CatchTarget(owner.transform);
+        // _virtualCamera.Follow = owner.transform;
+        
+        owner.onDead.AddListener((u) =>
         {
             //destroy gameObject
             Destroy(gameObject);    
         });
         
-        target.onFinishShoot.AddListener((a,b,c,d) =>
+        owner.onFinishShoot.AddListener((a,b,c,d) =>
         {
             ShakeCamera(5, 1, 0.1f);
         });
         
-        target.onActionStart.AddListener((a, t) =>
+        owner.onActionStart.AddListener((a, t) =>
         {
+            _actionTargetTile = FieldSystem.tileSystem.GetTile(t);
             
+            CatchTarget(_actionTargetTile.transform);
         });
         
-        target.onFinishAction.AddListener((a) =>
+        owner.onFinishAction.AddListener((a) =>
         {
+            RemoveTarget(_actionTargetTile.transform);
             
+            _actionTargetTile = null;
         });
     }
 
@@ -74,7 +90,7 @@ public class UnitCamera : MonoBehaviour
 
     private void CatchTarget(Transform target)
     {
-        _targetGroup.AddMember(target, 1, 1);
+        _targetGroup.AddMember(target, 1, unitRadius);
     }
 
     private void RemoveTarget(Transform target)

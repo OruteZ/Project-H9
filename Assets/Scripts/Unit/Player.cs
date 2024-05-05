@@ -77,7 +77,7 @@ public class Player : Unit
         {
             SelectAction(GetAction<MoveAction>());
             ReloadSight();
-            PlayerEvents.OnProcessedWorldTurn.Invoke(GameManager.instance.worldTurn);
+            PlayerEvents.OnProcessedWorldTurn.Invoke(GameManager.instance.runtimeWorldData.worldTurn);
         }
     }
 

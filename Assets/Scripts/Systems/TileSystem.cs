@@ -41,6 +41,8 @@ public class TileSystem : MonoBehaviour
     public Transform environments;
     
     private Dictionary<Vector3Int, Tile> _tiles;
+    private List<TileObject> _tileObjects;
+    
     private HexGridLayout _gridLayout;
     private HexGridLayout gridLayout => _gridLayout ??= tileParent.GetComponent<HexGridLayout>();
 
@@ -95,6 +97,7 @@ public class TileSystem : MonoBehaviour
         foreach (var obj in objects)
         {
             obj.SetUp();
+            _tileObjects.Add(obj);
         }
 
         var envList = environments.GetComponentsInChildren<HexTransform>().ToList();
@@ -169,6 +172,8 @@ public class TileSystem : MonoBehaviour
         obj.linkIndex = linkIndex;
         obj.combatMapIndex = mapIndex;
         obj.SetUp();
+        
+        _tileObjects.Add(obj);
     }
 
     /// <summary>
@@ -179,6 +184,24 @@ public class TileSystem : MonoBehaviour
     public Tile GetTile(Vector3Int position)
     {
         return _tiles.GetValueOrDefault(position);
+    }
+    
+    /// <summary>
+    /// 해당 Hex좌표에 해당하는 TileObject를 가져옵니다.
+    /// </summary>
+    /// <param name="position">Hex 좌표</param>
+    /// <returns></returns>
+    public TileObject GetTileObject(Vector3Int position)
+    {
+        return _tileObjects.FirstOrDefault(obj => obj.hexPosition == position);
+    }
+    
+    /// <summary>
+    /// 존재하는 모든 TileObjects를 반환합니다.
+    /// </summary>
+    public IEnumerable<TileObject> GetAllTileObjects()
+    {
+        return _tileObjects;
     }
 
     /// <summary>

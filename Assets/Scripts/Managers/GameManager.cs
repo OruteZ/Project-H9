@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -110,7 +112,6 @@ public class GameManager : Generic.Singleton<GameManager>
 
     [Header("World Info")]
     public int worldAp;
-    public int worldTurn;
 
     public bool backToWorldTrigger = false;
 
@@ -118,13 +119,35 @@ public class GameManager : Generic.Singleton<GameManager>
     private UnityEvent<QuestInfo> OnNotifiedQuestEnd = new UnityEvent<QuestInfo>();
     private UnityEvent<QuestInfo> OnNotifiedQuestStart = new UnityEvent<QuestInfo>();
 
+    private void SaveCurrentWorldData()
+    {
+        worldAp = FieldSystem.unitSystem.GetPlayer().currentActionPoint;
+        runtimeWorldData.worldTurn = FieldSystem.turnSystem.turnNumber;
+
+        runtimeWorldData.playerPosition = FieldSystem.unitSystem.GetPlayer().hexPosition;
+        
+        //save links
+        runtimeWorldData.links = new List<LinkObjectData>();
+        
+        foreach (Link link in FieldSystem.tileSystem.GetAllTileObjects().Where(obj => obj is Link))
+        {
+            LinkObjectData linkData = new LinkObjectData();
+            linkData.pos = link.hexPosition;
+            linkData.linkIndex = link.linkIndex;
+            linkData.combatMapIndex = link.combatMapIndex;
+            // linkData.modelName = link.;
+            // The Link Model is one-to-one with the Link Index,
+            // todo : the model can also be saved only when this structure is changed.
+            
+            runtimeWorldData.links.Add(linkData);
+        }
+    }
+
     public void StartCombat(int stageIndex, int linkIndex)
     {
         //Save World Data
-        worldAp = FieldSystem.unitSystem.GetPlayer().currentActionPoint;
-        worldTurn = FieldSystem.turnSystem.turnNumber;
-
-        runtimeWorldData.playerPosition = FieldSystem.unitSystem.GetPlayer().hexPosition;
+        SaveCurrentWorldData();
+        
         ChangeState(GameState.Combat);
         _currentLinkIndex = linkIndex;
         _stageData = Resources.Load<CombatStageData>($"Map Data/Stage {stageIndex}");

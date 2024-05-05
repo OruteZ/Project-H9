@@ -14,6 +14,8 @@ public class WorldData : ScriptableObject
     public List<WorldFlags> flags;
 
     public HashSet<Vector3Int> discoveredWorldTileSet;
+
+    public int worldTurn;
 }
 
 [Serializable]

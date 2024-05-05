@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class WorldMapEditor : MonoBehaviour
 {
-    [SerializeField]private WorldObjectData worldObjectData;
+    [SerializeField]private WorldData worldData;
     [SerializeField]private Transform tileObjectsTransform;
     [SerializeField]private GameObject linkPrefab;
     
@@ -40,7 +40,7 @@ public class WorldMapEditor : MonoBehaviour
         }
         
         //Instantiate link object by link data
-        foreach (var linkData in worldObjectData.links)
+        foreach (var linkData in worldData.links)
         {
             //instantiate
             var link = Instantiate(linkPrefab, Hex.Hex2World(linkData.pos), Quaternion.identity);
@@ -64,7 +64,7 @@ public class WorldMapEditor : MonoBehaviour
     public void SaveLink()
     {
         //Get link data by link object
-        worldObjectData.links.Clear();
+        worldData.links.Clear();
         foreach (Transform child in tileObjectsTransform)
         {
             var link = child.GetComponent<Link>();
@@ -78,7 +78,7 @@ public class WorldMapEditor : MonoBehaviour
                 modelName = link.name
             };
             linkData.modelName = linkData.modelName.Replace("(Clone)", "");
-            worldObjectData.links.Add(linkData);
+            worldData.links.Add(linkData);
         }
         
         onLinkChanged.Invoke();

@@ -35,7 +35,7 @@ public class ItemUI : UISystem
         }
         ClosePopupWindow();
 
-        Item startItem = Item.CreateItem(GameManager.instance.itemDatabase.GetItemData(GameManager.instance.PlayerWeaponIndex));
+        Item startItem = Item.CreateItem(GameManager.instance.itemDatabase.GetItemData(GameManager.instance.playerWeaponIndex));
         _equippedElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(startItem);
         GameManager.instance.playerInventory.InitEquippedItem(startItem);
         SetInventoryUI();

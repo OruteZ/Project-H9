@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using DGS = System.Diagnostics;
 
 public enum GameState
@@ -14,12 +15,34 @@ public enum GameState
 public class GameManager : Generic.Singleton<GameManager>
 {
     private const string COMBAT_SCENE_NAME = "CombatScene";
-
-    public Inventory playerInventory = new Inventory();
-    [SerializeField]
+    
+    //databases
     public ItemDatabase itemDatabase;
     public WeaponDatabase weaponDatabase;
+    
+    // map data
+    public WorldData runtimeWorldData;
+    [SerializeField] private WorldData _defaultWorldData;
+
+    public Inventory playerInventory = new Inventory();
     public List<QuestInfo> Quests;
+    
+    [SerializeField]
+    private GameState _currentState = GameState.World;
+
+    [SerializeField] private CombatStageData _stageData;
+    [SerializeField] private int _currentLinkIndex = -1;
+
+    [Header("Player Info")]
+    public UnitStat playerStat;
+    [FormerlySerializedAs("_playerWeaponIndex")] public int playerWeaponIndex;
+    public GameObject playerModel;
+    public List<int> playerPassiveIndexList;
+    public List<int> playerActiveIndexList;
+    
+    public UnityEvent<Weapon> onPlayerWeaponChanged = new UnityEvent<Weapon>(); // �̰� �� ������
+    public UnityEvent<int> onPlayerCombatFinished = new UnityEvent<int>(); // <LinkIndex>, Combat manager ��ũ��Ʈ�� Player �׼� ��ũ��Ʈ(not player data)�� ������ �ű�����
+
     
     #region ITEM_TEST
     public void AddItem(int id)
@@ -45,37 +68,6 @@ public class GameManager : Generic.Singleton<GameManager>
         Debug.Log("Added item to inventory");
     }//a
     #endregion
-
-    private HashSet<Vector3Int> _discoveredWorldTileSet;
-    
-    [SerializeField]
-    private GameState _currentState = GameState.World;
-
-    [SerializeField] private CombatStageData _stageData;
-    [SerializeField]
-    private int _currentLinkIndex = -1;
-
-    [Header("Player Info")]
-    public Vector3Int playerWorldPos;
-    public UnitStat playerStat;
-    [SerializeField] private int _playerWeaponIndex;
-    public int PlayerWeaponIndex
-    {
-        get => _playerWeaponIndex;
-        set
-        {
-            _playerWeaponIndex = value;
-            Weapon weapon = weaponDatabase.Clone(value);
-            onPlayerWeaponChanged.Invoke(weapon); 
-        }
-    }
-    public GameObject playerModel;
-    public List<int> playerPassiveIndexList;
-    public List<int> playerActiveIndexList;
-    
-    public UnityEvent<Weapon> onPlayerWeaponChanged = new UnityEvent<Weapon>(); // �̰� �� ������
-    public UnityEvent<int> onPlayerCombatFinished = new UnityEvent<int>(); // <LinkIndex>, Combat manager ��ũ��Ʈ�� Player �׼� ��ũ��Ʈ(not player data)�� ������ �ű�����
-
     #region LEVEL
 
     [Header("Level system")]
@@ -132,7 +124,7 @@ public class GameManager : Generic.Singleton<GameManager>
         worldAp = FieldSystem.unitSystem.GetPlayer().currentActionPoint;
         worldTurn = FieldSystem.turnSystem.turnNumber;
 
-        playerWorldPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
+        runtimeWorldData.playerPosition = FieldSystem.unitSystem.GetPlayer().hexPosition;
         ChangeState(GameState.Combat);
         _currentLinkIndex = linkIndex;
         _stageData = Resources.Load<CombatStageData>($"Map Data/Stage {stageIndex}");
@@ -213,32 +205,27 @@ public class GameManager : Generic.Singleton<GameManager>
     
     public bool IsPioneeredWorldTile(Vector3Int tilePos)
     {
-        return _discoveredWorldTileSet.Contains(tilePos);
+        return runtimeWorldData.discoveredWorldTileSet.Contains(tilePos);
     }
     
-    public List<Vector3Int> GetPioneeredWorldTileList()
-    {
-        return new List<Vector3Int>(_discoveredWorldTileSet);
-    }
-
     public void AddPioneeredWorldTile(Vector3Int tilePos)
     {
-        if (_discoveredWorldTileSet.Contains(tilePos)) return;
-        
-        _discoveredWorldTileSet.Add(tilePos);
+        if (!runtimeWorldData.discoveredWorldTileSet.Add(tilePos));
     }
     
     private new void Awake()
     {
         base.Awake();
+
+        runtimeWorldData = Instantiate(_defaultWorldData);
+        runtimeWorldData.discoveredWorldTileSet = new HashSet<Vector3Int>();
         
-        _discoveredWorldTileSet = new ();
+        
         var watch = DGS.Stopwatch.StartNew();
         var qi = new QuestParser();
         Quests = qi.GetQuests();
         watch.Stop();
         Debug.Log($"<color=blue>Quest parse time: {watch.ElapsedMilliseconds}</color>");
-
     }
 
     private void Start()

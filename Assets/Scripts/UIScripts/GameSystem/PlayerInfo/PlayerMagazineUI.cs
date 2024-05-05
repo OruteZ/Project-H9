@@ -18,7 +18,7 @@ public class PlayerMagazineUI : UIElement
         int flickerCnt;
         if (isOnlyDisplayMaxMagazine)
         {
-            maxBullet = GameManager.instance.itemDatabase.GetItemData(GameManager.instance.PlayerWeaponIndex).weaponAmmo;
+            maxBullet = GameManager.instance.itemDatabase.GetItemData(GameManager.instance.playerWeaponIndex).weaponAmmo;
             curBullet = maxBullet;
             flickerCnt = 0;
         }

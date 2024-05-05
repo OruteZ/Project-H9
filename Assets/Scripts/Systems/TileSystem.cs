@@ -40,8 +40,8 @@ public class TileSystem : MonoBehaviour
     /// </summary>
     public Transform environments;
     
-    private Dictionary<Vector3Int, Tile> _tiles;
-    private List<TileObject> _tileObjects;
+    private Dictionary<Vector3Int, Tile> _tiles = new();
+    private readonly List<TileObject> _tileObjects = new();
     
     private HexGridLayout _gridLayout;
     private HexGridLayout gridLayout => _gridLayout ??= tileParent.GetComponent<HexGridLayout>();

@@ -239,6 +239,7 @@ public class GameManager : Generic.Singleton<GameManager>
     private new void Awake()
     {
         base.Awake();
+        if(this == null) return;
 
         runtimeWorldData = Instantiate(_defaultWorldData);
         runtimeWorldData.discoveredWorldTileSet = new HashSet<Vector3Int>();

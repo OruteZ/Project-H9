@@ -395,7 +395,13 @@ MonoBehaviour:
   onAnyUnitMoved:
     m_PersistentCalls:
       m_Calls: []
+  onPlayerMoved:
+    m_PersistentCalls:
+      m_Calls: []
   onAnyUnitDead:
+    m_PersistentCalls:
+      m_Calls: []
+  onUnitCreated:
     m_PersistentCalls:
       m_Calls: []
   unitParent: {fileID: 138153909}
@@ -418,12 +424,14 @@ MonoBehaviour:
   dataName: 
   tilePrefab: {fileID: 7055767354360999130, guid: 2b4c0590199488d4fae5ab62e5bca496,
     type: 3}
+  linkPrefab: {fileID: 0}
   worldFogOfWarPrefab: {fileID: 3921417558311075226, guid: 2b38978ec82fdef40b0068180537e289,
     type: 3}
   combatFogOfWarPrefab: {fileID: 7545141808226543623, guid: 2866b32b39420524182300b5b34c2713,
     type: 3}
   fogs: {fileID: 1662776250}
-  map: {fileID: 1333147563}
+  tileParent: {fileID: 1333147563}
+  tileObjParent: {fileID: 1423698520}
   environments: {fileID: 175661819}
   range: 10
   width: 12
@@ -1558,6 +1566,9 @@ MonoBehaviour:
   onPlayerWeaponChanged:
     m_PersistentCalls:
       m_Calls: []
+  onPlayerCombatFinished:
+    m_PersistentCalls:
+      m_Calls: []
   level: 0
   curExp: 0
   worldSceneName: 
@@ -2022,6 +2033,9 @@ MonoBehaviour:
     type: 3}
   impossibleEffect: {fileID: 0}
   invisibleEffect: {fileID: 0}
+  ammunitionEffect: {fileID: 0}
+  salonEffect: {fileID: 0}
+  sheriffEffect: {fileID: 0}
   combatFowMaterial: {fileID: 2100000, guid: 674a3db04c561de4c9c506bd807d3b4d, type: 2}
   attackTileEffect: {fileID: 610890547546262990, guid: 3002e9219f5f2144ba946c0549aff645,
     type: 3}

@@ -14,6 +14,11 @@ public class TileSystem : MonoBehaviour
     public GameObject tilePrefab;
     
     /// <summary>
+    /// Link Prefab입니다.
+    /// </summary>
+    public GameObject linkPrefab;
+    
+    /// <summary>
     /// 전장의 안개 Prefab입니다.
     /// </summary>
     public GameObject worldFogOfWarPrefab;
@@ -26,8 +31,10 @@ public class TileSystem : MonoBehaviour
     public Transform fogs;
     
     /// <summary>모든 TIle을 자식으로 가질 오브젝트입니다. </summary>
-    public GameObject map;
+    public GameObject tileParent;
 
+    public GameObject tileObjParent;
+    
     /// <summary>
     /// 모든 환경요소를 자식으로 가지는 오브젝트입니다.
     /// </summary>
@@ -35,7 +42,7 @@ public class TileSystem : MonoBehaviour
     
     private Dictionary<Vector3Int, Tile> _tiles;
     private HexGridLayout _gridLayout;
-    private HexGridLayout gridLayout => _gridLayout ??= map.GetComponent<HexGridLayout>();
+    private HexGridLayout gridLayout => _gridLayout ??= tileParent.GetComponent<HexGridLayout>();
 
     /// <summary>
     /// 현재 존재하는 모든 타일의 reference를 반환합니다.
@@ -70,7 +77,7 @@ public class TileSystem : MonoBehaviour
     public void SetUpTilesAndObjects()
     {
         _tiles = new Dictionary<Vector3Int, Tile>();
-        _gridLayout = map.GetComponent<HexGridLayout>();
+        _gridLayout = tileParent.GetComponent<HexGridLayout>();
         
         var tilesInChildren = GetComponentsInChildren<Tile>();  
         foreach (Tile t in tilesInChildren)
@@ -146,6 +153,23 @@ public class TileSystem : MonoBehaviour
         
         return tile;
     }
+    
+    /// <summary>
+    /// Runtime에 Link를 추가합니다.
+    /// </summary>
+    public void AddLink(Vector3Int position, int linkIndex, int mapIndex = 1)
+    {
+        //if link that has same position with tile already exist, skip
+        var tile = GetTile(position);
+        if (tile is null) return;
+        if (tile.tileObjects.Any(obj => obj is Link)) return;
+        
+        var obj = Instantiate(linkPrefab, tileObjParent.transform).GetComponent<Link>();
+        obj.hexPosition = position;
+        obj.linkIndex = linkIndex;
+        obj.combatMapIndex = mapIndex;
+        obj.SetUp();
+    }
 
     /// <summary>
     /// 해당 Hex좌표에 해당하는 Tile을 가져옵니다.
@@ -154,7 +178,7 @@ public class TileSystem : MonoBehaviour
     /// <returns>Tile</returns>
     public Tile GetTile(Vector3Int position)
     {
-        return _tiles.TryGetValue(position, out var tile) ? tile : null;
+        return _tiles.GetValueOrDefault(position);
     }
 
     /// <summary>
@@ -343,7 +367,7 @@ public class TileSystem : MonoBehaviour
         Debug.Log(positions.Count);
         foreach (var pos in positions)
         {
-            var tile = Instantiate(tilePrefab, map.transform).GetComponent<Tile>();
+            var tile = Instantiate(tilePrefab, tileParent.transform).GetComponent<Tile>();
             tile.hexPosition = pos;
             tile.visible = tile.walkable = tile.rayThroughable = tile.gridVisible =  true;
             tile.gameObject.name = $"Tile : {tile.hexPosition}";
@@ -359,7 +383,7 @@ public class TileSystem : MonoBehaviour
         Debug.Log(positions.Count);
         foreach (var pos in positions)
         {
-            var tile = Instantiate(tilePrefab, map.transform).GetComponent<Tile>();
+            var tile = Instantiate(tilePrefab, tileParent.transform).GetComponent<Tile>();
             tile.hexPosition = pos;
             tile.visible = tile.walkable = tile.rayThroughable = tile.gridVisible = true;
             tile.gameObject.name = $"Tile : {tile.hexPosition}";

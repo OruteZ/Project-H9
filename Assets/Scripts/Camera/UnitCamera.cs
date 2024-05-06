@@ -6,23 +6,55 @@ using UnityEngine;
 public class UnitCamera : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+    [SerializeField] private CinemachineTargetGroup _targetGroup;
+
+    [SerializeField] private float unitRadius = 2;
 
     private Unit _unit;
+    private Tile _actionTargetTile;
 
-    public void SetTarget(Unit target)
+    private void Awake()
     {
-        _unit = target;
-        _virtualCamera.Follow = target.transform;
+        _targetGroup = Instantiate(new GameObject("ViewPoint")).AddComponent<CinemachineTargetGroup>();
         
-        target.onDead.AddListener((u) =>
+        _virtualCamera.Follow = _targetGroup.transform;
+        _virtualCamera.LookAt = _targetGroup.transform;
+    }
+
+    public void SetOwner(Unit owner)
+    {
+        _unit = owner;
+        CatchTarget(owner.transform);
+        // _virtualCamera.Follow = owner.transform;
+        
+        owner.onDead.AddListener((u) =>
         {
             //destroy gameObject
             Destroy(gameObject);    
         });
         
-        target.onFinishShoot.AddListener((a,b,c,d) =>
+        FieldSystem.onCombatFinish.AddListener((a) =>
+        {
+            Destroy(gameObject);
+        });
+        
+        owner.onFinishShoot.AddListener((a,b,c,d) =>
         {
             ShakeCamera(5, 1, 0.1f);
+        });
+        
+        owner.onActionStart.AddListener((a, t) =>
+        {
+            _actionTargetTile = FieldSystem.tileSystem.GetTile(t);
+            
+            CatchTarget(_actionTargetTile.transform);
+        });
+        
+        owner.onFinishAction.AddListener((a) =>
+        {
+            RemoveTarget(_actionTargetTile.transform);
+            
+            _actionTargetTile = null;
         });
     }
 
@@ -59,5 +91,15 @@ public class UnitCamera : MonoBehaviour
     public Unit GetUnit()
     {
         return _unit;
+    }
+
+    private void CatchTarget(Transform target)
+    {
+        _targetGroup.AddMember(target, 1, unitRadius);
+    }
+
+    private void RemoveTarget(Transform target)
+    {
+        _targetGroup.RemoveMember(target);
     }
 }

@@ -99,7 +99,7 @@ public class FanningAction : BaseAction, IShootingAction
 
     public override void TossAnimationEvent(string eventString)
     {
-        if (eventString != "FanningFire") return;
+        if (eventString != AnimationEventNames.GUN_FIRE) return;
         if (_shotCount <= 0) return;
         
         unit.TryAttack(_target, _hitRateModifier);

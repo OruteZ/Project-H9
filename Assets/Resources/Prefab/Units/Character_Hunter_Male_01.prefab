@@ -1490,6 +1490,7 @@ GameObject:
   - component: {fileID: 4520975720257318}
   - component: {fileID: 95121064974739926}
   - component: {fileID: 2113785741658775931}
+  - component: {fileID: -2472405911098331542}
   m_Layer: 0
   m_Name: Character_Hunter_Male_01
   m_TagString: Untagged
@@ -1556,6 +1557,22 @@ MonoBehaviour:
   weaponModel: {fileID: 0}
   animator: {fileID: 0}
   unit: {fileID: 0}
+--- !u!114 &-2472405911098331542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923928492321678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43c545caffa489a8c14d23766c56e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunFireClip: {fileID: 8300000, guid: aeb9460740171724fb067bc605a67995, type: 3}
+  gunReloadClip: {fileID: 0}
+  gunReloadEndClip: {fileID: 0}
+  stepClip: {fileID: 8300000, guid: f55f1653ab2903c41b1627afcf0ed05f, type: 3}
 --- !u!1 &1929740133822124
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,7 @@ public class UnitSystem : MonoBehaviour
     public UnityEvent<Unit> onAnyUnitMoved;
     public UnityEvent<Vector3> onPlayerMoved;
     public UnityEvent<Unit> onAnyUnitDead;
+    public UnityEvent<Unit> onUnitCreated;
     
     [SerializeField] private Transform unitParent;
     [SerializeField] private GameObject playerPrefab;
@@ -93,7 +94,6 @@ public class UnitSystem : MonoBehaviour
                                + " linkDataIdx : " + linkDataIdx+
                                " linkData.combatEnemy.Length : " + linkData.combatEnemy.Length);
                 throw new Exception();
-                return;
             }
             
             for (int i = 0; i < enemyCount; i++)
@@ -186,6 +186,8 @@ public class UnitSystem : MonoBehaviour
             if(GameManager.instance.CompareState(GameState.Combat)) {
                 CameraManager.instance.CreateUnitCamera(unit);
             }
+            
+            onUnitCreated.Invoke(unit);
         }
     }
 

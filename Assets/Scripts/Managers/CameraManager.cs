@@ -23,7 +23,7 @@ public class CameraManager : Singleton<CameraManager>
         
         var uCam = Instantiate(unitCameraPrefab, _cameraParentTransform).GetComponent<UnitCamera>();
         _unitCameras.Add(target, uCam);
-        uCam.SetTarget(target);
+        uCam.SetOwner(target);
     }
 
     private void LookAt(Unit target)
@@ -42,7 +42,7 @@ public class CameraManager : Singleton<CameraManager>
 
     public UnitCamera GetCamera(Unit unit)
     {
-        var ret = _unitCameras.TryGetValue(unit, out var unitCamera) ? unitCamera : null;
+        var ret = _unitCameras.GetValueOrDefault(unit);
         return ret;
     }
     

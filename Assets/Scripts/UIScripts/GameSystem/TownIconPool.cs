@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class TownIcontWrapper : ObjectPoolWrapper<RectTransform>
 {
-    public Tile tile { get; private set; }
+    public Vector3Int hexPosition { get; private set; }
     public Town.BuildingType buildingType { get; private set; }
     public TownIcontWrapper(RectTransform instance, float lifeTime) : base(instance, lifeTime)
     {
-        tile = null;
+        hexPosition = Vector3Int.zero;
         buildingType = Town.BuildingType.NULL;
     }
-    public void Init(Tile tile, Town.BuildingType type) 
+    public void Init(Vector3Int pos, Town.BuildingType type) 
     {
-        this.tile = tile;
+        hexPosition = pos;
         buildingType = type;
         switch (type)
         {
@@ -40,7 +40,7 @@ public class TownIcontWrapper : ObjectPoolWrapper<RectTransform>
 public class TownIconPool : ObjectPool<RectTransform, TownIcontWrapper>
 {
     int count = 0;
-    public override void Init(string objectKey, Transform parent, float generalLifeTime, uint expectedSize = 10, string rootName = "")
+    public override void Init(string objectKey, Transform parent, float generalLifeTime, uint expectedSize = 9, string rootName = "")
     {
         base.Init(objectKey, parent, generalLifeTime, expectedSize, rootName);
         GameObject.Destroy(_root.gameObject);
@@ -51,6 +51,7 @@ public class TownIconPool : ObjectPool<RectTransform, TownIcontWrapper>
 
     public override TownIcontWrapper Set()
     {
+        if (_pool.Count == 0) SupplyPool(9);
         var target = _pool.Dequeue();
 
         target.Enable = false;
@@ -79,10 +80,26 @@ public class TownIconPool : ObjectPool<RectTransform, TownIcontWrapper>
         for (int i = 0; i <_working.Count; i++)
         {
             var target = _working[i];
-            if (!target.tile.inSight) continue;
+            Tile t = FieldSystem.tileSystem.GetTile(target.hexPosition);
+            if (t == null) continue;
+            if (!t.inSight) continue;
             target.Instance.GetComponent<Image>().enabled = true;
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(target.tile.transform.position);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(t.transform.position);
             target.Instance.GetComponent<RectTransform>().position = screenPos;
         }
+    }
+
+    public TownIcontWrapper Find(Vector3Int hexPos)
+    {
+        for (int i = 0; i < _working.Count; i++)
+        {
+            var target = _working[i];
+            Debug.Log(hexPos + "/ " + target.hexPosition);
+            if (target.hexPosition == hexPos) 
+            {
+                return target;
+            }
+        }
+        return null;
     }
 }

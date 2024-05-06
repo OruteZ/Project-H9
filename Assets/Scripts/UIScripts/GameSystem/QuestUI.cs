@@ -53,30 +53,44 @@ public class QuestUI : UISystem
     }
     IEnumerator EndQuestUI(string rewardText) 
     {
-        _rewardText.GetComponent<TextMeshProUGUI>().text = rewardText;
-        _rewardWindow.SetActive(true);
-        Player player = FieldSystem.unitSystem.GetPlayer();
-        var actions = player.GetUnitActionArray();
-        foreach (var a in actions) 
+        while (true)
         {
-            if (a is IdleAction) 
+            _rewardText.GetComponent<TextMeshProUGUI>().text = rewardText;
+            _rewardWindow.SetActive(true);
+            Player player = FieldSystem.unitSystem.GetPlayer();
+            if (player == null)
             {
-                player.SelectAction(a);
+                yield return new WaitForSeconds(2.0f);
+                continue;
             }
-        }
-        
-        yield return new WaitForSeconds(1.5f);
-        _rewardWindow.SetActive(false);
-        yield return new WaitForSeconds(.5f);
-        UIManager.instance.gameSystemUI.conversationUI.StartNextConversation();
-        foreach (var a in actions)
-        {
-            if (a is MoveAction)
+            var actions = player.GetUnitActionArray();
+            foreach (var a in actions)
             {
-                player.SelectAction(a);
+                if (a is IdleAction)
+                {
+                    player.SelectAction(a);
+                }
             }
+
+            yield return new WaitForSeconds(1.5f);
+            _rewardWindow.SetActive(false);
+            yield return new WaitForSeconds(.5f);
+            UIManager.instance.gameSystemUI.conversationUI.StartNextConversation();
+
+            player = FieldSystem.unitSystem.GetPlayer();
+            if (player == null) 
+            {
+                yield break;
+            } 
+            foreach (var a in actions)
+            {
+                if (a is MoveAction)
+                {
+                    player.SelectAction(a);
+                }
+            }
+            yield break;
         }
-        yield break;
     }
 
     public void ClickQuestButton()

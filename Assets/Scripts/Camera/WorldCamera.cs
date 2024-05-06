@@ -111,6 +111,13 @@ public class WorldCamera : MonoBehaviour
         
         transform.position = position;
     }
+    
+    public void LookAtHex(Vector3Int hex)
+    {
+        var pos = Hex.Hex2World(hex);
+        
+        SetPosition(pos);
+    }
 
     public void ShakeCamera(float amplitude, float frequency, float duration)
     {

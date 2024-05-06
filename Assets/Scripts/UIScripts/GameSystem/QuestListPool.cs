@@ -27,6 +27,7 @@ public class QuestListPool : ObjectPool<RectTransform, QuestListWrapper>
 
     public override QuestListWrapper Set()
     {
+        if (_pool.Count == 0) SupplyPool(10);
         var target = _pool.Dequeue();
 
         target.Enable = false;

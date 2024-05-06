@@ -10,6 +10,7 @@ public class PinUI : UISystem
 
     private bool _isTracking = false;
     private Vector3 _targetPos = Vector3.zero;
+    public Vector3Int targetHexPos { get; private set; }
 
     // Start is called before the first frame update
     void Awake()
@@ -44,13 +45,15 @@ public class PinUI : UISystem
             Debug.LogError("해당 Hex 좌표의 Tile은 존재하지 않습니다. Hex 좌표: " + dest);
             return;
         }
-            _targetPos = target.gameObject.transform.position;
+        _targetPos = target.gameObject.transform.position;
+        targetHexPos = dest;
         _isTracking = true;
         _pinImage.SetActive(_isTracking);
     }
     public void ClearPinUI()
     {
         _targetPos = Vector3.zero;
+        targetHexPos = Vector3Int.zero;
         _isTracking = false;
         _pinImage.SetActive(_isTracking);
     }

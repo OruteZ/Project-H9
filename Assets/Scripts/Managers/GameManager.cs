@@ -134,6 +134,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
         playerWorldPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
         ChangeState(GameState.Combat);
+        FieldSystem.onCombatEnter.Invoke(true);
         _currentLinkIndex = linkIndex;
         _stageData = Resources.Load<CombatStageData>($"Map Data/Stage {stageIndex}");
         LoadingManager.instance.LoadingScene(COMBAT_SCENE_NAME);

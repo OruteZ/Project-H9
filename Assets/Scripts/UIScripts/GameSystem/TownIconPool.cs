@@ -94,7 +94,7 @@ public class TownIconPool : ObjectPool<RectTransform, TownIcontWrapper>
         for (int i = 0; i < _working.Count; i++)
         {
             var target = _working[i];
-            Debug.Log(hexPos + "/ " + target.hexPosition);
+            //Debug.Log(hexPos + "/ " + target.hexPosition);
             if (target.hexPosition == hexPos) 
             {
                 return target;

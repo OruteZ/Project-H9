@@ -28,9 +28,13 @@ public class FieldSystem : MonoBehaviour
     /// CombatScene에서 Stage가 끝났을때 호출되는 이벤트입니다. WorldScene에서 호출되지 않습니다.
     /// </summary>
     private static UnityEvent<bool> _onCombatFinish;
-    public static UnityEvent<bool> onCombatFinish => _onCombatFinish ??= new UnityEvent<bool> ();
-    
-    
+    public static UnityEvent<bool> onCombatFinish => _onCombatFinish ??= new UnityEvent<bool>();
+
+
+    private static UnityEvent<bool> _onCombatEnter;
+    public static UnityEvent<bool> onCombatEnter => _onCombatEnter ??= new UnityEvent<bool>();
+
+
     private void Awake()
     {
         Debug.Log("Field System : Awake");

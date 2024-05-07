@@ -97,12 +97,12 @@ public class UnitStat : ICloneable
             }
             return;
         }
-        
         _additional[(int)type] += value;
     }
 
     public void AddMultiplier(StatType type, int value)
     {
+        Debug.LogError("Sub" + type);
         //is all stat type, convert to array and set value
         if (IsAllStat(type))
         {

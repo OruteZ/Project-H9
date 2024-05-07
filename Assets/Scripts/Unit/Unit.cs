@@ -114,6 +114,7 @@ public abstract class Unit : MonoBehaviour, IUnit
 
         onFinishAction.AddListener((action) => onAnyUnitActionFinished.Invoke(this));
         FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
+        FieldSystem.onCombatEnter.AddListener(OnCombatFinish);
 
         _seController = new UnitStatusEffectController(this);
         
@@ -541,9 +542,8 @@ public abstract class Unit : MonoBehaviour, IUnit
     }
 
     #endregion
-    
-    #region UNITY_EVENT
 
+    #region UNITY_EVENT
     private void OnCombatFinish(bool playerWin)
     {
         // disable all status effect, and passive
@@ -551,13 +551,30 @@ public abstract class Unit : MonoBehaviour, IUnit
 
         foreach (var passive in _passiveList)
         {
-            passive.Delete();
             passive.Disable();
+            passive.Delete();
         }
 
         _passiveList.Clear();
         stat.ResetModifier();
     }
     #endregion
+
+    public void SetPassive(List<Passive> passiveList)
+    {
+        _passiveList = passiveList;
+        foreach (var passive in _passiveList)
+        {
+            if (passive is null)
+            {
+                Debug.LogError("passive is null");
+                break;
+            }
+
+            passive.Setup();
+
+            //passiveIndexList.Add(passive.index);
+        }
+    }
 }
 

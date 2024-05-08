@@ -99,6 +99,15 @@ public class TileSystem : MonoBehaviour
             obj.SetUp();
             _tileObjects.Add(obj);
         }
+        //get runtime map data from gamemanager
+        var mapData = GameManager.instance.runtimeWorldData;
+        if (mapData is not null)
+        {
+            foreach (var link in mapData.links)
+            {
+                AddLink(link.pos, link.linkIndex, link.combatMapIndex);
+            }
+        }
 
         var envList = environments.GetComponentsInChildren<HexTransform>().ToList();
         foreach (var env in envList)

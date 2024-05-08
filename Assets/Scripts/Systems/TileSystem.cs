@@ -99,14 +99,16 @@ public class TileSystem : MonoBehaviour
             obj.SetUp();
             _tileObjects.Add(obj);
         }
+        
         //get runtime map data from gamemanager
         var mapData = GameManager.instance.runtimeWorldData;
         if (mapData is not null)
         {
-            foreach (var link in mapData.links)
-            {
-                AddLink(link.pos, link.linkIndex, link.combatMapIndex);
-            }
+            if(GameManager.instance.CompareState(GameState.World)) 
+                foreach (var link in mapData.links)
+                {
+                    AddLink(link.pos, link.linkIndex, link.combatMapIndex);
+                }
         }
 
         var envList = environments.GetComponentsInChildren<HexTransform>().ToList();
@@ -169,17 +171,29 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// Runtime에 Link를 추가합니다.
     /// </summary>
-    public void AddLink(Vector3Int position, int linkIndex, int mapIndex = 1)
+    public void AddLink(Vector3Int position, int linkIndex, int mapIndex = 1, bool isRepeatable = false)
     {
+        Debug.Log("Add Link Call");
+        
         //if link that has same position with tile already exist, skip
         var tile = GetTile(position);
-        if (tile is null) return;
-        if (tile.tileObjects.Any(obj => obj is Link)) return;
+        if (tile is null)
+        {
+            Debug.LogError("Link를 추가할 타일이 없습니다.");
+            return;
+        }
+
+        if (tile.tileObjects.Any(obj => obj is Link))
+        {
+            Debug.LogError("이미 Link가 있는 타일에 Link를 추가하려고 합니다.");
+            return;
+        }
         
         var obj = Instantiate(linkPrefab, tileObjParent.transform).GetComponent<Link>();
         obj.hexPosition = position;
         obj.linkIndex = linkIndex;
         obj.combatMapIndex = mapIndex;
+        obj.isRepeatable = isRepeatable;
         obj.SetUp();
         
         _tileObjects.Add(obj);

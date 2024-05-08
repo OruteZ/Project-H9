@@ -146,9 +146,14 @@ public class TownUI : UISystem
             Debug.LogError("Town Icon을 띄울 타일을 찾을 수 없습니다.");
         }
         var target = _iconPool.Set();
+        if (target == null)
+        {
+            Debug.LogError("Town Icon Pool is Empty");
+            return;
+        }
         target.Init(t, type);
-
     }
+    
     void Update()
     {
         bool isWorldScene = SceneManager.GetActiveScene().name == "WorldScene" || SceneManager.GetActiveScene().name == "UITestScene";

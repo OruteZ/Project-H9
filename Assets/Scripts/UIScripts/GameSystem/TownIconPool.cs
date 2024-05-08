@@ -51,7 +51,11 @@ public class TownIconPool : ObjectPool<RectTransform, TownIcontWrapper>
 
     public override TownIcontWrapper Set()
     {
-        var target = _pool.Dequeue();
+        if (_pool.TryDequeue(out var target) is false)
+        {
+            Debug.LogError("Pool is Empty");
+            return null;
+        }
 
         target.Enable = false;
 
@@ -80,6 +84,13 @@ public class TownIconPool : ObjectPool<RectTransform, TownIcontWrapper>
         {
             var target = _working[i];
             if (!target.tile.inSight) continue;
+            if (target.tile == null)
+            {
+                _working.RemoveAt(i);
+                i--;
+                continue;
+            }
+            
             target.Instance.GetComponent<Image>().enabled = true;
             Vector3 screenPos = Camera.main.WorldToScreenPoint(target.tile.transform.position);
             target.Instance.GetComponent<RectTransform>().position = screenPos;

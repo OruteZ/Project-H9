@@ -49,6 +49,7 @@ public class WorldMapEditor : MonoBehaviour
             var linkComponent = link.GetComponent<Link>();
             linkComponent.linkIndex = linkData.linkIndex;
             linkComponent.combatMapIndex = linkData.combatMapIndex;
+            linkComponent.isRepeatable = linkData.isRepeatable;
 
             if (link.TryGetComponent(out linkComponent.hexTransform))
             {
@@ -56,7 +57,7 @@ public class WorldMapEditor : MonoBehaviour
             }
             
             //remove "(Clone)" from name
-            link.name = linkData.modelName;
+            link.name = linkData.model.name.Replace("(Clone)", "");
         }
     }
     
@@ -75,9 +76,9 @@ public class WorldMapEditor : MonoBehaviour
                 pos = link.hexPosition,
                 linkIndex = link.linkIndex,
                 combatMapIndex = link.combatMapIndex,
-                modelName = link.name
+                isRepeatable = link.isRepeatable,
+                model = null
             };
-            linkData.modelName = linkData.modelName.Replace("(Clone)", "");
             worldData.links.Add(linkData);
         }
         

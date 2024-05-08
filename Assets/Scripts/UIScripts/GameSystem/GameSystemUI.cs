@@ -45,7 +45,7 @@ public class GameSystemUI : UISystem
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.L))    //level up test button
         {
-            playerStatLevelUpUI.OpenPlayerStatLevelUpUI();
+            playerStatLevelUpUI.GetPlayerStatPoint();
         }
 #endif
     }

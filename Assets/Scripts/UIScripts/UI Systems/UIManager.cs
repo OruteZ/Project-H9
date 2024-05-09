@@ -16,6 +16,7 @@ public class UIManager : Generic.Singleton<UIManager>
     public SkillUI skillUI { get; private set; }
     public PauseMenuUI pauseMenuUI { get; private set; }
     public DebugUI debugUI { get; private set; }
+    public InfoPopup infoPopup { get; private set; }
 
     [Header("Canvases")]
     [SerializeField] private Canvas _worldCanvas;
@@ -25,6 +26,7 @@ public class UIManager : Generic.Singleton<UIManager>
     [SerializeField] private Canvas _pauseMenuCanvas;
     [SerializeField] private Canvas _debugCanvas;
     [SerializeField] private Canvas _logCanvas;
+    [SerializeField] private Canvas _infoPopupCanvas;
 
     //[HideInInspector]
     public bool isMouseOverUI;
@@ -66,6 +68,7 @@ public class UIManager : Generic.Singleton<UIManager>
         _skillCanvas.enabled = false;
         _pauseMenuCanvas.enabled = false;
         _logCanvas.enabled = true;
+        _infoPopupCanvas.enabled = true;
 
         gameSystemUI = _worldCanvas.GetComponent<GameSystemUI>();
         combatUI = _combatCanvas.GetComponent<CombatWindowUI>();
@@ -73,13 +76,13 @@ public class UIManager : Generic.Singleton<UIManager>
         skillUI = _skillCanvas.GetComponent<SkillUI>();
         pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
         debugUI = _debugCanvas.GetComponent<DebugUI>();
+        infoPopup = _infoPopupCanvas.GetComponent<InfoPopup>();
 
         SetCanvasState(_characterCanvas, characterUI, false);
         SetCanvasState(_skillCanvas, skillUI, false);
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
 
         onTurnChanged.AddListener(() => { currentLayer = 1; });
-        
 
         UIState = GameState.World;
         if (!GameManager.instance.CompareState(UIState)) 

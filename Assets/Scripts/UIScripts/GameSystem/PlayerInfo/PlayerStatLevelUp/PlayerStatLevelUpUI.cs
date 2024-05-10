@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerStatLevelInfo 
 {
@@ -67,13 +68,32 @@ public class PlayerStatLevelInfo
 public class PlayerStatLevelUpUI : UISystem
 {
     [SerializeField] private GameObject _statLevelUpButton;
+    [SerializeField] private GameObject _statLevelUpButtonText;
     [SerializeField] private GameObject _statLevelUpWindow;
     [SerializeField] private GameObject _background;
     [SerializeField] private GameObject _statLevelUpTitleText;
     [SerializeField] private GameObject[] _statCards;
     [SerializeField] private GameObject _statSelectButton;
 
-    private int _statPoint = 0;
+    private int _sp = 0;
+    private int _statPoint { 
+        get 
+        { 
+            return _sp; 
+        } 
+        set 
+        {
+            _sp = value;
+            if (value == 1)
+            {
+                _statLevelUpButtonText.GetComponent<TextMeshProUGUI>().text = "";
+            }
+            else
+            {
+                _statLevelUpButtonText.GetComponent<TextMeshProUGUI>().text = value.ToString();
+            }
+        } 
+    }
     private bool _isOpenUI = false;
     public PlayerStatLevelInfo[] statLevels { get; private set; }
     public int selectedCardNumber { get; private set; }
@@ -84,6 +104,8 @@ public class PlayerStatLevelUpUI : UISystem
     private void Awake()
     {
         _statLevelUpButton.SetActive(false);
+        _statPoint = 0;
+
         ClosePlayerStatLevelUpUI();
         //_statLevelUpWindow.SetActive(false);
     }

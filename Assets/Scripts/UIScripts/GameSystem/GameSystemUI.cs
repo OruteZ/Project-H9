@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameSystemUI : UISystem
 {
+    [SerializeField] private GameObject _skillButtonRedDot;
     public PlayerInfoUI playerInfoUI { get; private set; }
     public QuestUI questUI { get; private set; }
     public TurnUI turnUI { get; private set; }
@@ -64,5 +66,13 @@ public class GameSystemUI : UISystem
     {
         if (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive()) return;
         UIManager.instance.SetPauseMenuCanvasState(true);
+    }
+
+    public void ChangeSkillButtonRetDotText(int sp) 
+    {
+        string t = sp.ToString();
+        if (sp == 1) t = "";
+        _skillButtonRedDot.SetActive(sp != 0);
+        _skillButtonRedDot.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = t;
     }
 }

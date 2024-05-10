@@ -23,7 +23,19 @@ public class SkillManager : Generic.Singleton<SkillManager>
     private List<SkillDescriptionScript> _skillDescriptionScripts;
     private List<KeywordScript> _skillKeywordScripts;
 
-    private int _skillPoint;
+    private int _sp = 0;
+    private int _skillPoint 
+    {
+        get 
+        {
+            return _sp;
+        } 
+        set 
+        {
+            _sp = value;
+            UIManager.instance.gameSystemUI.ChangeSkillButtonRetDotText(value);
+        }
+    }
 
     private new void Awake()
     {

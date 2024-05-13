@@ -9,6 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class EnemyStatUI : UISystem
 {
+    [SerializeField] private GameObject _mouseOverIcon;
     [SerializeField] private GameObject _enemyStatWindow;
 
     [SerializeField] private GameObject _enemyStatText;
@@ -37,18 +38,33 @@ public class EnemyStatUI : UISystem
     public override void ClosePopupWindow()
     {
         _isOpenedTooltipWindow = false;
-        UIManager.instance.SetUILayer(1);
         CloseEnemyStatUI();
+        UIManager.instance.SetUILayer(1);
     }
     private void Update()
     {
         if (!GameManager.instance.CompareState(GameState.Combat)) return;
+        if (FieldSystem.turnSystem.turnOwner is Player p && !_enemyStatWindow.activeSelf)
+        {
+            bool isMouseover = IsMouseOverOnEnemy(out Vector3Int ep);
+            _mouseOverIcon.SetActive(isMouseover);
+            if (isMouseover)
+            {
+                Vector3 pos = FieldSystem.tileSystem.GetTile(ep).transform.position;
+                _mouseOverIcon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(pos);
+            }
+        }
+        else
+        {
+            _mouseOverIcon.SetActive(false);
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
             Player player = FieldSystem.unitSystem.GetPlayer();
             if (player is null || player.GetSelectedAction().GetActionType() is not ActionType.Idle) return;
             Vector3Int enemyPos;
-            if (IsMouseClickedEnemy(out enemyPos))
+            if (IsMouseOverOnEnemy(out enemyPos))
             {
                 //Debug.Log("Enemy Click");
                 Enemy enemy = (Enemy)FieldSystem.unitSystem.GetUnit(enemyPos);
@@ -78,6 +94,11 @@ public class EnemyStatUI : UISystem
     /// <param name="enemy"> 클릭한 적 유닛 </param>
     public void SetEnemyStatUI(Enemy enemy)
     {
+        if (_isOpenedTooltipWindow) 
+        {
+            ClosePopupWindow();
+            return;
+        }
         OpenPopupWindow();
         _enemy = enemy;
         SetEnemyStatUIPosition(enemy.transform.position);
@@ -100,7 +121,7 @@ public class EnemyStatUI : UISystem
 
         Vector2 enemyScreenPos = Camera.main.WorldToScreenPoint(enemyPositionHeightCorrection);
         Vector2 windowSetPos = enemyScreenPos;
-        windowSetPos.x += sign * WINDOW_X_POSITION_CORRECTION;
+        windowSetPos.x += sign * WINDOW_X_POSITION_CORRECTION * UIManager.instance.GetCanvasScale();
 
         //Set UI Position
         _enemyStatWindow.GetComponent<RectTransform>().position = windowSetPos;
@@ -200,7 +221,7 @@ public class EnemyStatUI : UISystem
     {
         _enemyStatWindow.SetActive(false);
     }
-    private static bool IsMouseClickedEnemy(out Vector3Int pos)
+    private static bool IsMouseOverOnEnemy(out Vector3Int pos)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool isSuccessRaycast = Physics.Raycast(ray, out var hit, float.MaxValue, layerMask: LayerMask.GetMask("Enemy"));

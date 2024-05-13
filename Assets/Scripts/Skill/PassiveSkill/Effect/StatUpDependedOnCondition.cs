@@ -1,5 +1,6 @@
 ﻿
 using System;
+using UnityEngine;
 using PassiveSkill;
 
 public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
@@ -19,7 +20,6 @@ public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
     {
         if (enable) return;
         enable = true;
-
         unit.stat.Add(GetStatType(), GetAmount());
     }
 
@@ -27,7 +27,7 @@ public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
     {
         if (enable is false) return;
         enable = false;
-        
+
         unit.stat.Subtract(GetStatType(), GetAmount());
     }
     

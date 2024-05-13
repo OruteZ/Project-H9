@@ -64,7 +64,7 @@ public class CharacterTooltip : UIElement, IPointerEnterHandler, IPointerExitHan
         _textElement = textElement;
         _tooltipNameText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.statScript.GetStatScript(info.statName).name;
         _tooltipDescText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.statScript.GetStatScript(info.statName).description;
-        Vector3 pos = position;
+        Vector3 pos = new Vector3(position.x, position.y + 10, position.z);
         pos.y -= STAT_TOOLTIP_YPOSITION_CORRECTION;
         GetComponent<RectTransform>().position = pos;
 

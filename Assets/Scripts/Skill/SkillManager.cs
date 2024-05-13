@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -22,7 +23,19 @@ public class SkillManager : Generic.Singleton<SkillManager>
     private List<SkillDescriptionScript> _skillDescriptionScripts;
     private List<KeywordScript> _skillKeywordScripts;
 
-    private int _skillPoint;
+    private int _sp = 0;
+    private int _skillPoint 
+    {
+        get 
+        {
+            return _sp;
+        } 
+        set 
+        {
+            _sp = value;
+            UIManager.instance.gameSystemUI.ChangeSkillButtonRetDotText(value);
+        }
+    }
 
     private new void Awake()
     {
@@ -173,6 +186,9 @@ public class SkillManager : Generic.Singleton<SkillManager>
     /// </returns>
     public bool LearnSkill(int index) 
     {
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player == null) return false;
+
         List<Skill> learnedSkill = GetAllLearnedSkills();
         foreach (Skill skill in learnedSkill) 
         {
@@ -201,6 +217,8 @@ public class SkillManager : Generic.Singleton<SkillManager>
                 _skills[i].LearnSkill();
                 PlayerEvents.OnLearnedSkill?.Invoke(_skills[i].skillInfo);
                 GameManager.instance.AddPlayerSkillListElement(_skills[i].skillInfo);
+                passiveDB.GetPassive(_skills[i].skillInfo.index, player);
+                player.SetPassive(GameManager.instance.playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, player)).ToList());
                 break;
             }
         }

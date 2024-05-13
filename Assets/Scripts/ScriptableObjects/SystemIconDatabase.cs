@@ -31,7 +31,7 @@ public class SystemIconDatabase : ScriptableObject
                 return info.icon;
             }
         }
-        Debug.LogError(name);
+        Debug.LogError($"{name} 아이콘을 찾을 수 없습니다.");
         return iconList[0].icon;
     }
 }

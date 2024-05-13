@@ -95,8 +95,8 @@ public class UIManager : Generic.Singleton<UIManager>
     {
         //Debug.Log(currentLayer);
         isMouseOverUI = (EventSystem.current.IsPointerOverGameObject()/* || currentLayer > 1*/);
-        if (combatUI.combatActionUI.isCombatUIOpened()) return;
-        if (!combatUI.combatActionUI.isCombatUIOpened() && Input.GetMouseButtonDown(0))
+        //if (combatUI.combatActionUI.isCombatUIOpened()) return;
+        if (!combatUI.combatActionUI.IsMouseOverActionUI() && Input.GetMouseButtonDown(0))
         {
             int layer = GetPointerOverUILayer();
             if (layer < 2 && !_characterCanvas.enabled && !_skillCanvas.enabled && !_pauseMenuCanvas.enabled)

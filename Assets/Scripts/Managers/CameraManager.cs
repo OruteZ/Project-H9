@@ -26,6 +26,10 @@ public class CameraManager : Singleton<CameraManager>
         uCam.SetOwner(target);
     }
 
+    public void LookAtForcely(Unit target)
+    {
+        LookAt(target);
+    }
     private void LookAt(Unit target)
     {
         if (_unitCameras.TryGetValue(target, out var unitCamera))
@@ -149,6 +153,6 @@ public class CameraManager : Singleton<CameraManager>
             LookWorldCamera();
         }
     }
-    
+
     #endregion
 }

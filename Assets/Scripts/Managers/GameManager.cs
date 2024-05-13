@@ -17,16 +17,16 @@ public enum GameState
 public class GameManager : Generic.Singleton<GameManager>
 {
     private const string COMBAT_SCENE_NAME = "CombatScene";
-    
-    //databases
+
+    public UserData user;
+    public Inventory playerInventory = new Inventory();
+    [SerializeField]
     public ItemDatabase itemDatabase;
     public WeaponDatabase weaponDatabase;
     
     // map data
     public WorldData runtimeWorldData;
     [SerializeField] private WorldData _defaultWorldData;
-
-    public Inventory playerInventory = new Inventory();
     public List<QuestInfo> Quests;
     
     [SerializeField]
@@ -286,24 +286,24 @@ public class GameManager : Generic.Singleton<GameManager>
                 onPlayerCombatFinished.AddListener(quest.OnCountConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
                 onPlayerCombatFinished.AddListener(quest.OnCountGoalEvented);
-             
+
             // ����Ʈ ����, �Ϸ���� KILL_UNIT ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
-                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>quest.OnCountConditionEvented(u.Index));
+                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u) => quest.OnCountConditionEvented(u.Index));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
-                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u)=>quest.OnCountGoalEvented(u.Index));
+                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u) => quest.OnCountGoalEvented(u.Index));
 
             // ����Ʈ ����, �Ϸ���� GET_ITEM, USE_TIEM ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
                 IInventory.OnGetItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
-                IInventory.OnGetItem.AddListener((i) => quest.OnCountGoalEvented(i.id)) ;
+                IInventory.OnGetItem.AddListener((i) => quest.OnCountGoalEvented(i.id));
 
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
                 IInventory.OnUseItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
-                IInventory.OnUseItem.AddListener((i) => quest.OnCountGoalEvented(i.id)) ;
-            
+                IInventory.OnUseItem.AddListener((i) => quest.OnCountGoalEvented(i.id));
+
             // �÷��̾� �þ� ���� Ÿ��, ��ũ ���Խ��� �̺�Ʈ ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
                 PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedConditionEvent(tile.hexPosition));
@@ -313,9 +313,9 @@ public class GameManager : Generic.Singleton<GameManager>
                 PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedConditionEvent(link.linkIndex));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.LINK_IN_SIGHT))
                 PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedGoalEvent(link.linkIndex));
-            
+
             if (quest.ExpireTurn != -1)
-                PlayerEvents.OnProcessedWorldTurn.AddListener((u) => { quest.ProgressExpireTurn();});
+                PlayerEvents.OnProcessedWorldTurn.AddListener((u) => { quest.ProgressExpireTurn(); });
         }
         watch.Stop();
         Debug.Log($"<color=blue>Quest link time: {watch.ElapsedMilliseconds}</color>");
@@ -326,13 +326,53 @@ public class GameManager : Generic.Singleton<GameManager>
 
         OnGameStarted?.Invoke();
         UIManager.instance.gameSystemUI.conversationUI.StartNextConversation();    //load previous quest when start game _ fix later
+
+        if (DataLoader.IsReady)
+        {
+            user = DataLoader.Data;
+            DataLoader.Clear();
+
+            // <world load>
+            // town etc persistent object load
+            // enemy load 
+
+            // <player load>
+            // player curretn turn ;
+            // player position ;
+            var player = FieldSystem.unitSystem.GetPlayer();
+            player.MoveForcely(user.Position);
+            CameraManager.instance.LookAtForcely(player);
+            // player hp ;
+            // player move point ;
+            // player ammo ; // maybe no useless
+            
+            // player skill load
+            // player stat load
+            
+            // player inventory load
+            // player weapon(equiped) load
+        }
+
+        if (!user.Events.TryGetValue("INFO_POPUP_MESSAGE_DO_MOVE", out var value) || value != 0)
+        {
+            InfoPopup.instance.Show(InfoPopup.MESSAGE.DO_MOVE);
+            user.Events.TryAdd("INFO_POPUP_MESSAGE_DO_MOVE", 1);
+        }
     }
 
     public void Update()
     {
         var deltaTime = Time.deltaTime;
         Service.OnUpdated(deltaTime);
-        
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            Debug.Log($"현재 F3로 저장도 하는 중");
+            if (user == null) Debug.Log($"user is null");
+            user.Position = FieldSystem.unitSystem.GetPlayer().hexPosition;
+            UserDataFileSystem.Save(in user);
+        }
+
         #region ITEM_TEST
 
         if (Input.GetKeyDown(KeyCode.F1))

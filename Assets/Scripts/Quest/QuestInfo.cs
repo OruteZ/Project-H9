@@ -231,16 +231,23 @@ public class QuestInfo
         _isInProgress = true;
         OnQuestStarted.Invoke(this);     
         PlayerEvents.OnStartedQuest.Invoke(this);
-
+        
+        
         if (_createLink is { Length: 4 })
         {
             int linkIdx = _createLink[0];
             Vector3Int linkHex = new Vector3Int(_createLink[1], _createLink[2], _createLink[3]);
-
-            if (linkIdx > 0)
+            if (linkIdx <= 0)
             {
-                FieldSystem.tileSystem.AddLink(linkHex, linkIdx);
+                Debug.LogError("퀘스트 링크 생성 실패: 링크 인덱스가 0 이하입니다.");
+                return;
             }
+            
+            if (GameManager.instance.CompareState(GameState.Combat))
+            {
+                GameManager.instance.runtimeWorldData.TryAddLink(linkHex, linkIdx);
+            }
+            else FieldSystem.tileSystem.AddLink(linkHex, linkIdx);
         }
     }
 

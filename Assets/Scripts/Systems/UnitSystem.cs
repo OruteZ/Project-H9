@@ -160,11 +160,11 @@ public class UnitSystem : MonoBehaviour
 
                 GameManager.instance.playerStat.ResetModifier();
                 p.SetUp(-1, "Player", GameManager.instance.playerStat, 
-                    weaponDB.Clone(GameManager.instance.PlayerWeaponIndex),
+                    weaponDB.Clone(GameManager.instance.playerWeaponIndex),
                     GameManager.instance.playerModel, playerPassiveList);
                 if (GameManager.instance.CompareState(GameState.World))
                 {
-                    p.hexTransform.position = GameManager.instance.playerWorldPos;
+                    p.hexTransform.position = GameManager.instance.runtimeWorldData.playerPosition;
                 }
             }
             else if(unit is Enemy enemy)

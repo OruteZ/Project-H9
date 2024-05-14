@@ -19,11 +19,16 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
         displayedEffect = effect;
         _isPlayer = isPlayer;
         // buff image setting
-        if (effect is StatusEffect sEffect) 
+        Sprite icon = null;
+        if (effect is StatusEffect sEffect)
         {
-            Sprite icon = UIManager.instance.combatUI.buffUI.GetDebuffIconSprite(sEffect.GetStatusEffectType());
-            _buffImage.GetComponent<Image>().sprite = icon;
+            icon = UIManager.instance.combatUI.buffUI.GetDebuffIconSprite(sEffect.GetStatusEffectType());
         }
+        else if (effect is StatUpDependedOnCondition skillCondition)
+        {
+            icon = UIManager.instance.iconDB.GetIconInfo(SkillManager.instance.GetSkill(skillCondition.GetIndex()).skillInfo.icon);
+        }
+        _buffImage.GetComponent<Image>().sprite = icon;
 
         //Outline Effect Setting
         if (isBuff)

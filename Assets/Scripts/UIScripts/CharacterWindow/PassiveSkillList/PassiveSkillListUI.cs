@@ -35,7 +35,7 @@ public class PassiveSkillListUI : UISystem
             PassiveInfo pInfo = passiveDB.GetPassiveInfo(passiveList[i]);
             if (pInfo.condition == PassiveSkill.ConditionType.Null) continue;
             var t = _listPool.Set();
-            t.Instance.GetComponent<PassiveSkillListElement>().SetPassiveSkillListElement(pInfo);
+            t.Instance.GetComponent<PassiveSkillListElement>().SetPassiveSkillListElement(pInfo, i);
             t.Instance.transform.SetAsLastSibling();
         }
     }

@@ -43,6 +43,12 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
         if (action is null) return;
         buttonName = action.GetActionType().ToString();
         buttonAction = action;
+        if (actionType == CombatActionType.PlayerSkill)
+        {
+            //fix later
+            _actionButtonIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo("Skills");
+        }
+
         SetInteractable();
     }
     public void ClearCombatActionButton()

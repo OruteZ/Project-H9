@@ -82,6 +82,11 @@ namespace PassiveSkill
         {
             _condition.Setup(this);
             _effect.Setup(this);
+
+            if (_condition.GetConditionType() is ConditionType.Null)
+            {
+                Enable();
+            }
         }
 
         public bool IsEffectEnable()

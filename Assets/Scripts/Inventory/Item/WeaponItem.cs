@@ -13,7 +13,7 @@ public class WeaponItem : Item
 
     public override bool TryEquip()
     {
-        GameManager.instance.PlayerWeaponIndex =
+        GameManager.instance.playerWeaponIndex =
             GetData().id;
         UIManager.instance.onWeaponChanged.Invoke();
         return true;

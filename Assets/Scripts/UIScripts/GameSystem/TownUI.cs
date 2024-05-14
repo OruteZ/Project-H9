@@ -21,11 +21,13 @@ public class TownUI : UISystem
 
     private TownIconPool _iconPool = null;
     [SerializeField] private GameObject _iconContainer;
+    [SerializeField] private GameObject _doorIcon;
 
     private void Awake()
     {
         _iconPool = new TownIconPool();
         _iconPool.Init("Prefab/Town Icon", _iconContainer.transform, 0);
+        _doorIcon.SetActive(false);
 
         UIManager.instance.onPlayerEnterTown.AddListener((p, i, t) => { SetCurrentTownInfo(p, i, t); });
         CloseUI();
@@ -71,7 +73,7 @@ public class TownUI : UISystem
         FieldSystem.turnSystem.EndTurn();
         CloseUI();
     }
-    //Invoke when player start idle action
+    //Invoke when player stop(start to move)
     private void CheckPlayerInTown()
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
@@ -84,6 +86,7 @@ public class TownUI : UISystem
 
         if (player.hexPosition != _currentInteractPosition)
         {
+            _doorIcon.SetActive(false);
             UIManager.instance.SetUILayer(1);
             CloseUI();
             _previousBuildingType = Town.BuildingType.NULL;
@@ -91,14 +94,58 @@ public class TownUI : UISystem
         }
         if (_currentBuildingType == _previousBuildingType) return;
         if (UIManager.instance.gameSystemUI.conversationUI.isConverstating) return;
-        IUnitAction selectedAction = player.GetSelectedAction();
-        if (selectedAction is not MoveAction || ((MoveAction)selectedAction).isThereAPathLeft()) return;
 
-        //player.GetSelectedAction().ForceFinish();
+    }
 
+    //Invoke when player collide with town tile
+    private void SetCurrentTownInfo(Vector3Int pos, int index, Town.BuildingType type) 
+    {
+        _currentInteractPosition = pos;
+        _currentTownIndex = index;
+        _currentBuildingType = type;
+        _doorIcon.SetActive(true);
+    }
+
+    public override void CloseUI()
+    {
+        isTownUIOpened = false;
+        _AmmunitionWindow.SetActive(false);
+        _SaloonWindow.SetActive(false);
+        _SheriffWindow.SetActive(false);
+        base.CloseUI();
+    }
+
+    public void AddTownIcon(Vector3Int pos, Town.BuildingType type) 
+    {
+        Vector3Int iconHexPos = new Vector3Int(pos.x, pos.y - 2, pos.z + 2);
+
+        if (_iconPool.Find(iconHexPos) != null) return;
+        var target = _iconPool.Set();
+        target.Init(iconHexPos, type);
+
+    }
+    void Update()
+    {
+        bool isWorldScene = SceneManager.GetActiveScene().name == "WorldScene" || SceneManager.GetActiveScene().name == "UITestScene";
+        _iconContainer.SetActive(isWorldScene);
+        if (!isWorldScene) return;
+
+        _iconPool.Update();
+
+        Tile townTile = FieldSystem.tileSystem.GetTile(_currentInteractPosition);
+        Vector3Int doorTileHexPos = new Vector3Int(_currentInteractPosition.x, _currentInteractPosition.y - 1, _currentInteractPosition.z + 1);
+        Tile doorTile = FieldSystem.tileSystem.GetTile(doorTileHexPos);
+        if (townTile == null || doorTile == null) return;
+        if (!townTile.inSight || !doorTile.inSight) return;
+        Vector3 screenPos = Camera.main.WorldToScreenPoint((townTile.transform.position + doorTile.transform.position) / 2);
+        _doorIcon.GetComponent<RectTransform>().position = screenPos;
+    }
+
+    public void OnClickDoorIcon()
+    {
         UIManager.instance.SetUILayer(2);
         isTownUIOpened = true;
-        switch (_currentBuildingType) 
+        switch (_currentBuildingType)
         {
             case Town.BuildingType.Ammunition:
                 {
@@ -117,44 +164,5 @@ public class TownUI : UISystem
                 }
 
         }
-    }
-
-    //Invoke when player collide with town tile
-    private void SetCurrentTownInfo(Vector3Int pos, int index, Town.BuildingType type) 
-    {
-        _currentInteractPosition = pos;
-        _currentTownIndex = index;
-        _currentBuildingType = type;
-    }
-
-    public override void CloseUI()
-    {
-        isTownUIOpened = false;
-        _AmmunitionWindow.SetActive(false);
-        _SaloonWindow.SetActive(false);
-        _SheriffWindow.SetActive(false);
-        base.CloseUI();
-    }
-
-    public void AddTownIcon(Vector3Int pos, Town.BuildingType type) 
-    {
-        Vector3Int iconPos = new Vector3Int(pos.x, pos.y - 2, pos.z + 2);
-        Tile t = FieldSystem.tileSystem.GetTile(iconPos);
-
-        if (t == null) 
-        {
-            Debug.LogError("Town Icon을 띄울 타일을 찾을 수 없습니다.");
-        }
-        var target = _iconPool.Set();
-        target.Init(t, type);
-
-    }
-    void Update()
-    {
-        bool isWorldScene = SceneManager.GetActiveScene().name == "WorldScene" || SceneManager.GetActiveScene().name == "UITestScene";
-        _iconContainer.SetActive(isWorldScene);
-        if (!isWorldScene) return;
-
-        _iconPool.Update();
     }
 }

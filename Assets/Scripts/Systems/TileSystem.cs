@@ -40,7 +40,9 @@ public class TileSystem : MonoBehaviour
     /// </summary>
     public Transform environments;
     
-    private Dictionary<Vector3Int, Tile> _tiles;
+    private Dictionary<Vector3Int, Tile> _tiles = new();
+    private readonly List<TileObject> _tileObjects = new();
+    
     private HexGridLayout _gridLayout;
     private HexGridLayout gridLayout => _gridLayout ??= tileParent.GetComponent<HexGridLayout>();
 
@@ -95,6 +97,18 @@ public class TileSystem : MonoBehaviour
         foreach (var obj in objects)
         {
             obj.SetUp();
+            _tileObjects.Add(obj);
+        }
+        
+        //get runtime map data from gamemanager
+        var mapData = GameManager.instance.runtimeWorldData;
+        if (mapData is not null)
+        {
+            if(GameManager.instance.CompareState(GameState.World)) 
+                foreach (var link in mapData.links)
+                {
+                    AddLink(link.pos, link.linkIndex, link.combatMapIndex);
+                }
         }
 
         var envList = environments.GetComponentsInChildren<HexTransform>().ToList();
@@ -157,18 +171,32 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// Runtime에 Link를 추가합니다.
     /// </summary>
-    public void AddLink(Vector3Int position, int linkIndex, int mapIndex = 1)
+    public void AddLink(Vector3Int position, int linkIndex, int mapIndex = 1, bool isRepeatable = false)
     {
+        Debug.Log("Add Link Call");
+        
         //if link that has same position with tile already exist, skip
         var tile = GetTile(position);
-        if (tile is null) return;
-        if (tile.tileObjects.Any(obj => obj is Link)) return;
+        if (tile is null)
+        {
+            Debug.LogError("Link를 추가할 타일이 없습니다.");
+            return;
+        }
+
+        if (tile.tileObjects.Any(obj => obj is Link))
+        {
+            Debug.LogError("이미 Link가 있는 타일에 Link를 추가하려고 합니다.");
+            return;
+        }
         
         var obj = Instantiate(linkPrefab, tileObjParent.transform).GetComponent<Link>();
         obj.hexPosition = position;
         obj.linkIndex = linkIndex;
         obj.combatMapIndex = mapIndex;
+        obj.isRepeatable = isRepeatable;
         obj.SetUp();
+        
+        _tileObjects.Add(obj);
     }
 
     /// <summary>
@@ -179,6 +207,24 @@ public class TileSystem : MonoBehaviour
     public Tile GetTile(Vector3Int position)
     {
         return _tiles.GetValueOrDefault(position);
+    }
+    
+    /// <summary>
+    /// 해당 Hex좌표에 해당하는 TileObject를 가져옵니다.
+    /// </summary>
+    /// <param name="position">Hex 좌표</param>
+    /// <returns></returns>
+    public TileObject GetTileObject(Vector3Int position)
+    {
+        return _tileObjects.FirstOrDefault(obj => obj.hexPosition == position);
+    }
+    
+    /// <summary>
+    /// 존재하는 모든 TileObjects를 반환합니다.
+    /// </summary>
+    public IEnumerable<TileObject> GetAllTileObjects()
+    {
+        return _tileObjects;
     }
 
     /// <summary>

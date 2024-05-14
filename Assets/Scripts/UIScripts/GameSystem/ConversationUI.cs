@@ -11,7 +11,7 @@ public class ConversationUI : UISystem
 
     public bool isConverstating { get; private set; }
 
-    private QuestInfo _questInfo;
+    public QuestInfo _questInfo;
     private bool _isStartQuest;
 
     private QuestInfo _tmpQuestInfo;
@@ -117,6 +117,7 @@ public class ConversationUI : UISystem
         if (_isStartQuest)
         {
             UIManager.instance.gameSystemUI.questUI.AddQuestListUI(_questInfo);
+            _questInfo = null;
         }
         else
         {

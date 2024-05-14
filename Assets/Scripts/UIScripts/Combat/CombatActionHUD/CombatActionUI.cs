@@ -326,14 +326,22 @@ public class CombatActionUI : UISystem
 
         return false;
     }
-    private bool IsMouseOverActionUI()
+    public bool IsMouseOverActionUI()
     {
         GraphicRaycaster gr = GetComponent<GraphicRaycaster>();
         PointerEventData ped = new PointerEventData(null);
         ped.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         gr.Raycast(ped, results);
-        if (results.Count != 0)
+        int cnt = 0;
+        foreach (var r in results)
+        {
+            if (r.gameObject.tag == "CombatUI") 
+            {
+                cnt++;
+            }
+        }
+        if (cnt != 0)
         {
             return true;
         }

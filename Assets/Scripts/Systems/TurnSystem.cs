@@ -13,10 +13,13 @@ public class TurnSystem : MonoBehaviour
     public Unit turnOwner;  
     public int turnNumber;
 
-    private void Awake()
+    private void Start()
     {
-        turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.worldTurn : 0;
-        onTurnChanged.AddListener(() => { turnNumber++; if (GameManager.instance.CompareState(GameState.World)) GameManager.instance.worldTurn++; });
+        turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.runtimeWorldData.worldTurn : 0;
+        onTurnChanged.AddListener(() => { turnNumber++; 
+            if (GameManager.instance.CompareState(GameState.World)) 
+                GameManager.instance.runtimeWorldData.worldTurn++; }
+        );
         onTurnChanged.AddListener(() => UIManager.instance.onTurnChanged.Invoke());
         onTurnChanged.AddListener(() => UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI());
         onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));

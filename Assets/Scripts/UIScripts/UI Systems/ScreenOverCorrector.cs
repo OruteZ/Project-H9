@@ -32,7 +32,8 @@ public static class ScreenOverCorrector
     {
         Vector3 result = pos;
 
-        Vector2 canvasSize = canvas.gameObject.GetComponent<RectTransform>().sizeDelta - new Vector2(5, 5);
+        RectTransform rt = canvas.gameObject.GetComponent<RectTransform>();
+        Vector2 canvasSize = new Vector2(rt.sizeDelta.x * rt.localScale.x - 5, rt.sizeDelta.y * rt.localScale.y - 5);
         Vector2 windowSize = size;
         Vector2 windowPivot = pivot;
         float[] screenLimit = { canvasSize.x, 0,

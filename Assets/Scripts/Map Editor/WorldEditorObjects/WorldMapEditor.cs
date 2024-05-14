@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class WorldMapEditor : MonoBehaviour
 {
-    [SerializeField]private WorldObjectData worldObjectData;
+    [SerializeField]private WorldData worldData;
     [SerializeField]private Transform tileObjectsTransform;
     [SerializeField]private GameObject linkPrefab;
     
@@ -40,7 +40,7 @@ public class WorldMapEditor : MonoBehaviour
         }
         
         //Instantiate link object by link data
-        foreach (var linkData in worldObjectData.links)
+        foreach (var linkData in worldData.links)
         {
             //instantiate
             var link = Instantiate(linkPrefab, Hex.Hex2World(linkData.pos), Quaternion.identity);
@@ -49,6 +49,7 @@ public class WorldMapEditor : MonoBehaviour
             var linkComponent = link.GetComponent<Link>();
             linkComponent.linkIndex = linkData.linkIndex;
             linkComponent.combatMapIndex = linkData.combatMapIndex;
+            linkComponent.isRepeatable = linkData.isRepeatable;
 
             if (link.TryGetComponent(out linkComponent.hexTransform))
             {
@@ -56,7 +57,7 @@ public class WorldMapEditor : MonoBehaviour
             }
             
             //remove "(Clone)" from name
-            link.name = linkData.modelName;
+            link.name = linkData.model.name.Replace("(Clone)", "");
         }
     }
     
@@ -64,7 +65,7 @@ public class WorldMapEditor : MonoBehaviour
     public void SaveLink()
     {
         //Get link data by link object
-        worldObjectData.links.Clear();
+        worldData.links.Clear();
         foreach (Transform child in tileObjectsTransform)
         {
             var link = child.GetComponent<Link>();
@@ -75,10 +76,10 @@ public class WorldMapEditor : MonoBehaviour
                 pos = link.hexPosition,
                 linkIndex = link.linkIndex,
                 combatMapIndex = link.combatMapIndex,
-                modelName = link.name
+                isRepeatable = link.isRepeatable,
+                model = null
             };
-            linkData.modelName = linkData.modelName.Replace("(Clone)", "");
-            worldObjectData.links.Add(linkData);
+            worldData.links.Add(linkData);
         }
         
         onLinkChanged.Invoke();

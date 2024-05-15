@@ -146,6 +146,12 @@ public class GameManager : Generic.Singleton<GameManager>
 
     public void StartCombat(int stageIndex, int linkIndex)
     {
+        if (stageIndex == 0)
+        {
+            Debug.LogError("Stage Index is 0, set to 1");
+            stageIndex = 1;
+        }
+        
         //Save World Data
         SaveCurrentWorldData();
         

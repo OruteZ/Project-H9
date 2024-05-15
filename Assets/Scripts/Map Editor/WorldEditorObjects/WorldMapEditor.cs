@@ -57,7 +57,7 @@ public class WorldMapEditor : MonoBehaviour
             }
             
             //remove "(Clone)" from name
-            link.name = linkData.model.name.Replace("(Clone)", "");
+            // link.name = linkData.model.name.Replace("(Clone)", "");
         }
     }
     

@@ -58,6 +58,7 @@ public class Player : Unit
         if (Input.GetMouseButton(1) && GameManager.instance.CompareState(GameState.Combat))
         {
             SelectAction(GetAction<IdleAction>());
+            UIManager.instance.combatUI.ClosePopupWindow();
         }
     }
 

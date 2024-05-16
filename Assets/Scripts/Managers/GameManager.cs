@@ -248,6 +248,7 @@ public class GameManager : Generic.Singleton<GameManager>
     {
         base.Awake();
         if(this == null) return;
+        Application.targetFrameRate = 90;
 
         runtimeWorldData = Instantiate(_defaultWorldData);
         runtimeWorldData.discoveredWorldTileSet = new HashSet<Vector3Int>();

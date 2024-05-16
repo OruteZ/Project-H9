@@ -26,6 +26,10 @@ public class EnemyHpUIPool : ObjectPool<RectTransform, EnemyHpUIWrapper>
 
     public override EnemyHpUIWrapper Set()
     {
+        if (_pool.Count == 0)
+        {
+            SupplyPool(10);
+        }
         var target = _pool.Dequeue();
 
         target.Enable = false;

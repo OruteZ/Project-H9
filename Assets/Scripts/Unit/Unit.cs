@@ -190,6 +190,11 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
     }
 
+    public void MoveForcely(Vector3Int value)
+    {
+        hexTransform.position = value;
+    }
+
     private void EquipWeapon(Weapon newWeapon, bool isOnSetup = false)
     {
         bool changingInCombat = (GameManager.instance.CompareState(GameState.Combat) && isOnSetup == false);

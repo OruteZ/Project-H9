@@ -88,7 +88,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 AttackTileEffect();
                 break;
             case ActionType.Dynamite:
-                DynamiteTileEffect();
+                // DynamiteTileEffect();
                 break;
             case ActionType.Idle:
                 ClearEffect(_effectsBase);
@@ -344,60 +344,60 @@ public class TileEffectManager : Singleton<TileEffectManager>
     #endregion
     
     #region DYNAMITE
-    private void DynamiteTileEffect()
-    {
-        int range = _player.GetAction<DynamiteAction>().GetThrowingRange();
+    // private void DynamiteTileEffect()
+    // {
+    //     int range = _player.GetAction<DynamiteAction>().GetThrowingRange();
         
-        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, range).Where(
-            tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
+    //     var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, range).Where(
+    //         tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
 
-        foreach (var tile in tiles)
-        {
-            if(Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
+    //     foreach (var tile in tiles)
+    //     {
+    //         if(Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
             
-            var go =Instantiate(attackTileEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
-            _effectsBase.Add(tile.hexPosition, go);
-        }
+    //         var go =Instantiate(attackTileEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
+    //         _effectsBase.Add(tile.hexPosition, go);
+    //     }
 
-        _curCoroutine = StartCoroutine(DynamiteTargetEffectCoroutine());
-    }
+    //     _curCoroutine = StartCoroutine(DynamiteTargetEffectCoroutine());
+    // }
 
-    private IEnumerator DynamiteTargetEffectCoroutine()
-    {
-        int expRange = _player.GetAction<DynamiteAction>().GetExplosionRange();
-        int thrRange = _player.GetAction<DynamiteAction>().GetThrowingRange();
+    // private IEnumerator DynamiteTargetEffectCoroutine()
+    // {
+    //     int expRange = _player.GetAction<DynamiteAction>().GetExplosionRange();
+    //     int thrRange = _player.GetAction<DynamiteAction>().GetThrowingRange();
         
-        while (true)
-        {
-            yield return null;
-            ClearEffect(_effectsRelatedTarget);
+    //     while (true)
+    //     {
+    //         yield return null;
+    //         ClearEffect(_effectsRelatedTarget);
 
-            if (Player.TryGetMouseOverTilePos(out var target) is false)
-            {
-                ClearEffect(_effectsRelatedTarget);
-                continue;
-            }
-            if (FieldSystem.tileSystem.GetTile(target).visible is false)
-            {
-                ClearEffect(_effectsRelatedTarget);
-                continue;
-            }
+    //         if (Player.TryGetMouseOverTilePos(out var target) is false)
+    //         {
+    //             ClearEffect(_effectsRelatedTarget);
+    //             continue;
+    //         }
+    //         if (FieldSystem.tileSystem.GetTile(target).visible is false)
+    //         {
+    //             ClearEffect(_effectsRelatedTarget);
+    //             continue;
+    //         }
 
-            if (Hex.Distance(target, _player.hexPosition) > thrRange)
-            {
-                ClearEffect(_effectsRelatedTarget);
-                continue;
-            }
+    //         if (Hex.Distance(target, _player.hexPosition) > thrRange)
+    //         {
+    //             ClearEffect(_effectsRelatedTarget);
+    //             continue;
+    //         }
 
-            var tiles = FieldSystem.tileSystem.GetTilesInRange(target, expRange);
-            foreach (var pos in tiles.Select(tile => tile.hexPosition)) 
-            {
-                if(Hex.Distance(_player.hexPosition, pos) > _player.stat.sightRange) continue;
-                SetEffectTarget(pos, TileEffectType.Friendly);
-            }
-        }
-        // ReSharper disable once IteratorNeverReturns
-    }
+    //         var tiles = FieldSystem.tileSystem.GetTilesInRange(target, expRange);
+    //         foreach (var pos in tiles.Select(tile => tile.hexPosition)) 
+    //         {
+    //             if(Hex.Distance(_player.hexPosition, pos) > _player.stat.sightRange) continue;
+    //             SetEffectTarget(pos, TileEffectType.Friendly);
+    //         }
+    //     }
+    //     // ReSharper disable once IteratorNeverReturns
+    // }
     #endregion
     
     #region USING ITEM

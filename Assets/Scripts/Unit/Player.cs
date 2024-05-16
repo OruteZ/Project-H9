@@ -26,6 +26,7 @@ public class Player : Unit
         TileEffectManager.instance.SetPlayer(this);
 
         FieldSystem.onStageAwake.AddListener(ReloadSight);
+        stat.OnChangedStat.AddListener((type) => { PlayerEvents.OnChangedStat?.Invoke(stat, type); });
     }
     public void Update()
     {
@@ -63,6 +64,7 @@ public class Player : Unit
 
     protected override void DeadCall(Unit unit)
     {
+        stat.OnChangedStat.RemoveAllListeners();
         PlayerEvents.OnStartedQuest.RemoveListener((quest) => OnForceFinish());
         PlayerEvents.OnSuccessQuest.AddListener((quest) => OnForceFinish());
         PlayerEvents.OnFailedQuest.AddListener((quest) => OnForceFinish());

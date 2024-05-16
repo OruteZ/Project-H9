@@ -185,7 +185,11 @@ public class TileSystem : MonoBehaviour
 
         if (tile.tileObjects.Any(obj => obj is Link))
         {
-            Debug.LogError("이미 Link가 있는 타일에 Link를 추가하려고 합니다.");
+            Debug.LogError("이미 Link가 있는 타일에 Link를 추가하려고 합니다." +
+                           "pos : " + position + 
+                           ", LinkIndex : " + linkIndex + 
+                           ", MapIndex : " + mapIndex
+                           );
             return;
         }
         

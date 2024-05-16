@@ -1,0 +1,8 @@
+﻿index,kor,eng,comment
+0,잘못된 접근입니다.,Wrong access info.,기본적으로는 출력되지 않는 문자
+1,현재 이동할 수 있는 타일은 파란색으로 표현됩니다. 다른 타일로 이동하세요.,"You can move to blue tiles, Click tile to move.",DO_MOVE
+2,이동을 하면 행동력이 소모됩니다.,Move costs action points.,IT_IS_MOVE_GAGE
+3,"더 이상 행동할 수 없다면, 차례를 넘기세요.","You can't act more, pass the turn.",IT_IS_TURN_END
+4,전투는 서로의 차례를 번갈아가며 반복합니다.,The combat repeats each other's turn alternately.,COMBAT_TURN
+5,캐릭터를 누르고 다음 행동을 선택하세요.,Click character and select next action.,COMBAT_ACTION
+6,체력이 0이 되면 죽습니다. 힘내세요.,"When you loss all hp, you are die. good luck.",COMBAT_HP

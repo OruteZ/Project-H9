@@ -19,6 +19,16 @@ public class TitleUI : MonoBehaviour
     {
         if (!_isStarted) 
         {
+            DataLoader.New();
+            _isStarted = true;
+            LoadingManager.instance.LoadingScene("WorldScene");
+        }
+    }
+    public void OnClickLoadBtn(in UserData userData)
+    {
+        if (!_isStarted) 
+        {
+            DataLoader.Stack(userData);
             _isStarted = true;
             LoadingManager.instance.LoadingScene("WorldScene");
         }

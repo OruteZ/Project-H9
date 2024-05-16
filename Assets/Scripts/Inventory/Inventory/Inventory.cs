@@ -85,8 +85,39 @@ public class Inventory : IInventory
             if (item.GetData().id == deleteItem.GetData().id)
             {
                 item.SetStackCount(item.GetStackCount() - cnt);
+                CollectZeroItem();
                 IInventory.OnInventoryChanged?.Invoke();
                 return;
+            }
+        }
+    }
+    
+    public void CollectZeroItem()
+    {
+        for(int i = 0; i < _weaponItems.Count; i++)
+        {
+            if (_weaponItems[i] == null) continue;
+            if (_weaponItems[i].GetStackCount() <= 0)
+            {
+                _weaponItems[i] = null;
+            }
+        }
+        
+        for(int i = 0; i < _consumableItems.Count; i++)
+        {
+            if (_consumableItems[i] == null) continue;   
+            if (_consumableItems[i].GetStackCount() <= 0)
+            {
+                _consumableItems[i] = null;
+            }
+        }
+        
+        for(int i = 0; i < _elseItems.Count; i++)
+        {
+            if (_elseItems[i] == null) continue;
+            if (_elseItems[i].GetStackCount() <= 0)
+            {
+                _elseItems[i] = null;
             }
         }
     }
@@ -117,8 +148,12 @@ public class Inventory : IInventory
         if (itemList[index].IsUsable())
         {
             Debug.Log("select");
+            
+            var data = itemList[index].GetData();
+            
             player.SelectItem(itemList[index]);
-            IInventory.OnUseItem.Invoke(itemList[index].GetData());
+            
+            IInventory.OnUseItem.Invoke(data);
         }
     }
     public void SellItem(ItemType type, int index)

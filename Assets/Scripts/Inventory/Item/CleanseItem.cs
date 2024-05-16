@@ -20,6 +20,8 @@ public class CleanseItem : Item
                 //remove this status effect
                 user.TryRemoveStatus(itemDebuff);
                 stackCount--;
+                
+                GameManager.instance.playerInventory.CollectZeroItem();
                 return true;
             }
         }

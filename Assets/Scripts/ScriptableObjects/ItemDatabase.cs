@@ -125,7 +125,7 @@ public class ItemData
     public GameObject itemModel;
 
     /// <summary>
-    /// ÇØ´ç ¾ÆÀÌÅÛÀÇ ÅøÆÁ ¼³¸íÀ» ±¸¼ºÇÏ¿© ºÒ·¯¿É´Ï´Ù.
+    /// í•´ë‹¹ ì•„ì´í…œì˜ íˆ´íŒ ì„¤ëª…ì„ êµ¬ì„±í•˜ì—¬ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤.
     /// </summary>
     public string GetInventoryTooltipContents()
     {

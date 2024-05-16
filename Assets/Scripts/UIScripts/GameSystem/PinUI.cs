@@ -16,6 +16,8 @@ public class PinUI : UISystem
     void Awake()
     {
         _pinImage.SetActive(false);
+
+        worldCamera = CameraManager.instance.worldCamera;
     }
     void Update()
     {

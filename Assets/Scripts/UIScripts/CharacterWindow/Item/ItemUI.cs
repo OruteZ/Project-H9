@@ -51,7 +51,7 @@ public class ItemUI : UISystem
 
     public void SetInventoryUI() 
     {
-        //_inventory ºÒ·¯¿À±â
+        //_inventory ë¶ˆëŸ¬ì˜¤ê¸°
         Inventory inventory = GameManager.instance.playerInventory;
         if (inventory is null) return;
         List<IItem> items = (List<IItem>)inventory.GetItems(_displayInventoryType);

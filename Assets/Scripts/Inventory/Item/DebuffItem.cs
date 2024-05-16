@@ -67,6 +67,7 @@ public class DebuffItem : Item
         else return false;
 
         stackCount--;
+        GameManager.instance.playerInventory.CollectZeroItem();
         return true;
     }
 

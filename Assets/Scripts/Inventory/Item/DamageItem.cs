@@ -16,6 +16,8 @@ public class DamageItem : Item
         
         unit.TakeDamage(GetData().itemEffectAmount, user);
         stackCount--;
+        
+        GameManager.instance.playerInventory.CollectZeroItem();
         return true;
     }
 

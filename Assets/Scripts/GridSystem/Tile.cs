@@ -29,6 +29,7 @@ public class Tile : MonoBehaviour, IEquatable<Tile>
     public bool visible;
     public bool rayThroughable;
     public bool gridVisible;
+    public int combatStageIndex;
 
     [Header("플레이어 시야")] 
     [SerializeField] 

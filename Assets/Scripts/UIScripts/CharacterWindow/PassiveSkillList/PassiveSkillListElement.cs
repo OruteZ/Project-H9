@@ -12,14 +12,14 @@ public class PassiveSkillListElement : UIElement, IPointerEnterHandler, IPointer
 
     [SerializeField] private int _skillIndex;
 
-    public void SetPassiveSkillListElement(PassiveInfo info)
+    public void SetPassiveSkillListElement(PassiveInfo info, int order)
     {
         if (isOpenUI) return;
         OpenUI();
-        GetComponent<RectTransform>().localPosition = Vector3.zero;
+        GetComponent<RectTransform>().localPosition = new Vector3(5, -35 - (GetComponent<RectTransform>().sizeDelta.y + 5) * order, 0);
 
         _skillIndex = info.index;
-        _skillIcon.GetComponent<Image>().sprite = null;
+        _skillIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo(SkillManager.instance.GetSkill(_skillIndex).skillInfo.icon);
         _skillName.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillName(info.index);
     }
 

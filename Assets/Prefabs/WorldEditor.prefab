@@ -491,7 +491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4be2712bf74423f846c042073b934d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldObjectData: {fileID: 11400000, guid: 532e30157131c3a40895f14a4c377df2, type: 2}
+  worldData: {fileID: 11400000, guid: 532e30157131c3a40895f14a4c377df2, type: 2}
   tileObjectsTransform: {fileID: 0}
   linkPrefab: {fileID: 2689239927243006842, guid: 2b1d988cc1ad8fc49a6fc42cbca0493a,
     type: 3}
@@ -2090,6 +2090,7 @@ MonoBehaviour:
       m_Calls: []
   commands:
     isConst: 0
+    defaultKey: 0
     keys: 7a000000780000006300000072000000
     values:
     - AddLink

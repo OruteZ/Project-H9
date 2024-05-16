@@ -29,9 +29,11 @@ public class SkillIcon : UIElement
         SkillManager skillManager = SkillManager.instance;
         Skill skill = skillManager.GetSkill(_skillIndex);
         if (skill == null) return;
-        Sprite sprite = Resources.Load("Images/" + skill.skillInfo.iconIndex) as Sprite;
-        if (sprite == null) 
+        //Sprite sprite = Resources.Load("SkillIcon/" + skill.skillInfo.icon) as Sprite;
+        Sprite sprite = UIManager.instance.iconDB.GetIconInfo(skill.skillInfo.icon);
+        if (sprite == null)
         {
+            Debug.LogError(_skillIndex + "번 스킬의 스프라이트 " + skill.skillInfo.icon + "를 찾을 수 없습니다.");
             sprite = defaultImage;
         }
         this.GetComponent<Image>().sprite = sprite;

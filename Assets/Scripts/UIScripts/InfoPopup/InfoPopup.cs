@@ -39,6 +39,12 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
 
     public void Show(MESSAGE message)
     {
+        if(_infoMessagePrefab == null)
+        {
+            Debug.LogError("InfoMessagePrefab is null");
+            return; 
+        }
+        
         _curInfo = Instantiate(_infoMessagePrefab);
         _curInfo.transform.parent = _canvas;
         var anchorPos = prePosition[(int)message];

@@ -13,5 +13,71 @@ MonoBehaviour:
   m_Name: World Obj Data
   m_EditorClassIdentifier: 
   playerPosition: {x: 29, y: 18, z: -47}
-  links: []
+  links:
+  - pos: {x: 29, y: 15, z: -44}
+    linkIndex: 1
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 26, y: 13, z: -39}
+    linkIndex: 2
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 30, y: 2, z: -32}
+    linkIndex: 6
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 31, y: 7, z: -38}
+    linkIndex: 7
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 26, y: 2, z: -28}
+    linkIndex: 16
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 20, y: 15, z: -35}
+    linkIndex: 3
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 29, y: 6, z: -35}
+    linkIndex: 5
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 18, y: 12, z: -30}
+    linkIndex: 3
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 13, y: 9, z: -22}
+    linkIndex: 6
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 11, y: 6, z: -17}
+    linkIndex: 4
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 8, y: 8, z: -16}
+    linkIndex: 4
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 8, y: 11, z: -19}
+    linkIndex: 4
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 4, y: 12, z: -16}
+    linkIndex: 5
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
   flags: 
+  worldTurn: 0

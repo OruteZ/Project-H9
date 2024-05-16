@@ -36,6 +36,7 @@ public class TownUI : UISystem
     {
         Player p = FieldSystem.unitSystem.GetPlayer();
         PlayerEvents.OnMovedPlayer.AddListener((pos) => { if (p.GetSelectedAction().GetActionType() == ActionType.Move) CheckPlayerInTown(); });
+        UIManager.instance.onTSceneChanged.AddListener((gs) => { _doorIcon.SetActive(gs == GameState.World); });
     }
 
     public void OpenAmmunitionWindow(int townIndex)

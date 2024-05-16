@@ -117,6 +117,7 @@ public class CombatActionUI : UISystem
             //open key
             if (isOpenKeyClicked || isPlayerClicked)
             {
+                Debug.Log(_activeActionBundle + " / " + _displayedActionBundle);
                 if (_activeActionBundle == null && _displayedActionBundle == null)
                 {
                     SetActionBundle(_baseActionBundle, _baseActionBundle);

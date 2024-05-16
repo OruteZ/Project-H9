@@ -31,6 +31,9 @@ public class GameSystemUI : UISystem
         uiSubsystems.Add(conversationUI);
         uiSubsystems.Add(pinUI);
         uiSubsystems.Add(townUI);
+
+        ChangeSkillButtonRetDotText(SkillManager.instance.GetSkillPoint());
+        UIManager.instance.onTSceneChanged.AddListener((s) => { ChangeSkillButtonRetDotText(SkillManager.instance.GetSkillPoint()); });
     }
 
     // Update is called once per frame

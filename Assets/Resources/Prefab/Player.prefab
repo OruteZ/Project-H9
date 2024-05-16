@@ -79,6 +79,9 @@ MonoBehaviour:
   onTurnEnd:
     m_PersistentCalls:
       m_Calls: []
+  onActionStart:
+    m_PersistentCalls:
+      m_Calls: []
   onFinishAction:
     m_PersistentCalls:
       m_Calls: []
@@ -110,6 +113,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onKill:
+    m_PersistentCalls:
+      m_Calls: []
+  onUnitActionDataChanged:
     m_PersistentCalls:
       m_Calls: []
   onSelectedChanged:
@@ -188,6 +194,8 @@ MonoBehaviour:
   range: 0
   radius: 0
   damage: 0
+  _dynamitePrefab: {fileID: 7756329116870450271, guid: b882947213b1ed2479113dd0371871fa,
+    type: 3}
 --- !u!136 &8584103021152720753
 CapsuleCollider:
   m_ObjectHideFlags: 0

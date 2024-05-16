@@ -83,12 +83,14 @@ public class ItemUsingAction : BaseAction
         euler.z = 0;
         unit.transform.eulerAngles = euler;
         
-        yield return new WaitForSeconds(1f);
-        
+        _waitingForExplosion = true;
+        yield return new WaitUntil(() => !_waitingForExplosion);
+
         _item.Use(unit, _targetPos);
         IInventory.OnInventoryChanged?.Invoke();
         _itemUsedTrigger = true;
-        yield return null;
+
+        yield return new WaitForSeconds(1f);
     }
 
     private void ResetUseTrigger()
@@ -104,4 +106,36 @@ public class ItemUsingAction : BaseAction
     {
         return _item;
     }
+
+    #region THROW
+
+    [SerializeField]
+    private GameObject _dynamitePrefab;
+
+    [SerializeField]
+    private bool _waitingForExplosion = false;
+
+    private void Throw() 
+    {
+        if(_dynamitePrefab == null || _item.GetData().itemType is not ItemType.Damage)
+        {
+            Debug.LogError("Dynamite Prefab is null");
+            //stop action immediately
+            _waitingForExplosion = false;
+            return;
+        }
+
+        Dynamite dynamite = Instantiate(_dynamitePrefab, unit.transform.position, Quaternion.identity).GetComponent<Dynamite>();
+        dynamite.SetDestination(_targetPos, () => _waitingForExplosion = false);
+    }
+
+    public override void TossAnimationEvent(string args)
+    {
+        if (args != AnimationEventNames.THROW) return;
+        
+        {
+            Throw();
+        }
+    }
+    #endregion
 }

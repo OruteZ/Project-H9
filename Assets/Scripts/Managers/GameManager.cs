@@ -327,6 +327,13 @@ public class GameManager : Generic.Singleton<GameManager>
         OnGameStarted?.Invoke();
         UIManager.instance.gameSystemUI.conversationUI.StartNextConversation();    //load previous quest when start game _ fix later
 
+#if UNITY_EDITOR
+        if (DataLoader.IsReady == false)
+        {
+            DataLoader.New();
+        }
+#endif
+
         if (DataLoader.IsReady)
         {
             user = DataLoader.Data;
@@ -345,19 +352,79 @@ public class GameManager : Generic.Singleton<GameManager>
             // player hp ;
             // player move point ;
             // player ammo ; // maybe no useless
-            
+
             // player skill load
             // player stat load
-            
+
             // player inventory load
             // player weapon(equiped) load
         }
 
-        if (!user.Events.TryGetValue("INFO_POPUP_MESSAGE_DO_MOVE", out var value) || value != 0)
+        if (!user.Events.TryGetValue("INFO_POPUP_MESSAGE_DO_MOVE", out var value) || value == 0)
         {
             InfoPopup.instance.Show(InfoPopup.MESSAGE.DO_MOVE);
             user.Events.TryAdd("INFO_POPUP_MESSAGE_DO_MOVE", 1);
         }
+
+        PlayerEvents.OnChangedStat.AddListener((stat, type) =>
+        {
+            if (!user.Events.TryGetValue("INFO_POPUP_MOVE_GAGE", out var value) || value == 0)
+            {
+                if (type == StatType.CurActionPoint && stat.GetStat(type) != stat.GetStat(StatType.MaxActionPoint))
+                {
+                    InfoPopup.instance.Show(InfoPopup.MESSAGE.IT_IS_MOVE_GAGE);
+                    user.Events.TryAdd("INFO_POPUP_MOVE_GAGE", 1);
+                }
+            }
+        });
+
+        PlayerEvents.OnChangedStat.AddListener((stat, type) =>
+        {
+            if (!user.Events.TryGetValue("INFO_POPUP_TURN_END", out var value) || value == 0)
+            {
+                if (type == StatType.CurActionPoint && stat.GetStat(type) == 0)
+                {
+                    InfoPopup.instance.Show(InfoPopup.MESSAGE.IT_IS_TURN_END);
+                    user.Events.TryAdd("INFO_POPUP_TURN_END", 1);
+                }
+            }
+        });
+
+         PlayerEvents.OnChangedStat.AddListener((stat, type) =>
+        {
+            if (!user.Events.TryGetValue("INFO_POPUP_COMBAT_HP", out var value) || value == 0)
+            {
+                if (type == StatType.CurHp && stat.GetStat(type) != stat.GetStat(StatType.MaxHp))
+                {
+                    InfoPopup.instance.Show(InfoPopup.MESSAGE.COMBAT_HP);
+                    user.Events.TryAdd("INFO_POPUP_COMBAT_HP", 1);
+                }
+            }
+        });
+
+        UIManager.instance.onTSceneChanged.AddListener((scene) => 
+        {
+            if (!user.Events.TryGetValue("INFO_POPUP_COMBAT_TURN", out var value) || value == 0)
+            {
+                if (scene == GameState.Combat)
+                {
+                    InfoPopup.instance.Show(InfoPopup.MESSAGE.COMBAT_TURN);
+                    user.Events.TryAdd("INFO_POPUP_COMBAT_TURN", 1);
+                }
+            }
+        });
+
+        UIManager.instance.onTSceneChanged.AddListener((scene) => 
+        {
+            if (!user.Events.TryGetValue("INFO_POPUP_COMBAT_ACTION", out var value) || value == 0)
+            {
+                if (scene == GameState.Combat)
+                {
+                    InfoPopup.instance.Show(InfoPopup.MESSAGE.COMBAT_ACTION);
+                    user.Events.TryAdd("INFO_POPUP_COMBAT_ACTION", 1);
+                }
+            }
+        });
     }
 
     public void Update()

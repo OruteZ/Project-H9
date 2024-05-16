@@ -37,7 +37,6 @@ public static class UserDataFileSystem
 
         userData = new UserData($"save{ind}.json");
         userData.Position = new Vector3Int(29, 18, -47);
-        Save(in userData);
     }
 
     public static void Save(in UserData userData)

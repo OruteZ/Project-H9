@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public class UnitStat : ICloneable
@@ -9,6 +10,8 @@ public class UnitStat : ICloneable
     {
         ResetModifier();
     }
+
+    public UnityEvent<StatType> OnChangedStat = new UnityEvent<StatType>();
 
     public int maxHp => GetStat(StatType.MaxHp);
     public int curHp => GetStat(StatType.CurHp);
@@ -98,6 +101,7 @@ public class UnitStat : ICloneable
             return;
         }
         _additional[(int)type] += value;
+        OnChangedStat?.Invoke(type);
     }
 
     public void AddMultiplier(StatType type, int value)
@@ -115,6 +119,7 @@ public class UnitStat : ICloneable
         }
         
         _multiplier[(int)type] += value;
+        OnChangedStat?.Invoke(type);
     }
 
     public void Subtract(StatType type, int value)
@@ -132,6 +137,7 @@ public class UnitStat : ICloneable
         }
 
         _additional[(int)type] -= value;
+        OnChangedStat?.Invoke(type);
     }
 
     public void SubtractMultiplier(StatType type, int value)
@@ -149,6 +155,7 @@ public class UnitStat : ICloneable
         }
         
         _multiplier[(int)type] -= value;
+        OnChangedStat?.Invoke(type);
     }
 
     public void ResetModifier()
@@ -191,6 +198,7 @@ public class UnitStat : ICloneable
         
         int idx = (int)stat;
         original[idx] = Mathf.Clamp(original[idx] - value, 0, maxValue);
+        OnChangedStat?.Invoke(stat);
     }
 
     public bool TryConsume(StatType stat, int value)
@@ -205,6 +213,7 @@ public class UnitStat : ICloneable
             return false;
         
         original[(int)stat] -= value; 
+        OnChangedStat?.Invoke(stat);
         return true;
     }
 

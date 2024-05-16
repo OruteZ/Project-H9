@@ -8,12 +8,17 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
                         , DO_MOVE = 1
                         , IT_IS_MOVE_GAGE = 2
                         , IT_IS_TURN_END = 3
-                        , DO_ACTION = 4};
+                        , COMBAT_TURN = 4
+                        , COMBAT_ACTION = 5
+                        , COMBAT_HP = 6};
 
-    private Vector2[] prePosition = { new Vector2(0, 0) // default
-                                    , new Vector2(-140, -35) // 플레이어 위치 옆
-                                    , new Vector2(133, -360) // 행동력 위
-                                    , new Vector2(447, -360) // 턴종 위
+    private Vector2[] prePosition = { new Vector2(0, 0) // default 0
+                                    , new Vector2(-140, -35) // 플레이어 위치 옆 1
+                                    , new Vector2(79, -360) // 행동력 위 2
+                                    , new Vector2(447, -360) // 턴종 위 3
+                                    , new Vector2(-494, 376) // 전투 턴 ui(상단) 왼쪽아래 4
+                                    , new Vector2(-140, -35) // 플레이어 위치 옆 5
+                                    , new Vector2(79, -360) // 체력 위
     };
 
     [SerializeReference]
@@ -34,20 +39,12 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
 
     public void Show(MESSAGE message)
     {
-        if (_curInfo)
-            Destroy(_curInfo);
-
         _curInfo = Instantiate(_infoMessagePrefab);
         _curInfo.transform.parent = _canvas;
         var anchorPos = prePosition[(int)message];
         _curInfo.GetComponent<RectTransform>().anchoredPosition = anchorPos;
         _curInfo.GetComponentInChildren<TMPro.TMP_Text>().text = _infoMessage[((int)message)];
-        Invoke("CloseCurInfo", 5.0f);
-    }
 
-    private void CloseCurInfo()
-    {
-        if (_curInfo)
-            _curInfo.SetActive(false);
+        // delete는 버튼으로 할당
     }
 }

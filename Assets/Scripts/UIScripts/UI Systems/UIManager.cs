@@ -43,7 +43,6 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent<GameState> onTSceneChanged;
     [HideInInspector] public UnityEvent onSceneChanged;
     [HideInInspector] public UnityEvent onTurnChanged;
-    [HideInInspector] public UnityEvent onCombatStarted; // UnityEvent<string/int> onSceneChanged 를 만들어서 합치는걸 권장
     [HideInInspector] public UnityEvent<Unit> onStartedCombatTurn;
     [HideInInspector] public UnityEvent onPlayerStatChanged;
     [HideInInspector] public UnityEvent<int> onGetExp;

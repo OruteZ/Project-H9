@@ -7,7 +7,7 @@ public class WriteVersion : MonoBehaviour
 {
     public void Awake()
     {
-        var version = PlayerSettings.bundleVersion;
-        GetComponent<TMPro.TMP_Text>().text = $"version {version}";
+        // var version = PlayerSettings.bundleVersion;
+        // GetComponent<TMPro.TMP_Text>().text = $"version {version}";
     }
 }

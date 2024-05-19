@@ -9,6 +9,7 @@ public static class HotKey
 
     public static KeyCode openCharacterUIKey = KeyCode.I;
     public static KeyCode openSkillUIKey = KeyCode.K;
+    public static KeyCode openStatLevelUpUIKey = KeyCode.C;
     public static KeyCode openActionUIKey = KeyCode.Tab;
     public static KeyCode changeOutlineModeKey = KeyCode.BackQuote;
 

@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PlayerApUI : UIElement
+public class PlayerApUI : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private GameObject _apTooltip;
+    void Start()
+    {
+        _apTooltip?.SetActive(false);
+    }
     public void SetApUI()
     {
         int maxAp = GameManager.instance.playerStat.maxActionPoint;
@@ -20,5 +26,13 @@ public class PlayerApUI : UIElement
 
             transform.GetChild(i).GetComponent<PlayerApUIElement>().SetApUIElement(isExist, isFilled, isFlickering);
         }
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _apTooltip?.SetActive(true);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _apTooltip?.SetActive(false);
     }
 }

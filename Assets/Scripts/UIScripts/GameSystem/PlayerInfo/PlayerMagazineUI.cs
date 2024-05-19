@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PlayerMagazineUI : UIElement
+public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private GameObject _magazineTooltip;
+
     private int MAGAZINE_SIZE = 6;
     private int MAGAZINE_COUNT = 7;
+    void Start()
+    {
+        if (_magazineTooltip == null) return;
+        _magazineTooltip?.SetActive(false);
+    }
     public void SetMagazineUI(bool isOnlyDisplayMaxMagazine)
     {
         if (transform.childCount != MAGAZINE_COUNT) 
@@ -51,5 +59,15 @@ public class PlayerMagazineUI : UIElement
             curBullet -= MAGAZINE_SIZE;
             nonFlickerCnt -= MAGAZINE_SIZE;
         }
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_magazineTooltip == null) return;
+        _magazineTooltip?.SetActive(true);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (_magazineTooltip == null) return;
+        _magazineTooltip?.SetActive(false);
     }
 }

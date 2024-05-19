@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// 플레이어의 Hp아이콘UI 표시 방식을 구현하는 클래스
 /// </summary>
-public class PlayerHpUI : UIElement
+public class PlayerHpUI : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject _playerHpBar;
     [SerializeField] private GameObject _playerHpText;
+
+    [SerializeField] private GameObject _hpTooltip;
 
     //[SerializeField] private GameObject _playerHpContainer;
     //[SerializeField] private GameObject hpUIPrefab;
@@ -22,6 +25,7 @@ public class PlayerHpUI : UIElement
     private int _prevCurHp;
     void Start()
     {
+        _hpTooltip?.SetActive(false);
         InitHPUI();
     }
     public override void OpenUI()
@@ -50,6 +54,16 @@ public class PlayerHpUI : UIElement
 
         _playerHpBar.GetComponent<Image>().fillAmount = (float)curHp / maxHp;
         _playerHpText.GetComponent<TextMeshProUGUI>().text = curHp.ToString() + " / " + maxHp.ToString();
+    }
+
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _hpTooltip?.SetActive(true);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _hpTooltip?.SetActive(false);
     }
 
     //private void HpUIObjectPooling(int length)

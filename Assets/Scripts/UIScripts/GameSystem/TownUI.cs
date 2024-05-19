@@ -35,7 +35,7 @@ public class TownUI : UISystem
     private void Start()
     {
         Player p = FieldSystem.unitSystem.GetPlayer();
-        PlayerEvents.OnMovedPlayer.AddListener((pos) => { if (p.GetSelectedAction().GetActionType() == ActionType.Move) CheckPlayerInTown(); });
+        PlayerEvents.OnMovedPlayer.AddListener((pos) => { /*if (p.GetSelectedAction().GetActionType() == ActionType.Move)*/ CheckPlayerInTown(); });
         UIManager.instance.onTSceneChanged.AddListener((gs) => { _doorIcon.SetActive(gs == GameState.World); });
     }
 
@@ -93,8 +93,9 @@ public class TownUI : UISystem
             _previousBuildingType = Town.BuildingType.NULL;
             return;
         }
-        if (_currentBuildingType == _previousBuildingType) return;
-        if (UIManager.instance.gameSystemUI.conversationUI.isConverstating) return;
+        _doorIcon.SetActive(true);
+        //if (_currentBuildingType == _previousBuildingType) return;
+        //if (UIManager.instance.gameSystemUI.conversationUI.isConverstating) return;
 
     }
 
@@ -104,7 +105,6 @@ public class TownUI : UISystem
         _currentInteractPosition = pos;
         _currentTownIndex = index;
         _currentBuildingType = type;
-        _doorIcon.SetActive(true);
     }
 
     public override void CloseUI()
@@ -144,6 +144,17 @@ public class TownUI : UISystem
 
     public void OnClickDoorIcon()
     {
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player == null)
+        {
+            Debug.LogError("player가 존재하지 않습니다.");
+            return;
+        }
+        if (player.IsBusy() || isTownUIOpened)
+        {
+            CloseUI();
+            return;
+        }
         UIManager.instance.SetUILayer(2);
         isTownUIOpened = true;
         switch (_currentBuildingType)

@@ -11,7 +11,7 @@ public class PlayerMainStatTooltip : UIElement
     private const int TOOLTIP_Y_POSITION_CORRECTION = 40;
     public void SetPlayerMainStatTooltip(GameObject textObj)
     {
-        if (textObj is null || !textObj.TryGetComponent<PlayerMainStatElement>(out var element))
+        if (textObj is null || !textObj.TryGetComponent<PlayerMainStatElement>(out var textObjElement))
         {
             Debug.Log("main stat tooltip에 대한 잘못된 접근.");
             return;
@@ -21,7 +21,7 @@ public class PlayerMainStatTooltip : UIElement
         pos += new Vector3(TOOLTIP_X_POSITION_CORRECTION, TOOLTIP_Y_POSITION_CORRECTION, 0);
         GetComponent<RectTransform>().position = pos;
 
-        _tooltipText.GetComponent<TextMeshProUGUI>().text = textObj.GetComponent<PlayerMainStatElement>().statName;
+        _tooltipText.GetComponent<TextMeshProUGUI>().text = textObjElement.statName;
 
         OpenUI();
     }

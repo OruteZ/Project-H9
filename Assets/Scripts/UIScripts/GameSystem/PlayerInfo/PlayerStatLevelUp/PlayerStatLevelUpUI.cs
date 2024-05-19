@@ -124,7 +124,11 @@ public class PlayerStatLevelUpUI : UISystem
     // Update is called once per frame
     void Update()
     {
-
+        if (!_statLevelUpButton.activeSelf) return;
+        if (Input.GetKeyDown(HotKey.openStatLevelUpUIKey)) 
+        {
+            OpenPlayerStatLevelUpUI();
+        }
         float[] appearTargetValue = { 380, 0, 192 / 255.0f };
         float[] disappearTargetValue = 
         {

@@ -10,7 +10,10 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
                         , IT_IS_TURN_END = 3
                         , COMBAT_TURN = 4
                         , COMBAT_ACTION = 5
-                        , COMBAT_HP = 6};
+                        , COMBAT_HP = 6
+                        , IT_IS_CONCENTRATION = 7
+                        , INCREASED_SP = 8
+    };
 
     private Vector2[] prePosition = { new Vector2(0, 0) // default 0
                                     , new Vector2(-140, -35) // 플레이어 위치 옆 1
@@ -19,6 +22,8 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
                                     , new Vector2(-494, 376) // 전투 턴 ui(상단) 왼쪽아래 4
                                     , new Vector2(-140, -35) // 플레이어 위치 옆 5
                                     , new Vector2(79, -360) // 체력 위
+                                    , new Vector2(0, 0) 
+                                    , new Vector2(-615, -456) // SP 화면  -426, 368
     };
 
     [SerializeReference]

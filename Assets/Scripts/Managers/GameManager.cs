@@ -397,19 +397,19 @@ public class GameManager : Generic.Singleton<GameManager>
             }
         });
 
-         PlayerEvents.OnChangedStat.AddListener((stat, type) =>
-        {
-            if (!user.Events.TryGetValue("INFO_POPUP_COMBAT_HP", out var value) || value == 0)
-            {
-                if (type == StatType.CurHp && stat.GetStat(type) != stat.GetStat(StatType.MaxHp))
-                {
-                    InfoPopup.instance.Show(InfoPopup.MESSAGE.COMBAT_HP);
-                    user.Events.TryAdd("INFO_POPUP_COMBAT_HP", 1);
-                }
-            }
-        });
+        PlayerEvents.OnChangedStat.AddListener((stat, type) =>
+       {
+           if (!user.Events.TryGetValue("INFO_POPUP_COMBAT_HP", out var value) || value == 0)
+           {
+               if (type == StatType.CurHp && stat.GetStat(type) != stat.GetStat(StatType.MaxHp))
+               {
+                   InfoPopup.instance.Show(InfoPopup.MESSAGE.COMBAT_HP);
+                   user.Events.TryAdd("INFO_POPUP_COMBAT_HP", 1);
+               }
+           }
+       });
 
-        UIManager.instance.onTSceneChanged.AddListener((scene) => 
+        UIManager.instance.onTSceneChanged.AddListener((scene) =>
         {
             if (!user.Events.TryGetValue("INFO_POPUP_COMBAT_TURN", out var value) || value == 0)
             {
@@ -421,7 +421,7 @@ public class GameManager : Generic.Singleton<GameManager>
             }
         });
 
-        UIManager.instance.onTSceneChanged.AddListener((scene) => 
+        UIManager.instance.onTSceneChanged.AddListener((scene) =>
         {
             if (!user.Events.TryGetValue("INFO_POPUP_COMBAT_ACTION", out var value) || value == 0)
             {
@@ -432,6 +432,17 @@ public class GameManager : Generic.Singleton<GameManager>
                 }
             }
         });
+
+
+        PlayerEvents.OnIncSkillPoint.AddListener(() =>
+        {
+            if (!user.Events.TryGetValue("INFO_POPUP_INCREASED_SP", out var value) || value == 0)
+            {
+                InfoPopup.instance.Show(InfoPopup.MESSAGE.INCREASED_SP);
+                user.Events.TryAdd("INFO_POPUP_INCREASED_SP", 1);
+            }
+        });
+
     }
 
     public void Update()

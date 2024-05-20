@@ -14,6 +14,7 @@ public class TurnOrderUI : UISystem
     void Start()
     {
         TurnOrderUIObjectPooling(30);
+        UIManager.instance.onTSceneChanged.AddListener((gs) => { if (gs == GameState.World) CloseUI(); });
     }
     public override void CloseUI()
     {
@@ -87,7 +88,7 @@ public class TurnOrderUI : UISystem
             bool isFound = false;
             for (int i = 1; i < currentTurnOrderUI.Count; i++)
             {
-                bool isSameTypeObject = (currentTurnOrderUI[i].GetComponent<TurnOrderUIElement>()._unit.GetType() == unit.GetType());
+                bool isSameTypeObject = (currentTurnOrderUI[i].GetComponent<TurnOrderUIElement>().unit.GetType() == unit.GetType());
                 bool isAlreadyCheck = check[i];
                 if (isSameTypeObject && !isAlreadyCheck)
                 {
@@ -140,6 +141,17 @@ public class TurnOrderUI : UISystem
         {
             GameObject ui = Instantiate(_turnOrderUIPrefab, Vector3.zero, Quaternion.identity, _turnOrderUIContainer.transform);
             ui.SetActive(false);
+        }
+    }
+
+    public void EffectMouseOverEnemy(Enemy enemy)
+    {
+        for (int i = 0; i < _turnOrderUI.transform.childCount; i++)
+        {
+            if (_turnOrderUI.transform.GetChild(i).GetComponent<TurnOrderUIElement>().unit is Player) continue;
+
+            bool isEffectOn = (enemy != null && _turnOrderUI.transform.GetChild(i).GetComponent<TurnOrderUIElement>()?.unit == (Unit)enemy);
+            _turnOrderUI.transform.GetChild(i).GetComponent<TurnOrderUIElement>().EffectTurnOrderUIElement(isEffectOn);
         }
     }
 }

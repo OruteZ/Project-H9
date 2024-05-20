@@ -21,7 +21,8 @@ public class EnemyStatUI : UISystem
     private const float WINDOW_X_POSITION_CORRECTION = 300;
 
     private bool _isOpenedTooltipWindow = false;
-    private Enemy _enemy;
+    private Enemy _statOpenEnemy = null;
+    private Enemy _mouseOverEnemy =  null;
 
     public override void CloseUI()
     {
@@ -59,31 +60,43 @@ public class EnemyStatUI : UISystem
             _mouseOverIcon.SetActive(false);
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (IsMouseOverOnEnemy(out Vector3Int enemyPos))
         {
             Player player = FieldSystem.unitSystem.GetPlayer();
-            if (player is null || player.GetSelectedAction().GetActionType() is not ActionType.Idle) return;
-            Vector3Int enemyPos;
-            if (IsMouseOverOnEnemy(out enemyPos))
+            Enemy enemy = (Enemy)FieldSystem.unitSystem.GetUnit(enemyPos);
+            if (player is null || enemy is null) return;
+
+            if (Input.GetMouseButtonDown(1))
             {
-                //Debug.Log("Enemy Click");
-                Enemy enemy = (Enemy)FieldSystem.unitSystem.GetUnit(enemyPos);
+                if (player.GetSelectedAction().GetActionType() is not ActionType.Idle) return;
                 if (enemy is not null && enemy.isVisible)
                 {
                     SetEnemyStatUI(enemy);
                 }
             }
+
+            if (_mouseOverEnemy != enemy)
+            {
+                _mouseOverEnemy = enemy;
+                UIManager.instance.combatUI.turnOrderUI.EffectMouseOverEnemy(enemy);
+            }
         }
+        else if(_mouseOverEnemy != null)
+        {
+            _mouseOverEnemy = null;
+            UIManager.instance.combatUI.turnOrderUI.EffectMouseOverEnemy(null);
+        }
+
         if (_isOpenedTooltipWindow)
         {
-            if (_enemy is null)
+            if (_statOpenEnemy is null)
             {
                 ClosePopupWindow();
                 return;
             }
             else
             {
-                SetEnemyStatUIPosition(_enemy.transform.position);
+                SetEnemyStatUIPosition(_statOpenEnemy.transform.position);
             }
         }
     }
@@ -100,7 +113,7 @@ public class EnemyStatUI : UISystem
             return;
         }
         OpenPopupWindow();
-        _enemy = enemy;
+        _statOpenEnemy = enemy;
         SetEnemyStatUIPosition(enemy.transform.position);
         SetCharacterStatText(enemy.stat);
         SetWeaponStatText(enemy.weapon);

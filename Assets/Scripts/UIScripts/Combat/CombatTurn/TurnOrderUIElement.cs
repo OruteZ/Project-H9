@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TurnOrderUIElement : MonoBehaviour
 {
-    public Unit _unit { get; private set; }
+    public Unit unit;// { get; private set; }
     private Image _frame;
     private Image _characterIcon;
 
@@ -73,7 +73,7 @@ public class TurnOrderUIElement : MonoBehaviour
     public void InitTurnOrderUIElement(Unit unit, int order)
     {
         if (order <= -1) return;
-        _unit = unit;
+        this.unit = unit;
         if (unit is Player)
         {
             _frame.color = UICustomColor.PlayerTurnColor;
@@ -105,6 +105,22 @@ public class TurnOrderUIElement : MonoBehaviour
         if (order == 0)
         {
             _isTurnOwner = true;
+        }
+    }
+
+    public void EffectTurnOrderUIElement(bool isEffectOn)
+    {
+        if (unit is Player)
+        {
+            _frame.color = UICustomColor.PlayerTurnColor;
+        }
+        else if (isEffectOn)
+        {
+            _frame.color = UICustomColor.NormalStateColor;
+        }
+        else
+        {
+            _frame.color = UICustomColor.EnemyTurnColor;
         }
     }
 }

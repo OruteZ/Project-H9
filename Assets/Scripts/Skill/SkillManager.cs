@@ -240,6 +240,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
     public void AddSkillPoint(int sp) 
     {
         _skillPoint += sp;
+        PlayerEvents.OnIncSkillPoint?.Invoke();
     }
     /// <summary>
     /// 현재 스킬 포인트가 스킬을 배울 만큼 충분한 지 반환합니다.

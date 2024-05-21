@@ -22,7 +22,7 @@ public class TurnUI : UISystem
     private void Awake()
     {
         UIManager.instance.onActionChanged.AddListener(SetEndTurnButton);
-        UIManager.instance.onTurnChanged.AddListener(SetEndTurnButton);
+        UIManager.instance.onPlayerStatChanged.AddListener(SetEndTurnButton);
         _endTurnButtonEffect.GetComponent<Animator>().enabled = false;
         _endTurnButtonIcon.GetComponent<Image>().sprite = _turnOffSprite;
     }

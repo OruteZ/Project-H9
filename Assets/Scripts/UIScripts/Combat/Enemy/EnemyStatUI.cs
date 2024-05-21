@@ -54,7 +54,7 @@ public class EnemyStatUI : UISystem
     private void Update()
     {
         if (!GameManager.instance.CompareState(GameState.Combat)) return;
-        if (FieldSystem.turnSystem.turnOwner is Player p && !_enemyStatWindow.activeSelf)
+        if (FieldSystem.turnSystem.turnOwner is Player)
         {
             bool isMouseover = IsMouseOverOnEnemy(out Vector3Int ep);
             _mouseOverIcon.SetActive(isMouseover);

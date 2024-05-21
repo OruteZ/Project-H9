@@ -12,13 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e05302d655d4edf8ba008247ff13673, type: 3}
   m_Name: World Obj Data
   m_EditorClassIdentifier: 
-  playerPosition: {x: 29, y: 18, z: -47}
+  playerPosition: {x: 29, y: 19, z: -48}
   links:
-  - pos: {x: 29, y: 15, z: -44}
-    linkIndex: 1
-    combatMapIndex: 1
-    model: {fileID: 0}
-    isRepeatable: 0
   - pos: {x: 26, y: 13, z: -39}
     linkIndex: 2
     combatMapIndex: 1
@@ -76,6 +71,11 @@ MonoBehaviour:
     isRepeatable: 0
   - pos: {x: 4, y: 12, z: -16}
     linkIndex: 5
+    combatMapIndex: 1
+    model: {fileID: 0}
+    isRepeatable: 0
+  - pos: {x: 29, y: 14, z: -43}
+    linkIndex: 1
     combatMapIndex: 1
     model: {fileID: 0}
     isRepeatable: 0

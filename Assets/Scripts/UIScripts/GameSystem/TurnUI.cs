@@ -67,6 +67,7 @@ public class TurnUI : UISystem
             _endTurnButtonEffect.GetComponent<Animator>().enabled = true;
             _endTurnButtonEffect.GetComponent<Animator>().Play("Inner FadeOut Effect");
             _endTurnButtonIcon.GetComponent<Image>().sprite = _turnOnSprite;
+            _endTurnButtonIcon.GetComponent<Image>().color = Color.white;
             color = UICustomColor.HighlightStateColor;
         }
 
@@ -77,6 +78,7 @@ public class TurnUI : UISystem
             _endTurnButtonEffect.GetComponent<Animator>().Rebind();
             _endTurnButtonEffect.GetComponent<Animator>().enabled = false;
             _endTurnButtonIcon.GetComponent<Image>().sprite = _turnOffSprite;
+            _endTurnButtonIcon.GetComponent<Image>().color = Color.gray;
         } 
     }
 

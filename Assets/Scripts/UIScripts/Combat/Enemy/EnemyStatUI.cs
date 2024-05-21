@@ -24,6 +24,8 @@ public class EnemyStatUI : UISystem
     private Enemy _statOpenEnemy = null;
     private Enemy _mouseOverEnemy =  null;
 
+    private bool _isOpenInfoPopupOnce = false;
+
     public override void CloseUI()
     {
         base.CloseUI();
@@ -77,6 +79,16 @@ public class EnemyStatUI : UISystem
 
             if (_mouseOverEnemy != enemy)
             {
+                UserData user = GameManager.instance.user;
+                if (!user.Events.TryGetValue("INFO_POPUP_HIT_RATE", out var value) || value == 0)
+                {
+                    if (!_isOpenInfoPopupOnce && player.GetSelectedAction() is AttackAction)
+                    {
+                        _isOpenInfoPopupOnce = true;
+                        InfoPopup.instance.Show(InfoPopup.MESSAGE.IT_IS_HIT_RATE);
+                        user.Events.TryAdd("INFO_POPUP_HIT_RATE", 1);
+                    }
+                }
                 _mouseOverEnemy = enemy;
                 UIManager.instance.combatUI.turnOrderUI.EffectMouseOverEnemy(enemy);
             }

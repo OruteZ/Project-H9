@@ -64,12 +64,15 @@ public class Link : TileObject
 
     public override string[] GetArgs()
     {
-        return new [] { linkIndex.ToString() };
+        return new [] { linkIndex.ToString(), transform.rotation.y.ToString() };
     }
 
     public override void SetArgs(string[] args)
     {
+        if(args.Length != 2) throw new ArgumentException("Link SetArgs Error");
+
         linkIndex = int.Parse(args[0]);
+        transform.rotation = Quaternion.Euler(0, float.Parse(args[1]), 0);
     }
     
     public override void SetUp()

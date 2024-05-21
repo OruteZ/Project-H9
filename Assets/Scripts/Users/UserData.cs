@@ -36,7 +36,9 @@ public static class UserDataFileSystem
         }
 
         userData = new UserData($"save{ind}.json");
-        userData.Position = GameManager.instance.user.Position;
+
+        // load resource Assets/Resources/Map Data/World Obj Data.asset
+        userData.Position = Resources.Load<WorldData>("Map Data/World Obj Data").playerPosition;
     }
 
     public static void Save(in UserData userData)

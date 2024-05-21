@@ -11,7 +11,7 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
                         , COMBAT_TURN = 4
                         , COMBAT_ACTION = 5
                         , COMBAT_HP = 6
-                        , IT_IS_CONCENTRATION = 7
+                        , IT_IS_HIT_RATE = 7
                         , INCREASED_SP = 8
     };
 

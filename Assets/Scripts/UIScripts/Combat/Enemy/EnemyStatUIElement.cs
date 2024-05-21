@@ -6,17 +6,18 @@ using TMPro;
 
 public class EnemyStatUIElement : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private EnemyInfoUI _infoUI;
     [SerializeField] private GameObject _statText;
     private string _statName = "";
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UIManager.instance.combatUI.enemyStatUI.OpenStatTooltip(GetComponent<RectTransform>().position, _statName);
+        _infoUI.OpenStatTooltip(GetComponent<RectTransform>().position, _statName);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        UIManager.instance.combatUI.enemyStatUI.CloseStatTooltip();
+        _infoUI.CloseStatTooltip();
     }
 
     public void SetEnemyStatUIElement(string name, int value) 

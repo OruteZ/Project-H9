@@ -271,6 +271,11 @@ public class UIManager : Generic.Singleton<UIManager>
     {
         return _worldCanvas.scaleFactor;
     }
+
+    public void SetLogCanvasState(bool isOpen) 
+    {
+        _logCanvas.enabled = isOpen;
+    }
 }
 
 public enum ScriptLanguage

@@ -5,12 +5,13 @@ using UnityEngine.EventSystems;
 
 public class InventoryUIEnemyWeapon : InventoryUIBaseElement, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private EnemyInfoUI _infoUI;
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UIManager.instance.combatUI.enemyStatUI.OpenInventoryTooltip(gameObject, GetComponent<RectTransform>().position);
+        _infoUI.OpenInventoryTooltip(gameObject, GetComponent<RectTransform>().position);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        UIManager.instance.combatUI.enemyStatUI.CloseInventoryTooltip();
+        _infoUI.CloseInventoryTooltip();
     }
 }

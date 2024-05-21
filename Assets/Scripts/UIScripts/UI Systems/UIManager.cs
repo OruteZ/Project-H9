@@ -61,6 +61,9 @@ public class UIManager : Generic.Singleton<UIManager>
 
     protected override void Awake()
     {
+        base.Awake();
+        if(this == null) return;
+
         _worldCanvas.enabled = true;
         _combatCanvas.enabled = false;
         _characterCanvas.enabled = false;
@@ -91,7 +94,6 @@ public class UIManager : Generic.Singleton<UIManager>
         if (loading) loading.SetActive(true);
 
         statScript = new StatScript();
-        base.Awake();
     }
     void Update()
     {

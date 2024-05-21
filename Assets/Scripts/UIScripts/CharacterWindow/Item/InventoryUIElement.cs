@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
+//Draggable items
 public class InventoryUIElement : InventoryUIBaseElement, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public void OnPointerDown(PointerEventData eventData)

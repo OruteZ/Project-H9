@@ -135,8 +135,9 @@ public class ItemData
             string weaponTypeText = itemType.ToString();
             string weaponDamageText = weaponDamage.ToString() + " Damage";
             string weaponRangeText = itemRange.ToString() + " Range";
+            string weaponAmmoText = weaponAmmo.ToString() + " Magazine";
             string weaponEffect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription(this);
-            description = weaponTypeText + "\n" + weaponDamageText + "\n" + weaponRangeText + "\n\n" + weaponEffect;
+            description = weaponTypeText + "\n" + weaponDamageText + "\n" + weaponRangeText + "\n" + weaponAmmoText + "\n\n" + weaponEffect;
         }
         else
         {

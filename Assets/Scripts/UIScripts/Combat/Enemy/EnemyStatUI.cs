@@ -12,11 +12,12 @@ public class EnemyStatUI : UISystem
     [SerializeField] private GameObject _mouseOverIcon;
     [SerializeField] private GameObject _enemyStatWindow;
 
-    [SerializeField] private GameObject _enemyStatText;
-    [SerializeField] private GameObject _weaponStatText1Contents;
-    [SerializeField] private GameObject _weaponStatText2Contents;
-    [SerializeField] private GameObject _weaponStatText3Name;
-    [SerializeField] private GameObject _weaponStatText3Contents;
+    [SerializeField] private GameObject _enemyNameText;
+    [SerializeField] private GameObject _enemyPortrait;
+    [SerializeField] private GameObject _enemyWeapon;
+    [SerializeField] private GameObject[] _enemyStats = new GameObject[4];
+    [SerializeField] private GameObject _enemyStatTooltip;
+    [SerializeField] private GameObject _enemyWeaponTooltip;
 
     private const float WINDOW_X_POSITION_CORRECTION = 300;
 
@@ -26,12 +27,10 @@ public class EnemyStatUI : UISystem
 
     private bool _isOpenInfoPopupOnce = false;
 
-    public override void CloseUI()
+    private void Awake()
     {
-        base.CloseUI();
-        CloseEnemyStatUI();
+        CloseStatTooltip();
     }
-
     public override void OpenPopupWindow()
     {
         _isOpenedTooltipWindow = true;
@@ -43,6 +42,14 @@ public class EnemyStatUI : UISystem
         _isOpenedTooltipWindow = false;
         CloseEnemyStatUI();
         UIManager.instance.SetUILayer(1);
+    }
+    public void OpenInventoryTooltip(GameObject ui, Vector3 pos)
+    {
+        _enemyWeaponTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui, pos);
+    }
+    public void CloseInventoryTooltip()
+    {
+        _enemyWeaponTooltip.GetComponent<InventoryUITooltip>().CloseUI();
     }
     private void Update()
     {
@@ -127,8 +134,11 @@ public class EnemyStatUI : UISystem
         OpenPopupWindow();
         _statOpenEnemy = enemy;
         SetEnemyStatUIPosition(enemy.transform.position);
-        SetCharacterStatText(enemy.stat);
-        SetWeaponStatText(enemy.weapon);
+
+        _enemyNameText.GetComponent<TextMeshProUGUI>().text = "WANTED : " + enemy.unitName;
+        _enemyPortrait.GetComponent<Image>().sprite = Resources.Load("UnitCapture" + enemy.unitName) as Sprite;
+        SetEnemyStatText(enemy.stat);
+        SetEnemyWeapon(enemy.weapon);
     }
     private void SetEnemyStatUIPosition(Vector3 pos)
     {
@@ -192,51 +202,18 @@ public class EnemyStatUI : UISystem
         _enemyStatWindow.GetComponent<Image>().color = c;
 
     }
-    private void SetCharacterStatText(UnitStat enemyStat)
+    private void SetEnemyStatText(UnitStat enemyStat)
     {
-        string text = enemyStat.maxHp.ToString() + '\n' +
-                      enemyStat.concentration.ToString() + '\n' +
-                      enemyStat.sightRange.ToString() + '\n' +
-                      enemyStat.speed.ToString() + '\n' +
-                      enemyStat.maxActionPoint.ToString() + '\n' +
-                      enemyStat.additionalHitRate.ToString() + "%\n" +
-                      enemyStat.criticalChance.ToString() +'%';
-
-        _enemyStatText.GetComponent<TextMeshProUGUI>().text = text;
+        _enemyStats[0].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement("Health Point", enemyStat.maxHp);
+        _enemyStats[1].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement("Action Point", enemyStat.maxActionPoint);
+        _enemyStats[2].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement("Concentration", enemyStat.concentration);
+        _enemyStats[3].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement("Speed", enemyStat.speed);
     }
-    private void SetWeaponStatText(Weapon weapon)
+    private void SetEnemyWeapon(Weapon weapon)
     {
-        string text1 = /*weapon.weaponName +*/'\n' +
-                       weapon.weaponDamage.ToString();
-        _weaponStatText1Contents.GetComponent<TextMeshProUGUI>().text = text1;
-
-        string text2 = weapon.currentAmmo.ToString() + " / " + weapon.maxAmmo.ToString() + '\n' +
-                       weapon.weaponRange.ToString();
-        _weaponStatText2Contents.GetComponent<TextMeshProUGUI>().text = text2;
-
-
-
-        string text3 = "", text4 = "";
-        float hitRate = weapon.hitRate;
-        float criChance = weapon.criticalChance;
-        float criDamage = weapon.criticalDamage;
-        if (hitRate != 0)
-        {
-            text3 += "Hit Rate:" + '\n';
-            text4 += hitRate.ToString() + '\n';
-        }
-        if (criChance != 0)
-        {
-            text3 += "Critical Chance:" + '\n';
-            text4 += criChance.ToString() + '\n';
-        }
-        if (criDamage != 0)
-        {
-            text3 += "Critical Damage:" + '\n';
-            text4 += criDamage.ToString() + '\n';
-        }
-        _weaponStatText3Name.GetComponent<TextMeshProUGUI>().text = text3;
-        _weaponStatText3Contents.GetComponent<TextMeshProUGUI>().text = text4;
+        ItemData iData = GameManager.instance.itemDatabase.GetItemData(weapon.nameIndex);
+        WeaponItem item = new WeaponItem(iData);
+        _enemyWeapon.GetComponent<InventoryUIEnemyWeapon>().SetInventoryUIElement(item);
     }
 
     /// <summary>
@@ -259,5 +236,20 @@ public class EnemyStatUI : UISystem
 
         pos = Vector3Int.zero;
         return false;
+    }
+
+    internal void OpenStatTooltip(Vector3 pos, string name)
+    {
+        _enemyStatTooltip.GetComponent<RectTransform>().position = pos;
+        _enemyStatTooltip.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
+        _enemyStatTooltip.SetActive(true);
+    }
+
+
+    internal void CloseStatTooltip()
+    {
+        _enemyStatTooltip.GetComponent<RectTransform>().position = Vector3.zero;
+        _enemyStatTooltip.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+        _enemyStatTooltip.SetActive(false);
     }
 }

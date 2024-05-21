@@ -40,7 +40,7 @@ public class BuffTooltip : UIElement
     }
     private void SetDebuffText(IDisplayableEffect effect)
     {
-        KeywordScript kw = SkillManager.instance.GetSkillKeyword(effect.GetIndex());
+        KeywordScript kw = SkillManager.instance.GetSkillKeyword(effect.ToString());
         if (kw == null) return;
         _buffName = kw.name;
         _buffDesc = kw.GetDescription();

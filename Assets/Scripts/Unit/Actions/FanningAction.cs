@@ -59,7 +59,7 @@ public class FanningAction : BaseAction, IShootingAction
 
     public override bool CanExecute()
     {
-        if (_target is null) return false;
+        if (_target is null || _target == unit) return false;
         if (IsThereWallBetweenUnitAndTarget(_target.hexPosition)) return false;
         
         return true;

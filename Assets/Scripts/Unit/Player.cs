@@ -142,7 +142,9 @@ public class Player : Unit
         foreach (var tile in allTile)
         {
             var isInDistance = Hex.Distance(hexTransform.position, tile.hexPosition) <= stat.sightRange;
-            if (isInDistance)
+            var isInMoreClosedDistance = Hex.Distance(hexTransform.position, tile.hexPosition) <= stat.sightRange - 1;
+
+            if (isInMoreClosedDistance) // 시야 끝거리에서만 보이지말고 한칸 들어오게 해달라는 미친 PM의 요청
             {
                 PlayerEvents.OnEnteredTileinSight?.Invoke(tile);
                 foreach (var tileObj in tile.tileObjects)

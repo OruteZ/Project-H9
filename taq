@@ -1,0 +1,4651 @@
+[33mcommit 5837db5d73579c5f47b28b86d56dd8fdaa06f492[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mUI[m[33m)[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu May 23 01:40:40 2024 +0900
+
+    HUD 초상화 추가, 경험치 마우스오버 버그 수정, 포인트 레드닷텍스트 1포인트도 표시되게 변경
+
+[33mcommit df0ae6595b7efce86ef13575139887046e8e260e[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu May 23 00:09:21 2024 +0900
+
+    적 인포 UI 초상화 추가
+
+[33mcommit 3d6c1004f863ae72f9b131f4f5105ee1f209bb81[m
+Merge: 7347ed17 6f4808fb
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed May 22 23:42:48 2024 +0900
+
+    Merge remote-tracking branch 'origin/urgent' into UI
+
+[33mcommit 6f4808fbd9796c92a0684b06b379d56e3895cdcb[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 22 23:32:05 2024 +0900
+
+    타이틀 돌아갈시 초기화
+
+[33mcommit 6fd4191c3609fd118f2e439577e58d47618656cd[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 22 23:28:48 2024 +0900
+
+    Scene 이름 변경 (띄어쓰기 제거)
+
+[33mcommit 9c279a3807585537ed09fba5dcfbd2107f4347c2[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 22 23:27:56 2024 +0900
+
+    스테이지 에셋 변경
+
+[33mcommit 76e8849b3a6a6f1aa48a88c3aed4e7dbb20e5256[m
+Merge: 17eb77ad ad1b3cd1
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 22 22:22:33 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI' into urgent
+    
+    # Conflicts:
+    #       Assets/Prefabs/Managers/UI Manager.prefab
+    #       Assets/Resources/DataBase/EnemyDatabase.asset
+    #       Assets/Resources/Fonts/NanumGothic SDF.asset
+    #       Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF.asset
+
+[33mcommit 7347ed175510b1c8704097a070ab839a0ed59989[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed May 22 21:57:05 2024 +0900
+
+    월드 링크 인포 UI 추가
+
+[33mcommit 17eb77ad35a945b85c9fe37e052887dae1efdd98[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 22 21:14:40 2024 +0900
+
+    20240522 21:13 진행상황 반영
+    
+    엔딩 씬 제작 후 테스트 중
+    타이틀 돌아갔을 때 UIManager 종료 방안 모색 중
+    CSV, Database 변경
+    UnitModel 오류 해결 (에셋이 다르니까 Unit 아바타가 달라서 예외처리 했음)
+    Pause 임시로 작성 중
+
+[33mcommit cb60468cfdbc81cbb168dab32cc1199d7d46f375[m
+Merge: 190d7fd9 60122202
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 22 18:54:05 2024 +0900
+
+    Merge With hot-fix
+
+[33mcommit 190d7fd94cca94069d646c145364d07f497dbd17[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 22 18:52:56 2024 +0900
+
+    Ending Scene 추가
+
+[33mcommit f1b88cfaccb5a908bb8a7fa5b73387f6b9754df5[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 22 18:52:07 2024 +0900
+
+    csv 변경
+
+[33mcommit ad1b3cd1221646a98725a478c169bd27901895c7[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 21 22:09:08 2024 +0900
+
+    240521 데일리 스크럼 수정사항 반영
+    
+    - 핀 UI 크기 조절
+    - 전투 중 스탯 레벨업 UI 버튼이 나타나지 않도록 변경
+    - 초기 SP 0으로 변경
+    - 각종 UI 레이아웃 겹치거나 우선순위 안맞는 문제 해결
+    - HY견명조체 추가
+    - 적 이름 테이블에서 읽어와서 UI에 적용
+
+[33mcommit 49d80e0aa9f1120f913033d3db55a58a996a704d[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 21 18:40:06 2024 +0900
+
+    적 스탯창 아이콘 안뜨는 버그 수정 및 턴 종료 이펙트 버그 수정
+
+[33mcommit 148f2a8cf2ff77f5119ed1d7850d1d2cc15263e1[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 21 17:37:06 2024 +0900
+
+    전투 중 적 정보 UI 변경 및 디버프 툴팁 관련 버그 해결
+
+[33mcommit 05865b74124e314f9cd1f2d998f7c5b57937ea5d[m[33m ([m[1;32mmain[m[33m)[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 17:22:58 2024 +0900
+
+    웨스트빌 건물타입 지정
+
+[33mcommit 9406adebd8e521cd16967d5b4a7dbff68cb7c40e[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 17:14:41 2024 +0900
+
+    Revert "글꼴 추가"
+    
+    This reverts commit b9130ac6acea8b50721828ced5745a6526c8f709.
+
+[33mcommit 9e5036347f681cf8f059c2d7fe98f764e5caddc3[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 17:14:16 2024 +0900
+
+    UI Manager의 base.Awake(Singleton) 위치 수정
+
+[33mcommit 3d8371d9b5d9acbf1981d15f30c02058cd60eac0[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 17:07:57 2024 +0900
+
+    UserData 변경
+
+[33mcommit 9db5393e0617ef8acebfbbc59810d3425e3537cc[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 17:07:22 2024 +0900
+
+    Links의 Argument 로테이션값 포함하도록 변경
+
+[33mcommit 9902edf9d2297d54cf4e4408227564b92e034729[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 17:06:53 2024 +0900
+
+    PlayerSettings 참소 Editor 유일로 변경
+
+[33mcommit 659bc9707d0fb9500b952eed02a6997ca4ee8cc0[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 17:06:13 2024 +0900
+
+    모든 타일의 Combat Stage Index 1로 변경
+
+[33mcommit 5d7491c37d64f833411fee0a0cb137b4d7861331[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 17:05:40 2024 +0900
+
+    Title Scene 변경
+
+[33mcommit b9130ac6acea8b50721828ced5745a6526c8f709[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 14:57:33 2024 +0900
+
+    글꼴 추가
+
+[33mcommit d79e4f682a69a3c5cfd9acc69a8b2c467bf513f7[m
+Merge: 72273588 5228cfa0
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 14:50:29 2024 +0900
+
+    Merge commit '5228cfa02ebc8957f4d4be5ee0aaa3b9c6a2a311'
+
+[33mcommit 7227358819a06f282f180dd8e0e0381d60995c31[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 14:48:05 2024 +0900
+
+    World Scene Link 세팅 정정
+
+[33mcommit 943dde56559be0e2ef72b57dfbfcf7bca1ba9a50[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 14:47:45 2024 +0900
+
+    CSV 문제 수정
+
+[33mcommit 40c9bebb1dd193c38791770718a1709ba227f066[m
+Merge: 38d61017 ec294ce4
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 21 14:42:47 2024 +0900
+
+    Merge branch 'MAP-design' of https://github.com/OruteZ/Project-H9
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+
+[33mcommit 5228cfa02ebc8957f4d4be5ee0aaa3b9c6a2a311[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 21 13:41:49 2024 +0900
+
+    조준 시 명중률 튜토리얼 팝업 추가 및 UI 레이아웃 추가 조정
+
+[33mcommit 74e8f95d66b7712e1187c93799adcc0cb0d4d0ea[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 21 13:03:13 2024 +0900
+
+    UI 레이아웃 조정
+
+[33mcommit ec294ce4caf6d4545ae65db9534a8725e8021e6d[m[33m ([m[1;31morigin/MAP-design[m[33m)[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Tue May 21 04:50:34 2024 +0900
+
+    타이틀 화면 배경으로 사용할 PolygonWestern Demo Scene
+
+[33mcommit 38d610172b64f1743493d8dafbe9a3b792966848[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue May 21 00:43:14 2024 +0900
+
+    플레이어 스폰위치 하드코딩 수정
+
+[33mcommit 5a70d0e80a240f209bac2ab7bfa218616edde105[m
+Merge: 720d13ba e43c2d2a
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue May 21 00:42:38 2024 +0900
+
+    Merge branch 'main' into UI
+    
+    # Conflicts:
+    #       Assets/Prefabs/Managers/UI Manager.prefab
+
+[33mcommit 274c380fce9288cc06a0c197e5ee04f9a6e64453[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Tue May 21 00:28:50 2024 +0900
+
+    퀘스트 대사 적용, 플레이어 스폰 위치 수정
+
+[33mcommit 720d13bad4a69d8c51a24386e93be12bc00c7f6c[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon May 20 21:11:31 2024 +0900
+
+    마우스오버 시 턴 순서 표시 기능 추가
+
+[33mcommit e43c2d2ac88d05b978e24818c0f6587362c9877c[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Mon May 20 20:18:55 2024 +0900
+
+    SP 획득 팝업
+
+[33mcommit 601222024ed10c51c0c68197e09db1f3dea97a00[m[33m ([m[1;31morigin/hot-fix[m[33m)[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon May 20 16:39:20 2024 +0900
+
+    Meta 파일 손실 복구
+
+[33mcommit ab84c80e3bb880ee2c40ac30aae1e2f2ef9b85e1[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon May 20 02:39:47 2024 +0900
+
+    240516 회의 내용 반영 1 (+a)
+    
+    - 캐릭터 정보 HUD의 Hp, Ap, Magazine, Concentration UI도 마우스 오버 시 툴팁 팝업
+    - 건물 입장 버튼 UI가 타일을 벗어나도 남아있는 버그 수정
+    - 스탯 레벨업 버튼 단축키 추가
+    - 스킬 아이콘 5종 추가
+    - 액션 슬롯 UI의 단축키 UI 변경
+
+[33mcommit cc09540400ca1b07f61e6ad2d651b8c9dc137f6f[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun May 19 11:53:44 2024 +0900
+
+    샷건 장착 안하는 버그 해결
+
+[33mcommit eea908b0fe41b38f9212eb01dae8e95dc9e60246[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun May 19 11:45:41 2024 +0900
+
+    Prefab 변경 : 일부 Transform 추가
+
+[33mcommit e9d31e2427faa2496253fc89639e700edcaa8776[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun May 19 11:45:19 2024 +0900
+
+    csv 업데이트 + 모델 변경
+
+[33mcommit 1e90d76f70c668de6650fbd6044512c03b3d17d8[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun May 19 11:43:48 2024 +0900
+
+    Scene 이름 변경
+
+[33mcommit a1428ea9ea945af41cd761b3745456558738b9fc[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun May 19 11:19:35 2024 +0900
+
+    사진 추가
+
+[33mcommit db44a1ddfc497b9f94f82cdb0c63d9b60a9306e8[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Sat May 18 15:39:32 2024 +0900
+
+    이일단 줄인 초상화
+
+[33mcommit 0859f50bee3a446dcdb68be67c6b8e2f2cb650bb[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri May 17 23:59:27 2024 +0900
+
+    Weapon Changed Event 급한데로 중첩 적용
+
+[33mcommit 6f5f4c30c3c803d768cad46e4669a316656f9190[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri May 17 23:59:04 2024 +0900
+
+    이게 빌드를 틀어막았어요
+
+[33mcommit 8a1c00bfa099c841fbf13f63917d1ffa4ed0c520[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 16 19:36:47 2024 +0900
+
+    2024 05 16 회의 폴리싱
+
+[33mcommit f024ca14aa36417f6563316f1eb12b381a61d42d[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 16 17:56:24 2024 +0900
+
+    Merge
+
+[33mcommit a9313056f2e1b34dbb4afc13a1586410d1d173d8[m
+Merge: 59074aae ddc54179
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 16 17:29:40 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit 59074aaee68b4710832694e6414e5c1a9df3d191[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 16 17:28:01 2024 +0900
+
+    Info Popup Null Check 추가
+    World Scene의 Links World Obj Data로 변경
+
+[33mcommit ae891e07af3fdd36889a63119a6104ac6968398e[m
+Merge: 99a92071 10827b9f
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 16 16:40:17 2024 +0900
+
+    Merge branch 'main' into MAP-design
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+
+[33mcommit 10827b9f1457c4883008293e7093b4c37df75074[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 16 16:13:35 2024 +0900
+
+    Dynamite Action
+
+[33mcommit c2e46e7842e0dfa07ec363be2802300dbfea0643[m
+Merge: 0a7c6ccd 8019594c
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu May 16 15:30:04 2024 +0900
+
+    Merge remote-tracking branch 'origin/main' into infoPopup
+
+[33mcommit 0a7c6ccd4968896aa5b0912b9fe298b31dea5309[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu May 16 15:29:51 2024 +0900
+
+    쓸모없는 함수 제거
+
+[33mcommit 3622276d6f7ea782d6eac494a8edf1d7d6e4cfc9[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu May 16 15:29:42 2024 +0900
+
+    Info popup 기능 및 호출
+
+[33mcommit 8019594c462e9e753d3ce921ae6d58b9e90e9192[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 16 08:28:44 2024 +0900
+
+    Stage 연동 Tile 기준으로 변경
+
+[33mcommit 99a920715e8ccfc354592039933e3d55fa0422ad[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Thu May 16 04:19:19 2024 +0900
+
+    잡몹 Link 배치, enemy & link 데이터 임시로 수정
+
+[33mcommit e56f207f26688cc236fe98655c1c3999e030cc87[m
+Merge: 9d2ce2e8 2a3ed0bb
+Author: Qedem <sdjld58@gmail.com>
+Date:   Thu May 16 03:18:36 2024 +0900
+
+    Merge branch 'MAP-design' of https://github.com/OruteZ/Project-H9 into MAP-design
+
+[33mcommit 9d2ce2e8c9757b176bc830da08db0e151ce8fa0d[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Thu May 16 03:14:26 2024 +0900
+
+    퀘스트 중 생성된 링크 스폰위치 설정
+
+[33mcommit eb4988f367a52a83475762ffce99a988b407df6a[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Thu May 16 03:13:36 2024 +0900
+
+    웨스트빌 타일 작업
+
+[33mcommit ddc541794a99561d2d468b6e68e95a40406cdf8c[m
+Merge: f502209c c1c7529e
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed May 15 18:05:56 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI' into UI
+
+[33mcommit f502209cdf0c04e356d8b61b40a6878c0a446b8d[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed May 15 18:00:45 2024 +0900
+
+    각종 버그 수정 및 디테일 조정
+    
+    - 버프 아이콘 배경 추가
+    - 스킬 아이콘 크기 조정
+    - 전투 액션 도중 마우스 오른쪽 버튼으로 취소할 시 Tap으로 액션 슬롯이 켜지지 않던 버그 수정
+    - 마을 UI 오픈 버튼이 켜진 상태로 전투 진입 시 UI가 꺼지지 않는 버그 수정
+    - 씬 전환 시 스킬 레드닷 UI의 스킬 포인트 표기 기능이 작동하지 않던 버그 수정
+
+[33mcommit 2a3ed0bb29cd551b8bbac29dac092b00b42c736e[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 15 17:47:42 2024 +0900
+
+    Editor 버그 수정
+
+[33mcommit c1c7529edbf64fe4eb209e07d8d951690f9aaa6e[m
+Merge: ddb551fa 2e497f7c
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 14 14:07:27 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit ddb551fac159e94ac415e1a29c06477c84ae2584[m
+Merge: a6cfda48 83bc6caa
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 14 14:00:59 2024 +0900
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit a6cfda48cc4dfbcc147e29058ccd6f4bbefe506c[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue May 14 14:00:35 2024 +0900
+
+    Title Scene 문제 수정
+
+[33mcommit 2e497f7c8609080a5b81240450cf770ccf1af9e8[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 14 03:07:57 2024 +0900
+
+    스킬 아이콘 적용
+
+[33mcommit 7d570c898a9e359297820e2744514661f96ac181[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue May 14 00:32:12 2024 +0900
+
+    자동으로 타이틀에 버전기입
+
+[33mcommit eeee49303c2ddd9fbd241b61601314575efa18fd[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue May 14 00:32:04 2024 +0900
+
+    저장/불러오기 기능 추가 중
+
+[33mcommit ef2e9c35436cbfbf8ac67558e3806bd0bb75a3f9[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu May 9 18:34:50 2024 +0900
+
+    infopopup
+
+[33mcommit 83bc6caadaa1597fa22dcc596dd297cc23dd5869[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon May 13 20:48:52 2024 +0900
+
+    Title Scene Inspector 창에 요소들 빠진 부분 수정
+
+[33mcommit 044a4d2b018bf48b9665a1f999560bb017b06fd3[m
+Merge: 02126c47 c1d2f96c
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon May 13 16:27:02 2024 +0900
+
+    Merge branch 'main' of https://github.com/OruteZ/Project-H9
+
+[33mcommit 02126c47eb3297e54a4b0f2818abc402ce596309[m
+Merge: e4be43d4 6e6e2742
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon May 13 16:13:19 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit c1d2f96cd6325a2e6e982c316741a847c6b6c993[m
+Merge: e4be43d4 6e6e2742
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon May 13 16:13:19 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit e4be43d42ea31fce4bfe8d802a5cef1202654f85[m
+Merge: 933527b5 4edf3c0f
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon May 13 16:13:07 2024 +0900
+
+    Merge remote-tracking branch 'origin/map-data-refectoring'
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+    #       Assets/Scripts/UIScripts/GameSystem/TownIconPool.cs
+    #       Assets/Scripts/UIScripts/GameSystem/TownUI.cs
+
+[33mcommit 6e6e274280d90a52946bf3a070e69fa2ca876e57[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri May 10 23:04:41 2024 +0900
+
+    아이콘 오버레이 정보 표시
+    
+    - 각 버튼의 단축키 UI 추가
+    - 스텟/스킬포인트 남은 양 표시하도록 레드닷 UI 변경
+    - 전투 중 적 디테일 표시 UI 추가
+
+[33mcommit 4edf3c0f0d668291bc0605914ab91eeb51dea668[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 9 07:43:04 2024 +0900
+
+    퀘스트 종료후 링크 생성 원활하도록 작업 완료
+
+[33mcommit d62b9924ec085d084e5b2c842b3ceeacf42dff25[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 9 07:18:28 2024 +0900
+
+    Link 부활 막는 방법 추가
+
+[33mcommit 9089a9f6b28a2293379a39e26e3be24877505870[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 9 07:02:55 2024 +0900
+
+    TileObject 생성되었던것들 불러오는 기능 제작
+
+[33mcommit 3735487f1864b9cdb05c44a176bcba5caf9fbdb0[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu May 9 00:30:13 2024 +0900
+
+    스탯 선택 UI 접근 방식 변경
+    
+    - 기존에 3번 레벨업 한 순간 열리던 스탯 선택 UI를 열 수 있는 버튼이 따로
+      생기고, 3번 레벨업 할 때마다 포인트가 쌓여서 그 표인트 개수만큼 버튼을
+      클릭해 올릴 스탯을 선택할 수 있도록 변경
+    - 플레이어 EXP UI 좀 더 선명하게 변경
+    - 에디터 스프라이트 정리
+
+[33mcommit af3652cd4edcf49fb178cd6c9a37283d8ad99ebd[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed May 8 01:43:45 2024 +0900
+
+    건물 입장 버튼 추가
+
+[33mcommit 1c30f49535ee6ee66ff360352c4621930b787398[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 7 21:53:39 2024 +0900
+
+    캐릭터 창의 스탯 UI 관련 버그 수정
+    
+    - HP 스탯 툴팁을 찾지 못해 툴팁이 뜨지 않던 버그 수정
+    - 조건없는 패시브 스킬 습득 즉시 UI에 반영이 안되고 전투에 들어가야만 반영되던 버그 수정
+    - 스탯 UI 레이아웃 살짝 수정
+
+[33mcommit 85657806ff7f85768967184b2c0dea29c90d7acc[m
+Merge: f784b8d5 933527b5
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 7 00:22:32 2024 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit f784b8d515b4d4cf33fe0e4a30d837fa58a58c3e[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 7 00:16:37 2024 +0900
+
+    스킬 조건 없을 시 리스트에 뜨지 않도록 수정
+
+[33mcommit 3034a667d4361d5353933a12e78721c0cfc055b7[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun May 5 21:05:34 2024 +0900
+
+    일부 버그 수정
+
+[33mcommit c81a0710868b1dc824c04e6b1edc47eccd886d61[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun May 5 19:12:29 2024 +0900
+
+    카메라 수정
+
+[33mcommit 0e0925660dc1cf356491109d326ec40d5d3a5073[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun May 5 17:56:59 2024 +0900
+
+    Combat Start할 때 World Data 저장
+
+[33mcommit a50a653f319e0232123ef4e27205e05446b7ffe7[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun May 5 17:41:34 2024 +0900
+
+    GameManager Inspector 변경됨에 따라서 Default Map Data에 값 수정
+
+[33mcommit b1954add764d0008e1f1b472f7558776d77e8995[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun May 5 17:40:55 2024 +0900
+
+    Player Spawn Point World Data에 종속적으로 변경
+
+[33mcommit 933527b57299ffa525d08324b7713a8aa2f8c9a0[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 2 19:26:33 2024 +0900
+
+    World Scene 적용
+
+[33mcommit 61756c71021f29b65bf39ea725d5129ac68175a0[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu May 2 17:48:41 2024 +0900
+
+    링크 추가에 따른 UI 관련 버그 수정 및 변경점 적용
+
+[33mcommit 04057beaeb90d018d1c7de495857b8b2d846064d[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 2 15:19:51 2024 +0900
+
+    UI Manager 적용
+
+[33mcommit a7b2b0bb4b01acce1985803120d7fbdaa5d60755[m
+Merge: c2ab2c56 a1f54574
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 2 14:55:04 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit c2ab2c56c86eee8282dffe8884239c7381cce2fc[m
+Merge: 2af013ab 7828c479
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 2 14:53:51 2024 +0900
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit 2af013ab30bb5ee7c050a5d74fea274630a919ce[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 2 14:53:44 2024 +0900
+
+    Unit Camera 수정
+
+[33mcommit 7828c479e7a9767c88eb80d6b75676be2d92bdbe[m
+Merge: c2d5845b e1e7ead1
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu May 2 14:47:02 2024 +0900
+
+    Merge branch 'questBugfix'
+
+[33mcommit e1e7ead114eeade0c442e7832520ef4740a03aba[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu May 2 14:46:49 2024 +0900
+
+    bugfix: Quest Kill Link work
+
+[33mcommit c2d5845b0227d9040413b3d6d1434c5e602858c2[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 2 13:19:51 2024 +0900
+
+    BGM Setting
+
+[33mcommit 6b38a0af7333f2acf97c53439a238e8d7c01a93b[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 2 08:00:55 2024 +0900
+
+    기본 SoundFX 적용
+
+[33mcommit c209afef868515898a262a4c9735d8b5ec0684b5[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu May 2 07:15:25 2024 +0900
+
+    링크가 제대로 소환되지 않던 버그 수정
+
+[33mcommit b85e0448c2cbf66466faeaa2d54150fec6b31dbb[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 1 20:28:24 2024 +0900
+
+    Utility 폴더 생성
+    AnimationEvent에 Step 이벤트 추가
+
+[33mcommit 4cb68a4ae4a6d3e8730643e1dc78729f782c9eb5[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 1 20:26:23 2024 +0900
+
+    LinkTable 갱신
+
+[33mcommit 423095a75c21deb9ac626b4ad0b22f00373d9a61[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed May 1 14:16:50 2024 +0900
+
+    AnimationEvent Setting
+
+[33mcommit a1f545747cfb409980743b33881407ee3f67146a[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Apr 29 20:06:42 2024 +0900
+
+    이동 중간에 건물 UI 팝업되는 버그 수정 및 퀘스트 딜레이 감소
+
+[33mcommit 1b327c6b5717780b004bfe418a55b65e81990344[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Apr 29 19:44:43 2024 +0900
+
+    SoundSources.cs 삭제
+
+[33mcommit d6d8a241008e6bad815d215f69a94d7495ed69b8[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Apr 29 19:44:26 2024 +0900
+
+    함수명을 이상하게 바꿔놨었네 되돌림 커밋
+
+[33mcommit 33fde799c6a3ed1362524cb79fc4a596f263442b[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Apr 29 17:23:46 2024 +0900
+
+    건물 아이콘 위치 변경
+
+[33mcommit b23df05b6a3eb12b7ef9e3aa1e2b86a837572d2d[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Apr 29 16:59:15 2024 +0900
+
+    Camera 관련 기능 추가
+
+[33mcommit 6fb40ac0915339f2e98ea8126ca30d74d0d9d5ea[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Apr 29 02:46:29 2024 +0900
+
+    건물 상호작용 UI 작업
+
+[33mcommit 87516cd760bdc40f5736a835542d0a1a611f5941[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun Apr 28 19:06:35 2024 +0900
+
+    Sound Init
+
+[33mcommit 803eb0f4b74506acd34be9b67e66f0648b18188e[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun Apr 28 19:05:38 2024 +0900
+
+    Serializable Dict 수정
+
+[33mcommit b80a5408556f56e459cc193ecf9aa7b7edd48b5a[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun Apr 28 19:04:54 2024 +0900
+
+    QuestInfo.cs 일부 수정
+
+[33mcommit 81796250782ed24ce943d3ce55e2fd4211ecda24[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Apr 27 15:19:44 2024 +0900
+
+    퀘스트 startQuest 예외처리 추가
+
+[33mcommit d51e90219592ab70e67316e90276d20f50ba86b3[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Apr 27 14:59:47 2024 +0900
+
+    Quest AddLink 기능 추가
+
+[33mcommit 8ebd306dc7e52908d4579c6805bddcd493d7afb1[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Apr 27 14:55:04 2024 +0900
+
+    일부 오타 수정
+
+[33mcommit 4bbd7bdd693e7340f9de353f24a653fa3c75774b[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Apr 27 14:38:42 2024 +0900
+
+    Runtime중 AddLink 추가
+
+[33mcommit d091b3058c84c7beb19e762499feadbf56e2ff05[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Apr 27 14:37:47 2024 +0900
+
+    Camera에 LookAtHex 추가
+
+[33mcommit 4fc58d338fcf13e3f4d259c84f8c7c5435f2e483[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Apr 26 17:47:22 2024 +0900
+
+    캔버스 실수로 끈거 복구
+
+[33mcommit 60b1e986aa45db62c9f4cadd5b364dde208d54ca[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Apr 26 03:31:31 2024 +0900
+
+    test
+
+[33mcommit 544bc530263e9ec7a3d1d1f8c81e94e18e1e0a11[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Apr 26 03:16:46 2024 +0900
+
+    마을 상호작용 UI 레이아웃 추가
+
+[33mcommit e12e0dc42d61cbf90b09f4aa495379bd9f3d3fda[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Apr 25 23:32:33 2024 +0900
+
+    머지 테스트
+
+[33mcommit 168b25d1aea3b290e2ead95f07aa2ea828431619[m
+Merge: 8494a28c 6f731c21
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Apr 25 23:13:12 2024 +0900
+
+    Merge branch 'UI'
+
+[33mcommit 8494a28c775887b668eceed1bffa92f869a02729[m
+Merge: 6d5f33ea 97dfb532
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Apr 25 23:04:06 2024 +0900
+
+    Merge branch 'MAP-design'
+
+[33mcommit 97dfb532c4911d6b1b9492aa3aae3e3c1fbd0892[m[33m ([m[1;32mmap-design[m[33m)[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Thu Apr 25 15:25:22 2024 +0900
+
+    월드 씬 레벨 작업
+
+[33mcommit 6d5f33ea784232edda846cd27f055ab5119e2557[m
+Merge: 7b4e01b4 94aca96c
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 25 14:58:40 2024 +0900
+
+    Merge branch 'log'
+
+[33mcommit 94aca96c922d246758562a095788cb1192b5abc5[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 25 14:52:35 2024 +0900
+
+    퀘스트: pin 추가 기능
+
+[33mcommit 680c3cd088ea1b12748f31656f1173f8c9be78a8[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 25 14:24:04 2024 +0900
+
+    add Quest parsing 'pingTile', 'createLink'
+
+[33mcommit 09b2f12f73c080d27044176940c33aa55c1ed081[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 25 13:26:03 2024 +0900
+
+    Quest: 퀘스트 완료/시작 시 현재 진행하던 Action을 멈추게
+
+[33mcommit b064979160fa89cd184ac833196b9a457e7082a6[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Thu Apr 25 09:00:39 2024 +0900
+
+    PolygonFarm 에셋 추가, 월드 씬 레벨 작업
+
+[33mcommit 6f731c211fbca3a780965eef4ce222eae32a9962[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Apr 25 05:47:23 2024 +0900
+
+    건물 상호작용 감지 및 타일 이펙트 작업
+
+[33mcommit 9b58a18be953f70731c60356fbdf467f591054a9[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 25 02:46:34 2024 +0900
+
+    Quest: 퀘스트 완료시 퀘스트가 수주될 때, 로그가 순서대로 뜰 수 있도록 정리
+
+[33mcommit 979e1ddf86ef63fada0bdebab4bc760fe6d2f1b7[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Apr 23 22:57:35 2024 +0900
+
+    각종 버그 픽스
+    
+    - 퀘스트 UI가 스킬 매니저를 맨 처음에는 못 찾는 버그 수정
+    - 퀘스트 UI가 닫혀있을 때 퀘스트 완료가 안되는 버그 수정
+    - 버프 툴팁 UI 스크립트 Missing된 현상 수정
+    - 핀 UI 켜지고 꺼지는 타이밍 조정
+    - 대화 및 퀘스트보상 UI 폰트 문제 해결
+    - UIManager의 IsMouesOverUI 가끔 비정상작동하는 문제 해결
+
+[33mcommit c86df24ded3fc925e1ffdb33e11bc6c7a7063be2[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 23 17:09:51 2024 +0900
+
+    Log: 함수명 변경, 퀘스트 종료 콜백 분할
+
+[33mcommit a7aec37ed72da30ecb168126d089dfcca5271729[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 23 17:08:06 2024 +0900
+
+    Log: 퀘스트 수주,성공,실패 보상에 대한 로그 출력
+
+[33mcommit 77ace662f0d41c95f7b191277e32f56fb573c134[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 23 16:36:05 2024 +0900
+
+    일부 주석 수정
+
+[33mcommit 47c7041521f9b6698f52f4c469691a40d212c2af[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 23 16:32:15 2024 +0900
+
+    Log: 헷갈리는 변수명 변경
+
+[33mcommit e348d0b451fd7f53da994e004e9c6c2fbff45c37[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 23 16:29:40 2024 +0900
+
+    Log: World turn 넘어갈 때 로그 표시
+
+[33mcommit 1f9f63380e528678f13946222f987e44006122ec[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 23 16:02:25 2024 +0900
+
+    Quest ExpireTurn이 WorldTurn으로만 넘어가도록 동작
+
+[33mcommit e99a3fdad5f6dbffab71d57a6e8fe341b8263a45[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 23 15:47:00 2024 +0900
+
+    Log localization
+
+[33mcommit 9eeb72d113afa79acba15d2e1b75de8b25702e6a[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Apr 23 03:04:53 2024 +0900
+
+    퀘스트 관련 디테일 추가 및 아이템 액션 버그 수정
+    
+    - 퀘스트 제목을 눌러도 핀으로 화면 이동
+    - 퀘스트 정렬 순서 정립
+    - 퀘스트 시작 대화, 종료 대화 플로우 정립
+    - 퀘스트 목록 여닫는 버튼 크기 조정
+    
+    - 즉발형이 아닌 아이템 액션 선택 도중 액션 선택 UI를 다시 켰을 때 아이템
+      액션이 취소되지 않는 버그 수정
+
+[33mcommit 7b4e01b4a4d560ce768af3fa2b72977b18af2025[m
+Merge: 0f3615ba 60d2f328
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Fri Apr 19 16:56:58 2024 +0900
+
+    Merge branch 'questSystem_bugfix2'
+
+[33mcommit 60d2f3289109a964a94b210ef72bcc546c6a5f4c[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Fri Apr 19 16:56:47 2024 +0900
+
+    bugfix) KILL_UNIT 퀘스트완료가 제대로 수행되지 않는 버그 수정
+
+[33mcommit 5123ed267fc62222488e192e1e9942c87102d16f[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Fri Apr 19 16:56:29 2024 +0900
+
+    bugfix) 플레이어 캐릭터가 Scene에서 교체된 후, 지점으로 이동 퀘스트가 제대로 동작하지 않는 문제 해결
+
+[33mcommit 0f3615ba13c0e19072c14d02d4b3fd2a39d73e7f[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Apr 18 21:07:24 2024 +0900
+
+    CSV 변경
+
+[33mcommit 47fc61e34847eea55b5077ac3542061baa9efdaf[m
+Merge: 3e150b66 5dfbcb30
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Apr 18 18:20:08 2024 +0900
+
+    Merge remote-tracking branch 'origin/questSystem_bugfix'
+    
+    # Conflicts:
+    #       Assets/Scripts/Managers/GameManager.cs
+
+[33mcommit 3e150b662aff36bc05113953229931683a14b325[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Apr 18 17:30:23 2024 +0900
+
+    gitignore 변경 (.idea 파일 추적)
+
+[33mcommit af859b7eb39e92efae6a0febc1ee54a0393a0737[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Apr 18 17:29:15 2024 +0900
+
+    Untrack .idea directory
+
+[33mcommit c967d9be2af62b0de9e83cd31f269c6c43524bdb[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Apr 18 17:27:33 2024 +0900
+
+    Untrack .idea directory
+
+[33mcommit 5dfbcb30029e3a9dfd08a15d4b182e0239ef3eda[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 18 14:19:40 2024 +0900
+
+    bugfix) 퀘스트, IN_SIGHT 관련하여 n타일내로 들어오는 부분이 잘 동작하지 않은 것 수정
+
+[33mcommit 8415cb6d4de4ac9fe16aff3c2bb2515d36bb53e3[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 18 14:10:13 2024 +0900
+
+    bugfix) 퀘스트, IN_SIGHT 관련 동작이 제대로 이루어지지 않은 부분 수정
+
+[33mcommit 911cbbcdb3814b787ccc724d6a6d6913def38bb3[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 18 14:08:36 2024 +0900
+
+    bugfix) 퀘스트, IN_SIGHT 관련하여 작동이 안되는 버그 수정
+
+[33mcommit 89e9db2b7ea8870caed5d8bff40e780c0849e9f2[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 18 14:07:28 2024 +0900
+
+    bugfix) 퀘스트, QUEST_END 제대로 작동 안하는 버그 수정
+
+[33mcommit 7566d1b37a13f4ad29c5ca2ea28de36ba9093a54[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 18 14:05:19 2024 +0900
+
+    Log 글씨 크기가 커지는 버그 수정
+
+[33mcommit 9e8cfbe4e8073b44fa110c4bdf0105c1e1cbb6c9[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 18 01:38:11 2024 +0900
+
+    Logui 키고끄게
+
+[33mcommit e000da89d48e8233e8b3e0ce98fb68ff64932233[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 16 23:37:36 2024 +0900
+
+    퀘스트 -> Player 시야 이벤트
+
+[33mcommit 05207bf7d248ba341d215f3990751ff070373c3b[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 16 19:08:00 2024 +0900
+
+    디버그용 퀘스트 타임 재기. 당장은 그냥 냅두고 나아중에 없애기.
+
+[33mcommit d1478b1705233b31c21e3d8de1b5b3357ff6c763[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Apr 16 00:11:18 2024 +0900
+
+    User Setting이 더이상 git에 오르지 않을 예정입니다
+
+[33mcommit fd81bd500e7eb59a26858046f4d29637321c89a2[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Apr 16 00:10:59 2024 +0900
+
+    Reload Animation
+
+[33mcommit 3c2c2b6df1daf6560be639dcbef6c9e3bb53ac10[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Apr 16 00:09:38 2024 +0900
+
+    마을 TileObject
+
+[33mcommit f2b3f1a0d12a4f91ac06c3395f719fa21132547e[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Mon Apr 15 18:47:32 2024 +0900
+
+    린스데일 레벨 작업
+
+[33mcommit 98c5d8a18fc72da246b7adff8bd04f7feaf00fb2[m
+Merge: 18205dfe f0cab20f
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Mon Apr 15 17:29:54 2024 +0900
+
+    Merge branch 'questSystem_reward'
+
+[33mcommit f0cab20fdad467ed234539b7998d380112d142d3[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Mon Apr 15 17:28:20 2024 +0900
+
+    퀘스트 보상 Exp 얻는 코드 수정 (LevelSystem에 GetExpImmediately() 추가함)
+
+[33mcommit 9234a3af34f522667cd4152166c015060e4d6e6e[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Mon Apr 15 17:20:55 2024 +0900
+
+    파일에서 excel 데이터 제거 (원드라이브 연동해서 쓰시오)
+
+[33mcommit 7b3c2a933793b7d083d85fef1257a77e8aa71b0b[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Mon Apr 15 17:20:20 2024 +0900
+
+    퀘스트 보상에서 index 0의 예외처리
+
+[33mcommit 178c513346e545e30c64e27dcfc64f410ee6e694[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Mon Apr 15 17:12:49 2024 +0900
+
+    테스트용으로 퀘스트 테이블 내용 변경
+
+[33mcommit 184da9348021d106978640492b773c624e9fdfc6[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Mon Apr 15 16:57:04 2024 +0900
+
+    간단한 주석 (퀘스트 연결 될 StartConversation)
+
+[33mcommit 71a0547bc4c9ccf4fc9a6378dc545f1585bca26b[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Mon Apr 15 16:53:08 2024 +0900
+
+    KILL_UNIT 퀘스트 추가. (유닛에 index field 추가함.)
+    
+    - 플레이어는 index 관리가 필요없으므로 index추가가 애매하긴 하지만, 퀘스트 등 시스템에서 적군을 판별하는 용도로 인덱스가 필요하여 Unit.cs 에 추가하게 되었음. 더 좋은 방안 있으면 해결 바람.
+
+[33mcommit 367cbc7a01949729b652675f789f47bbaec4a9ff[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Mon Apr 15 10:38:44 2024 +0900
+
+    PolygonWestern 에셋 추가, 맵 디자인
+
+[33mcommit 258d26fce5d64fa08c3ff4960bbdcf23a6e7572a[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Sat Apr 13 22:44:43 2024 +0900
+
+    퀘스트 ExprieTurn 기능
+
+[33mcommit 3ff7ea0da9ccd301e8aca545be6abd4173c81f28[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Fri Apr 12 16:07:13 2024 +0900
+
+    퀘스트 보상받기 (not UI)
+
+[33mcommit 18205dfeadbaa1e69437bec5f8833767358427ae[m
+Merge: ab619a73 8e938d41
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 11 17:07:12 2024 +0900
+
+    Merge branch 'questSystem'
+
+[33mcommit 8e938d413394d41d128b72696f8d3df5b0bebd64[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 11 16:57:54 2024 +0900
+
+    퀘스트 UnityEvent OnChangedProgress / 퀘스트 시작 invoke 추가
+
+[33mcommit 6c81455d10c1e21808811760a599ca941e5be6cf[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 11 16:46:27 2024 +0900
+
+    QuestInfo Property 생성 및 일부 이름, 주석 변경
+
+[33mcommit 423efcc80dff93d57fe1fd1a4f0e40a47cd9094f[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 11 16:46:07 2024 +0900
+
+    QuestInit => QuestParser로 이름 변경
+
+[33mcommit 5c53e99c8942c73d378bd9989e232c82123494fc[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 11 16:13:58 2024 +0900
+
+    '아이템 획득', '아이템 사용' 퀘스트
+
+[33mcommit 620688601e017aa6c9a42a897e3bb62c0c739c06[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 11 14:52:15 2024 +0900
+
+    전투 종료 퀘스트 (kill_link)
+
+[33mcommit 20e7ca094c737e96449063169ea25c61c82681e9[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Thu Apr 11 14:47:59 2024 +0900
+
+    퀘스트용 이벤트 키워드 변경 (Script -> Conversation)
+    
+    - 혁재의 UI 코드 이름이 conversation이라 그에 맞게 변경
+
+[33mcommit ab619a732ad35079507050efa2552793e2fd503f[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 9 19:55:24 2024 +0900
+
+    머지오류 수정
+
+[33mcommit 5c68cfb40871163bb6701b956b035294a2424229[m
+Merge: e5e25596 7b0d75fe
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 9 19:53:45 2024 +0900
+
+    Merge branch 'questSystem'
+
+[33mcommit 7b0d75fea5cd499486d84acdb2ed82962d280aa4[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 9 19:49:02 2024 +0900
+
+    디버그 메시지 제거
+
+[33mcommit 9da4985b896d0379cbcab78dcfb2949bf13bfe98[m
+Author: Moonsh <kimgaejin@naver.com>
+Date:   Tue Apr 9 15:43:26 2024 +0900
+
+    '퀘스트 완료', '플레이어 이동' 의 퀘스트 수주/완료 기능추가 및 버그수정
+    
+    - 퀘스트 끝날 때의 수주 기능 추가
+    - 플레이어 이동 시의 수주 / 완료 기능 추가
+    => 퀘스트 수주 / 완료를 GameManager에 꿍쳐놔서, 나중에 리팩토링 필요
+    - enum QUEST_EVENT flag형태로 수정
+    - Table은 오타 수정
+    - try/catch문 제거
+
+[33mcommit 31aea772ca8ffc28b93a19609cec2e8b7f28dd03[m
+Author: 문ìMSH <kimgaejin@naver.com>
+Date:   Tue Apr 9 00:59:28 2024 +0900
+
+    ConditionBit를 이용한 퀘스트 수주 (GAME_START만)
+
+[33mcommit c95af6ec854d13bd6bd4e1dd7063f0182d9b51e5[m
+Author: 문ìMSH <kimgaejin@naver.com>
+Date:   Mon Apr 8 11:54:49 2024 +0900
+
+    FileRead class's reference fix
+
+[33mcommit 77fb502c54daccfbc6b823d42a70344db68171cc[m
+Author: 문ìMSH <kimgaejin@naver.com>
+Date:   Mon Apr 8 11:54:06 2024 +0900
+
+    Quest localization (not work)
+    
+    - SkillManager.cs 등 FileRead에서 참조하는 함수 인자를 수정해두지 않아서 작동하지 않음. 다음 커밋으로 진행함.
+
+[33mcommit a863572a4359248cf010ca7ef53487252b4fffb2[m
+Author: 문ìMSH <kimgaejin@naver.com>
+Date:   Sat Apr 6 23:47:06 2024 +0900
+
+    Quest Information class
+    
+    CSV 데이터를 가져오는 작업
+
+[33mcommit f69a47a39a09f94aa84e3b4e8854eacb2f771f71[m
+Author: 문ìMSH <kimgaejin@naver.com>
+Date:   Sat Apr 6 23:46:26 2024 +0900
+
+    CSV Convertor 임시로 더 잦은 갱신 코드
+    
+    OnGUI()에서 매 프레임 OpenDirectory()를 호출하도록 갱신. OpenDirectory()가 Browse()에 연동시켜놨더니, 제대로 작동하지 않고 있는듯함.
+
+[33mcommit e5e255966b0aa60cc51e706a5aef1609bb354201[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Apr 9 17:17:17 2024 +0900
+
+    Iventory 일부 변경
+
+[33mcommit 1ecae6c79f8546833a60418c8a3ad14de9fc8c3f[m
+Merge: 5df31de7 20398440
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Apr 9 16:25:28 2024 +0900
+
+    Merge commit '20398440779c0621dbf5e638a14076a9e25ce5ec'
+
+[33mcommit 578035eeb67b39f6a28f83afc1c1ab7026d1476c[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Apr 9 16:12:01 2024 +0900
+
+    머지 테스트
+
+[33mcommit 089526ce01e85697ea29f4480f712fff08be1acc[m
+Merge: d1478b17 472b993b
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Apr 9 15:56:04 2024 +0900
+
+    Merge branch 'UI'
+
+[33mcommit 472b993b66c541995665a10c4e87c324831dc718[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Apr 17 18:36:33 2024 +0900
+
+    퀘스트 및 아이콘 관련 버그 수정
+    
+    - 퀘스트의 아이템, 스킬 툴팁이 화면 밖으로 벗어나지 않도록 수정
+    - 퀘스트 핀 UI가 전투 씬에서도 뜨던 문제 수정
+    
+    - 공격 액션 아이콘 변경
+    - 반동 디버프 아이콘 안뜨는 버그 수정
+    - 버프디버프 아이콘이 HUD에 가려져서 툴팁이 안뜨는 버그 수정
+
+[33mcommit f412d0bdbe7eaaf5825916cb896a94fc7f7b45fd[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Apr 16 22:09:27 2024 +0900
+
+    퀘스트와 핀 UI 연동 및 핀 클릭 시 카메라 이동 구현
+
+[33mcommit 10c60a3bea0e56f6d3eda715437ec667f1075ccd[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Apr 16 21:35:37 2024 +0900
+
+    핀 UI 추가
+
+[33mcommit d7114a8ae0d94da9db1cff64472d8af0354fa549[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Apr 15 19:09:33 2024 +0900
+
+    퀘스트 보상 팝업 추가
+
+[33mcommit f9b8f44feee0520f225eab1d81bb9d04655c4752[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Apr 12 21:16:58 2024 +0900
+
+    퀘스트 스킬 툴팁 버튼 삭제 및 퀘스트 리스트 UI 텍스트 조정
+
+[33mcommit af13677ff029a7db15f27ac1042afd73492be5e7[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Apr 12 04:55:46 2024 +0900
+
+    퀘스트 UI 인스턴스와 연동 및 기능 완성
+
+[33mcommit 5d9a7eb87beeddb49d2787673f673a38861af249[m
+Merge: a50b9495 18205dfe
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Apr 11 17:53:27 2024 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit a50b94952f96291203311ec053b8273d0ae57950[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Apr 11 17:52:44 2024 +0900
+
+    레이아웃 일부 수정
+
+[33mcommit 88c0474e7e842c228eb8167a3d623e32d59fabd1[m
+Merge: 0eb3715e ab619a73
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Apr 9 20:28:56 2024 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit 0eb3715e09266917515c7c15b0b55f7d587c4fa9[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Apr 9 20:28:19 2024 +0900
+
+    퀘스트 리스트 UI 기능 코드만 추가
+
+[33mcommit 20398440779c0621dbf5e638a14076a9e25ce5ec[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Apr 7 01:42:59 2024 +0900
+
+    퀘스트리스트 UI 레이아웃 추가
+
+[33mcommit 5df31de7c0c0ec20dfd7f5a6a4ef8dc9137f1663[m
+Merge: ddd00bb2 4a0158ce
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Apr 4 18:04:00 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit 4a0158cea15d45005dbcec1c262555e6facfd883[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Apr 4 16:44:57 2024 +0900
+
+    타이틀 로딩 버그 수정 및 코스트 아이콘 버그 수정
+
+[33mcommit 209d196f7239b7b967a9f6bbb416f67b524b550a[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Apr 4 02:47:30 2024 +0900
+
+    대화창 UI 추가
+
+[33mcommit ddd00bb210937418bcfdc1a612a6a5daffe05311[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Apr 3 20:58:13 2024 +0900
+
+    패닝 애니메이션 적용 완료
+
+[33mcommit 7f5f49c2b3b74c63e4230d9ecb8866744deb6474[m
+Merge: aa99674b f11a855a
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Apr 3 20:01:01 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit f11a855a448fabc7cde159e9a96c309713d3bd66[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Apr 2 22:10:03 2024 +0900
+
+    대화창 UI 레이아웃 추가 및 액션 아이콘 변경
+
+[33mcommit aa99674b78eddd0aa47d8a22b76b1e088eb71b6e[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Apr 2 15:18:56 2024 +0900
+
+    Unit Animation AI 움직임 오류 수정
+
+[33mcommit 0e73f2edf4a2776d277b3b534d34249f29e03c74[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Apr 2 15:04:15 2024 +0900
+
+    Item 선택 오류 해결
+
+[33mcommit 9cf34c6cf4a41eb0cf76de5869e75c0ca6c39a3e[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Apr 2 15:03:44 2024 +0900
+
+    Recoil 미적용 오륳 ㅐ결
+
+[33mcommit 3ada5513c3e4e97f3c6d89c25dd7693279b0c55c[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Apr 2 14:02:52 2024 +0900
+
+    Item Selectable 수정
+
+[33mcommit 28ea4569f83e6f85f8a5450b54daace0bc31a958[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Apr 1 18:46:05 2024 +0900
+
+    머지 테스트 및 인벤토리에서 템 사용 시 창 안닫히는 버그 수정
+
+[33mcommit 640f2296a71f47be0372a5072c83d28118b4f736[m
+Merge: 397b111b 33cc8ebc
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Apr 1 17:46:24 2024 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit 33cc8ebc28f81562b3eff5095273ec0575c9742a[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Apr 1 13:52:15 2024 +0900
+
+    UI 드래그 막기
+
+[33mcommit 83064e89ce9e50ebd4ea9f4558f9c617b08a8c5f[m
+Merge: 355585e8 983383a7
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Apr 1 07:33:25 2024 +0900
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit 355585e828de55355d8b25f8ff99bcdc3fb10579[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Apr 1 07:33:09 2024 +0900
+
+    Recoil
+
+[33mcommit 983383a7d52bf18af3b8f46c8ed0a602fa3fb25c[m
+Merge: 50698ab3 5d325bcc
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Sat Mar 30 11:21:41 2024 +0900
+
+    Merge branch 'logUI'
+
+[33mcommit 397b111b4288c2cffc062b4574d137d2e7161312[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sat Mar 30 03:10:16 2024 +0900
+
+    아이템 사용 관련 버그 수정 및 ui레이어 관련 리펙토링
+    
+    - 아이템 사용 시 1개만 줄어들도록 수정
+    - 특정 상황에서 액티브 아이템을 사용하지 못하는 버그 수정
+    
+    - ui레이어 조정으로 인한 각종 ui창 여닫기 기능 리펙토링함
+    
+    - 추가로 캔버스 비활성화 시 스킬창ui 스크롤 위치가 이상해지는 버그 수정
+
+[33mcommit da995ffc237b9b553737d79f34ec86deb8e9d224[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Mar 28 03:24:06 2024 +0900
+
+    장착 무기 슬롯 강조 효과
+
+[33mcommit ec7345cdbf0b1b383d9f5c34e02548305697a4ff[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Mar 27 00:05:11 2024 +0900
+
+    행동력, 탄환 아이콘 추가 및 적용
+
+[33mcommit 2c458a42480702d4210c349be55efb326354bf24[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Mar 26 19:05:51 2024 +0900
+
+    플레이어 테두리&실루엣 온오프 기능 추가
+
+[33mcommit 7b3e7d070012b75156bec5dfc2f41638e2b2472a[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Mar 25 01:42:36 2024 +0900
+
+    UI Icon 관리용 SystemUIDatabase 추가 및 적용, 스킬 툴팁 개선
+    
+    - 기존에 직접 인스펙터에 하나하나 박아넣던 리소스들 정비해서 SystemUIDatabase에 추가
+    - 행동 선택 슬롯, 캐릭터 스탯, 무기, 디버프 아이콘 변경, 적용, 수정하고 인스펙터가 아닌 Database를 참조해서 불러오도록 수정
+    
+    - 스킬창 툴팁을 행동 선택 슬롯의 스킬 툴팁 UI와 동기화
+    - 스킬창 및 행동 선택 슬롯의 스킬 툴팁에 section 변수 참조해서 스킬의 무기 제한 조건 표기 추가
+
+[33mcommit 991a8cea638337d57a815886227431a4964137d0[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sat Mar 23 21:16:13 2024 +0900
+
+    적 체력바 관련 버그 수정
+
+[33mcommit 50698ab3cb4b2cd295407dadf2c47c9d459a2ca5[m
+Merge: aa4977de 695cd649
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Mar 23 19:02:58 2024 +0900
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit aa4977de984f1afddd31a3b002a8a3b49e1a0710[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Mar 23 19:01:30 2024 +0900
+
+    인벤토리에 추가 성공한 보상 아이템만 반환하도록 변경 완료
+
+[33mcommit 9b124ca5ed13aae0d29a43756dc350ee5759dbe1[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Mar 23 18:55:19 2024 +0900
+
+    AddItem => TryAddItem으로 이름 변경
+
+[33mcommit fd9bdfd40324cfc4e034c40a77220588e37a01b9[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Mar 23 18:50:02 2024 +0900
+
+    반동 시스템 추가
+
+[33mcommit 5d325bcc2c5088668e29fba0f9c7705da40827b8[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Fri Mar 22 18:44:22 2024 +0900
+
+    LogUI Sensitivity 조정 및 위아래로 안넘어가도록 고정
+
+[33mcommit 695cd6498b9615869e1e3b79d23e952d82ef887b[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Fri Mar 22 17:39:16 2024 +0900
+
+    가능하다면 이 worldscene으로 받아주시오.
+    
+    1. 계속 Log UI Canvas 위치 (Hierarchy 상, 가장 위에 오도록 노력중이지만 자꾸 맨 아래로감)가 바뀜.
+    2. 디폴트가 프리팹이라 애매하긴 하지만, .scene에서 조정해두면 상관없을텐데 자꾸 세팅값이 초기화되어서 Scale이 0,0,0 됨.
+    
+    위 내용이 머지하면서 어쩔 수 없이 생기는 문제인지 자꾸 내 머지가 씹혀서 그러는지 확인도 하고싶으니 worldscene 로그를 건들지 말아주오.
+
+[33mcommit 0fe8dba71e35dddc832a5b505a4a2e4b52be0be1[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Mar 22 05:20:42 2024 +0900
+
+    페이드 인아웃 속도 조절
+
+[33mcommit 856718ee7e52c63b9073459deb822cc62b58f9ad[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Mar 22 05:19:58 2024 +0900
+
+    게임 시작 시 플레이어 조명하도록 위치 조정
+
+[33mcommit 6118886f8fd822aa4dce696ac84d09a9465280f6[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Mar 22 05:14:28 2024 +0900
+
+    초상화 클릭시 카메라 이동
+
+[33mcommit 591898ff58fb4ec9e1c575283e863f40cd60d01b[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Mar 22 05:03:48 2024 +0900
+
+    무기 코스트 부족시 전투중 변경 불가
+
+[33mcommit f5e67419febcbcb74211e3409e1c808b1ce8cfe7[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Mar 22 05:03:33 2024 +0900
+
+    UnitStat 오류 변경
+
+[33mcommit c2902d14ebbafeda1f3baf00866487c1faffc12c[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Mar 22 04:59:31 2024 +0900
+
+    WorldScene에서도 힐템 사용 가능하게 변경
+
+[33mcommit daca59e7e0fbc9f8f3e5c574b04a6a4b5f27c967[m
+Merge: f9829971 e4adfce3
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Mar 22 04:49:31 2024 +0900
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit f98299713224770546024379e6a4630975a9f842[m
+Merge: cbc55171 25f80b2a
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Mar 22 04:49:14 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit 25f80b2a29c172518f4a5d76a2e00cbf89203b93[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Mar 22 01:47:43 2024 +0900
+
+    스탯 표기 버그 수정 및 타이틀 해상도 이슈 수정
+    
+    - HUD의 추가 명중률 표기가 제대로 되지 않던 점의 원인 발견(재오가 곧 고칠 듯)
+    - HUD와 캐릭터창의 스탯UI에서 데미지가 정상적으로 표기되지 않던 점 수정
+    - StatNameTable, StatTooltipTable 읽어와서 캐릭터창의 스탯UI 툴팁에 적용
+    
+    - Title씬의 UI가 해상도 이슈로 위치가 비정상적으로 표시되는 점 수정
+
+[33mcommit 021b0642304c93bb1c4548d9413d18560f3e67b0[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Mar 21 00:54:22 2024 +0900
+
+    UI 관련 수정사항 적용
+    
+    - 최대 체력 증가 스킬 추가
+    - 테이블 최신화(드롭률 버그 수정)
+    - 인벤토리 요소 상호작용 버튼 관련 버그 해결
+    - Eqiup 오타 수정
+    - 초상화 누르면 실행되는 함수 추가(향후 재오가 카메라 무브 관련 추가 예정)
+    - ESC 버튼을 통해서 행동 선택 슬롯 상호작용 추가 및 기존의 ESC로 창 닫는 기능 관련 리펙토링
+    - 행동 선택 슬롯 아이템 및 웨폰 버튼 관련 기능 정비해서 매끄럽게 작동하도록 변경
+    - 스킬 툴팁이 스킬창을 스크롤하면 위치가 변경되도록 수정
+    - 스킬 트리 배치 관련 레이아웃 수정 및 향후 추가가 용이하도록 프리팹 정리
+
+[33mcommit e4adfce36ee5910b889df0bde92899ea1df4b8e2[m
+Merge: cbc55171 50a7ad98
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Mar 20 19:31:00 2024 +0900
+
+    Merge branch 'damageFloaterHotfix'
+
+[33mcommit 50a7ad98c0b8f41940bd9e141f73fbbe1c0679a7[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Mar 20 19:30:44 2024 +0900
+
+    크리티컬이 크리티컬로 안보이는 크리터컬 버그 수정
+
+[33mcommit cbc55171b7c68e18eb4fbd6140b6c35969941c51[m[33m ([m[1;33mtag: [m[1;33m아이템-테스트-빌드-release[m[33m)[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Mar 20 00:15:38 2024 +0900
+
+    Item 오류 수정
+
+[33mcommit c90ca6a55295aaa5044911a06284d82d0dfe3570[m
+Merge: 58fdcf60 58e33e90
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 22:19:35 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+
+[33mcommit 58fdcf603b463866216ec2c80972970bdf88f5c0[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 22:17:44 2024 +0900
+
+    버그수정
+
+[33mcommit 2cff854aa88bec69916b03489b5c0a1e4350fce8[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 22:16:50 2024 +0900
+
+    Shake Camera 기능 추가
+
+[33mcommit 57c114731fdb25ad135c5b70ff7fd5818309bb8b[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 22:06:45 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI' into Status_Effect
+    
+    # Conflicts:
+    #       Assets/Scripts/ScriptableObjects/ActiveDatabase.cs
+    #       Assets/Scripts/Unit/Actions/IUnitAction.cs
+    #       UserSettings/EditorUserSettings.asset
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit fda731723378ffe0a751e5ec7577aceb5aa4dfa7[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 18:41:00 2024 +0900
+
+    World Camera 설정 추가
+
+[33mcommit d2cc86f4e366996acd52c93abadc0b15ecdcb7b2[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 18:39:58 2024 +0900
+
+    버그 추가
+
+[33mcommit a322551c85a64733a750c15e393d9054604b8a16[m
+Merge: 5d402a80 eeb22535
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 18:24:01 2024 +0900
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit 5d402a80911ab872aa96567a85fffb46c58526b5[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 18:20:25 2024 +0900
+
+    버그 : 게임 시작 시 무기 착용 + 코스트 소모
+
+[33mcommit 3a0a7c766efcd0f4b3d52b8384b093c97f63336b[m
+Merge: f3ff4f0f 012f6d5b
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 18:14:29 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit 58e33e9047c7ff1c5123f083d7d06f37884951f2[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Mar 19 17:55:49 2024 +0900
+
+    자잘한 수정사항 추가
+    
+    - 전투 보상 UI에 골드 및 아이템 추가
+    - F2 누르면 스킬포인트 증가하는 테스트 기능 추가
+    - 골드 보상 실제 적용
+    - 인벤토리 상호작용 버튼 상황 & 아이템 종류 따라 OnOff되는 기능 추가
+
+[33mcommit 0b62b080fd0474a03ccfbf2bec77e025095e5927[m
+Merge: 012f6d5b eeb22535
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Mar 19 16:59:10 2024 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit eeb225353378890f231c2a448ce52871b8c01474[m
+Merge: f3ff4f0f 735523b8
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Mar 19 16:19:17 2024 +0900
+
+    Merge branch 'DamageFloater'
+
+[33mcommit 735523b88907b0978c898ce4ff3d0c81d583c463[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Mar 19 16:11:10 2024 +0900
+
+    아이템 이름 로그 제대로 뜨도록 수정
+
+[33mcommit 3c7d1fcf2fffaace903b5ed2dde2c493ce5c5e88[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Mar 19 16:10:59 2024 +0900
+
+    머지 후 맛간 log canvas inspector 조정
+
+[33mcommit b85b5c02db3ac086d7a4e8314c932a994300faa9[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Mar 19 16:10:59 2024 +0900
+
+    머지 후 맛간 log canvas inspector 조정
+
+[33mcommit fa7d0666661ff02efb95404594bd4506d49ce270[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Mon Mar 18 20:10:30 2024 +0900
+
+    아이템 사용 로그
+
+[33mcommit ec4efb27045130cdb2123952ca84729f058d5e19[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Fri Mar 15 18:11:46 2024 +0900
+
+    DamageFloater 구조변경, 회복 플로팅 => TakeDamage에 eDamageType 추가됨
+    
+    1. 호출 위치 변경
+    - 각각의 무기에서 호출하던 Service.SetText()를 UIManager.OnTakeDamage() 콜백으로 옮김.
+    - 회복을 위한 Recover의 경우에는 Level, 게임 시작 등으로 인한 회복과 분리하기위해 Recover(out var appliedValue)를 추가하여 외부에서 UIManager.OnHealed()를 호출하므로, 참조하길 바람.
+    2. 인자 변경
+    - [TakeDamage()]일단은 DamageFloater에서 사용하기 위한 eDamageType을 제작함. flag 로써 활용.
+    - [Recover()] (1)에서 설명한 바와 같음
+    3. 규칙 변경
+    - [DamageFloaterManager.Set()] 데미지가 클 시, 크기를 더 키워달라는 요청때문에 scale 관련한 초기화를 Set()에서 제거하고 외부에서 진행함. 다만 지금은 damage가 15보다 클 시, 시작 크기만 1.5배로 키우는 중.
+
+[33mcommit f3ff4f0fa7126127dea130ef06571a70fa28e966[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 15:07:47 2024 +0900
+
+    World에서 SelectItem 불가능하게 막기
+
+[33mcommit ef044367cef7a6654d1111a3591d6c5405e18471[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 15:03:37 2024 +0900
+
+    Drag Speed 조정
+
+[33mcommit 73ff3a6c7d434468fe22b97c56a9916ba21888b4[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 15:02:26 2024 +0900
+
+    Weapon Default model 설정 변경
+
+[33mcommit 27a4bcdf0619756dc15f6ae3a6477419fa03c109[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 14:57:25 2024 +0900
+
+    WeaponDatabase.asset 수정
+
+[33mcommit 51b173846eb3f09648a4a8f9d1123cad60b3206b[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 14:56:29 2024 +0900
+
+    아니 왜 아이템 테이블 안 바뀐채로 올라간거야
+
+[33mcommit ff5f170f764cdba823265be185ad76c212da331e[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 14:51:27 2024 +0900
+
+    Title Scene Text Changed
+
+[33mcommit 94b478aec79eb08cc2094864e086d8cfeb2dc2e9[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 14:47:03 2024 +0900
+
+    Space 누르면 플레이어 쳐다보기
+
+[33mcommit 53190a95cb9b8732846b7c8e5b847d481a3df33a[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 14:41:41 2024 +0900
+
+    _weaponModel 프리펩에서 클릭시 NullRef 뜨는 오류 픽스
+
+[33mcommit c3662c7d88c9db5c23f7d7602c998af9df79bc5d[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 14:41:12 2024 +0900
+
+    웨폰 장착에 Cost 적용
+
+[33mcommit d7abe3d37f0a81ad8020ebb831672367ffd0b897[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 04:32:13 2024 +0900
+
+    빌드전 마지막 커밋
+
+[33mcommit 7d27a2e3c7b80cf86e8c5eccff28559371b91675[m
+Merge: cc86af30 199bfd0b
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 04:25:15 2024 +0900
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit cc86af30d53826c2c6511551d343b1d1dcc2c726[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 04:25:08 2024 +0900
+
+    ㅇㅇ
+
+[33mcommit 199bfd0bae32d3eb9f0385fafcb531f303d9be4b[m
+Merge: f8150016 ffd1d94c
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 04:20:58 2024 +0900
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit f81500166ff7d425b184afcf865f2110bf42a5d3[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 19 04:20:48 2024 +0900
+
+    CombatScene에서 Cameramanager 삭제
+
+[33mcommit ffd1d94c751797be9362864d6b3bb27832e7b400[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Tue Mar 19 04:14:30 2024 +0900
+
+    Link 전투공간 배치
+
+[33mcommit 012f6d5bc07929517fead688716ff291868dc27a[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Mar 19 00:40:15 2024 +0900
+
+    merge test
+
+[33mcommit 60a291ff5aa23a77cb72989d39b8222b31926fe0[m
+Merge: d98932b4 3a48a071
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Mar 19 00:36:09 2024 +0900
+
+    Merge branch 'UI' of https://github.com/OruteZ/Project-H9 into UI
+
+[33mcommit d98932b4f31e5b5a053e786bb68ff3ec2bca8050[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Mar 18 23:09:10 2024 +0900
+
+    행동슬롯 아이템/무기교체 UI 추가
+
+[33mcommit 3a48a07162370d6b7b18cbc7e77bc9c2d8f9e8dc[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Mar 18 22:15:08 2024 +0900
+
+    주석 수정
+
+[33mcommit 91b0f959948dae2aaa3a4b86b90c27fe5d5583be[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Mar 18 22:03:04 2024 +0900
+
+    WorldScene UI 최신버전으로 변경
+
+[33mcommit a0f5d1aa7f5de73239819b2dd457603bd3d9de3f[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Mar 18 22:02:40 2024 +0900
+
+    World Scene 수정
+
+[33mcommit 4a8397c8fef348e1e931b61b5df72048f9be2fc2[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Mar 18 21:59:57 2024 +0900
+
+    WorldScene Camera 세팅
+
+[33mcommit 2347c6dd3615e5eaab83aca8a4cd166d398c519a[m
+Merge: c87e89ab 991b344b
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Mar 18 21:58:12 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       Assets/Resources/Fonts/NanumGothic SDF.asset
+    #       Assets/Scenes/WorldScene.unity
+    #       UserSettings/EditorUserSettings.asset
+
+[33mcommit c87e89ab6accff333c449447b184a1a7f3caa976[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Mar 18 21:57:06 2024 +0900
+
+    컨벤션 수정
+    ItemUsingAction.IsSelectable() 수정
+
+[33mcommit d7a84aad5d43cfa6fc8f124063cc07bcd5dec4b8[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Mar 18 18:44:45 2024 +0900
+
+    World Camera 일부 수정
+
+[33mcommit cd464b6ed4187a42e1ba3def8ef1ce75aaf612e4[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sun Mar 17 17:53:41 2024 +0900
+
+    Cinemachine으로 카메라 전면 변경
+
+[33mcommit 991b344b86cdd2dbf9e055bc7cf77b063ac3413f[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Mar 17 02:20:16 2024 +0900
+
+    20240314 회의 피드백 수정
+    
+    - 인벤토리UI에서 아이템 이름 및 툴팁내용 표기
+    - 인벤토리UI에서 아이템 툴팁창 고정 지연 시간 추가
+    - 스킬창 단축키 추가(인벤토리 단축키는 원래 있었음)
+    - 턴 종료키를 임시로 쓴 '~'키에서 엔터키로 변경해 할당
+    - 전투UI에서 적 Hp 감소 효과 적용에 지연 시간을 넣어서 좀 더 부드럽게 변경
+    - 행동창 슬롯UI에서 선택 가능한 행동이 남아있을 경우 자동으로 뜨도록 변경
+    - 인벤토리UI에서 아이템 Use 버튼 클릭 시 인벤토리 창 닫히는 기능 추가
+
+[33mcommit 1dee370e1db63aaaaf0ec26fd8b4073c23bba099[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Mar 16 19:57:44 2024 +0900
+
+    CombatRewardController.cs 변경
+
+[33mcommit ac736ac0ab98e493c0b70ed2ff72550327bc5a00[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Mar 16 19:30:58 2024 +0900
+
+    카메라 WASD 움직임 적용
+
+[33mcommit d39b0db78666ca82bc4411785a67732bf031afe6[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Mar 16 19:30:25 2024 +0900
+
+    Fanning Action AmmoCost 요소 변경
+
+[33mcommit 3a10bc8ca23e6c91b14e4403bdafc66ba681a9b3[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Mar 16 19:29:54 2024 +0900
+
+    전투보상으로 Item 제공기능 추가
+
+[33mcommit 03eea995c0be6cb6daf3c0f5d4242d437225593c[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Mar 16 19:29:27 2024 +0900
+
+    임시 이벤트 : onUnitActionDataChanged 추가
+
+[33mcommit 27964269ea3bd626ecf3eff4b10a04da70a39239[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Mar 16 19:29:10 2024 +0900
+
+    _exp => EXP 컨벤션 변경
+
+[33mcommit e109d80cd3d03f192a07e4720420a70a9328b7e0[m
+Merge: 9ac8113b 848a9cd2
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Mar 14 16:12:04 2024 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit 848a9cd2cf19604d84f39d1428259b2074e76704[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Thu Mar 14 15:37:24 2024 +0900
+
+    혁재야! Log 프리팹을 넣는게 아니야! 커밋
+
+[33mcommit 90f67224571aeec769d761b0580d9bbdc57555a6[m
+Merge: 4b40fe72 5c3a330d
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Thu Mar 14 15:36:30 2024 +0900
+
+    Merge branch 'logUI_'
+
+[33mcommit 4b40fe72347244c2b3f0e012d82567f3c9f04dea[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Mar 14 15:32:39 2024 +0900
+
+    테이블 수정. ItemUsingAction에 모션 추가
+
+[33mcommit 5c3a330d76a6c37704f99b470380c10d97e74641[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Thu Mar 14 15:31:02 2024 +0900
+
+    회피 log
+
+[33mcommit 2c999faaaf3bd0e806bec6d377fe070e935d03f2[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Thu Mar 14 15:16:47 2024 +0900
+
+    TakeDamaged() 로그 Enemy -> Unit로 변경
+
+[33mcommit 6a5278ef9ed37537b09ed91ce2bfe2010ee91077[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Mar 14 15:02:26 2024 +0900
+
+    Link Database 갱신
+
+[33mcommit edca54744d6d14d2a16ccd5c7bc58c5424363219[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Mar 14 14:36:08 2024 +0900
+
+    dd
+
+[33mcommit a6c66e5f8c27adcdb0706fe78a7c6a6b20e4afb9[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Mar 14 14:35:23 2024 +0900
+
+    Link. Enemy database
+
+[33mcommit 76cd93fa1f443e7d87919dd99c0f8a5fb58f9eae[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Mar 14 10:15:03 2024 +0900
+
+    카메라 조절
+
+[33mcommit 536302bd598fdd6a4e89405ad0db7b8b339ec0d8[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Mar 14 09:05:57 2024 +0900
+
+    Enemy Table 수정
+
+[33mcommit 766a528e576464aa4824d38a737ddc8a27d03fd9[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Mar 14 08:51:35 2024 +0900
+
+    Item Using Action 보강
+
+[33mcommit 9ac8113b4a6c17a83ad5bd39b045d83df5d7efe4[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Mar 14 06:54:53 2024 +0900
+
+    sprite mismatch 문제 해결
+
+[33mcommit 38048fcbdc7c6402cf13e5aacf6ae5f7e8d41c5c[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Mar 13 21:30:16 2024 +0900
+
+    추가 업로드
+
+[33mcommit 42bfc3f389fa166d67de7808d7653947376eb0b1[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Mar 13 20:47:24 2024 +0900
+
+    ETC 아이템 추가
+    사진 추가
+    F1 누를 시 모든 아이템 획득 가능
+
+[33mcommit 4d70a5f737ceceb5bc7dab69e38a05cdaef8aa39[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Mar 13 20:01:05 2024 +0900
+
+    Table 적용
+    WeaponType 제거
+
+[33mcommit eebfaea545cd056b50fe373be6bbfe8ff18e45fe[m
+Merge: a9ad9bfa 1929dba1
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Mar 13 19:46:45 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit a9ad9bfa4cf12792bff3ca31be85d1a4620280d8[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Mar 13 18:41:56 2024 +0900
+
+    유닛 Prefab에 Item Using Action 추가
+
+[33mcommit 7ba5561c5cfa0460019e2def874628f56c6fc265[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Mar 13 18:04:34 2024 +0900
+
+    Item Using Action Tile Effect 추가
+
+[33mcommit 1929dba1682cb2ba726e99d115a8f48fa03516d3[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Mar 13 02:42:18 2024 +0900
+
+    아이템 사용 UI 상호작용 구현을 위한 사전작업 및 각종 레이아웃 및 툴팁 표시 관련 요소 변경
+
+[33mcommit f82520d6a2f1577ad121809b5079c8f647659c3d[m
+Merge: 099f6f94 55179791
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Mar 13 00:14:43 2024 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit 099f6f94bce6a1d81d61033e50a6e8f360c6b6c0[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Mar 12 22:09:11 2024 +0900
+
+    아이템 사용 ui 상호작용만 구현
+
+[33mcommit 55179791ca1bf714dc55b397ce6871c27f7ba164[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Mar 12 17:14:50 2024 +0900
+
+    WorldScene 수정 (LogUI 추가)
+    
+    - UIManager에 LogUI Prefab 추가. UIManager 인스펙터에 해당 Instance assign하면 됨.
+    - LogUI의 계층 위치는 가장 위(UI 간 별도의 조정이 없으면 가장 뒤에 있도록)로 지정해놨지만 상관없음.
+
+[33mcommit 8dd7439319889c81b5cc3af80ec71c66ee197891[m
+Merge: 97aacfe7 d12b0cb2
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Mar 12 17:10:53 2024 +0900
+
+    Merge branch 'logUI'
+
+[33mcommit d12b0cb2adf8b0c59b6fb3d4d86aa68872176c7e[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Mar 12 17:10:26 2024 +0900
+
+    Attack => Move 상태 오타수정
+
+[33mcommit 5fdcca58860cd91ab37e056f936c89d6bf51650e[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Mar 12 17:10:15 2024 +0900
+
+    사용하지 않는 UnityEvent Listener에 null 할당한 것 제거
+    
+    - null 할당 시 UnityEvent 자체가 null이 아니여도 null 함수를 호출하는 것이니 nullRefer 오류 뜸. 그럼 왜 null을 할당할 수 있게 만든거람?
+
+[33mcommit 0bf495eb486d646d8968c57ec23490d611798daa[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Mar 12 16:57:13 2024 +0900
+
+    log action/invoke/scripting
+
+[33mcommit bc56de59991249bc9e3ab3e6c0cad6d2c378fc54[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Mon Feb 26 18:21:54 2024 +0900
+
+    UIManager에 OnChangedPlayerStat 와 별도로 분리된 LevelUP / GetExp Callback 추가
+
+[33mcommit 78a8c688abdfe3592fff2a09bbe293d4636c1a94[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Mon Feb 26 18:11:13 2024 +0900
+
+    Debug 메시지 삭제
+
+[33mcommit aab19c265aaeb6c6917f72c9bd1bde3a85e89198[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Mon Feb 26 17:50:08 2024 +0900
+
+    LogUI 추가
+
+[33mcommit 97aacfe7182a0a3c2c5b0fbffb831a827425955e[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Mar 12 14:31:40 2024 +0900
+
+    DamageItem, CleanseItem
+
+[33mcommit 06219f2f3c19935b1fca77b87c4a6ba466bb29e9[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Mar 11 18:04:09 2024 +0900
+
+    인벤토리 위치 기억 및 초기 무기 장착 문제 해결, 아이템 분류 버튼 추가
+
+[33mcommit 2dc32fff7131672083093d6d7c91e734fabe6229[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Mar 11 17:08:40 2024 +0900
+
+    ItemUsingAction 추가
+
+[33mcommit d2e7918c8f02ee913d9237ad2335cbe0b9dc5274[m
+Merge: 4609e6cc 36be3edc
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Mar 11 14:20:51 2024 +0900
+
+    merge
+
+[33mcommit 36be3edc898caa2b5ee585a977702def87a2cfb5[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Mar 11 13:33:57 2024 +0900
+
+    디버프 버프 추가
+
+[33mcommit bae545a30ecbef4e5f343c8d6b7e58d7ea9385ba[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Mar 11 08:06:03 2024 +0900
+
+    USE 함수 변경
+
+[33mcommit 4609e6cc234679f0f291dd1ce27465cbe1b67e66[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Mar 7 22:10:47 2024 +0900
+
+    버프창 부활
+
+[33mcommit 6fd180a28e854e02c1c19359c655abf386dddf13[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Mar 5 23:04:11 2024 +0900
+
+    행동창 스킬 툴팁 기능 적용
+
+[33mcommit c545b38b02fb204506ec2b1a950254bb3fe60be5[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Mar 4 22:08:38 2024 +0900
+
+    행동창 HUD 스킬 툴팁 요소 배치
+
+[33mcommit 4f63adc43a99868d5be6d24501b94937e90a15aa[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Feb 28 17:35:33 2024 +0900
+
+    s
+
+[33mcommit 7fef5c3a7e604d5a08edc840b9924fe118bd0bb8[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Feb 28 16:47:58 2024 +0900
+
+    무기 구현 스프린트
+
+[33mcommit cfed4358d5ad706046408402af2adf3eb3d1c25d[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Feb 28 00:03:11 2024 +0900
+
+    머지 중 발견한 자잘한 오류 해결 및 코드 정리
+
+[33mcommit 2a549c3fba59f818ce4f06b1844b888c702c6ad6[m
+Merge: 16b9b394 2eba3af9
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Feb 27 21:31:15 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+
+[33mcommit 2eba3af91ec1b85a3d5e03b337901af41be71b2a[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Feb 26 17:05:07 2024 +0900
+
+    요구 코스트 HUD에 미리보기 기능 추가
+
+[33mcommit 15268b677d66bec32ae88e7e2dcd53c3de16d0ad[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Feb 23 18:45:45 2024 +0900
+
+    플레이어 스테이터스 갱신 시점 조정
+
+[33mcommit 16b9b39457b84f3b486eda898ec28a5ef846db79[m
+Merge: f4ddb328 5c554d20
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Feb 22 21:41:12 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+    #       Assets/Scripts/Inventory/Inventory/Inventory.cs
+    #       Assets/Scripts/Inventory/Item/WeaponItem.cs
+    #       Assets/Scripts/Managers/GameManager.cs
+    #       Assets/Scripts/UIScripts/CharacterWindow/Item/InventoryUIElement.cs
+    #       Assets/Scripts/UIScripts/CharacterWindow/Item/ItemUI.cs
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit 5c554d20337c5f35c79df142db8f79ca6826d16b[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Feb 22 16:42:39 2024 +0900
+
+    마우스오버 시 툴팁 레이아웃 배치 및 일부 내용 불러오는 기능 추가
+
+[33mcommit f4ddb328dc5155b6805baad62b552fd08cc87c22[m[33m ([m[1;31morigin/inventory-System[m[33m)[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Feb 21 18:26:27 2024 +0900
+
+    zjalt
+
+[33mcommit 9a386bd98034f5e2ace63088f450669f56622614[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Feb 21 16:42:34 2024 +0900
+
+    인벤토리 마우스오버 툴팁 팝업 기능 추가
+
+[33mcommit 6b0eadae3672851e9bd77b0b49822da12b12663e[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Feb 20 15:17:04 2024 +0900
+
+    인벤토리 드래그앤드롭 기능 추가
+
+[33mcommit 5ff986ac0a1174606a540a55e2ea3c18bc755508[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Feb 16 18:59:19 2024 +0900
+
+    무기 장착 UI 기능 더미 구현 및 창닫기 버튼 추가됨
+
+[33mcommit 29db6ba2b6c24fd2ea6b34df83e0fb9df89c79a5[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Feb 16 17:48:53 2024 +0900
+
+    무기 장착 UI 레이아웃 추가
+
+[33mcommit 1f3155d6d7a5d96bea8bdacc0c733c66af863b84[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Feb 14 23:57:14 2024 +0900
+
+    하단 HUD UI 레이어 문제 해결
+
+[33mcommit 3010e8b66e0bc86647894706e2461535ea020d61[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Feb 14 17:19:10 2024 +0900
+
+    행동창 관련 피드백 수정
+
+[33mcommit 621e0392688c29a28336eb1c68ddfcfb6a498f0f[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Feb 13 16:28:30 2024 +0900
+
+    캐릭터 창 관련 버그 해결
+    
+    - 패시브 리스트 UI의 마지막 요소와 상호작용되지 않는 점 수정
+    - 추가로 패시브 리스트 UI 레이아웃 및 조작감 일부 수정
+    - 스텟 툴팁 UI가 다른 UI에 가려지는 문제 해결
+    - 패시브 리스트 UI가 정상적으로 출력되지 않던 현상 수정
+
+[33mcommit 4ef17386d41be85879ec8870be24db90c8db9911[m
+Merge: f88d551b 6b8b31dc
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Feb 13 15:41:09 2024 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit 6b8b31dc7737c6abc06759e9155dc49d148185ef[m
+Merge: 9e02d9aa 03830849
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Feb 12 22:45:30 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI' into inventory-Syste
+    
+    # Conflicts:
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit f88d551be7e6fe5bc79dd27d544137dde4c335e6[m
+Merge: 03830849 9e02d9aa
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Feb 7 15:18:02 2024 +0900
+
+    merge to inventory
+
+[33mcommit 038308494afac3f674d6c2edeee70297fb316074[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Feb 7 03:38:46 2024 +0900
+
+    행동 선택 HUD 추가
+
+[33mcommit 9e02d9aac2e97a70c79213fddebff250ec628bf0[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Feb 5 15:27:56 2024 +0900
+
+    가상 Inventory 추가
+
+[33mcommit 516a2a378b0a21f15575170c15a3f6a44cb9d9d8[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Feb 5 13:28:19 2024 +0900
+
+    Inventory.cs 작성
+
+[33mcommit 4f3f50bc9a6652e75c540e0cdeb5a73b40500dce[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Feb 1 06:02:02 2024 +0900
+
+    인벤토리 UI 레이아웃 배치 및 UI 관련 기능 구현
+
+[33mcommit 955badd5cd443192023da1caac6f50461f08c869[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Jan 30 08:26:48 2024 +0900
+
+    IItemAttribute.cs 추가
+
+[33mcommit a499d48985653973622b37dae145d84ae2eb8ba6[m
+Merge: 2f812dfe 2500fc1f
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Jan 30 08:26:23 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI' into inventory-Syste
+    
+    # Conflicts:
+    #       Assets/Resources/Fonts/Unchained-Spaghetti SDF.asset
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit 2f812dfe7748b724bb9de74e00d74e2b110eef06[m
+Merge: 5e2499d8 09dfdd44
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Jan 30 04:23:53 2024 +0900
+
+    Merge branch 'main' into inventory-Syste
+
+[33mcommit 09dfdd44b8fc3b5f3d46af4df838e8ba670644d0[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Jan 30 04:20:50 2024 +0900
+
+    git ignore 추가 : Project Settings, User Settings
+
+[33mcommit 6f9966810a088f2d1096b675d86ae38d61f7aaa2[m[33m ([m[1;31morigin/Release[m[33m)[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Jan 30 04:12:20 2024 +0900
+
+    Null Condition 중복적용 문제 수정
+
+[33mcommit 5e2499d8b62bd71d76716c8e110edc79547c6f19[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Jan 30 03:59:08 2024 +0900
+
+    근접 무기 종류 카테고리 Character => Melee로 이름 면경
+
+[33mcommit b5ede6189ff73e87b0e3dd7755e2381e386058f0[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Jan 30 03:57:30 2024 +0900
+
+    Item 관련 Interface 추가
+
+[33mcommit 2500fc1f639bbe080b7a4ade32d153ffa36180e2[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Jan 26 06:07:49 2024 +0900
+
+    캐릭터 스탯 UI 리뉴얼 및 패시브 리스트 UI 추가
+
+[33mcommit 0324a86dc2fa0b6ddbc8fb255919f1755b951719[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Jan 24 14:43:02 2024 +0900
+
+    주석 깨짐 수정
+
+[33mcommit 4c87fe4c4ff5a40abe5e9b55c525dfc4ed51acfd[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Jan 24 14:40:08 2024 +0900
+
+    Camera Change
+
+[33mcommit ad0c5b94d07f842bcfdced8bcbe4e013c0ccfdc7[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Jan 24 07:12:42 2024 +0900
+
+    HUD 추가
+
+[33mcommit 8f3db0004f1d07ab377b59672d891a525ddb9a3f[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Jan 22 23:50:37 2024 +0900
+
+    HUD 레이아웃 추가
+
+[33mcommit c32b2b6fca9873c39fde5e3a6fad48a342b33889[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Jan 16 19:18:25 2024 +0900
+
+    ui관련 ux 개선안 반영
+
+[33mcommit d0f19ef7af51770e25ea774d7ece6c2049ee09a0[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Jan 11 17:12:15 2024 +0900
+
+    외곽선 관련 파일 정리
+
+[33mcommit 9f9e27abaa76d3e4403b9e3b1ba46ae135bb5267[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Jan 11 16:53:39 2024 +0900
+
+    UI 관련 파일 정리 및 윤곽선 기능 추가
+
+[33mcommit 06c743eb11a090bf4641d68b45fb47416e491552[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Jan 2 01:12:25 2024 +0900
+
+    Title 변경
+
+[33mcommit c92197b89388391be2bf1cb5652ebdca8fdee9ab[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Jan 2 01:03:35 2024 +0900
+
+    액션UI 로그에러 로그만 띄우도록 변경
+
+[33mcommit 34c058dec18056fcfcef1dd95c661f83442d87af[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Jan 2 00:19:54 2024 +0900
+
+    빌드 폴리싱 3
+
+[33mcommit 8e9b3f798382bb7f43ed80959514f4708e27ff52[m
+Merge: de84bc89 c7417ef1
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Jan 1 22:51:21 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit c7417ef189ba1e5700cbfeca8b9163db352757c5[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Jan 1 22:48:40 2024 +0900
+
+    턴 종료 버튼 이펙트 버그 수정 + 일부 텍스트 색상 변경
+
+[33mcommit de84bc892bcfbf9b8f0a6aebb43c1b181fdcd756[m
+Merge: 2eeb5738 1b00a154
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Jan 1 22:11:52 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit 2eeb5738164bacc76ea46b44773d8ec14cbe19c7[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Jan 1 22:11:12 2024 +0900
+
+    일부 animator 수정 + Stage Data 수정
+
+[33mcommit 1b00a1542dd20706e971e2bc8eaff2155edc651f[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Jan 1 17:41:18 2024 +0900
+
+    폰트 깨짐 문제 해결
+
+[33mcommit eb1ba7fb038586d2299ebcadf07ab2ca1056cdf1[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Jan 1 17:15:29 2024 +0900
+
+    빌드 폴리싱 2
+
+[33mcommit a8de35818228d4a9c75cb088f162454dc08cd2b1[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Jan 1 17:12:57 2024 +0900
+
+    적 체력 UI 정상적으로 사라지지 않는 버그 수정
+
+[33mcommit e3dacbf8c5a392172952a99093cdea9bd348fa23[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Jan 1 15:25:10 2024 +0900
+
+    빌드 폴리싱 1
+
+[33mcommit 911d532bb681df31ee0828e0343cfc330efab03b[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Mon Jan 1 14:49:57 2024 +0900
+
+    Link 배치, 전투공간 작업
+
+[33mcommit 63c7d417ff883c0db55f9a061fe11acfdaee9b66[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Jan 1 14:35:31 2024 +0900
+
+    EventSystem 하나 제거
+
+[33mcommit 0c228545fd0b92bfd35d1b873b9b92b421b863b2[m
+Merge: d82dda56 d7277e21
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Jan 1 14:34:10 2024 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+    #       Assets/Scripts/Unit/Actions/DynamiteAction.cs
+    #       Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF.asset
+    #       UserSettings/EditorUserSettings.asset
+    #       UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit d82dda56ffb30b31c0287be231ed430ed94eefaf[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Jan 1 14:32:28 2024 +0900
+
+    각종 버그 수정
+
+[33mcommit d7277e21611e2934adf7106ff0a05455004096c4[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sat Dec 30 16:18:51 2023 +0900
+
+    스킬 버튼 2종 추가 및 arrow 명명법 변경
+
+[33mcommit 86c0211ef334b8330540e4d0e0878ed18bf2f679[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Dec 27 15:09:30 2023 +0900
+
+    시야 밖 유닛 보는 CameraController.cs 오류 변경
+
+[33mcommit 72a971e4ec5507b35326764737f461788fe4950f[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Dec 27 15:09:09 2023 +0900
+
+    Scene 이름 변경
+
+[33mcommit 4b49fd987dd765a652e3c9cbe3f096bb9b797a93[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Dec 26 21:31:58 2023 +0900
+
+    턴 종료 UI 강조 효과 추가
+
+[33mcommit 52852ead9e307e3b25bde3baee67514e30fcddcc[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Dec 22 15:50:35 2023 +0900
+
+    HemostasisAction 기능 변경
+
+[33mcommit 6a19d9b4c809bf56a7bee0418c3da5ab3cdbc45e[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Dec 21 16:50:29 2023 +0900
+
+    상태 UI에 간이 툴팁 추가
+
+[33mcommit ae5587dd0a789c322fb19c767cd431be3d88ccf9[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Dec 20 17:50:49 2023 +0900
+
+    패시브 툴팁 버그 수정
+
+[33mcommit 7cee5e5e5b4bd19d3cb84d8e11b0895b0edf8272[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Dec 20 15:37:58 2023 +0900
+
+    Dynamite Action 추가
+
+[33mcommit 9f32a70e6bae910f876e41a3480aa87a12b67b8f[m[33m ([m[1;31morigin/Editor[m[33m)[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Dec 20 10:09:44 2023 +0900
+
+    Scriptable Objects 변경사항 업로드
+
+[33mcommit ee284299e388e825dac0840182d0d9dc39ac6a2e[m
+Merge: f41af0db 43c7bada
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Dec 20 10:07:58 2023 +0900
+
+    Merge remote-tracking branch 'origin/main'
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+
+[33mcommit f41af0db4866d8839374232ba7bb13841d28f63b[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Dec 20 10:06:08 2023 +0900
+
+    CSV Convert 오류 수정
+
+[33mcommit 43c7bada12ec4d4f2a4759b5060a2368d2df9298[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Tue Dec 19 18:54:20 2023 +0900
+
+    Link 배치, 전투공간 스폰 위치 수정
+
+[33mcommit a6f47604704ea81bc39d77faec2d1e56f3a168e0[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Dec 19 16:58:57 2023 +0900
+
+    Link Index 0 Warning 추가
+
+[33mcommit ab4ccc5bedc1999f185cecba71ed4b42c5b9b272[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Dec 19 16:56:50 2023 +0900
+
+    Link Index 0 문제 해결
+
+[33mcommit 91795aef2b403376f9e47a563d7607da1f3dd71b[m
+Merge: 091a1eaf 5eef69c2
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Dec 19 15:57:10 2023 +0900
+
+    머지 충돌 해결
+
+[33mcommit 091a1eaf5a06fbbd989239347b8ee579592b4a03[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Dec 19 15:52:07 2023 +0900
+
+    버프 UI 관련 리펙토링
+
+[33mcommit 5eef69c2c4290e48bb76616cbcdc44108ea682b2[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Dec 19 13:20:15 2023 +0900
+
+    로그 추가
+
+[33mcommit 3294f99cff0bbd3449588d50814392451f627bd1[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Dec 19 13:18:34 2023 +0900
+
+    버그수정
+
+[33mcommit 33e7fca3c515b0d6f8dbb9c501eaf173e3056ae1[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Dec 19 12:35:10 2023 +0900
+
+    RUnning Animation 수정
+
+[33mcommit f83699acfaa205f88f70862c1f61e0b54f727c1d[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Dec 19 12:34:50 2023 +0900
+
+    Unit Model 할당 오류 수정
+
+[33mcommit da56a78056fe18a1ba31de9e294498e5e5fea92d[m
+Merge: c8dc0771 03f049cf
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Dec 19 09:29:37 2023 +0900
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit c8dc07718798e9e15a740dbf5d52d595ce70b186[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Dec 19 09:26:57 2023 +0900
+
+    Editor 오류 수정
+
+[33mcommit 03f049cf8f4c26782297d3ba941260ac7e2e837a[m[33m ([m[1;31morigin/DMF[m[33m)[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Mon Dec 18 23:43:14 2023 +0900
+
+    치명타 데미지플로팅
+
+[33mcommit 6a82f578923643466743ec86530c29c235481043[m
+Merge: f2605d62 f64a444d
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Dec 18 19:17:38 2023 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       Assets/Resources/DataBase/EnemyDatabase.asset
+    #       Assets/Resources/Files/WeaponTable.CSV
+    #       Assets/Scenes/WorldScene.unity
+    #       Assets/Scripts/Managers/GameManager.cs
+    #       Assets/Scripts/Managers/LoadingManager.cs
+    #       UserSettings/EditorUserSettings.asset
+    #       UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit f2605d621ce000c0bc42477f0f206ce5811d1e8b[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Dec 18 19:14:38 2023 +0900
+
+    CSV 꼬인거 전부 정리
+    NULL Model 추가
+
+[33mcommit 57f54ea727dc1f0f45851c3ff087e3b9c4340e2a[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Dec 18 17:32:14 2023 +0900
+
+    Turn 시작 시 카메라 이동
+
+[33mcommit a1103e34d2c0687331685a3e868b05ca9d6fddb3[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Dec 18 17:23:53 2023 +0900
+
+    FOG World Scene에서 상태 유지하도록 변경
+
+[33mcommit 0cf89e34944697cf87bea54e1f59af42ac8f7bc5[m
+Merge: 1f1ea592 c90076d6
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Dec 18 17:10:59 2023 +0900
+
+    Merge branch 'Editor'
+
+[33mcommit 1f1ea592aef802e20a59bff5aa03ba9a5b7febbd[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Dec 18 16:58:39 2023 +0900
+
+    쓸데없는 한 줄 삭제
+
+[33mcommit bb2dd8f8dbc79af9cdb2d88c48efa5330c770932[m
+Merge: 6173d153 30daa05e
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Dec 18 16:58:21 2023 +0900
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit 6173d153b344680d7fc54b840d7abc6611be5f3e[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Dec 18 16:58:05 2023 +0900
+
+    Player World 시야 수정
+
+[33mcommit f64a444d9984495ef717729e04c8e8d440562fc2[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Dec 14 22:50:33 2023 +0900
+
+    적 상태이상 UI 추가
+
+[33mcommit 39054dfeb0f0a5bea2ea32880b68addea2fbd1e1[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Dec 13 16:24:20 2023 +0900
+
+    적 상태 이상 UI 요소 추가
+
+[33mcommit 26aca45cabdc1b9d8cc3c5b6217bdb001f104054[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Dec 13 15:18:27 2023 +0900
+
+    빌드를 위한 UI 및 기능 테스트 및 수정, 리포트
+    
+    버그 및 의도치 않은 현상 수정
+     - 스킬 트리 습득 불가 이펙트 버그 수정
+     - 싱글톤 작동 버그 수정
+     - 시야 스탯 레벨업 시 바로 적용되지 않는 버그 수정
+     - 캐릭터 스탯 UI의 툴팁에 표시되는 스탯 텍스트 공백 관련 버그 수정
+     - 전투 중 패시브/상태 이상이 꺼질 시 툴팁이 안닫히던 버그 수정
+     - 전투 중 적 스탯 UI가 월드 UI를 가리는 버그 수정
+     - 적 스탯 UI의 일부 표기를 플레이어 스탯에 맞춰 수정
+    이슈 리포트
+     - 크리티컬 데미지 표기 방식 리포트 및 수정
+     - StatType 인덱스 관련 이슈 리포트
+     - '지혈' 액션의 툴팁과 실제 적용이 다른 점 리포트
+     - '다이너마이트' 액션의 소모 AP 관련 이슈 리포트
+
+[33mcommit c90076d608439c7faacb1d2aea1bd25040bc0e4e[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Dec 13 09:02:04 2023 +0900
+
+    dd
+
+[33mcommit 149a99f7ad732fa94977fb002758d75af4304014[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Dec 11 07:19:37 2023 +0900
+
+    Combat Map Editor
+
+[33mcommit 966a5d97e54c6dc329003fb8faa76550fa9f3445[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Dec 9 22:04:16 2023 +0900
+
+    World Editor
+
+[33mcommit d4e07777d6659672392f6d84d1a5998274a1873d[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Dec 6 17:16:28 2023 +0900
+
+    스킬 포인트 레벨업 적용
+
+[33mcommit ef84b011bcfdf0a213560dc564223d69dab738b9[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Dec 5 00:02:31 2023 +0900
+
+    패닝 액션 아이콘 버그 수정
+
+[33mcommit 8ba02fe2a0eaac65344172bb52c63306884b6631[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Dec 4 16:40:29 2023 +0900
+
+    동일 타입 스킬 습득 방지 기능 버그 수정
+
+[33mcommit 30daa05e6d8fdc74d3f6ac80e9da76b19ba07849[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Fri Dec 1 17:01:13 2023 +0900
+
+    Csv convertor: 반점이 들어간 내용은 큰따옴표 삽입
+
+[33mcommit b26614404df90b7085b73808581a26b2c598c786[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Dec 1 14:52:35 2023 +0900
+
+    ??
+
+[33mcommit 856ab77fec3f14ffbee612f63328f6c038ebe81f[m
+Merge: 41a26b3a d25d3005
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Dec 1 14:45:49 2023 +0900
+
+    conflict resolve
+
+[33mcommit 41a26b3a88ceb0f8ecfa2dd540aec825098a0438[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Dec 1 14:40:54 2023 +0900
+
+    test
+
+[33mcommit d25d300569233f983f9122a9b84a689fc07749e6[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Dec 1 13:55:01 2023 +0900
+
+    2023 12 01
+
+[33mcommit 5a5ac9178271bee6d3a1c58c22b5fdea069e5b10[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Nov 30 17:50:24 2023 +0900
+
+    스킬 툴팁 변수 삽입 기능 개선
+
+[33mcommit 78c53e70a27cfae442cc56c88ad387d676ef4535[m
+Merge: 9132eb00 37497a4b
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Nov 30 16:46:08 2023 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit 9132eb0095d68fcdb9dd7cfce3bf1d63cc408663[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Nov 30 16:44:55 2023 +0900
+
+    머지 테스트 및 스킬 툴팁 변수 삽입 관련 준비
+
+[33mcommit db2247651df5d70ea97494482cc0300f19c87a58[m
+Merge: 8e6abe6d 8f2bea30
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Nov 30 16:26:14 2023 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit 8e6abe6d33581c4b3910cd43f9b0ce4fe5af18fb[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Nov 30 16:23:28 2023 +0900
+
+    스킬 툴팁 창 크기 조절 및 스킬 트리 UI 색상 조정
+
+[33mcommit 37497a4b4e7c524efc9a12c9ad36c7300f5c2b3a[m
+Merge: 5dc7febe b12091e2
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 29 19:18:12 2023 +0900
+
+    Merge branch 'Test_Build'
+    
+    # Conflicts:
+    #       Assets/Scripts/Skill/PassiveSkill/Effect/StatUpDependedOnCondition.cs
+
+[33mcommit 5dc7febed83ac1743bfc054f7bcb59a592e133c5[m
+Merge: 8f2bea30 ac835634
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 29 18:21:42 2023 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit b12091e299cc0d996931d3291b8f6dc165799c85[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 29 15:49:18 2023 +0900
+
+    Stun 효과 변경
+
+[33mcommit b39ddd9e0a6ea3f2ccecc9dbebd010c6af64f5f5[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 29 15:41:17 2023 +0900
+
+    Read CSV 함수 수정
+
+[33mcommit ac8356342f7d77694d7927058969dab70d33653b[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Nov 28 17:06:45 2023 +0900
+
+    상태 이상 UI 아이콘 추가
+
+[33mcommit 8f2bea3019e7266718b4916abdaf983160fcf2a7[m
+Merge: 3d56928d 6d4d8097
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Nov 28 17:04:56 2023 +0900
+
+    Merge branch 'Light/PP-default-option'
+
+[33mcommit 6d4d809787479e67790d2a697011dc5d470dede8[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Nov 28 16:56:08 2023 +0900
+
+    BlueTile / YellowTile / Cloud 매터리얼 색 수정
+
+[33mcommit 3421984b323453c60c559f347a06c5ce31aa69b6[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Nov 28 16:53:39 2023 +0900
+
+    Light / PP 적용된 Scene
+
+[33mcommit dbb7dacc422ac41237606f45ed1e057dd5a62825[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Nov 28 16:53:31 2023 +0900
+
+    Light / PP Prefab화
+
+[33mcommit 045c522ef9f8435193a6d5b0a44cc7bb7e6797b1[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 27 18:37:12 2023 +0900
+
+    Active Table 맞춤형으로 읽는 코드 변경
+
+[33mcommit ef2e86fa647e69051ac8aa78d7a2f8a1995bedcb[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Nov 27 16:07:21 2023 +0900
+
+    캐릭터 스탯UI에 스킬 보너스 표기 기능 추가
+
+[33mcommit 8780d613d62e523d9eff806251f09332ed6229a4[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 27 15:30:54 2023 +0900
+
+    패시브 스텟 적용 메커니즘 변경
+
+[33mcommit 169ef616bfb15fd8ca8cb4c183fca8f8242491b4[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 27 15:30:24 2023 +0900
+
+    StopBleedingAction -> Hemostasis 테이블에 맞추어서 용어 변경
+
+[33mcommit 3d56928d717c99287241c7b75b9839f81401c6ef[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 22 19:02:04 2023 +0900
+
+    UnitStat Getter 메서드 추가 : Additional, Multiplier
+
+[33mcommit 7e1d7dd8de18a3402c5698ddbc6b1f9d85620149[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Nov 22 16:55:52 2023 +0900
+
+    툴팁 레이아웃 조정 및 캐릭터 스탯 툴팁 수정을 위한 사전작업
+
+[33mcommit e4483bd63ea783ff61c62b5a7d069dddce2af30d[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Nov 20 17:20:18 2023 +0900
+
+    패시브 및 상태 이상 툴팁 적용
+
+[33mcommit 832822deee21775f7769c73602d2c05740ab9e71[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Nov 18 10:30:20 2023 +0900
+
+    UnitModel 세팅 + 촬영 기능 추가
+
+[33mcommit d16ea439811c38f3779d30d80487ccf1ab07f2ed[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Sat Nov 18 04:34:10 2023 +0900
+
+    Editor 폴더 통합
+
+[33mcommit 9a2c3aa1ce546152ee1c88c81a3a9a4cd5ef65d7[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Nov 17 01:28:16 2023 +0900
+
+    상태 이상 UI
+
+[33mcommit b21ff1db9db5d1e770b0cc87775015c224490a4c[m
+Merge: 53a6965d b49dc256
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Nov 16 16:26:07 2023 +0900
+
+    Merge branch 'main' into UI
+
+[33mcommit 53a6965dd16e32ff563ded85bc68aba7f193ce16[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Nov 16 16:11:07 2023 +0900
+
+    각종 버그 픽스 및 상태이상UI 레이아웃 추가
+
+[33mcommit b49dc256a64b57ccbf980ad83b58a7c81b7dcd35[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Nov 16 15:50:55 2023 +0900
+
+    IDisplayableEffect.cs 수정
+
+[33mcommit b658355b10da0d2c454549426e9f99a55646f356[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Nov 16 15:40:56 2023 +0900
+
+    지혈 Action 추가
+
+[33mcommit 2f7b8fa1f1046f79fa882642c616e8b291ef2066[m
+Merge: 7f930d2b e511a5e7
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Nov 15 15:53:42 2023 +0900
+
+    Merge branch 'nuget'
+
+[33mcommit e511a5e75f9011fb9fe8435e00d3250f3641e035[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Nov 15 15:52:50 2023 +0900
+
+    ExcelDataReader.DataSet 설치 및 CsvConvertor의 csv 변환 삽입
+
+[33mcommit a749c66380dcc01484f5266f17872b36926a8372[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Nov 15 14:53:57 2023 +0900
+
+    Nuget / ExcelDataReader 설치
+
+[33mcommit 10c55dcc94c2e8734ffb0b17466ec52547a1de37[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Nov 15 14:14:36 2023 +0900
+
+    CsvConvertor Window 틀
+
+[33mcommit 7f930d2bbb6fd31cf0e4bd02bfb2983cfb86021b[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 15 15:42:16 2023 +0900
+
+    절뚝거림 회전속도 조정
+
+[33mcommit dae62050489e344f106600f7927a4307427f52da[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 15 15:29:04 2023 +0900
+
+    Merge 버그 수정
+
+[33mcommit 6a2e915ac5645f5bbed60fe9dfbc5f8e2c19007e[m
+Merge: ab53ec81 15ee69d3
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 15 15:10:46 2023 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+
+[33mcommit ab53ec810c733e63597b7aeaf40664fbc431e73a[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 15 14:57:59 2023 +0900
+
+    WorldScene UIManager 최신버전으로 반영
+
+[33mcommit 7945755216adf479c215eca258d5ea7239f44418[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 15 14:54:29 2023 +0900
+
+    무장해제 상태이상 애니메이션 수정
+
+[33mcommit a565a259f4c135bdeaaac147dc697d3b44786166[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Nov 15 12:30:04 2023 +0900
+
+    231115 회의 전 막바지 작업
+
+[33mcommit 15ee69d3c59664f0c653989299eb81c9c13551cc[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Nov 14 16:18:25 2023 +0900
+
+    키워드 툴팁 관련 버그 수정 3
+
+[33mcommit 93a0d4d24feb2112e058b0c72cc2647758f2bf47[m
+Merge: 5ca68264 4052eda4
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Nov 14 16:10:19 2023 +0900
+
+    ?
+
+[33mcommit 5ca6826475ae39aee9c93dcda1dab4b36b6c905a[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Nov 14 16:05:58 2023 +0900
+
+    키워드 툴팁 관련 버그 수정 2
+
+[33mcommit 4052eda41609bc3ddb7ade421c35f3a5491e0ee0[m
+Merge: 68227331 e83dffd8
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 13 21:29:22 2023 +0900
+
+    Merge
+
+[33mcommit 682273315dbbdd0bd43e2c90be813c1a7a35f8e3[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 13 21:21:32 2023 +0900
+
+    버그수정
+
+[33mcommit e83dffd87c0b64ad4ecb5d628bcf283002ea01d3[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Nov 13 20:35:04 2023 +0900
+
+    키워드 툴팁 관련 버그 수정
+
+[33mcommit de61c48ef8f968bd8ca0cd48fd16ebaff5dfeff2[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 13 18:16:48 2023 +0900
+
+    출혈, 화상으로 사망하지 않는 버그 수정
+
+[33mcommit 73315807fc812ab21fe22a31ff503d238bc96ceb[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 13 17:56:49 2023 +0900
+
+    simple name change
+
+[33mcommit b38be9d240cba82b9485d6ef897bc267b7a66000[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 13 17:55:06 2023 +0900
+
+    StatusEffectTestButton
+
+[33mcommit d1b8bae2de3d0e851ccf99adb608b1b805873a31[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 13 17:54:34 2023 +0900
+
+    TakeDamage 수정
+
+[33mcommit 0ad54701b16d08ffa619ab70bca0c2120fba36ba[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 13 17:07:09 2023 +0900
+
+    onCombatStart -> onStageStart
+    onCombatAwake -> onStageAwake
+    Events 이름 변경
+
+[33mcommit c7963e8ac0141b149746463b6bb456de415f3f5f[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 13 17:06:13 2023 +0900
+
+    상태이상 코드 보강
+
+[33mcommit fd9f03773fae59f6a8494c5fda459587ce3d823c[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 13 16:35:55 2023 +0900
+
+    Created StopBleedingAction.cs
+
+[33mcommit edd150cb885ce5f18dabd074451bc886f7978985[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Nov 13 15:24:45 2023 +0900
+
+    Animator와 UnitModel 상관관계 리팩토링
+
+[33mcommit be66fffd00786065d8905ec69a8b1c39e092c1fd[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Nov 10 00:59:49 2023 +0900
+
+    IDisplayableEffect.cs
+
+[33mcommit 6e5971bced036998a14a02351fb9ea7b2b400d1b[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Nov 10 00:36:47 2023 +0900
+
+    All Status Effect Created
+
+[33mcommit 5f175734c5cb3108be4aa2f31abe20cab6121376[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Nov 9 02:31:39 2023 +0900
+
+    스킬 툴팁에 키워드 툴팁 추가 출력 기능 추가
+
+[33mcommit 92701edbe3aeb7481098226da891f6bcfe6f6e19[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Nov 8 19:12:18 2023 +0900
+
+    상위 액티브 습득 시 하위 액티브 삭제 및 테이블 갱신 후 스킬트리에디터 테스트
+
+[33mcommit 2aae52497074b7a20ad41db3af34e06676b32fd5[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Nov 7 16:24:59 2023 +0900
+
+    Active Database 변경
+
+[33mcommit 621eed291ddf68ca9f86d344294cc1962f088044[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Nov 6 00:19:22 2023 +0900
+
+    Add Active Table
+
+[33mcommit 98288da375010644fc4ab2241473ef35bcd46088[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Nov 3 00:46:15 2023 +0900
+
+    스킬트리에디터 최적화 및 다양한 태스크에 대한 자잘한 사전작업들
+
+[33mcommit 19a49eeae404f64942fd59764a231d570f83d89a[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Oct 31 03:20:19 2023 +0900
+
+    스킬UI 리펙토링 및 에디터 기능 추가
+
+[33mcommit a5694c672c0da3458ccdf257e6bc7095dace7502[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Oct 25 15:57:06 2023 +0900
+
+    AI 수정
+
+[33mcommit 5e16f4d2c923dfb31e55fcaed89250f224c69333[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Oct 25 15:32:25 2023 +0900
+
+    다이너마이트 사거리 clamp
+
+[33mcommit 54e9c927998ea57b3b20634220a5305c0205f4a4[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Oct 25 15:31:21 2023 +0900
+
+    다이너마이트 사거리 cap 설정
+
+[33mcommit a096663cd84796cb0768d9665d5bf0f6951784d0[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Oct 25 15:15:31 2023 +0900
+
+    Merge 오류 수정
+
+[33mcommit 06715a4564d4d2dc656e77c095163c9c255afbdb[m
+Merge: 9bd23ecd 332f1345
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Oct 25 14:49:20 2023 +0900
+
+    Merge branch 'AI'
+    
+    # Conflicts:
+    #       Assets/Scripts/Unit/Enemy.cs
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit 9bd23ecd70c31907254e1bd268c8b0276834e49d[m
+Merge: d6b77d79 de592d39
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Oct 25 14:47:41 2023 +0900
+
+    Merge branch 'Skill'
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+
+[33mcommit de592d39d20dcc11eddb7cfebe1d246eb1522ea1[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Oct 24 18:05:01 2023 +0900
+
+    Condition 4종 추가
+
+[33mcommit d6b77d793c6295bda1ecd524c234c7ab6e5da2f6[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Oct 24 04:59:10 2023 +0900
+
+    패시브 아이콘 및 키워드 UI 관련 사전작업 및 UI 색상 관련 자잘한 기능 개선
+
+[33mcommit 8677e0090f1697988273de5116e401862dc93304[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Oct 23 09:51:53 2023 +0900
+
+    Dynamiteaction.cs 추가
+    IUnitAction.cs 리팩토링
+
+[33mcommit 332f1345a83a105b974166c6e43b43e5eb6e4384[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Oct 19 19:28:25 2023 +0900
+
+    AI refeatoring
+
+[33mcommit 6d938e42efd871308151cf26bb5e82fc4ea4c89d[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Oct 15 04:57:50 2023 +0900
+
+    전투 종료 플로우 관련 기능 개발
+
+[33mcommit b9f7f7a7c27d2ec07fa865294356e1887dd483eb[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Oct 13 01:50:31 2023 +0900
+
+    Merge
+
+[33mcommit 17cf488e8a5ab2fc3a7644399571d3c8504f0036[m
+Merge: 2dff77e8 6b97c0ff
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Oct 13 01:49:15 2023 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+    #       Assets/Scripts/Managers/GameManager.cs
+    #       Assets/Scripts/Skill/SkillDescriptionScript.cs
+    #       UserSettings/EditorUserSettings.asset
+    #       UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit 2dff77e8eed7ba46aafba325fcefa20afb22d20d[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Oct 13 01:43:45 2023 +0900
+
+    TileEffectManager.cs 리팩토링
+    
+    모든 확률, 배수 표기 정수 %로 변경
+
+[33mcommit 6b97c0ff330454d0deacd783b64097c81afa592d[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Oct 12 22:59:09 2023 +0900
+
+    스킬 UI에서 테스트용 스킬 습득 시 실제 효과가 반영되어 적용되는 기능 추가
+
+[33mcommit 2d5f7ff53c5fa1fefe01ece6cc96da8eee064292[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Oct 12 21:53:13 2023 +0900
+
+    FileRead.ConvertStringToArray 함수 Generic으로 변경
+
+[33mcommit 627ee0329cb3f7ca72f292903cd5168f97f1d46e[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Oct 12 20:26:33 2023 +0900
+
+    유닛 스탯 리팩토링
+
+[33mcommit 0302499c42dbc0a6fa754d9ac7ea5f63e07d06ce[m[33m ([m[1;33mtag: [m[1;33m성장-스프린트-release[m[33m)[m
+Merge: e003add8 8de4eadf
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Thu Oct 12 16:44:16 2023 +0900
+
+    Merge branch 'sh/damageFloater'
+
+[33mcommit 8de4eadfea502eb488acd898ed9961a953d05cab[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Oct 4 21:21:14 2023 +0900
+
+    데미지플로터 동작 canvas 변경
+    
+    - 기존 TileEffectManager에서 관리하던 WorldCanvas에서, Service에서 별도의 canvas를 생성하도록 변경. 기존의 canvas는 tile과 관련된 이펙트만 작동할 수 있도록 의도 반영함. 새로운 canvas는 world space에 할당되었기 때문에 캐릭터와 플로터가 렌더링 싸움이 있을 수 있음.
+
+[33mcommit 34a6729f72a127477c7f6c128dc096e9fa0cc89f[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Thu Sep 28 02:25:31 2023 +0900
+
+    데미지플로터 위치/크기 변화 (수치는 하드코딩)
+
+[33mcommit 11f636386f25875b3a40220b1dcf2d3ff8e50ad8[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Sep 26 18:25:15 2023 +0900
+
+    Object pool 적용한 Damage Floater
+
+[33mcommit 623d1a4ca2b3f475e671699523f96336b2a8fe5b[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Mon Sep 25 18:13:35 2023 +0900
+
+    Generic 적용한 OjectPool<T>
+
+[33mcommit 9ed1ec3ab309bc001273f106adbff46d2a48fc0b[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Mon Sep 25 16:54:34 2023 +0900
+
+    GameObject 대상으로 한 general한 Object pool
+
+[33mcommit e003add848b1417296bc828ac56e6b0ccc255a87[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Oct 11 22:56:14 2023 +0900
+
+    테스트 스킬 스크립트 적용 오류 수정
+
+[33mcommit a254d3f6295289d41b2773ebb38048e94e8d6407[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Oct 11 18:03:41 2023 +0900
+
+    테스트 패시브 스킬들을 위한 테이블들 추가 및 시스템 변경
+
+[33mcommit 77ab60ae9fcaf27aedde544301d9b1ba20460081[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Oct 11 13:59:53 2023 +0900
+
+    merge
+
+[33mcommit d13f3dad92643759581fa381dc06158941573845[m
+Merge: 79028724 c1620e7d
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Oct 11 13:48:53 2023 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       Assets/Scripts/Skill/PassiveSkill/Condition.meta
+    #       Assets/Scripts/Unit/Player.cs
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit 790287246c573acdafd5a026678904bf83743f34[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Oct 11 13:45:07 2023 +0900
+
+    20231011
+
+[33mcommit c1620e7df81384b127c36ceb865f1130029220ef[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Oct 10 04:28:10 2023 +0900
+
+    UI 시스템 구조 개선 및 EXP UI 추가
+
+[33mcommit f69aaae93f058d4b22b543ee6de17cf2b93db471[m
+Merge: 6a47b363 6817bcd3
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Oct 6 18:19:03 2023 +0900
+
+    Merge remote-tracking branch 'origin/UI' into Merge
+    
+    # Conflicts:
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit 6a47b36349fee2895857c4df911d623cdc507b3c[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Oct 6 18:17:12 2023 +0900
+
+    Passive.cs 작업
+
+[33mcommit 39a1a4729bd4e9caf4b5326f298758488f97d65d[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Oct 5 18:26:05 2023 +0900
+
+    Skill Effect 구현 0.5
+
+[33mcommit 6817bcd351816ea56a5e6ab7108d3184223abf2b[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Oct 4 16:53:41 2023 +0900
+
+    스탯 레벨업 기능 보완
+
+[33mcommit 5bfd82e6004d8e3a723370cd4663a7e97e5e2abe[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sat Sep 30 00:35:07 2023 +0900
+
+    캐릭터 스탯 레벨업 UI 기능 추가
+
+[33mcommit a7d86130c1edc407041ee79b915fd4433509b732[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Sep 27 12:40:28 2023 +0900
+
+    20230927
+
+[33mcommit 17250d958caa35dfd213af04d145c8707078daed[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Sep 27 03:51:44 2023 +0900
+
+    스킬아이콘UI 구조 개선
+
+[33mcommit 1b42b79caae224dfe07082773baf8050bb2413d5[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Sep 25 20:48:24 2023 +0900
+
+    스킬UI창 에셋 적용 및 가시성 관련 기능 개선
+
+[33mcommit 61d7030a168f20846f91b94f9bef7af1fb1ded51[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Sep 24 04:55:06 2023 +0900
+
+    스텟 UI 기능 개선
+
+[33mcommit 5ff0b245c090c250d1e27c0b7ccd3bbf120ae7b6[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sat Sep 23 01:08:20 2023 +0900
+
+    캐릭터 스텟 UI 레이아웃 변경 및 팝업창 기능 추가를 위한 구조 개선
+
+[33mcommit 9f13b6843d5d9c118100d7d445b5ab189f4eca30[m
+Merge: 8510be11 107cac4f
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Sep 21 16:43:23 2023 +0900
+
+    Merge branch 'Map_Editor'
+
+[33mcommit 8510be11559001149642bfcb2c5f591b2d6f0fc2[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Thu Sep 21 16:40:30 2023 +0900
+
+    Revert "즉시 실행 행동에 SetBusy 함수 추가"
+    
+    This reverts commit 049950fe86671ea0427e084be06ee27c7c4af1f4.
+
+[33mcommit 107cac4f04af32f3334837810cadd3ce7202c6fe[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Sep 20 14:06:30 2023 +0900
+
+    Combat Test Build
+
+[33mcommit 049950fe86671ea0427e084be06ee27c7c4af1f4[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Sep 20 14:06:30 2023 +0900
+
+    즉시 실행 행동에 SetBusy 함수 추가
+
+[33mcommit 5034a745489cd525a5e8c1f0ba6d403557cdcbe0[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Sep 20 13:56:57 2023 +0900
+
+    prefab animation avatar 지정
+
+[33mcommit d3d3bcdad037dd98103c7fddf3ec1fc104f20e38[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Sep 20 13:14:27 2023 +0900
+
+    Added Waist Transform in character prefab
+
+[33mcommit 4408c61ed1cf3ee5dfde754a3da0f692d00474fe[m
+Merge: ea1d9a9a 4e3b4631
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Sep 20 13:08:58 2023 +0900
+
+    Merge remote-tracking branch 'origin/UI' into Map_Editor
+    
+    # Conflicts:
+    #       Assets/Resources/Prefab/Units/Character_Bandit_Male_01.prefab
+    #       Assets/Resources/Prefab/Units/Character_Thug_Male_01.prefab
+    #       UserSettings/EditorUserSettings.asset
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit ea1d9a9a1808a56ffb1cacb630605428eae39c22[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Wed Sep 20 13:07:39 2023 +0900
+
+    20230920
+
+[33mcommit 4e3b4631f4c755d917a848e8bbda8724cc863423[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Sep 20 03:15:17 2023 +0900
+
+    의도되지 않은 타이밍의 버튼 상호작용 버그 수정 및 턴 종료 버튼 가시성 개선
+
+[33mcommit 11e052341d3219d1bb78d3b90ff3133e0f448293[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Sep 19 12:24:45 2023 +0900
+
+    Merge 완료
+
+[33mcommit 42085b440cf70ebf58fd06784be3bdb9171f8ee6[m
+Merge: 4622e07c 7ecda758
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Sep 19 11:43:45 2023 +0900
+
+    Merge remote-tracking branch 'origin/UI' into Map_Editor
+    
+    # Conflicts:
+    #       Assets/Scenes/CombatScene.unity
+    #       Assets/Scripts/Systems/TurnSystem.cs
+
+[33mcommit 4622e07c4fb7b6c509399a1d2740b7ef47b1e4aa[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Sep 19 11:39:27 2023 +0900
+
+    20230919
+
+[33mcommit 7ecda758d412405ce4706ee5be31d20e4a8f5edc[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sat Sep 16 01:16:40 2023 +0900
+
+    코드 리펙토링
+
+[33mcommit ead13432ac7acb934bcdfeb0f6aa3858e5ac1c83[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Sep 12 17:17:40 2023 +0900
+
+    행동선택버튼 테두리 적용
+
+[33mcommit e269d27bf4b80b04781ce6d48de7b5c585e80d4d[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Sep 11 21:01:22 2023 +0900
+
+    Fanning 공격 액션 화
+
+[33mcommit 7f6195c85bfe95d44e24455686e87b420599dbd7[m
+Merge: 8a2f071a a1ac3a74
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Sep 11 18:12:44 2023 +0900
+
+    Merge remote-tracking branch 'origin/MAP-design' into Map_Editor
+
+[33mcommit 8a2f071a67695ff4b6b240ac5d9aee9144942ac4[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Sep 11 17:28:37 2023 +0900
+
+    Combat Start Event / 구조 변경
+
+[33mcommit e41341fd08a31875a2cd3338848703406056f307[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Sep 11 17:26:58 2023 +0900
+
+    Fanning 사격시 사용 불가로 변경
+
+[33mcommit 4e01a7f92e156a33db9aaf8de7b0bc69fc6aedfa[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Sep 11 17:25:59 2023 +0900
+
+    Tile Effect 그림자 받지 않도록 수정
+
+[33mcommit a1ac3a74fcc9665955c08f4aeb4fc3970de267c3[m
+Author: Qedem <sdjld58@gmail.com>
+Date:   Mon Sep 11 17:14:43 2023 +0900
+
+    World Map 수정
+
+[33mcommit 7845962b5a3787049bbe001e4396bc26b29e903f[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Sep 11 15:56:36 2023 +0900
+
+    행동취소버튼 아이콘 추가
+
+[33mcommit 5b21c4713cd255102d50ab06deab444c10f61057[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Sep 11 12:47:43 2023 +0900
+
+    Fade in / out 기능 추가
+
+[33mcommit e71b6d5a70e74b33a7f9c3effe9404d171a4de91[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Sep 11 04:12:30 2023 +0900
+
+    20230910
+
+[33mcommit 8e1f9b4a833ef9fd4791560a9ca6b8aaf0cee11e[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Sep 10 23:07:33 2023 +0900
+
+    체력바 삭제 기능 추가 및 리소스 적용
+
+[33mcommit 9fdc93eb252b91a561aa6aedef6ab407c7f89632[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Sep 8 18:34:32 2023 +0900
+
+    적 스텟 정보 표시 UI 개선
+
+[33mcommit 1e1139362bfdeaa4ab82151ec115c2ba4eee10f7[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Sep 5 18:05:12 2023 +0900
+
+    머지 오류 수정
+
+[33mcommit c7deacb20c1f1037d4de4725fed82a019eb533b9[m
+Merge: 4eace423 74426f49
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Sep 5 16:39:09 2023 +0900
+
+    Merge branch 'UI' of https://github.com/OruteZ/Project-H9
+
+[33mcommit 74426f499e2cb2f02e1b1701edee4bd01545c69b[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Sep 5 16:29:14 2023 +0900
+
+    턴 텍스트 UI 기획 의도에 맞게 수정
+
+[33mcommit 4eace423c436d8bde9d0f576c5dda413617125e1[m
+Merge: b30ad3a6 6706fb91
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Sep 5 16:12:58 2023 +0900
+
+    Merge branch 'UI'
+
+[33mcommit b30ad3a68bab055369ab424f13540e0bf1346737[m
+Merge: 54351641 1abec3b0
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Sep 5 16:12:49 2023 +0900
+
+    Merge branch 'Map_Editor'
+
+[33mcommit 1abec3b05fdc80e5f52c6b6082bc5eb0929bff59[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Sep 5 16:07:50 2023 +0900
+
+    20230905
+
+[33mcommit 6706fb91a26985d2b1a8eb1fc9e3ee330cd644f5[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Sep 4 16:31:04 2023 +0900
+
+    행동창 및 턴순서 UI 아이콘 리소스 적용
+
+[33mcommit 74eb96c5d7a11521f6fc638c78c0ac1b5a210908[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Aug 30 23:06:58 2023 +0900
+
+    Title Screen 추가
+
+[33mcommit 543516411938edef2726e9649daa857ba224360d[m
+Merge: 118e273b 846fabdf
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Aug 30 19:08:04 2023 +0900
+
+    Merge branch 'feature/vfx-link'
+
+[33mcommit 846fabdfb8d9797ae8d46f5e54dc7cf179ee3f07[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Aug 30 19:01:58 2023 +0900
+
+    총알 궤적 Line Prefab 키우기
+
+[33mcommit 50a741d3de4e98843999f9bc8807b6ce922c99fd[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Aug 30 19:01:49 2023 +0900
+
+    Attack/Panning 에 격발 smoke/궤적/출혈 VFX 적용
+
+[33mcommit 118e273bd8a25ef32c2ac8e74dd25ceaa97590c0[m
+Merge: 47f9e2b6 79527b99
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Aug 29 18:54:36 2023 +0900
+
+    Merge branch 'feature/vfx'
+
+[33mcommit 79527b996460a351181ffaa3c062c403edc2741c[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Aug 29 18:41:28 2023 +0900
+
+    WeaponModel의 총구 위치 확인하여 총구 연기 VFX 출력
+
+[33mcommit 68762bac2697b187260e1ec7411dd6e5741d8ff0[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Tue Aug 29 18:40:12 2023 +0900
+
+    Paticles->VFX 참조용 폴더명 변경
+
+[33mcommit da732836a5f0c6bc9736881c914f7512aad4e8ab[m
+Author: 문성현 <kimgaejin@naver.com>
+Date:   Wed Aug 16 17:51:10 2023 +0900
+
+    add 'VFX 시스템'
+
+[33mcommit 47f9e2b640d773eb6d52a97d090bd0f775d084c4[m
+Merge: eea3eb4c 5217d787
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Tue Aug 29 18:10:54 2023 +0900
+
+    Merge branch 'UI'
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+
+[33mcommit 5217d7875530b5617c3719532edf503d8365c387[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Aug 28 23:05:12 2023 +0900
+
+    캐릭터창 UI 스텟 마우스 오버 관련 기능 추가
+
+[33mcommit eea3eb4cacef4aff303c7c0f33be569f1363dcaf[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Mon Aug 28 18:44:09 2023 +0900
+
+    2023 08 28
+
+[33mcommit 1563f22abf9d78fd96c2ffbff7e72a535ac4d7ae[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Aug 28 16:23:17 2023 +0900
+
+    캐릭터 스텟창 UI 레이아웃 변경
+
+[33mcommit b87ff69e99527c8448c292c8da22d1ac4aee94ab[m
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Aug 25 19:51:25 2023 +0900
+
+    Merge Error 해결
+
+[33mcommit 384a6324c042888532fad471fa6a74f935cc8d30[m
+Merge: c4033a81 9e9e39d9
+Author: OZ <dwd0102@sju.ac.kr>
+Date:   Fri Aug 25 19:02:58 2023 +0900
+
+    Merge branch 'Test_Combat_Scene'
+    
+    # Conflicts:
+    #       Assets/Scenes/CombatScene.unity
+    #       Assets/Scenes/WorldScene.unity
+    #       Assets/Scripts/Managers/GameManager.cs
+    #       Assets/Scripts/UIScripts/Combat/ActionSelectButtonElement.cs
+    #       Assets/Scripts/UIScripts/GameStatus/PlayerHpUI.cs
+    #       Packages/manifest.json
+    #       Packages/packages-lock.json
+
+[33mcommit 9e9e39d95ee71baef1556519c033b2f55d8da5ab[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Fri Aug 25 18:37:33 2023 +0900
+
+    2023 08 25
+
+[33mcommit c4033a8128ce37608d0293246280f6c5c396dbcd[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Aug 25 18:24:54 2023 +0900
+
+    탄창 UI 리소스 적용
+
+[33mcommit 410ce6c08e65a57b4db55344d637bb8828645d6a[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Aug 25 00:30:39 2023 +0900
+
+    턴 순서 UI 리소스 추가 및 연출 적용
+
+[33mcommit 755a4719980431f889e24f5a1f049340fd354584[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Aug 23 16:32:05 2023 +0900
+
+    행동창 UI 리소스 및 턴 시작 시 턴진행자 표시 UI 추가
+
+[33mcommit eba02e762df3e89e9e5a7e5daf00f994677ebdee[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Aug 21 15:45:54 2023 +0900
+
+    에셋 추가 및 월드 UI 이미지 리소스 적용
+
+[33mcommit 5b6f1908d09b887c7beaeb1ce88388a18a35bbf8[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Aug 16 16:40:57 2023 +0900
+
+    UI용 스프라이트 에셋들 추가
+
+[33mcommit d3c631d4d4e68b7f58ad4eb1667d2efe1ee049aa[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Aug 16 15:49:50 2023 +0900
+
+    동기화 문제 해결에 따른 CombatScene의 UIManager 재생성 및 버그 수정
+
+[33mcommit be0119bc0146ecfddbfe6f54d3a6eff321cac42a[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sat Aug 12 21:43:44 2023 +0900
+
+    UI 리소스 적용 준비 및 UI 코드 전반에 대한 주석 추가 작업
+
+[33mcommit a172d78060eb364346fc898a446f0afb4e93b3ee[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Aug 10 16:25:07 2023 +0900
+
+    머지 테스트 및 리펙토링
+
+[33mcommit 3cf0dfec744e87e49797abc37f7e485f0c9b7bf8[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Thu Aug 10 12:32:02 2023 +0900
+
+    Merge 오류 수정
+
+[33mcommit 890b27c5cb01ddf5ed53cce3f99273cc5e3820f7[m
+Merge: b8ba74b0 7bc5369c
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed Aug 9 23:00:39 2023 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+    #       Assets/Scripts/UIScripts/Combat/EnemyHpUI.cs
+    #       Assets/Scripts/Unit/Enemy.cs
+    #       UserSettings/EditorUserSettings.asset
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit b8ba74b0297e6c1627a8170ea8c4635b12756c37[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed Aug 9 22:53:39 2023 +0900
+
+    20230809
+
+[33mcommit 7bc5369ceee9b79e6b543d2df1ea44bbff7ed68b[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Aug 8 22:16:29 2023 +0900
+
+    Action의 필요 탄약 실시간 UI 적용 기능 및 잡다한 버그 픽스, 리펙토링
+
+[33mcommit a293790867e0a4b07f8554d1d726cf3f82cefa54[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Aug 7 21:44:14 2023 +0900
+
+    디버깅용 UI 추가
+
+[33mcommit 4187703126d56bc0bd9b0680490e7cc30240a6e0[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Aug 4 15:38:12 2023 +0900
+
+    행동 UI 조작감 및 버그 픽스
+
+[33mcommit 5c04d951f37a4eb97c5a435027eabeaa4a001440[m
+Merge: ba8e7beb 800a18f2
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue Aug 1 18:37:35 2023 +0900
+
+    Merge branch 'UI'
+    
+    # Conflicts:
+    #       Assets/Scenes/CombatScene.unity
+    #       Assets/Scripts/UIScripts/Combat/EnemyHpUI.cs
+    #       UserSettings/EditorUserSettings.asset
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit ba8e7bebd76562ecf0dca2e2957ab7f8a357d13c[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue Aug 1 18:34:48 2023 +0900
+
+    20230801
+
+[33mcommit 800a18f2b80fbd7854fd3d8b77fb8bac57bbccb8[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Aug 1 16:42:27 2023 +0900
+
+    적 스텟 UI 구현
+
+[33mcommit 1e1cb2d37ecbbdf623e116c83cf1dc50c2e11623[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Jul 31 17:46:46 2023 +0900
+
+    적 체력바 UI 구현
+
+[33mcommit ce1a5cb507330000e7d27fd14985fc46f0f324af[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Jul 31 15:50:39 2023 +0900
+
+    Merge 오류 해결 및 병합 완료
+
+[33mcommit 26581f62008ffd70384f4d5159db4c481c19914d[m
+Merge: 0a7c6003 78cba5bc
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Jul 31 14:37:08 2023 +0900
+
+    Merge branch 'Test_Combat_Scene'
+    
+    # Conflicts:
+    #       Assets/Scenes/CombatScene.unity
+    #       Assets/Scripts/Unit/Player.cs
+
+[33mcommit 78cba5bc37c58f1e0de59d63d8964dec811dbf82[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Jul 31 14:32:03 2023 +0900
+
+    20230731
+
+[33mcommit 0a7c6003c7d9ed1dc79b04414ec6077045b99340[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Jul 30 23:52:47 2023 +0900
+
+    자잘한 버그 수정 및 적 UI 구현을 위한 사전작업
+
+[33mcommit 1974d9c7aad61babadff8c71f2b9bcc1f497e704[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Jul 25 06:09:56 2023 +0900
+
+    행동창 UI 구현 완료
+
+[33mcommit 7d6e4d7aa5c9fb79e2bddbfb5acae0a62115c81d[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Jul 23 20:44:48 2023 +0900
+
+    턴 진행 시스템 버그 수정 및 UI 추가
+
+[33mcommit 770cb74b4c4ecf93daac0814743e2201554ec89c[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Jul 23 17:17:15 2023 +0900
+
+    턴 진행 시스템 구현
+
+[33mcommit 4fa5b84481af36cbf446472fc6c90ef8fc583426[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Jul 23 16:03:22 2023 +0900
+
+    씬 전환 시 UI 변경 기능 추가
+
+[33mcommit 79b3a86825c63a651bfe4b9c30ca78dd58009656[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sat Jul 22 01:19:46 2023 +0900
+
+    테스트 코드 정리
+
+[33mcommit 492c6f67a33b98967ceb447511b879c47bfe0368[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sat Jul 22 00:57:35 2023 +0900
+
+    무기 스텟 UI 테스트 완료
+
+[33mcommit 2f6fe51a6ef00cfffa6c218822237a0fe841485b[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sat Jul 22 00:34:49 2023 +0900
+
+    캐릭터 창 UI의 무기 스텟 UI 테스트 완료
+
+[33mcommit 90187fbe68e232f2f6ea99f81ced1f5050b3cbd2[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Fri Jul 21 19:15:07 2023 +0900
+
+    Merge 확인
+
+[33mcommit 98c35cec187ddf73c3700742251fda6044ce6e13[m
+Merge: 67ecb2fe 9f7a9b10
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Fri Jul 21 18:56:04 2023 +0900
+
+    Merge remote-tracking branch 'origin/UI'
+    
+    # Conflicts:
+    #       Assets/Scenes/WorldScene.unity
+    #       UserSettings/EditorUserSettings.asset
+
+[33mcommit 67ecb2fe2679aabd425b8d316b7c2e9d10c889d8[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Fri Jul 21 18:49:50 2023 +0900
+
+    2023 07 21
+    
+    패닝 추가
+    무기 DB 추가
+
+[33mcommit 9f7a9b10a71503f14be124d2c221de47bdb3ae43[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu Jul 20 23:45:00 2023 +0900
+
+    무기 및 행동 코드 미리 작성
+
+[33mcommit b26a4a9ef53edf86933bd8b09388fb15ca541694[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Thu Jul 20 14:44:49 2023 +0900
+
+    Weapon datatable 추가
+    Idle Action 추가
+    Reload Action 추가
+    Weapon 내부에 장탄수 기능 확정
+    
+    Player가 Action을 선택할때 IsSelectable이라는 함수 추가
+
+[33mcommit ea1f1323cecc195b337163c8a82005e280d2853f[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Thu Jul 20 04:31:55 2023 +0900
+
+    Combat Scene Tile 시야 처리
+
+[33mcommit dee775a35347985cead47d184218340a1dd013e9[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Jul 19 17:10:35 2023 +0900
+
+    머지 테스트 및 자잘한 디테일 변경
+
+[33mcommit 93ce2c56cf81493ce48aac1449be6dd60ecedbba[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed Jul 19 14:21:25 2023 +0900
+
+    UI Manager 파일명 변경
+
+[33mcommit 4a39fcd93552d871d97a0c7eb03123f01ee9ac42[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue Jul 18 20:02:48 2023 +0900
+
+    Merge 후 오류 조정
+
+[33mcommit f37b9e0128bac7e46e7411a65755537c718a12b5[m
+Merge: e8c40421 06256666
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue Jul 18 19:09:23 2023 +0900
+
+    Merge branch 'UI'
+    
+    # Conflicts:
+    #       Assets/Scripts/UIScripts/UiManager.cs
+    #       UserSettings/EditorUserSettings.asset
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit e8c40421cccbc6eade8e78313536a3e7672859ab[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue Jul 18 18:50:59 2023 +0900
+
+    Asset 추가 + Map Save 건들다가 만 흔적들
+
+[33mcommit 062566660cb1bac66b693fa015264d8653f4ea59[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Jul 17 18:31:19 2023 +0900
+
+    EndTurn 버튼 구현 및 자잘한 코드 리펙토링
+
+[33mcommit 17d32acc730260ef309db49b7e9f3d73740fe0bd[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Jul 17 16:57:06 2023 +0900
+
+    Test map 제작 + Prefab 배치 (PolygonNature)
+
+[33mcommit 96454fe3c721ed6cb1bbfb11f97894344b4c0350[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Jul 14 21:53:02 2023 +0900
+
+    체력바 UI 구현
+
+[33mcommit 85e3901af632d95d05bf2e1439adbf1eea43f377[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Jul 14 19:45:10 2023 +0900
+
+    하단 바 UI 작업 완료
+
+[33mcommit 36920962728c1a1cbc6c2049b8aed2b07df0027c[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri Jul 14 00:44:30 2023 +0900
+
+    하단 스테이터스 UI 기능 코드 일부 구현
+
+[33mcommit 5be4b844eab1d132fe2217c98bb4b4be04cf8a76[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Jul 12 21:06:21 2023 +0900
+
+    UI 레이아웃 수정
+
+[33mcommit 933fabdaf18629c2f90e728019df5f449714d348[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed Jul 12 13:48:11 2023 +0900
+
+    isMouseOverUI 추가
+
+[33mcommit 01bfabcd05d080f411e390de6ab193e1587d319a[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed Jul 12 13:46:47 2023 +0900
+
+    Code Refactoring
+
+[33mcommit 29157e42aad77b1db4eb5f0b641ca2c289171c90[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue Jul 11 21:41:32 2023 +0900
+
+    Merge 문제 해결!
+
+[33mcommit cc295c01059299f2d79ddfed494197f0af2fc0ca[m
+Merge: 3cafbf35 365f0b47
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue Jul 11 21:21:12 2023 +0900
+
+    Merge branch 'EnemyAI'
+    
+    # Conflicts:
+    #       Assets/Scripts/Systems/TurnSystem.cs
+
+[33mcommit 3cafbf35f36c9dfefdedc2ef9adca92bf1e00297[m
+Merge: 570b9bc7 5e278234
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue Jul 11 21:19:57 2023 +0900
+
+    Merge branch 'UI'
+    
+    # Conflicts:
+    #       UserSettings/EditorUserSettings.asset
+    #       UserSettings/Layouts/default-2021.dwlt
+
+[33mcommit 365f0b47f9ea331d71ac307a50416ca8182cc933[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue Jul 11 21:17:49 2023 +0900
+
+    20230711
+
+[33mcommit 5e2782342449042c49c3f300e98cdc7eafd7c26b[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Jul 10 20:21:35 2023 +0900
+
+    턴 UI 적용 및 테스트 완료
+
+[33mcommit e40882e3edf7c8e3ca67df9c300d74d9455df698[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Jul 9 23:52:20 2023 +0900
+
+    턴 표시 UI 추가 - 테스트 필요
+
+[33mcommit 91dceb953ea15c916762a4b98b8904f30c5319f0[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Jul 9 23:33:54 2023 +0900
+
+    UI Scroll View 최적화
+
+[33mcommit a3745b135b68a045a0a3a71a97485138cc22c49c[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sun Jul 9 18:25:14 2023 +0900
+
+    20230709 중간 커밋
+
+[33mcommit 7cf55bce1a815e5510c4d1138cb33c1c624490f4[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Jul 4 00:44:47 2023 +0900
+
+    UI 레이어 조정
+
+[33mcommit 5a2460f39529e4099d017cfc39cb004abf92f1ae[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Jun 20 17:05:12 2023 +0900
+
+    UI 코드 리펙토링
+
+[33mcommit ebae9fde5f5cd0f56ddd7f65ed667c16bdd5843f[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Jun 19 15:58:42 2023 +0900
+
+    상태UI 기능 구현
+
+[33mcommit d4624fae8a34ac16a59e70bbed6330542f25167e[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Jun 18 22:53:29 2023 +0900
+
+    아이템 리스트 UI 요소와의 상호작용(판매, 삭제) 구현
+
+[33mcommit 462b81771dbd923e8a3e1c9439592a8cb2cff2a3[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Jun 14 23:03:24 2023 +0900
+
+    캐릭터창UI의 아이템 패널 기능 추가
+
+[33mcommit d1ae17baf2240a6278bcdfe72c1ebfe34e738132[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue Jun 13 14:01:40 2023 +0900
+
+    아이템 매니저 완성 및 테스트용 테이블 및 버튼 추가
+
+[33mcommit 4b8bce08e37ef8494941349341007d37cf81edcb[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Jun 7 17:11:47 2023 +0900
+
+    캐릭터창UI 레이아웃 조정 및 배치 완료, 아이템 기능을 위해 아이템 코드 일부 작성
+
+[33mcommit 0a5699f9ef3f3bd6aaf6aac2731c26e191d3c6e9[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Jun 7 00:15:31 2023 +0900
+
+    캐릭터UI의 스탯 표시 기능 추가 및 자잘한 UI 요소 배치 및 이름 수정
+
+[33mcommit ab78516bbbe5552deae6fa0d22942119de5e7271[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Jun 5 13:39:01 2023 +0900
+
+    Tile 내부 hexTransform 프로퍼티 수정
+
+[33mcommit ea8320acde286c17e386d49d0e6c0194ff3997e5[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Jun 5 13:38:19 2023 +0900
+
+    IUnitAction.cs 인터페이스 주석 추가
+
+[33mcommit 22cbb7a0a368a7bf7bb1ef1bce76fefc4bf2885f[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Jun 5 13:37:57 2023 +0900
+
+    IUnit 인터페이스 주석 추가
+
+[33mcommit dc3f8f86120e4e3ca1a82b0ca1291b813b55d4fe[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Jun 5 13:37:22 2023 +0900
+
+    UnitAction에서 NoneAction.cs 추가
+
+[33mcommit fdf1e3f629b7e33382697a6e09f802bf1a55eb93[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Jun 5 02:58:22 2023 +0900
+
+    CombatSystem -> MainSystem 이름 변경
+
+[33mcommit 744cc2e0aa1cea35cf20b4047c5e70532010df48[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Jun 5 02:56:41 2023 +0900
+
+    함수명 변경
+
+[33mcommit 745def9ec355fdd9e4f4b28ed68df7c013795c60[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sun Jun 4 14:26:56 2023 +0900
+
+    타일 오브젝트 시야시스템 변경
+    IUnit 인터페이스 추가
+
+[33mcommit b49e947bb969d4de3a127c4d1ccf928e88fc88ae[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sun Jun 4 14:25:43 2023 +0900
+
+    Hex.cs 함수 업데이트
+    
+    GetGridsWithRange함수 이름 변경 : GetCircleGridList
+    
+    함수 추가 : GetRectGridList
+
+[33mcommit 79bafd68be3890bf7584a9b2ed9c77e4b72e6222[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sun Jun 4 11:51:43 2023 +0900
+
+    가독성 리팩토링
+
+[33mcommit cef73b5e3a6fa95538aa65ff278a1e0f8f89f5f5[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sun Jun 4 11:50:59 2023 +0900
+
+    UnitAction 리펙토링, 무기 시스템 리펙토링
+
+[33mcommit 6ab8e6c217461a37b7602d7ab583231e6997a5ff[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sun Jun 4 08:45:09 2023 +0900
+
+    뭐야 코드들 왜 사라졌어
+
+[33mcommit 279cc546b5b99214e494d244bbeb89c22726d673[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Fri Jun 2 00:27:17 2023 +0900
+
+    Enemy AI 작업 완료 (일단 Dummy AI)
+
+[33mcommit 570b9bc714f512a3154658b319101b959f5b446e[m
+Author: 오재오 <47718603+OruteZ@users.noreply.github.com>
+Date:   Thu Jun 1 23:24:45 2023 +0900
+
+    제목 없는 다이어그램.drawio이 추가되었습니다.
+
+[33mcommit 4d2761f8de4d19971e7853f33e9abb00d96e4d33[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Thu Jun 1 13:01:11 2023 +0900
+
+    Tile에 Layer 추가 + GetMouseOverTile() 함수 수정
+
+[33mcommit 83cece03b2daab413d9c97daa4b5d74c077a2063[m
+Merge: 82d4809e fedcb05c
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed May 31 17:43:08 2023 +0900
+
+    Merge branch 'UI'
+    
+    # Conflicts:
+    #       Assets/Scripts/UIScripts/SkillUI.cs
+
+[33mcommit 82d4809efa6aac0b6ceab91b11e381c54f1d66d9[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed May 31 17:40:07 2023 +0900
+
+    네이밍 컨벤션 일부 추가 수정
+
+[33mcommit fedcb05c59fdedf291a62d60c0733840b047f13e[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed May 31 17:13:18 2023 +0900
+
+    UI 코드 리펙토링 및 캐릭터 UI창의 스킬 표시 기능 추가
+
+[33mcommit c9387d11059d15945fab9d7ce0922be8ffc761d5[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sun May 28 05:09:05 2023 +0900
+
+    폴더 수정 + World Scene과 Combat Scene 구분하여 구현
+
+[33mcommit 02480ee1611483ab4bf0fb0576937a54ce59c7dc[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sat May 27 23:42:28 2023 +0900
+
+    네이밍 컨벤션 변경
+
+[33mcommit e278e3de6332dccb529c2818f591b71a626db228[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Fri May 26 18:23:06 2023 +0900
+
+    20230526 작업목록 커밋
+    
+    - WeaponDB 싱글톤 오브젝트 추가 : 이 오브젝트에서 모든 weapon생성
+    - Gimmick 시스템 추가 : 무기에 특수능력 부여 가능 (테스트용으로 Critical double tab 기믹 작성)
+    - 네이밍 컨벤션 변경
+
+[33mcommit 129ac651b07a3084e1157771b53f6e56dea6795c[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Fri May 26 16:24:53 2023 +0900
+
+    네이밍 컨벤션 수정
+
+[33mcommit 1302e56666e84f45ac32f0738acbca899ffa42d2[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 23 16:24:09 2023 +0900
+
+    캐릭터 창 UI 레이아웃 배치
+
+[33mcommit a2aad53b381f1a1d067fe320c6bcb50149626220[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue May 23 06:07:11 2023 +0900
+
+    시야 시스템 완료
+
+[33mcommit 8de9b67b9a98372732d2b3cb3e10c88f41b8bcf3[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue May 23 04:00:29 2023 +0900
+
+    System 종류 스크립트들 리팩토링
+
+[33mcommit 03023154b8a95a40bd3cc3a7e621d84fcee919f0[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon May 22 16:11:32 2023 +0900
+
+    test
+
+[33mcommit 4e8b21a8f7a544c24c036e27abcbeeae722e5ff9[m
+Merge: 9c747979 e1f8ccfd
+Author: MtNight <41281664+MtNight@users.noreply.github.com>
+Date:   Mon May 22 15:59:55 2023 +0900
+
+    Merge pull request #1 from OruteZ/UI
+    
+    main 브랜치와 동기화
+
+[33mcommit e1f8ccfd5fffa0b4c9905827ee8e32aa11a060bc[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon May 22 15:45:56 2023 +0900
+
+    main 브랜치와 동기화
+
+[33mcommit 9c7479798dc172c741f68086c9e94b0518784d71[m
+Merge: bbc2fb25 6433b090
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Fri May 19 16:43:09 2023 +0900
+
+    Merge branch 'UI'
+
+[33mcommit bbc2fb25fd424c4b20d575c8b75cb115d6306e50[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Fri May 19 16:18:14 2023 +0900
+
+    다음부턴 미리미리 커밋하겠습니다...
+
+[33mcommit 6433b0909b0acee10e499f04631906445d045d37[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Thu May 18 16:20:00 2023 +0900
+
+    테스트용 UI 요소 추가 배치
+
+[33mcommit 9a795374eb3b0bdae62ee4ac34cc02ce84c169a6[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed May 17 16:09:51 2023 +0900
+
+    Pause Menu 레이아웃 배치
+
+[33mcommit 95bb14a3381abb6b596c2fab0ab91cba0b89cd95[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 16 22:52:22 2023 +0900
+
+    UI및 skill 코드 싱글톤 적용
+
+[33mcommit 19d4ad82100f29bfb794b3f66cfeac8ec005639f[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed May 3 16:05:00 2023 +0900
+
+    스킬UI 화살표 UI 추가 및 UI창 온오프 기능 조정
+
+[33mcommit 7603253c59064a335c1ffd6d3c73e1c87a9ffeac[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Tue May 2 16:45:42 2023 +0900
+
+    skill 클래스를 skillinfo 클래스로 세부화
+
+[33mcommit 13a1156e4673a1eae72778fc6250989290e87b21[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon May 1 16:58:10 2023 +0900
+
+    테이블 속성 정의에 맞춰서 코드 수정
+
+[33mcommit 831de0e3312c1da9756b3a90bc4f3e0da54b7727[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Apr 26 20:59:54 2023 +0900
+
+    스킬 습득 UI 기능 구현 완료
+
+[33mcommit eea86876bd65e1f3bcad8d60f4c6ae25afcc0536[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Apr 26 19:09:52 2023 +0900
+
+    스킬 클래스와 스킬 매니저  구성 및 스킬 UI 배치, 상호작용 추가 및 한글 폰트 적용
+
+[33mcommit 757161d1f019b26260a3bafa193468f274af399d[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Apr 24 17:12:57 2023 +0900
+
+    스킬 클래스 생성
+
+[33mcommit 006a0ea1e7c14f76e6fc087689fc3d97824eb2ba[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Apr 24 16:50:07 2023 +0900
+
+    스킬테이블 파일 읽어오기 추가
+
+[33mcommit 95165188cb6203fd747bedd5c218940d191b75a6[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Wed Apr 19 16:50:26 2023 +0900
+
+    스킬 매니저 코드 틀만 잡아둠
+
+[33mcommit b1dbc99c6d2ab9910657d02dd8be194f83b37899[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Tue Apr 18 14:17:27 2023 +0900
+
+    턴 시스템 일단 완성
+
+[33mcommit 493a2c4bcaa80735781af448497a600b540e034b[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Apr 17 18:41:29 2023 +0900
+
+    에셋 추가
+
+[33mcommit 44e48d6a6d645a9a8bce3cff16f7afa32f614514[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Mon Apr 17 18:39:14 2023 +0900
+
+    3주차 작업현황 반영
+
+[33mcommit e47f5cb5b8e3de804ce3b7203ef5c3e37c5e5182[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed Apr 12 19:01:26 2023 +0900
+
+    3주차 작업 올리기
+
+[33mcommit c40aebaf3d59f007762aee36ea49fb7af3ec7f23[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Apr 10 16:27:29 2023 +0900
+
+    UI매니저 및 상호작용 테스트
+
+[33mcommit f04c9bbb7e72cc3cb0cfd77b38ae6f79909bbf15[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Mon Apr 10 00:31:06 2023 +0900
+
+    UI 요소 배치
+
+[33mcommit f503f293009b5ca45aee88d5c1c79d60fa48f9c6[m
+Author: MtNight <eskwon0228@gmail.com>
+Date:   Sun Apr 9 21:28:47 2023 +0900
+
+    UI 브랜치 테스트
+
+[33mcommit 10de369016c0968cfab321de4eb4cbc75ca7ee1f[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed Apr 5 20:47:19 2023 +0900
+
+    20230405 작업 현황 반영 2
+
+[33mcommit 8946a0167be8752cc024e56608ddc3b5439872ca[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed Apr 5 20:46:02 2023 +0900
+
+    20230405 작업 현황 반영
+
+[33mcommit 8a7cfda5c449bab6c0cca09b44d07f2ee8420019[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sun Apr 2 23:03:27 2023 +0900
+
+    Singleton 제네릭 클래스 생성
+
+[33mcommit 2e97ec5f5159d67aa7e4363b2086c9b5b0f7f319[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sun Apr 2 21:04:24 2023 +0900
+
+    임시 코드 추가
+
+[33mcommit 2bf81ae05b35f4184326b0dc7d800350009f9a36[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sun Apr 2 21:02:18 2023 +0900
+
+    변수명 변경 및 주석 추가
+
+[33mcommit e6336b6d25f0ad28abfb1e03db92e021994d3489[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Thu Mar 30 09:36:18 2023 +0900
+
+    현재 작업상황 전체 푸쉬
+
+[33mcommit 276d688d53c54e50857a825ea1426092d40373ee[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed Mar 29 10:07:00 2023 +0900
+
+    Raycast 완료, 플레이어 행동 테스트로 작성 중
+
+[33mcommit eb4ea636338cf4371460c567ceec60c0fa2e254c[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Sat Mar 25 14:45:31 2023 +0900
+
+    RayCast 작성 중
+
+[33mcommit 40ffb4b490492017af05e296ac0cec929c5520c2[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Thu Mar 23 05:55:17 2023 +0900
+
+    FindPath 함수 임시 완성, World 좌표계 오류 수정
+
+[33mcommit 7ebe8d09c76881e2c9e20dbead21f07314587aba[m
+Author: OruteZ <creeperss85@gmail.com>
+Date:   Wed Mar 22 23:16:44 2023 +0900
+
+    0.0.0 깃 생성
+
+[33mcommit 7f1fe91b28c895b31acf953bb2edf529bfc32f89[m
+Author: OruteZ <47718603+OruteZ@users.noreply.github.com>
+Date:   Wed Mar 22 23:07:07 2023 +0900
+
+    Initial commit

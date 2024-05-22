@@ -247,7 +247,7 @@ public class QuestInfo
             {
                 GameManager.instance.runtimeWorldData.TryAddLink(linkHex, 0, linkIdx);
             }
-            else FieldSystem.tileSystem.AddLink(linkHex, linkIdx);
+            else FieldSystem.tileSystem.AddLink(linkHex, 0, linkIdx);
         }
     }
 

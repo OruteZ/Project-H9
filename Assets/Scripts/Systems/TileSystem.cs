@@ -107,7 +107,7 @@ public class TileSystem : MonoBehaviour
             if(GameManager.instance.CompareState(GameState.World)) 
                 foreach (var link in mapData.links)
                 {
-                    AddLink(link.pos, link.linkIndex, link.combatMapIndex);
+                    AddLink(link.pos, link.rotation, link.linkIndex, link.combatMapIndex);
                 }
         }
 
@@ -171,7 +171,7 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// Runtime에 Link를 추가합니다.
     /// </summary>
-    public void AddLink(Vector3Int position, int linkIndex, int mapIndex = 1, bool isRepeatable = false)
+    public void AddLink(Vector3Int position, float rotation, int linkIndex, int mapIndex = 1, bool isRepeatable = false)
     {
         Debug.Log("Add Link Call");
         
@@ -195,6 +195,7 @@ public class TileSystem : MonoBehaviour
         
         var obj = Instantiate(linkPrefab, tileObjParent.transform).GetComponent<Link>();
         obj.hexPosition = position;
+        obj.transform.rotation = Quaternion.Euler(0, rotation, 0);
         obj.linkIndex = linkIndex;
         obj.combatMapIndex = mapIndex;
         obj.isRepeatable = isRepeatable;

@@ -68,7 +68,7 @@ MonoBehaviour:
     weaponCriticalDamage: 0
     weaponSkill: 0
     itemTooltip: 701
-    icon: {fileID: 21300000, guid: 8fb23ba1fd791ef4aaa6a20826f429b9, type: 3}
+    icon: {fileID: 21300000, guid: 2b81ed3eae4879043973e06479f180e7, type: 3}
     itemModel: {fileID: 0}
   - id: 801
     nameIdx: 801
@@ -163,14 +163,14 @@ MonoBehaviour:
     weaponCriticalDamage: 0
     weaponSkill: 0
     itemTooltip: 301
-    icon: {fileID: 21300000, guid: e2ff8e2b6d13a354ba9261d17a7480b4, type: 3}
+    icon: {fileID: 21300000, guid: f056ed14d2d84d246892e93805008a0d, type: 3}
     itemModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
       type: 3}
   - id: 302
     nameIdx: 302
     itemType: 3
     itemMaxStorage: 1
-    itemRange: 3
+    itemRange: 4
     sweetSpot: 0
     itemEffect: 0
     itemEffectAmount: 0
@@ -216,14 +216,14 @@ MonoBehaviour:
     itemEffectAmount: 0
     itemEffectDuration: 0
     itemPrice: 0
-    weaponDamage: 1
+    weaponDamage: 2
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
     weaponCriticalDamage: 0
     weaponSkill: 0
     itemTooltip: 304
-    icon: {fileID: 21300000, guid: e2ff8e2b6d13a354ba9261d17a7480b4, type: 3}
+    icon: {fileID: 21300000, guid: bb64cf2a14c1fba4ea91916ceb54a356, type: 3}
     itemModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
       type: 3}
   - id: 305
@@ -236,7 +236,7 @@ MonoBehaviour:
     itemEffectAmount: 0
     itemEffectDuration: 0
     itemPrice: 0
-    weaponDamage: 2
+    weaponDamage: 3
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
@@ -676,26 +676,16 @@ MonoBehaviour:
   - _itemIndex: 0
     _itemName: null
     _itemDescription: null
-  - _itemIndex: 306
-    _itemName: "\uD3C9\uBC94\uD55C \uB9AC\uBCFC\uBC84"
-    _itemDescription: "\uD3C9\uBC94\uD558\uACE0 \uD754\uD55C \uB9AC\uBCFC\uBC84"
-  - _itemIndex: 307
-    _itemName: "\uD2BC\uD2BC\uD55C \uB9AC\uBCFC\uBC84"
-    _itemDescription: "\uC2E0\uB8B0\uD560 \uC218 \uC788\uB294 \uD2BC\uD2BC\uD55C
-      \uB9AC\uBCFC\uBC84"
-  - _itemIndex: 308
-    _itemName: "\uCF5C\uD2B8 \uB9AC\uBCFC\uBC84"
-    _itemDescription: "\uD0C1\uC6D4\uD55C \uC815\uD655\uC131\uC744 \uAC00\uC9C4 \uB9AC\uBCFC\uBC84"
   - _itemIndex: 601
     _itemName: "\uB0A0\uACE0\uAE30"
     _itemDescription: "\uCCB4\uB825 <itemEffectAmount> \uD68C\uBCF5"
   - _itemIndex: 701
-    _itemName: "\uC8FC\uC0AC\uC704"
+    _itemName: "\uD22C\uCC99\uC6A9 \uB2E8\uAC80"
     _itemDescription: "\uC801\uC5D0\uAC8C \uB358\uC838 <itemEffectAmount> \uD53C\uD574\uB97C
       \uC785\uD798"
   - _itemIndex: 801
     _itemName: "\uBD80\uBAA9"
-    _itemDescription: "<keyword:16> \uC2A4\uD0DD <itemEffectAmount> \uAC10\uC18C"
+    _itemDescription: "<keyword:16> <itemEffectAmount>\uC2A4\uD0DD \uAC10\uC18C"
   - _itemIndex: 901
     _itemName: "\uB2F4\uBC30"
     _itemDescription: "<itemEffectDuration>\uD134 \uB3D9\uC548 \uC9D1\uC911\uB825
@@ -709,50 +699,37 @@ MonoBehaviour:
     _itemDescription: "\uB204\uAD70\uAC00\uAC00 \uC120\uBB3C\uD574 \uC900 \uBAA8\uC790"
   - _itemIndex: 301
     _itemName: "\uD328\uD130\uC2A8 \uB9AC\uBCFC\uBC84"
-    _itemDescription: "\uD68C\uC804 \uC2E4\uB9B0\uB354\uB97C \uCC98\uC74C\uC73C\uB85C
-      \uC0AC\uC6A9\uD55C \uB9AC\uBCFC\uBC84"
+    _itemDescription: 
   - _itemIndex: 302
     _itemName: "\uB4DC\uB798\uAD70 \uB9AC\uBCFC\uBC84"
-    _itemDescription: "\uAE30\uBCD1\uB4E4\uC744 \uC704\uD574 \uAC1C\uBC1C\uB41C \uB9AC\uBCFC\uBC84"
+    _itemDescription: 
   - _itemIndex: 303
     _itemName: "\uB354\uBE14\uC561\uC158 \uB9AC\uBCFC\uBC84"
-    _itemDescription: "\uB354\uBE14\uC561\uC158 \uBC29\uC2DD\uC744 \uC0AC\uC6A9\uD558\uC5EC
-      \uC5F0\uC0AC\uAC00 \uAC00\uB2A5\uD55C \uB9AC\uBCFC\uBC84"
+    _itemDescription: 
   - _itemIndex: 304
     _itemName: "\uC2A4\uCF54\uD544\uB4DC \uB9AC\uBCFC\uBC84"
-    _itemDescription: "\uCD1D\uC5F4\uC744 \uBC11\uC73C\uB85C \uB0B4\uB824\uC11C \uBE60\uB974\uAC8C
-      \uC7AC\uC7A5\uC804 \uD560 \uC218 \uC788\uB294 \uB9AC\uBCFC\uBC84"
+    _itemDescription: 
   - _itemIndex: 305
     _itemName: "\uD53C\uC2A4\uBA54\uC774\uCEE4"
     _itemDescription: "\uACAC\uACE0\uD558\uACE0 \uC2E0\uB8B0\uC131\uC774 \uC88B\uC740
       \uB9AC\uBCFC\uBC84"
   - _itemIndex: 401
     _itemName: "\uD5E8\uB9AC \uC18C\uCD1D"
-    _itemDescription: "\uC2E4\uC6A9\uC801\uC778 \uB808\uBC84\uC561\uC158 \uC18C\uCD1D"
+    _itemDescription: 
   - _itemIndex: 402
     _itemName: "\uC2A4\uD39C\uC11C \uC18C\uCD1D"
-    _itemDescription: "\uAE30\uBCD1\uB300\uB97C \uC704\uD574 \uC124\uACC4\uB41C \uB808\uBC84\uC561\uC158
-      \uC18C\uCD1D"
+    _itemDescription: 
   - _itemIndex: 403
     _itemName: "\uC610\uB85C\uC6B0 \uBCF4\uC774"
-    _itemDescription: "\uD5E8\uB9AC \uC18C\uCD1D\uC744 \uAC1C\uB7C9\uD55C \uB808\uBC84\uC561\uC158
-      \uC18C\uCD1D"
+    _itemDescription: 
   - _itemIndex: 404
     _itemName: "\uC2A4\uD504\uB9C1\uD544\uB4DC"
-    _itemDescription: "\uAD70\uC6A9\uC73C\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uAC15\uB825\uD55C
-      \uD2B8\uB7A9\uB3C4\uC5B4 \uC18C\uCD1D"
+    _itemDescription: 
   - _itemIndex: 405
     _itemName: "\uBCFC\uD2B8\uC561\uC158 \uC18C\uCD1D"
-    _itemDescription: "\uAD70\uC6A9\uC73C\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uAC15\uB825\uD55C
-      \uBCFC\uD2B8\uC561\uC158 \uC18C\uCD1D"
+    _itemDescription: 
   - _itemIndex: 501
     _itemName: "\uB354\uBE14\uBC30\uB7F4 \uC0B0\uD0C4\uCD1D"
-    _itemDescription: "\uAC15\uB825\uD55C \uB354\uBE14\uBC30\uB7F4 \uC0B0\uD0C4\uCD1D"
-  - _itemIndex: 502
-    _itemName: 
-    _itemDescription: 
-  - _itemIndex: 503
-    _itemName: 
     _itemDescription: 
   - _itemIndex: 602
     _itemName: "\uC218\uD1B5"
@@ -784,10 +761,10 @@ MonoBehaviour:
       \uC785\uD798"
   - _itemIndex: 802
     _itemName: "\uBAA8\uB798\uC8FC\uBA38\uB2C8"
-    _itemDescription: "<keyword:10> \uC2A4\uD0DD <itemEffectAmount> \uAC10\uC18C"
+    _itemDescription: "<keyword:10> <itemEffectAmount>\uC2A4\uD0DD \uAC10\uC18C"
   - _itemIndex: 803
     _itemName: "\uC704\uC2A4\uD0A4"
-    _itemDescription: "<keyword:15> \uC2A4\uD0DD <itemEffectAmount> \uAC10\uC18C"
+    _itemDescription: "<keyword:15> <itemEffectAmount>\uC2A4\uD0DD \uAC10\uC18C"
   - _itemIndex: 902
     _itemName: "\uAC00\uC8FD \uBD80\uCE20"
     _itemDescription: "<itemEffectDuration>\uD134 \uB3D9\uC548 \uC18D\uB3C4 <itemEffectAmount>

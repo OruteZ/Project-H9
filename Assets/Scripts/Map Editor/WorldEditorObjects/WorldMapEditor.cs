@@ -75,7 +75,7 @@ public class WorldMapEditor : MonoBehaviour
             var linkData = new LinkObjectData
             {
                 pos = link.hexPosition,
-                rotation = child.transform.rotation.y,
+                rotation = child.transform.rotation.eulerAngles.y,
                 linkIndex = link.linkIndex,
                 combatMapIndex = link.combatMapIndex,
                 isRepeatable = link.isRepeatable,

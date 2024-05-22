@@ -62,6 +62,9 @@ public class UnitModel : MonoBehaviour
 
     public void SetupWeaponModel(Weapon weapon)
     {
+        if(weaponModel != null)
+            Destroy(weaponModel.gameObject);
+        
         if (GameManager.instance.CompareState(GameState.Combat))
         {
             weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();

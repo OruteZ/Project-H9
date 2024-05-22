@@ -60,6 +60,16 @@ public class WeaponDatabase : ScriptableObject
         
         return weapon;
     }
+    
+    public static Weapon GetWeapon(int index)
+    {
+        return GameManager.instance.weaponDatabase.Clone(index);
+    }
+    
+    public static Weapon GetWeapon(WeaponData data)
+    {
+        return GameManager.instance.weaponDatabase.Clone(data.index);
+    }
 
     [ContextMenu("Load Csv")]
     public void LoadCsv()

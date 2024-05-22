@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class Ending : MonoBehaviour
 {
-    public void OnEnding()
+    public void BackToTitle()
     {
+        SceneManager.LoadScene($"Title Scene");
     }
 }

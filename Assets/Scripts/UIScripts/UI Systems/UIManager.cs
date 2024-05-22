@@ -256,6 +256,13 @@ public class UIManager : Generic.Singleton<UIManager>
                     ChangeUIToCombatScene();
                     break;
                 }
+
+            default:
+            {
+                SetCombatCanvasState(false);
+                _worldCanvas.enabled = false;
+                break;
+            }
         }
         onTSceneChanged?.Invoke(gameState);
         onSceneChanged?.Invoke();

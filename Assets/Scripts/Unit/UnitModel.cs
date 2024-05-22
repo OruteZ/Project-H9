@@ -36,6 +36,8 @@ public class UnitModel : MonoBehaviour
     
     private SkinnedMeshRenderer _visual;
 
+    [SerializeField] private bool isWesternFrontierAsset = true;
+
     public void Setup(Unit unit)
     {
         if (TryGetComponent(out animator) is false)
@@ -56,6 +58,7 @@ public class UnitModel : MonoBehaviour
         unit.onHit.AddListener(OnHit);
         unit.onTurnStart.AddListener(OnStartTurn);
         unit.onStatusEffectChanged.AddListener(OnStatusEffectChanged);
+        unit.onMoved.AddListener((a) => transform.localPosition = Vector3.zero);
 
         #endregion
     }
@@ -68,14 +71,14 @@ public class UnitModel : MonoBehaviour
         if (GameManager.instance.CompareState(GameState.Combat))
         {
             weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
-            weaponModel.SetHandPosRot();
+            weaponModel.SetHandPosRot(isWesternFrontierAsset);
             SetAnimator(weapon.GetWeaponType());
         }
 
         else
         {
             weaponModel = Instantiate(weapon.model, waist).GetComponent<WeaponModel>();
-            weaponModel.SetWaistPosRot();
+            weaponModel.SetWaistPosRot(isWesternFrontierAsset);
             SetAnimator(ItemType.Null);
         }
     }

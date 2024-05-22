@@ -40,10 +40,13 @@ public class CombatResultUI : UISystem
 
     private void BackToMenu()
     {
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#endif
-        Application.Quit();
+// #if UNITY_EDITOR
+//         EditorApplication.isPlaying = false;
+// #endif
+//         Application.Quit();
+
+        // move to title scene
+        LoadingManager.instance.LoadingScene("Title Scene");
     }
 
     private void OnCombatFinish(bool isPlayerWin)

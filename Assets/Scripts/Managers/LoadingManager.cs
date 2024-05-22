@@ -33,12 +33,12 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
     public Canvas canvas;
     public Slider progress;
 
-    public void LoadingScene(string sceneName)
+    public void LoadingScene(string sceneName, Action callback = null)
     {
-        StartCoroutine(LoadSceneCoroutine(sceneName));
+        StartCoroutine(LoadSceneCoroutine(sceneName, callback));
     }
     
-    private IEnumerator LoadSceneCoroutine(string sceneName)
+    private IEnumerator LoadSceneCoroutine(string sceneName, Action callback = null)
     {
         isLoadingNow = true;
         canvas.enabled = true;
@@ -67,6 +67,8 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
         canvas.enabled = false;
 
         isLoadingNow = false; 
+        
+        callback?.Invoke();
     }
 
     /// <summary>
@@ -86,6 +88,10 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
             case "CombatScene":
                 {
                     return GameState.Combat;
+                }
+            case "TitleScene":
+                {
+                    return GameState.None;
                 }
         }
 

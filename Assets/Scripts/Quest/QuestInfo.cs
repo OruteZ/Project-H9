@@ -245,7 +245,7 @@ public class QuestInfo
             
             if (GameManager.instance.CompareState(GameState.Combat))
             {
-                GameManager.instance.runtimeWorldData.TryAddLink(linkHex, linkIdx);
+                GameManager.instance.runtimeWorldData.TryAddLink(linkHex, 0, linkIdx);
             }
             else FieldSystem.tileSystem.AddLink(linkHex, linkIdx);
         }

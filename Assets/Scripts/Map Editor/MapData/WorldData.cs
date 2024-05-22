@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,6 +18,14 @@ public class WorldData : ScriptableObject
     public HashSet<Vector3Int> discoveredWorldTileSet;
 
     public int worldTurn;
+    
+    public void SaveChangesToScriptableObject(ScriptableObject obj)
+    {
+        #if UNITY_EDITOR
+        EditorUtility.SetDirty(obj);
+        AssetDatabase.SaveAssets();
+        #endif
+    }
     
     public bool TryAddLink(Vector3Int pos, float rotation, int linkIndex, int combatMapIndex = 1, GameObject model = null, bool isRepeatable = false)
     {

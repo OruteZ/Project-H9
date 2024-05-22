@@ -18,11 +18,7 @@ public class PauseMenuUI : UISystem
         //Find all GameObjects with DontDestroyOnLoad
         foreach (GameObject obj in FindObjectsOfType<GameObject>())
         {
-            if (obj.scene.name == null)
-            {
-                // Destroy the GameObject
-                Destroy(obj);
-            }
+            Destroy(obj);
         }
         
         SceneManager.LoadScene($"TitleScene");

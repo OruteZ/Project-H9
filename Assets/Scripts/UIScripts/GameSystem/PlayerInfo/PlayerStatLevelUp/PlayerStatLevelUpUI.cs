@@ -199,6 +199,7 @@ public class PlayerStatLevelUpUI : UISystem
     {
         _statPoint++;
         _statLevelUpButton.SetActive(GameManager.instance.CompareState(GameState.World));
+        PlayerEvents.OnIncStatPoint?.Invoke();
     }
 
     public void OpenPlayerStatLevelUpUI()

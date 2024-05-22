@@ -18,7 +18,9 @@ public class TurnOrderUIElement : MonoBehaviour
     private bool _isTurnOwner;
 
     [SerializeField] private Texture2D _textures;
-    public Sprite[] _sprites;
+    
+    [SerializeField] private EnemyDatabase _enemyDatabase;
+    [SerializeField] private Sprite playerIcon;
 
     void Awake()
     {
@@ -77,12 +79,18 @@ public class TurnOrderUIElement : MonoBehaviour
         if (unit is Player)
         {
             _frame.color = UICustomColor.PlayerTurnColor;
-            _characterIcon.sprite = _sprites[0];
+            _characterIcon.sprite = playerIcon;
         }
         else 
         {
             _frame.color = UICustomColor.EnemyTurnColor;
-            _characterIcon.sprite = _sprites[1];
+
+            Debug.Log(_enemyDatabase.GetInfo(unit.Index).model.name);
+            _characterIcon.sprite = Resources.Load<Sprite>(
+                "UnitCapture/" + 
+                _enemyDatabase.GetInfo(unit.Index).model.name);
+            
+            //Assets/Resources/UnitCapture/Character_Bandit_Male_01.png
         }
 
         //_characterIcon.sprite = unit.icon;

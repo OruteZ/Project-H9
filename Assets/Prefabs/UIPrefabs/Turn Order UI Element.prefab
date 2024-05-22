@@ -128,11 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8eccf82a5ed9d74bb21c89de0b999b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unit: {fileID: 0}
   _textures: {fileID: 2800000, guid: b22fd97be70d0cc41af8f0f9ab15a23d, type: 3}
-  _sprites:
-  - {fileID: -1409943159, guid: b22fd97be70d0cc41af8f0f9ab15a23d, type: 3}
-  - {fileID: -383706831, guid: b22fd97be70d0cc41af8f0f9ab15a23d, type: 3}
-  - {fileID: -654616971, guid: b22fd97be70d0cc41af8f0f9ab15a23d, type: 3}
+  _enemyDatabase: {fileID: 11400000, guid: 450d8f5528bf2864ab9655c7c32be5b7, type: 2}
+  playerIcon: {fileID: 21300000, guid: 741159d253710fd4e9ea1e7307d5499c, type: 3}
 --- !u!222 &7696319615396013333
 CanvasRenderer:
   m_ObjectHideFlags: 0

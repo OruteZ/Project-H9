@@ -2920,7 +2920,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7210858972004831142}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.43421054
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3430,7 +3430,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7210858972712505102}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.96666664
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6155,7 +6155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -15087095, y: -432733.62}
+  m_AnchoredPosition: {x: -15096129, y: -433284.38}
   m_SizeDelta: {x: 530, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7210858972036938412
@@ -6885,7 +6885,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -14372132, y: 5632770.5}
+  m_AnchoredPosition: {x: -14390937, y: 5639643.5}
   m_SizeDelta: {x: 1475, y: 1000}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7210858972156955839
@@ -7011,7 +7011,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7210858970981029300}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.52606636
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11273,7 +11273,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9103344837886649129}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9103344839954877745}
+        m_TargetAssemblyTypeName: PauseMenuUI, Assembly-CSharp
+        m_MethodName: BackToTitle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9103344837888639542
 GameObject:
   m_ObjectHideFlags: 0
@@ -13396,7 +13408,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -192, y: -123071.76}
+  m_AnchoredPosition: {x: -192, y: -128464.75}
   m_SizeDelta: {x: 384, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &9103344838095770329
@@ -37842,7 +37854,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7210858973043455096}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.5
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -71114,7 +71126,7 @@ PrefabInstance:
     - target: {fileID: 467369732069624399, guid: 1bc23117af09fb84db11cfb5098f0e33,
         type: 3}
       propertyPath: m_Size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 467369732069624399, guid: 1bc23117af09fb84db11cfb5098f0e33,
         type: 3}
@@ -71259,7 +71271,7 @@ PrefabInstance:
     - target: {fileID: 467369732903991730, guid: 1bc23117af09fb84db11cfb5098f0e33,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 5299822
+      value: 5306860
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc23117af09fb84db11cfb5098f0e33, type: 3}

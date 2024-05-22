@@ -134,6 +134,7 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             LinkObjectData linkData = new LinkObjectData();
             linkData.pos = link.hexPosition;
+            linkData.rotation = link.gameObject.transform.rotation.eulerAngles.y;
             linkData.linkIndex = link.linkIndex;
             linkData.combatMapIndex = link.combatMapIndex;
             linkData.isRepeatable = link.isRepeatable;

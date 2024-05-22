@@ -23,7 +23,7 @@ public class LinkInfoUI : UISystem
     private int _uiCloseCount = 0;
 
     private const int X_POSITION_CORRECTION = 40;
-    private const int UI_CLOSE_COUNT_THRESHOLD = 60;
+    private const int UI_CLOSE_COUNT_THRESHOLD = 90;
 
     private void Start()
     {
@@ -123,6 +123,14 @@ public class LinkInfoUI : UISystem
 
     private static bool IsMouseOverOnLink(out Vector3Int pos)
     {
+        // if mouse on ui, return false
+        if (EventSystem.current.IsPointerOverGameObject()) 
+        {
+            pos = Vector3Int.zero;
+            return false;
+        }
+        
+        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool isSuccessRaycast = Physics.Raycast(ray, out var hit, float.MaxValue, layerMask: LayerMask.GetMask("Link"));
         if (isSuccessRaycast)

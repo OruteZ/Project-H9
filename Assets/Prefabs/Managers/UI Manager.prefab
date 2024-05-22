@@ -2920,7 +2920,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7210858972004831142}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.43421054
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6155,7 +6155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -14402203, y: -412434.75}
+  m_AnchoredPosition: {x: -14832648, y: -425509.84}
   m_SizeDelta: {x: 530, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7210858972036938412
@@ -6885,7 +6885,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -13209663, y: 5178183}
+  m_AnchoredPosition: {x: -13942819, y: 5464290.5}
   m_SizeDelta: {x: 1475, y: 1000}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7210858972156955839
@@ -10751,7 +10751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -13396,7 +13396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -192, y: -133852.28}
+  m_AnchoredPosition: {x: -192, y: 0}
   m_SizeDelta: {x: 384, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &9103344838095770329
@@ -25417,6 +25417,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ac32d7f66433544b42ff5e03801bc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _defaultPlayerImage: {fileID: 1578983914, guid: 65b89ad1f71fa3a4a817244013750ead,
+    type: 3}
+  playerModelName: Character_Thug_Male_01
 --- !u!222 &9103344838352170681
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -71256,7 +71259,7 @@ PrefabInstance:
     - target: {fileID: 467369732903991730, guid: 1bc23117af09fb84db11cfb5098f0e33,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4641148
+      value: 5031136
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc23117af09fb84db11cfb5098f0e33, type: 3}

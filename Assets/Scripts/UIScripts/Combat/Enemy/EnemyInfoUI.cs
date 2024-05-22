@@ -48,7 +48,6 @@ public class EnemyInfoUI : UIElement
         if (count == 0) countText = "";
         _enemyCountText.GetComponent<TextMeshProUGUI>().text = countText;
         Texture2D enemyTexture = Resources.Load("UnitCapture/" + data.modelName) as Texture2D;
-
         Sprite enemySpr = Sprite.Create(enemyTexture, new Rect(0, 0, enemyTexture.width, enemyTexture.height), new Vector2(0.5f, 0.5f));
         if (enemySpr == null) enemySpr = _defaultEnemyImage;
         _enemyPortrait.GetComponent<Image>().sprite = enemySpr;

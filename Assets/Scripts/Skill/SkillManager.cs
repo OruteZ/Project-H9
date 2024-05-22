@@ -34,7 +34,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
         set 
         {
             _sp = value;
-            UIManager.instance.gameSystemUI.ChangeSkillButtonRetDotText(value);
+            UIManager.instance.gameSystemUI.ChangeSkillButtonRedDotText(value);
         }
     }
 

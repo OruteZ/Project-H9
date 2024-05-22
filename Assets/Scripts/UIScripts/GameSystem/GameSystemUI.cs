@@ -35,8 +35,8 @@ public class GameSystemUI : UISystem
         uiSubsystems.Add(townUI);
         uiSubsystems.Add(linkInfoUI);
 
-        ChangeSkillButtonRetDotText(SkillManager.instance.GetSkillPoint());
-        UIManager.instance.onTSceneChanged.AddListener((s) => { ChangeSkillButtonRetDotText(SkillManager.instance.GetSkillPoint()); });
+        ChangeSkillButtonRedDotText(SkillManager.instance.GetSkillPoint());
+        UIManager.instance.onTSceneChanged.AddListener((s) => { ChangeSkillButtonRedDotText(SkillManager.instance.GetSkillPoint()); });
     }
 
     // Update is called once per frame
@@ -74,10 +74,10 @@ public class GameSystemUI : UISystem
         UIManager.instance.SetPauseMenuCanvasState(true);
     }
 
-    public void ChangeSkillButtonRetDotText(int sp) 
+    public void ChangeSkillButtonRedDotText(int sp) 
     {
         string t = sp.ToString();
-        if (sp == 1) t = "";
+        //if (sp == 1) t = "";
         _skillButtonRedDot.SetActive(sp != 0);
         _skillButtonRedDot.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = t;
     }

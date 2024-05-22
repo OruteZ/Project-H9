@@ -85,7 +85,7 @@ public class PlayerStatLevelUpUI : UISystem
         set 
         {
             _sp = value;
-            if (value == 1)
+            if (value == 0)
             {
                 _statLevelUpButtonText.GetComponent<TextMeshProUGUI>().text = "";
             }

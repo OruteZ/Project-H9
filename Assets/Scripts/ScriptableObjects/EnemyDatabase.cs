@@ -49,6 +49,7 @@ public class EnemyDatabase : ScriptableObject
             curData.stat = new UnitStat();
             curData.weaponIndex = int.Parse(data[(int)Col.EquippedWeapon]);
             curData.btIndex = int.Parse(data[(int)Col.BehaviorPattern]);
+            curData.modelName = data[(int)Col.ModelFile];
             curData.model = Resources.Load("Prefab/Units/" + data[(int)Col.ModelFile]) as GameObject;  
             curData.skillIndex = FileRead.ConvertStringToArray<int>(data[(int)Col.EnemySkill]);
 
@@ -134,6 +135,7 @@ public struct EnemyData
 {
     public int index;
     public int nameIndex;
+    public string modelName;
     public GameObject model;
     
     [Header("UnitStat")]

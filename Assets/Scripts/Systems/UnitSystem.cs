@@ -332,6 +332,10 @@ public class UnitSystem : MonoBehaviour
     {
         return weaponDB.GetData(index);
     }
+    public EnemyData GetEnemyData(int index) 
+    {
+        return enemyDB.GetInfo(index);
+    }
 
     public bool isEnemyExist() 
     {

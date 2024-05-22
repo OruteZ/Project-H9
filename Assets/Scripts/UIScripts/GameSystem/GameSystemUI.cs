@@ -13,6 +13,7 @@ public class GameSystemUI : UISystem
     public ConversationUI conversationUI { get; private set; }
     public PinUI pinUI { get; private set; }
     public TownUI townUI { get; private set; }
+    public LinkInfoUI linkInfoUI { get; private set; }
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class GameSystemUI : UISystem
         conversationUI = GetComponent<ConversationUI>();
         pinUI = GetComponent<PinUI>();
         townUI = GetComponent<TownUI>();
+        linkInfoUI = GetComponent<LinkInfoUI>();
 
         uiSubsystems.Add(playerInfoUI);
         uiSubsystems.Add(questUI);
@@ -31,9 +33,10 @@ public class GameSystemUI : UISystem
         uiSubsystems.Add(conversationUI);
         uiSubsystems.Add(pinUI);
         uiSubsystems.Add(townUI);
+        uiSubsystems.Add(linkInfoUI);
 
-        ChangeSkillButtonRetDotText(SkillManager.instance.GetSkillPoint());
-        UIManager.instance.onTSceneChanged.AddListener((s) => { ChangeSkillButtonRetDotText(SkillManager.instance.GetSkillPoint()); });
+        ChangeSkillButtonRedDotText(SkillManager.instance.GetSkillPoint());
+        UIManager.instance.onTSceneChanged.AddListener((s) => { ChangeSkillButtonRedDotText(SkillManager.instance.GetSkillPoint()); });
     }
 
     // Update is called once per frame
@@ -71,10 +74,10 @@ public class GameSystemUI : UISystem
         UIManager.instance.SetPauseMenuCanvasState(true);
     }
 
-    public void ChangeSkillButtonRetDotText(int sp) 
+    public void ChangeSkillButtonRedDotText(int sp) 
     {
         string t = sp.ToString();
-        if (sp == 1) t = "";
+        //if (sp == 1) t = "";
         _skillButtonRedDot.SetActive(sp != 0);
         _skillButtonRedDot.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = t;
     }

@@ -23,6 +23,7 @@ public class LinkInfoUI : UISystem
     private int _uiCloseCount = 0;
 
     private const int X_POSITION_CORRECTION = 40;
+    private const int UI_CLOSE_COUNT_THRESHOLD = 60;
 
     private void Start()
     {
@@ -147,7 +148,7 @@ public class LinkInfoUI : UISystem
         }
 
         _uiCloseCount++;
-        if (_uiCloseCount < 120) return;
+        if (_uiCloseCount < UI_CLOSE_COUNT_THRESHOLD) return;
 
         _uiCloseCount = 0;
         _currentLink = null;

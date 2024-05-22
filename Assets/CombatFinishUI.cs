@@ -23,16 +23,13 @@ public class CombatFinishUI : MonoBehaviour
 
     public void BackToMenu()
     {
-        // #if UNITY_EDITOR
-        //
-        // EditorApplication.isPlaying = false;
-        //
-        // #endif
-        //
-        // Application.Quit();
+        // Find all GameObjects with DontDestroyOnLoad
+        foreach (GameObject obj in FindObjectsOfType<GameObject>())
+        {
+            Destroy(obj);
+        }
         
-        // move to title scene
-        LoadingManager.instance.LoadingScene("Title Scene");
+        SceneManager.LoadScene($"TitleScene");
     }
 
     private void OnCombatFinish(bool isPlayerWin)

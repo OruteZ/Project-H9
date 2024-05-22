@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CombatResultUI : UISystem
 {
@@ -40,13 +41,13 @@ public class CombatResultUI : UISystem
 
     private void BackToMenu()
     {
-// #if UNITY_EDITOR
-//         EditorApplication.isPlaying = false;
-// #endif
-//         Application.Quit();
-
-        // move to title scene
-        LoadingManager.instance.LoadingScene("Title Scene");
+        // Find all GameObjects with DontDestroyOnLoad
+        foreach (GameObject obj in FindObjectsOfType<GameObject>())
+        {
+            Destroy(obj);
+        }
+        
+        SceneManager.LoadScene($"TitleScene");
     }
 
     private void OnCombatFinish(bool isPlayerWin)

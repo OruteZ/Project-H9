@@ -6,11 +6,14 @@ using UnityEngine.UI;
 
 public class EnemyInfoUI : UIElement
 {
+    [SerializeField] private GameObject _enemyCountText;
     [SerializeField] private GameObject _enemyPortrait;
     [SerializeField] private GameObject _enemyWeapon;
     [SerializeField] private GameObject[] _enemyStats = new GameObject[4];
     [SerializeField] private GameObject _enemyStatTooltip;
     [SerializeField] private GameObject _enemyWeaponTooltip;
+
+    [SerializeField] private Sprite _defaultEnemyImage;
 
     private void Awake()
     {
@@ -37,11 +40,24 @@ public class EnemyInfoUI : UIElement
         _enemyStatTooltip.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
         _enemyStatTooltip.SetActive(false);
     }
-    public void SetEnemyInfoUI(Enemy enemy)
+
+
+    public void SetEnemyInfoUI(EnemyData data, int count)
     {
-        _enemyPortrait.GetComponent<Image>().sprite = Resources.Load("UnitCapture" + enemy.unitName) as Sprite;
-        SetEnemyStatText(enemy.stat);
-        SetEnemyWeapon(enemy.weapon);
+        string countText = count + "x";
+        if (count == 0) countText = "";
+        _enemyCountText.GetComponent<TextMeshProUGUI>().text = countText;
+        Sprite enemySpr = Resources.Load("UnitCapture/" + data.nameIndex) as Sprite;
+        if (enemySpr == null) enemySpr = _defaultEnemyImage;
+        _enemyPortrait.GetComponent<Image>().sprite = enemySpr;
+        SetEnemyStatText(data.stat);
+        SetEnemyWeapon(data.weaponIndex);
+    }
+    public void SetEnemyInfoUI(EnemyData data, int count, GameObject statTooltip, GameObject weaponTooltip)
+    {
+        SetEnemyInfoUI(data, count);
+        _enemyStatTooltip = statTooltip;
+        _enemyWeaponTooltip = weaponTooltip;
     }
 
     private void SetEnemyStatText(UnitStat enemyStat)
@@ -51,9 +67,9 @@ public class EnemyInfoUI : UIElement
         _enemyStats[2].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement("Concentration", enemyStat.concentration);
         _enemyStats[3].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement("Speed", enemyStat.speed);
     }
-    private void SetEnemyWeapon(Weapon weapon)
+    private void SetEnemyWeapon(int weaponIndex)
     {
-        ItemData iData = GameManager.instance.itemDatabase.GetItemData(weapon.nameIndex);
+        ItemData iData = GameManager.instance.itemDatabase.GetItemData(weaponIndex);
         WeaponItem item = new WeaponItem(iData);
         _enemyWeapon.GetComponent<InventoryUIEnemyWeapon>().SetInventoryUIElement(item);
     }

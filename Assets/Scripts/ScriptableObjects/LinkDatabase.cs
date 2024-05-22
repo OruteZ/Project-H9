@@ -7,7 +7,8 @@ public class LinkDatabase : ScriptableObject
 {
     [SerializeField] private List<LinkData> dataBase;
     public int Length() => dataBase.Count;
-    
+
+    private List<EnemyName> _linkNames;
     [ContextMenu("Read CSV")]
     public void ReadCsv()
     {
@@ -38,6 +39,38 @@ public class LinkDatabase : ScriptableObject
             
             dataBase.Add(newData);
         }
+    }
+    private void LoadEnemyNameScript()
+    {
+        var dataList = FileRead.Read("LinkScriptTable", out var columnInfo);
+
+        if (_linkNames is null) _linkNames = new List<EnemyName>();
+        else _linkNames.Clear();
+
+        foreach (var data in dataList)
+        {
+            var curData = new EnemyName();
+
+            curData.nameIndex = int.Parse(data[0]);
+            curData.name = data[(int)UIManager.instance.scriptLanguage];
+            curData.Ename = data[2];
+
+            _linkNames.Add(curData);
+        }
+    }
+    public string GetLinkName(int nameIndex)
+    {
+        if (_linkNames is null) LoadEnemyNameScript();
+
+        foreach (var nameInfo in _linkNames)
+        {
+            if (nameInfo.nameIndex == nameIndex)
+            {
+                return nameInfo.name;
+            }
+        }
+        Debug.Log("Can't Find Link Name. nameIndex : " + nameIndex);
+        return "";
     }
 
     public LinkData GetData(int index)
@@ -74,3 +107,10 @@ internal enum LinkColumn
     CombatEnemy,
     Model,
 }
+
+//public struct LinkName
+//{
+//    public int nameIndex;
+//    public string Ename;
+//    public string name;
+//}

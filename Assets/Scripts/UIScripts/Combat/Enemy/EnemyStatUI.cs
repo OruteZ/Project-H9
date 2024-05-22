@@ -61,7 +61,7 @@ public class EnemyStatUI : UISystem
             if (Input.GetMouseButtonDown(1))
             {
                 if (player.GetSelectedAction().GetActionType() is not ActionType.Idle) return;
-                if (enemy is not null && enemy.isVisible)
+                if (enemy.isVisible)
                 {
                     SetEnemyStatUI(enemy);
                 }
@@ -119,7 +119,7 @@ public class EnemyStatUI : UISystem
         SetEnemyStatUIPosition(enemy.transform.position);
 
         _enemyNameText.GetComponent<TextMeshProUGUI>().text = "WANTED : " + enemy.unitName;
-        _enemyInfoUI.GetComponent<EnemyInfoUI>().SetEnemyInfoUI(enemy);
+        _enemyInfoUI.GetComponent<EnemyInfoUI>().SetEnemyInfoUI(FieldSystem.unitSystem.GetEnemyData(enemy.dataIndex), 0);
     }
     private void SetEnemyStatUIPosition(Vector3 pos)
     {

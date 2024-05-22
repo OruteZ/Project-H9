@@ -29,6 +29,7 @@ public class FogOfWar : TileObject
     {
         if (_isRemoving) return;
 
+        FieldSystem.tileSystem.DeleteTileObject(this);
         tile.RemoveObject(this);
         _isRemoving = true;
         StartCoroutine(RemovingCoroutine());

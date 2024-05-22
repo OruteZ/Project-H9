@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2689239927243006837}
   - component: {fileID: 2689239927243006839}
   - component: {fileID: 2689239927243006836}
-  m_Layer: 0
+  - component: {fileID: -1278378428426576155}
+  m_Layer: 12
   m_Name: Combat Encounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +63,23 @@ MonoBehaviour:
   vision: 0
   hexTransform: {fileID: 2689239927243006839}
   meshRenderer: {fileID: 8442020678047426553}
+  _linkIndex: 0
   combatMapIndex: 0
+  isRepeatable: 0
+--- !u!136 &-1278378428426576155
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2689239927243006842}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &5485667902834301275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70,10 +87,40 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2689239927243006837}
     m_Modifications:
+    - target: {fileID: 11665163648568699, guid: 539b94f4f2d9ad344b419d557efa6135,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1484840951058384764, guid: 539b94f4f2d9ad344b419d557efa6135,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3056040394443969997, guid: 539b94f4f2d9ad344b419d557efa6135,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 3908126545092858998, guid: 539b94f4f2d9ad344b419d557efa6135,
         type: 3}
       propertyPath: m_Name
       value: NULL
+      objectReference: {fileID: 0}
+    - target: {fileID: 3908126545092858998, guid: 539b94f4f2d9ad344b419d557efa6135,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479706654704401919, guid: 539b94f4f2d9ad344b419d557efa6135,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6798415127156397648, guid: 539b94f4f2d9ad344b419d557efa6135,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8930587743572080877, guid: 539b94f4f2d9ad344b419d557efa6135,
         type: 3}

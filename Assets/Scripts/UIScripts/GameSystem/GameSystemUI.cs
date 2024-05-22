@@ -13,6 +13,7 @@ public class GameSystemUI : UISystem
     public ConversationUI conversationUI { get; private set; }
     public PinUI pinUI { get; private set; }
     public TownUI townUI { get; private set; }
+    public LinkInfoUI linkInfoUI { get; private set; }
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class GameSystemUI : UISystem
         conversationUI = GetComponent<ConversationUI>();
         pinUI = GetComponent<PinUI>();
         townUI = GetComponent<TownUI>();
+        linkInfoUI = GetComponent<LinkInfoUI>();
 
         uiSubsystems.Add(playerInfoUI);
         uiSubsystems.Add(questUI);
@@ -31,6 +33,7 @@ public class GameSystemUI : UISystem
         uiSubsystems.Add(conversationUI);
         uiSubsystems.Add(pinUI);
         uiSubsystems.Add(townUI);
+        uiSubsystems.Add(linkInfoUI);
 
         ChangeSkillButtonRetDotText(SkillManager.instance.GetSkillPoint());
         UIManager.instance.onTSceneChanged.AddListener((s) => { ChangeSkillButtonRetDotText(SkillManager.instance.GetSkillPoint()); });

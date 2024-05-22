@@ -8,11 +8,12 @@ using UnityEngine;
 /// </summary>
 public class SkillManager : Generic.Singleton<SkillManager>
 {
-    private const int REQUIRED_SKILL_POINT = 0;
 #if UNITY_EDITOR
+    private const int REQUIRED_SKILL_POINT = 0;
     private const int INITIAL_SKILL_POINT = 10;
 #else
-    private const int INITIAL_SKILL_POINT = 1;
+    private const int REQUIRED_SKILL_POINT = 1;
+    private const int INITIAL_SKILL_POINT = 0;
 #endif
     public PassiveDatabase passiveDB;
     public ActiveDatabase activeDB;

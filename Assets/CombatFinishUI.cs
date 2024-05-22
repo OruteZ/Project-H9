@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CombatFinishUI : MonoBehaviour
 {
@@ -22,12 +23,13 @@ public class CombatFinishUI : MonoBehaviour
 
     public void BackToMenu()
     {
-        #if UNITY_EDITOR
-
-        EditorApplication.isPlaying = false;
+        // Find all GameObjects with DontDestroyOnLoad
+        foreach (GameObject obj in FindObjectsOfType<GameObject>())
+        {
+            Destroy(obj);
+        }
         
-        #endif
-        Application.Quit();
+        SceneManager.LoadScene($"TitleScene");
     }
 
     private void OnCombatFinish(bool isPlayerWin)

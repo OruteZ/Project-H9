@@ -120,6 +120,10 @@ public class PlayerStatLevelUpElement : UIElement, IPointerEnterHandler, IPointe
     public void OnPointerEnter(PointerEventData eventData)
     {
         bool isSelectedSomeCard = UIManager.instance.gameSystemUI.playerStatLevelUpUI.isSelectedSomeCard;
+
+        Vector3 pos = GetComponent<RectTransform>().position;
+        pos.y -= GetComponent<RectTransform>().sizeDelta.y / 2 * UIManager.instance.GetCanvasScale();
+        UIManager.instance.gameSystemUI.playerStatLevelUpUI.OpenPlayerStatLevelUpTooltip(statLevelInfo, pos);
         //if (isSelectedSomeCard && !_isSelected) return;
         _isMouseOver = true;
     }
@@ -127,5 +131,6 @@ public class PlayerStatLevelUpElement : UIElement, IPointerEnterHandler, IPointe
     public void OnPointerExit(PointerEventData eventData)
     {
         _isMouseOver = false;
+        UIManager.instance.gameSystemUI.playerStatLevelUpUI.ClosePlayerStatLevelUpTooltip();
     }
 }

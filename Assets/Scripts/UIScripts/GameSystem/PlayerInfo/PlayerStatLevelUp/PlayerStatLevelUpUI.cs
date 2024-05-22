@@ -74,6 +74,7 @@ public class PlayerStatLevelUpUI : UISystem
     [SerializeField] private GameObject _statLevelUpTitleText;
     [SerializeField] private GameObject[] _statCards;
     [SerializeField] private GameObject _statSelectButton;
+    [SerializeField] private GameObject _statTooltip;
 
     private int _sp = 0;
     private int _statPoint { 
@@ -119,6 +120,20 @@ public class PlayerStatLevelUpUI : UISystem
         selectedCardNumber = -1;
         isSelectedSomeCard = false;
         ClosePlayerStatLevelUpUI();
+        _statTooltip.SetActive(false);
+
+        UIManager.instance.onTSceneChanged.AddListener((gs) =>
+            {
+                if (gs == GameState.Combat)
+                {
+                    _statLevelUpButton.SetActive(false);
+                }
+                else if(_statPoint > 0)
+                {
+                    _statLevelUpButton.SetActive(true);
+                }
+            }
+        );
     }
 
     // Update is called once per frame
@@ -183,11 +198,12 @@ public class PlayerStatLevelUpUI : UISystem
     public void GetPlayerStatPoint() 
     {
         _statPoint++;
-        _statLevelUpButton.SetActive(true);
+        _statLevelUpButton.SetActive(GameManager.instance.CompareState(GameState.World));
     }
 
-    public void OpenPlayerStatLevelUpUI() 
+    public void OpenPlayerStatLevelUpUI()
     {
+        if (!GameManager.instance.CompareState(GameState.World)) return;
         if (_isOpenUI) return;
         int cnt = 0;
         for (int i = 0; i < _statCards.Length; i++)
@@ -200,6 +216,7 @@ public class PlayerStatLevelUpUI : UISystem
         if (cnt >= _statCards.Length) return;
 
         OpenUI();
+        UIManager.instance.SetLogCanvasState(false);
         _isOpenUI = true;
         selectedCardNumber = -1;
         isSelectedSomeCard = false;
@@ -240,6 +257,7 @@ public class PlayerStatLevelUpUI : UISystem
         _statSelectButton.SetActive(false);
         _statLevelUpWindow.SetActive(false);
 
+        UIManager.instance.SetLogCanvasState(true);
         CloseUI();
     }
 
@@ -283,5 +301,15 @@ public class PlayerStatLevelUpUI : UISystem
             _statLevelUpButton.SetActive(false);
         }
         ClosePlayerStatLevelUpUI();
+    }
+
+    public void OpenPlayerStatLevelUpTooltip(PlayerStatLevelInfo info, Vector3 pos) 
+    {
+        _statTooltip.GetComponent<PlayerStatLevelUpTooltip>().SetStatLevelUpTooltip(info, pos);
+        _statTooltip.SetActive(true);
+    }
+    public void ClosePlayerStatLevelUpTooltip()
+    {
+        _statTooltip.SetActive(false);
     }
 }

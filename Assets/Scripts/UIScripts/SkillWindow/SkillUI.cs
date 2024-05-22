@@ -129,6 +129,7 @@ public class SkillUI : UISystem
     }
     private void UpdateSkillUINode(GameObject ui)
     {
+        if (ui == null || !ui.activeSelf) return;
         SkillTreeElement _skillElement = ui.GetComponent<SkillTreeElement>();
         Skill _skill = _skillManager.GetSkill(_skillElement.GetSkillUIIndex());
         if (_skill == null) return;

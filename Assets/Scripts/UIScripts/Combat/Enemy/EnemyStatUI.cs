@@ -12,11 +12,8 @@ public class EnemyStatUI : UISystem
     [SerializeField] private GameObject _mouseOverIcon;
     [SerializeField] private GameObject _enemyStatWindow;
 
-    [SerializeField] private GameObject _enemyStatText;
-    [SerializeField] private GameObject _weaponStatText1Contents;
-    [SerializeField] private GameObject _weaponStatText2Contents;
-    [SerializeField] private GameObject _weaponStatText3Name;
-    [SerializeField] private GameObject _weaponStatText3Contents;
+    [SerializeField] private GameObject _enemyNameText;
+    [SerializeField] private GameObject _enemyInfoUI;
 
     private const float WINDOW_X_POSITION_CORRECTION = 300;
 
@@ -25,13 +22,6 @@ public class EnemyStatUI : UISystem
     private Enemy _mouseOverEnemy =  null;
 
     private bool _isOpenInfoPopupOnce = false;
-
-    public override void CloseUI()
-    {
-        base.CloseUI();
-        CloseEnemyStatUI();
-    }
-
     public override void OpenPopupWindow()
     {
         _isOpenedTooltipWindow = true;
@@ -47,7 +37,7 @@ public class EnemyStatUI : UISystem
     private void Update()
     {
         if (!GameManager.instance.CompareState(GameState.Combat)) return;
-        if (FieldSystem.turnSystem.turnOwner is Player p && !_enemyStatWindow.activeSelf)
+        if (FieldSystem.turnSystem.turnOwner is Player)
         {
             bool isMouseover = IsMouseOverOnEnemy(out Vector3Int ep);
             _mouseOverIcon.SetActive(isMouseover);
@@ -127,8 +117,9 @@ public class EnemyStatUI : UISystem
         OpenPopupWindow();
         _statOpenEnemy = enemy;
         SetEnemyStatUIPosition(enemy.transform.position);
-        SetCharacterStatText(enemy.stat);
-        SetWeaponStatText(enemy.weapon);
+
+        _enemyNameText.GetComponent<TextMeshProUGUI>().text = "WANTED : " + enemy.unitName;
+        _enemyInfoUI.GetComponent<EnemyInfoUI>().SetEnemyInfoUI(enemy);
     }
     private void SetEnemyStatUIPosition(Vector3 pos)
     {
@@ -190,53 +181,6 @@ public class EnemyStatUI : UISystem
             c.a = alpha;
         }
         _enemyStatWindow.GetComponent<Image>().color = c;
-
-    }
-    private void SetCharacterStatText(UnitStat enemyStat)
-    {
-        string text = enemyStat.maxHp.ToString() + '\n' +
-                      enemyStat.concentration.ToString() + '\n' +
-                      enemyStat.sightRange.ToString() + '\n' +
-                      enemyStat.speed.ToString() + '\n' +
-                      enemyStat.maxActionPoint.ToString() + '\n' +
-                      enemyStat.additionalHitRate.ToString() + "%\n" +
-                      enemyStat.criticalChance.ToString() +'%';
-
-        _enemyStatText.GetComponent<TextMeshProUGUI>().text = text;
-    }
-    private void SetWeaponStatText(Weapon weapon)
-    {
-        string text1 = /*weapon.weaponName +*/'\n' +
-                       weapon.weaponDamage.ToString();
-        _weaponStatText1Contents.GetComponent<TextMeshProUGUI>().text = text1;
-
-        string text2 = weapon.currentAmmo.ToString() + " / " + weapon.maxAmmo.ToString() + '\n' +
-                       weapon.weaponRange.ToString();
-        _weaponStatText2Contents.GetComponent<TextMeshProUGUI>().text = text2;
-
-
-
-        string text3 = "", text4 = "";
-        float hitRate = weapon.hitRate;
-        float criChance = weapon.criticalChance;
-        float criDamage = weapon.criticalDamage;
-        if (hitRate != 0)
-        {
-            text3 += "Hit Rate:" + '\n';
-            text4 += hitRate.ToString() + '\n';
-        }
-        if (criChance != 0)
-        {
-            text3 += "Critical Chance:" + '\n';
-            text4 += criChance.ToString() + '\n';
-        }
-        if (criDamage != 0)
-        {
-            text3 += "Critical Damage:" + '\n';
-            text4 += criDamage.ToString() + '\n';
-        }
-        _weaponStatText3Name.GetComponent<TextMeshProUGUI>().text = text3;
-        _weaponStatText3Contents.GetComponent<TextMeshProUGUI>().text = text4;
     }
 
     /// <summary>

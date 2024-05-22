@@ -30,7 +30,8 @@ public class EnemyDatabase : ScriptableObject
     #endregion
     [SerializeField] 
     private List<EnemyData> enemyInfos;
-    
+
+    private List<EnemyName> _enemyNames;
     [ContextMenu("Load Csv")]
     public void LoadCsv()
     {
@@ -78,6 +79,39 @@ public class EnemyDatabase : ScriptableObject
         }
     }
 
+    private void LoadEnemyNameScript()
+    {
+        var dataList = FileRead.Read("EnemyScriptTable", out var columnInfo);
+
+        if (_enemyNames is null) _enemyNames = new List<EnemyName>();
+        else _enemyNames.Clear();
+
+        foreach (var data in dataList)
+        {
+            var curData = new EnemyName();
+
+            curData.nameIndex = int.Parse(data[0]);
+            curData.name = data[(int)UIManager.instance.scriptLanguage];
+            curData.Ename = data[2];
+
+            _enemyNames.Add(curData);
+        }
+    }
+    public string GetEnemyName(int nameIndex)
+    {
+        if (_enemyNames is null) LoadEnemyNameScript();
+
+        foreach (var nameInfo in _enemyNames)
+        {
+            if (nameInfo.nameIndex == nameIndex) 
+            {
+                return nameInfo.name;
+            }
+        }
+        Debug.Log("Can't Find Enemy Name. nameIndex : " + nameIndex);
+        return "";
+    }
+
     public EnemyData GetInfo(int index)
     {
         if (index == 0)
@@ -119,4 +153,10 @@ public struct UnitModelData
 {
     public string name;
     public GameObject modelObject;
+}
+public struct EnemyName
+{
+    public int nameIndex;
+    public string Ename;
+    public string name;
 }

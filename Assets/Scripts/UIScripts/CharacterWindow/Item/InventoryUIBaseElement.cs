@@ -33,14 +33,15 @@ public class InventoryUIBaseElement : UIElement
         _itemIcon.GetComponent<Image>().sprite = texture;
         _itemIcon.GetComponent<Image>().color = Color.white;
 
-        var data = item.GetData();
-
         string countText = item.GetStackCount().ToString();
         if (item.GetStackCount() == 0 || item is WeaponItem)
         {
             countText = "";
         }
-        _itemCountText.GetComponent<TextMeshProUGUI>().text = countText;
+        if (_itemCountText != null)
+        {
+            _itemCountText.GetComponent<TextMeshProUGUI>().text = countText;
+        }
     }
     public void ClearInventoryUIElement()
     {

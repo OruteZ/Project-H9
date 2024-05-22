@@ -12,7 +12,8 @@ public enum GameState
 {
     Combat,
     World,
-    Editor
+    Editor,
+    None
 }
 public class GameManager : Generic.Singleton<GameManager>
 {
@@ -174,11 +175,13 @@ public class GameManager : Generic.Singleton<GameManager>
 
     public void FinishCombat()
     {
-        onPlayerCombatFinished?.Invoke(GetLinkIndex());
         ChangeState(GameState.World);
 
         backToWorldTrigger = true;
-        LoadingManager.instance.LoadingScene(worldSceneName);
+        LoadingManager.instance.LoadingScene(worldSceneName, () =>
+        {
+            onPlayerCombatFinished?.Invoke(GetLinkIndex());
+        });
     }
 
     public void SetEditor()

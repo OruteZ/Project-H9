@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class SkillManager : Generic.Singleton<SkillManager>
 {
-    private const int REQUIRED_SKILL_POINT = 1;
+    private const int REQUIRED_SKILL_POINT = 0;
 #if UNITY_EDITOR
     private const int INITIAL_SKILL_POINT = 10;
 #else
@@ -269,11 +269,24 @@ public class SkillManager : Generic.Singleton<SkillManager>
         }
         return _skillDescriptionScripts[skill.skillInfo.tooltipIndex].GetDescription(skillIndex, out keywords);
     }
+
+    //delete and replace (search by name) later
     public KeywordScript GetSkillKeyword(int keywordIndex)
     {
         foreach (KeywordScript script in _skillKeywordScripts) 
         {
             if (script.index == keywordIndex) 
+            {
+                return script;
+            }
+        }
+        return null;
+    }
+    public KeywordScript GetSkillKeyword(string keywordName)
+    {
+        foreach (KeywordScript script in _skillKeywordScripts)
+        {
+            if (script.Ename == keywordName)
             {
                 return script;
             }

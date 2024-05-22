@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ConversationUI : UISystem
 {
@@ -113,6 +114,8 @@ public class ConversationUI : UISystem
         _sequenceNumber = 0;
         _conversationWindow.SetActive(false);
         isConverstating = false;
+        
+        
 
         if (_isStartQuest)
         {
@@ -121,16 +124,18 @@ public class ConversationUI : UISystem
         }
         else
         {
+            // todo : 임시 엔딩 추가를 위한 코드입니다. 차후 삭제해야 합니다.
+            if (_questInfo is { Index: 1 })
+            {
+                Debug.LogError("엔딩 씬으로 이동합니다.");
+                SceneManager.LoadScene("EndingScene");
+            }
+            
             UIManager.instance.gameSystemUI.questUI.DeleteQuestListUI(_questInfo);
             _questInfo = _tmpQuestInfo;
             _isStartQuest = _tmpIsStartQuest;
         }
         
-        // todo : 임시 엔딩 추가를 위한 코드입니다. 차후 삭제해야 합니다.
-        if (_questInfo is { Index: 8 })
-        {
-            
-        }
     }
     public void StartNextConversation()
     {

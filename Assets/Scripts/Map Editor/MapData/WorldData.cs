@@ -18,7 +18,7 @@ public class WorldData : ScriptableObject
 
     public int worldTurn;
     
-    public bool TryAddLink(Vector3Int pos, int linkIndex, int combatMapIndex = 1, GameObject model = null, bool isRepeatable = false)
+    public bool TryAddLink(Vector3Int pos, float rotation, int linkIndex, int combatMapIndex = 1, GameObject model = null, bool isRepeatable = false)
     {
         if (model == null)
         {
@@ -32,6 +32,7 @@ public class WorldData : ScriptableObject
         links.Add(new LinkObjectData
         {
             pos = pos,
+            rotation = rotation,
             linkIndex = linkIndex,
             combatMapIndex = combatMapIndex,
             model = model,
@@ -46,6 +47,7 @@ public class WorldData : ScriptableObject
 public struct LinkObjectData
 {
     public Vector3Int pos;
+    public float rotation;
 
     public int linkIndex;
     public int combatMapIndex;

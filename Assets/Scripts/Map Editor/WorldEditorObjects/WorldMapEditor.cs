@@ -45,6 +45,7 @@ public class WorldMapEditor : MonoBehaviour
             //instantiate
             var link = Instantiate(linkPrefab, Hex.Hex2World(linkData.pos), Quaternion.identity);
             link.transform.SetParent(tileObjectsTransform);
+            link.transform.rotation = Quaternion.Euler(0, linkData.rotation, 0);
             
             var linkComponent = link.GetComponent<Link>();
             linkComponent.linkIndex = linkData.linkIndex;
@@ -74,6 +75,7 @@ public class WorldMapEditor : MonoBehaviour
             var linkData = new LinkObjectData
             {
                 pos = link.hexPosition,
+                rotation = child.transform.rotation.y,
                 linkIndex = link.linkIndex,
                 combatMapIndex = link.combatMapIndex,
                 isRepeatable = link.isRepeatable,

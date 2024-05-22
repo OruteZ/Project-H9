@@ -446,6 +446,14 @@ public class GameManager : Generic.Singleton<GameManager>
             }
         });
 
+        PlayerEvents.OnIncStatPoint.AddListener(() =>
+        {
+            if (!user.Events.TryGetValue("INFO_POPUP_INCREASED_STAT", out var value) || value == 0)
+            {
+                InfoPopup.instance.Show(InfoPopup.MESSAGE.INCREASED_STAT);
+                user.Events.TryAdd("INFO_POPUP_INCREASED_STAT", 1);
+            }
+        });
     }
 
     public void Update()

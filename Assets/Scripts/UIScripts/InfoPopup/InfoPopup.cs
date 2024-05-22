@@ -13,6 +13,7 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
                         , COMBAT_HP = 6
                         , IT_IS_HIT_RATE = 7
                         , INCREASED_SP = 8
+                        , INCREASED_STAT = 9
     };
 
     private Vector2[] prePosition = { new Vector2(0, 0) // default 0
@@ -24,6 +25,7 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
                                     , new Vector2(79, -360) // 체력 위
                                     , new Vector2(0, 0) 
                                     , new Vector2(-615, -456) // SP 화면  -426, 368
+                                    , new Vector2(-542, -289) // Stat
     };
 
     [SerializeReference]

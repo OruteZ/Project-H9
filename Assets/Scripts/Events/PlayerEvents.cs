@@ -15,4 +15,5 @@ public static class PlayerEvents
     public static UnityEvent<QuestInfo> OnFailedQuest = new UnityEvent<QuestInfo>();
     public static UnityEvent<UnitStat, StatType> OnChangedStat = new UnityEvent<UnitStat, StatType>();
     public static UnityEvent OnIncSkillPoint = new UnityEvent();
+    public static UnityEvent OnIncStatPoint = new UnityEvent();
 }

@@ -1,21 +1,21 @@
-﻿index,enemyName,modelFile,hp,concentration,sightRange,speed,actionPoint,additionalHitRate,criticalChance,criticalDamage,equippedWeapon,behaviorPattern,enemySkill,rewardGold,rewardXP,rewardItem
-0,0,,1,1,1,1,1,1,1,1,1,1,,0,0,
-1,1,Character_Bandit_Male_01,3,60,4,60,4,0,10,1,301,1,,1,100,
-2,2,Character_Bandit_Male_01,4,60,4,60,4,0,10,1,301,1,,1,150,
-3,3,Character_Bandit_Male_01,5,60,4,60,4,0,10,1,301,1,,1,200,
-4,4,Character_Mexican_Male_01,5,60,4,60,4,0,10,1,302,1,,1,250,"302,50"
-5,5,Character_Mexican_Male_02,6,60,4,60,4,0,10,1,303,1,,1,250,"303,50"
-6,6,Character_Thug_Male_02,7,60,4,60,4,0,10,1,304,1,,1,250,"304,50"
-7,7,Character_Soldier_Male_01,10,60,4,60,4,0,10,1,305,1,,1,300,"305,50,101,100"
-8,8,Character_NativeAmericanWarrior_Male_01,5,60,7,60,4,0,10,1,401,1,,1,200,"401,50"
-9,9,Character_NativeAmericanWarrior_Male_01,6,60,7,60,4,0,10,1,402,1,,1,250,"402,50"
-10,10,Character_NativeAmericanWarrior_Male_02,7,60,7,60,4,0,10,1,403,1,,1,250,"403,50"
-11,11,Character_NativeAmericanWarrior_Male_02,8,60,7,60,4,0,10,1,404,1,,1,250,"404,50"
-12,12,Character_NativeAmericanChief_Male_01,10,60,7,60,4,0,10,1,405,1,,1,300,"405,50"
-13,13,Character_Hunter_Male_01,15,60,4,60,4,0,10,1,501,1,,1,300,"501,50"
-101,101,Character_Traveler_Female_01,5,60,4,80,4,0,10,1,302,1,,1,200,"302,100"
-102,102,Character_Traveler_Female_01,6,60,4,70,4,0,10,1,303,1,,1,300,"303,100"
-103,103,Character_GoldMiner_Male_02,10,70,4,70,4,0,10,1,305,1,,1,300,"305,100"
-104,6,Character_Traveler_Female_01,5,60,4,90,4,0,10,1,303,1,,1,300,
-105,7,Character_Traveler_Female_01,7,60,4,60,4,0,10,1,305,1,,1,300,
-106,9,Character_Traveler_Female_01,4,70,6,50,4,0,10,1,402,1,,1,300,
+index,enemyName,modelFile,hp,concentration,sightRange,speed,actionPoint,additionalHitRate,criticalChance,criticalDamage,equippedWeapon,behaviorPattern,enemySkill,rewardGold,rewardXP,rewardItem,주석
+0,0,,1,1,1,1,1,1,1,1,1,1,,0,0,,
+1,1,Character_Bandit_Male_01,2,60,4,60,4,0,10,1,302,1,,1,100,,
+2,2,Character_Bandit_Male_01,3,60,4,60,4,0,10,1,302,1,,1,150,,
+3,3,Character_Bandit_Male_01,4,60,4,60,4,0,10,1,302,1,,1,200,,
+4,4,Character_Mexican_Male_01,5,60,4,60,4,0,10,1,304,1,,1,250,"304,50",
+5,5,Character_Mexican_Male_02,6,60,4,60,4,0,10,1,304,1,,1,250,"304,51",
+6,6,Character_Thug_Male_02,7,60,4,60,4,0,10,1,304,1,,1,250,"304,50",
+7,7,Character_Soldier_Male_01,10,60,4,60,4,0,10,1,305,1,,1,300,"305,50",
+8,8,Character_NativeAmericanWarrior_Male_01,5,60,7,60,4,0,10,1,401,1,,1,200,,
+9,9,Character_NativeAmericanWarrior_Male_01,6,60,7,60,4,0,10,1,402,1,,1,250,,
+10,10,Character_NativeAmericanWarrior_Male_02,7,60,7,60,4,0,10,1,403,1,,1,250,,
+11,11,Character_NativeAmericanWarrior_Male_02,8,60,7,60,4,0,10,1,404,1,,1,250,,
+12,12,Character_NativeAmericanChief_Male_01,10,60,7,60,4,0,10,1,405,1,,1,300,,
+13,13,Character_Hunter_Male_01,15,60,4,60,4,0,10,1,501,1,,1,300,"501,50",
+101,101,Character_Badguy_01,5,60,4,80,4,0,10,1,302,1,,1,200,"302,100",마차강도 제임스 / modelFile을 나중에 Character_Badguy_01로 바꾸기
+102,102,Character_Business_Man_01,6,60,4,70,4,0,10,1,304,1,,1,300,"303,100",토마스 / modelFile을 나중에 Character_Business_Man_01로 바꾸기
+103,103,Character_GoldMiner_Male_02,10,70,4,70,4,0,10,1,305,1,,1,300,"305,100",웨스트빌 주정뱅이
+104,6,Character_Cowboy_01,5,60,4,80,4,0,10,1,301,1,,1,300,,무법자1 / Character_Cowboy_01
+105,7,Character_Badguy_01,8,60,4,60,4,0,10,1,305,1,,1,300,,무법자2 / Character_Badguy_01
+106,9,Character_Gunman_01,3,70,6,40,4,0,10,1,401,1,,1,300,,무법자3 / Character_Gunman_01

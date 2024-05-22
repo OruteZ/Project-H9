@@ -125,6 +125,12 @@ public class ConversationUI : UISystem
             _questInfo = _tmpQuestInfo;
             _isStartQuest = _tmpIsStartQuest;
         }
+        
+        // todo : 임시 엔딩 추가를 위한 코드입니다. 차후 삭제해야 합니다.
+        if (_questInfo is { Index: 8 })
+        {
+            
+        }
     }
     public void StartNextConversation()
     {

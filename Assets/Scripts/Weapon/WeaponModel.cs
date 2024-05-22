@@ -46,19 +46,47 @@ public class WeaponModel : MonoBehaviour
     
     public Quaternion handRotationOffset;
     public Vector3 handPositionOffset;
+    
+    public Quaternion NOTFRONTIER_handRotationOffset;
+    public Vector3 NOTFRONTIER_handPositionOffset;
 
     public Quaternion standRotationOffset;
     public Vector3 standPositionOffset;
+    
+    
 
-    public void SetHandPosRot()
+    public void SetHandPosRot(bool isWesternFrontier = true)
     {
-        transform.SetLocalPositionAndRotation(handPositionOffset, handRotationOffset); 
+        if (isWesternFrontier)
+        {
+            transform.SetLocalPositionAndRotation(handPositionOffset, handRotationOffset);
+            //set model scale to 100
+            transform.localScale = Vector3.one * 100f;
+        }
+        else
+        {
+            transform.SetLocalPositionAndRotation(NOTFRONTIER_handPositionOffset, NOTFRONTIER_handRotationOffset);
+            //set model scale to 1
+            transform.localScale = Vector3.one;
+        }
     }
-
-    public void SetWaistPosRot()
+    
+    public void SetWaistPosRot(bool isWesternFrontier = true)
     {
-        transform.SetLocalPositionAndRotation(standPositionOffset, standRotationOffset); 
+        if (isWesternFrontier)
+        {
+            transform.SetLocalPositionAndRotation(standPositionOffset, standRotationOffset);
+            //set model scale to 100
+            transform.localScale = Vector3.one * 100f;
+        }
+        else
+        {
+            transform.SetLocalPositionAndRotation(NOTFRONTIER_handPositionOffset, NOTFRONTIER_handRotationOffset);
+            //set model scale to 1
+            transform.localScale = Vector3.one;
+        }
     }
+    
     public Vector3 GetGunpointPosition()
     {
         if (_isExistGunpoint)

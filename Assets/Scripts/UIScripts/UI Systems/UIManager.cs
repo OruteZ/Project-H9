@@ -141,6 +141,7 @@ public class UIManager : Generic.Singleton<UIManager>
                 {
                     SetCanvasState(_characterCanvas, characterUI, false);
                     SetCanvasState(_skillCanvas, skillUI, false);
+                    SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
                     combatUI.CloseUI();
                     break;
                 }
@@ -148,7 +149,6 @@ public class UIManager : Generic.Singleton<UIManager>
                 {
                     characterUI.ClosePopupWindow();
                     skillUI.ClosePopupWindow();
-                    SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
                     break;
                 }
             case 3:

@@ -18,6 +18,7 @@ public class EnemyInfoUI : UIElement
     private void Awake()
     {
         CloseStatTooltip();
+        UIManager.instance.onTSceneChanged.AddListener((gs) => { CloseStatTooltip(); });
     }
 
     public void OpenInventoryTooltip(GameObject ui, Vector3 pos)

@@ -91,7 +91,7 @@ public class EnemyStatUI : UISystem
 
         if (_isOpenedTooltipWindow)
         {
-            if (_statOpenEnemy is null)
+            if (_statOpenEnemy == null)
             {
                 ClosePopupWindow();
                 return;

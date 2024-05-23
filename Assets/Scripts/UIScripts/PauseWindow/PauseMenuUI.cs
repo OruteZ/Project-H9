@@ -10,7 +10,7 @@ public class PauseMenuUI : UISystem
 {
     public void OnResumeBtnClick()
     {
-        UIManager.instance.SetUILayer(2);
+        UIManager.instance.SetUILayer(1);
     }
     
     public void BackToTitle()

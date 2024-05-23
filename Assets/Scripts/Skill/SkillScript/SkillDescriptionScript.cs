@@ -38,6 +38,7 @@ public class SkillDescriptionScript
         {
             keywords = null;
         }
+
         return _substitutedDescription;
     }
     private void SubstituteKeyword()

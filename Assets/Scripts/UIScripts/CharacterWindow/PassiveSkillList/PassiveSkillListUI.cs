@@ -29,6 +29,7 @@ public class PassiveSkillListUI : UISystem
         if (passiveList == null) return;
         _listPool.Reset();
 
+        _passiveSkillListContainer.GetComponent<RectTransform>().localPosition = Vector3.zero;
         PassiveDatabase passiveDB = SkillManager.instance.passiveDB;
         for (int i = 0; i < passiveList.Count; i++)
         { 

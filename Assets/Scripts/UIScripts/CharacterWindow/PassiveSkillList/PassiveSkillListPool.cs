@@ -42,7 +42,8 @@ public class PassiveSkillListPool : ObjectPool<RectTransform, PassiveSkillListWr
             var ins = GameObject.Instantiate(_prefab, Vector3.zero, _prefab.transform.rotation);
             ins.name = _prefab.name + " " + count++;
             ins.transform.SetParent(_root, false);
-            ins.GetComponent<RectTransform>().localPosition = Vector3.zero;
+            //ins.GetComponent<RectTransform>().localPosition = Vector3.zero;
+            ins.GetComponent<RectTransform>().localPosition = new Vector3(5, -35, 0);
             var insRect = ins.GetComponent<RectTransform>();
             var insWrap = new PassiveSkillListWrapper(insRect, _generalLifeTime);
             _pool.Enqueue(insWrap);

@@ -166,9 +166,9 @@ public class ItemUI : UISystem
 
                 bool isEquipmentCell = (droppedPosition.gameObject == _equippedElement);
                 bool isWeaponItem = (_draggedItem is WeaponItem);
-                if (isEquipmentCell && isWeaponItem)
+                if (isEquipmentCell)
                 {
-                    if (!_draggedItem.TryEquip())
+                    if (!isWeaponItem || !_draggedItem.TryEquip())
                     {
                         continue;
                     }

@@ -111,8 +111,8 @@ public class QuestUI : UISystem
     }
     public override void ClosePopupWindow()
     {
-        _itemTooltip.GetComponent<InventoryUITooltip>().CloseUI();
-        _skillTooltip.GetComponent<SkillTooltip>().CloseUI();
+        if(_itemTooltip.activeSelf) _itemTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+        if (_skillTooltip.activeSelf) _skillTooltip.GetComponent<SkillTooltip>().CloseUI();
         base.ClosePopupWindow();
     }
 }

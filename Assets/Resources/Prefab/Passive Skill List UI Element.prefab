@@ -174,7 +174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 5, y: -35}
   m_SizeDelta: {x: 530, y: 60}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &8837163314369585251
@@ -191,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillIcon: {fileID: 6468618453457561232}
   _skillName: {fileID: 4473622472207930874}
+  _skillIndex: 0
 --- !u!222 &5185228260483600278
 CanvasRenderer:
   m_ObjectHideFlags: 0

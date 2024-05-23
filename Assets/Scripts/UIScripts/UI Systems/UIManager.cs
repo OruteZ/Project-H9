@@ -65,10 +65,10 @@ public class UIManager : Generic.Singleton<UIManager>
         if(this == null) return;
 
         _worldCanvas.enabled = true;
-        _combatCanvas.enabled = false;
-        _characterCanvas.enabled = false;
-        _skillCanvas.enabled = false;
-        _pauseMenuCanvas.enabled = false;
+        _combatCanvas.enabled = true;
+        _characterCanvas.enabled = true;
+        _skillCanvas.enabled = true;
+        _pauseMenuCanvas.enabled = true;
         _logCanvas.enabled = true;
         _infoPopupCanvas.enabled = true;
 
@@ -80,10 +80,6 @@ public class UIManager : Generic.Singleton<UIManager>
         debugUI = _debugCanvas.GetComponent<DebugUI>();
         infoPopup = _infoPopupCanvas.GetComponent<InfoPopup>();
 
-        SetCanvasState(_characterCanvas, characterUI, false);
-        SetCanvasState(_skillCanvas, skillUI, false);
-        SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
-
         onTurnChanged.AddListener(() => { currentLayer = 1; });
 
         UIState = GameState.World;
@@ -94,6 +90,20 @@ public class UIManager : Generic.Singleton<UIManager>
         if (loading) loading.SetActive(true);
 
         statScript = new StatScript();
+    }
+    private void Start()
+    {
+        _worldCanvas.enabled = true;
+        _combatCanvas.enabled = false;
+        _characterCanvas.enabled = false;
+        _skillCanvas.enabled = false;
+        _pauseMenuCanvas.enabled = false;
+        _logCanvas.enabled = true;
+        _infoPopupCanvas.enabled = true;
+
+        SetCanvasState(_characterCanvas, characterUI, false);
+        SetCanvasState(_skillCanvas, skillUI, false);
+        SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
     }
     void Update()
     {

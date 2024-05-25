@@ -52,7 +52,8 @@ public class TileEffectManager : Singleton<TileEffectManager>
     public GameObject attackUnitEffect;
     public GameObject attackSweetSpotEffect;
     public GameObject attackSweetSpotUnitEffect;
-    public RectTransform aimEffectRectTsf; 
+    public RectTransform aimEffectRectTsf;
+    
     public RectTransform combatCanvas;
     public RectTransform aimEffect;
 
@@ -335,6 +336,11 @@ public class TileEffectManager : Singleton<TileEffectManager>
             
             float size = _player.weapon.GetFinalHitRate(targetUnit) * 0.01f;
             aimEffect.localScale = new Vector3(size, size, 1);
+            
+            //hitrate text
+            aimEffectRectTsf.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = 
+                $"{_player.weapon.GetFinalHitRate(targetUnit)}%";
+            
 
             // aimEffectRectTsf.gameObject.SetActive(false);
             yield return null;

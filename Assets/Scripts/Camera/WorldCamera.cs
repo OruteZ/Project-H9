@@ -66,18 +66,20 @@ public class WorldCamera : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) direction += Vector3.right;
         transform.Translate(direction * (movementSpeed * Time.deltaTime));
 
+        #if UNITY_EDITOR
+        #else
+        int offset = 10;
         // 화면 가장자리에 마우스 커서에 의한 이동
         Vector3 mousePosition = Input.mousePosition;
-        if (mousePosition.x < 0) transform.Translate(Vector3.left * (movementSpeed * Time.deltaTime));
-        if (mousePosition.x > Screen.width) transform.Translate(Vector3.right * (movementSpeed * Time.deltaTime));
-        if (mousePosition.y < 0) transform.Translate(Vector3.back * (movementSpeed * Time.deltaTime));
-        if (mousePosition.y > Screen.height) transform.Translate(Vector3.forward * (movementSpeed * Time.deltaTime));
+        if (mousePosition.x <= 0 + offset) transform.Translate(Vector3.left * (movementSpeed * Time.deltaTime));
+        if (mousePosition.x >= Screen.width - offset) transform.Translate(Vector3.right * (movementSpeed * Time.deltaTime));
+        if (mousePosition.y <= 0 + offset) transform.Translate(Vector3.back * (movementSpeed * Time.deltaTime));
+        if (mousePosition.y >= Screen.height - offset) transform.Translate(Vector3.forward * (movementSpeed * Time.deltaTime));
+        #endif
         
         // 이동 제한 적용
         Vector3 clampedPosition = transform.position;
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, minPosition.x, maxPosition.x);
-        
-        //clamp y value to 0
         clampedPosition.y = 0;
         clampedPosition.z = Mathf.Clamp(clampedPosition.z, minPosition.z, maxPosition.z);
         transform.position = clampedPosition;

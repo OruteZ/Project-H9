@@ -88,7 +88,6 @@ public class AttackAction : BaseAction, IShootingAction
 
     protected override IEnumerator ExecuteCoroutine()
     {
-        UIManager.instance.onTryAttack.Invoke(unit);
         unit.animator.SetTrigger(IDLE);
         
         float timer = 1f;

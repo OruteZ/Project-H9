@@ -43,7 +43,6 @@ public class GameManager : Generic.Singleton<GameManager>
     public List<int> playerPassiveIndexList;
     public List<int> playerActiveIndexList;
     
-    public UnityEvent<Weapon> onPlayerWeaponChanged = new UnityEvent<Weapon>(); // �̰� �� ������
     public UnityEvent<int> onPlayerCombatFinished = new UnityEvent<int>(); // <LinkIndex>, Combat manager ��ũ��Ʈ�� Player �׼� ��ũ��Ʈ(not player data)�� ������ �ű�����
 
     

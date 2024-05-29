@@ -24,11 +24,21 @@ public class PlayerSummaryStatusUI : UIElement
     // Start is called before the first frame update
     void Start()
     {
+        // todo: onActionChanged Á¦°Å
         UIManager.instance.onActionChanged.AddListener(InitExpectedValues);
-        UIManager.instance.onTurnChanged.AddListener(InitExpectedValues);
+        
+        FieldSystem.onStageAwake.AddListener(StageStart);
+        
+        
         InitExpectedValues();
         SetCurrentStatusUI();
     }
+
+    void StageStart()
+    {
+        FieldSystem.turnSystem.onTurnChanged.AddListener(InitExpectedValues);
+    }
+    
     private void InitExpectedValues() 
     {
         expectedHpUsage = 0;

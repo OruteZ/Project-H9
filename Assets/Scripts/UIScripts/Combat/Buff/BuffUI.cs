@@ -34,8 +34,13 @@ public class BuffUI : UISystem
 
         UIManager.instance.onPlayerStatChanged.AddListener(SetBuffDebuffUI);
         UIManager.instance.onActionChanged.AddListener(SetBuffDebuffUI);
-        UIManager.instance.onTurnChanged.AddListener(SetBuffDebuffUI);
     }
+
+    private void StageAwake()
+    {
+        FieldSystem.turnSystem.onTurnChanged.AddListener(SetBuffDebuffUI);
+    }
+    
     public override void OpenUI()
     {
         base.OpenUI();

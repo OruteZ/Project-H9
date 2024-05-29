@@ -20,7 +20,7 @@ public class TurnSystem : MonoBehaviour
             if (GameManager.instance.CompareState(GameState.World)) 
                 GameManager.instance.runtimeWorldData.worldTurn++; }
         );
-        onTurnChanged.AddListener(() => UIManager.instance.onTurnChanged.Invoke());
+        
         onTurnChanged.AddListener(() => UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI());
         onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));
     }

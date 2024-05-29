@@ -109,7 +109,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         EquipWeapon(newWeapon, true);
         if (this is Player)
         {
-            GameManager.instance.onPlayerWeaponChanged.AddListener(wpn => EquipWeapon(wpn));
+            PlayerEvents.OnWeaponChanged.AddListener(wpn => EquipWeapon(wpn));
         }
 
         onFinishAction.AddListener((action) => onAnyUnitActionFinished.Invoke(this));
@@ -149,7 +149,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         FieldSystem.turnSystem.EndTurn();
     }
 
-    public virtual void TakeDamage(int damage, Unit attacker, eDamageType.Type type = eDamageType.Type.Default)
+    public virtual void TakeDamage(int damage, Unit attacker, Damage.Type type = Damage.Type.Default)
     {
         if (gameObject == null) return;
         

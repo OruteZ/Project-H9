@@ -11,7 +11,7 @@ public class HealItem : Item
 
         stackCount--;
         
-        UIManager.instance.onHealed.Invoke(user, appliedValue, eDamageType.Type.Heal);
+        UIManager.instance.onHealed.Invoke(user, appliedValue, Damage.Type.Heal);
         GameManager.instance.playerInventory.CollectZeroItem();
         return true;
     }

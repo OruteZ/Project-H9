@@ -14,8 +14,6 @@ public class Player : Unit
         base.SetUp(index, newName, unitStat, newWeapon, unitModel, passiveList);
         
         onMoved.AddListener(OnMoved);
-        onMoved.AddListener((p) =>  PlayerEvents.OnMovedPlayer?.Invoke(p.hexPosition));
-        onStatusEffectChanged.AddListener(OnStatusEffectChanged);
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnChanged);
         onSelectedChanged.AddListener(() => UIManager.instance.onActionChanged.Invoke());
@@ -172,7 +170,7 @@ public class Player : Unit
         }
     }
 
-    public override void TakeDamage(int damage, Unit attacker, eDamageType.Type type = eDamageType.Type.Default)
+    public override void TakeDamage(int damage, Unit attacker, Damage.Type type = Damage.Type.Default)
     {
         base.TakeDamage(damage, attacker, type);
 
@@ -197,6 +195,8 @@ public class Player : Unit
         { 
             obj.OnCollision(unit);
         }
+        
+        PlayerEvents.OnMovedPlayer?.Invoke(hexPosition);
     }
 
     private void OnTurnChanged()

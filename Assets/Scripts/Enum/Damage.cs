@@ -1,4 +1,4 @@
-public class eDamageType
+public struct Damage
 {
     /// <summary>
     /// 비트연산으로 동작하는 DamageType
@@ -18,7 +18,15 @@ public class eDamageType
         Blooded = 1 << 2,
         Burned = 1 << 3,
         Heal = 1 << 4,
-        
         Miss = 0,
     };
+    
+    public bool Contains(Type type, Type value)
+    {
+        return (type & value) == value;
+    }
+
+    private int amount;
+    private Unit attacker;
+    private Unit target;
 }

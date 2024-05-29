@@ -52,7 +52,6 @@ public class ReloadAction : BaseAction
     {
         unit.animator.ResetTrigger(IDLE);
         unit.animator.SetTrigger(RELOAD);
-        UIManager.instance.onReloaded.Invoke(unit);
 
         yield return new WaitForSeconds(ANIM_TIME);
 

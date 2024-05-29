@@ -108,7 +108,7 @@ public class CharacterStatUI : UISystem
             characterStatInfo.Add(str, new CharacterStatUIInfo(str));
         }
         UIManager.instance.onPlayerStatChanged.AddListener(SetStatText);
-        UIManager.instance.onWeaponChanged.AddListener(SetStatText);
+        PlayerEvents.OnWeaponChanged.AddListener((wpn) => SetStatText());
     }
 
     public override void OpenUI()

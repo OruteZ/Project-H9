@@ -42,22 +42,14 @@ public class UIManager : Generic.Singleton<UIManager>
 
     [HideInInspector] public UnityEvent<GameState> onTSceneChanged;
     [HideInInspector] public UnityEvent onSceneChanged;
-    [HideInInspector] public UnityEvent onTurnChanged;
     [HideInInspector] public UnityEvent<Unit> onStartedCombatTurn;
     [HideInInspector] public UnityEvent onPlayerStatChanged;
     [HideInInspector] public UnityEvent<int> onGetExp;
     [HideInInspector] public UnityEvent<int> onLevelUp;
-    [HideInInspector] public UnityEvent onPlayerSkillChangd;
     [HideInInspector] public UnityEvent onActionChanged;
-    [HideInInspector] public UnityEvent<Unit, int, eDamageType.Type> onTakeDamaged;
-    [HideInInspector] public UnityEvent<Unit, int, eDamageType.Type> onHealed;
-    [HideInInspector] public UnityEvent<Unit> onReloaded;
-    [HideInInspector] public UnityEvent<Unit> onTryAttack;
+    [HideInInspector] public UnityEvent<Unit, int, Damage.Type> onTakeDamaged;
+    [HideInInspector] public UnityEvent<Unit, int, Damage.Type> onHealed;
     [HideInInspector] public UnityEvent<Unit> onNonHited;
-    [HideInInspector] public UnityEvent onInventoryChanged;
-    [HideInInspector] public UnityEvent onWeaponChanged;
-    [HideInInspector] public UnityEvent<Unit, BaseAction> onStartAction;
-    [HideInInspector] public UnityEvent<Vector3Int, int, Town.BuildingType> onPlayerEnterTown;
 
     protected override void Awake()
     {
@@ -80,8 +72,6 @@ public class UIManager : Generic.Singleton<UIManager>
         debugUI = _debugCanvas.GetComponent<DebugUI>();
         infoPopup = _infoPopupCanvas.GetComponent<InfoPopup>();
 
-        onTurnChanged.AddListener(() => { currentLayer = 1; });
-
         UIState = GameState.World;
         if (!GameManager.instance.CompareState(UIState)) 
         {
@@ -91,6 +81,12 @@ public class UIManager : Generic.Singleton<UIManager>
 
         statScript = new StatScript();
     }
+
+    private void FieldAwake()
+    {
+        FieldSystem.turnSystem.onTurnChanged.AddListener(() => currentLayer = 1);
+    }
+    
     private void Start()
     {
         _worldCanvas.enabled = true;

@@ -79,6 +79,6 @@ public class Shotgun : Weapon
     private void CriticalAttack(Unit target)
     {
         int damage = GetFinalCriticalDamage();
-        target.TakeDamage(damage, unit, eDamageType.Type.Critical);
+        target.TakeDamage(damage, unit, Damage.Type.Critical);
     }
 }

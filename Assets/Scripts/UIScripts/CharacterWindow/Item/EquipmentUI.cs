@@ -20,7 +20,7 @@ public class EquipmentUI : UISystem
     {
         ClearEquipmentParticle();
         SetEquipmentUI();
-        UIManager.instance.onWeaponChanged.AddListener(SetEquipmentUI);
+        PlayerEvents.OnWeaponChanged.AddListener((wpn) => SetEquipmentUI());
     }
 
     public void SetEquipmentUI() 

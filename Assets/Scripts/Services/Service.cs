@@ -35,10 +35,10 @@ public static class Service
 
     public static void MissedText(Unit unit)
     {
-        Service.SetText(eDamageType.Type.Default, "MISS", unit.transform.position, 1.0f);
+        Service.SetText(Damage.Type.Default, "MISS", unit.transform.position, 1.0f);
     }
 
-    public static void DamagedText(Unit unit, int damage, eDamageType.Type type)
+    public static void DamagedText(Unit unit, int damage, Damage.Type type)
     {
         // 데미지에 비례하여 커지는 것은 게임의 진행 상황에 따라 "큰 데미지"의 기준이 바뀌므로, 지금은 임시로만
         // 15보다 높은 값에만 scale을 추가로 주겠음
@@ -51,22 +51,22 @@ public static class Service
     /// <summary>
     /// Type에 따라 어떤 damageFloater를 사용하는지는 생성자의 List 들어가는 프리팹 이름 확인
     /// </summary>
-    public static void SetText(eDamageType.Type type, string text, Vector3 position, float scale = 1.0f)
+    public static void SetText(Damage.Type type, string text, Vector3 position, float scale = 1.0f)
     {
         DamageFlaoterWrapper floater = null;
-        if (type.HasFlag(eDamageType.Type.Critical))
+        if (type.HasFlag(Damage.Type.Critical))
         {
             floater = _floaters[1].Set();
         }
-        else if (type.HasFlag(eDamageType.Type.Burned))
+        else if (type.HasFlag(Damage.Type.Burned))
         {
             floater = _floaters[0].Set();
         }
-        else if (type.HasFlag(eDamageType.Type.Blooded))
+        else if (type.HasFlag(Damage.Type.Blooded))
         {
             floater = _floaters[0].Set();
         }
-        else if (type.HasFlag(eDamageType.Type.Heal))
+        else if (type.HasFlag(Damage.Type.Heal))
         {
             floater = _floaters[2].Set();
         }

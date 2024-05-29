@@ -19,9 +19,9 @@ public class WeaponItem : Item
         
         // todo : weapon change event
         
-        UIManager.instance.onWeaponChanged.Invoke();
         Weapon weapon = WeaponDatabase.GetWeapon(GetData().id);
-        GameManager.instance.onPlayerWeaponChanged.Invoke(weapon);
+        
+        PlayerEvents.OnWeaponChanged.Invoke(weapon);
         return true;
     }
 }

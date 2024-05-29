@@ -32,7 +32,7 @@ public class Town : TileObject
         //other.GetSelectedAction().ForceFinish();
 
         Debug.Log("On Collision Calls");
-        UIManager.instance.onPlayerEnterTown.Invoke(hexPosition, _townIndex, _buildingType);
+        PlayerEvents.OnPlayerEnterTown.Invoke(hexPosition, _townIndex, _buildingType);
 
     }
 

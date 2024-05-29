@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LogUI : UISystem
 {
@@ -38,8 +39,13 @@ public class LogUI : UISystem
         UIManager.instance.onGetExp.AddListener(ChangedExp);
         UIManager.instance.onTSceneChanged.AddListener(TChangeScene);
         UIManager.instance.onTakeDamaged.AddListener(TakeDamaged);
-        UIManager.instance.onStartAction.AddListener(StartAction);
         UIManager.instance.onNonHited.AddListener(NonHited);
+        
+        FieldSystem.onStageAwake.AddListener(() =>
+        {
+            FieldSystem.unitSystem.onUnitCreated.AddListener(AddUnitEventListener);
+        });
+        
         PlayerEvents.OnProcessedWorldTurn.AddListener(ProcessedWorldTurn);
         UIManager.instance.onStartedCombatTurn.AddListener(StartedCombatTurn);
         PlayerEvents.OnStartedQuest.AddListener(StartedQuest);
@@ -51,6 +57,17 @@ public class LogUI : UISystem
         //UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat); // 모든 플레이어 스탯변화 추적하기 힘들어 일단 주석처리
         InstantiateText();
         _FixedTextedPanelHeight = 0;
+    }
+
+    private void AddUnitEventListener(Unit unit)
+    {
+        
+        // todo : unit Take Damaged 변경시적용
+        // unit.onTakeDamaged.AddListener(TakeDamaged);
+        // unit.onNonHited.AddListener(NonHited);
+        unit.onActionStart.AddListener((action, target) =>
+            StartAction(unit, action)
+            );
     }
 
 
@@ -99,7 +116,7 @@ public class LogUI : UISystem
         UpdateText();
     }
 
-    private void TakeDamaged(Unit unit, int damage, eDamageType.Type type)
+    private void TakeDamaged(Unit unit, int damage, Damage.Type type)
     {
         var message = localization[5].Replace("{unitName}", unit.unitName.ToString());
         message = message.Replace("{damage}", damage.ToString());
@@ -124,7 +141,7 @@ public class LogUI : UISystem
         }
     }
 
-    private void StartAction(Unit unit, BaseAction action)
+    private void StartAction(Unit unit, IUnitAction action)
     {
         string actionType = localization[11];
         switch (action.GetActionType())

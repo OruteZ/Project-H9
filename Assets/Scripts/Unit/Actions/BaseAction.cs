@@ -37,7 +37,6 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     public void Execute()
     {
-        UIManager.instance.onStartAction.Invoke(unit, this);
         IEnumerator Coroutine()
         {
             yield return ExecuteCoroutine();

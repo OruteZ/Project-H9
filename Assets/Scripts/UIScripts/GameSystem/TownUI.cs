@@ -29,7 +29,7 @@ public class TownUI : UISystem
         _iconPool.Init("Prefab/Town Icon", _iconContainer.transform, 0);
         _doorIcon.SetActive(false);
 
-        UIManager.instance.onPlayerEnterTown.AddListener((p, i, t) => { SetCurrentTownInfo(p, i, t); });
+        PlayerEvents.OnPlayerEnterTown.AddListener((p, i, t) => { SetCurrentTownInfo(p, i, t); });
         CloseUI();
     }
     private void Start()

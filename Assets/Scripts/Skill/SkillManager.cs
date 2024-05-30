@@ -177,15 +177,17 @@ public class SkillManager : Generic.Singleton<SkillManager>
         }
         return null;
     }
+
     /// <summary>
     /// 스킬을 습득합니다.
     /// </summary>
     /// <param name="index"> 습득하고자 하는 스킬의 고유번호 </param>
+    /// <param name="isFreeLearn"></param>
     /// <returns>
     /// 스킬 습득조건이 충족되지 않았거나, 스킬 포인트가 부족한 경우 스킬은 습득되지 않고 false를 반환합니다.
     /// 정상적으로 스킬을 습득한 경우 true를 반환합니다.
     /// </returns>
-    public bool LearnSkill(int index) 
+    public bool LearnSkill(int index, bool isFreeLearn = false) 
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player == null) return false;
@@ -199,6 +201,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
                 return false;
             }
         }
+        
         for (int i = 0; i < _skills.Count; i++) 
         {
             if (_skills[i].skillInfo.index == index) 
@@ -208,13 +211,13 @@ public class SkillManager : Generic.Singleton<SkillManager>
                     Debug.Log("습득 조건이 충족되지 않은 스킬입니다.");
                     return false; 
                 }
-                if (!IsEnoughSkillPoint()) 
+                if (!IsEnoughSkillPoint() && !isFreeLearn) 
                 {
                     Debug.Log("스킬 포인트가 부족합니다.");
                     return false;
                 }
 
-                _skillPoint -= REQUIRED_SKILL_POINT;
+                _skillPoint -= isFreeLearn ? 0 : REQUIRED_SKILL_POINT;
                 _skills[i].LearnSkill();
                 PlayerEvents.OnLearnedSkill?.Invoke(_skills[i].skillInfo);
                 GameManager.instance.AddPlayerSkillListElement(_skills[i].skillInfo);

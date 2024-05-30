@@ -324,6 +324,13 @@ public class TileEffectManager : Singleton<TileEffectManager>
             targetUnit = newTarget;
             
             aimEffectRectTsf.gameObject.SetActive(true);
+            var hitRate = _player.weapon.GetFinalHitRate(targetUnit);
+            float offset = 0;
+            if (_player.GetSelectedAction() is FanningAction f)
+            {
+                offset = f.GetHitRateModifier();
+            }
+            hitRate += offset;
             
             Vector2 viewportPosition = Camera.main.WorldToViewportPoint(Hex.Hex2World(targetUnit.hexPosition) + 
                                                                         Vector3.up * (targetUnit.transform.localScale.y * 0.5f));
@@ -334,12 +341,12 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 ((viewportPosition.y * sizeDelta.y) - (sizeDelta.y * 0.5f)));
             aimEffectRectTsf.anchoredPosition = worldObjectScreenPosition;
             
-            float size = _player.weapon.GetFinalHitRate(targetUnit) * 0.01f;
+            float size = hitRate * 0.01f;
             aimEffect.localScale = new Vector3(size, size, 1);
             
             //hitrate text
             aimEffectRectTsf.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = 
-                $"{_player.weapon.GetFinalHitRate(targetUnit)}%";
+                $"{hitRate}%";
             
 
             // aimEffectRectTsf.gameObject.SetActive(false);

@@ -84,6 +84,8 @@ public class WorldMapEditor : MonoBehaviour
             worldData.links.Add(linkData);
         }
         
+        worldData.SaveChangesToScriptableObject(worldData);
+        
         onLinkChanged.Invoke();
     }
 }

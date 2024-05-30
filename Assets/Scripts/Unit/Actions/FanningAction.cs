@@ -25,6 +25,11 @@ public class FanningAction : BaseAction, IShootingAction
         
         _hitRateModifier = amounts[0];
     }
+    
+    public float GetHitRateModifier()
+    {
+        return _hitRateModifier;
+    }
 
     public override ActionType GetActionType()
     {

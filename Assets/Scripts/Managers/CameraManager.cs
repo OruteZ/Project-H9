@@ -12,6 +12,7 @@ public class CameraManager : Singleton<CameraManager>
     
     public WorldCamera worldCamera;
     public GameObject unitCameraPrefab;
+    public QuestViewpoint questViewpoint;
     
     public void CreateUnitCamera(Unit target)
     {
@@ -154,5 +155,18 @@ public class CameraManager : Singleton<CameraManager>
         }
     }
 
+    #endregion
+    
+    #region QUEST_VIEWPOINT
+    public void SetQuestViewpoint(Vector3Int hexPosition)
+    {
+        questViewpoint.SetPosition(hexPosition);
+    }
+    
+    public void ViewQuest(float duration = -1)
+    {
+        questViewpoint.View(duration);
+    }
+    
     #endregion
 }

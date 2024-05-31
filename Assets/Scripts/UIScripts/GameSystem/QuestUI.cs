@@ -14,6 +14,8 @@ public class QuestUI : UISystem
     [SerializeField] private GameObject _rewardWindow;
     [SerializeField] private GameObject _rewardText;
 
+    public WorldCamera worldCamera;
+
     private QuestListPool _listPool = null;
 
     void Awake()
@@ -31,7 +33,16 @@ public class QuestUI : UISystem
         Debug.Log($"info Pin len: {info.Pin.Length}");
         if (info.Pin.Length > 0) 
         {
-            UIManager.instance.gameSystemUI.pinUI.SetPinUI(new Vector3Int(info.Pin[0], info.Pin[1], info.Pin[2]));
+            Vector3Int pinPos = new Vector3Int(info.Pin[0], info.Pin[1], info.Pin[2]);
+            UIManager.instance.gameSystemUI.pinUI.SetPinUI(pinPos);
+            Tile target = FieldSystem.tileSystem.GetTile(pinPos);
+            if (target is null)
+            {
+                Debug.LogError("해당 Hex 좌표의 Tile은 존재하지 않습니다. Hex 좌표: " + pinPos);
+                return;
+            }
+            Vector3 _targetPos = target.gameObject.transform.position;
+            worldCamera.SetPosition(_targetPos);
         }
         ui.Instance.GetComponent<QuestListElement>().SetQuestListElement(info);
         _listPool.Sort();

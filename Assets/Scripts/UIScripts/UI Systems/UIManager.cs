@@ -51,6 +51,7 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent<Unit, int, Damage.Type> onHealed;
     [HideInInspector] public UnityEvent<Unit> onNonHited;
 
+    [SerializeField] private QuestViewpoint _questView;
     protected override void Awake()
     {
         base.Awake();
@@ -103,6 +104,13 @@ public class UIManager : Generic.Singleton<UIManager>
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Debug.LogError("adf");
+            _questView.SetPosition(Vector3Int.zero);
+            _questView.View(10);
+        }
+
         //Debug.Log(currentLayer);
         isMouseOverUI = (EventSystem.current.IsPointerOverGameObject()/* || currentLayer > 1*/);
         //if (combatUI.combatActionUI.isCombatUIOpened()) return;

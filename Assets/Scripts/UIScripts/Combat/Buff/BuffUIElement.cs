@@ -14,7 +14,7 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
     public IDisplayableEffect displayedEffect { get; private set; }
     private bool _isPlayer = false;
 
-    public void SetBuffUIElement(IDisplayableEffect effect, bool isBuff, bool isPlayer) 
+    public void SetBuffUIElement(IDisplayableEffect effect, bool isBuff, bool isPlayer)
     {
         displayedEffect = effect;
         _isPlayer = isPlayer;
@@ -27,6 +27,10 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
         else if (effect is StatUpDependedOnCondition skillCondition)
         {
             icon = UIManager.instance.iconDB.GetIconInfo(SkillManager.instance.GetSkill(skillCondition.GetIndex()).skillInfo.icon);
+        }
+        else if (effect is ItemBuff item)
+        {
+            icon = GameManager.instance.itemDatabase.GetItemData(item.GetIndex()).icon;
         }
         _buffImage.GetComponent<Image>().sprite = icon;
 

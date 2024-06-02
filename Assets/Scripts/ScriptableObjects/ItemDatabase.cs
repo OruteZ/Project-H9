@@ -136,13 +136,13 @@ public class ItemData
             string weaponDamageText = weaponDamage.ToString() + " Damage";
             string weaponRangeText = itemRange.ToString() + " Range";
             string weaponAmmoText = weaponAmmo.ToString() + " Magazine";
-            string weaponEffect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription(this);
+            string weaponEffect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription();
             description = weaponTypeText + "\n" + weaponDamageText + "\n" + weaponRangeText + "\n" + weaponAmmoText + "\n\n" + weaponEffect;
         }
         else
         {
             string typeText = itemType.ToString() + " Item";
-            string effect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription(this);
+            string effect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription();
             description = typeText + "\n\n" + effect;
         }
 

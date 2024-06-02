@@ -66,11 +66,13 @@ public class QuestListElement : UIElement, IPointerClickHandler
         UIManager.instance.gameSystemUI.questUI.ClosePopupWindow();
     }
 
-    public void SetQuestListElement(QuestInfo qInfo)
+    public void SetQuestListElement(QuestInfo qInfo, out string popupStr)
     {
         currentQuestInfo = qInfo;
         _questNameText.GetComponent<TextMeshProUGUI>().text = qInfo.QuestName;
         _questDescriptText.GetComponent<TextMeshProUGUI>().text = "- " + qInfo.QuestTooltip;
+        popupStr = "Quest Accepted!\n" + qInfo.QuestName;
+
         string[] rewardTexts = { "", "", "", "" };
 
         _resultText = "Reward: ";
@@ -117,9 +119,9 @@ public class QuestListElement : UIElement, IPointerClickHandler
         OpenUI();
     }
 
-    public void CompleteQuestUI(out string str)
+    public void CompleteQuestUI(out string popupStr)
     {
-        str = _displayText;
+        popupStr = "Quest Complete!\n" + _displayText;
         if (!_isDestroying) 
         {
             _isDestroying = true;

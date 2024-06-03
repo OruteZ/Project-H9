@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -8,9 +9,18 @@ using UnityEngine.SceneManagement;
 public class CombatResultUI : UISystem
 {
     [SerializeField] private GameObject _ResultWindow;
-    [SerializeField] private GameObject _WinOrLoseText;
-    [SerializeField] private GameObject _ResultText;
-    [SerializeField] private GameObject _CloseButton;
+    [SerializeField] private TMP_Text _ResultTitleText;
+    [SerializeField] private TMP_Text _WinOrLoseText;
+    [SerializeField] private TMP_Text _BootyTitleText;
+    [SerializeField] private TMP_Text _BootyText;
+    [SerializeField] private TMP_Text _CloseButtonText;
+
+    [SerializeField] private Transform _ResultBootyItemParent;
+    [SerializeField] private GameObject _ResultBootyItemPrefab;
+
+    private string _winComment;
+    private string _loseComment;
+    private string _emptyBootyComment;
 
     private bool isPlayerWin;
     private int earnedExp;
@@ -21,6 +31,13 @@ public class CombatResultUI : UISystem
         UIManager.instance.onSceneChanged.AddListener(CloseCombatResultUI);
         //UIManager.instance.onTSceneChanged.AddListener(null);
         _ResultWindow.SetActive(false);
+
+        _ResultTitleText.text = UIManager.instance.UILocalization[1];
+        _winComment = UIManager.instance.UILocalization[2];
+        _loseComment = UIManager.instance.UILocalization[3];
+        _BootyTitleText.text = UIManager.instance.UILocalization[4];
+        _CloseButtonText.text = UIManager.instance.UILocalization[5];
+        _emptyBootyComment = UIManager.instance.UILocalization[7];
     }
 
     public void OnClickResultWindowCloseButton()
@@ -59,22 +76,53 @@ public class CombatResultUI : UISystem
     private void SetCombatResultUI()
     {
         _ResultWindow.SetActive(true);
+        
+        // Empty out "Result Booty Items"
+        for (int i = _ResultBootyItemParent.childCount - 1; 0 <= i; i--)
+        {
+            Destroy(_ResultBootyItemParent.GetChild(i));
+        }
+
         if (isPlayerWin)
         {
-            _WinOrLoseText.GetComponent<TextMeshProUGUI>().text = "You Win!";
-            string expStr = "Earned EXP: " + earnedExp + "\n";
-            string goldStr = "Earned Gold: " + FieldSystem.unitSystem.rewardHelper.GetRewardGold() + "\n";
-            string itemStr = "Earned Items: ";
+            // set text
+            _WinOrLoseText.text = _winComment;
+            
+            var exp = earnedExp;
+            var gold = FieldSystem.unitSystem.rewardHelper.GetRewardGold();
+            var bootyText = string.Empty;
+            if (0 < exp && 0 < gold) bootyText = $"{exp} EXP, {gold} Gold";
+            else if (0 < exp) bootyText = $"{exp} EXP";
+            else if (0 < gold) bootyText = $"{gold} Gold";
+            else bootyText = _emptyBootyComment;
+            _BootyText.text = bootyText;
+           
+            // set item panel
             int[] itemidxs = FieldSystem.unitSystem.rewardHelper.GetRewardItemInfos();
+            var itemSize = _ResultBootyItemPrefab.GetComponent<RectTransform>().sizeDelta;
+            var intervalX = 5; // hard code.
+            var positionY = 16; // hard code.
+            var itemSizeSum = (itemidxs.Length * itemSize.x) + ((itemidxs.Length - 1) * intervalX) - ((itemSize.x / 2.0f) * 2);
+            var startPositionX = -(itemSizeSum / 2.0f);
             for (int i = 0; i < itemidxs.Length; i++)
             {
-                itemStr += GameManager.instance.itemDatabase.GetItemScript(itemidxs[i]).GetName() + "\n\t";
+                var index = itemidxs[i];
+                var itemData = GameManager.instance.itemDatabase.GetItemData(index);
+                // create and align
+                var itemObj = Instantiate(_ResultBootyItemPrefab);
+                itemObj.GetComponent<RectTransform>().SetParent(_ResultBootyItemParent);
+                itemObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(startPositionX + ((itemSize.x + intervalX) * i), positionY);
+                // assign icon and name
+                var itemIconObj = itemObj.transform.Find("ItemIcon");
+                itemIconObj.GetComponent<Image>().sprite = itemData.icon;
+                var itemNameObj = itemObj.transform.Find("ItemName");
+                itemNameObj.GetComponent<TMP_Text>().text = GameManager.instance.itemDatabase.GetItemScript(index).GetName();
             }
-            _ResultText.GetComponent<TextMeshProUGUI>().text = expStr + goldStr + itemStr;
         }
         else
         {
-            _WinOrLoseText.GetComponent<TextMeshProUGUI>().text = "Game Over";
+            _WinOrLoseText.text = _loseComment;
+            _BootyText.text = _emptyBootyComment; // IF, player lose, get something, then fix it.
         }
 
         UIManager.instance.gameSystemUI.playerInfoUI.expUI.GetComponent<PlayerExpUI>().SetPlayerExpUI(GameManager.instance.curExp + earnedExp);

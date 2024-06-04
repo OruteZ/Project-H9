@@ -112,12 +112,12 @@ public class CombatActionUI : UISystem
             bool isCancelKeyClicked = Input.GetKeyDown(HotKey.cancelKey);
             if (isPlayerClicked || isOpenKeyClicked || isCancelKeyClicked)
             {
-                Debug.Log(isPlayerClicked + " / " + isOpenKeyClicked + " / " + isCancelKeyClicked);
+                //Debug.Log(isPlayerClicked + " / " + isOpenKeyClicked + " / " + isCancelKeyClicked);
             }
             //open key
             if (isOpenKeyClicked || isPlayerClicked)
             {
-                Debug.Log(_activeActionBundle + " / " + _displayedActionBundle);
+                //Debug.Log(_activeActionBundle + " / " + _displayedActionBundle);
                 if (_activeActionBundle == null && _displayedActionBundle == null)
                 {
                     SetActionBundle(_baseActionBundle, _baseActionBundle);

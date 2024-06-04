@@ -28,6 +28,7 @@ public class BuffTooltip : UIElement
         }
 
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _buffName;
+        transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = UICustomColor.UINameColor;
         transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _buffDesc;
 
         GetComponent<RectTransform>().position = pos;

@@ -18,6 +18,11 @@ public class SkillDescriptionScript
     public string GetDescription(int skillIndex, out List<int> keywords)
     {
         _substitutedDescription = description;
+        if (_substitutedDescription.Length == 0) 
+        {
+            keywords = null;
+            return "NULL Skill Localization table error";
+        }
         SubstituteKeyword();
         SubstituteValue("effectAmount", skillIndex);
         SubstituteValue("damage", skillIndex);

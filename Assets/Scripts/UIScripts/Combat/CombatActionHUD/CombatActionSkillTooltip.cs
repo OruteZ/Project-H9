@@ -41,6 +41,7 @@ public class CombatActionSkillTooltip : UIElement
         string name = SkillManager.instance.GetSkillName(info.index);
         string desc = SkillManager.instance.GetSkillDescription(info.index, out var keywords);
         _skillNameText.GetComponent<TextMeshProUGUI>().text = name;
+        _skillNameText.GetComponent<TextMeshProUGUI>().color = UICustomColor.UINameColor;
         _skillDescriptionText.GetComponent<TextMeshProUGUI>().text = desc;
 
         ItemType sectionType = ItemType.Etc + info.section;

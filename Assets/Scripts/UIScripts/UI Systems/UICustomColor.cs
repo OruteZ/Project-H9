@@ -43,9 +43,11 @@ public static class UICustomColor
     public static readonly Color32 BuffColor = greenColor;
     public static readonly Color32 DebuffColor = redColor;
 
-    public static readonly Color32 QuestNameColor = new Color32(237, 146, 0, 255);
-    public static readonly Color32 ItemTextColor = QuestNameColor;
-    public static readonly Color32 SkillTextColor = QuestNameColor;
+    public static readonly Color32 UINameColor = new Color32(237, 146, 0, 255);
+
+    public static readonly Color32 QuestNameColor = UINameColor;
+    public static readonly Color32 ItemTextColor = UINameColor;
+    public static readonly Color32 SkillTextColor = UINameColor;
 
     public static string GetColorHexCode(Color32 color)
     {

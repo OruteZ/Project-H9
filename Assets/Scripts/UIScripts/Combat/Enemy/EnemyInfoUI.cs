@@ -32,7 +32,7 @@ public class EnemyInfoUI : UIElement
     internal void OpenStatTooltip(Vector3 pos, string name)
     {
         _enemyStatTooltip.GetComponent<RectTransform>().position = pos;
-        _enemyStatTooltip.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
+        _enemyStatTooltip.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name + "*FixLater";  //need localization
         _enemyStatTooltip.SetActive(true);
     }
     internal void CloseStatTooltip()

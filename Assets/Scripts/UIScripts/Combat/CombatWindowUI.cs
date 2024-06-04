@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+using UnityEngine.Experimental.AI;
 
 /// <summary>
 /// 전투 씬 입장 시 필요한 UI의 여러 기능을 묶어서 관리하는 클래스
@@ -9,6 +10,8 @@ using UnityEngine;
 /// </summary>
 public class CombatWindowUI : UISystem
 {
+    [SerializeField] private GameObject _ResultWindowPrefab;
+
     /// <summary>
     /// 캐릭터의 행동창 UI의 표시 및 상호작용과 관련된 기능
     /// </summary>
@@ -32,13 +35,17 @@ public class CombatWindowUI : UISystem
     // Start is called before the first frame update
     private void Awake()
     {
+        var resultWindowInstance = Instantiate(_ResultWindowPrefab);
+        resultWindowInstance.transform.SetParent(UIManager.instance.HotCanvas.transform);
+        resultWindowInstance.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+        resultWindowInstance.GetComponent<RectTransform>().offsetMax = Vector2.zero;
 
         combatActionUI = GetComponent<CombatActionUI>();
         enemyHpUI = GetComponent<EnemyHpUI>();
         enemyStatUI = GetComponent<EnemyStatUI>();
         startTurnTextUI = GetComponent<StartTurnTextUI>();
         turnOrderUI = GetComponent<TurnOrderUI>();
-        combatResultUI = GetComponent<CombatResultUI>();
+        combatResultUI = resultWindowInstance.GetComponent<CombatResultUI>();
         buffUI = GetComponent<BuffUI>();
 
         //uiSubsystems.Add(combatActionUI);

@@ -18,6 +18,10 @@ public class UIManager : Generic.Singleton<UIManager>
     public DebugUI debugUI { get; private set; }
     public InfoPopup infoPopup { get; private set; }
 
+    private readonly string LOCALIZATION_PATH = "UILocalizationTable";
+    private Dictionary<int, string> _uiLocalization;
+    public Dictionary<int, string> UILocalization => _uiLocalization;
+
     [Header("Canvases")]
     [SerializeField] private Canvas _worldCanvas;
     [SerializeField] private Canvas _combatCanvas;
@@ -27,6 +31,8 @@ public class UIManager : Generic.Singleton<UIManager>
     [SerializeField] private Canvas _debugCanvas;
     [SerializeField] private Canvas _logCanvas;
     [SerializeField] private Canvas _infoPopupCanvas;
+    [SerializeField] private Canvas _hotCanvas;
+    public Canvas HotCanvas => _hotCanvas;
 
     //[HideInInspector]
     public bool isMouseOverUI;
@@ -71,6 +77,7 @@ public class UIManager : Generic.Singleton<UIManager>
         pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
         debugUI = _debugCanvas.GetComponent<DebugUI>();
         infoPopup = _infoPopupCanvas.GetComponent<InfoPopup>();
+        FileRead.ParseLocalization(in LOCALIZATION_PATH, out _uiLocalization);
 
         UIState = GameState.World;
         if (!GameManager.instance.CompareState(UIState)) 

@@ -31,6 +31,8 @@ public class UIManager : Generic.Singleton<UIManager>
     [SerializeField] private Canvas _debugCanvas;
     [SerializeField] private Canvas _logCanvas;
     [SerializeField] private Canvas _infoPopupCanvas;
+    [SerializeField] private Canvas _hotCanvas;
+    public Canvas HotCanvas => _hotCanvas;
 
     //[HideInInspector]
     public bool isMouseOverUI;

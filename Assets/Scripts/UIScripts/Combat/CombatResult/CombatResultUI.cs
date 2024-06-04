@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class CombatResultUI : UISystem
 {
-    [SerializeField] private GameObject _ResultWindow;
     [SerializeField] private TMP_Text _ResultTitleText;
     [SerializeField] private TMP_Text _WinOrLoseText;
     [SerializeField] private TMP_Text _BootyTitleText;
@@ -30,7 +29,7 @@ public class CombatResultUI : UISystem
         FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
         UIManager.instance.onSceneChanged.AddListener(CloseCombatResultUI);
         //UIManager.instance.onTSceneChanged.AddListener(null);
-        _ResultWindow.SetActive(false);
+        this.gameObject.SetActive(false);
 
         _ResultTitleText.text = UIManager.instance.UILocalization[1];
         _winComment = UIManager.instance.UILocalization[2];
@@ -75,12 +74,12 @@ public class CombatResultUI : UISystem
 
     private void SetCombatResultUI()
     {
-        _ResultWindow.SetActive(true);
+        this.gameObject.SetActive(true);
         
         // Empty out "Result Booty Items"
         for (int i = _ResultBootyItemParent.childCount - 1; 0 <= i; i--)
         {
-            Destroy(_ResultBootyItemParent.GetChild(i));
+            Destroy(_ResultBootyItemParent.GetChild(i).gameObject);
         }
 
         if (isPlayerWin)
@@ -130,7 +129,7 @@ public class CombatResultUI : UISystem
     }
     private void CloseCombatResultUI()
     {
-        _ResultWindow.SetActive(false);
+        this.gameObject.SetActive(false);
     }
     public void SetExpInformation(int eExp) 
     {

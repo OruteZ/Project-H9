@@ -25,7 +25,7 @@ public class PlayerConcentrationUI : UIElement, IPointerEnterHandler, IPointerEx
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _concentrationTooltip?.SetActive(true);
+        _concentrationTooltip.GetComponent<PlayerMainStatTooltip>().SetPlayerMainStatTooltip(gameObject);
     }
     public void OnPointerExit(PointerEventData eventData)
     {

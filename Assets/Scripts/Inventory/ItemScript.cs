@@ -38,8 +38,11 @@ public class ItemScript : IItemScript
     {
         return _itemName;
     }
-    public string GetDescription(ItemData data)
+    public string GetDescription()
     {
+        ItemData data = GameManager.instance.itemDatabase.GetItemData(_itemIndex);
+        if (data == null) return "Null Reference error in ItemScript";
+
         string description = _itemDescription;
         description = SubstituteKeyword(description);
 

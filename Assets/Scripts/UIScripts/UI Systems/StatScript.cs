@@ -25,8 +25,8 @@ public class StatScript
     public StatScript() 
     {
         _statScripts = new List<StatScriptInfo>();
-        List<List<string>> statNameTable = FileRead.Read("StatNameScriptTable", out var nameColumnInfo);
-        List<List<string>> statDescTable = FileRead.Read("StatTooltipScriptTable", out var descColumnInfo);
+        List<List<string>> statNameTable = FileRead.Read("StatNameLocalizationTable", out var nameColumnInfo);
+        List<List<string>> statDescTable = FileRead.Read("StatTooltipLocalizationTable", out var descColumnInfo);
         if (statNameTable == null || statDescTable == null) 
         {
             Debug.LogError("스탯 스크립트 테이블을 찾을 수 없습니다.");

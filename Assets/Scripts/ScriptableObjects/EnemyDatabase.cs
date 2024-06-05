@@ -82,7 +82,7 @@ public class EnemyDatabase : ScriptableObject
 
     private void LoadEnemyNameScript()
     {
-        var dataList = FileRead.Read("EnemyScriptTable", out var columnInfo);
+        var dataList = FileRead.Read("EnemyLocalizationTable", out var columnInfo);
 
         if (_enemyNames is null) _enemyNames = new List<EnemyName>();
         else _enemyNames.Clear();

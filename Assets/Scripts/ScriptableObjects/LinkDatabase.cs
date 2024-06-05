@@ -42,7 +42,7 @@ public class LinkDatabase : ScriptableObject
     }
     private void LoadEnemyNameScript()
     {
-        var dataList = FileRead.Read("LinkScriptTable", out var columnInfo);
+        var dataList = FileRead.Read("LinkLocalizationTable", out var columnInfo);
 
         if (_linkNames is null) _linkNames = new List<EnemyName>();
         else _linkNames.Clear();

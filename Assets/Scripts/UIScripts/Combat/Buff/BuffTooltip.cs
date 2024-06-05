@@ -28,6 +28,7 @@ public class BuffTooltip : UIElement
         }
 
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _buffName;
+        transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = UICustomColor.UINameColor;
         transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _buffDesc;
 
         GetComponent<RectTransform>().position = pos;
@@ -35,8 +36,16 @@ public class BuffTooltip : UIElement
     }
     private void SetBuffText(IDisplayableEffect effect)
     {
-        _buffName = SkillManager.instance.GetSkillName(effect.GetIndex());
-        _buffDesc = SkillManager.instance.GetSkillDescription(effect.GetIndex(), out var k);
+        if (effect is StatUpDependedOnCondition skillCondition)
+        {
+            _buffName = SkillManager.instance.GetSkillName(effect.GetIndex());
+            _buffDesc = SkillManager.instance.GetSkillDescription(effect.GetIndex(), out var k);
+        }
+        else if (effect is ItemBuff item)
+        {
+            _buffName = GameManager.instance.itemDatabase.GetItemScript(item.GetIndex()).GetName();
+            _buffDesc = GameManager.instance.itemDatabase.GetItemScript(item.GetIndex()).GetDescription();
+        }
     }
     private void SetDebuffText(IDisplayableEffect effect)
     {

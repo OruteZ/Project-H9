@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -29,7 +30,7 @@ public class PlayerApUI : UIElement, IPointerEnterHandler, IPointerExitHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _apTooltip?.SetActive(true);
+        _apTooltip?.GetComponent<PlayerMainStatTooltip>().SetPlayerMainStatTooltip(gameObject);
     }
     public void OnPointerExit(PointerEventData eventData)
     {

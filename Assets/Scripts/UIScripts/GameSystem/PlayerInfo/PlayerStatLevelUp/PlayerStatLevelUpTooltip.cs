@@ -23,6 +23,7 @@ public class PlayerStatLevelUpTooltip : UIElement
         OpenUI();
         nameText = info.statName;
         _tooltipNameText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.statScript.GetStatScript(info.statName).name;
+        _tooltipNameText.GetComponent<TextMeshProUGUI>().color = UICustomColor.UINameColor;
         _tooltipDescText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.statScript.GetStatScript(info.statName).description;
         pos.y -= STAT_TOOLTIP_YPOSITION_CORRECTION * UIManager.instance.GetCanvasScale();
         GetComponent<RectTransform>().position = pos;

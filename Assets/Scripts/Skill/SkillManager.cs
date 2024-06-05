@@ -76,8 +76,8 @@ public class SkillManager : Generic.Singleton<SkillManager>
     }
     private void InitSkillScripts()
     {
-        List<List<string>> skillNameTable = FileRead.Read("SkillNameScriptTable", out var nameColumnInfo);
-        List<List<string>> skillDescriptionTable = FileRead.Read("SkillTooltipScriptTable", out var descColumnInfo);
+        List<List<string>> skillNameTable = FileRead.Read("SkillNameLocalizationTable", out var nameColumnInfo);
+        List<List<string>> skillDescriptionTable = FileRead.Read("SkillTooltipLocalizationTable", out var descColumnInfo);
         List<List<string>> skillKeywordTable = FileRead.Read("KeywordTable", out var keywordColumnInfo);
         if (skillNameTable == null || skillDescriptionTable == null || skillKeywordTable == null)
         {

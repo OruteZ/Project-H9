@@ -67,7 +67,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
         playerInventory.TryAddItem(item);
 
-        Debug.Log("Added item to inventory");
+        //Debug.Log("Added item to inventory");
     }//a
     #endregion
     #region LEVEL

@@ -176,7 +176,7 @@ public class ConversationInfo
         index = i;
         group = g;
         sequence = s;
-        speakerName = name;
+        speakerName = name + "*FixLater";     //need Localization
         originalConversationText = originText;
         conversationText = text;
     } 

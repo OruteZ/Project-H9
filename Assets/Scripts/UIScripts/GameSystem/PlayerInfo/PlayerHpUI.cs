@@ -59,7 +59,7 @@ public class PlayerHpUI : UIElement, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _hpTooltip?.SetActive(true);
+        _hpTooltip.GetComponent<PlayerMainStatTooltip>().SetPlayerMainStatTooltip(gameObject);
     }
     public void OnPointerExit(PointerEventData eventData)
     {

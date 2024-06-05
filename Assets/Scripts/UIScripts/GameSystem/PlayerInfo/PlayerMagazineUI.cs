@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -63,7 +64,7 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (_magazineTooltip == null) return;
-        _magazineTooltip?.SetActive(true);
+        _magazineTooltip.GetComponent<PlayerMainStatTooltip>().SetPlayerMainStatTooltip(gameObject);
     }
     public void OnPointerExit(PointerEventData eventData)
     {

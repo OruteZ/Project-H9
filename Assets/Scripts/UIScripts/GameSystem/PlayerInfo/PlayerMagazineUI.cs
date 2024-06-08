@@ -17,14 +17,17 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
     }
     public void SetMagazineUI(bool isOnlyDisplayMaxMagazine)
     {
+        /*
         if (transform.childCount != MAGAZINE_COUNT) 
         {
             Debug.LogError("배치된 UI 요소 개수와 코드 상 상수가 다릅니다.");
             return;
         }
+        */
         int maxBullet;
         int curBullet;
         int flickerCnt;
+
         if (isOnlyDisplayMaxMagazine)
         {
             maxBullet = GameManager.instance.itemDatabase.GetItemData(GameManager.instance.playerWeaponIndex).weaponAmmo;
@@ -38,6 +41,10 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
             flickerCnt = UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedMagUsage;
         }
 
+        var magazineUI = transform.GetChild(0).GetComponent<PlayerMagazineUIElement>();
+        magazineUI.Reload(maxBullet, curBullet, flickerCnt);
+
+        /*
         int nonFlickerCnt = curBullet - flickerCnt;
         for (int i = 0; i < transform.childCount; i++) 
         {
@@ -54,12 +61,14 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
                 flickerCnt = filledCnt - nonFlickerCnt;
             }
 
-            transform.GetChild(i).GetComponent<PlayerMagazineUIElement>().SetPlayerMagUIElement(existCnt, filledCnt, flickerCnt);
+            //transform.GetChild(i).GetComponent<PlayerMagazineUIElement>().SetPlayerMagUIElement(existCnt, filledCnt, flickerCnt);
+            
 
             maxBullet -= MAGAZINE_SIZE;
             curBullet -= MAGAZINE_SIZE;
             nonFlickerCnt -= MAGAZINE_SIZE;
         }
+        */
     }
     public void OnPointerEnter(PointerEventData eventData)
     {

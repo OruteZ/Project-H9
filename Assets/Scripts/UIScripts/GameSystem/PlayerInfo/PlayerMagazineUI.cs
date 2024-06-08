@@ -8,6 +8,11 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
 {
     [SerializeField] private GameObject _magazineTooltip;
 
+    [SerializeField] private PlayerMagazineUIElement _revolvers;
+    [SerializeField] private PlayerMagazineUIElement _shotguns;
+    [SerializeField] private PlayerMagazineUIElement _repeater;
+
+
     private int MAGAZINE_SIZE = 6;
     private int MAGAZINE_COUNT = 7;
     void Start()
@@ -17,58 +22,46 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
     }
     public void SetMagazineUI(bool isOnlyDisplayMaxMagazine)
     {
-        /*
-        if (transform.childCount != MAGAZINE_COUNT) 
-        {
-            Debug.LogError("배치된 UI 요소 개수와 코드 상 상수가 다릅니다.");
-            return;
-        }
-        */
-        int maxBullet;
-        int curBullet;
+        int maxAmmo;
+        int curAmmo;
         int flickerCnt;
 
         if (isOnlyDisplayMaxMagazine)
         {
-            maxBullet = GameManager.instance.itemDatabase.GetItemData(GameManager.instance.playerWeaponIndex).weaponAmmo;
-            curBullet = maxBullet;
+            maxAmmo = GameManager.instance.itemDatabase.GetItemData(GameManager.instance.playerWeaponIndex).weaponAmmo;
+            curAmmo = maxAmmo;
             flickerCnt = 0;
         }
-        else 
+        else
         {
-            maxBullet = FieldSystem.unitSystem.GetPlayer().weapon.maxAmmo;
-            curBullet = FieldSystem.unitSystem.GetPlayer().weapon.currentAmmo;
+            maxAmmo = FieldSystem.unitSystem.GetPlayer().weapon.maxAmmo;
+            curAmmo = FieldSystem.unitSystem.GetPlayer().weapon.currentAmmo;
             flickerCnt = UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedMagUsage;
         }
 
-        var magazineUI = transform.GetChild(0).GetComponent<PlayerMagazineUIElement>();
-        magazineUI.Reload(maxBullet, curBullet, flickerCnt);
+        if (_revolvers.gameObject.activeSelf == true)
+            _revolvers.gameObject.SetActive(false);
+        if (_shotguns.gameObject.activeSelf == true)
+            _shotguns.gameObject.SetActive(false);
+        if (_repeater.gameObject.activeSelf == true)
+            _repeater.gameObject.SetActive(false);
 
-        /*
-        int nonFlickerCnt = curBullet - flickerCnt;
-        for (int i = 0; i < transform.childCount; i++) 
+        var weaponType = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
+        if (weaponType == ItemType.Revolver)
         {
-            int existCnt = MAGAZINE_SIZE;
-            int filledCnt = MAGAZINE_SIZE;
-            flickerCnt = 0;
-            if (curBullet <= MAGAZINE_SIZE)
-            {
-                filledCnt = curBullet;
-                existCnt = maxBullet;
-            }
-            if (nonFlickerCnt <= MAGAZINE_SIZE)
-            {
-                flickerCnt = filledCnt - nonFlickerCnt;
-            }
-
-            //transform.GetChild(i).GetComponent<PlayerMagazineUIElement>().SetPlayerMagUIElement(existCnt, filledCnt, flickerCnt);
-            
-
-            maxBullet -= MAGAZINE_SIZE;
-            curBullet -= MAGAZINE_SIZE;
-            nonFlickerCnt -= MAGAZINE_SIZE;
+            _revolvers.gameObject.SetActive(true);
+            _revolvers.Reload(maxAmmo, curAmmo, flickerCnt);
         }
-        */
+        if (weaponType == ItemType.Shotgun)
+        {
+            _shotguns.gameObject.SetActive(true);
+            _shotguns.Reload(maxAmmo, curAmmo, flickerCnt);
+        }
+        if (weaponType == ItemType.Repeater)
+        {
+            _repeater.gameObject.SetActive(true);
+            _repeater.Reload(maxAmmo, curAmmo, flickerCnt);
+        }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {

@@ -36,13 +36,13 @@ public class PlayerMagazineUIElement : UIElement
             Debug.LogError($"HUD magazine UI => SetMaxSize()'s size is incorrect. ({gameObject.name} maxAmmo:{maxAmmo})");
         
         // use bullets
-        for (int i = 0; i <= curAmmo; i++)
+        for (int i = 0; i < curAmmo; i++)
         {
             _elements[i].Fill();
             _elements[i].GetComponent<Image>().sprite = _bulletSprite;
         }
 
-        for (int i = curAmmo + 1; i < maxAmmo; i++)
+        for (int i = curAmmo; i < maxAmmo; i++)
         {
             _elements[i].Empty();
             _elements[i].GetComponent<Image>().sprite = _bulletSprite;
@@ -55,7 +55,7 @@ public class PlayerMagazineUIElement : UIElement
         }
 
         // flicker
-        for (int i = curAmmo; 0 <= i; i--)
+        for (int i = curAmmo - 1; 0 <= i; i--)
         {
             if (0 != expectedCnt)
             {

@@ -16,6 +16,10 @@ public class PlayerSummaryStatusUI : UIElement
     [SerializeField] private GameObject _magazineUI;
     [SerializeField] private GameObject _concentrationUI;
 
+    [SerializeField] private TMP_Text _hpTitleText;
+    [SerializeField] private TMP_Text _concentrationTitleText;
+    [SerializeField] private TMP_Text _apTitleText;
+
     public int expectedHpUsage = 0;
     public int expectedApUsage = 0;
     public int expectedMagUsage = 0;
@@ -32,6 +36,10 @@ public class PlayerSummaryStatusUI : UIElement
         
         InitExpectedValues();
         SetCurrentStatusUI();
+
+        _hpTitleText.text = UIManager.instance.UILocalization[26];
+        _concentrationTitleText.text = UIManager.instance.UILocalization[29];
+        _apTitleText.text = UIManager.instance.UILocalization[27];
     }
 
     void StageStart()

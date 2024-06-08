@@ -4,25 +4,45 @@ using UnityEngine;
 
 public class PlayerBulletUIElement : UIElement
 {
-    [SerializeField] private GameObject _bulletOutline;
-    [SerializeField] private GameObject _bulletEmpty;
-    [SerializeField] private GameObject _bulletFill;
+    [SerializeField] private Transform _bulletFill;
 
-    public void SetBulletUIElement(bool isExist, bool isFilled, bool isFlickering)
+    public void Fill()
     {
-        _bulletOutline.SetActive(isExist);
-        _bulletEmpty.SetActive(isExist);
-        _bulletFill.SetActive(isFilled);
-        if (isFilled && isFlickering)
+        if (this.gameObject.activeSelf == false)
+            this.gameObject.SetActive(true);
+
+        if (_bulletFill.gameObject.activeSelf == false)
+            _bulletFill.gameObject.SetActive(true);
+    }
+
+    public void Empty()
+    {
+        if (this.gameObject.activeSelf == false)
+            this.gameObject.SetActive(true);
+
+        if (_bulletFill.gameObject.activeSelf == true)
         {
-            _bulletFill.GetComponent<Animator>().enabled = true;
-            _bulletFill.GetComponent<Animator>().Rebind();
-            _bulletFill.GetComponent<Animator>().Play("Fade In & Out Effect");
+            _bulletFill.gameObject.SetActive(false);
+            StopFlick();
         }
-        else
-        {
-            _bulletFill.GetComponent<Animator>().Rebind();
-            _bulletFill.GetComponent<Animator>().enabled = false;
-        }
+    }
+
+    // Hide included edge or background.
+    public void Hide()
+    {
+        this.gameObject.SetActive(false);
+    }
+
+    public void Flick()
+    {
+        _bulletFill.GetComponent<Animator>().enabled = true;
+        _bulletFill.GetComponent<Animator>().Rebind();
+        _bulletFill.GetComponent<Animator>().Play("Fade In & Out Effect");
+    }
+
+    public void StopFlick()
+    {
+        _bulletFill.GetComponent<Animator>().Rebind();
+        _bulletFill.GetComponent<Animator>().enabled = false;
     }
 }

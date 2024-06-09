@@ -14,7 +14,7 @@ public class QuestUI : UISystem
     [SerializeField] private GameObject _popupWindow;
     [SerializeField] private GameObject _popupText;
 
-    public WorldCamera worldCamera;
+    private WorldCamera worldCamera;
 
     private QuestListPool _listPool = null;
 
@@ -24,6 +24,8 @@ public class QuestUI : UISystem
         _listPool = new QuestListPool();
         _listPool.Init("Prefab/Quest List UI Element", _listElementContainer.transform, 0);
         _questWindow.SetActive(true);
+
+        worldCamera = CameraManager.instance.worldCamera;
     }
 
     public void AddQuestListUI(QuestInfo info) 

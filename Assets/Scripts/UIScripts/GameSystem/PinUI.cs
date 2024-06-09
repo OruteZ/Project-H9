@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PinUI : UISystem
 {
     [SerializeField] private GameObject _pinImage;
-    public WorldCamera worldCamera;
+    private WorldCamera worldCamera;
 
     private bool _isTracking = false;
     private Vector3 _targetPos = Vector3.zero;

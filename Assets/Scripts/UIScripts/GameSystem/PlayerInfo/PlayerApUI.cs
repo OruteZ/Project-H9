@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerApUI : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private GameObject _apElements;
     [SerializeField] private GameObject _apTooltip;
     void Start()
     {
@@ -25,7 +26,7 @@ public class PlayerApUI : UIElement, IPointerEnterHandler, IPointerExitHandler
             if (i >= curAp) isFilled = false;
             if (i >= maxAp) isExist = false;
 
-            transform.GetChild(i).GetComponent<PlayerApUIElement>().SetApUIElement(isExist, isFilled, isFlickering);
+            _apElements.transform.GetChild(i).GetComponent<PlayerApUIElement>().SetApUIElement(isExist, isFilled, isFlickering);
         }
     }
     public void OnPointerEnter(PointerEventData eventData)

@@ -20,10 +20,10 @@ public class PlayerSummaryStatusUI : UIElement
     [SerializeField] private TMP_Text _concentrationTitleText;
     [SerializeField] private TMP_Text _apTitleText;
 
-    public int expectedHpUsage = 0;
-    public int expectedApUsage = 0;
-    public int expectedMagUsage = 0;
-    public int expectedConcenUsage = 0;
+    [HideInInspector] public int expectedHpUsage = 0;
+    [HideInInspector] public int expectedApUsage = 0;
+    [HideInInspector] public int expectedMagUsage = 0;
+    [HideInInspector] public int expectedConcenUsage = 0;
 
     // Start is called before the first frame update
     void Start()

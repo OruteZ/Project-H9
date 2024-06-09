@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ConversationUI : UISystem
 {
     [SerializeField] private GameObject _conversationWindow;
+    [SerializeField] private GameObject _speakerPortrait;
     [SerializeField] private GameObject _speakerText;
     [SerializeField] private GameObject _contentsText;
 
@@ -104,6 +106,7 @@ public class ConversationUI : UISystem
         }
         else
         {
+            //_speakerPortrait.GetComponent<Image>().sprite = ???;
             _speakerText.GetComponent<TextMeshProUGUI>().text = _groupInfo[_sequenceNumber].speakerName;
             _contentsText.GetComponent<TextMeshProUGUI>().text = _groupInfo[_sequenceNumber].conversationText;
         }

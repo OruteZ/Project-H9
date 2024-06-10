@@ -46,11 +46,11 @@ public abstract class Weapon
     /// </summary>
     /// <param name="target"></param>
     /// <param name="isCritical"></param>
-    public abstract void Attack(Unit target, out bool isCritical);
+    public abstract void Attack(IDamageable target, out bool isCritical);
     public abstract ItemType GetWeaponType();
     public abstract int GetFinalDamage();
     public abstract int GetFinalCriticalDamage();
-    public abstract float GetFinalHitRate(Unit target);
+    public abstract float GetFinalHitRate(IDamageable target);
     public abstract float GetDistancePenalty();
 
     public abstract int GetRange();

@@ -14,7 +14,7 @@ public class Revolver : Weapon
         return weaponRange + unitStat.revolverAdditionalRange;
     }
 
-    public override void Attack(Unit target, out bool isCritical)
+    public override void Attack(IDamageable target, out bool isCritical)
     {
         Debug.Log("Weapon attack Call" + " : " + nameIndex);
 
@@ -42,10 +42,10 @@ public class Revolver : Weapon
         return Mathf.RoundToInt(dmg);
     }
 
-    public override float GetFinalHitRate(Unit target)
+    public override float GetFinalHitRate(IDamageable target)
     {
         int range = weaponRange + unitStat.revolverAdditionalRange;
-        int distance = Hex.Distance(unit.hexPosition, target.hexPosition);
+        int distance = Hex.Distance(unit.hexPosition, target.GetHex());
 
         float finalHitRate = (hitRate + unitStat.concentration * (100 - distance * GetDistancePenalty() *
             (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1)
@@ -59,7 +59,7 @@ public class Revolver : Weapon
         #endif
 
         UIManager.instance.debugUI.SetDebugUI
-            (finalHitRate, unit, target, distance, weaponRange,
+            (finalHitRate, unit, (Unit)target, distance, weaponRange,
                 unitStat.revolverAdditionalRange,
                 GetDistancePenalty() *
                 (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
@@ -67,13 +67,13 @@ public class Revolver : Weapon
         return finalHitRate;
     }
 
-    private void NonCriticalAttack(Unit target)
+    private void NonCriticalAttack(IDamageable target)
     {
         int damage = GetFinalDamage();
         target.TakeDamage(damage, unit);
     }
 
-    private void CriticalAttack(Unit target)
+    private void CriticalAttack(IDamageable target)
     {
         int damage = GetFinalCriticalDamage();
         target.TakeDamage(damage, unit, Damage.Type.Critical);

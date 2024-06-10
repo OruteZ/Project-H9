@@ -47,9 +47,9 @@ public class UIManager : Generic.Singleton<UIManager>
     [HideInInspector] public UnityEvent<int> onGetExp;
     [HideInInspector] public UnityEvent<int> onLevelUp;
     [HideInInspector] public UnityEvent onActionChanged;
-    [HideInInspector] public UnityEvent<Unit, int, Damage.Type> onTakeDamaged;
+    [HideInInspector] public UnityEvent<IDamageable, int, Damage.Type> onTakeDamaged;
     [HideInInspector] public UnityEvent<Unit, int, Damage.Type> onHealed;
-    [HideInInspector] public UnityEvent<Unit> onNonHited;
+    [HideInInspector] public UnityEvent<IDamageable> onNonHited;
 
     protected override void Awake()
     {

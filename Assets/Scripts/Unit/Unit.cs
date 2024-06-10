@@ -11,7 +11,7 @@ public enum UnitType
 }
 
 [RequireComponent(typeof(HexTransform))]
-public abstract class Unit : MonoBehaviour, IUnit
+public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 {
     #region SIMPLIFY
     public int currentActionPoint => stat.GetStat(StatType.CurActionPoint);
@@ -63,8 +63,8 @@ public abstract class Unit : MonoBehaviour, IUnit
     [HideInInspector] public UnityEvent<Unit> onMoved; // me
     [HideInInspector] public UnityEvent<Unit> onDead; //me
     [HideInInspector] public UnityEvent<Unit, int> onHit; // attacker, damage
-    [HideInInspector] public UnityEvent<Unit> onStartShoot; // target
-    [HideInInspector] public UnityEvent<Unit, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
+    [HideInInspector] public UnityEvent<IDamageable> onStartShoot; // target
+    [HideInInspector] public UnityEvent<IDamageable, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
     [HideInInspector] public UnityEvent<Unit> onKill; // target
     [HideInInspector] public UnityEvent onUnitActionDataChanged;
     [HideInInspector] public UnityEvent onSelectedChanged;
@@ -369,7 +369,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         return activeUnitAction;
     }
 
-    public bool TryAttack(Unit target, float hitRateOffset)
+    public bool TryAttack(IDamageable target, float hitRateOffset)
     {
         onStartShoot.Invoke(target);
 
@@ -384,7 +384,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         if (VFXHelper.TryGetTraceOfBulletFXKey(weapon.GetWeaponType(), out var fxBulletLine, out var traceTime))
         {
             var startPos = _unitModel.GetGunpointPosition();
-            var destPos = target.transform.position + Vector3.up;
+            var destPos = Hex.Hex2World(target.GetHex()) + Vector3.up;
             if (!hit) destPos += new Vector3(UnityEngine.Random.value*2-1, UnityEngine.Random.value*2-1, UnityEngine.Random.value*2-1);
             VFXManager.instance.TryLineRender(fxBulletLine, traceTime, startPos, destPos);
         }
@@ -395,7 +395,7 @@ public abstract class Unit : MonoBehaviour, IUnit
             var existKey = VFXHelper.TryGetBloodingFXKey(weapon.GetWeaponType(), out var fxBloodingKey, out var bloodingTime);
             if (existKey)
             {
-                var targetPos = target.transform.position + Vector3.up;
+                var targetPos = Hex.Hex2World(target.GetHex()) + Vector3.up;
                 VFXManager.instance.TryInstantiate(fxBloodingKey, bloodingTime, targetPos);
             }
         }
@@ -581,5 +581,23 @@ public abstract class Unit : MonoBehaviour, IUnit
             //passiveIndexList.Add(passive.index);
         }
     }
+    
+    
+    #region IDAMAGEABLE
+    public Vector3Int GetHex()
+    {
+        return hexTransform.position;
+    }
+
+    public int GetCurrentHp()
+    {
+        return stat.GetStat(StatType.CurHp);
+    }
+
+    public int GetMaxHp()
+    {
+        return stat.GetStat(StatType.MaxHp);
+    }
+    #endregion
 }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Melee : Weapon
 {
-    public override void Attack(Unit target, out bool isCritical)
+    public override void Attack(IDamageable target, out bool isCritical)
     {
         throw new System.NotImplementedException();
     }
@@ -24,7 +24,7 @@ public class Melee : Weapon
         throw new System.NotImplementedException();
     }
 
-    public override float GetFinalHitRate(Unit target)
+    public override float GetFinalHitRate(IDamageable target)
     {
         throw new System.NotImplementedException();
     }

@@ -16,15 +16,15 @@
         public LessTargetRangeCondition(float amt) : base(amt)
         { }
 
-        private void SetTarget(Unit target)
+        private void SetTarget(IDamageable target)
         {
-            var dist = Hex.Distance(unit.hexPosition, target.hexPosition);
+            var dist = Hex.Distance(unit.hexPosition, target.GetHex());
             
             if(dist <= amount) passive.Enable();
             else passive.Disable();
         }
 
-        private void TargetOff(Unit target, int damage, bool none, bool __)
+        private void TargetOff(IDamageable target, int damage, bool none, bool __)
         {
             passive.Disable();
         }
@@ -46,15 +46,15 @@
         public MoreTargetRangeCondition(float amt) : base(amt)
         { }
 
-        private void SetTarget(Unit target)
+        private void SetTarget(IDamageable target)
         {
-            var dist = Hex.Distance(unit.hexPosition, target.hexPosition);
+            var dist = Hex.Distance(unit.hexPosition, target.GetHex());
             
             if(dist >= (int)amount) passive.Enable();
             else passive.Disable();
         }
 
-        private void TargetOff(Unit target, int damage, bool none, bool __)
+        private void TargetOff(IDamageable target, int damage, bool none, bool __)
         {
             passive.Disable();
         }
@@ -76,15 +76,15 @@
             unit.onFinishShoot.AddListener(TargetOff);
         }
 
-        private void SetTarget(Unit target)
+        private void SetTarget(IDamageable target)
         {
-            var dist = Hex.Distance(unit.hexPosition, target.hexPosition);
+            var dist = Hex.Distance(unit.hexPosition, target.GetHex());
             
             if(dist == (int)amount) passive.Enable();
             else passive.Disable();
         }
 
-        private void TargetOff(Unit target, int damage, bool none, bool __)
+        private void TargetOff(IDamageable target, int damage, bool none, bool __)
         {
             passive.Disable();
         }

@@ -16,13 +16,13 @@
         public TargetHighHpCondition(float amt) : base(amt)
         { }
 
-        private void SetTarget(Unit target)
+        private void SetTarget(IDamageable target)
         {
-            if(target.hp >= amount) passive.Enable();
+            if(target.GetCurrentHp() >= amount) passive.Enable();
             else passive.Disable();
         }
 
-        private void TargetOff(Unit target, int damage, bool none, bool __)
+        private void TargetOff(IDamageable target, int damage, bool none, bool __)
         {
             passive.Disable();
         }
@@ -44,13 +44,13 @@
         public TargetHpIsCondition(float amt) : base(amt)
         { }
 
-        private void SetTarget(Unit target)
+        private void SetTarget(IDamageable target)
         {
-            if(target.hp == (int)amount) passive.Enable();
+            if(target.GetCurrentHp() == (int)amount) passive.Enable();
             else passive.Disable();
         }
 
-        private void TargetOff(Unit target, int damage, bool none, bool __)
+        private void TargetOff(IDamageable target, int damage, bool none, bool __)
         {
             passive.Disable();
         }
@@ -72,13 +72,13 @@
             unit.onFinishShoot.AddListener(TargetOff);
         }
 
-        private void SetTarget(Unit target)
+        private void SetTarget(IDamageable target)
         {
-            if(target.hp <= amount) passive.Enable();
+            if(target.GetCurrentHp() <= amount) passive.Enable();
             else passive.Disable();
         }
 
-        private void TargetOff(Unit target, int damage, bool none, bool __)
+        private void TargetOff(IDamageable target, int damage, bool none, bool __)
         {
             passive.Disable();
         }
@@ -101,13 +101,13 @@
             unit.onFinishShoot.AddListener(TargetOff);
         }
 
-        private void SetTarget(Unit target)
+        private void SetTarget(IDamageable target)
         {
-            if(target.hp == target.stat.GetStat(StatType.MaxHp)) passive.Enable();
+            if(target.GetCurrentHp() == target.GetMaxHp()) passive.Enable();
             // else passive.DisableCondition();
         }
 
-        private void TargetOff(Unit target, int damage, bool none, bool __)
+        private void TargetOff(IDamageable target, int damage, bool none, bool __)
         {
             passive.Disable();
         }

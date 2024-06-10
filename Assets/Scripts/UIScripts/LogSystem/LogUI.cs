@@ -9,10 +9,10 @@ using UnityEngine.SceneManagement;
 public class LogUI : UISystem
 {
     [SerializeField]
-    private RectTransform _logView; // on/off ½Ã ²ô°í ÄÑ´Â Ã¢
+    private RectTransform _logView; // on/off ì‹œ ë„ê³  ì¼œëŠ” ì°½
 
     [SerializeField]
-    private RectTransform _logPanel; // text µéÀ» ´ãÀ» ¼ö ÀÖÀ¸¸ç, text µéÀÇ ÇÕ¸¸Å­ÀÇ Å©±â¸¦ Áö´Ò °ÍÀÓ.
+    private RectTransform _logPanel; // text ë“¤ì„ ë‹´ì„ ìˆ˜ ìˆìœ¼ë©°, text ë“¤ì˜ í•©ë§Œí¼ì˜ í¬ê¸°ë¥¼ ì§€ë‹ ê²ƒì„.
     private float _FixedTextedPanelHeight; // "length text 0 ~ n-1" + length text n
 
     [SerializeField]
@@ -54,7 +54,7 @@ public class LogUI : UISystem
         IInventory.OnGetItem.AddListener(GotItem);
         PlayerEvents.OnGetMoney.AddListener(GotMoney);
         PlayerEvents.OnLearnedSkill.AddListener(LearnedSkill);
-        //UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat); // ¸ğµç ÇÃ·¹ÀÌ¾î ½ºÅÈº¯È­ ÃßÀûÇÏ±â Èûµé¾î ÀÏ´Ü ÁÖ¼®Ã³¸®
+        //UIManager.instance.onPlayerStatChanged.AddListener(ChangedPlayerStat); // ëª¨ë“  í”Œë ˆì´ì–´ ìŠ¤íƒ¯ë³€í™” ì¶”ì í•˜ê¸° í˜ë“¤ì–´ ì¼ë‹¨ ì£¼ì„ì²˜ë¦¬
         InstantiateText();
         _FixedTextedPanelHeight = 0;
     }
@@ -62,7 +62,7 @@ public class LogUI : UISystem
     private void AddUnitEventListener(Unit unit)
     {
         
-        // todo : unit Take Damaged º¯°æ½ÃÀû¿ë
+        // todo : unit Take Damaged ë³€ê²½ì‹œì ìš©
         // unit.onTakeDamaged.AddListener(TakeDamaged);
         // unit.onNonHited.AddListener(NonHited);
         unit.onActionStart.AddListener((action, target) =>
@@ -116,17 +116,21 @@ public class LogUI : UISystem
         UpdateText();
     }
 
-    private void TakeDamaged(Unit unit, int damage, Damage.Type type)
+    private void TakeDamaged(IDamageable unit, int damage, Damage.Type type)
     {
-        var message = localization[5].Replace("{unitName}", unit.unitName.ToString());
+        if (unit is not Unit u) return;
+        
+        var message = localization[5].Replace("{unitName}", u.unitName.ToString());
         message = message.Replace("{damage}", damage.ToString());
         _builder.Append($"{message}\n");
         UpdateText();
     }
 
-    private void NonHited(Unit unit)
+    private void NonHited(IDamageable unit)
     {
-        var message = localization[6].Replace("{unitName}", unit.unitName.ToString());
+        if (unit is not Unit u) return;
+        
+        var message = localization[6].Replace("{unitName}", u.unitName.ToString());
         _builder.Append($"{message}\n");
         UpdateText();
     }
@@ -211,7 +215,7 @@ public class LogUI : UISystem
     {
         var target = Instantiate(_defaultTextPrefab);
         target.transform.SetParent(_logPanel);
-        target.transform.localScale = Vector3.one; // °£È¤ canvasÀÇ scaleÀÌ º¯ÇÏ´Â ÀÏ ¶§¹®¿¡ ¼³Á¤ÇØµÒ. scale º¯È¯½ÃÅ³ ÀÏ ÀÖÀ¸¸é ±× ¶§ º¸ÀÚ.
+        target.transform.localScale = Vector3.one; // ê°„í˜¹ canvasì˜ scaleì´ ë³€í•˜ëŠ” ì¼ ë•Œë¬¸ì— ì„¤ì •í•´ë‘ . scale ë³€í™˜ì‹œí‚¬ ì¼ ìˆìœ¼ë©´ ê·¸ ë•Œ ë³´ì.
         _textCaches.Add(target.GetComponent<TMP_Text>());
         _sizeFilterCaches.Add(target.GetComponent<ContentSizeFitter>());
         _curTextlistIndex++;
@@ -223,12 +227,12 @@ public class LogUI : UISystem
         _sizeFilterCaches[_curTextlistIndex].SetLayoutVertical();
         float newHeight = _beforeHeight + _textCaches[_curTextlistIndex].rectTransform.sizeDelta.y;
         _logPanel.sizeDelta = new Vector2(_logPanel.sizeDelta.x, newHeight);
-        _scroll.verticalScrollbar.value = 0; // ½ºÅ©·ÑÀÌ °¡Àå ¾Æ·¡·Î ³»·Á¿Àµµ·Ï Á¶Á¤
+        _scroll.verticalScrollbar.value = 0; // ìŠ¤í¬ë¡¤ì´ ê°€ì¥ ì•„ë˜ë¡œ ë‚´ë ¤ì˜¤ë„ë¡ ì¡°ì •
 
-        // Å©±â°¡ ÀÏÁ¤ ¼öÁØ ÀÌ»óÀÌ¶ó¸é, ´ÙÀ½¿¡ »ç¿ëÇÒ ÅØ½ºÆ® ¿ÀºêÁ§Æ®¸¦ ¹Ì¸® ¸¸µç´Ù.
+        // í¬ê¸°ê°€ ì¼ì • ìˆ˜ì¤€ ì´ìƒì´ë¼ë©´, ë‹¤ìŒì— ì‚¬ìš©í•  í…ìŠ¤íŠ¸ ì˜¤ë¸Œì íŠ¸ë¥¼ ë¯¸ë¦¬ ë§Œë“ ë‹¤.
         if (LIMIT_TEXT_LENGTH < _textCaches[_curTextlistIndex].text.Length)
         {
-            _builder.Clear(); // ÀÌ¹Ì ¾²¿©Áø ÅØ½ºÆ® ¿ÀºêÁ§Æ®´Â ±³Ã¼ÇÏÁö ¾ÊÀ» ¿¹Á¤ÀÌ¹Ç·Î, stringBuilder¸¦ ºñ¿î´Ù.
+            _builder.Clear(); // ì´ë¯¸ ì“°ì—¬ì§„ í…ìŠ¤íŠ¸ ì˜¤ë¸Œì íŠ¸ëŠ” êµì²´í•˜ì§€ ì•Šì„ ì˜ˆì •ì´ë¯€ë¡œ, stringBuilderë¥¼ ë¹„ìš´ë‹¤.
             _beforeHeight = _textCaches[_curTextlistIndex].rectTransform.sizeDelta.y;
             _FixedTextedPanelHeight = _FixedTextedPanelHeight + _textCaches[_curTextlistIndex].rectTransform.sizeDelta.y;
             InstantiateText();

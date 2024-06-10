@@ -33,19 +33,23 @@ public static class Service
         UIManager.instance.onHealed.AddListener(DamagedText); // 피해를 입는 것과 같은 규칙 따름.
     }
 
-    public static void MissedText(Unit unit)
+    public static void MissedText(IDamageable unit)
     {
-        Service.SetText(Damage.Type.Default, "MISS", unit.transform.position, 1.0f);
+        var pos = Hex.Hex2World(unit.GetHex());
+        
+        Service.SetText(Damage.Type.Default, "MISS", pos, 1.0f);
     }
 
-    public static void DamagedText(Unit unit, int damage, Damage.Type type)
+    public static void DamagedText(IDamageable unit, int damage, Damage.Type type)
     {
+        var pos = Hex.Hex2World(unit.GetHex());
+        
         // 데미지에 비례하여 커지는 것은 게임의 진행 상황에 따라 "큰 데미지"의 기준이 바뀌므로, 지금은 임시로만
         // 15보다 높은 값에만 scale을 추가로 주겠음
         float scale = 1.0f;
         if (damage > 15) scale = 1.5f;
 
-        Service.SetText(type, damage.ToString(), unit.transform.position, scale);
+        Service.SetText(type, damage.ToString(), pos, scale);
     }
 
     /// <summary>

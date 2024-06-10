@@ -95,6 +95,9 @@ public class ItemBuff : IDisplayableEffect
 
     public void DecreaseDuration()
     {
+        //if turn is not owner, return
+        if (FieldSystem.turnSystem.turnOwner != _unit) return;
+        
         _duration--;
         if (_duration <= 0)
         {

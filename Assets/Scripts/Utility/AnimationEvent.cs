@@ -5,6 +5,7 @@ public static class AnimationEventNames
     public const string GUN_RELOAD_END = "GunReloadEnd";
     public const string STEP = "Step";
     public const string THROW = "Throw";
+    public const string COVER = "Cover";
 
     public static bool IsEventName(string eventName)
     {
@@ -14,6 +15,7 @@ public static class AnimationEventNames
             or GUN_RELOAD_END
             or STEP
             or THROW
+            or COVER
             
        ;
     }

@@ -71,11 +71,11 @@ public class QuestListElement : UIElement, IPointerClickHandler
         currentQuestInfo = qInfo;
         _questNameText.GetComponent<TextMeshProUGUI>().text = qInfo.QuestName;
         _questDescriptText.GetComponent<TextMeshProUGUI>().text = "- " + qInfo.QuestTooltip;
-        popupStr = "Quest Accepted!*FixLater\n" + qInfo.QuestName;
+        popupStr = UIManager.instance.UILocalization[31] + "\n" + qInfo.QuestName;
 
         string[] rewardTexts = { "", "", "", "" };
 
-        _resultText = "Reward*FixLater: ";
+        _resultText = UIManager.instance.UILocalization[33];
         if (qInfo.MoneyReward > 0)
         {
             rewardTexts[0] = qInfo.MoneyReward.ToString() + "$";
@@ -121,7 +121,7 @@ public class QuestListElement : UIElement, IPointerClickHandler
 
     public void CompleteQuestUI(out string popupStr)
     {
-        popupStr = "Quest Complete!*FixLater\n" + _displayText;
+        popupStr = UIManager.instance.UILocalization[32] + "\n" + _displayText;
         if (!_isDestroying) 
         {
             _isDestroying = true;

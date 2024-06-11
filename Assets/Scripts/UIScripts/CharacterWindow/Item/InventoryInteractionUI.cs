@@ -6,6 +6,8 @@ using TMPro;
 public class InventoryInteractionUI : UIElement
 {
     [SerializeField] private GameObject _useBtn;
+    [SerializeField] private GameObject _sellBtn;
+    [SerializeField] private GameObject _removeBtn;
     public bool isEquipable { get; private set; }
 
     private void Awake()
@@ -30,7 +32,7 @@ public class InventoryInteractionUI : UIElement
             case ItemType.Shotgun:
                 {
                     isEquipable = true;
-                    _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Equip";
+                    _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[40];
                     break;
                 }
             case ItemType.Heal:
@@ -40,7 +42,7 @@ public class InventoryInteractionUI : UIElement
             case ItemType.Debuff:
                 {
                     isEquipable = false;
-                    _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Use";
+                    _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[39];
                     if (GameManager.instance.CompareState(GameState.World) && item.GetData().itemType != ItemType.Heal)
                     {
                         _useBtn.SetActive(false);
@@ -52,6 +54,8 @@ public class InventoryInteractionUI : UIElement
                     break;
                 }
         }
+        _sellBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[41] + "(" + item.GetData().itemPrice + ")";
+        _removeBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[42];
 
         GetComponent<RectTransform>().position = pos;
         UIManager.instance.SetUILayer(3);

@@ -19,33 +19,29 @@ public class PlayerMainStatTooltip : UIElement
         string str = "";
         if (textObj.TryGetComponent<PlayerMainStatElement>(out var textObjElement)) 
         {
-            str = textObjElement.statName;
+            str = UIManager.instance.statScript.GetStatScript(textObjElement.statName).name;
         }
         else if (textObj.TryGetComponent<PlayerHpUI>(out var hp))
         {
-            str = "Health Point";
+            str = UIManager.instance.UILocalization[26];
         }
         else if (textObj.TryGetComponent<PlayerApUI>(out var ap))
         {
-            str = "Action Point";
+            str = UIManager.instance.UILocalization[27];
         }
         else if (textObj.TryGetComponent<PlayerMagazineUI>(out var mag))
         {
-            str = "Magazine";
+            str = UIManager.instance.UILocalization[28];
         }
         else if (textObj.TryGetComponent<PlayerConcentrationUI>(out var conc))
         {
-            str = "Concentration";
+            str = UIManager.instance.UILocalization[29];
         }
         else
         {
             Debug.LogError("Can't Find Text for main stat tooltip");
             return;
         }
-
-        //Convert str by language
-        //str = UIManager.instance.UILocalization[str?]
-        str += "*fix later";
 
         Vector3 pos = textObj.GetComponent<RectTransform>().position;
         pos += new Vector3(TOOLTIP_X_POSITION_CORRECTION, textObj.GetComponent<RectTransform>().sizeDelta.y / 2 + TOOLTIP_Y_POSITION_CORRECTION, 0) * UIManager.instance.GetCanvasScale();

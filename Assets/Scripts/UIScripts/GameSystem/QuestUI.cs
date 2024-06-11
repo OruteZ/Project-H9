@@ -7,6 +7,7 @@ using TMPro;
 /// </summary>
 public class QuestUI : UISystem
 {
+    [SerializeField] private GameObject _questText;
     [SerializeField] private GameObject _questWindow;
     [SerializeField] private GameObject _listElementContainer;
     [SerializeField] private GameObject _itemTooltip;
@@ -20,6 +21,7 @@ public class QuestUI : UISystem
 
     void Awake()
     {
+        _questText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[30];
         _popupWindow.SetActive(false);
         _listPool = new QuestListPool();
         _listPool.Init("Prefab/Quest List UI Element", _listElementContainer.transform, 0);

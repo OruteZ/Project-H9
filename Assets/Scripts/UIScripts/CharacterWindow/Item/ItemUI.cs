@@ -10,6 +10,10 @@ public class ItemUI : UISystem
 {
     [SerializeField] private GameObject _moneyText;
 
+    [SerializeField] private GameObject _weaponItemButton;
+    [SerializeField] private GameObject _consumeItemButton;
+    [SerializeField] private GameObject _otherItemButton;
+
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject _inventoryTooltip;
     [SerializeField] private GameObject _inventoryInteractionButtons;
@@ -27,6 +31,10 @@ public class ItemUI : UISystem
 
     private void Start()
     {
+        _weaponItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[49];
+        _consumeItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[50];
+        _otherItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[51];
+
         _draggedElement.GetComponent<InventoryUIElement>().ClearInventoryUIElement();
         _equippedElement.GetComponent<InventoryUIElement>().ClearInventoryUIElement();
         for (int i = 0; i < _inventoryUI.transform.childCount; i++)

@@ -30,7 +30,7 @@ public class SkillIcon : UIElement
         Skill skill = skillManager.GetSkill(_skillIndex);
         if (skill == null) return;
         //Sprite sprite = Resources.Load("SkillIcon/" + skill.skillInfo.icon) as Sprite;
-        Sprite sprite = UIManager.instance.iconDB.GetIconInfo(skill.skillInfo.icon);
+        Sprite sprite = skill.skillInfo.icon;
         if (sprite == null)
         {
             Debug.LogError(_skillIndex + "번 스킬의 스프라이트 " + skill.skillInfo.icon + "를 찾을 수 없습니다.");

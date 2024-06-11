@@ -207,6 +207,14 @@ public class UIManager : Generic.Singleton<UIManager>
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, isOn);
         if (!_pauseMenuCanvas.enabled) currentLayer = 1;
     }
+    public bool GetCharacterCanvasState()
+    {
+        return _characterCanvas.enabled;
+    }
+    public bool GetSkillCanvasState()
+    {
+        return _skillCanvas.enabled;
+    }
 
     public void OnExitBtnClick()
     {

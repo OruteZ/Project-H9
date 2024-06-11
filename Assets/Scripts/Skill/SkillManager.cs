@@ -9,8 +9,8 @@ using UnityEngine;
 public class SkillManager : Generic.Singleton<SkillManager>
 {
 #if UNITY_EDITOR
-    private const int REQUIRED_SKILL_POINT = 0;
-    private const int INITIAL_SKILL_POINT = 10;
+    private const int REQUIRED_SKILL_POINT = 1;
+    private const int INITIAL_SKILL_POINT = 3;
 #else
     private const int REQUIRED_SKILL_POINT = 1;
     private const int INITIAL_SKILL_POINT = 0;
@@ -24,7 +24,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
     private List<SkillDescriptionScript> _skillDescriptionScripts;
     private List<KeywordScript> _skillKeywordScripts;
 
-    private int _sp = 0;
+    private int _sp = INITIAL_SKILL_POINT;
     private int _skillPoint 
     {
         get 
@@ -35,6 +35,17 @@ public class SkillManager : Generic.Singleton<SkillManager>
         {
             _sp = value;
             UIManager.instance.gameSystemUI.ChangeSkillButtonRedDotText(value);
+            if (UIManager.instance != null)
+            {
+                if (_sp <= 0)
+                {
+                    UIManager.instance.gameSystemUI.alarmUI.DeleteAlarmUI(AlarmType.SkillPoint);
+                }
+                else
+                {
+                    UIManager.instance.gameSystemUI.alarmUI.AddAlarmUI(AlarmType.SkillPoint);
+                }
+            }
         }
     }
 
@@ -44,7 +55,6 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
         InitSkills();
         InitSkillScripts();
-        _skillPoint = INITIAL_SKILL_POINT;
     }
 
     private void InitSkills()

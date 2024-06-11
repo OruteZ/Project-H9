@@ -70,6 +70,11 @@ public class Inventory : IInventory
                 itemList[i] = item;
                 IInventory.OnInventoryChanged?.Invoke();
                 IInventory.OnGetItem?.Invoke(item.GetData());
+
+                if (itemList == _weaponItems) 
+                {
+                    UIManager.instance.gameSystemUI.alarmUI.AddAlarmUI((WeaponItem)item);
+                }
                 return true;
             }
         }

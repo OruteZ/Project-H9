@@ -19,7 +19,7 @@ public class PassiveSkillListElement : UIElement, IPointerEnterHandler, IPointer
         GetComponent<RectTransform>().localPosition = new Vector3(5, -35 - (GetComponent<RectTransform>().sizeDelta.y + 5) * order, 0);
 
         _skillIndex = info.index;
-        _skillIcon.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo(SkillManager.instance.GetSkill(_skillIndex).skillInfo.icon);
+        _skillIcon.GetComponent<Image>().sprite = SkillManager.instance.GetSkill(_skillIndex).skillInfo.icon;
         _skillName.GetComponent<TextMeshProUGUI>().text = SkillManager.instance.GetSkillName(info.index);
     }
 

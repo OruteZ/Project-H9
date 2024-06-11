@@ -46,9 +46,10 @@ public class ConversationUI : UISystem
             int g = int.Parse(conversationTable[i][1]);
             int s = int.Parse(conversationTable[i][2]);
             string n = conversationTable[i][3];
-            string o = conversationTable[i][5];
-            string t = conversationTable[i][3 + (int)UIManager.instance.scriptLanguage];
-            ConversationInfo info = new ConversationInfo(idx, g, s, n, o, t);
+            string img = conversationTable[i][4];
+            string o = conversationTable[i][4 + (int)ScriptLanguage.English];
+            string t = conversationTable[i][4 + (int)UIManager.instance.scriptLanguage];
+            ConversationInfo info = new ConversationInfo(idx, g, s, n, img, o, t);
             _conversationInfo.Add(info);
         }
     }
@@ -160,6 +161,7 @@ public class ConversationUI : UISystem
         _conversationWindow.SetActive(true);
         isConverstating = true;
         _sequenceNumber = 0;
+        _speakerPortrait.GetComponent<Image>().sprite = _groupInfo[0].speakerImage;
         _speakerText.GetComponent<TextMeshProUGUI>().text = _groupInfo[0].speakerName;
         _contentsText.GetComponent<TextMeshProUGUI>().text = _groupInfo[0].conversationText;
     }
@@ -171,15 +173,19 @@ public class ConversationInfo
     public int group { get; private set; }
     public int sequence { get; private set; }
     public string speakerName { get; private set; }
+    public Sprite speakerImage { get; private set; }
     public string originalConversationText { get; private set; }
     public string conversationText { get; private set; }
 
-    public ConversationInfo(int i, int g, int s, string name, string originText, string text) 
+    public ConversationInfo(int i, int g, int s, string name, string image, string originText, string text) 
     {
         index = i;
         group = g;
         sequence = s;
         speakerName = name + "*FixLater";     //need Localization
+        Texture2D texture = Resources.Load("UnitCapture/" + image) as Texture2D;
+        Sprite spr = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        speakerImage = spr;
         originalConversationText = originText;
         conversationText = text;
     } 

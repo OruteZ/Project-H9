@@ -26,7 +26,7 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
         }
         else if (effect is StatUpDependedOnCondition skillCondition)
         {
-            icon = UIManager.instance.iconDB.GetIconInfo(SkillManager.instance.GetSkill(skillCondition.GetIndex()).skillInfo.icon);
+            icon = SkillManager.instance.GetSkill(skillCondition.GetIndex()).skillInfo.icon;
         }
         else if (effect is ItemBuff item)
         {

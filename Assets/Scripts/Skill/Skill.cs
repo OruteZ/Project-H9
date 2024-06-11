@@ -53,7 +53,7 @@ public class SkillInfo
     private int _isPassive;
     public int nameIndex { get; private set; }
     public int tooltipIndex { get; private set; }
-    public string icon { get; private set; }
+    public Sprite icon { get; private set; }
     public int[] precedenceIndex { get; private set; }
     public List<SkillInfo> precedenceSkillInfo { get; private set; }
     public List<SkillInfo> childSkillInfo { get; private set; }
@@ -77,7 +77,7 @@ public class SkillInfo
         _isPassive = int.Parse(list[2]);
         nameIndex = int.Parse(list[3]);
         tooltipIndex = int.Parse(list[4]);
-        icon = list[5];
+        icon = Resources.Load<Sprite>("SkillIcon/" + list[5]);
         precedenceIndex = InitIntArrayValue(list[6]);
         precedenceSkillInfo = new List<SkillInfo>();
         childSkillInfo = new List<SkillInfo>();

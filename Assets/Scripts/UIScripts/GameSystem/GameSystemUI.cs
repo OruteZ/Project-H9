@@ -14,6 +14,7 @@ public class GameSystemUI : UISystem
     public PinUI pinUI { get; private set; }
     public TownUI townUI { get; private set; }
     public LinkInfoUI linkInfoUI { get; private set; }
+    public AlarmUI alarmUI { get; private set; }
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class GameSystemUI : UISystem
         pinUI = GetComponent<PinUI>();
         townUI = GetComponent<TownUI>();
         linkInfoUI = GetComponent<LinkInfoUI>();
+        alarmUI = GetComponent<AlarmUI>();
 
         uiSubsystems.Add(playerInfoUI);
         uiSubsystems.Add(questUI);
@@ -34,6 +36,7 @@ public class GameSystemUI : UISystem
         uiSubsystems.Add(pinUI);
         uiSubsystems.Add(townUI);
         uiSubsystems.Add(linkInfoUI);
+        uiSubsystems.Add(alarmUI);
 
         ChangeSkillButtonRedDotText(SkillManager.instance.GetSkillPoint());
         UIManager.instance.onTSceneChanged.AddListener((s) => { ChangeSkillButtonRedDotText(SkillManager.instance.GetSkillPoint()); });
@@ -53,7 +56,11 @@ public class GameSystemUI : UISystem
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.L))    //level up test button
         {
-            playerStatLevelUpUI.GetPlayerStatPoint();
+            playerStatLevelUpUI.AddPlayerStatPoint();
+        }
+        if (Input.GetKeyDown(KeyCode.Semicolon))    //skill test button
+        {
+            playerStatLevelUpUI.AddPlayerStatPoint();
         }
 #endif
     }

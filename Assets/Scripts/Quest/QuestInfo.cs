@@ -265,7 +265,10 @@ public class QuestInfo
                 Debug.Log($"퀘스트 완료 아이템을 받을 수 없습니다.: item code '{_itemReward}'");
             }
         if (_skillReward != 0)
+        {
             SkillManager.instance.LearnSkill(_skillReward, true);
+            UIManager.instance.gameSystemUI.alarmUI.AddAlarmUI(SkillManager.instance.GetSkill(_skillReward));
+        }
         if (_expReward != 0)
         {
             LevelSystem.GetExpImmediately(_expReward);

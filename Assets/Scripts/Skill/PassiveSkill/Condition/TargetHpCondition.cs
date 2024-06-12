@@ -1,11 +1,10 @@
-﻿namespace PassiveSkill
+﻿using UnityEngine;
+
+namespace PassiveSkill
 {
     public class TargetHighHpCondition : BaseCondition 
     {
-        public override ConditionType GetConditionType()
-        {
-            return ConditionType.TargetHighHp;
-        }
+        public override ConditionType GetConditionType() => ConditionType.TargetHighHp;
 
         protected override void ConditionSetup()
         {
@@ -18,22 +17,19 @@
 
         private void SetTarget(Unit target)
         {
-            if(target.hp >= amount) passive.Enable();
-            else passive.Disable();
+            if(target.hp >= amount) passive.FullfillCondition(this);
+            else passive.NotFullfillCondition(this);
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.Disable();
+            passive.NotFullfillCondition(this);
         }
     }
     
     public class TargetHpIsCondition : BaseCondition
     {
-        public override ConditionType GetConditionType()
-        {
-            return ConditionType.TargetHpIs;
-        }
+        public override ConditionType GetConditionType() => ConditionType.TargetHpIs;
 
         protected override void ConditionSetup()
         {
@@ -46,13 +42,13 @@
 
         private void SetTarget(Unit target)
         {
-            if(target.hp == (int)amount) passive.Enable();
-            else passive.Disable();
+            if(target.hp == (int)amount) passive.FullfillCondition(this);
+            else passive.NotFullfillCondition(this);
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.Disable();
+            passive.NotFullfillCondition(this);
         }
     }
     
@@ -61,10 +57,7 @@
         public TargetLowHpCondition(float amt) : base(amt)
         { }
         
-        public override ConditionType GetConditionType()
-        {
-            return ConditionType.TargetLowHp;
-        }
+        public override ConditionType GetConditionType() => ConditionType.TargetLowHp;
 
         protected override void ConditionSetup()
         {
@@ -74,13 +67,13 @@
 
         private void SetTarget(Unit target)
         {
-            if(target.hp <= amount) passive.Enable();
-            else passive.Disable();
+            if(target.hp <= amount) passive.FullfillCondition(this);
+            else passive.NotFullfillCondition(this);
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.Disable();
+            passive.NotFullfillCondition(this);
         }
     }
 
@@ -90,10 +83,7 @@
         public TargetHpMaxCondition(float amt) : base(amt)
         { }
         
-        public override ConditionType GetConditionType()
-        {
-            return ConditionType.TargetHpMax;
-        }
+        public override ConditionType GetConditionType() => ConditionType.TargetHpMax;
 
         protected override void ConditionSetup()
         {
@@ -103,13 +93,13 @@
 
         private void SetTarget(Unit target)
         {
-            if(target.hp == target.stat.GetStat(StatType.MaxHp)) passive.Enable();
+            if(target.hp == target.stat.GetStat(StatType.MaxHp)) passive.FullfillCondition(this);
             // else passive.DisableCondition();
         }
 
         private void TargetOff(Unit target, int damage, bool none, bool __)
         {
-            passive.Disable();
+            passive.NotFullfillCondition(this);
         }
     }
 }

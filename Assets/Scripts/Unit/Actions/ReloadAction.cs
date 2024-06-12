@@ -24,7 +24,7 @@ public class ReloadAction : BaseAction
 
     public override int GetCost()
     {
-        return 3;
+        return unit.freeReloadTrigger ? 0 : 3;
     }
 
     public override int GetAmmoCost()
@@ -67,5 +67,7 @@ public class ReloadAction : BaseAction
         yield return new WaitForSeconds(COOL_OFF_TIME);
         
         unit.animator.SetTrigger(IDLE);
+
+        unit.freeReloadTrigger = false;
     }
 }

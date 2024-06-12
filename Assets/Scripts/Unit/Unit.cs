@@ -42,10 +42,11 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     private List<Passive> _passiveList;
     public List<int> passiveIndexList;
-    
+
     public bool infiniteActionPointTrigger;
     public bool lightFootTrigger;
-    
+    public bool freeReloadTrigger;
+
     public int currentRound;
     
     private List<IDisplayableEffect> _displayableEffects;
@@ -60,6 +61,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     [HideInInspector] public UnityEvent<int, int> onCostChanged; // before, after
     [HideInInspector] public UnityEvent<int, int> onAmmoChanged; // before, after
     [HideInInspector] public UnityEvent<int, int> onHpChanged; // before, after
+    [HideInInspector] public UnityEvent<Weapon> onWeaponChange; // after
     [HideInInspector] public UnityEvent<Unit> onMoved; // me
     [HideInInspector] public UnityEvent<Unit> onDead; //me
     [HideInInspector] public UnityEvent<Unit, int> onHit; // attacker, damage
@@ -153,7 +155,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         if (gameObject == null) return;
         
-        stat.Consume(StatType.CurHp, damage);
+        stat.Consume(StatType.CurHp, damage);    //for test
         UIManager.instance.onTakeDamaged.Invoke(this, damage, type);
         onHit.Invoke(FieldSystem.turnSystem.turnOwner, damage);
 
@@ -213,6 +215,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
 
         if (changingInCombat) ConsumeCost(4);
+        onWeaponChange.Invoke(weapon);
     }
 
     protected virtual void Awake()
@@ -262,7 +265,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         {
             if (passive.TryGetDisplayableEffect(out var displayableEffect))
             {
-                displayableEffects.Add(displayableEffect);
+                displayableEffects.AddRange(displayableEffect);
             }
         }
         

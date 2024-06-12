@@ -34,6 +34,7 @@ public class BuffUI : UISystem
 
         UIManager.instance.onPlayerStatChanged.AddListener(SetBuffDebuffUI);
         UIManager.instance.onActionChanged.AddListener(SetBuffDebuffUI);
+        PlayerEvents.OnWeaponChanged.AddListener((w) => { SetBuffDebuffUI(); });
     }
 
     private void StageAwake()

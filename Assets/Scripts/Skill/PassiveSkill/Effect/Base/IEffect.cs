@@ -17,5 +17,12 @@
         StatUpDependedOnCondition,
         LightFootStep,
         InfinityShootPoint,
+        TwoShootPoint,
+        FreeReload,
+        GoldenBullet,
+        TwoGoldenBullet,
+        StatUpDuringThreeTurn,
+        SweetSpot,
+        StatUpWhileAction
     }
 }

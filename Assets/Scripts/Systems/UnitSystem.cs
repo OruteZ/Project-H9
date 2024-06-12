@@ -147,7 +147,7 @@ public class UnitSystem : MonoBehaviour
                 
                 //remove passive that has null condition && world state
                 if(GameManager.instance.CompareState(GameState.World)) 
-                    playerPassiveList.RemoveAll(pas => pas.GetConditionType() is not ConditionType.Null);
+                    playerPassiveList.RemoveAll(pas => pas.GetConditionType()[0] is not ConditionType.Null);
                 #endregion
 
                 var activeList = GameManager.instance.playerActiveIndexList;

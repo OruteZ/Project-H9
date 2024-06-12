@@ -98,14 +98,14 @@ public class SkillManager : Generic.Singleton<SkillManager>
         _skillNameScripts = new List<SkillNameScript>();
         for (int i = 0; i < skillNameTable.Count; i++)
         {
-            SkillNameScript script = new SkillNameScript(i, skillNameTable[i][(int)_language]);
+            SkillNameScript script = new SkillNameScript(int.Parse(skillNameTable[i][0]), skillNameTable[i][(int)_language]);
             _skillNameScripts.Add(script);
         }
 
         _skillDescriptionScripts = new List<SkillDescriptionScript>();
         for (int i = 0; i < skillDescriptionTable.Count; i++)
         {
-            SkillDescriptionScript script = new SkillDescriptionScript(i, skillDescriptionTable[i][(int)_language]);
+            SkillDescriptionScript script = new SkillDescriptionScript(int.Parse(skillDescriptionTable[i][0]), skillDescriptionTable[i][(int)_language]);
             _skillDescriptionScripts.Add(script);
         }
         _skillKeywordScripts = new List<KeywordScript>();
@@ -281,7 +281,14 @@ public class SkillManager : Generic.Singleton<SkillManager>
             keywords = null;
             return null;
         }
-        return _skillDescriptionScripts[skill.skillInfo.tooltipIndex].GetDescription(skillIndex, out keywords);
+        foreach (SkillDescriptionScript desc in _skillDescriptionScripts) 
+        {
+            if (skill.skillInfo.tooltipIndex == desc.index) return desc.GetDescription(skillIndex, out keywords);
+        }
+
+        Debug.LogError("Can't Find Skill Description. Tooltip index: " + skill.skillInfo.tooltipIndex);
+        keywords = null;
+        return null;
     }
 
     //delete and replace (search by name) later

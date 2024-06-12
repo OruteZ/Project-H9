@@ -34,7 +34,7 @@ public class PassiveSkillListUI : UISystem
         for (int i = 0; i < passiveList.Count; i++)
         { 
             PassiveInfo pInfo = passiveDB.GetPassiveInfo(passiveList[i]);
-            if (pInfo.condition == PassiveSkill.ConditionType.Null) continue;
+            if (pInfo.condition[0] == PassiveSkill.ConditionType.Null) continue;
             var t = _listPool.Set();
             t.Instance.GetComponent<PassiveSkillListElement>().SetPassiveSkillListElement(pInfo, i);
             t.Instance.transform.SetAsLastSibling();

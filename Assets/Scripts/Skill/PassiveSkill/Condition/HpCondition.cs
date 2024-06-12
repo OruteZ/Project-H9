@@ -12,9 +12,9 @@
         private void CheckHp(int before, int after)
         {
             if (after == (int)amount)
-                passive.Enable();
+                passive.FullfillCondition(this);
             else
-                passive.Disable();
+                passive.NotFullfillCondition(this);
         }
 
         public HpIsCondition(float amt) : base(amt)
@@ -33,9 +33,9 @@
         private void CheckHp(int before, int after)
         {
             if (after >= (int)amount)
-                passive.Enable();
+                passive.FullfillCondition(this);
             else
-                passive.Disable();
+                passive.NotFullfillCondition(this);
         }
 
         public HighHpCondition(float amt) : base(amt)
@@ -54,9 +54,9 @@
         private void CheckHp(int before, int after)
         {
             if (after <= (int)amount)
-                passive.Enable();
+                passive.FullfillCondition(this);
             else
-                passive.Disable();
+                passive.NotFullfillCondition(this);
         }
 
         public LowHpCondition(float amt) : base(amt)

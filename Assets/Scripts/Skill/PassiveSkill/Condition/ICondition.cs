@@ -31,9 +31,27 @@
         MovedInThisTurn,
         NotMovedInThisTurn,
         
+        UseFanning,
+        UseFanningAndCheckChance,
+        HitSixFanningShot,
+
+        ShootAGoldenBullet,
+        TargetIsHitByGoldenBulletInThisTurn,
+       
+        TargetOnSweetSpot,
+        KillEnemy,
+        KillEnemyOnSweetSpot,
+
+        Critical,
+        NonCritical,
+
+        EquipRevolver,
+        EquipRepeater,
+        EquipShotgun,
+
+        //maybe not use anymore?
         Revenge,
         Dying,
-        
         Snipe,
         Fighter
     }

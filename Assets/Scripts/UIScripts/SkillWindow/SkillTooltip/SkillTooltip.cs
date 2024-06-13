@@ -100,28 +100,28 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
             {
                 if (GameManager.instance.CompareState(GameState.World))
                 {
-                    buttonText.text = "습득";
+                    buttonText.text = UIManager.instance.UILocalization[34];
                     _isInteractableButton = true;
                 }
                 else
                 {
-                    buttonText.text = "전투 중 스킬 습득 불가";
+                    buttonText.text = UIManager.instance.UILocalization[38];
                 }
             }
             else
             {
-                buttonText.text = "스킬 포인트 부족";
+                buttonText.text = UIManager.instance.UILocalization[37];
             }
         }
         else
         {
             if (currentSkill.isLearned)
             {
-                buttonText.text = "습득 완료";
+                buttonText.text = UIManager.instance.UILocalization[36];
             }
             else
             {
-                buttonText.text = "습득 불가";
+                buttonText.text = UIManager.instance.UILocalization[35];
             }
         }
     }

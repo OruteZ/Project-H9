@@ -9,6 +9,7 @@ public class ItemDatabase : ScriptableObject
     private List<ItemData> _itemList;
     [SerializeField]
     private List<ItemScript> _itemScriptList;
+    private ScriptLanguage _currentLanguage;
 
     [ContextMenu("Read Csv")]
     public void ReadCsv()
@@ -51,14 +52,15 @@ public class ItemDatabase : ScriptableObject
     }
     private void ReadScriptTable()
     {
-        var dataList = FileRead.Read("ItemScriptTable", out var columnInfo);
+        var dataList = FileRead.Read("ItemLocalizationTable", out var columnInfo);
 
         if (_itemScriptList is null) _itemScriptList = new List<ItemScript>();
         else _itemScriptList.Clear();
 
+        _currentLanguage = UIManager.instance.scriptLanguage;
         foreach (var data in dataList)
         {
-            ItemScript curData = new ItemScript(int.Parse(data[0]), data[1], data[3]);
+            ItemScript curData = new ItemScript(int.Parse(data[0]), data[(int)_currentLanguage], data[2 + (int)_currentLanguage]);
             _itemScriptList.Add(curData);
         }
     }
@@ -91,6 +93,8 @@ public class ItemDatabase : ScriptableObject
 
     public ItemScript GetItemScript(int nameIndex)
     {
+        if (_itemScriptList == null || _currentLanguage != UIManager.instance.scriptLanguage) ReadScriptTable();
+
         foreach (var script in _itemScriptList)
         {
             if (script.GetIndex() == nameIndex) return script;
@@ -136,13 +140,13 @@ public class ItemData
             string weaponDamageText = weaponDamage.ToString() + " Damage";
             string weaponRangeText = itemRange.ToString() + " Range";
             string weaponAmmoText = weaponAmmo.ToString() + " Magazine";
-            string weaponEffect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription(this);
-            description = weaponTypeText + "\n" + weaponDamageText + "\n" + weaponRangeText + "\n" + weaponAmmoText + "\n\n" + weaponEffect;
+            string weaponEffect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription();
+            description = weaponTypeText + "\n\n" + weaponDamageText + "\n" + weaponRangeText + "\n" + weaponAmmoText + "\n\n" + weaponEffect;
         }
         else
         {
             string typeText = itemType.ToString() + " Item";
-            string effect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription(this);
+            string effect = GameManager.instance.itemDatabase.GetItemScript(nameIdx).GetDescription();
             description = typeText + "\n\n" + effect;
         }
 

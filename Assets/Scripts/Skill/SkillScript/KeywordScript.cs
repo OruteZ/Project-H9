@@ -43,7 +43,7 @@ public class KeywordScript
             string middleString = GetSubString(origin, startIndex + split[0].Length, endIndex);
             string afterString = GetSubString(origin, endIndex + split[1].Length, origin.Length);
             result += beforeString;
-            string highlightColor = UICustomColor.GetColorHexCode(UICustomColor.PlayerStatColor);
+            string highlightColor = UICustomColor.GetColorHexCode(UICustomColor.UINameColor);
             string keyword = SkillManager.instance.GetSkillKeyword(int.Parse(middleString)).name;
             result += string.Format("<color=#{0}>{1}</color>", highlightColor, keyword);
             origin = afterString;

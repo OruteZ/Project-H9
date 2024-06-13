@@ -85,13 +85,15 @@ public class PlayerStatLevelUpUI : UISystem
         set 
         {
             _sp = value;
-            if (value == 0)
+            if (_sp <= 0)
             {
                 _statLevelUpButtonText.GetComponent<TextMeshProUGUI>().text = "";
+                UIManager.instance.gameSystemUI.alarmUI.DeleteAlarmUI(AlarmType.StatPoint);
             }
             else
             {
                 _statLevelUpButtonText.GetComponent<TextMeshProUGUI>().text = value.ToString();
+                UIManager.instance.gameSystemUI.alarmUI.AddAlarmUI(AlarmType.StatPoint);
             }
         } 
     }
@@ -105,7 +107,6 @@ public class PlayerStatLevelUpUI : UISystem
     private void Awake()
     {
         _statLevelUpButton.SetActive(false);
-        _statPoint = 0;
 
         ClosePlayerStatLevelUpUI();
         //_statLevelUpWindow.SetActive(false);
@@ -195,7 +196,11 @@ public class PlayerStatLevelUpUI : UISystem
         _background.GetComponent<Image>().color = color;
         if (color.a == disappearTargetValue[2]) _background.SetActive(false);
     }
-    public void GetPlayerStatPoint() 
+    public int GetPlayerStatPoint() 
+    {
+        return _statPoint;
+    }
+    public void AddPlayerStatPoint() 
     {
         _statPoint++;
         _statLevelUpButton.SetActive(GameManager.instance.CompareState(GameState.World));

@@ -67,7 +67,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
         playerInventory.TryAddItem(item);
 
-        Debug.Log("Added item to inventory");
+        //Debug.Log("Added item to inventory");
     }//a
     #endregion
     #region LEVEL
@@ -97,7 +97,7 @@ public class GameManager : Generic.Singleton<GameManager>
         SkillManager.instance.AddSkillPoint(LEVEL_UP_REWARD_SKILL_POINT);
         if (level % 3 == 0)
         {
-            UIManager.instance.gameSystemUI.playerStatLevelUpUI.GetPlayerStatPoint();
+            UIManager.instance.gameSystemUI.playerStatLevelUpUI.AddPlayerStatPoint();
             UIManager.instance.onLevelUp.Invoke(level);
         }
     }

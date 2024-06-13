@@ -42,28 +42,28 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
         {
             GetComponent<TextMeshProUGUI>().color = Color.white;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = Color.white;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().text = "기본 스텟";
+            _subTooltipText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[43];
             _isSetContents = true;
         }
         else if (statType == UIStatType.Character) 
         {
             GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
-            string str = "캐릭터 보너스";
+            string str = "";
             if (statName == "Additional Hit Rate" || statName == "Critical Chance" || statName == "Critical Damage")
             {
                 ItemType playerWeaponType = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
                 if (playerWeaponType == ItemType.Revolver)
                 {
-                    str += " (리볼버)";
+                    str = UIManager.instance.UILocalization[44];
                 }
                 else if (playerWeaponType == ItemType.Repeater)
                 {
-                    str += " (리피터)";
+                    str = UIManager.instance.UILocalization[45];
                 }
                 else if (playerWeaponType == ItemType.Shotgun)
                 {
-                    str += " (샷건)";
+                    str = UIManager.instance.UILocalization[46];
                 }
             }
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = str;
@@ -73,14 +73,14 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
         {
             GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().text = "장착 무기 보너스";
+            _subTooltipText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[47];
             _isSetContents = true;
         }
         else if (statType == UIStatType.Skill)
         {
             GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().text = "스킬 보너스";
+            _subTooltipText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[48];
             _isSetContents = true;
         }
         else

@@ -13,5 +13,5 @@ public interface IItemScript
     /// <summary>
     /// 아이템의 설명을 가져옵니다.
     /// </summary>
-    public string GetDescription(ItemData data);
+    public string GetDescription();
 }

@@ -14,9 +14,9 @@ public class PlayerPortraitUI : UIElement
             Debug.LogError("Please Enter Player Model Name in Portrait UI");
         }
         Texture2D playerTexture = Resources.Load("UnitCapture/" + playerModelName) as Texture2D;
-        Sprite enemySpr = Sprite.Create(playerTexture, new Rect(0, 0, playerTexture.width, playerTexture.height), new Vector2(0.5f, 0.5f));
-        if (enemySpr == null) enemySpr = _defaultPlayerImage;
-        transform.GetChild(0).GetComponent<Image>().sprite = enemySpr;
+        Sprite spr = Sprite.Create(playerTexture, new Rect(0, 0, playerTexture.width, playerTexture.height), new Vector2(0.5f, 0.5f));
+        if (spr == null) spr = _defaultPlayerImage;
+        transform.GetChild(0).GetComponent<Image>().sprite = spr;
     }
     public void ClickPortrait()
     {

@@ -62,7 +62,7 @@ public class CharacterStatUIInfo
         string finalStat = GetCorrectedValue(GetFinalStatValue()).ToString();
         if (statName == "") return "";
         if (statName == "Exp") return finalStat + " / " + GameManager.instance.GetMaxExp();
-        if (statName == "Additional Hit Rate") return finalStat + "%";
+        if (statName == "Bonus Hit Rate") return finalStat + "%";
         if (statName == "Critical Chance") return finalStat + '%';
         if (statName == "Critical Damage") return finalStat + 'x';
 
@@ -89,7 +89,7 @@ public class CharacterStatUI : UISystem
         "Speed",
         "Action Point",
         "Concentration",
-        "Additional Hit Rate",
+        "Bonus Hit Rate",
         "Damage",
         "Critical Chance",
         "Critical Damage",
@@ -144,7 +144,7 @@ public class CharacterStatUI : UISystem
             ("Speed",               StatType.Speed),
             ("Action Point",        StatType.MaxActionPoint),
             ("Concentration",       StatType.Concentration),
-            ("Additional Hit Rate", StatType.AdditionalHitRate),
+            ("Bonus Hit Rate", StatType.AdditionalHitRate),
             ("Critical Chance",     StatType.CriticalChance)
         };
         if (weaponType is ItemType.Revolver)
@@ -184,17 +184,13 @@ public class CharacterStatUI : UISystem
         }
 
         //bonus stat
-        characterStatInfo["Additional Hit Rate"].SetStatValue(UIStatType.Weapon, weapon.hitRate);
+        characterStatInfo["Bonus Hit Rate"].SetStatValue(UIStatType.Weapon, weapon.hitRate);
         characterStatInfo["Critical Chance"].SetStatValue(UIStatType.Weapon, weapon.criticalChance);
         characterStatInfo["Critical Damage"].SetStatValue(UIStatType.Weapon, weapon.criticalDamage);
 
-        //weapon
-        //characterStatInfo["Name"].SetStatValue(UIStatType.Weapon, weapon.nameIndex);
-        //characterStatInfo["Ammo"].SetStatValue(UIStatType.Weapon, weapon.maxAmmo);
-
-        characterStatInfo["Damage"].SetStatValue(UIStatType.Base, weapon.weaponDamage);
-        characterStatInfo["Range"].SetStatValue(UIStatType.Base, weapon.weaponRange);
-        characterStatInfo["Critical Damage"].SetStatValue(UIStatType.Base, 100);
+        characterStatInfo["Damage"].SetStatValue(UIStatType.Weapon, weapon.weaponDamage);
+        characterStatInfo["Range"].SetStatValue(UIStatType.Weapon, weapon.weaponRange);
+        characterStatInfo["Critical Damage"].SetStatValue(UIStatType.Weapon, 100);
     }
     private void SetCharacterStatText()
     {
@@ -221,7 +217,7 @@ public class CharacterStatUI : UISystem
 //Sight Range:
 //Speed:
 //Action Point:
-//Additional Hit Rate:
+//Bonus Hit Rate:
 //Critical Chance:
 
 //Damage:
@@ -232,6 +228,6 @@ public class CharacterStatUI : UISystem
 //Ammo:
 //Damage:
 //Range:
-//Additional Hit Rate:
+//Bonus Hit Rate:
 //Critical Chance:
 //Critical Damage:

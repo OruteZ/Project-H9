@@ -6,7 +6,7 @@ using UnityEngine;
 public class SystemIconDatabase : ScriptableObject
 {
     [SerializeField]
-    public List<SystemIconInfo> iconList;
+    public List<IconInfo> iconList;
 
     public Sprite GetIconInfo(int index)
     {
@@ -37,7 +37,7 @@ public class SystemIconDatabase : ScriptableObject
 }
 
 [Serializable]
-public struct SystemIconInfo
+public struct IconInfo
 {
     public int index;
     public string name;

@@ -16,6 +16,7 @@ public class SkillKeywordTooltip : UIElement
         GetComponent<RectTransform>().localPosition = Vector3.zero;
 
         _keywordNameText.GetComponent<TextMeshProUGUI>().text = name;
+        _keywordNameText.GetComponent<TextMeshProUGUI>().color = UICustomColor.UINameColor;
         _keywordDescriptionText.GetComponent<TextMeshProUGUI>().text = description;
         _keywordDescriptionText.GetComponent<ContentSizeFitter>().SetLayoutVertical();
         GetComponent<ContentSizeFitter>().SetLayoutVertical();

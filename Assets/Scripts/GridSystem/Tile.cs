@@ -116,4 +116,9 @@ public class Tile : MonoBehaviour, IEquatable<Tile>
     {
         return other != null && hexPosition == other.hexPosition;
     }
+
+    public T GetTileObject<T>() where T : TileObject
+    {
+        return tileObjects.Find(obj => obj is T) as T;
+    }
 }

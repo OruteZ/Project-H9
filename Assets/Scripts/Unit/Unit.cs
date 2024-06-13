@@ -45,6 +45,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     
     public bool infiniteActionPointTrigger;
     public bool lightFootTrigger;
+    public CoverType coverType;
     
     public int currentRound;
     
@@ -126,6 +127,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         onTurnStart.Invoke(this);
         
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out var appliedValue);
+        SetCoverType(CoverType.None);
 
         if (hp <= 0)
         {
@@ -144,7 +146,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         onTurnEnd.Invoke(this);
         
         // reset idle trigger animator
-        animator.SetTrigger("Idle");
+        animator.SetTrigger(IDLE);
 
         FieldSystem.turnSystem.EndTurn();
     }
@@ -369,7 +371,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         return activeUnitAction;
     }
 
-    public bool TryAttack(IDamageable target, float hitRateOffset)
+    public void TryAttack(IDamageable target, float hitRateOffset)
     {
         onStartShoot.Invoke(target);
 
@@ -408,7 +410,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
         int damage = hit ? isCritical ? weapon.GetFinalCriticalDamage() : weapon.GetFinalDamage() : 0;
         onFinishShoot.Invoke(target, damage, hit, isCritical);
-        return hit;
     }
     
     public void DestroyThis()
@@ -492,6 +493,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     #region STATUE EFFECT
 
     private UnitStatusEffectController _seController;
+    private static readonly int IDLE = Animator.StringToHash("Idle");
 
     public bool HasStatusEffect(StatusEffectType type)
     {
@@ -598,6 +600,23 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         return stat.GetStat(StatType.MaxHp);
     }
+
+    public int GetHitRateModifier()
+    {
+        return coverType switch
+        {
+            CoverType.Light => -20,
+            CoverType.Heavy => -30,
+            _ => 0
+        };
+    }
+
     #endregion
+    
+    public void SetCoverType(CoverType type)
+    {
+        Debug.Log("Set Cover Type: " + type);
+        coverType = type;
+    }
 }
 

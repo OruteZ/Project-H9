@@ -10,6 +10,8 @@ public class CoverableObj : TileObject, IDamageable
     public override void SetUp()
     {
         base.SetUp();
+        
+        currentHp = maxHp;
     }
     
     public override string[] GetArgs()
@@ -28,11 +30,23 @@ public class CoverableObj : TileObject, IDamageable
         maxHp = int.Parse(args[0]);
         currentHp = int.Parse(args[1]);
     }
+    
+    public CoverType GetCoverType()
+    {
+        return coverType;
+    }
 
     #region IDamageable
     public void TakeDamage(int damage, Unit attacker, Damage.Type type = Damage.Type.Default)
     {
-        throw new System.NotImplementedException();
+        currentHp -= damage;
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            
+            // remove obj
+            RemoveSelf();
+        }
     }
 
     public Vector3Int GetHex()
@@ -49,11 +63,18 @@ public class CoverableObj : TileObject, IDamageable
     {
         return maxHp;
     }
+
+    public int GetHitRateModifier()
+    {
+        return 0;
+    }
+
     #endregion
 }
 
-internal enum CoverType
+public enum CoverType
 {
     Light,
-    Strong
+    Heavy,
+    None
 }

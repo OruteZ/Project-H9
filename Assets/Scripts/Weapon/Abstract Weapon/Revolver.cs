@@ -47,12 +47,13 @@ public class Revolver : Weapon
         int range = weaponRange + unitStat.revolverAdditionalRange;
         int distance = Hex.Distance(unit.hexPosition, target.GetHex());
 
-        float finalHitRate = (hitRate + unitStat.concentration * (100 - distance * GetDistancePenalty() *
+        var finalHitRate = (hitRate + unitStat.concentration * (100 - distance * GetDistancePenalty() *
             (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1)
             )) * 0.01f;
 
         finalHitRate = Mathf.Round(10 * finalHitRate) * 0.1f;
         finalHitRate = Mathf.Clamp(finalHitRate, 0, 100);
+        finalHitRate += target.GetHitRateModifier();
 
         #if UNITY_EDITOR
         //Debug.Log("Hit rate = " + finalHitRate);

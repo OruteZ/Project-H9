@@ -60,9 +60,14 @@ public class CoverAction : BaseAction
         
         // unit.animator.SetTrigger(COVER);
         
+        var coverType = FieldSystem.tileSystem.GetTile(_targetPos).GetTileObject<CoverableObj>().GetCoverType();
+        unit.SetCoverType(coverType);
         
         // wait until animation is done
         yield return new WaitUntil(() => _animationDone);
+        
+        // end turn
+        unit.EndTurn();
     } 
     
     public override void TossAnimationEvent(string eventString)

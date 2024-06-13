@@ -107,10 +107,15 @@ public class TileEffectManager : Singleton<TileEffectManager>
             case ActionType.ItemUsing:
                 ItemTileEffect();
                 break;
+            case ActionType.Cover:
+                CoverEffect();
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
     }
+
+    
 
     #region MOVE
     private void MovableTileEffect()
@@ -467,6 +472,43 @@ public class TileEffectManager : Singleton<TileEffectManager>
             }
         }
         // ReSharper disable once IteratorNeverReturns
+    }
+    #endregion
+    
+    #region COVER
+    private void CoverEffect()
+    {
+        const int range = 2;
+
+        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, range).Where(
+            tile => tile.GetTileObject<CoverableObj>() is not null);
+
+        foreach (var tile in tiles)
+        {
+            SetEffectBase(tile.hexPosition, TileEffectType.Friendly);
+        }
+        
+        _curCoroutine = StartCoroutine(CoverEffectCoroutine());
+    }
+    
+    private IEnumerator CoverEffectCoroutine()
+    {
+        const int range = 2;
+
+        while (true)
+        {
+            yield return null;
+            ClearEffect(_effectsRelatedTarget);
+            if (Player.TryGetMouseOverTilePos(out var target) is false) continue;
+            
+            if (FieldSystem.tileSystem.GetTile(target).visible is false) continue;
+            if (Hex.Distance(target, _player.hexPosition) > range) continue;
+            
+            var tile = FieldSystem.tileSystem.GetTile(target);
+            if (tile.GetTileObject<CoverableObj>() is null) continue;
+            
+            SetEffectTarget(target, TileEffectType.Normal);
+        }
     }
     #endregion
     private new void Awake()

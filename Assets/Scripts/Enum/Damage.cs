@@ -1,3 +1,5 @@
+using Unity.Collections.LowLevel.Unsafe;
+
 public struct Damage
 {
     /// <summary>
@@ -10,7 +12,6 @@ public struct Damage
     /// enum값이 아닌 DamageType 클래스 자체를 하나 생성하는 것이 기본적으로는 괜찮아보임
     ///     (데미지의 타입 등을 이용해 계산 자체나 Log에 적재하기 위해)
     /// </comment>
-
     [System.Flags]
     public enum Type { 
         Default = 1 << 0,
@@ -21,12 +22,34 @@ public struct Damage
         Miss = 0,
     };
     
-    public bool Contains(Type type, Type value)
+    public bool Contains(Type value)
     {
-        return (type & value) == value;
+        return (_type & value) == value;
+    }
+    
+    public void Add(Type value)
+    {
+        _type |= value;
+    }
+    
+    public void Remove(Type value)
+    {
+        _type &= ~value;
+    }
+    
+    public int GetFinalAmount()
+    {
+        if (Contains(Type.Critical)) return criticalAmount;
+        if (Contains(Type.Miss)) return 0;
+
+        return amount;
     }
 
     private int amount;
+    private int criticalAmount;
+    
+    private Type _type;
+    
     private Unit attacker;
     private Unit target;
 }

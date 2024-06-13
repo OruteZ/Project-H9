@@ -28,9 +28,9 @@ public class FogOfWar : TileObject
     protected override void RemoveSelf()
     {
         if (_isRemoving) return;
-
-        FieldSystem.tileSystem.DeleteTileObject(this);
-        tile.RemoveObject(this);
+        
+        base.RemoveSelf();
+        
         _isRemoving = true;
         StartCoroutine(RemovingCoroutine());
     }

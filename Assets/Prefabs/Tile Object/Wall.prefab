@@ -97,9 +97,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3946e4ec2a3904aa1e6d2925b10c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectType: 4
+  vision: 0
   hexTransform: {fileID: 0}
   meshRenderer: {fileID: 0}
-  vision: 0
+  visible: 0
+  walkable: 0
+  rayThroughable: 0
 --- !u!114 &-1841399454949109969
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(HexTransform))]
 public abstract class TileObject : MonoBehaviour
 {
-    //for debug
+    public TileObjectType objectType;
+    
     [SerializeField] 
     private bool vision;
     
@@ -82,10 +83,20 @@ public abstract class TileObject : MonoBehaviour
 
     protected virtual void RemoveSelf()
     {
+        FieldSystem.tileSystem.DeleteTileObject(this);
         tile.RemoveObject(this);
         Destroy(gameObject);
     }
 
     public abstract string[] GetArgs();
     public abstract void SetArgs(string[] args);
+}
+
+public enum TileObjectType
+{
+    Link,
+    FogOfWar,
+    Town,
+    Coverable,
+    None
 }

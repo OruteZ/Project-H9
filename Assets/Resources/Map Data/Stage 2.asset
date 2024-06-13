@@ -285,6 +285,22 @@ MonoBehaviour:
     gridVisible: 1
   tileObjectData: []
   envData:
+  - material: {fileID: 2100000, guid: e4739197ddcfbab489e1d405ef527455, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 0
+    hexPosition: {x: 0, y: 0, z: 0}
+    height: -1.15
+    position: {x: 10.392304, y: -1.15, z: 0}
+    rotation: 0
+    scale: {x: 100, y: 15, z: 100}
+  - material: {fileID: 2100000, guid: e4739197ddcfbab489e1d405ef527455, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 0
+    hexPosition: {x: 0, y: 0, z: 0}
+    height: -1.15
+    position: {x: 10.392304, y: -1.15, z: 0}
+    rotation: 0
+    scale: {x: 100, y: 15, z: 100}
   - material: {fileID: 2100000, guid: 56133758b8ec90f46a17e67a98bf9e1a, type: 2}
     mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
     hexPositioned: 1
@@ -534,7 +550,7 @@ MonoBehaviour:
     rotation: 0
     scale: {x: 1.73, y: 15, z: 1.73}
   - material: {fileID: 2100000, guid: e9bd2610263612e4b8e015ad1ae4f12a, type: 2}
-    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    mesh: {fileID: 4300000, guid: 219de587148d8bb41a8e255859dafe53, type: 3}
     hexPositioned: 1
     hexPosition: {x: 3, y: 3, z: -6}
     height: -0.7
@@ -729,7 +745,7 @@ MonoBehaviour:
     mesh: {fileID: 4300000, guid: d36b1838f61877b42b4d7b6abfb63baa, type: 3}
     hexPositioned: 1
     hexPosition: {x: 2, y: 1, z: -3}
-    height: 0.5
+    height: -8.91
     position: {x: 4.330127, y: -8.91, z: -1.5}
     rotation: 0
     scale: {x: 0.7, y: 0.8, z: 0.7}
@@ -737,8 +753,8 @@ MonoBehaviour:
     mesh: {fileID: 4300000, guid: 6aaae776b6965754d8eae1882070c385, type: 3}
     hexPositioned: 1
     hexPosition: {x: 5, y: 2, z: -7}
-    height: 0.5
-    position: {x: 10.16, y: 0.5, z: -3}
+    height: -2.66
+    position: {x: 10.392304, y: -2.66, z: -3}
     rotation: 0
     scale: {x: 1, y: 1, z: 1}
   enemySpawnPoints:

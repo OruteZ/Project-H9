@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 
 public class Link : TileObject
 {
+    
     private static LinkDatabase _linkDatabase;
     
     [SerializeField]

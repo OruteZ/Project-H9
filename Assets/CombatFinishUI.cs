@@ -34,8 +34,7 @@ public class CombatFinishUI : MonoBehaviour
 
     private void OnCombatFinish(bool isPlayerWin)
     {
-        if(isPlayerWin is false) Invoke(nameof(TurnOnDefeatUI), 2f);
-        else Invoke(nameof(TurnOnWinUI), 2f);
+        Invoke(isPlayerWin is false ? nameof(TurnOnDefeatUI) : nameof(TurnOnWinUI), 2f);
     }
 
     private void TurnOnDefeatUI()

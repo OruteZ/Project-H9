@@ -127,13 +127,13 @@ public class MapSaveAndLoader : MonoBehaviour
         layout.LayoutGrid();
         
         //instantiate tile objects
-        // foreach (var tileObjectData in saveData.GetTileObjectDataList()
+        foreach (var tileObjectData in saveData.GetTileObjectDataList())
         {
-            // var tileObject = Instantiate(tileObjectPrefabs[tileObjectData.id], tileObjParent.transform).GetComponent<TileObject>();
-            // tileObject.hexPosition = tileObjectData.hexPosition;
-            // tileObject.gameObject.transform.localRotation = Quaternion.Euler(0, tileObjectData.rotation, 0);
-            // tileObject.SetArgs(tileObjectData.arguments);
-            // tileObject.SetUp();
+            var tileObject = Instantiate(tileObjectData.prefab).GetComponent<TileObject>();
+            tileObject.hexPosition = tileObjectData.hexPosition;
+            tileObject.gameObject.transform.localRotation = Quaternion.Euler(0, tileObjectData.rotation, 0);
+            tileObject.SetArgs(tileObjectData.arguments);
+            tileObject.SetUp();
         }
         
         //instantiate environments

@@ -98,7 +98,7 @@ public class CombatStageData : ScriptableObject
         return true;
     }
     
-    public void SetEnemyPoints(int linkIndex, Vector3Int[] points)
+    public void SetEnemyPoints(int linkIndex, IEnumerable<Vector3Int> points)
     {
         if(enemySpawnPoints.Count <= linkIndex)
         {
@@ -188,6 +188,7 @@ public struct TileData
 [System.Serializable]
 public struct TileObjectData
 {
+    public GameObject prefab;
     public Vector3Int hexPosition;
     public float rotation;
     public string[] arguments;
@@ -197,6 +198,13 @@ public struct TileObjectData
         hexPosition = obj.hexPosition;
         rotation = obj.gameObject.transform.localRotation.y;
         arguments = obj.GetArgs();
+        
+        if(obj.gameObject.GetPrefabDefinition() is GameObject p) prefab = p;
+        else
+        {
+            Debug.LogError("TileObjectData : Prefab is null");
+            prefab = null;
+        }
     }
 }
 

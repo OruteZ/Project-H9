@@ -34,9 +34,7 @@ public class MoveAction : BaseAction
 
     public override bool IsSelectable()
     {
-        if (unit.CheckAttackMoveTrigger()) return false;
-
-        return true;
+        return !unit.CheckAttackMoveTrigger();
     }
 
     public override bool CanExecuteImmediately()

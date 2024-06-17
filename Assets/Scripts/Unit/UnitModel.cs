@@ -319,10 +319,9 @@ public class UnitModel : MonoBehaviour
     public void SetTransform()
     {
         //set all transform
-        Transform tsf = null;
 
         //root
-        root = TryFind("Root", transform, out tsf) ? tsf : null;
+        root = TryFind("Root", transform, out var tsf) ? tsf : null;
         hand = TryFind("IndexFinger_01 1", transform, out tsf) ? tsf : null;
         chest = TryFind("Spine_03", transform, out tsf) ? tsf : null;
         waist = TryFind("Hips", transform, out tsf) ? tsf : null;
@@ -330,7 +329,7 @@ public class UnitModel : MonoBehaviour
         head = TryFind("Head", transform, out tsf) ? tsf : null;
     }
     
-    private bool TryFind(string path, Transform current, out Transform target)
+    private static bool TryFind(string path, Transform current, out Transform target)
     {
         //using recursion, find transform
         if (current.name == path)

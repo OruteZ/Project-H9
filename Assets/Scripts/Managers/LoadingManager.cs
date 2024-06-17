@@ -45,21 +45,21 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
         yield return StartCoroutine(FadeOut(fadeDuration));
         
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
-        operation.allowSceneActivation = false;
 
-        while (!operation.isDone)
+        progress.gameObject.SetActive(true);
+        while (operation.progress < 0.9f)
         {
-            progress.gameObject.SetActive(true);
             yield return null;
-
-            if (progress.value < 1f)
-            {
-                
-                progress.value = operation.progress;
-            }
-            operation.allowSceneActivation = true;
-            progress.gameObject.SetActive(false);
+            progress.value = operation.progress;
         }
+        while (progress.value < 1f)
+        {
+            yield return new WaitForSeconds(0.01f);
+            progress.value += 0.01f;
+        }
+        
+        operation.allowSceneActivation = true;
+        progress.gameObject.SetActive(false);
         
         UIManager.instance.ChangeScene(SceneNameToGameState(sceneName));
 

@@ -247,6 +247,7 @@ public class CombatActionUI : UISystem
         {
             player.SelectAction(_idleAction);
             _selectedActionType = CombatActionType.Null;
+            ClearRequiredCost();
         }
         UpdateButtonSeletable();
 

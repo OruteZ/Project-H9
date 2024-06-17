@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Melee : Weapon
 {
+    public Melee(WeaponData data) : base(data)
+    {
+    }
+
     public override void Attack(Unit target, out bool isCritical)
     {
         throw new System.NotImplementedException();

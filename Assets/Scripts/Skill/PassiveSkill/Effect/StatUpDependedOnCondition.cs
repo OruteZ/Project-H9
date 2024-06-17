@@ -30,28 +30,17 @@ public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
 
         unit.stat.Subtract(GetStatType(), GetAmount());
     }
-    
+
     #region IDISPLAYABLE_EFFECT
 
-    public int GetIndex()
-    {
-        return passive.index;
-    }
-
-    public int GetStack()
-    {
-        return GetAmount();
-    }
-
-    public int GetDuration()
-    {
-        return IDisplayableEffect.NONE;
-    }
+    public int GetIndex() => passive.index;
+    public int GetStack() => GetAmount();
+    public int GetDuration() => IDisplayableEffect.NONE;
 
     public bool CanDisplay()
     {
         if (passive is null) return false;
-        if (passive.GetConditionType() is ConditionType.Null) return false;
+        if (passive.GetConditionType()[0] is ConditionType.Null) return false;
         return enable;
     }
     #endregion

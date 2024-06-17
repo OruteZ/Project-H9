@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class Repeater : Weapon
 {
-     public override ItemType GetWeaponType() => ItemType.Repeater;
+    public Repeater(WeaponData data) : base(data)
+    {
+    }
+
+    public override ItemType GetWeaponType() => ItemType.Repeater;
     public override float GetDistancePenalty() => 5;
     public override int GetRange()
     {
-        return weaponRange + unitStat.revolverAdditionalRange;
+        return weaponRange + magazine.GetNextBullet().data.range + unitStat.repeaterAdditionalRange;
     }
 
     public override void Attack(Unit target, out bool isCritical)
     {
         Debug.Log("Weapon attack Call" + " : " + nameIndex);
 
-        isCritical = Random.value * 100 < unitStat.criticalChance + criticalChance;
+        isCritical = Random.value * 100 < unitStat.criticalChance + criticalChance + magazine.GetNextBullet().data.criticalChance;
         if (isCritical)
         {
             CriticalAttack(target);
@@ -24,28 +28,27 @@ public class Repeater : Weapon
         {
             NonCriticalAttack(target);
         }
-        //UIManager.instance.combatUI.enemyHpUI.SetEnemyHpBars(); //test
     }
 
     public override int GetFinalDamage()
     {
-        return Mathf.RoundToInt(weaponDamage + unitStat.revolverAdditionalDamage);
+        return Mathf.RoundToInt(weaponDamage + magazine.GetNextBullet().data.damage + unitStat.revolverAdditionalDamage);
     }
 
     public override int GetFinalCriticalDamage()
     {
-        float dmg = weaponDamage + unitStat.revolverAdditionalDamage;
-        dmg += dmg * ((unitStat.revolverCriticalDamage + criticalDamage) * 0.01f);
+        float dmg = weaponDamage + magazine.GetNextBullet().data.damage + unitStat.revolverAdditionalDamage;
+        dmg += dmg * ((unitStat.revolverCriticalDamage + criticalDamage + magazine.GetNextBullet().data.criticalDamage) * 0.01f);
 
         return Mathf.RoundToInt(dmg);
     }
 
     public override float GetFinalHitRate(Unit target)
     {
-        int range = weaponRange + unitStat.revolverAdditionalRange;
+        int range = GetRange();
         int distance = Hex.Distance(unit.hexPosition, target.hexPosition);
 
-        float finalHitRate = (hitRate + unitStat.concentration * 
+        float finalHitRate = (hitRate + magazine.GetNextBullet().data.hitRate + unitStat.concentration * 
             (100 - distance * (IsSweetSpot(distance) ? 0 : GetDistancePenalty()) *
             (distance > range ? REPEATER_OVER_RANGE_PENALTY : 1)
             )) * 0.01f;
@@ -53,12 +56,15 @@ public class Repeater : Weapon
         finalHitRate = Mathf.Round(10 * finalHitRate) * 0.1f;
         finalHitRate = Mathf.Clamp(finalHitRate, 0, 100);
 
+
+#if UNITY_EDITOR
         UIManager.instance.debugUI.SetDebugUI
             (finalHitRate, unit, target, distance, weaponRange,
                 unitStat.revolverAdditionalRange,
-                (IsSweetSpot(distance) ? 0 : GetDistancePenalty()) *
-                (distance > range ? REPEATER_OVER_RANGE_PENALTY : 1));
-        
+                GetDistancePenalty() *
+                (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
+#endif
+
         return finalHitRate;
     }
 

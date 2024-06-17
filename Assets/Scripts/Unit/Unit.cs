@@ -42,10 +42,14 @@ public abstract class Unit : MonoBehaviour, IUnit
 
     private List<Passive> _passiveList;
     public List<int> passiveIndexList;
-    
+
     public bool infiniteActionPointTrigger;
     public bool lightFootTrigger;
-    
+    public bool freeReloadTrigger;
+
+    public int goldenBulletCount;
+    public BulletData goldenBulletEffect = new();
+
     public int currentRound;
     
     private List<IDisplayableEffect> _displayableEffects;
@@ -60,6 +64,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     [HideInInspector] public UnityEvent<int, int> onCostChanged; // before, after
     [HideInInspector] public UnityEvent<int, int> onAmmoChanged; // before, after
     [HideInInspector] public UnityEvent<int, int> onHpChanged; // before, after
+    [HideInInspector] public UnityEvent<Weapon> onWeaponChange; // after
     [HideInInspector] public UnityEvent<Unit> onMoved; // me
     [HideInInspector] public UnityEvent<Unit> onDead; //me
     [HideInInspector] public UnityEvent<Unit, int> onHit; // attacker, damage
@@ -119,6 +124,8 @@ public abstract class Unit : MonoBehaviour, IUnit
         _seController = new UnitStatusEffectController(this);
         
         _displayableEffects = new List<IDisplayableEffect>();
+
+        goldenBulletEffect.criticalChance = 100;
     }
 
     public virtual void StartTurn()
@@ -153,7 +160,7 @@ public abstract class Unit : MonoBehaviour, IUnit
     {
         if (gameObject == null) return;
         
-        stat.Consume(StatType.CurHp, damage);
+        stat.Consume(StatType.CurHp, damage);    //for test
         UIManager.instance.onTakeDamaged.Invoke(this, damage, type);
         onHit.Invoke(FieldSystem.turnSystem.turnOwner, damage);
 
@@ -203,6 +210,8 @@ public abstract class Unit : MonoBehaviour, IUnit
         newWeapon.unit = this;
         weapon = newWeapon;
 
+        SetGoldBullet();
+
         if (weapon.model == null)
         {
             Debug.LogError("Weapon Model Is NULL");
@@ -213,6 +222,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         }
 
         if (changingInCombat) ConsumeCost(4);
+        onWeaponChange.Invoke(weapon);
     }
 
     protected virtual void Awake()
@@ -262,7 +272,7 @@ public abstract class Unit : MonoBehaviour, IUnit
         {
             if (passive.TryGetDisplayableEffect(out var displayableEffect))
             {
-                displayableEffects.Add(displayableEffect);
+                displayableEffects.AddRange(displayableEffect);
             }
         }
         
@@ -579,6 +589,30 @@ public abstract class Unit : MonoBehaviour, IUnit
             passive.Setup();
 
             //passiveIndexList.Add(passive.index);
+        }
+    }
+
+    public void SetGoldBullet()
+    {
+        if (weapon.GetWeaponType() == ItemType.Revolver && goldenBulletCount != 0)
+        {
+            weapon.magazine.ClearEffectAll();
+
+            List<int> candidate = new();
+            List<int> selectedNumber = new();
+            for (int i = 0; i < weapon.maxAmmo; i++) candidate.Add(i);
+
+            for (int i = 0; i < goldenBulletCount; i++)
+            {
+                int select = Random.Range(0, candidate.Count);
+                selectedNumber.Add(candidate[select]);
+                candidate.RemoveAt(select);
+            }
+
+            for (int i = 0; i < selectedNumber.Count; i++)
+            {
+                weapon.magazine.SetGold(selectedNumber[i], goldenBulletEffect);
+            }
         }
     }
 }

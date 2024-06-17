@@ -31,9 +31,9 @@ public class ItemUI : UISystem
 
     private void Start()
     {
-        _weaponItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[49];
-        _consumeItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[50];
-        _otherItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[51];
+        _weaponItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[50];
+        _consumeItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[51];
+        _otherItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[52];
 
         _draggedElement.GetComponent<InventoryUIElement>().ClearInventoryUIElement();
         _equippedElement.GetComponent<InventoryUIElement>().ClearInventoryUIElement();
@@ -176,10 +176,8 @@ public class ItemUI : UISystem
                 bool isWeaponItem = (_draggedItem is WeaponItem);
                 if (isEquipmentCell)
                 {
-                    if (!isWeaponItem || !_draggedItem.TryEquip())
-                    {
-                        continue;
-                    }
+                    if (GameManager.instance.CompareState(GameState.Combat) && FieldSystem.unitSystem.GetPlayer().currentActionPoint < Inventory.WEAPON_COST) break;
+                    if (!isWeaponItem || !_draggedItem.TryEquip()) continue;
                     GameManager.instance.playerInventory.EquipItem(_draggedItem.GetData().itemType, GetInventoryUIIndex(_originalDraggedElement));
                 }
                 else
@@ -239,16 +237,19 @@ public class ItemUI : UISystem
 
     public void ClickUseItemBtn()
     {
+        Player player = FieldSystem.unitSystem.GetPlayer();
         if (_inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().isEquipable)
         {
+            if (GameManager.instance.CompareState(GameState.Combat) && (player.currentActionPoint < Inventory.WEAPON_COST)) return;
             //Item tmpItem = _interactionItem;
             //_interactionElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(_equippedItem);
             //_equippedElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(tmpItem);
 
             GameManager.instance.playerInventory.EquipItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
         }
-        else 
+        else
         {
+            if (GameManager.instance.CompareState(GameState.Combat) && (player.currentActionPoint < Inventory.ITEM_COST)) return;
             GameManager.instance.playerInventory.UseItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
             UIManager.instance.SetUILayer(1);
             //UIManager.instance.gameSystemUI.OnCharacterBtnClick();

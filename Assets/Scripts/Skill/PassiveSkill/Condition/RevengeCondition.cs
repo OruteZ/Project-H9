@@ -6,10 +6,7 @@
         {
         }
 
-        public override ConditionType GetConditionType()
-        {
-            return ConditionType.Revenge;
-        }
+        public override ConditionType GetConditionType() => ConditionType.Revenge;
 
         protected override void ConditionSetup()
         {
@@ -20,7 +17,7 @@
         {
             //if deadUnit is Enemy unit and this unit is Enemy unit, enable passive
             if (deadUnit is Enemy && unit is Enemy)
-                passive.Enable();
+                passive.FullfillCondition(this);
         }
     }
 }

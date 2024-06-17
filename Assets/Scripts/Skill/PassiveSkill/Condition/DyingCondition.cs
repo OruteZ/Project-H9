@@ -6,14 +6,11 @@
         {
         }
 
-        public override ConditionType GetConditionType()
-        {
-            return ConditionType.Dying;
-        }
+        public override ConditionType GetConditionType() => ConditionType.Dying;
 
         protected override void ConditionSetup()
         {
-            unit.onDead.AddListener((_) => passive.Enable());
+            unit.onDead.AddListener((_) => passive.FullfillCondition(this));
         }
     }
 }

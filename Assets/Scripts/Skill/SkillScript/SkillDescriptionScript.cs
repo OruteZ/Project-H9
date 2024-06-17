@@ -120,7 +120,7 @@ public class SkillDescriptionScript
                 PassiveInfo info = SkillManager.instance.passiveDB.GetPassiveInfo(skillIndex);
                 if (valueName == "effectAmount")
                 {
-                    value = info.effectAmount;
+                    value = info.effectAmount[0];
                 }
             }
             string str = value.ToString();

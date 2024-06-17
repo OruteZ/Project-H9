@@ -1,4 +1,6 @@
-﻿namespace PassiveSkill
+﻿using UnityEngine;
+
+namespace PassiveSkill
 {
     public class AmmoIsCondition : BaseCondition
     {
@@ -6,13 +8,14 @@
 
         protected override void ConditionSetup()
         {
+            unit.onTurnStart.AddListener((u) => { CheckAmmo(unit.weapon.currentAmmo, unit.weapon.currentAmmo); });
             unit.onAmmoChanged.AddListener(CheckAmmo);
         }
 
         private void CheckAmmo(int bef, int aft)
         {
-            if(aft == (int)amount) passive.Enable();
-            else passive.Disable();
+            if(aft == (int)amount) passive.FullfillCondition(this);
+            else passive.NotFullfillCondition(this);
         }
 
         public AmmoIsCondition(float amt) : base(amt)
@@ -30,8 +33,8 @@
 
         private void CheckAmmo(int bef, int aft)
         {
-            if(aft >= (int)amount) passive.Enable();
-            else passive.Disable();
+            if(aft >= (int)amount) passive.FullfillCondition(this);
+            else passive.NotFullfillCondition(this);
         }
 
         public HighAmmoCondition(float amt) : base(amt)
@@ -49,8 +52,8 @@
 
         private void CheckAmmo(int bef, int aft)
         {
-            if(aft <= (int)amount) passive.Enable();
-            else passive.Disable();
+            if(aft <= (int)amount) passive.FullfillCondition(this);
+            else passive.NotFullfillCondition(this);
         }
 
         public LowAmmoCondition(float amt) : base(amt)

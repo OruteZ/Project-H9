@@ -49,21 +49,21 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
         {
             GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.PlayerStatColor;
-            string str = "";
+            string str = UIManager.instance.UILocalization[44];
             if (statName == "Additional Hit Rate" || statName == "Critical Chance" || statName == "Critical Damage")
             {
                 ItemType playerWeaponType = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
                 if (playerWeaponType == ItemType.Revolver)
                 {
-                    str = UIManager.instance.UILocalization[44];
+                    str = UIManager.instance.UILocalization[45];
                 }
                 else if (playerWeaponType == ItemType.Repeater)
                 {
-                    str = UIManager.instance.UILocalization[45];
+                    str = UIManager.instance.UILocalization[46];
                 }
                 else if (playerWeaponType == ItemType.Shotgun)
                 {
-                    str = UIManager.instance.UILocalization[46];
+                    str = UIManager.instance.UILocalization[47];
                 }
             }
             _subTooltipText.GetComponent<TextMeshProUGUI>().text = str;
@@ -73,14 +73,14 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
         {
             GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.WeaponStatColor;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[47];
+            _subTooltipText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[48];
             _isSetContents = true;
         }
         else if (statType == UIStatType.Skill)
         {
             GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
             _subTooltipText.GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillStatColor;
-            _subTooltipText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[48];
+            _subTooltipText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[49];
             _isSetContents = true;
         }
         else

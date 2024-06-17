@@ -142,7 +142,7 @@ public class UnitSystem : MonoBehaviour
                     Debug.LogError("GameManager.playerPassiveList is null");
                     return;
                 }
-                
+                playerPassiveIndexList.Remove(0);
                 var playerPassiveList = playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, unit)).ToList();
                 
                 //remove passive that has null condition && world state

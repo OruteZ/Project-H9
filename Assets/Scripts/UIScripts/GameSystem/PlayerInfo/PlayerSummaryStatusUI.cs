@@ -22,15 +22,13 @@ public class PlayerSummaryStatusUI : UIElement
 
     [HideInInspector] public int expectedHpUsage = 0;
     [HideInInspector] public int expectedApUsage = 0;
-    [HideInInspector] public int expectedMagUsage = 0;
+    public int expectedMagUsage = 0;
     [HideInInspector] public int expectedConcenUsage = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        // todo: onActionChanged Á¦°Å
-        UIManager.instance.onActionChanged.AddListener(InitExpectedValues);
-        
+        UIManager.instance.onSceneChanged.AddListener(StageStart);
         FieldSystem.onStageAwake.AddListener(StageStart);
         
         
@@ -44,10 +42,12 @@ public class PlayerSummaryStatusUI : UIElement
 
     void StageStart()
     {
+        InitExpectedValues();
         FieldSystem.turnSystem.onTurnChanged.AddListener(InitExpectedValues);
+        FieldSystem.unitSystem.GetPlayer().onActionStart.AddListener((a, p) => { InitExpectedValues(); });
     }
     
-    private void InitExpectedValues() 
+    public void InitExpectedValues() 
     {
         expectedHpUsage = 0;
         expectedApUsage = 0;

@@ -53,6 +53,7 @@ public class ReloadAction : BaseAction
         unit.animator.ResetTrigger(IDLE);
         unit.animator.SetTrigger(RELOAD);
 
+        weapon.magazine.ClearEffectAll();
         yield return new WaitForSeconds(ANIM_TIME);
 
         for (int i = 0; i < weapon.maxAmmo; i++)
@@ -68,6 +69,7 @@ public class ReloadAction : BaseAction
         
         unit.animator.SetTrigger(IDLE);
 
+        unit.SetGoldBullet();
         unit.freeReloadTrigger = false;
     }
 }

@@ -38,8 +38,8 @@ namespace PassiveSkill
                     ConditionType.UseFanning => new UseFanningCondition(amount[i]),
                     ConditionType.UseFanningAndCheckChance => new UseFanningAndCheckChanceCondition(amount[i]),
                     ConditionType.HitSixFanningShot => new HitSixFanningShotCondition(amount[i]),
-                    //ConditionType.ShootAGoldenBullet => new (amount[i]),
-                    //ConditionType.TargetIsHitByGoldenBulletInThisTurn => new (amount[i]),
+                    ConditionType.ShootAGoldenBullet => new ShootAGoldenBulletCondition(amount[i]),
+                    ConditionType.TargetIsHitByGoldenBulletInThisTurn => new TargetIsHitByGoldenBulletInThisTurn(amount[i]),
                     ConditionType.TargetOnSweetSpot => new TargetOnSweetSpotCondition(amount[i]),
                     ConditionType.KillEnemy => new KillCondition(amount[i]),
                     ConditionType.KillEnemyOnSweetSpot => new KillOnSweetSpotCondition(amount[i]),
@@ -72,7 +72,8 @@ namespace PassiveSkill
                     PassiveEffectType.LightFootStep => new LightFootStep(stat[i], amount[i]),
                     //PassiveEffectType.TwoShootPoint => new LightFootStep(stat[i], amount[i]),
                     PassiveEffectType.FreeReload => new FreeReload(stat[i], amount[i]),
-                    //PassiveEffectType.GoldenBullet => new LightFootStep(stat[i], amount[i]),
+                    PassiveEffectType.GoldenBullet => new GoldenBulletEffect(stat[i], amount[i]),
+                    PassiveEffectType.TwoGoldenBullet => new TwoGoldenBulletEffect(stat[i], amount[i]),
                     PassiveEffectType.StatUpDuringThreeTurn => new StatUpDuringThreeTurn(stat[i], amount[i]),
                     PassiveEffectType.SweetSpot => new SweetSpotEffect(stat[i], amount[i]),
                     PassiveEffectType.StatUpWhileAction => new StatUpWhileAction(stat[i], amount[i]),
@@ -132,7 +133,7 @@ namespace PassiveSkill
         }
         public void Enable()
         {
-            Debug.LogError(index);
+            //Debug.LogError("Effect On: " + index);
             if (IsEffectEnable() && _condition[0] is NullCondition) return;
             foreach (IEffect effect in _effect)
             {
@@ -141,6 +142,7 @@ namespace PassiveSkill
         }
         public void Disable()
         {
+            //Debug.LogError("Effect Off: " + index);
             foreach (IEffect effect in _effect)
             {
                 effect.OnConditionDisable();

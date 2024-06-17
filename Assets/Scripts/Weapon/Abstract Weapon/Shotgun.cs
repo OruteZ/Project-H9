@@ -5,18 +5,23 @@ using UnityEngine;
 public class Shotgun : Weapon
 {
     private Vector3Int _targetHex;
+
+    public Shotgun(WeaponData data) : base(data)
+    {
+    }
+
     public override ItemType GetWeaponType() => ItemType.Shotgun;
     public override float GetDistancePenalty() => 2;
     public override int GetRange()
     {
-        return weaponRange + unitStat.shotgunAdditionalDamage;
+        return weaponRange + magazine.GetNextBullet().data.range + unitStat.shotgunAdditionalDamage;
     }
 
     public override void Attack(Unit target, out bool isCritical)
     {
         Debug.Log("Weapon attack Call" + " : " + nameIndex);
 
-        isCritical = Random.value * 100 < unitStat.criticalChance + criticalChance;
+        isCritical = Random.value * 100 < unitStat.criticalChance + criticalChance + magazine.GetNextBullet().data.criticalChance;
         if (isCritical)
         {
             CriticalAttack(target);
@@ -29,7 +34,7 @@ public class Shotgun : Weapon
 
     public override int GetFinalDamage()
     {
-        float baseDamage = (weaponDamage + unitStat.shotgunAdditionalDamage);
+        float baseDamage = (weaponDamage + magazine.GetNextBullet().data.damage + unitStat.shotgunAdditionalDamage);
 
         int range = GetRange();
         int distance = Hex.Distance(unit.hexPosition, _targetHex);
@@ -43,7 +48,7 @@ public class Shotgun : Weapon
     public override int GetFinalCriticalDamage()
     {
         float dmg = GetFinalDamage();
-        dmg += dmg * ((unitStat.shotgunCriticalDamage + criticalDamage) * 0.01f);
+        dmg += dmg * ((unitStat.shotgunCriticalDamage + criticalDamage + +magazine.GetNextBullet().data.criticalDamage) * 0.01f);
 
         return Mathf.RoundToInt(dmg);
     }
@@ -57,16 +62,14 @@ public class Shotgun : Weapon
 
         float finalHitRate = distance <= range ? 100 : 0;
 
-        #if UNITY_EDITOR
-        //Debug.Log("Hit rate = " + finalHitRate);
-        #endif
-
+#if UNITY_EDITOR
         UIManager.instance.debugUI.SetDebugUI
             (finalHitRate, unit, target, distance, weaponRange,
                 unitStat.revolverAdditionalRange,
                 GetDistancePenalty() *
                 (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
-        
+#endif
+
         return finalHitRate;
     }
 

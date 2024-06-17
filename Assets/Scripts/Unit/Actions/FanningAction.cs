@@ -94,8 +94,8 @@ public class FanningAction : BaseAction, IShootingAction
         transform.forward = aimDirection;
         
         unit.animator.SetTrigger(FANNING_FIRE);
-        _shotCount = unit.weapon.currentAmmo;
-        yield return new WaitUntil(() => _shotCount == 0);
+        
+        yield return new WaitUntil(() => unit.weapon.currentAmmo == 0);
 
         unit.animator.SetTrigger(FANNING_FINISH);
         yield return new WaitForSeconds(FINISH_TIME);
@@ -108,6 +108,5 @@ public class FanningAction : BaseAction, IShootingAction
         if (_shotCount <= 0) return;
         
         unit.TryAttack(_target, _hitRateModifier);
-        _shotCount--;
     }
 }

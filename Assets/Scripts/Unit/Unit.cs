@@ -673,5 +673,4 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     }
 }
 
-}
 

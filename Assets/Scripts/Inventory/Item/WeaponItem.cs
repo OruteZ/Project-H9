@@ -20,7 +20,7 @@ public class WeaponItem : Item
         // todo : weapon change event
         
         Weapon weapon = WeaponDatabase.GetWeapon(GetData().id);
-        
+
         PlayerEvents.OnWeaponChanged.Invoke(weapon);
         return true;
     }

@@ -180,8 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ee2fac045375446b158de125666df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletSprite: {fileID: 390070169, guid: 91dea9bdfc920c9428f34483065ee474, type: 3}
-  _goldenBulletSprite: {fileID: -968566748, guid: 91dea9bdfc920c9428f34483065ee474,
+  _bulletSprite: {fileID: -1736065637, guid: 91dea9bdfc920c9428f34483065ee474, type: 3}
+  _goldenBulletSprite: {fileID: 1508698344, guid: 91dea9bdfc920c9428f34483065ee474,
     type: 3}
 --- !u!1 &5043112073147778135
 GameObject:
@@ -1005,7 +1005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -266.50006, y: -0.000030517578}
+  m_AnchoredPosition: {x: -409406.16, y: -13211.876}
   m_SizeDelta: {x: 530, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5043112073825617732
@@ -1917,7 +1917,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5043112073150116582}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.96666664
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2540,7 +2540,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6898167004227408889}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}

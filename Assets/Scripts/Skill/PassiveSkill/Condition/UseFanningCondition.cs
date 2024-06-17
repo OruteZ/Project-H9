@@ -78,7 +78,7 @@ namespace PassiveSkill
                 passive.NotFullfillCondition(this);
             }
         }
-        protected void CountHit(Unit u, int dmg, bool isHit, bool isCri)
+        protected void CountHit(IDamageable d, int dmg, bool isHit, bool isCri)
         {
             if (_isFanning && isHit)
             {

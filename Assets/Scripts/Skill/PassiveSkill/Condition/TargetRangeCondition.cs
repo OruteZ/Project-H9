@@ -93,19 +93,19 @@ namespace PassiveSkill
         {
             unit.onStartShoot.AddListener(SetTarget);
             unit.onFinishShoot.AddListener(TargetOff);
-            unit.onKill.AddListener((u) => { Debug.LogError(u); });
+            unit.onKill.AddListener(Debug.LogError);
         }
 
-        private void SetTarget(Unit target)
+        private void SetTarget(IDamageable target)
         {
-            var dist = Hex.Distance(unit.hexPosition, target.hexPosition);
+            var dist = Hex.Distance(unit.hexPosition, target.GetHex());
             if (unit.weapon is not Repeater repeater) return;
 
             if (dist == repeater.GetSweetSpot()) passive.FullfillCondition(this);
             else passive.NotFullfillCondition(this);
         }
 
-        private void TargetOff(Unit target, int damage, bool none, bool __)
+        private void TargetOff(IDamageable target, int damage, bool none, bool __)
         {
             passive.NotFullfillCondition(this);
         }

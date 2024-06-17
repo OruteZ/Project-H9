@@ -11,16 +11,16 @@ public class SweetSpotEffect : BaseEffect, IDisplayableEffect
     {
         return PassiveEffectType.SweetSpot;
     }
-    private void CheckIfEnemyOnSweetSpot(Unit target) 
+    private void CheckIfEnemyOnSweetSpot(IDamageable target) 
     {
         if (unit.weapon is not Repeater repeater) return;
-        var dist = Hex.Distance(unit.hexPosition, target.hexPosition);
+        var dist = Hex.Distance(unit.hexPosition, target.GetHex());
         if (dist == repeater.GetSweetSpot())
         {
             unit.stat.Add(StatType.CriticalChance, GetAmount());
         }
     }
-    private void ClearEffect(Unit target, int dmg, bool isHit, bool isCrit)
+    private void ClearEffect(IDamageable target, int dmg, bool isHit, bool isCrit)
     {
         unit.stat.Subtract(StatType.CriticalChance, GetAmount());
     }

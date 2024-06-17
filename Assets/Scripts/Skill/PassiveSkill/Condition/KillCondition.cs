@@ -28,7 +28,7 @@ public class KillOnSweetSpotCondition : BaseCondition
 
     public override ConditionType GetConditionType() => ConditionType.KillEnemyOnSweetSpot;
 
-    Unit _killTarget;
+    IDamageable _killTarget;
     protected override void ConditionSetup()
     {
         _killTarget = null;
@@ -36,9 +36,9 @@ public class KillOnSweetSpotCondition : BaseCondition
         unit.onKill.AddListener(OnKill);
     }
 
-    private void SetTarget(Unit target)
+    private void SetTarget(IDamageable target)
     {
-        var dist = Hex.Distance(unit.hexPosition, target.hexPosition);
+        var dist = Hex.Distance(unit.hexPosition, target.GetHex());
         if (unit.weapon is not Repeater repeater) return;
 
         if (dist == repeater.GetSweetSpot()) 
@@ -52,7 +52,7 @@ public class KillOnSweetSpotCondition : BaseCondition
     }
     protected void OnKill(Unit target)
     {
-        if (target == _killTarget)
+        if (target == (Unit)_killTarget)
         {
             passive.FullfillCondition(this);
         }

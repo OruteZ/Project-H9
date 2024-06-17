@@ -32,7 +32,7 @@ public class TargetIsHitByGoldenBulletInThisTurn : BaseCondition
         unit.onFinishAction.AddListener((a) => { passive.NotFullfillCondition(this); });
     }
 
-    private void CheckTarget(Unit unit)
+    private void CheckTarget(IDamageable dmgAble)
     {
         passive.FullfillCondition(this);
     }

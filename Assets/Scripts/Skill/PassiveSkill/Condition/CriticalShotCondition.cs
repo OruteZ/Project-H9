@@ -13,12 +13,12 @@ public class CriticalShotCondition : BaseCondition
     public CriticalShotCondition(float amt) : base(amt)
     { }
 
-    private void SetTarget(Unit target)
+    private void SetTarget(IDamageable target)
     {
         passive.NotFullfillCondition(this);
     }
 
-    private void TargetOff(Unit target, int damage, bool isHit, bool isCritical)
+    private void TargetOff(IDamageable target, int damage, bool isHit, bool isCritical)
     {
         if (isCritical)
         {
@@ -39,12 +39,12 @@ public class NonCriticalShotCondition : BaseCondition
     public NonCriticalShotCondition(float amt) : base(amt)
     { }
 
-    private void SetTarget(Unit target)
+    private void SetTarget(IDamageable target)
     {
         passive.NotFullfillCondition(this);
     }
 
-    private void TargetOff(Unit target, int damage, bool isHit, bool isCritical)
+    private void TargetOff(IDamageable target, int damage, bool isHit, bool isCritical)
     {
         if (!isCritical)
         {

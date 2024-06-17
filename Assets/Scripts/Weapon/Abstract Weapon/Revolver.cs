@@ -18,9 +18,7 @@ public class Revolver : Weapon
     {
         Debug.Log("Weapon attack Call" + " : " + nameIndex);
 
-        isCritical = Random.value * 100 < unitStat.criticalChance + criticalChance 
-                     || GetCurrentBullet() == AmmoType.GoldBullet;
-
+        isCritical = Random.value * 100 < unitStat.criticalChance + criticalChance;
         if (isCritical)
         {
             CriticalAttack(target);

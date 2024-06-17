@@ -22,6 +22,11 @@ public class EquipmentUI : UISystem
         SetEquipmentUI();
         PlayerEvents.OnWeaponChanged.AddListener((wpn) => SetEquipmentUI());
     }
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        SetEquipmentUI();
+    }
 
     public void SetEquipmentUI() 
     {

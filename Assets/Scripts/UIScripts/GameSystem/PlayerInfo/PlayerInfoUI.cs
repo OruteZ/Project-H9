@@ -14,7 +14,11 @@ public class PlayerInfoUI : UISystem
     {
         UIManager.instance.onPlayerStatChanged.AddListener(SetPlayerInfoUI);
         PlayerEvents.OnWeaponChanged.AddListener((weapon) => SetPlayerInfoUI());
-        UIManager.instance.onSceneChanged.AddListener(SetPlayerInfoUI);
+        UIManager.instance.onSceneChanged.AddListener(() => 
+        {
+            SetPlayerInfoUI();
+            FieldSystem.unitSystem.GetPlayer().onWeaponChange.AddListener((weapon) => SetPlayerInfoUI());
+        });
         //UIManager.instance.onTSceneChanged.AddListener(null);
         UIManager.instance.onActionChanged.AddListener(SetPlayerInfoUI);
     }

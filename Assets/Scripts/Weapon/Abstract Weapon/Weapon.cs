@@ -12,7 +12,7 @@ public abstract class Weapon
     public int weaponDamage;
     public int weaponRange;
     public int maxAmmo;
-    private int _curAmmo;
+    
     public int hitRate;
     public int criticalChance;
     public int criticalDamage;
@@ -20,18 +20,29 @@ public abstract class Weapon
 
     public int currentAmmo
     {
-        get => _curAmmo;
+        get => bulletQueue.Count;
         set
         {
-            int before = _curAmmo;
-            _curAmmo = value;
+            int before = currentAmmo;
+            
+            while(bulletQueue.Count < value)
+            {
+                bulletQueue.Enqueue(AmmoType.Bullet);
+            }
+            while(bulletQueue.Count > value)
+            {
+                bulletQueue.Dequeue();
+            }
+            
 
-            if (before == _curAmmo) return;
+            if (before == currentAmmo) return;
             if (unit is null) return;
                 
-            unit.onAmmoChanged.Invoke(before, _curAmmo);
+            unit.onAmmoChanged.Invoke(before, currentAmmo);
         }
     }
+
+    public Queue<AmmoType> bulletQueue = new (); 
     
     public UnitStat unitStat => unit.stat;
     public Unit unit;
@@ -54,4 +65,15 @@ public abstract class Weapon
     public abstract float GetDistancePenalty();
 
     public abstract int GetRange();
+    public AmmoType GetCurrentBullet()
+    {
+        return bulletQueue.Count == 0 ? AmmoType.None : bulletQueue.Peek();
+    }
+}
+
+public enum AmmoType
+{
+    None,
+    Bullet,
+    GoldBullet,
 }

@@ -36,7 +36,7 @@ public class BuffTooltip : UIElement
     }
     private void SetBuffText(IDisplayableEffect effect)
     {
-        if (effect is StatUpDependedOnCondition skillCondition)
+        if (effect is PassiveSkill.BaseEffect)
         {
             _buffName = SkillManager.instance.GetSkillName(effect.GetIndex());
             _buffDesc = SkillManager.instance.GetSkillDescription(effect.GetIndex(), out var k);

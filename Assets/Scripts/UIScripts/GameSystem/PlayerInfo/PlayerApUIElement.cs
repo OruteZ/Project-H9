@@ -27,6 +27,7 @@ public class PlayerApUIElement : UIElement
         else
         {
             _apFill.GetComponent<Animator>().Rebind();
+            if (isFilled) _apFill.GetComponent<Animator>().Update(1);
             _apFill.GetComponent<Animator>().enabled = false;
         }
     }

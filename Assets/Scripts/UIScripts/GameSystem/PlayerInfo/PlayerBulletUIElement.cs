@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerBulletUIElement : UIElement
 {
-    [SerializeField] private Transform _bulletFill;
+    [SerializeField] private GameObject _bulletFill;
 
     public void Fill()
     {
@@ -43,6 +43,7 @@ public class PlayerBulletUIElement : UIElement
     public void StopFlick()
     {
         _bulletFill.GetComponent<Animator>().Rebind();
+        if (_bulletFill.gameObject.activeSelf) _bulletFill.GetComponent<Animator>().Update(1);
         _bulletFill.GetComponent<Animator>().enabled = false;
     }
 }

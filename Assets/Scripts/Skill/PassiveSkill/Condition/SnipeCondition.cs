@@ -6,10 +6,7 @@
         {
         }
 
-        public override ConditionType GetConditionType()
-        {
-            return ConditionType.Snipe;
-        }
+        public override ConditionType GetConditionType() => ConditionType.Snipe;
 
         protected override void ConditionSetup()
         {
@@ -26,12 +23,12 @@
                 var target = FieldSystem.unitSystem.GetUnit(pos);
                 if (target is Enemy)
                 {
-                    passive.Disable();
+                    passive.NotFullfillCondition(this);
                     return;   
                 }
             }
             
-            passive.Enable();
+            passive.FullfillCondition(this);
         }
     }
 }

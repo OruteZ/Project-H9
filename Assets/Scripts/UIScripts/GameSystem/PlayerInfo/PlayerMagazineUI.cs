@@ -23,19 +23,19 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
     public void SetMagazineUI(bool isOnlyDisplayMaxMagazine)
     {
         int maxAmmo;
-        int curAmmo;
+        Magazine magazine;
         int flickerCnt;
 
         if (isOnlyDisplayMaxMagazine)
         {
             maxAmmo = GameManager.instance.itemDatabase.GetItemData(GameManager.instance.playerWeaponIndex).weaponAmmo;
-            curAmmo = maxAmmo;
+            magazine = new Magazine(maxAmmo);
             flickerCnt = 0;
         }
         else
         {
             maxAmmo = FieldSystem.unitSystem.GetPlayer().weapon.maxAmmo;
-            curAmmo = FieldSystem.unitSystem.GetPlayer().weapon.currentAmmo;
+            magazine = FieldSystem.unitSystem.GetPlayer().weapon.magazine;
             flickerCnt = UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedMagUsage;
         }
 
@@ -50,17 +50,17 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
         if (weaponType == ItemType.Revolver)
         {
             _revolvers.gameObject.SetActive(true);
-            _revolvers.Reload(maxAmmo, curAmmo, flickerCnt);
+            _revolvers.Reload(maxAmmo, magazine, flickerCnt);
         }
         if (weaponType == ItemType.Shotgun)
         {
             _shotguns.gameObject.SetActive(true);
-            _shotguns.Reload(maxAmmo, curAmmo, flickerCnt);
+            _shotguns.Reload(maxAmmo, magazine, flickerCnt);
         }
         if (weaponType == ItemType.Repeater)
         {
             _repeater.gameObject.SetActive(true);
-            _repeater.Reload(maxAmmo, curAmmo, flickerCnt);
+            _repeater.Reload(maxAmmo, magazine, flickerCnt);
         }
     }
     public void OnPointerEnter(PointerEventData eventData)

@@ -5,10 +5,7 @@
         public NullCondition(float amt) : base(amt)
         { }
 
-        public override ConditionType GetConditionType()
-        {
-            return ConditionType.Null;
-        }
+        public override ConditionType GetConditionType() => ConditionType.Null;
 
         protected override void ConditionSetup()
         {
@@ -23,7 +20,7 @@
         
         private void EnablePassive()
         {
-            passive.Enable();
+            passive.FullfillCondition(this);
         }
     }
 }

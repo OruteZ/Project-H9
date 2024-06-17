@@ -24,7 +24,7 @@ public class ReloadAction : BaseAction
 
     public override int GetCost()
     {
-        return 3;
+        return unit.freeReloadTrigger ? 0 : 3;
     }
 
     public override int GetAmmoCost()
@@ -53,6 +53,7 @@ public class ReloadAction : BaseAction
         unit.animator.ResetTrigger(IDLE);
         unit.animator.SetTrigger(RELOAD);
 
+        weapon.magazine.ClearEffectAll();
         yield return new WaitForSeconds(ANIM_TIME);
 
         for (int i = 0; i < weapon.maxAmmo; i++)
@@ -67,5 +68,8 @@ public class ReloadAction : BaseAction
         yield return new WaitForSeconds(COOL_OFF_TIME);
         
         unit.animator.SetTrigger(IDLE);
+
+        unit.SetGoldBullet();
+        unit.freeReloadTrigger = false;
     }
 }

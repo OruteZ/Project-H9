@@ -20,7 +20,7 @@ public class PlayerApUI : UIElement, IPointerEnterHandler, IPointerExitHandler
         bool isExist = true;
         bool isFilled = true;
         bool isFlickering = false;
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < _apElements.transform.childCount; i++)
         {
             if (i >= curAp - flickerCnt) isFlickering = true;
             if (i >= curAp) isFilled = false;

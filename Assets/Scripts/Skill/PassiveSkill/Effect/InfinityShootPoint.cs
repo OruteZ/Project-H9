@@ -17,11 +17,11 @@ public class InfinityShootPoint : BaseEffect
 
     public override void OnConditionEnable()
     {
-        unit.infiniteActionPointTrigger = true;
+        unit.freeReloadTrigger = true;
     }
 
     public override void OnConditionDisable()
     {
-        unit.infiniteActionPointTrigger = false;
+        unit.freeReloadTrigger = false;
     }
 }

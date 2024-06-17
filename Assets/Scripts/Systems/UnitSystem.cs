@@ -142,12 +142,12 @@ public class UnitSystem : MonoBehaviour
                     Debug.LogError("GameManager.playerPassiveList is null");
                     return;
                 }
-                
+                playerPassiveIndexList.Remove(0);
                 var playerPassiveList = playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, unit)).ToList();
                 
                 //remove passive that has null condition && world state
                 if(GameManager.instance.CompareState(GameState.World)) 
-                    playerPassiveList.RemoveAll(pas => pas.GetConditionType() is not ConditionType.Null);
+                    playerPassiveList.RemoveAll(pas => pas.GetConditionType()[0] is not ConditionType.Null);
                 #endregion
 
                 var activeList = GameManager.instance.playerActiveIndexList;

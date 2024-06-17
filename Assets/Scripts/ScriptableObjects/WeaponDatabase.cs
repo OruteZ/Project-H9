@@ -26,35 +26,16 @@ public class WeaponDatabase : ScriptableObject
         var data = GetData(dataIndex);
         Weapon weapon = data.type switch
         {
-            ItemType.Character => new Melee(),
-            ItemType.Revolver => new Revolver(),
-            ItemType.Repeater => new Repeater(),
-            ItemType.Shotgun => new Shotgun(),
+            ItemType.Character => new Melee(data),
+            ItemType.Revolver => new Revolver(data),
+            ItemType.Repeater => new Repeater(data),
+            ItemType.Shotgun => new Shotgun(data),
             _ => throw new ArgumentOutOfRangeException()
         };
         //
         // weapon.unit = owner;
         // // ReSharper disable once MergeConditionalExpression
         // weapon.unitStat = weapon.unit is null ? new UnitStat() : weapon.unit.GetStat();
-
-        weapon.nameIndex = data.weaponNameIndex;
-        weapon.model = data.weaponModel;
-        if (data.weaponModel == null)
-        {
-            Debug.LogError("Weapon Model Is NULL");
-        }
-        if (weapon.model == null)
-        {
-            Debug.LogError("Weapon Model Is NULL");
-        }
-        weapon.weaponDamage = data.weaponDamage;
-        weapon.weaponRange = data.weaponRange;
-        weapon.maxAmmo = data.weaponAmmo;
-        weapon.currentAmmo = data.weaponAmmo;
-        weapon.hitRate = data.weaponHitRate;
-        weapon.criticalChance = data.weaponCriticalChance;
-        weapon.criticalDamage = data.weaponCriticalDamage;
-        weapon.script = data.weaponScript;
         
         //SetUpGimmicks
         

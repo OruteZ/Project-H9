@@ -24,9 +24,9 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
         {
             icon = UIManager.instance.combatUI.buffUI.GetDebuffIconSprite(sEffect.GetStatusEffectType());
         }
-        else if (effect is StatUpDependedOnCondition skillCondition)
+        else if (effect is PassiveSkill.BaseEffect)
         {
-            icon = SkillManager.instance.GetSkill(skillCondition.GetIndex()).skillInfo.icon;
+            icon = SkillManager.instance.GetSkill(effect.GetIndex()).skillInfo.icon;
         }
         else if (effect is ItemBuff item)
         {

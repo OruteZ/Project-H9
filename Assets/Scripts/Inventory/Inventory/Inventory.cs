@@ -152,8 +152,6 @@ public class Inventory : IInventory
 
         if (itemList[index].IsUsable())
         {
-            Debug.Log("select");
-            
             var data = itemList[index].GetData();
             
             player.SelectItem(itemList[index]);

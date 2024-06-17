@@ -395,9 +395,6 @@ MonoBehaviour:
   onAnyUnitMoved:
     m_PersistentCalls:
       m_Calls: []
-  onPlayerMoved:
-    m_PersistentCalls:
-      m_Calls: []
   onAnyUnitDead:
     m_PersistentCalls:
       m_Calls: []
@@ -612,7 +609,7 @@ PrefabInstance:
     - target: {fileID: 3644403104122124144, guid: d11f4e809abd3e2498702a0d3a489987,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3644403104122124144, guid: d11f4e809abd3e2498702a0d3a489987,
         type: 3}
@@ -692,7 +689,7 @@ PrefabInstance:
     - target: {fileID: 1265891589147596417, guid: eefaf383d41c8df4db77af12a3528b6c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1265891589147596417, guid: eefaf383d41c8df4db77af12a3528b6c,
         type: 3}
@@ -951,7 +948,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &781379465
 GameObject:
@@ -1549,23 +1546,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a512d1803673e243a8bfcc87e261cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  user:
+    Position: {x: 0, y: 0, z: 0}
   itemDatabase: {fileID: 0}
   weaponDatabase: {fileID: 0}
+  runtimeWorldData: {fileID: 0}
+  _defaultWorldData: {fileID: 0}
   _currentState: 1
   _stageData: {fileID: 11400000, guid: 8f404bdefa4f5744e9fe19822a56f4d9, type: 2}
   _currentLinkIndex: 1
-  playerWorldPos: {x: 2, y: 2, z: -4}
   playerStat:
+    OnChangedStat:
+      m_PersistentCalls:
+        m_Calls: []
     original: 
     _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
-  _playerWeaponIndex: 0
+  playerWeaponIndex: 0
   playerModel: {fileID: 0}
   playerPassiveIndexList: 
   playerActiveIndexList: 
-  onPlayerWeaponChanged:
-    m_PersistentCalls:
-      m_Calls: []
   onPlayerCombatFinished:
     m_PersistentCalls:
       m_Calls: []
@@ -1573,7 +1573,6 @@ MonoBehaviour:
   curExp: 0
   worldSceneName: 
   worldAp: 0
-  worldTurn: 0
   backToWorldTrigger: 0
 --- !u!4 &961737597
 Transform:
@@ -1995,7 +1994,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1598555323
 GameObject:
@@ -2230,50 +2229,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 230774715}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1961163468
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1961163470}
-  - component: {fileID: 1961163469}
-  m_Layer: 0
-  m_Name: Item Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1961163469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1961163468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56ec1b6a85d72b848baefb9f8ef041da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1961163470
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1961163468}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 922.2091, y: 528.84143, z: -2.4444823}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2133392061
 GameObject:

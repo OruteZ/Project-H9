@@ -1,6 +1,4 @@
-﻿using Unity.VisualScripting;
-
-namespace PassiveSkill
+﻿namespace PassiveSkill
 {
     public class MovedInThisTurnCondition : BaseCondition
     {
@@ -21,12 +19,12 @@ namespace PassiveSkill
         //---
         private void CheckAction(IUnitAction unitAction)
         {
-            if (unitAction is MoveAction) passive.Enable();
+            if (unitAction is MoveAction) passive.FullfillCondition(this);
         }
 
         private void ClearFlag()
         {
-            passive.Disable();
+            passive.NotFullfillCondition(this);
         }
     }
     
@@ -49,14 +47,14 @@ namespace PassiveSkill
         //---
         private void CheckAction(IUnitAction unitAction)
         {
-            if (unitAction is MoveAction) passive.Disable();
+            if (unitAction is MoveAction) passive.NotFullfillCondition(this);
         }
 
         private void ClearFlag()
         {
             if (FieldSystem.turnSystem.turnOwner == unit)
             {
-                passive.Enable();
+                passive.FullfillCondition(this);
             }
         }
     }
@@ -81,12 +79,12 @@ namespace PassiveSkill
         //---
         private void CheckAction(IUnitAction unitAction)
         {
-            if (unitAction is ReloadAction) passive.Enable();
+            if (unitAction is ReloadAction) passive.FullfillCondition(this);
         }
 
         private void ClearFlag()
         {
-            passive.Disable();
+            passive.NotFullfillCondition(this);
         }
     }
 }

@@ -14,41 +14,48 @@ public enum UnitType
 public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 {
     #region SIMPLIFY
+
     public int currentActionPoint => stat.GetStat(StatType.CurActionPoint);
     public int hp => stat.GetStat(StatType.CurHp);
 
     public Transform hand => _unitModel.hand;
     public Transform chest => _unitModel.chest;
     public Transform waist => _unitModel.waist;
-    
+
     public Animator animator => _unitModel.animator;
-    
+
     public bool isVisible
     {
         get => _unitModel.isVisible;
         set => _unitModel.isVisible = value;
     }
+
     #endregion
 
     private int _index; // 플레이어는 인덱스를 쓰지 않지만, 퀘스트 등 "이름"이 아닌 식별코드가 필요하여 index를 field로 추가해둠. 임시로 player는 -1 인덱스를 갖게 함.
     public int Index => _index;
     public string unitName;
-    
+
     public HexTransform hexTransform;
-    
+
     private UnitModel _unitModel;
     public UnitStat stat;
     public Weapon weapon;
 
     private List<Passive> _passiveList;
     public List<int> passiveIndexList;
-    
+
     public bool infiniteActionPointTrigger;
     public bool lightFootTrigger;
+    public bool freeReloadTrigger;
+
+    public int goldenBulletCount;
+    public BulletData goldenBulletEffect = new();
+
     public CoverType coverType;
-    
+
     public int currentRound;
-    
+
     private List<IDisplayableEffect> _displayableEffects;
 
     // ReSharper disable once InconsistentNaming
@@ -61,11 +68,15 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     [HideInInspector] public UnityEvent<int, int> onCostChanged; // before, after
     [HideInInspector] public UnityEvent<int, int> onAmmoChanged; // before, after
     [HideInInspector] public UnityEvent<int, int> onHpChanged; // before, after
+    [HideInInspector] public UnityEvent<Weapon> onWeaponChange; // after
     [HideInInspector] public UnityEvent<Unit> onMoved; // me
     [HideInInspector] public UnityEvent<Unit> onDead; //me
     [HideInInspector] public UnityEvent<Unit, int> onHit; // attacker, damage
     [HideInInspector] public UnityEvent<IDamageable> onStartShoot; // target
-    [HideInInspector] public UnityEvent<IDamageable, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
+
+    [HideInInspector]
+    public UnityEvent<IDamageable, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
+
     [HideInInspector] public UnityEvent<Unit> onKill; // target
     [HideInInspector] public UnityEvent onUnitActionDataChanged;
     [HideInInspector] public UnityEvent onSelectedChanged;
@@ -99,14 +110,14 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             }
 
             passive.Setup();
-            
+
             passiveIndexList.Add(passive.index);
         }
 
         var model = Instantiate(unitModel, transform);
         _unitModel = model.GetComponent<UnitModel>();
         _unitModel.Setup(this);
-        
+
         EquipWeapon(newWeapon, true);
         if (this is Player)
         {
@@ -118,14 +129,16 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         FieldSystem.onCombatEnter.AddListener(OnCombatFinish);
 
         _seController = new UnitStatusEffectController(this);
-        
+
         _displayableEffects = new List<IDisplayableEffect>();
+
+        goldenBulletEffect.criticalChance = 100;
     }
 
     public virtual void StartTurn()
     {
         onTurnStart.Invoke(this);
-        
+
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out var appliedValue);
         SetCoverType(CoverType.None);
 
@@ -134,7 +147,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             EndTurn();
             DeadCall(this);
         }
-        
+
         else SelectAction(GetAction<IdleAction>());
     }
 
@@ -144,9 +157,9 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         Debug.Log(unitName + " Turn Ended");
 #endif
         onTurnEnd.Invoke(this);
-        
+
         // reset idle trigger animator
-        animator.SetTrigger(IDLE);
+        animator.SetTrigger("Idle");
 
         FieldSystem.turnSystem.EndTurn();
     }
@@ -154,8 +167,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public virtual void TakeDamage(int damage, Unit attacker, Damage.Type type = Damage.Type.Default)
     {
         if (gameObject == null) return;
-        
-        stat.Consume(StatType.CurHp, damage);
+
+        stat.Consume(StatType.CurHp, damage); //for test
         UIManager.instance.onTakeDamaged.Invoke(this, damage, type);
         onHit.Invoke(FieldSystem.turnSystem.turnOwner, damage);
 
@@ -169,6 +182,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     }
 
     private Unit _killer;
+
     protected virtual void DeadCall(Unit unit)
     {
         onDead.Invoke(this);
@@ -179,7 +193,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         onAnyUnitActionFinished.RemoveListener(DeadCall);
         Invoke(nameof(DestroyThis), 2f);
     }
-    
+
     public Vector3Int hexPosition
     {
         get => hexTransform.position;
@@ -187,8 +201,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         {
             bool hasMoved = hexTransform.position != value;
             hexTransform.position = value;
-            
-            if(hasMoved) onMoved?.Invoke(this);
+
+            if (hasMoved) onMoved?.Invoke(this);
         }
     }
 
@@ -201,9 +215,11 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         bool changingInCombat = (GameManager.instance.CompareState(GameState.Combat) && isOnSetup == false);
         if (changingInCombat && stat.curActionPoint < 4) return;
-        
+
         newWeapon.unit = this;
         weapon = newWeapon;
+
+        SetGoldBullet();
 
         if (weapon.model == null)
         {
@@ -215,6 +231,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         }
 
         if (changingInCombat) ConsumeCost(4);
+        onWeaponChange.Invoke(weapon);
     }
 
     protected virtual void Awake()
@@ -240,8 +257,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
         return default;
     }
-    
-    public IUnitAction[] GetUnitActionArray() 
+
+    public IUnitAction[] GetUnitActionArray()
     {
         return _unitActionArray;
     }
@@ -250,12 +267,12 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         _displayableEffects.Add(effect);
     }
-    
+
     public void RemoveDisplayableEffect(IDisplayableEffect effect)
     {
         _displayableEffects.Remove(effect);
     }
-    
+
     public IDisplayableEffect[] GetDisplayableEffects()
     {
         //search passive that has displayable effect
@@ -264,20 +281,20 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         {
             if (passive.TryGetDisplayableEffect(out var displayableEffect))
             {
-                displayableEffects.Add(displayableEffect);
+                displayableEffects.AddRange(displayableEffect);
             }
         }
-        
+
         //search status effect that has displayable effect
         var statusEffects = _seController.GetAllStatusEffectInfo();
         if (statusEffects is not null)
         {
             displayableEffects.AddRange(statusEffects);
         }
-        
+
         //add displayable other effects
         displayableEffects.AddRange(_displayableEffects);
-        
+
         return displayableEffects.ToArray();
     }
 
@@ -296,27 +313,28 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         bool hasChanged = _isBusy is false;
         _isBusy = true;
-        
-        if(hasChanged) onBusyChanged.Invoke();  
+
+        if (hasChanged) onBusyChanged.Invoke();
     }
 
     protected void ClearBusy()
     {
         bool hasChanged = _isBusy;
         _isBusy = false;
-        
-        if(hasChanged) onBusyChanged.Invoke();
+
+        if (hasChanged) onBusyChanged.Invoke();
     }
 
     public bool IsBusy()
     {
         return _isBusy;
     }
-    public bool HasDead() 
+
+    public bool HasDead()
     {
         return _hasDead;
     }
-    
+
     public void SelectItem(IItem item)
     {
         if (item is null) return;
@@ -331,8 +349,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
             return;
         }
-        
-        
+
+
         var itemUsingAction = GetAction<ItemUsingAction>();
         itemUsingAction.SetItem(item);
         SelectAction(itemUsingAction);
@@ -364,7 +382,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         activeUnitAction.Execute();
         return true;
     }
-    
+
     public IUnitAction GetSelectedAction()
     {
         if (activeUnitAction is null) return GetAction<IdleAction>();
@@ -383,18 +401,22 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             var gunpointPos = _unitModel.GetGunpointPosition();
             VFXManager.instance.TryInstantiate(fxGunFireKey, fxGunFireTime, gunpointPos);
         }
+
         if (VFXHelper.TryGetTraceOfBulletFXKey(weapon.GetWeaponType(), out var fxBulletLine, out var traceTime))
         {
             var startPos = _unitModel.GetGunpointPosition();
             var destPos = Hex.Hex2World(target.GetHex()) + Vector3.up;
-            if (!hit) destPos += new Vector3(UnityEngine.Random.value*2-1, UnityEngine.Random.value*2-1, UnityEngine.Random.value*2-1);
+            if (!hit)
+                destPos += new Vector3(UnityEngine.Random.value * 2 - 1, UnityEngine.Random.value * 2 - 1,
+                    UnityEngine.Random.value * 2 - 1);
             VFXManager.instance.TryLineRender(fxBulletLine, traceTime, startPos, destPos);
         }
 
         if (hit)
         {
             weapon.Attack(target, out isCritical);
-            var existKey = VFXHelper.TryGetBloodingFXKey(weapon.GetWeaponType(), out var fxBloodingKey, out var bloodingTime);
+            var existKey =
+                VFXHelper.TryGetBloodingFXKey(weapon.GetWeaponType(), out var fxBloodingKey, out var bloodingTime);
             if (existKey)
             {
                 var targetPos = Hex.Hex2World(target.GetHex()) + Vector3.up;
@@ -405,13 +427,14 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         {
             UIManager.instance.onNonHited.Invoke(target);
         }
+
         weapon.currentAmmo--;
         UIManager.instance.onPlayerStatChanged.Invoke();
 
         int damage = hit ? isCritical ? weapon.GetFinalCriticalDamage() : weapon.GetFinalDamage() : 0;
         onFinishShoot.Invoke(target, damage, hit, isCritical);
     }
-    
+
     public void DestroyThis()
     {
         Destroy(gameObject);
@@ -436,12 +459,13 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         if (IsMyTurn() is false) return;
         if (action.IsSelectable() is false) return;
         if (action.GetCost() > currentActionPoint)
-        {  
+        {
             Debug.Log("Cost is loss, Cost is " + action.GetCost());
             return;
         }
+
         if (HasStatusEffect(StatusEffectType.Stun)) return;
-        
+
 #if UNITY_EDITOR
         Debug.Log("Select Action : " + action);
 #endif
@@ -450,12 +474,12 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         onSelectedChanged.Invoke();
 
         if (activeUnitAction.CanExecuteImmediately())
-        { 
+        {
             if (activeUnitAction is not IdleAction) SetBusy();
             var actionSuccess = TryExecuteUnitAction(Vector3Int.zero);
             Debug.Log("actionSuccess: " + actionSuccess);
-            
-            if(actionSuccess is false) ClearBusy();
+
+            if (actionSuccess is false) ClearBusy();
         }
     }
 
@@ -463,10 +487,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         var action = activeUnitAction;
 
-        if(activeUnitAction is not MoveAction) ConsumeCost(activeUnitAction.GetCost());
-        
+        if (activeUnitAction is not MoveAction) ConsumeCost(activeUnitAction.GetCost());
+
         ClearBusy();
-        if(GameManager.instance.CompareState(GameState.Combat))
+        if (GameManager.instance.CompareState(GameState.Combat))
         {
             var idleAction = GetAction<IdleAction>();
             SelectAction(idleAction is null ? GetAction<MoveAction>() : idleAction);
@@ -476,14 +500,16 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             SelectAction(GetAction<IdleAction>());
             SelectAction(GetAction<MoveAction>());
         }
+
         onFinishAction.Invoke(action);
     }
-    
+
     ///<summary>
     /// 한 턴에 한번만 사격 가능합니다. "단 Infinite Action Point 스킬을 배우지 않았을 경우"
     /// </summary>
-    public bool CheckAttackedTrigger() => HasStatusEffect(StatusEffectType.Recoil) && infiniteActionPointTrigger is false;
-    
+    public bool CheckAttackedTrigger() =>
+        HasStatusEffect(StatusEffectType.Recoil) && infiniteActionPointTrigger is false;
+
     /// <summary>
     /// 사격 후 이동이 불가합니다. "단 Light Foot 스킬을 배우지 않았을 경우"
     /// </summary>
@@ -493,7 +519,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     #region STATUE EFFECT
 
     private UnitStatusEffectController _seController;
-    private static readonly int IDLE = Animator.StringToHash("Idle");
 
     public bool HasStatusEffect(StatusEffectType type)
     {
@@ -507,6 +532,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             Debug.LogError("지속시간이 0 이하인 상태이상");
             return false;
         }
+
         if (effect.GetStatusEffectType() is StatusEffectType.Bleeding or StatusEffectType.Burning)
         {
             if (effect.GetStack() <= 0)
@@ -515,7 +541,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
                 return false;
             }
         }
-        
+
         _seController.AddStatusEffect(effect);
         UIManager.instance.onPlayerStatChanged.Invoke();
         return true;
@@ -527,7 +553,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         {
             return false;
         }
-        
+
         _seController.RemoveStatusEffect(type);
         return true;
     }
@@ -542,7 +568,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         _seController.RemoveStatusEffect(effect);
         return true;
     }
-    
+
     public bool TryGetStatusEffect(StatusEffectType type, out StatusEffect effect)
     {
         return _seController.TryGetStatusEffect(type, out effect);
@@ -551,6 +577,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     #endregion
 
     #region UNITY_EVENT
+
     private void OnCombatFinish(bool playerWin)
     {
         // disable all status effect, and passive
@@ -565,6 +592,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         _passiveList.Clear();
         stat.ResetModifier();
     }
+
     #endregion
 
     public void SetPassive(List<Passive> passiveList)
@@ -583,9 +611,34 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             //passiveIndexList.Add(passive.index);
         }
     }
-    
-    
+
+    public void SetGoldBullet()
+    {
+        if (weapon.GetWeaponType() == ItemType.Revolver && goldenBulletCount != 0)
+        {
+            weapon.magazine.ClearEffectAll();
+
+            List<int> candidate = new();
+            List<int> selectedNumber = new();
+            for (int i = 0; i < weapon.maxAmmo; i++) candidate.Add(i);
+
+            for (int i = 0; i < goldenBulletCount; i++)
+            {
+                int select = Random.Range(0, candidate.Count);
+                selectedNumber.Add(candidate[select]);
+                candidate.RemoveAt(select);
+            }
+
+            for (int i = 0; i < selectedNumber.Count; i++)
+            {
+                weapon.magazine.SetGold(selectedNumber[i], goldenBulletEffect);
+            }
+        }
+    }
+
+
     #region IDAMAGEABLE
+
     public Vector3Int GetHex()
     {
         return hexTransform.position;
@@ -612,11 +665,13 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     }
 
     #endregion
-    
+
     public void SetCoverType(CoverType type)
     {
         Debug.Log("Set Cover Type: " + type);
         coverType = type;
     }
+}
+
 }
 

@@ -25,6 +25,7 @@ public interface IUnit
     /// <summary>
     /// Unit의 상태를 설정합니다.
     /// </summary>
+    /// <param name="index">유닛의 index</param>
     /// <param name="newName">유닛의 이름</param>
     /// <param name="unitStat">유닛의 스탯</param>
     /// <param name="newWeapon">무기</param>

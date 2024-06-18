@@ -415,11 +415,11 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         if (hit)
         {
             weapon.Attack(target, out isCritical);
-            var existKey =
-                VFXHelper.TryGetBloodingFXKey(weapon.GetWeaponType(), out var fxBloodingKey, out var bloodingTime);
+            bool existKey =
+                VFXHelper.TryGetBloodingFXKey(weapon.GetWeaponType(), out string fxBloodingKey, out float bloodingTime);
             if (existKey)
             {
-                var targetPos = Hex.Hex2World(target.GetHex()) + Vector3.up;
+                Vector3 targetPos = Hex.Hex2World(target.GetHex()) + Vector3.up;
                 VFXManager.instance.TryInstantiate(fxBloodingKey, bloodingTime, targetPos);
             }
         }

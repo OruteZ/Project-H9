@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemDatabase", menuName = "ScriptableObjects/ItemDatabase", order = 1)]
@@ -21,27 +22,28 @@ public class ItemDatabase : ScriptableObject
 
         foreach(var data in dataList)
         {
-            ItemData curData = new ItemData();
-            
-            curData.id = int.Parse(data[0]);
-            curData.nameIdx = int.Parse(data[1]);
-            curData.itemType = (ItemType)Enum.Parse(typeof(ItemType), data[2]);
-            curData.itemMaxStorage = int.Parse(data[3]);
-            curData.itemRange = int.Parse(data[4]);
-            curData.sweetSpot = int.Parse(data[5]);
-            curData.itemEffect = int.Parse(data[6]);
-            curData.itemEffectAmount = int.Parse(data[7]);
-            curData.itemEffectDuration = int.Parse(data[8]);
-            curData.itemPrice = int.Parse(data[9]);
-            curData.weaponDamage = int.Parse(data[10]);
-            curData.weaponAmmo = int.Parse(data[11]);
-            curData.weaponHitRate = int.Parse(data[12]);
-            curData.weaponCriticalChance = int.Parse(data[13]);
-            curData.weaponCriticalDamage = int.Parse(data[14]);
-            curData.weaponSkill = int.Parse(data[15]);
-            curData.itemTooltip = int.Parse(data[16]);
-            curData.icon = Resources.Load<Sprite>("ItemIcon/" + data[17]);
-            curData.itemModel = Resources.Load<GameObject>("Prefab/Item/" + data[18]);   
+            ItemData curData = new ItemData
+            {
+                id = int.Parse(data[0]),
+                nameIdx = int.Parse(data[1]),
+                itemType = (ItemType)Enum.Parse(typeof(ItemType), data[2]),
+                itemMaxStorage = int.Parse(data[3]),
+                itemRange = int.Parse(data[4]),
+                sweetSpot = int.Parse(data[5]),
+                itemEffect = int.Parse(data[6]),
+                itemEffectAmount = int.Parse(data[7]),
+                itemEffectDuration = int.Parse(data[8]),
+                itemPrice = int.Parse(data[9]),
+                weaponDamage = int.Parse(data[10]),
+                weaponAmmo = int.Parse(data[11]),
+                weaponHitRate = int.Parse(data[12]),
+                weaponCriticalChance = int.Parse(data[13]),
+                weaponCriticalDamage = int.Parse(data[14]),
+                weaponSkill = int.Parse(data[15]),
+                itemTooltip = int.Parse(data[16]),
+                icon = Resources.Load<Sprite>("ItemIcon/" + data[17]),
+                itemModel = Resources.Load<GameObject>("Prefab/Item/" + data[18])
+            };
 
             if(curData.icon is null) curData.icon = Resources.Load<Sprite>($"ItemIcon/Default");
             
@@ -67,13 +69,7 @@ public class ItemDatabase : ScriptableObject
 
     public ItemData GetItemData(int id)
     {
-        foreach (var item in _itemList)
-        {
-            if (item.id == id) return item;
-        }
-
-        Debug.LogError("There is no item that has id " + id);
-        return null;
+        return _itemList.FirstOrDefault(item => item.id == id);
     }
     public ItemData GetItemData(string name)
     {
@@ -134,7 +130,7 @@ public class ItemData
     public string GetInventoryTooltipContents()
     {
         string description = "";
-        if (itemType == ItemType.Revolver || itemType == ItemType.Repeater || itemType == ItemType.Shotgun)
+        if (itemType is ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun)
         {
             string weaponTypeText = itemType.ToString();
             string weaponDamageText = weaponDamage.ToString() + " Damage";

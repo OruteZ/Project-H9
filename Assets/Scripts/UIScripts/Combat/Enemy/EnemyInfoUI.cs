@@ -72,7 +72,7 @@ public class EnemyInfoUI : UIElement
     private void SetEnemyWeapon(int weaponIndex)
     {
         ItemData iData = GameManager.instance.itemDatabase.GetItemData(weaponIndex);
-        WeaponItem item = new WeaponItem(iData);
+        WeaponItem item = new (iData);
         _enemyWeapon.GetComponent<InventoryUIEnemyWeapon>().SetInventoryUIElement(item);
     }
 }

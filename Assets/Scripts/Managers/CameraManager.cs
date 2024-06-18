@@ -99,7 +99,10 @@ public class CameraManager : Singleton<CameraManager>
     private void SetCombatCamOption()
     {
         if (Camera.main != null) Camera.main.orthographic = false;
+        
         UnitCamera playerCam= GetCamera(FieldSystem.unitSystem.GetPlayer());
+        if(playerCam == null) return;
+        
         worldCamera.SetPosition(playerCam.transform.position);
     }
     

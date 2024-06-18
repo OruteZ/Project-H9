@@ -64,7 +64,7 @@ public class CombatActionSkillTooltip : UIElement
             for (int i = 0; i < keywords.Count; i++)
             {
                 KeywordScript kw = SkillManager.instance.GetSkillKeyword(keywords[i]);
-                var t = _keywordPool.Set();
+                SkillKeywordWrapper t = _keywordPool.Set();
                 t.tooltip.SetSkillKeywordTooltip(kw.name, kw.GetDescription(), i);
             }
         }

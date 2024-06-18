@@ -43,7 +43,11 @@ public class Inventory : IInventory
 
     public bool TryAddItem(IItem item)
     {
-        if (item is null) return false;
+        if (item is null)
+        {
+            Debug.LogError("try add null item");
+            return false;
+        }
         
         List<IItem> itemList = GetCorrectTypeItemList(item.GetData().itemType);
         if (item.GetData().itemMaxStorage > 1)

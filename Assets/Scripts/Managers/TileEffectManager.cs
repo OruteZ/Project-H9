@@ -338,12 +338,16 @@ public class TileEffectManager : Singleton<TileEffectManager>
             }
             else
             {
-                foreach (var passive in _player.GetAllPassiveList())
+                if (_player.weapon.magazine.GetNextBullet().isGoldenBullet)
                 {
-                    if (passive.index == 21001 && passive.IsEffectEnable())
+                    foreach (var passive in _player.GetAllPassiveList())
                     {
-                        offset += 20;
-                        break;
+                        Debug.LogError(passive.index);
+                        if (passive.index == 21006)
+                        {
+                            offset += 20;
+                            break;
+                        }
                     }
                 }
             }

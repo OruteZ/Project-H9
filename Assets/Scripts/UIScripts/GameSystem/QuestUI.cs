@@ -130,7 +130,7 @@ public class QuestUI : UISystem
     public void OpenItemTooltip(int index, Vector3 pos) 
     {
         pos = ScreenOverCorrector.GetCorrectedUIPosition(GetComponent<Canvas>(), pos, _itemTooltip);
-        _itemTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(GameManager.instance.itemDatabase.GetItemData(index), pos);
+        _itemTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(GameManager.instance.itemDatabase.GetItemData(index), pos, false);
     }
     public void OpenSkillTooltip(int index, Vector3 pos)
     {

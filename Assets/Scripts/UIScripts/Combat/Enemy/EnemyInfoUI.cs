@@ -21,9 +21,9 @@ public class EnemyInfoUI : UIElement
         UIManager.instance.onTSceneChanged.AddListener((gs) => { CloseStatTooltip(); });
     }
 
-    public void OpenInventoryTooltip(GameObject ui, Vector3 pos)
+    public void OpenInventoryTooltip(GameObject ui, Vector3 pos, bool isCharacterItem = true)
     {
-        _enemyWeaponTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui, pos);
+        _enemyWeaponTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui, pos, isCharacterItem);
     }
     public void CloseInventoryTooltip()
     {
@@ -32,7 +32,7 @@ public class EnemyInfoUI : UIElement
     internal void OpenStatTooltip(Vector3 pos, string name)
     {
         _enemyStatTooltip.GetComponent<RectTransform>().position = pos;
-        _enemyStatTooltip.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name + "*FixLater";  //need localization
+        _enemyStatTooltip.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
         _enemyStatTooltip.SetActive(true);
     }
     internal void CloseStatTooltip()
@@ -64,10 +64,10 @@ public class EnemyInfoUI : UIElement
 
     private void SetEnemyStatText(UnitStat enemyStat)
     {
-        _enemyStats[0].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement("Health Point", enemyStat.maxHp);
-        _enemyStats[1].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement("Action Point", enemyStat.maxActionPoint);
-        _enemyStats[2].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement("Concentration", enemyStat.concentration);
-        _enemyStats[3].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement("Speed", enemyStat.speed);
+        _enemyStats[0].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement(UIManager.instance.UILocalization[26], enemyStat.maxHp);
+        _enemyStats[1].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement(UIManager.instance.UILocalization[27], enemyStat.maxActionPoint);
+        _enemyStats[2].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement(UIManager.instance.UILocalization[29], enemyStat.concentration);
+        _enemyStats[3].GetComponent<EnemyStatUIElement>().SetEnemyStatUIElement(UIManager.instance.UILocalization[22], enemyStat.speed);
     }
     private void SetEnemyWeapon(int weaponIndex)
     {

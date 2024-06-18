@@ -14,7 +14,7 @@ public class CombatActionSkillTooltip : UIElement
     [SerializeField] private GameObject _skillSectionText;
 
     private SkillInfo _currentSkillInfo = null;
-    static private SkillKeywordPool _keywordPool = null;
+    private SkillKeywordPool _keywordPool = null;
     // Start is called before the first frame update
     void Awake()
     {

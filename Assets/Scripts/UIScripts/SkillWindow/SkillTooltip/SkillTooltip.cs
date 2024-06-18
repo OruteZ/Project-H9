@@ -21,7 +21,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     private int _currentSkillIndex;
     private bool _isButtonInteractable;
 
-    static private SkillKeywordPool _keywordTooltips = null;
+    private SkillKeywordPool _keywordTooltips = null;
     private List<SkillKeywordWrapper> _activeKeywordTooltips = new List<SkillKeywordWrapper>();
 
     // Start is called before the first frame update

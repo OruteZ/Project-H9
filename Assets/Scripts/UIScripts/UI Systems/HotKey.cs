@@ -5,7 +5,7 @@ using UnityEngine;
 public static class HotKey
 {
     public static KeyCode cancelKey = KeyCode.Escape;
-    public static KeyCode endTurnKey = KeyCode.Return;  //Enter
+    public static KeyCode endTurnKey = KeyCode.T;
 
     public static KeyCode openCharacterUIKey = KeyCode.I;
     public static KeyCode openSkillUIKey = KeyCode.K;

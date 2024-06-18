@@ -10,6 +10,8 @@ public class InventoryUIElement : InventoryUIBaseElement, IPointerDownHandler, I
 {
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (item == null) return;
+
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             UIManager.instance.characterUI.itemUI.StartDragInventoryElement(this.gameObject);

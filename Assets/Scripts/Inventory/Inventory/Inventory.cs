@@ -82,19 +82,18 @@ public class Inventory : IInventory
         return false;
     }
 
-    public void DeleteItem(IItem deleteItem, int cnt = 1)
+    public void DeleteItem(IItem deleteItem, int index, int cnt = 1)
     {
         List<IItem> itemList = GetCorrectTypeItemList(deleteItem.GetData().itemType);
-        foreach (var item in itemList.Where(i => i is not null))
+        if (itemList[index].GetData().id != deleteItem.GetData().id) 
         {
-            if (item.GetData().id == deleteItem.GetData().id)
-            {
-                item.SetStackCount(item.GetStackCount() - cnt);
-                CollectZeroItem();
-                IInventory.OnInventoryChanged?.Invoke();
-                return;
-            }
+            Debug.LogError("Inventory delete error");
+            return;
         }
+        itemList[index].SetStackCount(itemList[index].GetStackCount() - cnt);
+        CollectZeroItem();
+        IInventory.OnInventoryChanged?.Invoke();
+        return;
     }
     
     public void CollectZeroItem()
@@ -162,10 +161,10 @@ public class Inventory : IInventory
     public void SellItem(ItemType type, int index)
     {
         List<IItem> itemList = GetCorrectTypeItemList(type);
-        if (itemList != _consumableItems) return;
+        if (itemList == _elseItems) return;
 
         AddGold(itemList[index].GetData().itemPrice);
-        itemList[index] -= 1;
+        DeleteItem(itemList[index], index);
     }
 
     public IEnumerable<IItem> GetItems()

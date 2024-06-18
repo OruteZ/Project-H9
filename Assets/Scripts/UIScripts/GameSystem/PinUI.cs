@@ -10,6 +10,8 @@ public class PinUI : UISystem
 
     private bool _isTracking = false;
     private Vector3 _targetPos = Vector3.zero;
+
+    private const int PIN_POSITION_Y_CORRECTION = 30;
     public Vector3Int targetHexPos { get; private set; }
 
     // Start is called before the first frame update
@@ -25,6 +27,15 @@ public class PinUI : UISystem
         {
             _pinImage.SetActive(SceneManager.GetActiveScene().name == "WorldScene" || SceneManager.GetActiveScene().name == "UITestScene");
             Vector3 screenPos = Camera.main.WorldToScreenPoint(_targetPos);
+            var tileObjects = FieldSystem.tileSystem.GetTileObject(targetHexPos);
+            foreach (var obj in tileObjects)
+            {
+                if (obj is Link)
+                {
+                    screenPos.y += PIN_POSITION_Y_CORRECTION;
+                    break;
+                }
+            }
             Vector3 correctedPos = ScreenOverCorrector.GetCorrectedUIPositionWithoutConsideringUISize(GetComponent<Canvas>(), screenPos, _pinImage.GetComponent<RectTransform>().sizeDelta, _pinImage.GetComponent<RectTransform>().pivot);
 
             if (screenPos != correctedPos)

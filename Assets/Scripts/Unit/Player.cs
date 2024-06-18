@@ -24,6 +24,7 @@ public class Player : Unit
         TileEffectManager.instance.SetPlayer(this);
 
         FieldSystem.onStageAwake.AddListener(ReloadSight);
+        onWeaponChange.AddListener((w)=> { ReloadSight(); });
         stat.OnChangedStat.AddListener((type) => { PlayerEvents.OnChangedStat?.Invoke(stat, type); });
     }
     public void Update()

@@ -26,6 +26,7 @@ public class ItemUI : UISystem
     private GameObject _interactionElement = null;
     private GameObject _originalDraggedElement = null;
     private Item _interactionItem = null;
+    private int _interactionIndex = -1;
     private Item _draggedItem = null;
     private Item _equippedItem = null;
 
@@ -94,6 +95,15 @@ public class ItemUI : UISystem
     public void OpenInventoryInteraction(GameObject ui)
     {
         _interactionElement = ui;
+        for (int i = 0; i < _inventoryUI.transform.childCount; i++) 
+        {
+            if (_inventoryUI.transform.GetChild(i).gameObject == ui) 
+            {
+                _interactionIndex = i;
+                break;
+            }
+        }
+
         _interactionItem = ui.GetComponent<InventoryUIElement>().item;
         Vector3 pos = ui.GetComponent<RectTransform>().position;
         if (_interactionItem == _equippedItem) return;
@@ -267,7 +277,7 @@ public class ItemUI : UISystem
     }
     public void ClickRemoveItemBtn()
     {
-        GameManager.instance.playerInventory.DeleteItem(_interactionItem);
+        GameManager.instance.playerInventory.DeleteItem(_interactionItem, _interactionIndex);
         _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
         SetInventoryUI();

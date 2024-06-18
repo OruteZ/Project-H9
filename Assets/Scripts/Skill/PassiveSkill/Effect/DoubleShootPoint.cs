@@ -17,12 +17,12 @@ public class DoubleShootPoint : BaseEffect
         if (enable) return;
         enable = true;
 
-        unit.doubleShootPointTrigger = true;
+        unit.maximumShootCountInTurn = 2;
     }
 
     public override void OnConditionDisable()
     {
-        unit.doubleShootPointTrigger = false;
+        unit.maximumShootCountInTurn = -2;
     }
 
     #region IDISPLAYABLE_EFFECT

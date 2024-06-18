@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using PassiveSkill;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public enum UnitType
 {
@@ -45,7 +48,23 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     private List<Passive> _passiveList;
     public List<int> passiveIndexList;
     
-    public bool doubleShootPointTrigger;
+    private readonly List<int> _shootCntList = new(){1};
+    public int maximumShootCountInTurn
+    {
+        get => _shootCntList.Max();
+        set
+        {
+            // removing
+            if (value < 0)
+            {
+                _shootCntList.Remove(value);
+                return;
+            }
+            
+            if (_shootCntList.Contains(value)) return;
+            _shootCntList.Add(value);
+        }
+    }
     public bool infiniteActionPointTrigger;
     public bool lightFootTrigger;
     public bool freeReloadTrigger;

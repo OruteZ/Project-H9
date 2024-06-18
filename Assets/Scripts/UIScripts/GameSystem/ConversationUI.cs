@@ -129,7 +129,7 @@ public class ConversationUI : UISystem
         else
         {
             // todo : 임시 엔딩 추가를 위한 코드입니다. 차후 삭제해야 합니다.
-            if (_questInfo is { Index: 10 })
+            if (_questInfo is { Index: 13 })
             {
                 Debug.LogError("엔딩 씬으로 이동합니다.");
                 SceneManager.LoadScene("EndingScene");

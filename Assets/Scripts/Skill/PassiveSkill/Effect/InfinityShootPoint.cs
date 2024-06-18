@@ -17,11 +17,11 @@ public class InfinityShootPoint : BaseEffect
 
     public override void OnConditionEnable()
     {
-        unit.freeReloadTrigger = true;
+        unit.maximumShootCountInTurn = 1000;
     }
 
     public override void OnConditionDisable()
     {
-        unit.freeReloadTrigger = false;
+        unit.maximumShootCountInTurn = -1000;
     }
 }

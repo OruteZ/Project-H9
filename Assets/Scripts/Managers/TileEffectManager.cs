@@ -242,8 +242,9 @@ public class TileEffectManager : Singleton<TileEffectManager>
             }
         }
         
-        //if weapon type is repeater, show sweet spot
-        if (_player.weapon is Repeater repeater)
+        //if weapon type is repeater && has sweet spot buff, show sweet spot
+        if (_player.weapon is Repeater repeater && 
+            _player.GetDisplayableEffects().Any(e => e is SweetSpotEffect))
         {
             var sweetSpot = (repeater).GetSweetSpot();
             if (sweetSpot < _player.stat.GetStat(StatType.SightRange))

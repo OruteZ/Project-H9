@@ -117,7 +117,7 @@ public class AttackAction : BaseAction, IShootingAction
         while (cnt-- > 0) yield return null;
         
         unit.animator.SetTrigger(IDLE);
-        if(!(unit.doubleShootPointTrigger && _atkCount == 0))
+        if(unit.maximumShootCountInTurn - 1 <= _atkCount)
         {
             unit.TryAddStatus(new Recoil(unit));
         }

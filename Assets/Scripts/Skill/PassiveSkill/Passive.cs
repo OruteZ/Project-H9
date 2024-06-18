@@ -70,7 +70,7 @@ namespace PassiveSkill
                     PassiveEffectType.StatUpDependedOnCondition => new StatUpDependedOnCondition(stat[i], amount[i]),
                     PassiveEffectType.InfinityShootPoint => new InfinityShootPoint(stat[i], amount[i]),
                     PassiveEffectType.LightFootStep => new LightFootStep(stat[i], amount[i]),
-                    //PassiveEffectType.TwoShootPoint => new LightFootStep(stat[i], amount[i]),
+                    PassiveEffectType.DoubleShootPoint => new DoubleShootPoint(stat[i], amount[i]),
                     PassiveEffectType.FreeReload => new FreeReload(stat[i], amount[i]),
                     PassiveEffectType.GoldenBullet => new GoldenBulletEffect(stat[i], amount[i]),
                     PassiveEffectType.TwoGoldenBullet => new TwoGoldenBulletEffect(stat[i], amount[i]),

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class AttackAction : BaseAction, IShootingAction
 {
+
+    private int _atkCount;
     public override ActionType GetActionType() => ActionType.Attack;
 
     private enum State
@@ -115,6 +117,23 @@ public class AttackAction : BaseAction, IShootingAction
         while (cnt-- > 0) yield return null;
         
         unit.animator.SetTrigger(IDLE);
-        unit.TryAddStatus(new Recoil(unit));
+        if(!(unit.doubleShootPointTrigger && _atkCount == 0))
+        {
+            unit.TryAddStatus(new Recoil(unit));
+        }
+        
+        _atkCount++;
+    }
+
+    public override void SetUp(Unit unit)
+    {
+        base.SetUp(unit);
+        
+        unit.onTurnStart.AddListener(OnTurnStart);
+    }
+
+    private void OnTurnStart(Unit arg0)
+    {
+        _atkCount = 0;
     }
 }

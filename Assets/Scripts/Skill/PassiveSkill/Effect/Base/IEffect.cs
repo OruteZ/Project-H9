@@ -17,7 +17,7 @@
         StatUpDependedOnCondition,
         LightFootStep,
         InfinityShootPoint,
-        TwoShootPoint,
+        DoubleShootPoint,
         FreeReload,
         GoldenBullet,
         TwoGoldenBullet,

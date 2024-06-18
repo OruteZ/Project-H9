@@ -20,7 +20,7 @@ public class Magazine
     }
     public Bullet GetNextBullet() 
     {
-        if (bullets.Count == 0) return null;
+        if (bullets.Count == 0) return new Bullet();
         return bullets[0];
     }
     public Bullet UseBullet() 

@@ -50,6 +50,11 @@ public class WorldData : ScriptableObject
 
         return true;
     }
+
+    public void RemoveLink(Vector3Int hexPosition, int linkIndex)
+    {
+        links.RemoveAll(x => x.pos == hexPosition && x.linkIndex == linkIndex);
+    }
 }
 
 [Serializable]

@@ -29,20 +29,21 @@ public class Link : TileObject
 
     private bool IsEncounterEnable()
     {
-        if (isRepeatable is false) return true;
         
         int curTurn = FieldSystem.turnSystem.turnNumber;
         bool hasFinished = EncounterManager.instance.TryGetTurn(hexPosition, out int lastTurn);
 
+        // 이미 죽은 적이 없으면 : return true
         if (hasFinished is false) return true;
         
-        // todo : 나중에 싹 뜯어고쳐야 함, 위치를 기반으로 링크의 부활 여부를 관리하는것도 문제, 일회용 링크여도 삭제되지 않는것도 문제
-        if (isRepeatable) return lastTurn + 5 <= curTurn;
-        
+        // 마지막을 전투한 시점 추가
         EncounterManager.instance.AddValue(hexPosition, 
             FieldSystem.turnSystem.turnNumber +
             (int.MaxValue / 2));
-        return false;
+        
+        // todo : 나중에 싹 뜯어고쳐야 함, 위치를 기반으로 링크의 부활 여부를 관리하는것도 문제, 일회용 링크여도 삭제되지 않는것도 문제
+        if (isRepeatable) return lastTurn + 5 <= curTurn;
+        else return false;
     }
     public override void OnCollision(Unit other)
     {
@@ -57,6 +58,8 @@ public class Link : TileObject
         if (isRepeatable is false)
         {
             Destroy(gameObject);
+            //call gameManager's runtime world data
+            GameManager.instance.runtimeWorldData.RemoveLink(hexPosition, _linkIndex);
         }
     }
 

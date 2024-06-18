@@ -113,6 +113,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         _index = index;
         unitName = newName;
         stat = unitStat;
+        coverType = CoverType.None;
 
         _unitActionArray = GetComponents<IUnitAction>();
         foreach (IUnitAction action in _unitActionArray)

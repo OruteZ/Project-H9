@@ -33,7 +33,7 @@ MonoBehaviour:
   - index: 1
     nameIndex: 1001
     modelName: Character_Bandit_Male_01
-    model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -50,7 +50,7 @@ MonoBehaviour:
   - index: 2
     nameIndex: 1001
     modelName: Character_Bandit_Male_01
-    model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -67,7 +67,7 @@ MonoBehaviour:
   - index: 3
     nameIndex: 1001
     modelName: Character_Bandit_Male_01
-    model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -84,7 +84,7 @@ MonoBehaviour:
   - index: 4
     nameIndex: 1002
     modelName: Character_Mexican_Male_01
-    model: {fileID: 1830787700065114, guid: dbbd35cb7d217034ca6e8b14a8c9da48, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -101,7 +101,7 @@ MonoBehaviour:
   - index: 5
     nameIndex: 1002
     modelName: Character_Mexican_Male_02
-    model: {fileID: 1930506485524798, guid: f7b944500ba277f418b2efff428244ff, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -118,7 +118,7 @@ MonoBehaviour:
   - index: 6
     nameIndex: 1004
     modelName: Character_Thug_Male_02
-    model: {fileID: 1971472593742656, guid: a3d345d8d279f5b4d81157ffaa77a658, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -135,7 +135,7 @@ MonoBehaviour:
   - index: 7
     nameIndex: 1003
     modelName: Character_Soldier_Male_01
-    model: {fileID: 1000615490526886, guid: 3daf58e69f5924641b3bb371bbc5fda2, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -152,24 +152,7 @@ MonoBehaviour:
   - index: 101
     nameIndex: 101
     modelName: Character_Badguy_01
-    model: {fileID: 1942289980213182, guid: 085e53ee40ad24b40a83bd90705ad460, type: 3}
-    stat:
-      OnChangedStat:
-        m_PersistentCalls:
-          m_Calls: []
-      original: 000000000a0000000a0000003c00000004000000500000000400000000000000000000000a0000000000000000000000c80000000000000000000000c80000000000000000000000c8000000
-      _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-      _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
-    weaponIndex: 302
-    btIndex: 1
-    skillIndex: 
-    rewardGold: 1
-    rewardExp: 400
-    rewardItem: 2e010000640000005a020000640000008603000032000000
-  - index: 102
-    nameIndex: 102
-    modelName: Character_Business_Man_01
-    model: {fileID: 1214723647702548, guid: e85f10072d335224984d9b8ae2e93843, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -183,10 +166,27 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 600
     rewardItem: 650000006400000030010000640000005b020000640000008703000032000000
+  - index: 102
+    nameIndex: 102
+    modelName: Character_Business_Man_01
+    model: {fileID: 0}
+    stat:
+      OnChangedStat:
+        m_PersistentCalls:
+          m_Calls: []
+      original: 000000000a0000000a0000003c00000004000000500000000400000000000000000000000a0000000000000000000000c80000000000000000000000c80000000000000000000000c8000000
+      _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+    weaponIndex: 304
+    btIndex: 1
+    skillIndex: 
+    rewardGold: 1
+    rewardExp: 400
+    rewardItem: 2e010000640000005a020000640000008603000032000000
   - index: 103
     nameIndex: 103
     modelName: Character_GoldMiner_Male_02
-    model: {fileID: 1968479938754796, guid: 4d2ee76a3bb7c9a4ba02c9cdca108f58, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -203,7 +203,7 @@ MonoBehaviour:
   - index: 104
     nameIndex: 6
     modelName: Character_Cowboy_01
-    model: {fileID: 1800371080893130, guid: e169e4d9dbd157b498e582065a5f9302, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -220,7 +220,7 @@ MonoBehaviour:
   - index: 105
     nameIndex: 7
     modelName: Character_Badguy_01
-    model: {fileID: 1942289980213182, guid: 085e53ee40ad24b40a83bd90705ad460, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -237,7 +237,7 @@ MonoBehaviour:
   - index: 106
     nameIndex: 9
     modelName: Character_Gunman_01
-    model: {fileID: 1964704263138806, guid: e3d9a5b7a19f9684d9b63308cdfa95bd, type: 3}
+    model: {fileID: 0}
     stat:
       OnChangedStat:
         m_PersistentCalls:

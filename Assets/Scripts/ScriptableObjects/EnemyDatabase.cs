@@ -50,7 +50,7 @@ public class EnemyDatabase : ScriptableObject
             curData.weaponIndex = int.Parse(data[(int)Col.EquippedWeapon]);
             curData.btIndex = int.Parse(data[(int)Col.BehaviorPattern]);
             curData.modelName = data[(int)Col.ModelFile];
-            curData.model = Resources.Load("Prefab/Units/" + data[(int)Col.ModelFile]) as GameObject;  
+            curData.model = Resources.Load("Prefab/UnitModels/" + data[(int)Col.ModelFile]) as GameObject;  
             curData.skillIndex = FileRead.ConvertStringToArray<int>(data[(int)Col.EnemySkill]);
 
             curData.rewardGold = int.Parse(data[(int)Col.RewardGold]);

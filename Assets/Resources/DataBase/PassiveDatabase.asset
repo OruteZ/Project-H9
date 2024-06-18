@@ -105,7 +105,7 @@ MonoBehaviour:
     - 0
     effect: 01000000
     effectStat: 15000000
-    effectAmount: 01000000
+    effectAmount: 64000000
   - index: 21003
     condition: 12000000
     conditionAmount:
@@ -178,3 +178,10 @@ MonoBehaviour:
     effect: 01000000
     effectStat: 07000000
     effectAmount: 01000000
+  - index: 31005
+    condition: 1c000000
+    conditionAmount:
+    - 0
+    effect: 01000000
+    effectStat: 04000000
+    effectAmount: 02000000

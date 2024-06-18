@@ -28,6 +28,7 @@ public class Link : TileObject
 
     private bool IsEncounterEnable()
     {
+        return true;
         
         int curTurn = FieldSystem.turnSystem.turnNumber;
         bool hasFinished = EncounterManager.instance.TryGetTurn(hexPosition, out int lastTurn);
@@ -90,7 +91,9 @@ public class Link : TileObject
         
         //Link는 World Object라서 한번 밝혀지면 상관이 없지만 
         //턴이 바뀜에 따라서 안보이는게 보일 수 있으니 확인 해줘야 함
-        FieldSystem.turnSystem.onTurnChanged.AddListener(() => SetVisible(_vision));
+        FieldSystem.turnSystem.onTurnChanged.AddListener(() => SetVisible(
+            GameManager.instance.IsPioneeredWorldTile(hexPosition)
+            ));
     }
 
     private void ReloadModel()

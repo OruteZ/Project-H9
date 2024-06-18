@@ -19,16 +19,16 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
         UIManager.instance.characterUI.itemUI.ClosePopupWindow();
     }
 
-    public void SetInventoryUITooltip(GameObject ui, Vector3 pos)
+    public void SetInventoryUITooltip(GameObject ui, Vector3 pos, bool isCharacterItem = true)
     {
         Item item = ui.GetComponent<InventoryUIBaseElement>().item;
         if (item is not null)
         {
-            SetInventoryUITooltip(item.GetData(), pos);
+            SetInventoryUITooltip(item.GetData(), pos, isCharacterItem);
         }
     }
 
-    public void SetInventoryUITooltip(ItemData data, Vector3 pos)
+    public void SetInventoryUITooltip(ItemData data, Vector3 pos, bool isCharacterItem = true)
     {
         if (_data == data && GetComponent<RectTransform>().position == pos) return;
 
@@ -46,7 +46,7 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
 
         SetInventoryTooltipText(data);
 
-        if (GameManager.instance.CompareState(GameState.Combat))
+        if (GameManager.instance.CompareState(GameState.Combat) && isCharacterItem)
         {
             if (data.itemType == ItemType.Revolver || data.itemType == ItemType.Repeater || data.itemType == ItemType.Shotgun)
             {

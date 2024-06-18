@@ -222,6 +222,7 @@ public class PlayerStatLevelUpUI : UISystem
         if (cnt >= _statCards.Length) return;
 
         OpenUI();
+        _statLevelUpWindow.transform.SetParent(UIManager.instance.HotCanvas.transform);
         UIManager.instance.SetLogCanvasState(false);
         _isOpenUI = true;
         selectedCardNumber = -1;

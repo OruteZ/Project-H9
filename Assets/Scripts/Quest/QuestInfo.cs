@@ -266,8 +266,24 @@ public class QuestInfo
             }
         if (_skillReward != 0)
         {
-            SkillManager.instance.LearnSkill(_skillReward, true);
-            UIManager.instance.gameSystemUI.alarmUI.AddAlarmUI(SkillManager.instance.GetSkill(_skillReward));
+            bool isAlreadyLearned = false;
+            foreach (var skill in SkillManager.instance.GetAllLearnedSkills()) 
+            {
+                if (skill.skillInfo.index == _skillReward) 
+                {
+                    isAlreadyLearned = true;
+                    break;
+                }
+            }
+            if (!isAlreadyLearned)
+            {
+                SkillManager.instance.LearnSkill(_skillReward, true);
+                UIManager.instance.gameSystemUI.alarmUI.AddAlarmUI(SkillManager.instance.GetSkill(_skillReward));
+            }
+            else 
+            {
+                SkillManager.instance.AddSkillPoint(1);
+            }
         }
         if (_expReward != 0)
         {

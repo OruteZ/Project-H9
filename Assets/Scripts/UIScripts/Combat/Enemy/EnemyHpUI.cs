@@ -10,7 +10,7 @@ public class EnemyHpUI : UISystem
 {
     [SerializeField] private GameObject _enemyHpBarContainer;
 
-    private static EnemyHpUIPool _pool = null;
+    private EnemyHpUIPool _pool = null;
 
     [HideInInspector] public UnityEvent<GameObject> onEnemyHpDeleted;
 

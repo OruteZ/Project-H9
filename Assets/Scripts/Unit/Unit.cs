@@ -44,7 +44,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     private List<Passive> _passiveList;
     public List<int> passiveIndexList;
-
+    
+    public bool doubleShootPointTrigger;
     public bool infiniteActionPointTrigger;
     public bool lightFootTrigger;
     public bool freeReloadTrigger;
@@ -185,6 +186,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     protected virtual void DeadCall(Unit unit)
     {
+        UIManager.instance.combatUI.turnOrderUI.DeleteDeadUnitTurnOrderUI(this);
         onDead.Invoke(this);
 
         // ReSharper disable once Unity.NoNullPropagation
@@ -504,11 +506,16 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         onFinishAction.Invoke(action);
     }
 
+    private int _atkCount;
+
     ///<summary>
     /// 한 턴에 한번만 사격 가능합니다. "단 Infinite Action Point 스킬을 배우지 않았을 경우"
     /// </summary>
-    public bool CheckAttackedTrigger() =>
-        HasStatusEffect(StatusEffectType.Recoil) && infiniteActionPointTrigger is false;
+    public bool CheckAttackedTrigger()
+    {
+        return HasStatusEffect(StatusEffectType.Recoil) && 
+               infiniteActionPointTrigger is false;
+    }
 
     /// <summary>
     /// 사격 후 이동이 불가합니다. "단 Light Foot 스킬을 배우지 않았을 경우"
@@ -605,7 +612,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
                 Debug.LogError("passive is null");
                 break;
             }
-
             passive.Setup();
 
             //passiveIndexList.Add(passive.index);

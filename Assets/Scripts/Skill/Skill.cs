@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -189,27 +190,23 @@ public class Skill
         CheckPrecedenceSkill(skills);
         isLearnable = IsLearnedAllPrecedenceSkills();
     }
-    private void CheckPrecedenceSkill(List<Skill> skills)
+    private void CheckPrecedenceSkill(IReadOnlyList<Skill> skills)
     {
-        for (int i = 0; i < skills.Count; i++)
+        foreach (Skill t in skills)
         {
             for (int j = 0; j < skillInfo.precedenceIndex.Length; j++)
             {
-                bool isPrecedenceSkill = (skills[i].skillInfo.index == skillInfo.precedenceIndex[j]);
+                bool isPrecedenceSkill = (t.skillInfo.index == skillInfo.precedenceIndex[j]);
                 if (isPrecedenceSkill)
                 {
-                    isLearnedPrecedeSkill[j] = skills[i].isLearned;
+                    isLearnedPrecedeSkill[j] = t.isLearned;
                 }
             }
         }
     }
     private bool IsLearnedAllPrecedenceSkills()
     {
-        for (int i = 0; i < isLearnedPrecedeSkill.Length; i++)
-        {
-            if (!isLearnedPrecedeSkill[i]) return false;
-        }
-        return true;
+        return isLearnedPrecedeSkill.All(t => t);
     }
 
     /// <summary>

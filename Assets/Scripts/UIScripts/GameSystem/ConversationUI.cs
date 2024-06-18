@@ -182,7 +182,7 @@ public class ConversationInfo
         index = i;
         group = g;
         sequence = s;
-        speakerName = name + "*FixLater";     //need Localization
+        speakerName = name/* + "*FixLater"*/;     //need Localization
         Texture2D texture = Resources.Load("UnitCapture/" + image) as Texture2D;
         Sprite spr = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         speakerImage = spr;

@@ -6,7 +6,6 @@ public class StatUpDuringThreeTurn : BaseEffect, IDisplayableEffect
     int _duration;
     public StatUpDuringThreeTurn(StatType statType, int amount) : base(statType, amount)
     {
-        unit.onTurnEnd.AddListener(OnTurnFinished);
     }
 
     public override PassiveEffectType GetEffectType() => PassiveEffectType.StatUpDuringThreeTurn;
@@ -37,6 +36,7 @@ public class StatUpDuringThreeTurn : BaseEffect, IDisplayableEffect
     #region IDISPLAYABLE_EFFECT
     protected override void EffectSetup()
     {
+        unit.onTurnEnd.AddListener(OnTurnFinished);
     }
     public int GetIndex() => passive.index;
     public int GetStack() => GetAmount();

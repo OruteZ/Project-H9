@@ -12,11 +12,13 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private PlayerMagazineUIElement _shotguns;
     [SerializeField] private PlayerMagazineUIElement _repeater;
 
+    private float _revolverRotation = 0;
 
     private int MAGAZINE_SIZE = 6;
     private int MAGAZINE_COUNT = 7;
     void Start()
     {
+        _revolvers.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 359.99f);
         if (_magazineTooltip == null) return;
         _magazineTooltip?.SetActive(false);
     }
@@ -51,6 +53,7 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
         {
             _revolvers.gameObject.SetActive(true);
             _revolvers.Reload(maxAmmo, magazine, flickerCnt);
+            _revolverRotation = 359.99f - 60 * (maxAmmo - magazine.bullets.Count);
         }
         if (weaponType == ItemType.Shotgun)
         {
@@ -61,6 +64,15 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
         {
             _repeater.gameObject.SetActive(true);
             _repeater.Reload(maxAmmo, magazine, flickerCnt);
+        }
+    }
+    private void Update()
+    {
+        if (!_revolvers.gameObject.activeSelf) return;
+            float rotation = _revolvers.GetComponent<RectTransform>().eulerAngles.z;
+        if (LerpCalculation.CalculateLerpValue(ref rotation, _revolverRotation, 10f))
+        {
+            _revolvers.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, rotation);
         }
     }
     public void OnPointerEnter(PointerEventData eventData)

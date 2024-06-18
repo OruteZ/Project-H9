@@ -344,4 +344,13 @@ public class UnitSystem : MonoBehaviour
         }
         return false;
     }
+    public int GetEnemyCount()
+    {
+        int cnt = 0;
+        foreach (var unit in units)
+        {
+            if (unit is Enemy) cnt++;
+        }
+        return cnt;
+    }
 }

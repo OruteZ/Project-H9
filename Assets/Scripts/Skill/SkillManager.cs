@@ -59,27 +59,21 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
     private void InitSkills()
     {
-        List<List<string>> skillTable = FileRead.Read("SkillTable", out var columnInfo);
+        var skillTable = FileRead.Read("SkillTable", out var columnInfo);
         if (skillTable == null) 
         {
             Debug.Log("skill table을 읽어오지 못했습니다.");
             return;
         }
 
-        List<SkillInfo> _skillInformations = new List<SkillInfo>();
-        for (int i = 0; i < skillTable.Count; i++)
-        {
-            SkillInfo skillInfo = new SkillInfo(skillTable[i]);
-            _skillInformations.Add(skillInfo);
-        }
+        var skillInformationList = skillTable.Select(t => new SkillInfo(t)).ToList();
 
         _skills = new List<Skill>();
-        for (int i = 0; i < _skillInformations.Count; i++)
+        foreach (Skill skill in skillInformationList.Select(t => new Skill(t)))
         {
-            Skill skill = new Skill(_skillInformations[i]);
             _skills.Add(skill);
         }
-        foreach (SkillInfo info in _skillInformations)
+        foreach (SkillInfo info in skillInformationList)
         {
             info.ConnectPrecedenceSkill();
         }
@@ -96,9 +90,9 @@ public class SkillManager : Generic.Singleton<SkillManager>
         }
         _language = UIManager.instance.scriptLanguage;
         _skillNameScripts = new List<SkillNameScript>();
-        for (int i = 0; i < skillNameTable.Count; i++)
+        foreach (var t in skillNameTable)
         {
-            SkillNameScript script = new SkillNameScript(int.Parse(skillNameTable[i][0]), skillNameTable[i][(int)_language]);
+            SkillNameScript script = new SkillNameScript(int.Parse(t[0]), t[(int)_language]);
             _skillNameScripts.Add(script);
         }
 
@@ -148,12 +142,9 @@ public class SkillManager : Generic.Singleton<SkillManager>
     /// </returns>
     public Skill GetSkill(int index)
     {
-        for (int i = 0; i < _skills.Count; i++)
+        foreach (Skill t in _skills.Where(t => t.skillInfo.index == index))
         {
-            if (_skills[i].skillInfo.index == index)
-            {
-                return _skills[i];
-            }
+            return t;
         }
         Debug.Log("해당 인덱스의 스킬을 찾지 못했습니다. 인덱스: " + index);
         return null;
@@ -227,15 +218,30 @@ public class SkillManager : Generic.Singleton<SkillManager>
                     return false;
                 }
 
+                // learn Skill;
                 _skillPoint -= isFreeLearn ? 0 : REQUIRED_SKILL_POINT;
                 _skills[i].LearnSkill();
+                
                 PlayerEvents.OnLearnedSkill?.Invoke(_skills[i].skillInfo);
                 GameManager.instance.AddPlayerSkillListElement(_skills[i].skillInfo);
-                passiveDB.GetPassive(_skills[i].skillInfo.index, player);
-                player.SetPassive(GameManager.instance.playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, player)).ToList());
+
+                if (player == null)
+                {
+                    Debug.Log("Player is Null");
+                    break;
+                }
+                
+                if (_skills[i].skillInfo.IsPassive())
+                {
+                    List<PassiveSkill.Passive> learndSkill = new() { passiveDB.GetPassive(_skills[i].skillInfo.index, player) };
+                    //player.SetPassive(GameManager.instance.playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, player)).ToList());
+                    player.SetPassive(learndSkill);
+                }
+
                 break;
             }
         }
+        
         for (int i = 0; i < _skills.Count; i++)
         {
             _skills[i].UpdateIsLearnable(_skills);

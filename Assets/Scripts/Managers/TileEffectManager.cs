@@ -333,7 +333,18 @@ public class TileEffectManager : Singleton<TileEffectManager>
             float offset = 0;
             if (_player.GetSelectedAction() is FanningAction f)
             {
-                offset = f.GetHitRateModifier();
+                offset += f.GetHitRateModifier();
+            }
+            else
+            {
+                foreach (var passive in _player.GetAllPassiveList())
+                {
+                    if (passive.index == 21001 && passive.IsEffectEnable())
+                    {
+                        offset += 20;
+                        break;
+                    }
+                }
             }
             hitRate += offset;
             

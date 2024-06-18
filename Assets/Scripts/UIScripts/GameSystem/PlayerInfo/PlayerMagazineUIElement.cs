@@ -36,11 +36,18 @@ public class PlayerMagazineUIElement : UIElement
         if (maxAmmo < 0 || _elements.Count <= maxAmmo)
             Debug.LogError($"HUD magazine UI => SetMaxSize()'s size is incorrect. ({gameObject.name} maxAmmo:{maxAmmo})");
 
-        // use bullets
-        for (int i = 0; i < magazine.bullets.Count; i++)
+
+        for (int i = 0; i < maxAmmo - magazine.bullets.Count; i++)
+        {
+            _elements[i].Empty();
+            _elements[i].GetComponent<Image>().sprite = _bulletSprite;
+        }
+
+        int bulletCnt = 0;
+        for (int i = maxAmmo - magazine.bullets.Count; i < maxAmmo; i++)
         {
             _elements[i].Fill();
-            if (GameManager.instance.CompareState(GameState.World) || !magazine.bullets[i].isGoldenBullet)
+            if (GameManager.instance.CompareState(GameState.World) || !magazine.bullets[bulletCnt].isGoldenBullet)
             {
                 _elements[i].transform.GetChild(1).GetComponent<Image>().sprite = _bulletSprite;
             }
@@ -48,12 +55,7 @@ public class PlayerMagazineUIElement : UIElement
             {
                 _elements[i].transform.GetChild(1).GetComponent<Image>().sprite = _goldenBulletSprite;
             }
-        }
-
-        for (int i = magazine.bullets.Count; i < maxAmmo; i++)
-        {
-            _elements[i].Empty();
-            _elements[i].GetComponent<Image>().sprite = _bulletSprite;
+            bulletCnt++;
         }
 
         // unuse bullets (upper maxAmmo)

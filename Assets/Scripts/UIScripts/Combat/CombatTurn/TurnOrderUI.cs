@@ -55,6 +55,16 @@ public class TurnOrderUI : UISystem
         ui.transform.SetParent(_turnOrderUIContainer.transform, false);
         ui.SetActive(false);
     }
+    public void DeleteDeadUnitTurnOrderUI(Unit unit) 
+    {
+        for (int i = transform.childCount; i >= 0; i--)
+        {
+            if (_turnOrderUI.transform.GetChild(i).GetComponent<TurnOrderUIElement>().unit == unit)
+            {
+                DeleteTurnOrderUI(_turnOrderUI.transform.GetChild(i).gameObject);
+            }
+        }
+    }
     private void InitTurnOrderUI(List<Unit> turnOrder)
     {
         int order = 0;

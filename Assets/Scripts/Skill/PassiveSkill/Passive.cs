@@ -133,8 +133,9 @@ namespace PassiveSkill
         }
         public void Enable()
         {
-            //Debug.LogError("Effect On: " + index);
+
             if (IsEffectEnable() && _condition[0] is NullCondition) return;
+            //Debug.LogError("Effect On: " + index);
             foreach (IEffect effect in _effect)
             {
                 effect.OnConditionEnable();
@@ -142,6 +143,7 @@ namespace PassiveSkill
         }
         public void Disable()
         {
+
             //Debug.LogError("Effect Off: " + index);
             foreach (IEffect effect in _effect)
             {

@@ -231,8 +231,13 @@ public class SkillManager : Generic.Singleton<SkillManager>
                 _skills[i].LearnSkill();
                 PlayerEvents.OnLearnedSkill?.Invoke(_skills[i].skillInfo);
                 GameManager.instance.AddPlayerSkillListElement(_skills[i].skillInfo);
-                passiveDB.GetPassive(_skills[i].skillInfo.index, player);
-                player.SetPassive(GameManager.instance.playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, player)).ToList());
+
+                if (_skills[i].skillInfo.IsPassive())
+                {
+                    List<PassiveSkill.Passive> learndSkill = new() { passiveDB.GetPassive(_skills[i].skillInfo.index, player) };
+                    //player.SetPassive(GameManager.instance.playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, player)).ToList());
+                    player.SetPassive(learndSkill);
+                }
                 break;
             }
         }

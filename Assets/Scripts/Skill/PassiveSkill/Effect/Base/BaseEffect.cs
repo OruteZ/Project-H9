@@ -18,6 +18,7 @@
         public void Setup(Passive passive)
         {
             this.passive = passive;
+            OnConditionDisable();
             EffectSetup();
         }
 

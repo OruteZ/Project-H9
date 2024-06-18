@@ -54,7 +54,7 @@ public class CharacterStatUIInfo
     public float GetCorrectedValue(float stat)
     {
         //if (statName == "Critical Chance") return ((int)(stat * 100));
-        if (statName == "Critical Damage") return stat / 100.0f;
+        //if (statName == "Critical Damage") return stat / 100.0f;
         return stat;
     }
     public string GetFinalStatValueString() 
@@ -64,7 +64,7 @@ public class CharacterStatUIInfo
         if (statName == "Exp") return finalStat + " / " + GameManager.instance.GetMaxExp();
         if (statName == "Bonus Hit Rate") return finalStat + "%";
         if (statName == "Critical Chance") return finalStat + '%';
-        if (statName == "Critical Damage") return finalStat + 'x';
+        if (statName == "Critical Damage") return finalStat + '%';
 
         return finalStat.ToString();
     }

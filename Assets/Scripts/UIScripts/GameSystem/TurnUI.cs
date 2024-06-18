@@ -29,12 +29,10 @@ public class TurnUI : UISystem
 
     private void Update()
     {
-#if UNITY_EDITOR
         if (Input.GetKeyDown(HotKey.endTurnKey))
         {
             OnClickEndTurnButton();
         }
-#endif 
     }
 
     /// <summary>

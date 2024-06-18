@@ -199,12 +199,16 @@ public struct TileObjectData
         rotation = obj.gameObject.transform.localRotation.y;
         arguments = obj.GetArgs();
         
+        #if UNITY_EDITOR
         if(obj.gameObject.GetPrefabDefinition() is GameObject p) prefab = p;
         else
         {
             Debug.LogError("TileObjectData : Prefab is null");
             prefab = null;
         }
+        #else
+        prefab = null;
+        #endif
     }
 }
 

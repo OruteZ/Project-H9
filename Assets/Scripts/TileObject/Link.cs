@@ -29,19 +29,20 @@ public class Link : TileObject
 
     private bool IsEncounterEnable()
     {
+        if (isRepeatable is false) return true;
+        
         int curTurn = FieldSystem.turnSystem.turnNumber;
         bool hasFinished = EncounterManager.instance.TryGetTurn(hexPosition, out int lastTurn);
 
         if (hasFinished is false) return true;
         
         // todo : 나중에 싹 뜯어고쳐야 함, 위치를 기반으로 링크의 부활 여부를 관리하는것도 문제, 일회용 링크여도 삭제되지 않는것도 문제
-        if (isRepeatable is false)
-        {
-            EncounterManager.instance.AddValue(hexPosition, FieldSystem.turnSystem.turnNumber +
-                                                            (int.MaxValue / 2));
-            return false;
-        }
-        return lastTurn + 5 <= curTurn;
+        if (isRepeatable) return lastTurn + 5 <= curTurn;
+        
+        EncounterManager.instance.AddValue(hexPosition, 
+            FieldSystem.turnSystem.turnNumber +
+            (int.MaxValue / 2));
+        return false;
     }
     public override void OnCollision(Unit other)
     {
@@ -52,6 +53,11 @@ public class Link : TileObject
         Debug.Log("On Collision Calls");
         EncounterManager.instance.AddValue(hexPosition, FieldSystem.turnSystem.turnNumber);
         GameManager.instance.StartCombat(tile.combatStageIndex, linkIndex: linkIndex);
+        
+        if (isRepeatable is false)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public override void SetVisible(bool value)

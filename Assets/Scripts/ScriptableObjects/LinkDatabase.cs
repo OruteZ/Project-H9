@@ -29,12 +29,12 @@ public class LinkDatabase : ScriptableObject
                 index = int.Parse(data[(int)LinkColumn.Index]),
                 groupNameIndex = int.Parse(data[(int)LinkColumn.GroupNameIndex]),
                 combatEnemy = FileRead.ConvertStringToArray<int>(data[(int)LinkColumn.CombatEnemy]),
-                model = Resources.Load<GameObject>("Prefab/Units/"+data[(int)LinkColumn.Model]),
+                model = Resources.Load<GameObject>("Prefab/UnitModels/"+data[(int)LinkColumn.Model]),
             };
             //if model is null, set NULL_MODEL
             if (newData.model == null)
             {
-                newData.model = Resources.Load<GameObject>("Prefab/Units/NULL");
+                newData.model = Resources.Load<GameObject>("Prefab/UnitModels/NULL");
             }
             
             dataBase.Add(newData);

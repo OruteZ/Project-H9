@@ -296,7 +296,7 @@ MonoBehaviour:
     itemEffectAmount: 0
     itemEffectDuration: 0
     itemPrice: 0
-    weaponDamage: 2
+    weaponDamage: 3
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
@@ -671,6 +671,25 @@ MonoBehaviour:
     weaponSkill: 0
     itemTooltip: 1003
     icon: {fileID: 21300000, guid: 5f82dd335690cde4eba838c9c54245ac, type: 3}
+    itemModel: {fileID: 0}
+  - id: 1
+    nameIdx: 1
+    itemType: 1
+    itemMaxStorage: 1
+    itemRange: 0
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 1
+    weaponDamage: 0
+    weaponAmmo: 0
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 1
+    icon: {fileID: 21300000, guid: 893db0dddd88cf14d8fe4e00fadc3a1d, type: 3}
     itemModel: {fileID: 0}
   _itemScriptList:
   - _itemIndex: 0

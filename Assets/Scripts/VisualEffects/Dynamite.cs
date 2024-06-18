@@ -21,7 +21,8 @@ public class Dynamite : MonoBehaviour
         float duration = 1f;
 
         Vector3 startPosition = transform.position;
-        Vector3 controlPosition = startPosition + (targetPosition - startPosition) / 2 + Vector3.up * 5;
+        
+        int randomRotationDirection = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;
 
         float startTime = Time.time;
         float progress = 0;
@@ -31,9 +32,11 @@ public class Dynamite : MonoBehaviour
             progress = (Time.time - startTime) / duration;
 
             Vector3 currentPosition = Vector3.Lerp(startPosition, targetPosition, progress);
-            currentPosition.y = Mathf.Sin(progress * Mathf.PI) * 5;
+            currentPosition.y = Mathf.Sin(progress * Mathf.PI) * 2;
 
             transform.position = currentPosition;
+            
+            transform.Rotate(Vector3.up, randomRotationDirection * 360 * Time.deltaTime);
 
             yield return null;
         }

@@ -47,12 +47,15 @@ public class CameraManager : Singleton<CameraManager>
 
     public UnitCamera GetCamera(Unit unit)
     {
-        var ret = _unitCameras.GetValueOrDefault(unit);
+        UnitCamera ret = _unitCameras.GetValueOrDefault(unit);
         return ret;
     }
-    
-    private void Start()
+
+    protected override void Awake()
     {
+        base.Awake();
+        if (this == null) return;
+        
         FieldSystem.onStageAwake.AddListener(OnStageAwake);
     }
     
@@ -96,7 +99,8 @@ public class CameraManager : Singleton<CameraManager>
     private void SetCombatCamOption()
     {
         if (Camera.main != null) Camera.main.orthographic = false;
-        worldCamera.SetPosition(GetCamera(FieldSystem.unitSystem.GetPlayer()).transform.position);
+        UnitCamera playerCam= GetCamera(FieldSystem.unitSystem.GetPlayer());
+        worldCamera.SetPosition(playerCam.transform.position);
     }
     
     public void ShakeCamera(float amplitude, float frequency, float duration)

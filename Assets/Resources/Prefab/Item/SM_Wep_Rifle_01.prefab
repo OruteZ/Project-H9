@@ -298,9 +298,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gunpoint: {fileID: 2012646553195548935}
   trigger: {fileID: 7766572871429703273}
-  rotationOffset: {x: -0.2550853, y: 0.45535, z: 0.36434662, w: 0.7712584}
-  positionOffset: {x: -0.3, y: -0.2, z: 1}
-  handRotationOffset: {x: -0.15607288, y: 0.36523876, z: -0.87939715, w: 0.262493}
-  handPositionOffset: {x: -1.4, y: 4.4, z: -3.7}
+  rotationOffset: {x: 0, y: 0, z: 0, w: 1}
+  positionOffset: {x: 0, y: 0, z: 0}
+  handRotationOffset: {x: 0.067399144, y: -0.13830364, z: 0.96428895, w: -0.21558401}
+  handPositionOffset: {x: -0.3, y: -0.2, z: 1}
+  NOTFRONTIER_handRotationOffset: {x: 0.15607293, y: -0.36523882, z: 0.87939715, w: -0.26249284}
+  NOTFRONTIER_handPositionOffset: {x: -1.4, y: 4.4, z: -3.7}
   standRotationOffset: {x: 0.5024086, y: -0.73175687, z: -0.2505807, w: 0.3864282}
   standPositionOffset: {x: -16.5, y: -9.27, z: 20.87}

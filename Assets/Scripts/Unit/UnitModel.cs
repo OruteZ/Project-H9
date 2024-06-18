@@ -358,6 +358,12 @@ public class UnitModel : MonoBehaviour
     /// <param name="eventStringArgument"></param>
     public void GetAnimationEvent(string eventStringArgument)
     {
+        if (AnimationEventNames.IsEventName(eventStringArgument) is false)
+        {
+            Debug.LogError("Invalid event name: " + eventStringArgument);
+            return;
+        }
+        
         unit.GetSelectedAction()?.TossAnimationEvent(eventStringArgument);
     }
 }

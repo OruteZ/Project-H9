@@ -15,7 +15,7 @@ public class UnitSFXEffector : MonoBehaviour
             return;
         }
         
-        var targetClip = eventName switch
+        AudioClip targetClip = eventName switch
         {
             AnimationEventNames.GUN_FIRE => gunFireClip,
             AnimationEventNames.GUN_RELOAD => gunReloadClip,

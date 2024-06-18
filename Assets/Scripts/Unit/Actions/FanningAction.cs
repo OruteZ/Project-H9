@@ -12,7 +12,6 @@ public class FanningAction : BaseAction, IShootingAction
     private const float FINISH_TIME = 1f;
     
     private Unit _target;
-    private int _shotCount;
 
     private float _hitRateModifier;
 
@@ -105,7 +104,6 @@ public class FanningAction : BaseAction, IShootingAction
     public override void TossAnimationEvent(string eventString)
     {
         if (eventString != AnimationEventNames.GUN_FIRE) return;
-        if (_shotCount <= 0) return;
         
         unit.TryAttack(_target, _hitRateModifier);
     }

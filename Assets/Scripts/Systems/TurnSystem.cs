@@ -81,7 +81,7 @@ public class TurnSystem : MonoBehaviour
                 currentRounds.Add(units[i].currentRound);
             }
             
-            while (turnOrder.Count < ORDER_LENGTH * 2)
+            while (turnOrder.Count < ORDER_LENGTH * 4)
             {
                 int minOrderValueUnitIndex = 0;
                 float minOrderValue = CalculateTurnOrderValue(currentRounds[0], units[0].stat.GetStat(StatType.Speed));

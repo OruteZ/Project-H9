@@ -132,7 +132,6 @@ public class SkillManager : Generic.Singleton<SkillManager>
         }
         return learnedSkills;
     }
-    
     /// <summary>
     /// 해당 고유번호 또는 이름를 가진 스킬을 반환합니다.
     /// </summary>
@@ -226,11 +225,19 @@ public class SkillManager : Generic.Singleton<SkillManager>
                 PlayerEvents.OnLearnedSkill?.Invoke(_skills[i].skillInfo);
                 GameManager.instance.AddPlayerSkillListElement(_skills[i].skillInfo);
 
-                if (player == null) break;
+                if (player == null)
+                {
+                    Debug.Log("Player is Null");
+                    break;
+                }
                 
-                passiveDB.GetPassive(_skills[i].skillInfo.index, player);
-                player.SetPassive(GameManager.instance.playerPassiveIndexList
-                    .Select(idx => passiveDB.GetPassive(idx, player)).ToList());
+                if (_skills[i].skillInfo.IsPassive())
+                {
+                    List<PassiveSkill.Passive> learndSkill = new() { passiveDB.GetPassive(_skills[i].skillInfo.index, player) };
+                    //player.SetPassive(GameManager.instance.playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, player)).ToList());
+                    player.SetPassive(learndSkill);
+                }
+
                 break;
             }
         }

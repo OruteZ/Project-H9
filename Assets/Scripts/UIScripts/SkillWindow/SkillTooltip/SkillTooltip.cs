@@ -19,7 +19,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
 
     private SkillManager _skillManager;
     private int _currentSkillIndex;
-    private bool _isInteractableButton;
+    private bool _isButtonInteractable;
 
     static private SkillKeywordPool _keywordTooltips = null;
     private List<SkillKeywordWrapper> _activeKeywordTooltips = new List<SkillKeywordWrapper>();
@@ -29,7 +29,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     {
         _skillManager = SkillManager.instance;
         _currentSkillIndex = 0;
-        _isInteractableButton = false;
+        _isButtonInteractable = false;
 
         if (_keywordTooltips == null)
         {
@@ -58,7 +58,9 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     {
         OpenUI();
         _currentSkillIndex = index;
-        _isInteractableButton = false;
+        _isButtonInteractable = false;
+        pos.x += 10 * UIManager.instance.GetCanvasScale();
+        pos.y -= 10 * UIManager.instance.GetCanvasScale();
         GetComponent<RectTransform>().position = pos;
         //GetComponent<RectTransform>().position = Input.mousePosition;
         _skillManager = SkillManager.instance;
@@ -101,7 +103,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
                 if (GameManager.instance.CompareState(GameState.World))
                 {
                     buttonText.text = UIManager.instance.UILocalization[34];
-                    _isInteractableButton = true;
+                    _isButtonInteractable = true;
                 }
                 else
                 {
@@ -132,7 +134,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
     /// </summary>
     public void ClickLearnSkill()
     {
-        if (_isInteractableButton && _skillManager.LearnSkill(_currentSkillIndex))
+        if (_isButtonInteractable && _skillManager.LearnSkill(_currentSkillIndex))
         {
             UIManager.instance.skillUI.UpdateRelatedSkillNodes(_currentSkillIndex);
         }

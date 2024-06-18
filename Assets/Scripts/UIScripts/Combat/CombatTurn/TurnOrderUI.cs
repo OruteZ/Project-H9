@@ -55,6 +55,21 @@ public class TurnOrderUI : UISystem
         ui.transform.SetParent(_turnOrderUIContainer.transform, false);
         ui.SetActive(false);
     }
+    public void DeleteDeadUnitTurnOrderUI(Unit unit) 
+    {
+        if (FieldSystem.unitSystem.GetEnemyCount() < 2) return;
+        for (int i = _turnOrderUI.transform.childCount - 1; i >= 0; i--)
+        {
+            if (_turnOrderUI.transform.GetChild(i).GetComponent<TurnOrderUIElement>().unit == null || _turnOrderUI.transform.GetChild(i).GetComponent<TurnOrderUIElement>().unit == unit)
+            {
+                DeleteTurnOrderUI(_turnOrderUI.transform.GetChild(i).gameObject);
+            }
+        }
+        for (int i = _turnOrderUI.transform.childCount - 1; i >= 0; i--)
+        {
+            _turnOrderUI.transform.GetChild(i).GetComponent<TurnOrderUIElement>().ChangeOrder(i);
+        }
+    }
     private void InitTurnOrderUI(List<Unit> turnOrder)
     {
         int order = 0;

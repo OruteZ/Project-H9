@@ -186,6 +186,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     protected virtual void DeadCall(Unit unit)
     {
+        UIManager.instance.combatUI.turnOrderUI.DeleteDeadUnitTurnOrderUI(this);
         onDead.Invoke(this);
 
         // ReSharper disable once Unity.NoNullPropagation
@@ -611,7 +612,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
                 Debug.LogError("passive is null");
                 break;
             }
-
             passive.Setup();
 
             //passiveIndexList.Add(passive.index);

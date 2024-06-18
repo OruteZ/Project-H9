@@ -38,6 +38,8 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
             return;
         }
         _data = data;
+        pos.x += 10 * UIManager.instance.GetCanvasScale();
+        pos.y -= 10 * UIManager.instance.GetCanvasScale();
         GetComponent<RectTransform>().position = pos;
 
         UIManager.instance.SetUILayer(3);

@@ -342,7 +342,6 @@ public class TileEffectManager : Singleton<TileEffectManager>
                 {
                     foreach (var passive in _player.GetAllPassiveList())
                     {
-                        Debug.LogError(passive.index);
                         if (passive.index == 21006)
                         {
                             offset += 20;

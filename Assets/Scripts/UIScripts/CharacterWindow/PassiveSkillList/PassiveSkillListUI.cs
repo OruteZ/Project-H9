@@ -7,7 +7,7 @@ public class PassiveSkillListUI : UISystem
     [SerializeField] private GameObject _passiveSkillListContainer;
     [SerializeField] private GameObject _passiveSkillListTooltip;
 
-    private static PassiveSkillListPool _listPool = null;
+    private PassiveSkillListPool _listPool = null;
 
     public override void OpenUI() 
     {

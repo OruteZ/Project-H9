@@ -52,8 +52,8 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
             return; 
         }
         
-        _curInfo = Instantiate(_infoMessagePrefab);
-        _curInfo.transform.parent = _canvas;
+        _curInfo = Instantiate(_infoMessagePrefab, _canvas);
+        //_curInfo.transform.parent = _canvas;
         var anchorPos = prePosition[(int)message];
         _curInfo.GetComponent<RectTransform>().anchoredPosition = anchorPos;
         _curInfo.GetComponentInChildren<TMPro.TMP_Text>().text = _infoMessage[((int)message)];

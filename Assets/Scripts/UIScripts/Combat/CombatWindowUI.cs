@@ -35,8 +35,7 @@ public class CombatWindowUI : UISystem
     // Start is called before the first frame update
     private void Awake()
     {
-        var resultWindowInstance = Instantiate(_ResultWindowPrefab);
-        resultWindowInstance.transform.SetParent(UIManager.instance.HotCanvas.transform);
+        var resultWindowInstance = Instantiate(_ResultWindowPrefab, UIManager.instance.HotCanvas.transform);
         resultWindowInstance.GetComponent<RectTransform>().offsetMin = Vector2.zero;
         resultWindowInstance.GetComponent<RectTransform>().offsetMax = Vector2.zero;
 

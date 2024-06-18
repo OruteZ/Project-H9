@@ -95,7 +95,7 @@ public class CombatResultUI : UISystem
             else if (0 < gold) bootyText = $"{gold} Gold";
             else bootyText = _emptyBootyComment;
             _BootyText.text = bootyText;
-           
+
             // set item panel
             int[] itemidxs = FieldSystem.unitSystem.rewardHelper.GetRewardItemInfos();
             var itemSize = _ResultBootyItemPrefab.GetComponent<RectTransform>().sizeDelta;
@@ -108,8 +108,7 @@ public class CombatResultUI : UISystem
                 var index = itemidxs[i];
                 var itemData = GameManager.instance.itemDatabase.GetItemData(index);
                 // create and align
-                var itemObj = Instantiate(_ResultBootyItemPrefab);
-                itemObj.GetComponent<RectTransform>().SetParent(_ResultBootyItemParent);
+                var itemObj = Instantiate(_ResultBootyItemPrefab, _ResultBootyItemParent);
                 itemObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(startPositionX + ((itemSize.x + intervalX) * i), positionY);
                 // assign icon and name
                 var itemIconObj = itemObj.transform.Find("ItemIcon");

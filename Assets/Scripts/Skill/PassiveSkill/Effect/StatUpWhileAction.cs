@@ -6,7 +6,7 @@ public class StatUpWhileAction : BaseEffect, IDisplayableEffect
     {
     }
 
-    public override PassiveEffectType GetEffectType() => PassiveEffectType.StatUpDuringThreeTurn;
+    public override PassiveEffectType GetEffectType() => PassiveEffectType.StatUpWhileAction;
 
     public override void OnConditionEnable()
     {

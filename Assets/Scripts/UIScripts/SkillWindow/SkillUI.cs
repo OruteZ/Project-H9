@@ -94,6 +94,8 @@ public class SkillUI : UISystem
     public void ClickSkillUIButton(int btnIndex, Vector3 pos)
     {
         _currentKeywordIndex.Clear();
+        pos.x += 10 * UIManager.instance.GetCanvasScale();
+        pos.y -= 10 * UIManager.instance.GetCanvasScale();
         _skillTooltipWindow.GetComponent<SkillTooltip>().SetSkillTooltip(btnIndex, pos);
 
         OpenPopupWindow();

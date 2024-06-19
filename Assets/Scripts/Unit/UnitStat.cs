@@ -14,13 +14,13 @@ public class UnitStat : ICloneable
     public UnityEvent<StatType> OnChangedStat = new UnityEvent<StatType>();
 
     public int maxHp => GetStat(StatType.MaxHp);
-    public int curHp => GetStat(StatType.CurHp);
+    public int curHp => GetOriginalStat(StatType.CurHp);
 
     public int concentration => GetStat(StatType.Concentration); 
     public int sightRange => GetStat(StatType.SightRange); 
     public int speed => GetStat(StatType.Speed);
     public int maxActionPoint => GetStat(StatType.MaxActionPoint);
-    public int curActionPoint => GetStat(StatType.CurActionPoint);
+    public int curActionPoint => GetOriginalStat(StatType.CurActionPoint);
     public float additionalHitRate => GetStat(StatType.AdditionalHitRate);
     public float criticalChance => GetStat(StatType.CriticalChance);
     public int revolverAdditionalDamage => GetStat(StatType.RevolverAdditionalDamage);
@@ -100,6 +100,11 @@ public class UnitStat : ICloneable
             }
             return;
         }
+        if (type is StatType.CurHp or StatType.CurActionPoint)
+        {
+            original[(int)type] += value;
+        }
+
         _additional[(int)type] += value;
         OnChangedStat?.Invoke(type);
     }
@@ -209,7 +214,7 @@ public class UnitStat : ICloneable
             return false;
         }
 
-        if (value > GetStat(stat)) 
+        if (value > GetOriginalStat(stat)) 
             return false;
         
         original[(int)stat] -= value; 

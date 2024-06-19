@@ -20,9 +20,10 @@
         DoubleShootPoint,
         FreeReload,
         GoldenBullet,
-        TwoGoldenBullet,
-        StatUpDuringThreeTurn,
+        TwoGoldenBullets,
+        StatUpDuringThreeTurns,
         SweetSpot,
-        StatUpWhileAction
+        StatUpWhileAction,
+        StatUpDuringATurn,
     }
 }

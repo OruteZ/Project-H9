@@ -49,7 +49,8 @@ public class PlayerHpUI : UIElement, IPointerEnterHandler, IPointerExitHandler
     public void SetHpUI()
     {
         int maxHp = GameManager.instance.playerStat.GetStat(StatType.MaxHp);
-        int curHp = GameManager.instance.playerStat.GetStat(StatType.CurHp);
+        int curHp = GameManager.instance.playerStat.
+            GetOriginalStat(StatType.CurHp);
         if (maxHp == _prevMaxHp && curHp == _prevCurHp) return;
 
         _playerHpBar.GetComponent<Image>().fillAmount = (float)curHp / maxHp;

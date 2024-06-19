@@ -59,6 +59,8 @@ public class Revolver : Weapon
         finalHitRate = Mathf.Clamp(finalHitRate, 0, 100);
         finalHitRate += target.GetHitRateModifier();
 
+        if (unit.GetSelectedAction() is FanningAction) finalHitRate += 100;
+
 #if UNITY_EDITOR
         UIManager.instance.debugUI.SetDebugUI
             (finalHitRate, unit, (Unit)target, distance, weaponRange,

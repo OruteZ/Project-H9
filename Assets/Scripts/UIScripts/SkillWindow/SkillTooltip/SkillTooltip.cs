@@ -59,8 +59,6 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         OpenUI();
         _currentSkillIndex = index;
         _isButtonInteractable = false;
-        pos.x += 10 * UIManager.instance.GetCanvasScale();
-        pos.y -= 10 * UIManager.instance.GetCanvasScale();
         GetComponent<RectTransform>().position = pos;
         //GetComponent<RectTransform>().position = Input.mousePosition;
         _skillManager = SkillManager.instance;

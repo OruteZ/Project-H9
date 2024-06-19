@@ -18,8 +18,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 {
     #region SIMPLIFY
 
-    public int currentActionPoint => stat.GetStat(StatType.CurActionPoint);
-    public int hp => stat.GetStat(StatType.CurHp);
+    public int currentActionPoint => stat.GetOriginalStat(StatType.CurActionPoint);
+    public int hp => stat.GetOriginalStat(StatType.CurHp);
 
     public Transform hand => _unitModel.hand;
     public Transform chest => _unitModel.chest;
@@ -167,8 +167,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             EndTurn();
             DeadCall(this);
         }
-
         else SelectAction(GetAction<IdleAction>());
+
     }
 
     public void EndTurn()
@@ -671,12 +671,12 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public int GetCurrentHp()
     {
-        return stat.GetStat(StatType.CurHp);
+        return stat.GetOriginalStat(StatType.CurHp);
     }
 
     public int GetMaxHp()
     {
-        return stat.GetStat(StatType.MaxHp);
+        return stat.GetOriginalStat(StatType.MaxHp);
     }
 
     public int GetHitRateModifier()

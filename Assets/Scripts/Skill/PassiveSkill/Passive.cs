@@ -73,10 +73,11 @@ namespace PassiveSkill
                     PassiveEffectType.DoubleShootPoint => new DoubleShootPoint(stat[i], amount[i]),
                     PassiveEffectType.FreeReload => new FreeReload(stat[i], amount[i]),
                     PassiveEffectType.GoldenBullet => new GoldenBulletEffect(stat[i], amount[i]),
-                    PassiveEffectType.TwoGoldenBullet => new TwoGoldenBulletEffect(stat[i], amount[i]),
-                    PassiveEffectType.StatUpDuringThreeTurn => new StatUpDuringThreeTurn(stat[i], amount[i]),
+                    PassiveEffectType.TwoGoldenBullets => new TwoGoldenBulletsEffect(stat[i], amount[i]),
+                    PassiveEffectType.StatUpDuringThreeTurns => new StatUpDuringThreeTurns(stat[i], amount[i]),
                     PassiveEffectType.SweetSpot => new SweetSpotEffect(stat[i], amount[i]),
                     PassiveEffectType.StatUpWhileAction => new StatUpWhileAction(stat[i], amount[i]),
+                    PassiveEffectType.StatUpDuringATurn => new StatUpDuringATurn(stat[i], amount[i]),
                     _ => throw new ArgumentOutOfRangeException(nameof(type), type[i], null)
                 };
                 ret[i] = r;

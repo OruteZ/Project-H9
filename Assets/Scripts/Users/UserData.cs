@@ -12,6 +12,7 @@ public class UserData
     private int _version = 102;
 
     public Vector3Int Position;
+    public UnitStat Stat;
     public int Version => _version;
 
     public Dictionary<string, int> Events = new Dictionary<string, int>();
@@ -39,6 +40,8 @@ public static class UserDataFileSystem
 
         // load resource Assets/Resources/Map Data/World Obj Data.asset
         userData.Position = Resources.Load<WorldData>("Map Data/World Obj Data").playerPosition;
+        userData.Stat = null;
+        Debug.Log($"New file: save{ind}.json");
     }
 
     public static void Save(in UserData userData)

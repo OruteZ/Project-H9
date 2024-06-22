@@ -23,7 +23,12 @@ public class PauseMenuUI : UISystem
         
         SceneManager.LoadScene($"TitleScene");
     }
-    
+
+    public void Save()
+    {
+        GameManager.instance.Save();
+    }
+
     public void ExitGame()
     {
         #if UNITY_EDITOR

@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using TMPro;
 
 public class LoadUI : MonoBehaviour
 {
     [SerializeReference]
-    private RectTransform _panel;
+    private RectTransform _slotParent;
     [SerializeReference]
-    private GameObject _loadFilePrefab;
+    private GameObject _slotPrefab;
 
     [SerializeField]
     private TitleUI _titleUI;
+    [SerializeField]
+    private TMP_Text _exitButtonText;
+    [SerializeField]
+    private TMP_Text _LoadTitleText;
 
+    private string _slotStr;
+    private string _hourStr;
+    private string _dayStr;
     private List<UserData> _lists = new List<UserData>();
 
     public void Awake()
@@ -21,17 +29,26 @@ public class LoadUI : MonoBehaviour
         ShowFiles();
     }
 
+    private void Start()
+    {
+        //_exitButtonText.text = UIManager.instance.UILocalization[102];
+        //_slotStr = UIManager.instance.UILocalization[104];
+        //_hourStr = UIManager.instance.UILocalization[105];
+        //_dayStr = UIManager.instance.UILocalization[106];
+    }
+
     public void CreateFile()
     {
         UserDataFileSystem.New(out var userData);
+        UserDataFileSystem.Save(userData);
         ShowFiles();
     }
 
     public void ShowFiles()
     {
-        for (int i = _panel.childCount - 1 ; 0 <= i ; i--)
+        for (int i = _slotParent.childCount - 1 ; 0 <= i ; i--)
         {
-            Destroy(_panel.GetChild(i).gameObject);
+            Destroy(_slotParent.GetChild(i).gameObject);
         }
 
         DirectoryInfo di = new DirectoryInfo(UserDataFileSystem.DefaultPath);
@@ -42,9 +59,10 @@ public class LoadUI : MonoBehaviour
                 if (UserDataFileSystem.Load(out var userData, file.FullName))
                 {
                     _lists.Add(userData);
-                    var ins = GameObject.Instantiate(_loadFilePrefab);
-                    ins.transform.parent = _panel;
-                    ins.GetComponentInChildren<TMPro.TMP_Text>().text = file.Name;
+                    var ins = GameObject.Instantiate(_slotPrefab);
+                    ins.transform.parent = _slotParent;
+                    ins.transform.Find("SlotText").GetComponent<TMP_Text>().text = $"{_slotStr} {file.Name}\nload test";
+                    ins.transform.Find("DateText").GetComponent<TMP_Text>().text = $"(not working)1 {_dayStr}";
 
                     ins.GetComponentInChildren<Button>().onClick.AddListener(
                         () => {_titleUI.OnClickLoadBtn(userData);  });

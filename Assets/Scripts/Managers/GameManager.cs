@@ -152,10 +152,10 @@ public class GameManager : Generic.Singleton<GameManager>
             Debug.LogError("Stage Index is 0, set to 1");
             stageIndex = 1;
         }
-        
-        //Save World Data
-        SaveCurrentWorldData();
-        
+
+        SaveCurrentWorldData();  //Save World Data
+        Save(); // Save User Data. World Data랑 하나로 합칠 가능성이 높음.
+
         ChangeState(GameState.Combat);
         FieldSystem.onCombatEnter.Invoke(true);
         _currentLinkIndex = linkIndex;
@@ -262,6 +262,36 @@ public class GameManager : Generic.Singleton<GameManager>
         Quests = qi.GetQuests();
         watch.Stop();
         Debug.Log($"<color=blue>Quest parse time: {watch.ElapsedMilliseconds}</color>");
+
+#if UNITY_EDITOR
+        if (DataLoader.IsReady == false)
+        {
+            DataLoader.New();
+        }
+#endif
+        Debug.Log($"USER초기화: {user.Position}, {user.Stat.curHp}");
+        if (DataLoader.IsReady)
+        {
+            user = DataLoader.Data;
+            DataLoader.Clear();
+
+            // <world load>
+            // town etc persistent object load
+            // enemy load 
+
+            // <player load>
+            // player curretn turn ;
+            // Player 관련 load
+            if (user.Stat == null)
+                user.Stat = (UnitStat)playerStat.Clone();
+            runtimeWorldData.playerPosition = user.Position;
+
+            // player skill load
+            // player stat load
+
+            // player inventory load
+            // player weapon(equiped) load
+        }
     }
 
     private void Start()
@@ -270,40 +300,34 @@ public class GameManager : Generic.Singleton<GameManager>
         var watch = DGS.Stopwatch.StartNew();
         foreach (var quest in Quests)
         {
-            // ���� ���۽� �����ϴ� ����Ʈ ����
+            // 유저 데이터로부터, 이미 클리어한/진행중인 퀘스트인지 확인하는 부분 추가해야 함.
+
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GAME_START))
                 OnGameStarted.AddListener(quest.OnConditionEventOccured);
 
-            // ����Ʈ ���۽� Invoke �Լ� ȣ��
             quest.OnQuestStarted.AddListener(InvokeQuestStart);
-            // ����Ʈ �Ϸ�� Invoke �Լ� ȣ��
             quest.OnQuestEnded.AddListener(InvokeQuestEnd);
 
-            // ����Ʈ �Ϸ�� �����ϴ� ����Ʈ ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.QUEST_END))
                 OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedConditionEvent(q.Index));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.QUEST_END))
                 OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedGoalEvent(q.Index));
 
-            // ����Ʈ ����, �Ϸ��� MOVE_TO ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
                 PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedConditionEvent(pos));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
                 PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedGoalEvent(pos));
 
-            // ����Ʈ ����, �Ϸ���� KILL_LINK ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
                 onPlayerCombatFinished.AddListener(quest.OnCountConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
                 onPlayerCombatFinished.AddListener(quest.OnCountGoalEvented);
 
-            // ����Ʈ ����, �Ϸ���� KILL_UNIT ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
                 FieldSystem.unitSystem.onAnyUnitDead.AddListener((u) => quest.OnCountConditionEvented(u.Index));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
                 FieldSystem.unitSystem.onAnyUnitDead.AddListener((u) => quest.OnCountGoalEvented(u.Index));
 
-            // ����Ʈ ����, �Ϸ���� GET_ITEM, USE_TIEM ȣ��, ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
                 IInventory.OnGetItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
@@ -314,7 +338,6 @@ public class GameManager : Generic.Singleton<GameManager>
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
                 IInventory.OnUseItem.AddListener((i) => quest.OnCountGoalEvented(i.id));
 
-            // �÷��̾� �þ� ���� Ÿ��, ��ũ ���Խ��� �̺�Ʈ ����
             if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
                 PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedConditionEvent(tile.hexPosition));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
@@ -336,39 +359,6 @@ public class GameManager : Generic.Singleton<GameManager>
 
         OnGameStarted?.Invoke();
         UIManager.instance.gameSystemUI.conversationUI.StartNextConversation();    //load previous quest when start game _ fix later
-
-#if UNITY_EDITOR
-        if (DataLoader.IsReady == false)
-        {
-            DataLoader.New();
-        }
-#endif
-
-        if (DataLoader.IsReady)
-        {
-            user = DataLoader.Data;
-            DataLoader.Clear();
-
-            // <world load>
-            // town etc persistent object load
-            // enemy load 
-
-            // <player load>
-            // player curretn turn ;
-            // player position ;
-            var player = FieldSystem.unitSystem.GetPlayer();
-            player.MoveForcely(user.Position);
-            CameraManager.instance.LookAtForcely(player);
-            // player hp ;
-            // player move point ;
-            // player ammo ; // maybe no useless
-
-            // player skill load
-            // player stat load
-
-            // player inventory load
-            // player weapon(equiped) load
-        }
 
         if (!user.Events.TryGetValue("INFO_POPUP_MESSAGE_DO_MOVE", out var value) || value == 0)
         {
@@ -461,14 +451,6 @@ public class GameManager : Generic.Singleton<GameManager>
         var deltaTime = Time.deltaTime;
         Service.OnUpdated(deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            Debug.Log($"현재 F3로 저장도 하는 중");
-            if (user == null) Debug.Log($"user is null");
-            user.Position = FieldSystem.unitSystem.GetPlayer().hexPosition;
-            UserDataFileSystem.Save(in user);
-        }
-
         #region ITEM_TEST
 
         if (Input.GetKeyDown(KeyCode.F1))
@@ -494,5 +476,14 @@ public class GameManager : Generic.Singleton<GameManager>
     private void InvokeQuestStart(QuestInfo quest)
     {
         OnNotifiedQuestStart?.Invoke(quest);
+    }
+
+    public void Save()
+    {
+        if (user == null) Debug.Log($"user is null");
+        var player = FieldSystem.unitSystem.GetPlayer();
+        user.Position = player.hexPosition;
+        user.Stat = (UnitStat)player.stat.Clone();
+        UserDataFileSystem.Save(in user);
     }
 }

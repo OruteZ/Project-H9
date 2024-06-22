@@ -48,6 +48,11 @@ public class UnitStat : ICloneable
         return newStat;
     }
 
+    public void CopyTo(ref UnitStat target)
+    {
+        target.DeepCopy(original, _additional, _multiplier);
+    }
+
     public int GetStat(StatType type)
     {
         if (IsAllStat(type))
@@ -222,7 +227,7 @@ public class UnitStat : ICloneable
         return true;
     }
 
-    public void DeepCopy(int[] original, int[] additional, int[] multiplier)
+    private void DeepCopy(int[] original, int[] additional, int[] multiplier)
     {
         for (int i = 0; i < (int)StatType.Length - 3; i++)
         {

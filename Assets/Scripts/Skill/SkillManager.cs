@@ -276,17 +276,26 @@ public class SkillManager : Generic.Singleton<SkillManager>
     public string GetSkillName(int skillIndex) 
     {
         Skill skill = GetSkill(skillIndex);
-        if (skill == null || _skillNameScripts.Count <= skill.skillInfo.nameIndex) return "";
-        return _skillNameScripts[skill.skillInfo.nameIndex].name;
+        if (skill == null) return null;
+
+        foreach (var script in _skillNameScripts)
+        {
+            if (script.index == skill.skillInfo.nameIndex)
+            {
+                return script.name;
+            }
+        }
+        return null;
     }
     public string GetSkillDescription(int skillIndex, out List<int> keywords)
     {
         Skill skill = GetSkill(skillIndex);
-        if (skill == null || _skillDescriptionScripts.Count <= skill.skillInfo.tooltipIndex)
+        if (skill == null)
         {
             keywords = null;
             return null;
         }
+
         foreach (SkillDescriptionScript desc in _skillDescriptionScripts) 
         {
             if (skill.skillInfo.tooltipIndex == desc.index) return desc.GetDescription(skillIndex, out keywords);

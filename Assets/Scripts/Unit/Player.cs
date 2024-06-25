@@ -85,7 +85,7 @@ public class Player : Unit
 
     public void ContinueWorldTurn()
     {
-        stat.SetOriginalStat(StatType.CurActionPoint, GameManager.instance.worldAp);
+        stat.SetOriginalStat(StatType.CurActionPoint, GameManager.instance.user.Stat.curActionPoint);
         //onStatChanged.Invoke();
         UIManager.instance.onPlayerStatChanged.Invoke();
         PlayerEvents.OnChangedStat?.Invoke(stat, StatType.CurActionPoint);

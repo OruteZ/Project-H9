@@ -35,19 +35,10 @@ public class TurnSystem : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
-        Debug.Log("Finish Turn Call");
-
         var player = FieldSystem.unitSystem.GetPlayer();
         if (player is not null)
         {
             if (FieldSystem.unitSystem.GetPlayer().IsBusy()) return;
-            else
-            {
-                // 초기화 과정에서, isBusy == false 인데 이 구문에 들어오면 무한 반복에 걸려서 일단 return.
-                // 무슨 문제가 없다면 Log 지워도 될 듯함
-                Debug.LogWarning($"Player turn end but player is busy.");
-                return;
-            }
         }
         else
         {

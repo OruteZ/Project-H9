@@ -10,6 +10,7 @@ public class UserData
     private string _fileName;
     public string FileName => _fileName;
     private int _version = 102;
+    public bool isFirstOpen;
 
     public Vector3Int Position;
     public UnitStat Stat;
@@ -57,7 +58,7 @@ public static class UserDataFileSystem
         userData = null;
         if (!File.Exists(filePath))
         {
-            Debug.LogError($"?????? ???????? ??????: \"{filePath}\"");
+            Debug.LogError($"UserData Load failed \"{filePath}\"");
             return false;
         }
 

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.UI.Extensions;
 using DGS = System.Diagnostics;
 
 public enum GameState
@@ -110,9 +111,6 @@ public class GameManager : Generic.Singleton<GameManager>
     [Header("World Scene Name")]
     public string worldSceneName;
 
-    [Header("World Info")]
-    public int worldAp;
-
     public bool backToWorldTrigger = false;
 
     private UnityEvent OnGameStarted = new UnityEvent();
@@ -121,7 +119,6 @@ public class GameManager : Generic.Singleton<GameManager>
 
     private void SaveCurrentWorldData()
     {
-        worldAp = FieldSystem.unitSystem.GetPlayer().currentActionPoint;
         runtimeWorldData.worldTurn = FieldSystem.turnSystem.turnNumber;
 
         runtimeWorldData.playerPosition = FieldSystem.unitSystem.GetPlayer().hexPosition;
@@ -264,33 +261,30 @@ public class GameManager : Generic.Singleton<GameManager>
         Debug.Log($"<color=blue>Quest parse time: {watch.ElapsedMilliseconds}</color>");
 
 #if UNITY_EDITOR
+        // 유니티 에디터에서 GameManager를 첫 시작 시, Default player 데이터를 생성함.
         if (DataLoader.IsReady == false)
         {
             DataLoader.New();
         }
 #endif
-        Debug.Log($"USER초기화: {user.Position}, {user.Stat.curHp}");
         if (DataLoader.IsReady)
         {
             user = DataLoader.Data;
             DataLoader.Clear();
 
-            // <world load>
-            // town etc persistent object load
-            // enemy load 
-
-            // <player load>
-            // player curretn turn ;
-            // Player 관련 load
             if (user.Stat == null)
                 user.Stat = (UnitStat)playerStat.Clone();
             runtimeWorldData.playerPosition = user.Position;
 
-            // player skill load
-            // player stat load
+            // 적, 인벤토리, 현재 장착 무기, 스킬 등 로드 
 
-            // player inventory load
-            // player weapon(equiped) load
+            GameManager.instance.backToWorldTrigger = true; // Turn 진행 중 저장됐을 것을 생각해서 ...
+        }
+
+        if (user.isFirstOpen)
+        {
+            GameManager.instance.backToWorldTrigger = false;
+            user.isFirstOpen = false;
         }
     }
 
@@ -480,7 +474,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
     public void Save()
     {
-        if (user == null) Debug.Log($"user is null");
+        if (user == null) Debug.Log($"try saved, but user is null");
         var player = FieldSystem.unitSystem.GetPlayer();
         user.Position = player.hexPosition;
         user.Stat = (UnitStat)player.stat.Clone();

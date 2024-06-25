@@ -14,9 +14,9 @@ public class QuestInfo
                                 , KILL_LINK = 1 << 6
                                 , KILL_UNIT = 1 << 7 
                                 , LINK_IN_SIGHT = 1 << 8 
-                                , TILE_IN_SIGHT = 1 << 9 }; // Äù½ºÆ®ÀÇ ¿¬°áÀ» Bit¸¶½ºÅ©·Î È®ÀÎ¿ë
+                                , TILE_IN_SIGHT = 1 << 9 }; // í€˜ìŠ¤íŠ¸ì˜ ì—°ê²°ì„ Bitë§ˆìŠ¤í¬ë¡œ í™•ì¸ìš©
     public UnityEvent<QuestInfo> OnQuestStarted = new UnityEvent<QuestInfo>();
-    public UnityEvent<QuestInfo> OnQuestEnded = new UnityEvent<QuestInfo>(); // Äù½ºÆ® ¼º°ø¿©ºÎ¿Í °ü·Ã¾øÀÌ Á¾·á
+    public UnityEvent<QuestInfo> OnQuestEnded = new UnityEvent<QuestInfo>(); // í€˜ìŠ¤íŠ¸ ì„±ê³µì—¬ë¶€ì™€ ê´€ë ¨ì—†ì´ ì¢…ë£Œ
     public UnityEvent OnChangedProgress = new UnityEvent();
 
     private int _index;
@@ -62,7 +62,7 @@ public class QuestInfo
     public int[] GoalArg{ get => _goalArguments; }
     public int[] CurArg { get => _curGoalArguments; }
     public int[] Pin { get => _pinTile; }
-    public int CurTurn { get => _curTurn; } // ExpireTurn¿¡¼­ ½ÃÀÛÇÏ¿© 0À¸·Î ÇâÇÒ ³²Àº ÅÏ. ex. {CurTurn}ÅÏ ³²À½!
+    public int CurTurn { get => _curTurn; } // ExpireTurnì—ì„œ ì‹œì‘í•˜ì—¬ 0ìœ¼ë¡œ í–¥í•  ë‚¨ì€ í„´. ex. {CurTurn}í„´ ë‚¨ìŒ!
     public int MoneyReward { get => _moneyReward; }
     public int ExpReward { get => _expReward; }
     public int ItemReward { get => _itemReward; }
@@ -120,7 +120,13 @@ public class QuestInfo
         return false;
     }
 
-    // °ÔÀÓ ÀúÀå, ·Îµå ½Ã ÇöÀç »óÈ²À» ÀúÀåÇÏ±â À§ÇÔ.
+    // ìš©ëŸ‰ì„ ìœ„í•´ Save ë°ì´í„°ë¥¼ í´ë¦¬ì–´/í´ë¦¬ì–´ ì•„ë‹Œ ê²ƒìœ¼ë¡œ ë‚˜ëˆ ì„œ ì €ì¥í•˜ë‹¤ë³´ë‹ˆ
+    // ì´ í•¨ìˆ˜ê°€ ë³„ë„ë¡œ ë‚˜ì˜¬ ìˆ˜ ë°–ì— ì—†ëŠ”ê²Œ ê¸°ë¶„ë‚˜ì˜ê¸´ í•œë°, ì¼ë‹¨ ìš©ëŸ‰ì„ íƒí•¨.
+    public void SetClear()
+    {
+        _isCleared = true;
+    }
+    // ê²Œì„ ì €ì¥, ë¡œë“œ ì‹œ í˜„ì¬ ìƒí™©ì„ ì €ì¥í•˜ê¸° ìœ„í•¨.
     public void SetProgress(QuestSaveWrapper saveWrapper)
     {
         _isInProgress = saveWrapper.IsInProgress;
@@ -138,8 +144,8 @@ public class QuestInfo
         return save;
     }
 
-    // Game Start Ã³·³ ¹«½¼ ÀÏÀÌ 1È¸¼ºÀ¸·Î ¹ú¾îÁø ÀÌº¥Æ®.
-    // Game start ¿Ü¿¡ ¾µ °÷ÀÌ ¾ø´Âµ¥, Game start ÀÚÃ¼°¡ ÀÓ½Ã·Î ÇØµĞ °ÍÀÌ¶ó »©´Â °Íµµ °í·Á Áß.
+    // Game Start ì²˜ëŸ¼ ë¬´ìŠ¨ ì¼ì´ 1íšŒì„±ìœ¼ë¡œ ë²Œì–´ì§„ ì´ë²¤íŠ¸.
+    // Game start ì™¸ì— ì“¸ ê³³ì´ ì—†ëŠ”ë°, Game start ìì²´ê°€ ì„ì‹œë¡œ í•´ë‘” ê²ƒì´ë¼ ë¹¼ëŠ” ê²ƒë„ ê³ ë ¤ ì¤‘.
     public void OnConditionEventOccured()
     {
         if (!_isInProgress)
@@ -166,8 +172,8 @@ public class QuestInfo
     }
 
     #region Count Event
-    // ÀüÅõ, »ìÇØ Ã³·³ ÀÌº¥Æ®¼ºÀ¸·Î ÀÏ¾î³ªÁö¸¸ ±× ¼ö´Â Ä«¿îÆ®ÇÏ´Â ÀÌº¥Æ®
-    // ex. [¾ÆÀÌÅÛ ÀÎµ¦½º, »ç¿ëÇØ¾ßÇÏ´Â ¼ö]
+    // ì „íˆ¬, ì‚´í•´ ì²˜ëŸ¼ ì´ë²¤íŠ¸ì„±ìœ¼ë¡œ ì¼ì–´ë‚˜ì§€ë§Œ ê·¸ ìˆ˜ëŠ” ì¹´ìš´íŠ¸í•˜ëŠ” ì´ë²¤íŠ¸
+    // ex. [ì•„ì´í…œ ì¸ë±ìŠ¤, ì‚¬ìš©í•´ì•¼í•˜ëŠ” ìˆ˜]
     public void OnCountConditionEvented(int targetIndex)
     {
         if (!_isInProgress)
@@ -187,8 +193,8 @@ public class QuestInfo
     }
     #endregion
 
-    // ÇÃ·¹ÀÌ¾î Move ÀÎÀÚ´Â ´õ Ãß°¡ µÉ °¡´É¼ºÀÌ ÀÖ¾î¼­ º°µµ·Î »© µÒ
-    // ÇÃ·¹ÀÌ¾î°¡ World¿¡ ÀÖÀ» ¶§¸¸, ¿ùµå°¡ ¿©·¯ °³(Áö¿ªº°·Î) ³ª´©¾îÁú °¡´É¼ºÀÌ ÀÖ¾î¼­ ÇØ´ç ÀÎµ¦½ºµµ.
+    // í”Œë ˆì´ì–´ Move ì¸ìëŠ” ë” ì¶”ê°€ ë  ê°€ëŠ¥ì„±ì´ ìˆì–´ì„œ ë³„ë„ë¡œ ë¹¼ ë‘ 
+    // í”Œë ˆì´ì–´ê°€ Worldì— ìˆì„ ë•Œë§Œ, ì›”ë“œê°€ ì—¬ëŸ¬ ê°œ(ì§€ì—­ë³„ë¡œ) ë‚˜ëˆ„ì–´ì§ˆ ê°€ëŠ¥ì„±ì´ ìˆì–´ì„œ í•´ë‹¹ ì¸ë±ìŠ¤ë„.
     public void OnPositionMovedConditionEvent(Vector3Int position)
     {
         if (_isCleared) return;
@@ -242,7 +248,7 @@ public class QuestInfo
             Vector3Int linkHex = new Vector3Int(_createLink[1], _createLink[2], _createLink[3]);
             if (linkIdx <= 0)
             {
-                Debug.LogError("Äù½ºÆ® ¸µÅ© »ı¼º ½ÇÆĞ: ¸µÅ© ÀÎµ¦½º°¡ 0 ÀÌÇÏÀÔ´Ï´Ù.");
+                Debug.LogError("í€˜ìŠ¤íŠ¸ ë§í¬ ìƒì„± ì‹¤íŒ¨: ë§í¬ ì¸ë±ìŠ¤ê°€ 0 ì´í•˜ì…ë‹ˆë‹¤.");
                 return;
             }
             
@@ -265,7 +271,7 @@ public class QuestInfo
         if (_itemReward != 0)
             if (GameManager.instance.playerInventory.TryAddItem(Item.CreateItem(itemDB.GetItemData(_itemReward))))
             {
-                Debug.Log($"Äù½ºÆ® ¿Ï·á ¾ÆÀÌÅÛÀ» ¹ŞÀ» ¼ö ¾ø½À´Ï´Ù.: item code '{_itemReward}'");
+                Debug.Log($"í€˜ìŠ¤íŠ¸ ì™„ë£Œ ì•„ì´í…œì„ ë°›ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.: item code '{_itemReward}'");
             }
         if (_skillReward != 0)
         {
@@ -313,7 +319,7 @@ public class QuestInfo
         return true;
     }
 
-    // ÇÃ·¹ÀÌ¾î°¡ µµ´ŞÇÑ À§Ä¡ ÀÌº¥Æ®
+    // í”Œë ˆì´ì–´ê°€ ë„ë‹¬í•œ ìœ„ì¹˜ ì´ë²¤íŠ¸
     private bool OnPositionEvent(ref int[] cur, ref int[] goal, Vector3Int pos)
     {
         cur[0] = pos.x;

@@ -297,12 +297,20 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             // 유저 데이터로부터, 이미 클리어한/진행중인 퀘스트인지 확인하는 부분 추가해야 함.
             if (user.ClearedQuests.Contains(quest.Index))
+            {
+                quest.SetClear();
                 continue;
+            }
 
             if (user.QuestProgress.ContainsKey(quest.Index))
             {
                 var progress = user.QuestProgress[quest.Index];
                 quest.SetProgress(progress);
+            }
+
+            if (quest.IsInProgress)
+            {
+                UIManager.instance.gameSystemUI.questUI.AddQuestListUI(quest);
             }
 
             // 퀘스트 수주 조건

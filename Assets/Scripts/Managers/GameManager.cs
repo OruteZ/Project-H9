@@ -274,14 +274,11 @@ public class GameManager : Generic.Singleton<GameManager>
 
             if (user.Stat == null)
             {
-                Debug.Log("아마 첫 로드니까, 불러왔어요");
                 user.Stat = (UnitStat)startPlayerStat.Clone();
             }
-            Debug.Log($"유저 스탯 {user.Stat.curHp} {user.Stat.maxHp}");
             runtimeWorldData.playerPosition = user.Position;
 
             // 적, 인벤토리, 현재 장착 무기, 스킬 등 로드 
-
             GameManager.instance.backToWorldTrigger = true; // Turn 진행 중 저장됐을 것을 생각해서 ...
         }
 
@@ -299,54 +296,59 @@ public class GameManager : Generic.Singleton<GameManager>
         foreach (var quest in Quests)
         {
             // 유저 데이터로부터, 이미 클리어한/진행중인 퀘스트인지 확인하는 부분 추가해야 함.
+            if (user.ClearedQuests.Contains(quest.Index))
+                continue;
 
-            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GAME_START))
-                OnGameStarted.AddListener(quest.OnConditionEventOccured);
+            if (user.QuestProgress.ContainsKey(quest.Index))
+            {
+                var progress = user.QuestProgress[quest.Index];
+                quest.SetProgress(progress);
+            }
 
-            quest.OnQuestStarted.AddListener(InvokeQuestStart);
-            quest.OnQuestEnded.AddListener(InvokeQuestEnd);
+            // 퀘스트 수주 조건
+            if (quest.IsInProgress == false)
+            {
+                if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GAME_START))
+                    OnGameStarted.AddListener(quest.OnConditionEventOccured);
+                if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.QUEST_END))
+                    OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedConditionEvent(q.Index));
+                if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
+                    PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedConditionEvent(pos));
+                if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
+                    onPlayerCombatFinished.AddListener(quest.OnCountConditionEvented);
+                if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
+                    FieldSystem.unitSystem.onAnyUnitDead.AddListener((u) => quest.OnCountConditionEvented(u.Index));
+                if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
+                    IInventory.OnGetItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
+                if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
+                    IInventory.OnUseItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
+                if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
+                    PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedConditionEvent(tile.hexPosition));
+                if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.LINK_IN_SIGHT))
+                    PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedConditionEvent(link.linkIndex));
+                quest.OnQuestStarted.AddListener(InvokeQuestStart);
+            }
 
-            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.QUEST_END))
-                OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedConditionEvent(q.Index));
+            // 퀘스트 완료 조건
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.QUEST_END))
                 OnNotifiedQuestEnd.AddListener((q) => quest.OnAccordedGoalEvent(q.Index));
-
-            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
-                PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedConditionEvent(pos));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.MOVE_TO))
                 PlayerEvents.OnMovedPlayer.AddListener((pos) => quest.OnPositionMovedGoalEvent(pos));
-
-            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
-                onPlayerCombatFinished.AddListener(quest.OnCountConditionEvented);
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_LINK))
                 onPlayerCombatFinished.AddListener(quest.OnCountGoalEvented);
-
-            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
-                FieldSystem.unitSystem.onAnyUnitDead.AddListener((u) => quest.OnCountConditionEvented(u.Index));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.KILL_UNIT))
                 FieldSystem.unitSystem.onAnyUnitDead.AddListener((u) => quest.OnCountGoalEvented(u.Index));
-
-            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
-                IInventory.OnGetItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.GET_ITEM))
                 IInventory.OnGetItem.AddListener((i) => quest.OnCountGoalEvented(i.id));
-
-            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
-                IInventory.OnUseItem.AddListener((i) => quest.OnCountConditionEvented(i.id));
-            if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
+           if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.USE_ITEM))
                 IInventory.OnUseItem.AddListener((i) => quest.OnCountGoalEvented(i.id));
-
-            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
-                PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedConditionEvent(tile.hexPosition));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.TILE_IN_SIGHT))
                 PlayerEvents.OnEnteredTileinSight.AddListener((tile) => quest.OnPositionMovedGoalEvent(tile.hexPosition));
-            if (quest.HasConditionFlag(QuestInfo.QUEST_EVENT.LINK_IN_SIGHT))
-                PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedConditionEvent(link.linkIndex));
             if (quest.HasGoalFlag(QuestInfo.QUEST_EVENT.LINK_IN_SIGHT))
                 PlayerEvents.OnEnteredLinkinSight.AddListener((link) => quest.OnAccordedGoalEvent(link.linkIndex));
-
             if (quest.ExpireTurn != -1)
                 PlayerEvents.OnProcessedWorldTurn.AddListener((u) => { quest.ProgressExpireTurn(); });
+            quest.OnQuestEnded.AddListener(InvokeQuestEnd);
         }
         watch.Stop();
         Debug.Log($"<color=blue>Quest link time: {watch.ElapsedMilliseconds}</color>");
@@ -481,6 +483,20 @@ public class GameManager : Generic.Singleton<GameManager>
         if (user == null) Debug.Log($"try saved, but user is null");
         var player = FieldSystem.unitSystem.GetPlayer();
         user.Position = player.hexPosition;
+
+        user.ClearedQuests.Clear();
+        user.QuestProgress.Clear();
+        foreach (var quest in Quests)
+        {
+            if (quest.IsCleared)
+            {
+                user.ClearedQuests.Add(quest.Index);
+            }
+            else
+            {
+                user.QuestProgress.Add(quest.Index, quest.GetProgress());
+            }
+        }
         UserDataFileSystem.Save(in user);
     }
 }

@@ -2,14 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// 1. CSV Init : 모든 퀘스트 정보 읽어오기
-/// 2. Localization : Tooltip, Name 등 국가별 언어 읽어오기
-/// 3. Async : 현재 유저 데이터에 존재하는, 퀘스트 진행 상황 동기화
-/// 4. GetEvent : 사용 가능한 퀘스트를 Start에 연결
-/// 5. GoalEvent : 현재 진행중인 퀘스트를 Event에 연결
-/// - GoalEvent에서 완료 조건이 된다면 EndQuest로 종료
-/// </summary>
 public class QuestInfo
 {
     public enum QUEST_EVENT {   NULL
@@ -58,6 +50,8 @@ public class QuestInfo
     private int[] _curGoalArguments;
 
     public int Index { get => _index; }
+    public bool IsInProgress => _isInProgress;
+    public bool IsCleared => _isCleared;
     public int QuestType { get => _questType; }
     public string QuestName { get => _questName; }
     public string QuestTooltip { get => _questTooltip; }
@@ -127,12 +121,21 @@ public class QuestInfo
     }
 
     // 게임 저장, 로드 시 현재 상황을 저장하기 위함.
-    public void SetProgress(bool isInProgress, int[] curGoalArguments, bool isCleared, int curTurn)
+    public void SetProgress(QuestSaveWrapper saveWrapper)
     {
-        _isInProgress = isInProgress;
-        _curGoalArguments = curGoalArguments;
-        _isCleared = isCleared;
-        _curTurn = curTurn;
+        _isInProgress = saveWrapper.IsInProgress;
+        _curConditionArguments = saveWrapper.CurConditionArguments;
+        _curGoalArguments = saveWrapper.CurGoalArguments;
+    }
+
+    public QuestSaveWrapper GetProgress()
+    {
+        var save = new QuestSaveWrapper();
+        save.Index = Index;
+        save.IsInProgress = _isInProgress;
+        save.CurConditionArguments = _curConditionArguments;
+        save.CurGoalArguments = _curGoalArguments;
+        return save;
     }
 
     // Game Start 처럼 무슨 일이 1회성으로 벌어진 이벤트.
@@ -338,4 +341,13 @@ public class QuestInfo
             return false;
         return true;
     }
+}
+
+[SerializeField]
+public class QuestSaveWrapper
+{
+    public int Index;
+    public bool IsInProgress;
+    public int[] CurGoalArguments;
+    public int[] CurConditionArguments;
 }

@@ -37,8 +37,8 @@ public class GameManager : Generic.Singleton<GameManager>
     [SerializeField] private CombatStageData _stageData;
     [SerializeField] private int _currentLinkIndex = -1;
 
-    [Header("Player Info")]
-    public UnitStat playerStat;
+    [Header("Player Info"), SerializeField]
+    private UnitStat startPlayerStat; // 시작 시 플레이어 스탯을 정의
     [FormerlySerializedAs("_playerWeaponIndex")] public int playerWeaponIndex;
     public GameObject playerModel;
     public List<int> playerPassiveIndexList;
@@ -94,7 +94,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
         curExp -= maxExp;
         level++;
-        playerStat.Recover(StatType.CurHp, playerStat.GetStat(StatType.MaxHp), out var appliedValue);
+        user.Stat.Recover(StatType.CurHp, user.Stat.GetStat(StatType.MaxHp), out var appliedValue);
         SkillManager.instance.AddSkillPoint(LEVEL_UP_REWARD_SKILL_POINT);
         if (level % 3 == 0)
         {
@@ -273,7 +273,11 @@ public class GameManager : Generic.Singleton<GameManager>
             DataLoader.Clear();
 
             if (user.Stat == null)
-                user.Stat = (UnitStat)playerStat.Clone();
+            {
+                Debug.Log("아마 첫 로드니까, 불러왔어요");
+                user.Stat = (UnitStat)startPlayerStat.Clone();
+            }
+            Debug.Log($"유저 스탯 {user.Stat.curHp} {user.Stat.maxHp}");
             runtimeWorldData.playerPosition = user.Position;
 
             // 적, 인벤토리, 현재 장착 무기, 스킬 등 로드 
@@ -477,7 +481,6 @@ public class GameManager : Generic.Singleton<GameManager>
         if (user == null) Debug.Log($"try saved, but user is null");
         var player = FieldSystem.unitSystem.GetPlayer();
         user.Position = player.hexPosition;
-        user.Stat = (UnitStat)player.stat.Clone();
         UserDataFileSystem.Save(in user);
     }
 }

@@ -176,7 +176,7 @@ public class Player : Unit
         base.TakeDamage(damage, attacker, type);
 
         UIManager.instance.onPlayerStatChanged.Invoke();
-        GameManager.instance.playerStat = stat;
+        GameManager.instance.user.Stat = stat;
     }
 
     #region UNITY_EVENT

@@ -10,7 +10,7 @@ public class UserData
     private string _fileName;
     public string FileName => _fileName;
     private int _version = 102;
-    public bool isFirstOpen;
+    public bool isFirstOpen = true;
 
     public Vector3Int Position;
     public UnitStat Stat;

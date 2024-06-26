@@ -65,7 +65,7 @@ public class LoadUI : MonoBehaviour
                     ins.transform.Find("DateText").GetComponent<TMP_Text>().text = $"(not working)1 {_dayStr}";
 
                     ins.GetComponentInChildren<Button>().onClick.AddListener(
-                        () => {_titleUI.OnClickLoadBtn(userData);  });
+                        () => {_titleUI.OnClickLoadSlot(userData);  });
                 }
             }
         }

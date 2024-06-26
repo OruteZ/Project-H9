@@ -34,10 +34,6 @@ public class PlayerSummaryStatusUI : UIElement
         
         InitExpectedValues();
         SetCurrentStatusUI();
-
-        _hpTitleText.text = UIManager.instance.UILocalization[26];
-        _concentrationTitleText.text = UIManager.instance.UILocalization[29];
-        _apTitleText.text = UIManager.instance.UILocalization[27];
     }
 
     void StageStart()
@@ -63,6 +59,10 @@ public class PlayerSummaryStatusUI : UIElement
     {
         Unit _player = FieldSystem.unitSystem.GetPlayer();
         if (_player is null) return;
+
+        _hpTitleText.text = UIManager.instance.UILocalization[26];
+        _concentrationTitleText.text = UIManager.instance.UILocalization[29];
+        _apTitleText.text = UIManager.instance.UILocalization[27];
 
         _healthPointUI.GetComponent<PlayerHpUI>().SetHpUI();
         _actionPointUI.GetComponent<PlayerApUI>().SetApUI();

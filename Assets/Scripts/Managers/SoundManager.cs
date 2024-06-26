@@ -12,6 +12,7 @@ public class SoundManager : Singleton<SoundManager>
     [FormerlySerializedAs("bgmClips")] public AudioClip[] worldBgmClips;
     public AudioClip[] combatBgmClips;
 
+    public float mainVolume = 1f;
     public float bgmVolume = 1f;
     public float sfxVolume = 1f;
 
@@ -60,7 +61,7 @@ public class SoundManager : Singleton<SoundManager>
         
 
         bgmSource.clip = clips[index];
-        bgmSource.volume = bgmVolume;
+        bgmSource.volume = mainVolume * bgmVolume;
         bgmSource.loop = true;
         bgmSource.Play();
     }
@@ -84,7 +85,7 @@ public class SoundManager : Singleton<SoundManager>
         
         // 임시로 해당 위치에 효과음을 재생하는 코드, 차후 게임오브젝트를 직접 생성해서 만들어내고 
         // 오브젝트 풀링을 통해 관리하는 방식으로 변경해야 함
-        AudioSource.PlayClipAtPoint(clip, position, sfxVolume);
+        AudioSource.PlayClipAtPoint(clip, position, mainVolume * sfxVolume);
     }
 
     public void StopBGM()
@@ -99,15 +100,20 @@ public class SoundManager : Singleton<SoundManager>
         // sfxSource.mute = isMute;
     }
 
+    public void SetMainVolume(float volume)
+    {
+        mainVolume = volume;
+        bgmSource.volume = mainVolume * bgmVolume;
+    }
     public void SetBGMVolume(float volume)
     {
         bgmVolume = volume;
-        bgmSource.volume = bgmVolume;
+        bgmSource.volume = mainVolume * bgmVolume;
     }
 
     public void SetSFXVolume(float volume)
     {
         sfxVolume = volume;
-        // sfxSource.volume = sfxVolume;
+        // sfxSource.volume = mainVolume * sfxVolume;
     }
 }

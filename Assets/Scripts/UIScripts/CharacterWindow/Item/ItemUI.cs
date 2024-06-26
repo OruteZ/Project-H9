@@ -32,10 +32,6 @@ public class ItemUI : UISystem
 
     private void Start()
     {
-        _weaponItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[50];
-        _consumeItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[51];
-        _otherItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[52];
-
         _draggedElement.GetComponent<InventoryUIElement>().ClearInventoryUIElement();
         _equippedElement.GetComponent<InventoryUIElement>().ClearInventoryUIElement();
         for (int i = 0; i < _inventoryUI.transform.childCount; i++)
@@ -53,6 +49,9 @@ public class ItemUI : UISystem
     }
     public override void OpenUI()
     {
+        _weaponItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[50];
+        _consumeItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[51];
+        _otherItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[52];
         base.OpenUI();
         ClosePopupWindow();
         SetInventoryUI();

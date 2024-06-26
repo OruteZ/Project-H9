@@ -42,7 +42,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     public GameObject loading; //test
 
-    public ScriptLanguage scriptLanguage = ScriptLanguage.Korean;
+    public ScriptLanguage scriptLanguage;
     public SystemIconDatabase iconDB;
     public StatScript statScript;
 
@@ -298,6 +298,13 @@ public class UIManager : Generic.Singleton<UIManager>
     public void SetLogCanvasState(bool isOpen) 
     {
         _logCanvas.enabled = isOpen;
+    }
+
+    public void SetUILanguage(ScriptLanguage language) 
+    {
+        scriptLanguage = language;
+        UserAccount.Language = language;
+        FileRead.ParseLocalization(in LOCALIZATION_PATH, out _uiLocalization);
     }
 }
 

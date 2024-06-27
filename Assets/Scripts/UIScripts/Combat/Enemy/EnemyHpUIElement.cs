@@ -6,10 +6,6 @@ using TMPro;
 
 public class EnemyHpUIElement : UIElement
 {
-    private Slider _frontHpBar;
-    private Slider _backHpBar;
-    private TextMeshProUGUI _hpText;
-    private GameObject _debuffs;
     private const float HP_BAR_MOVE_MAX_SPEED = 2;
     private float _hpBarMoveSpeed = HP_BAR_MOVE_MAX_SPEED;
     private float _prevEnemyHp;
@@ -17,16 +13,18 @@ public class EnemyHpUIElement : UIElement
     public Enemy enemy { get; private set; }
     private Vector3 _prevEnemyPos;
     private Vector3 _prevEnemyUIPos;
-
+    
+    [Header("Values")]
     [SerializeField] private float HP_BAR_UI_Y_POSITION_CORRECTION;
+    [Header("References")]
+    [SerializeField] private Slider _frontHpBar;
+    [SerializeField] private Slider _backHpBar;
+    [SerializeField] private TextMeshProUGUI _hpText;
+    [SerializeField] private GameObject _debuffs;
     // Start is called before the first frame update
     void Awake()
     {
         StopAllCoroutines();
-        _backHpBar = transform.GetChild(0).GetComponent<Slider>();
-        _frontHpBar = transform.GetChild(1).GetComponent<Slider>();
-        _hpText = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        _debuffs = transform.GetChild(3).gameObject;
         GetComponent<RectTransform>().localPosition = Vector3.zero;
 
         ClearEnemyHpUI();

@@ -314,7 +314,7 @@ public class UnitSystem : MonoBehaviour
         {
             if (playerWin)
             {
-                LevelSystem.ReservationExp(_totalExp);
+                LazyLevelHelper.ReservationExp(_totalExp);
                 rewardHelper.ApplyReward();
             }
             FieldSystem.onCombatFinish.Invoke(playerWin);

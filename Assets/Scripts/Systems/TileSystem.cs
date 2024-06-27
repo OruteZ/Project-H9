@@ -88,13 +88,13 @@ public class TileSystem : MonoBehaviour
             if (GameManager.instance.CompareState(GameState.World) && 
                 GameManager.instance.IsPioneeredWorldTile(t.hexPosition) is false)
             {
-                var fow = Instantiate(worldFogOfWarPrefab, fogs).GetComponent<FogOfWar>(); 
+                FogOfWar fow = Instantiate(worldFogOfWarPrefab, fogs).GetComponent<FogOfWar>(); 
                 fow.hexPosition = t.hexPosition;
             }
         }
 
         var objects = GetComponentsInChildren<TileObject>().ToList();
-        foreach (var obj in objects)
+        foreach (TileObject obj in objects)
         {
             obj.SetUp();
             _tileObjects.Add(obj);
@@ -244,6 +244,12 @@ public class TileSystem : MonoBehaviour
     /// <returns>도달 가능한 모든 Tile들이 담긴 List</returns>
     public IEnumerable<Tile> GetWalkableTiles(Vector3Int start, int maxLength)
     {
+        if (GetTile(start) is null)
+        {
+            Debug.Log("Start Tile is Null");
+            return null;
+        }
+        
         var visited = new HashSet<Vector3Int> { start };
         var result = new List<Tile> { GetTile(start) };
         var container = new Queue<Vector3Int>();
@@ -254,14 +260,14 @@ public class TileSystem : MonoBehaviour
             int length = container.Count;
             for(int i = 0; i < length; i++)
             {
-                if (!container.TryDequeue(out var current)) return result;
+                if (!container.TryDequeue(out Vector3Int current)) return result;
 
-                foreach (var dir in Hex.directions)
+                foreach (Vector3Int dir in Hex.directions)
                 {
-                    var next = current + dir;
+                    Vector3Int next = current + dir;
                     if (visited.Contains(next)) continue;
                     
-                    var tile = GetTile(next);
+                    Tile tile = GetTile(next);
                     if (tile is null) continue;
                     if (!tile.walkable) continue;
                     if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) != null) continue;

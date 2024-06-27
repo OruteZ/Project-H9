@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Rendering;
@@ -74,7 +75,7 @@ public class Link : TileObject
 
     public override string[] GetArgs()
     {
-        return new [] { linkIndex.ToString(), transform.rotation.y.ToString() };
+        return new [] { linkIndex.ToString(), transform.rotation.y.ToString(CultureInfo.InvariantCulture) };
     }
 
     public override void SetArgs(string[] args)

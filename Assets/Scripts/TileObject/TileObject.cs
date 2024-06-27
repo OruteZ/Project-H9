@@ -50,7 +50,7 @@ public abstract class TileObject : MonoBehaviour
     public virtual void SetUp()
     {
         tile = FieldSystem.tileSystem.GetTile(hexPosition);
-        if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치");
+        if(tile == null) Debug.LogError("타일이 없는 곳으로 Tile Object 배치 : hexPosition = " + hexPosition);
         
         SetTile(tile);
         vision = IsVisible();

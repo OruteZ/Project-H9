@@ -4,30 +4,25 @@ using UnityEngine;
 
 public class SetPlayerSpawn : IEditorCommand
 {
-    public Vector3Int beforePos;
-    public CombatMapEditor editor;
+    private Vector3Int _beforePos;
+    private readonly CombatMapEditor _editor = Object.FindObjectOfType<CombatMapEditor>();
 
-    public SetPlayerSpawn()
-    {
-        editor = Object.FindObjectOfType<CombatMapEditor>();
-    }
-    
     public void Execute(IEnumerable<Tile> tiles)
     {
-        beforePos = editor.playerSpawnPoint;
+        _beforePos = _editor.playerSpawnPoint;
         if (tiles.Count() != 1)
         {
             Debug.LogError("Wrong selected tile count");
             return;
         }
 
-        editor.playerSpawnPoint = tiles.First().hexPosition;
-        editor.Save();
+        _editor.playerSpawnPoint = tiles.First().hexPosition;
+        _editor.Save();
     }
 
     public void Undo()
     {
-        editor.playerSpawnPoint = beforePos;
-        editor.Save();
+        _editor.playerSpawnPoint = _beforePos;
+        _editor.Save();
     }
 }

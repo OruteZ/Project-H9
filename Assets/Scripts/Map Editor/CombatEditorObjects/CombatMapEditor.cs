@@ -40,7 +40,7 @@ public class CombatMapEditor : MonoBehaviour
     
     public void SetLinkIndex()
     {
-        if (int.TryParse(inputLinkIndex.text, out var index))
+        if (int.TryParse(inputLinkIndex.text, out int index))
         {
             if (index == currentLinkIndex)
             {

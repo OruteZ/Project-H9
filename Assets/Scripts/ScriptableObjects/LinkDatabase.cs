@@ -49,7 +49,7 @@ public class LinkDatabase : ScriptableObject
 
         foreach (var data in dataList)
         {
-            var curData = new EnemyName();
+            EnemyName curData = new EnemyName();
 
             curData.nameIndex = int.Parse(data[0]);
             curData.name = data[(int)UIManager.instance.scriptLanguage];

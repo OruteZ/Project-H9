@@ -124,24 +124,29 @@ public class TileEffectManager : Singleton<TileEffectManager>
         Vector3Int start = _player.hexPosition;
 
         var tiles = FieldSystem.tileSystem.GetWalkableTiles(start, range);
-        foreach (var tile in tiles)
+        foreach (Tile tile in tiles)
         {
+            if (tile is null)
+            {
+                Debug.LogError("Tile is null");
+                continue;
+            }
+            
             TileEffectType effectType = TileEffectType.Normal;
             if (GameManager.instance.CompareState(GameState.Combat))
             {
-                if (Hex.Distance(tile.hexPosition, _player.hexPosition) > _player.stat.sightRange) continue;
+                int distance = Hex.Distance(tile.hexPosition, _player.hexPosition);
+                int sightRange = _player.stat.sightRange;
+                if (distance > sightRange) continue;
                 if (!FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition)) continue;
             }
             else //GameState.World
             {
                 bool containsFog = tile.tileObjects.OfType<FogOfWar>().Any();
                 if (containsFog) continue;
-                foreach (var tileObject in tile.tileObjects)
+                foreach (Town tileObject in tile.tileObjects.OfType<Town>())
                 {
-                    if (tileObject is Town)
-                    {
-                        effectType = ((Town)tileObject).GetTileEffectType();
-                    }
+                    effectType = (tileObject).GetTileEffectType();
                 }
             }
             SetEffectBase(tile.hexPosition, effectType);

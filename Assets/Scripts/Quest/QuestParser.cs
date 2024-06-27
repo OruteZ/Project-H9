@@ -11,7 +11,7 @@ public class QuestParser
     {
         ParseLocalization(out var localizationData);
         ParseQuestInfos(in localizationData, out var questInfos);
-        // !À¯Àúµ¥ÀÌÅÍ¿Í µ¿±âÈ­ÇÏ´Â ÇÔ¼ö() ÇÊ¿ä
+        // !ìœ ì €ë°ì´í„°ì™€ ë™ê¸°í™”í•˜ëŠ” í•¨ìˆ˜() í•„ìš”
         return questInfos;
     }
 

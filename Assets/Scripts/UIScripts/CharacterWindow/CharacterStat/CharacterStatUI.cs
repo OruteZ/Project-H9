@@ -61,7 +61,7 @@ public class CharacterStatUIInfo
     {
         string finalStat = GetCorrectedValue(GetFinalStatValue()).ToString();
         if (statName == "") return "";
-        if (statName == "Exp") return finalStat + " / " + GameManager.instance.GetMaxExp();
+        if (statName == "Exp") return finalStat + " / " + GameManager.instance.LevelSystem.MaxExp;
         if (statName == "Bonus Hit Rate") return finalStat + "%";
         if (statName == "Critical Chance") return finalStat + '%';
         if (statName == "Critical Damage") return finalStat + '%';
@@ -167,8 +167,8 @@ public class CharacterStatUI : UISystem
         }
 
         //level
-        characterStatInfo["Level"].SetStatValue(UIStatType.Character, GameManager.instance.level);
-        characterStatInfo["Exp"].SetStatValue(UIStatType.Character, GameManager.instance.curExp);
+        characterStatInfo["Level"].SetStatValue(UIStatType.Character, GameManager.instance.LevelSystem.Level);
+        characterStatInfo["Exp"].SetStatValue(UIStatType.Character, GameManager.instance.LevelSystem.CurExp);
 
         //basic stat
         for (int i = 0; i < _strAndType.Count; i++)

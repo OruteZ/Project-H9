@@ -19,7 +19,7 @@ public class PlayerConcentrationUI : UIElement, IPointerEnterHandler, IPointerEx
     }
     public void SetConcentrationUI() 
     {
-        int concentration = GameManager.instance.playerStat.concentration;
+        int concentration = GameManager.instance.user.Stat.concentration;
         _concentrationFill.GetComponent<Image>().fillAmount = concentration / MAX_CONCENTRATION;
         _concentrationText.GetComponent<TextMeshProUGUI>().text = concentration.ToString();
     }

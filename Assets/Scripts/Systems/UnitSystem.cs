@@ -157,8 +157,8 @@ public class UnitSystem : MonoBehaviour
                 }
                 p.AddComponent<IdleAction>();
 
-                GameManager.instance.playerStat.ResetModifier();
-                p.SetUp(-1, "Player", GameManager.instance.playerStat, 
+                GameManager.instance.user.Stat.ResetModifier();
+                p.SetUp(-1, "Player", GameManager.instance.user.Stat, 
                     weaponDB.Clone(GameManager.instance.playerWeaponIndex),
                     GameManager.instance.playerModel, playerPassiveList);
                 if (GameManager.instance.CompareState(GameState.World))
@@ -314,7 +314,7 @@ public class UnitSystem : MonoBehaviour
         {
             if (playerWin)
             {
-                LevelSystem.ReservationExp(_totalExp);
+                LazyLevelHelper.ReservationExp(_totalExp);
                 rewardHelper.ApplyReward();
             }
             FieldSystem.onCombatFinish.Invoke(playerWin);

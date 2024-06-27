@@ -124,7 +124,7 @@ public class CombatResultUI : UISystem
             _BootyText.text = _emptyBootyComment; // IF, player lose, get something, then fix it.
         }
 
-        UIManager.instance.gameSystemUI.playerInfoUI.expUI.GetComponent<PlayerExpUI>().SetPlayerExpUI(GameManager.instance.curExp + earnedExp);
+        UIManager.instance.gameSystemUI.playerInfoUI.expUI.GetComponent<PlayerExpUI>().SetPlayerExpUI(GameManager.instance.LevelSystem.CurExp + earnedExp);
         earnedExp = 0;
     }
     private void CloseCombatResultUI()

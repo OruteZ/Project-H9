@@ -24,7 +24,7 @@ public class TitleUI : MonoBehaviour
             LoadingManager.instance.LoadingScene("WorldScene");
         }
     }
-    public void OnClickLoadBtn(in UserData userData)
+    public void OnClickLoadSlot(in UserData userData)
     {
         if (!_isStarted) 
         {

@@ -85,7 +85,7 @@ public class Player : Unit
 
     public void ContinueWorldTurn()
     {
-        stat.SetOriginalStat(StatType.CurActionPoint, GameManager.instance.worldAp);
+        stat.SetOriginalStat(StatType.CurActionPoint, GameManager.instance.user.Stat.curActionPoint);
         //onStatChanged.Invoke();
         UIManager.instance.onPlayerStatChanged.Invoke();
         PlayerEvents.OnChangedStat?.Invoke(stat, StatType.CurActionPoint);
@@ -176,7 +176,7 @@ public class Player : Unit
         base.TakeDamage(damage, attacker, type);
 
         UIManager.instance.onPlayerStatChanged.Invoke();
-        GameManager.instance.playerStat = stat;
+        GameManager.instance.user.Stat = stat;
     }
 
     #region UNITY_EVENT

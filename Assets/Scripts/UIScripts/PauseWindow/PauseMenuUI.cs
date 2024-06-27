@@ -40,6 +40,11 @@ public class PauseMenuUI : UISystem
         optionUI.CloseUI();
     }
 
+    public void Save()
+    {
+        GameManager.instance.Save();
+    }
+
     public void ExitGame()
     {
         #if UNITY_EDITOR

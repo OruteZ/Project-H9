@@ -14,7 +14,7 @@ public class PlayerApUI : UIElement, IPointerEnterHandler, IPointerExitHandler
     }
     public void SetApUI()
     {
-        int maxAp = GameManager.instance.playerStat.maxActionPoint;
+        int maxAp = GameManager.instance.user.Stat.maxActionPoint;
         int curAp = FieldSystem.unitSystem.GetPlayer().currentActionPoint;
         int flickerCnt = UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedApUsage;
         bool isExist = true;

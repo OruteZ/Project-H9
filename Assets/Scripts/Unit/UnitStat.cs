@@ -1,5 +1,5 @@
 ﻿using System;
-using Unity.VisualScripting;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,33 +11,52 @@ public class UnitStat : ICloneable
         ResetModifier();
     }
 
+    [JsonIgnore]
     public UnityEvent<StatType> OnChangedStat = new UnityEvent<StatType>();
 
+    [JsonIgnore]
     public int maxHp => GetStat(StatType.MaxHp);
+    [JsonIgnore]
     public int curHp => GetOriginalStat(StatType.CurHp);
 
+    [JsonIgnore]
     public int concentration => GetStat(StatType.Concentration); 
+    [JsonIgnore]
     public int sightRange => GetStat(StatType.SightRange); 
+    [JsonIgnore]
     public int speed => GetStat(StatType.Speed);
+    [JsonIgnore]
     public int maxActionPoint => GetStat(StatType.MaxActionPoint);
+    [JsonIgnore]
     public int curActionPoint => GetOriginalStat(StatType.CurActionPoint);
+    [JsonIgnore]
     public float additionalHitRate => GetStat(StatType.AdditionalHitRate);
+    [JsonIgnore]
     public float criticalChance => GetStat(StatType.CriticalChance);
+    [JsonIgnore]
     public int revolverAdditionalDamage => GetStat(StatType.RevolverAdditionalDamage);
+    [JsonIgnore]
     public int repeaterAdditionalDamage => GetStat(StatType.RepeaterAdditionalDamage);
+    [JsonIgnore]
     public int shotgunAdditionalDamage => GetStat(StatType.ShotgunAdditionalDamage);
+    [JsonIgnore]
     public int revolverAdditionalRange => GetStat(StatType.RevolverAdditionalRange);
+    [JsonIgnore]
     public int repeaterAdditionalRange => GetStat(StatType.RepeaterAdditionalRange);
+    [JsonIgnore]
     public int shotgunAdditionalRange => GetStat(StatType.ShotgunAdditionalRange);
+    [JsonIgnore]
     public float revolverCriticalDamage => GetStat(StatType.RevolverCriticalDamage);
+    [JsonIgnore]
     public float shotgunCriticalDamage => GetStat(StatType.ShotgunCriticalDamage);
+    [JsonIgnore]
     public float repeaterCriticalDamage => GetStat(StatType.RepeaterCriticalDamage);
 
-    [SerializeField]
+    [JsonProperty, SerializeField]
     private int[] original = new int[(int)StatType.Length - 3];
-    [SerializeField]
+    [JsonProperty, SerializeField]
     private int[] _additional = new int[(int)StatType.Length - 3];
-    [SerializeField]
+    [JsonProperty, SerializeField]
     private int[] _multiplier = new int[(int)StatType.Length - 3];
 
     public object Clone()
@@ -46,6 +65,11 @@ public class UnitStat : ICloneable
         newStat.DeepCopy(original, _additional, _multiplier);
 
         return newStat;
+    }
+
+    public void CopyTo(ref UnitStat target)
+    {
+        target.DeepCopy(original, _additional, _multiplier);
     }
 
     public int GetStat(StatType type)
@@ -222,7 +246,7 @@ public class UnitStat : ICloneable
         return true;
     }
 
-    public void DeepCopy(int[] original, int[] additional, int[] multiplier)
+    private void DeepCopy(int[] original, int[] additional, int[] multiplier)
     {
         for (int i = 0; i < (int)StatType.Length - 3; i++)
         {
@@ -267,6 +291,7 @@ public class UnitStat : ICloneable
 }
 
 
+// !경고! 절대 인덱스를 바꾸거나, 사이에 빵꾸내지 마시오. 저장에서 지옥을 맛보게 될 것.
 public enum StatType
 {
     Null = 0,

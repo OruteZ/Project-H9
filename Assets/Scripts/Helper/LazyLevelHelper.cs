@@ -11,7 +11,7 @@ public static class LazyLevelHelper
 
     private static void GetExp()
     {
-        GameManager.instance.GetExp(EXP);
+        GameManager.instance.LevelSystem.GetExp(EXP);
         FieldSystem.onStageStart.RemoveListener(GetExp);
         EXP = 0;
     }

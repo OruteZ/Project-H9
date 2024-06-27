@@ -20,6 +20,7 @@ public class GameManager : Generic.Singleton<GameManager>
 {
     private const string COMBAT_SCENE_NAME = "CombatScene";
 
+    [HideInInspector]
     public UserData user;
     public Inventory playerInventory = new Inventory();
     [SerializeField]
@@ -39,6 +40,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
     [Header("Player Info"), SerializeField]
     private UnitStat startPlayerStat; // 시작 시 플레이어 스탯을 정의
+
     [FormerlySerializedAs("_playerWeaponIndex")] public int playerWeaponIndex;
     public GameObject playerModel;
     public List<int> playerPassiveIndexList;
@@ -71,42 +73,8 @@ public class GameManager : Generic.Singleton<GameManager>
         //Debug.Log("Added item to inventory");
     }//a
     #endregion
-    #region LEVEL
 
-    [Header("Level system")]
-    public int level = 1;
-    public int curExp = 0;
-    private int maxExp => level * 100;
-    private const int LEVEL_UP_REWARD_SKILL_POINT = 1;
-    public void GetExp(int exp)
-    {
-        curExp += exp;
-        while (curExp >= maxExp)
-        {
-            LevelUp();
-        }
-        UIManager.instance.onPlayerStatChanged.Invoke();
-        UIManager.instance.onGetExp.Invoke(exp);
-    }
-    private void LevelUp()
-    {
-        if (maxExp > curExp) return;
-
-        curExp -= maxExp;
-        level++;
-        user.Stat.Recover(StatType.CurHp, user.Stat.GetStat(StatType.MaxHp), out var appliedValue);
-        SkillManager.instance.AddSkillPoint(LEVEL_UP_REWARD_SKILL_POINT);
-        if (level % 3 == 0)
-        {
-            UIManager.instance.gameSystemUI.playerStatLevelUpUI.AddPlayerStatPoint();
-            UIManager.instance.onLevelUp.Invoke(level);
-        }
-    }
-    public int GetMaxExp()
-    {
-        return maxExp;
-    }
-    #endregion
+    public CLevelSystem LevelSystem;
 
     [Header("World Scene Name")]
     public string worldSceneName;
@@ -253,7 +221,6 @@ public class GameManager : Generic.Singleton<GameManager>
         runtimeWorldData = Instantiate(_defaultWorldData);
         runtimeWorldData.discoveredWorldTileSet = new HashSet<Vector3Int>();
         
-        
         var watch = DGS.Stopwatch.StartNew();
         var qi = new QuestParser();
         Quests = qi.GetQuests();
@@ -272,6 +239,7 @@ public class GameManager : Generic.Singleton<GameManager>
             user = DataLoader.Data;
             DataLoader.Clear();
 
+            LevelSystem = new CLevelSystem(user.Level, user.EXP);
             if (user.Stat == null)
             {
                 user.Stat = (UnitStat)startPlayerStat.Clone();
@@ -489,6 +457,8 @@ public class GameManager : Generic.Singleton<GameManager>
     public void Save()
     {
         if (user == null) Debug.Log($"try saved, but user is null");
+        user.Level = LevelSystem.Level;
+        user.EXP = LevelSystem.CurExp;
         var player = FieldSystem.unitSystem.GetPlayer();
         user.Position = player.hexPosition;
 

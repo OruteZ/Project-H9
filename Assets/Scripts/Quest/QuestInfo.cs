@@ -296,7 +296,7 @@ public class QuestInfo
         }
         if (_expReward != 0)
         {
-            GameManager.instance.GetExp(_expReward);
+            GameManager.instance.LevelSystem.GetExp(_expReward);
         }
         PlayerEvents.OnSuccessQuest.Invoke(this);
         OnQuestEnded?.Invoke(this);

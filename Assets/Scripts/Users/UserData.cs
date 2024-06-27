@@ -12,6 +12,8 @@ public class UserData
     private int _version = 102;
     public bool isFirstOpen = true;
 
+    public int Level = 1;
+    public int EXP = 0;
     public Vector3Int Position;
     public UnitStat Stat;
     public HashSet<int> ClearedQuests = new HashSet<int>();

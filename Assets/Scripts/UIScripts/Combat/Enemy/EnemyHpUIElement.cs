@@ -21,6 +21,7 @@ public class EnemyHpUIElement : UIElement
     [SerializeField] private Slider _backHpBar;
     [SerializeField] private TextMeshProUGUI _hpText;
     [SerializeField] private GameObject _debuffs;
+    [SerializeField] private Transform _background;
     // Start is called before the first frame update
     void Awake()
     {
@@ -58,6 +59,7 @@ public class EnemyHpUIElement : UIElement
         _frontHpBar.gameObject.SetActive(isUIVisible);
         _hpText.gameObject.SetActive(isUIVisible);
         _debuffs.gameObject.SetActive(isUIVisible);
+        _background.gameObject.SetActive(isUIVisible);
 
         //UI Position Setting
         if (enemy != null) 

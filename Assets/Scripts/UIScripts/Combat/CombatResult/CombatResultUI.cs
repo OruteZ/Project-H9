@@ -27,13 +27,13 @@ public class CombatResultUI : UISystem
     public void Start()
     {
         FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
-        UIManager.instance.onSceneChanged.AddListener(CloseCombatResultUI);
         //UIManager.instance.onTSceneChanged.AddListener(null);
         this.gameObject.SetActive(false);
     }
 
     public void OnClickResultWindowCloseButton()
     {
+        CloseCombatResultUI();
         if (isPlayerWin)
         {
             BackToWorld();

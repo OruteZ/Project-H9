@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class TurnOrderUIElement : MonoBehaviour
+public class TurnOrderUIElement : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
     public Unit unit;// { get; private set; }
     private Image _frame;
@@ -118,6 +119,7 @@ public class TurnOrderUIElement : MonoBehaviour
 
     public void EffectTurnOrderUIElement(bool isEffectOn)
     {
+
         if (unit is Player)
         {
             _frame.color = UICustomColor.PlayerTurnColor;
@@ -130,5 +132,29 @@ public class TurnOrderUIElement : MonoBehaviour
         {
             _frame.color = UICustomColor.EnemyTurnColor;
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (unit is Player) return;
+        unit.TryGetComponent(out CustomOutline outline);
+        if (outline is null)
+        {
+            outline = unit.gameObject.AddComponent<CustomOutline>();
+            outline.OutlineColor = Color.red;
+        }
+        outline.OutlineMode = CustomOutline.Mode.OutlineAll;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (unit is Player) return;
+        unit.TryGetComponent(out CustomOutline outline);
+        if (outline is null)
+        {
+            outline = unit.gameObject.AddComponent<CustomOutline>();
+            outline.OutlineColor = Color.red;
+        }
+        outline.OutlineMode = CustomOutline.Mode.NULL;
     }
 }

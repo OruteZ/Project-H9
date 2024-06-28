@@ -331,7 +331,6 @@ public class CustomOutline : MonoBehaviour
         // Apply properties according to mode
         outlineFillMaterial.SetColor("_OutlineColor", outlineColor);
 
-        Debug.LogError(outlineMode);
         switch (outlineMode)
         {
             case Mode.NULL:

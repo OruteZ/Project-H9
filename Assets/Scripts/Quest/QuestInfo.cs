@@ -66,7 +66,7 @@ public class QuestInfo
     public int MoneyReward { get => _moneyReward; }
     public int ExpReward { get => _expReward; }
     public int ItemReward { get => _itemReward; }
-    public int SKillReward { get => _skillReward; }
+    public int SkillReward { get => _skillReward; }
 
     public QuestInfo(int index
                     , int questType

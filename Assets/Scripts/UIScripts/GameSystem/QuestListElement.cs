@@ -58,7 +58,7 @@ public class QuestListElement : UIElement, IPointerClickHandler
                 {
                     Vector3 pos = (skillBL + skillTR) / 2.0f;
 
-                    UIManager.instance.gameSystemUI.questUI.OpenSkillTooltip(currentQuestInfo.SKillReward, pos);
+                    UIManager.instance.gameSystemUI.questUI.OpenSkillTooltip(currentQuestInfo.SkillReward, pos);
                     return;
                 }
             }
@@ -89,9 +89,9 @@ public class QuestListElement : UIElement, IPointerClickHandler
             _itemName = GameManager.instance.itemDatabase.GetItemScript(qInfo.ItemReward).GetName();
             rewardTexts[2] = _itemName;
         }
-        if (qInfo.MoneyReward > 0)
+        if (qInfo.SkillReward > 0)
         { 
-            _skillName = SkillManager.instance.GetSkillName(qInfo.SKillReward);
+            _skillName = SkillManager.instance.GetSkillName(qInfo.SkillReward);
             rewardTexts[3] = _skillName;
         }
         bool isFirstReward = true;

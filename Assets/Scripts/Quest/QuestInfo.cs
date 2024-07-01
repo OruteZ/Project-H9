@@ -275,15 +275,7 @@ public class QuestInfo
             }
         if (_skillReward != 0)
         {
-            bool isAlreadyLearned = false;
-            foreach (var skill in SkillManager.instance.GetAllLearnedSkills()) 
-            {
-                if (skill.skillInfo.index == _skillReward) 
-                {
-                    isAlreadyLearned = true;
-                    break;
-                }
-            }
+            bool isAlreadyLearned = SkillManager.instance.isLearnedSkill(_skillReward);
             if (!isAlreadyLearned)
             {
                 SkillManager.instance.LearnSkill(_skillReward, true);

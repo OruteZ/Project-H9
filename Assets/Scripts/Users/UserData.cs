@@ -18,6 +18,10 @@ public class UserData
     public UnitStat Stat;
     public HashSet<int> ClearedQuests = new HashSet<int>();
     public Dictionary<int, QuestSaveWrapper> QuestProgress = new Dictionary<int, QuestSaveWrapper>();
+
+    public int skillPoint = 0;
+    public List<int> learnedSkills = new();
+
     public int Version => _version;
 
     public Dictionary<string, int> Events = new Dictionary<string, int>();

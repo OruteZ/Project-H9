@@ -324,6 +324,14 @@ public class GameManager : Generic.Singleton<GameManager>
                 user.QuestProgress.Add(quest.Index, quest.GetProgress());
             }
         }
+
+        user.skillPoint = SkillManager.instance.GetSkillPoint();
+        user.learnedSkills.Clear();
+        foreach (var s in SkillManager.instance.GetAllLearnedSkills()) 
+        {
+            user.learnedSkills.Add(s.skillInfo.index);
+            Debug.LogError(s.skillInfo.index);
+        }
         UserDataFileSystem.Save(in user);
     }
 }

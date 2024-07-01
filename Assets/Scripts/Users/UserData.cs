@@ -1,8 +1,8 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
-using Newtonsoft.Json;
+using UnityEngine;
 
 [Serializable]
 public class UserData 
@@ -18,7 +18,9 @@ public class UserData
     public UnitStat Stat;
     public HashSet<int> ClearedQuests = new HashSet<int>();
     public Dictionary<int, QuestSaveWrapper> QuestProgress = new Dictionary<int, QuestSaveWrapper>();
+    public string Description = string.Empty;
     public int Version => _version;
+    public DateTime SaveTime;
 
     public Dictionary<string, int> Events = new Dictionary<string, int>();
 
@@ -53,6 +55,14 @@ public static class UserDataFileSystem
     {
         string jsonData = JsonConvert.SerializeObject(userData, Formatting.Indented);
         var path = $"{_defaultPath}/{userData.FileName}";
+        File.WriteAllText(path, jsonData);
+        Debug.Log($"Save {userData.FileName} => {path}");
+    }
+
+    public static void AutoSave(in UserData userData)
+    {
+        string jsonData = JsonConvert.SerializeObject(userData, Formatting.Indented);
+        var path = $"{_defaultPath}/autosaved.json";
         File.WriteAllText(path, jsonData);
         Debug.Log($"Save {userData.FileName} => {path}");
     }

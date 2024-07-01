@@ -61,8 +61,11 @@ public class LoadUI : MonoBehaviour
                     _lists.Add(userData);
                     var ins = GameObject.Instantiate(_slotPrefab);
                     ins.transform.parent = _slotParent;
-                    ins.transform.Find("SlotText").GetComponent<TMP_Text>().text = $"{_slotStr} {file.Name}\nload test";
-                    ins.transform.Find("DateText").GetComponent<TMP_Text>().text = $"(not working)1 {_dayStr}";
+                    var name = file.Name.Split(".")[0];
+                    var slotText = $"{_slotStr} {name}\n{userData.Description}";
+                    ins.transform.Find("SlotText").GetComponent<TMP_Text>().text = slotText;
+                    var dateText = (name.Equals("autosaved")) ? $"autosaved\n{userData.SaveTime}" : $"{userData.SaveTime}";
+                    ins.transform.Find("DateText").GetComponent<TMP_Text>().text = dateText;
 
                     ins.GetComponentInChildren<Button>().onClick.AddListener(
                         () => {_titleUI.OnClickLoadSlot(userData);  });

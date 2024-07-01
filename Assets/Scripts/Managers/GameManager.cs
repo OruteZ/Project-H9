@@ -22,7 +22,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
     [HideInInspector]
     public UserData user;
-    public Inventory playerInventory = new Inventory();
+    public Inventory playerInventory;
     [SerializeField]
     public ItemDatabase itemDatabase;
     public WeaponDatabase weaponDatabase;
@@ -255,6 +255,26 @@ public class GameManager : Generic.Singleton<GameManager>
             GameManager.instance.backToWorldTrigger = false;
             user.isFirstOpen = false;
         }
+
+        playerInventory = new Inventory();
+        playerInventory.AddGold(user.money);
+        if (user.equippedItemIndex != 0)
+        {
+            playerWeaponIndex = user.equippedItemIndex;
+        }
+        playerInventory.InitEquippedItem(Item.CreateItem(itemDatabase.GetItemData(playerWeaponIndex)));
+
+        for (int i = 0; i < user.inventory.Count; i++)
+        {
+            Item item = null;
+            if (user.inventory[i].index != 0)
+            {
+                item = Item.CreateItem(itemDatabase.GetItemData(user.inventory[i].index));
+                item.SetStackCount(user.inventory[i].stack);
+                playerInventory.TryAddItem(item);
+            }
+        }
+        UIManager.instance.gameSystemUI.alarmUI.ClearAlarmUI();
     }
 
     private void Start()
@@ -325,13 +345,29 @@ public class GameManager : Generic.Singleton<GameManager>
             }
         }
 
+        //skill
         user.skillPoint = SkillManager.instance.GetSkillPoint();
         user.learnedSkills.Clear();
         foreach (var s in SkillManager.instance.GetAllLearnedSkills()) 
         {
             user.learnedSkills.Add(s.skillInfo.index);
-            Debug.LogError(s.skillInfo.index);
         }
+
+        //item
+        user.money = playerInventory.GetGold();
+        user.equippedItemIndex = playerInventory.GetEquippedItem().GetData().id;
+        user.inventory.Clear();
+        foreach (var i in playerInventory.GetInventory()) 
+        {
+            ItemSaveWrapper sw = new ItemSaveWrapper { index = 0, stack = 0 };
+            if (i is not null)
+            {
+                sw.index = i.GetData().id;
+                sw.stack = i.GetStackCount();
+            }
+            user.inventory.Add(sw);
+        }
+
         UserDataFileSystem.Save(in user);
     }
 }

@@ -20,8 +20,11 @@ public class Inventory : IInventory
     public const int WEAPON_COST = 4;
     public const int ITEM_COST = 2;
 
-    public Inventory() 
+    public Inventory()
     {
+        _weaponItems.Clear();
+        _consumableItems.Clear();
+        _elseItems.Clear();
         for (int i = 0; i < INVENTORY_MAX_SIZE; i++)
         {
             _weaponItems.Add(null);
@@ -203,6 +206,13 @@ public class Inventory : IInventory
         }
     }
 
+    public List<IItem> GetInventory()
+    {
+        List<IItem> itemList = _weaponItems.ToList<IItem>();
+        itemList.AddRange(_consumableItems);
+        itemList.AddRange(_elseItems);
+        return itemList;
+    }
     private List<IItem> GetAllItemList()
     {
         List<IItem> itemList = _weaponItems.ToList<IItem>();

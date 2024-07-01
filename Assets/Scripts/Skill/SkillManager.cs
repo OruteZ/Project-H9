@@ -61,9 +61,6 @@ public class SkillManager : Generic.Singleton<SkillManager>
         LoadLearnedSkills();
         UpdateIsLearnable();
     }
-    private void Start()
-    {
-    }
     private void LoadLearnedSkills()
     {
         List<int> learnedSkills = GameManager.instance.user.learnedSkills;

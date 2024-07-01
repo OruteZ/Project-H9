@@ -42,7 +42,7 @@ public class ItemUI : UISystem
 
         Item startItem = Item.CreateItem(GameManager.instance.itemDatabase.GetItemData(GameManager.instance.playerWeaponIndex));
         _equippedElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(startItem);
-        GameManager.instance.playerInventory.InitEquippedItem(startItem);
+        //GameManager.instance.playerInventory.InitEquippedItem(startItem);
         SetInventoryUI();
 
         IInventory.OnInventoryChanged.AddListener(SetInventoryUI);

@@ -22,6 +22,12 @@ public class UserData
     public int skillPoint = 0;
     public List<int> learnedSkills = new();
 
+    public int money = 0;
+    public int equippedItemIndex = 0;
+    public List<ItemSaveWrapper> inventory = new();
+    public List<ItemSaveWrapper> consumableInventory = new();
+    public List<ItemSaveWrapper> otherInventory = new();
+
     public int Version => _version;
 
     public Dictionary<string, int> Events = new Dictionary<string, int>();

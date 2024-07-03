@@ -59,6 +59,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     protected override void Awake()
     {
+        FileRead.ParseLocalization(in LOCALIZATION_PATH, out _uiLocalization);
         base.Awake();
         if(this == null) return;
 
@@ -77,7 +78,6 @@ public class UIManager : Generic.Singleton<UIManager>
         pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
         debugUI = _debugCanvas.GetComponent<DebugUI>();
         infoPopup = _infoPopupCanvas.GetComponent<InfoPopup>();
-        FileRead.ParseLocalization(in LOCALIZATION_PATH, out _uiLocalization);
 
         UIState = GameState.World;
         if (!GameManager.instance.CompareState(UIState)) 
@@ -86,7 +86,13 @@ public class UIManager : Generic.Singleton<UIManager>
         }
         if (loading) loading.SetActive(true);
 
+        StartCoroutine(SetStatScript());
+    }
+    private IEnumerator SetStatScript() 
+    {
+        if (scriptLanguage == ScriptLanguage.NULL) yield return null;
         statScript = new StatScript();
+        yield break;
     }
 
     private void FieldAwake()

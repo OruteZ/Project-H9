@@ -28,6 +28,8 @@ public class UserData
     public List<ItemSaveWrapper> consumableInventory = new();
     public List<ItemSaveWrapper> otherInventory = new();
 
+    public OptionSetting optionSetting;
+
     public int Version => _version;
 
     public Dictionary<string, int> Events = new Dictionary<string, int>();

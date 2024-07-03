@@ -36,8 +36,8 @@ public class PauseMenuUI : UISystem
     }
     public override void CloseUI()
     {
-        base.CloseUI();
         optionUI.CloseUI();
+        if (optionUI.isOpened) base.CloseUI();
     }
 
     public void Save()

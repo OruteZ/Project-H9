@@ -9,8 +9,6 @@ public class OptionUI : UISystem
 {
     [SerializeField] private GameObject _optionWindow;
 
-    [SerializeField] private OptionSetting _initialOptionSetting;
-
     [SerializeField] private GameObject _mainVolumeBar;
     [SerializeField] private GameObject _BGMVolumeBar;
     [SerializeField] private GameObject _SFXVolumeBar;
@@ -19,25 +17,36 @@ public class OptionUI : UISystem
     [SerializeField] private GameObject _resolutionDropDown;
 
     [SerializeField] private GameObject _lauguageDropDown;
+    [SerializeField] private GameObject _lauguageChangePopup;
+    private ScriptLanguage prevLanguage;
+    public bool isOpened;
+
 
     private OptionSetting _optionSetting;
 
     private List<Vector2Int> resolutions;
 
+
     // Start is called before the first frame update
     void Awake()
     {
+        isOpened = false;
         _optionWindow.SetActive(false);
-        _initialOptionSetting.resolution = new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height);
-        _initialOptionSetting.isFullScreen = Screen.fullScreen;
+        GameManager.instance.initialOptionSetting.resolution = new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height);
+        GameManager.instance.initialOptionSetting.isFullScreen = Screen.fullScreen;
 
         //need loading userdata
-        _optionSetting = _initialOptionSetting;
+        _optionSetting = GameManager.instance.initialOptionSetting;
 
         SetOptionWindow();
     }
+    public OptionSetting GetOptionSetting()
+    {
+        return _optionSetting;
+    }
     public void LoadOption(OptionSetting setting) 
     {
+        if (setting.lauguage == ScriptLanguage.NULL) return;
         _optionSetting = setting;
         SetOptionWindow();
     }
@@ -51,11 +60,36 @@ public class OptionUI : UISystem
         base.OpenUI();
         SetOptionWindow();
         _optionWindow.SetActive(true);
+
+        _lauguageChangePopup.SetActive(false);
+        prevLanguage = _optionSetting.lauguage;
+        isOpened = true;
     }
     public override void CloseUI()
     {
-        _optionWindow.SetActive(false);
-        base.CloseUI();
+        if (_optionSetting.lauguage != prevLanguage)
+        {
+            _lauguageChangePopup.SetActive(true);
+        }
+        else
+        {
+            GameManager.instance.Save();
+            _optionWindow.SetActive(false);
+            base.CloseUI();
+            isOpened = false;
+        }
+    }
+    public void OnClickChangeLanguageBtn() 
+    {
+        UserAccount.Language = _optionSetting.lauguage;
+        prevLanguage = _optionSetting.lauguage;
+        GameManager.instance.Save();
+        UIManager.instance.pauseMenuUI.BackToTitle();
+    }
+    public void OnClickCancelLanguageBtn() 
+    {
+        _optionSetting.lauguage = prevLanguage;
+        CloseUI();
     }
 
     public void SetOptionWindow()
@@ -65,23 +99,28 @@ public class OptionUI : UISystem
         _SFXVolumeBar.GetComponent<Scrollbar>().value = _optionSetting.SFXVolume;
 
         _fullScreenToggle.GetComponent<Toggle>().isOn = _optionSetting.isFullScreen;
-        int curIndex = 0;
+
         resolutions = new();
         for (int i = 0; i < Screen.resolutions.Length; i++) 
         {
             if (Screen.resolutions[i].width % 10 != 0 || Screen.resolutions[i].height % 10 != 0) continue;
 
             resolutions.Add(new Vector2Int(Screen.resolutions[i].width, Screen.resolutions[i].height));
-            if (Screen.resolutions[i].width == _optionSetting.resolution.x &&
-                Screen.resolutions[i].height == _optionSetting.resolution.y) 
+            
+        }
+        resolutions = resolutions.Distinct().ToList();
+
+        List<string> strings = new();
+        int curIndex = 0;
+        for (int i = 0; i < resolutions.Count; i++)
+        {
+            strings.Add($"{resolutions[i].x}x{resolutions[i].y}");
+            if (resolutions[i].x == _optionSetting.resolution.x &&
+                resolutions[i].y == _optionSetting.resolution.y)
             {
                 curIndex = i;
             }
         }
-        resolutions = resolutions.Distinct().ToList();
-        List<string> strings = new();
-        foreach (var r in resolutions) strings.Add($"{r.x}x{r.y}");
-
         _resolutionDropDown.GetComponent<TMP_Dropdown>().ClearOptions();
         _resolutionDropDown.GetComponent<TMP_Dropdown>().AddOptions(strings);
         _resolutionDropDown.GetComponent<TMP_Dropdown>().value = curIndex;
@@ -95,15 +134,24 @@ public class OptionUI : UISystem
 
     }
 
-    public void ChangeVolumeOption()
+    public void ChangeVolumeOption(int index)
     {
-        _optionSetting.MainVolume = _mainVolumeBar.GetComponent<Scrollbar>().value;
-        _optionSetting.BGMVolume = _BGMVolumeBar.GetComponent<Scrollbar>().value;
-        _optionSetting.SFXVolume = _SFXVolumeBar.GetComponent<Scrollbar>().value;
+        if (index == 0)
+        {
+            _optionSetting.MainVolume = _mainVolumeBar.GetComponent<Scrollbar>().value;
+            SoundManager.instance.SetMainVolume(_optionSetting.MainVolume);
+        }
+        else if (index == 1)
+        {
+            _optionSetting.BGMVolume = _BGMVolumeBar.GetComponent<Scrollbar>().value;
+            SoundManager.instance.SetBGMVolume(_optionSetting.BGMVolume);
+        }
+        if (index == 2)
+        {
+            _optionSetting.SFXVolume = _SFXVolumeBar.GetComponent<Scrollbar>().value;
+            SoundManager.instance.SetSFXVolume(_optionSetting.SFXVolume);
+        }
 
-        SoundManager.instance.SetMainVolume(_optionSetting.MainVolume);
-        SoundManager.instance.SetBGMVolume(_optionSetting.BGMVolume);
-        SoundManager.instance.SetSFXVolume(_optionSetting.SFXVolume);
     }
     public void ChangeScreenOption()
     {
@@ -117,21 +165,21 @@ public class OptionUI : UISystem
     public void ChangeLanguageOption() 
     {
         _optionSetting.lauguage = (ScriptLanguage)(_lauguageDropDown.GetComponent<TMP_Dropdown>().value + 1);
-
-        UIManager.instance.scriptLanguage = _optionSetting.lauguage;
     }
     public void ResetOption()
     {
-        _optionSetting = _initialOptionSetting;
+        _optionSetting = GameManager.instance.initialOptionSetting;
         SetOptionWindow();
-        _mainVolumeBar.GetComponent<Scrollbar>().value = _initialOptionSetting.MainVolume;
-        _BGMVolumeBar.GetComponent<Scrollbar>().value = _initialOptionSetting.BGMVolume;
-        _SFXVolumeBar.GetComponent<Scrollbar>().value = _initialOptionSetting.SFXVolume;
+
+        //???
+        _mainVolumeBar.GetComponent<Scrollbar>().value = GameManager.instance.initialOptionSetting.MainVolume;
+        _BGMVolumeBar.GetComponent<Scrollbar>().value = GameManager.instance.initialOptionSetting.BGMVolume;
+        _SFXVolumeBar.GetComponent<Scrollbar>().value = GameManager.instance.initialOptionSetting.SFXVolume;
 
         List<string> laugauages = new() { "Korean", "English" };
         _lauguageDropDown.GetComponent<TMP_Dropdown>().ClearOptions();
         _lauguageDropDown.GetComponent<TMP_Dropdown>().AddOptions(laugauages);
-        _lauguageDropDown.GetComponent<TMP_Dropdown>().value = (int)_initialOptionSetting.lauguage - 1;
+        _lauguageDropDown.GetComponent<TMP_Dropdown>().value = (int)GameManager.instance.initialOptionSetting.lauguage - 1;
         _lauguageDropDown.GetComponent<TMP_Dropdown>().RefreshShownValue();
     }
 }

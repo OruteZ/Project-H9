@@ -59,6 +59,7 @@ public class Revolver : Weapon
         finalHitRate = Mathf.Clamp(finalHitRate, 0, 100);
         finalHitRate += target.GetHitRateModifier();
 
+
 #if UNITY_EDITOR
         UIManager.instance.debugUI.SetDebugUI
             (finalHitRate, unit, (Unit)target, distance, weaponRange,

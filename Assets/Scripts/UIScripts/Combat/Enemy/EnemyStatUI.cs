@@ -58,6 +58,14 @@ public class EnemyStatUI : UISystem
             Enemy enemy = (Enemy)FieldSystem.unitSystem.GetUnit(enemyPos);
             if (player is null || enemy is null) return;
 
+            enemy.TryGetComponent(out CustomOutline outline);
+            if (outline is null)
+            {
+                outline = enemy.gameObject.AddComponent<CustomOutline>();
+                outline.OutlineColor = Color.red;
+            }
+            outline.OutlineMode = CustomOutline.Mode.OutlineAll;
+
             if (Input.GetMouseButtonDown(1))
             {
                 if (player.GetSelectedAction().GetActionType() is not ActionType.Idle) return;
@@ -85,6 +93,14 @@ public class EnemyStatUI : UISystem
         }
         else if(_mouseOverEnemy != null)
         {
+            _mouseOverEnemy.TryGetComponent(out CustomOutline outline);
+            if (outline is null)
+            {
+                outline = _mouseOverEnemy.gameObject.AddComponent<CustomOutline>();
+                outline.OutlineColor = Color.red;
+            }
+            outline.OutlineMode = CustomOutline.Mode.NULL;
+
             _mouseOverEnemy = null;
             UIManager.instance.combatUI.turnOrderUI.EffectMouseOverEnemy(null);
         }

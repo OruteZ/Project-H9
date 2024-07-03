@@ -32,6 +32,13 @@ public class AlarmUI : UISystem
         if (_skillPointAlarm == null && SkillManager.instance.GetSkillPoint() > 0) AddAlarmUI(AlarmType.SkillPoint);
         if (_statPointAlarm == null && UIManager.instance.gameSystemUI.playerStatLevelUpUI.GetPlayerStatPoint() > 0) AddAlarmUI(AlarmType.StatPoint);
     }
+    public void ClearAlarmUI()
+    {
+        for (int i = _alarmUIElements.transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(_alarmUIElements.transform.GetChild(i).gameObject);
+        }
+    }
     public override void CloseUI() 
     {
         _alarmTooltip.SetActive(false);

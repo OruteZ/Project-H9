@@ -55,6 +55,23 @@ public class SkillManager : Generic.Singleton<SkillManager>
 
         InitSkills();
         InitSkillScripts();
+
+        _skillPoint = GameManager.instance.user.skillPoint;
+        if (_skillPoint == 0) _skillPoint = INITIAL_SKILL_POINT;
+        LoadLearnedSkills();
+        UpdateIsLearnable();
+    }
+    private void LoadLearnedSkills()
+    {
+        List<int> learnedSkills = GameManager.instance.user.learnedSkills;
+
+        for (int i = 0; i < learnedSkills.Count; i++)
+        {
+            Skill skill = GetSkill(learnedSkills[i]);
+            skill.LearnSkill();
+            PlayerEvents.OnLearnedSkill?.Invoke(skill.skillInfo);
+            GameManager.instance.AddPlayerSkillListElement(skill.skillInfo);
+        }
     }
 
     private void InitSkills()
@@ -132,6 +149,15 @@ public class SkillManager : Generic.Singleton<SkillManager>
         }
         return learnedSkills;
     }
+    public bool isLearnedSkill(int index)
+    {
+        for (int i = 0; i < _skills.Count; i++)
+        {
+            if (!_skills[i].isLearned) continue;
+            if (_skills[i].skillInfo.index == index) return true;
+        }
+        return false;
+    }
     /// <summary>
     /// 해당 고유번호 또는 이름를 가진 스킬을 반환합니다.
     /// </summary>
@@ -192,17 +218,12 @@ public class SkillManager : Generic.Singleton<SkillManager>
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player == null) return false;
-
-        List<Skill> learnedSkill = GetAllLearnedSkills();
-        foreach (Skill skill in learnedSkill) 
+        if (isLearnedSkill(index))
         {
-            if (skill.skillInfo.index == index) 
-            {
-                Debug.Log("동일 스킬 습득 오류");
-                return false;
-            }
+            Debug.Log("동일 스킬 습득 오류");
+            return false;
         }
-        
+
         for (int i = 0; i < _skills.Count; i++) 
         {
             if (_skills[i].skillInfo.index == index) 
@@ -241,13 +262,17 @@ public class SkillManager : Generic.Singleton<SkillManager>
                 break;
             }
         }
-        
+
+        UpdateIsLearnable();
+
+        return true;
+    }
+    private void UpdateIsLearnable() 
+    {
         for (int i = 0; i < _skills.Count; i++)
         {
             _skills[i].UpdateIsLearnable(_skills);
         }
-
-        return true;
     }
     /// <summary>
     /// 현재 소지한 스킬 포인트를 반환합니다.
@@ -276,17 +301,26 @@ public class SkillManager : Generic.Singleton<SkillManager>
     public string GetSkillName(int skillIndex) 
     {
         Skill skill = GetSkill(skillIndex);
-        if (skill == null || _skillNameScripts.Count <= skill.skillInfo.nameIndex) return "";
-        return _skillNameScripts[skill.skillInfo.nameIndex].name;
+        if (skill == null) return null;
+
+        foreach (var script in _skillNameScripts)
+        {
+            if (script.index == skill.skillInfo.nameIndex)
+            {
+                return script.name;
+            }
+        }
+        return null;
     }
     public string GetSkillDescription(int skillIndex, out List<int> keywords)
     {
         Skill skill = GetSkill(skillIndex);
-        if (skill == null || _skillDescriptionScripts.Count <= skill.skillInfo.tooltipIndex)
+        if (skill == null)
         {
             keywords = null;
             return null;
         }
+
         foreach (SkillDescriptionScript desc in _skillDescriptionScripts) 
         {
             if (skill.skillInfo.tooltipIndex == desc.index) return desc.GetDescription(skillIndex, out keywords);

@@ -66,7 +66,7 @@ public class MoveAction : BaseAction
             return false;
         }
         
-        var unitAp = unit.stat.GetStat(StatType.CurActionPoint);
+        var unitAp = unit.stat.GetOriginalStat(StatType.CurActionPoint);
         //if dist * cost is more than ap, cant move
         if ((_path.Count - 1) * GetCost() > unitAp)
         {

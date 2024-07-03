@@ -303,9 +303,9 @@ public class CombatActionUI : UISystem
 
     public void ShowActionUITooltip(GameObject btn)
     {
-        if (_activeActionBundle == _skillActionBundle)
+        if (btn.GetComponent<CombatActionButtonElement>().buttonAction is not null)
         {
-            _skillTooltip.GetComponent<CombatActionSkillTooltip>().SetCombatSkillTooltip(btn);
+            _skillTooltip.GetComponent<CombatActionSkillTooltip>().SetCombatActionTooltip(btn);
         }
         else
         {

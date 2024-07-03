@@ -61,7 +61,9 @@ public class SkillDescriptionScript
             string afterString = GetSubString(origin, endIndex + split[1].Length, origin.Length);
             result += beforeString;
             string highlightColor = UICustomColor.GetColorHexCode(UICustomColor.PlayerStatColor);
-            keywordIndex.Add(int.Parse(middleString));
+            int addedKeywordIndex = int.Parse(middleString);
+            keywordIndex.Add(addedKeywordIndex);
+            if(addedKeywordIndex == 1) keywordIndex.Add(2);
             string keyword = SkillManager.instance.GetSkillKeyword(int.Parse(middleString)).name;
             result += string.Format("<color=#{0}>{1}</color>", highlightColor, keyword);
             origin = afterString;

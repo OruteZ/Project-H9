@@ -35,12 +35,15 @@ public class TurnSystem : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
-        Debug.Log("Finish Turn Call");
-
         var player = FieldSystem.unitSystem.GetPlayer();
         if (player is not null)
         {
             if (FieldSystem.unitSystem.GetPlayer().IsBusy()) return;
+        }
+        else
+        {
+            Debug.Log($"Player is null, Turn system is rest.");
+            return;
         }
         
         // turnOwner.animator.ResetTrigger("Idle");

@@ -30,13 +30,6 @@ public class CombatResultUI : UISystem
         UIManager.instance.onSceneChanged.AddListener(CloseCombatResultUI);
         //UIManager.instance.onTSceneChanged.AddListener(null);
         this.gameObject.SetActive(false);
-
-        _ResultTitleText.text = UIManager.instance.UILocalization[1];
-        _winComment = UIManager.instance.UILocalization[2];
-        _loseComment = UIManager.instance.UILocalization[3];
-        _BootyTitleText.text = UIManager.instance.UILocalization[4];
-        _CloseButtonText.text = UIManager.instance.UILocalization[5];
-        _emptyBootyComment = UIManager.instance.UILocalization[7];
     }
 
     public void OnClickResultWindowCloseButton()
@@ -69,6 +62,14 @@ public class CombatResultUI : UISystem
     private void OnCombatFinish(bool isPlayerWin)
     {
         this.isPlayerWin = isPlayerWin;
+
+        _ResultTitleText.text = UIManager.instance.UILocalization[1];
+        _winComment = UIManager.instance.UILocalization[2];
+        _loseComment = UIManager.instance.UILocalization[3];
+        _BootyTitleText.text = UIManager.instance.UILocalization[4];
+        _CloseButtonText.text = UIManager.instance.UILocalization[5];
+        _emptyBootyComment = UIManager.instance.UILocalization[7];
+
         Invoke(nameof(SetCombatResultUI), 2f);
     }
 
@@ -123,7 +124,7 @@ public class CombatResultUI : UISystem
             _BootyText.text = _emptyBootyComment; // IF, player lose, get something, then fix it.
         }
 
-        UIManager.instance.gameSystemUI.playerInfoUI.expUI.GetComponent<PlayerExpUI>().SetPlayerExpUI(GameManager.instance.curExp + earnedExp);
+        UIManager.instance.gameSystemUI.playerInfoUI.expUI.GetComponent<PlayerExpUI>().SetPlayerExpUI(GameManager.instance.LevelSystem.CurExp + earnedExp);
         earnedExp = 0;
     }
     private void CloseCombatResultUI()

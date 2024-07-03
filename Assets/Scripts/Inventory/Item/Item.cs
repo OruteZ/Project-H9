@@ -120,4 +120,19 @@ public abstract class Item : IItem
         Debug.LogError("Cannot stack items");
         return item1;
     }
+
+    public ItemSaveWrapper GetItemSaveData() 
+    {
+        var sw = new ItemSaveWrapper();
+        sw.index = _data.id;
+        sw.stack = stackCount;
+        return sw;
+    }
+}
+
+[SerializeField]
+public struct ItemSaveWrapper
+{
+    public int index;
+    public int stack;
 }

@@ -19,7 +19,7 @@ public class PlayerMainStatUI : UIElement
     }
     public void SetMainStatUI() 
     {
-        UnitStat stat = GameManager.instance.playerStat;
+        UnitStat stat = GameManager.instance.user.Stat;
         if (FieldSystem.unitSystem.GetPlayer() == null) return;
         Weapon weapon = FieldSystem.unitSystem.GetPlayer().weapon;
         int dmg = weapon.weaponDamage;

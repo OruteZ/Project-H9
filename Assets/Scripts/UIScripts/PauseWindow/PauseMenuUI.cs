@@ -8,6 +8,13 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class PauseMenuUI : UISystem
 {
+    public OptionUI optionUI { get; private set; }
+    private void Awake()
+    {
+        optionUI = GetComponent<OptionUI>();
+
+        //uiSubsystems.Add(optionUI);
+    }
     public void OnResumeBtnClick()
     {
         UIManager.instance.SetUILayer(1);
@@ -23,7 +30,21 @@ public class PauseMenuUI : UISystem
         
         SceneManager.LoadScene($"TitleScene");
     }
-    
+    public void OnOptionBtnClick() 
+    {
+        optionUI.OpenUI();
+    }
+    public override void CloseUI()
+    {
+        optionUI.CloseUI();
+        if (optionUI.isOpened) base.CloseUI();
+    }
+
+    public void Save()
+    {
+        GameManager.instance.Save();
+    }
+
     public void ExitGame()
     {
         #if UNITY_EDITOR

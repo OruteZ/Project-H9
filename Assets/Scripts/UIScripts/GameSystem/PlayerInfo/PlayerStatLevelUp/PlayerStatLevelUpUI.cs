@@ -21,7 +21,7 @@ public class PlayerStatLevelInfo
     {
         if(IsLevelUpFully()) return;
         statLevel++;
-        var stat = GameManager.instance.playerStat;
+        var stat = GameManager.instance.user.Stat;
         if (statName == "Concentration")
         {
             stat.SetOriginalStat(StatType.Concentration, 
@@ -46,7 +46,7 @@ public class PlayerStatLevelInfo
     }
     public int GetPlayerCurrentValue()
     {
-        UnitStat playerStat = GameManager.instance.playerStat;
+        UnitStat playerStat = GameManager.instance.user.Stat;
         if (statName == "Concentration")
         {
             return playerStat.concentration;

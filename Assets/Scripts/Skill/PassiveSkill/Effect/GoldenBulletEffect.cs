@@ -25,10 +25,10 @@ public class GoldenBulletEffect : BaseEffect
     {
     }
 }
-public class TwoGoldenBulletEffect : GoldenBulletEffect
+public class TwoGoldenBulletsEffect : GoldenBulletEffect
 {
     protected new int goldenBulletCount = 2;
-    public TwoGoldenBulletEffect(StatType statType, int amount) : base(statType, amount)
+    public TwoGoldenBulletsEffect(StatType statType, int amount) : base(statType, amount)
     {
     }
     public override void OnConditionEnable()

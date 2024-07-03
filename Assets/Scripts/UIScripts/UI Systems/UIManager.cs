@@ -42,7 +42,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     public GameObject loading; //test
 
-    public ScriptLanguage scriptLanguage = ScriptLanguage.Korean;
+    public ScriptLanguage scriptLanguage;
     public SystemIconDatabase iconDB;
     public StatScript statScript;
 
@@ -59,6 +59,7 @@ public class UIManager : Generic.Singleton<UIManager>
 
     protected override void Awake()
     {
+        FileRead.ParseLocalization(in LOCALIZATION_PATH, out _uiLocalization);
         base.Awake();
         if(this == null) return;
 
@@ -77,7 +78,6 @@ public class UIManager : Generic.Singleton<UIManager>
         pauseMenuUI = _pauseMenuCanvas.GetComponent<PauseMenuUI>();
         debugUI = _debugCanvas.GetComponent<DebugUI>();
         infoPopup = _infoPopupCanvas.GetComponent<InfoPopup>();
-        FileRead.ParseLocalization(in LOCALIZATION_PATH, out _uiLocalization);
 
         UIState = GameState.World;
         if (!GameManager.instance.CompareState(UIState)) 
@@ -86,7 +86,13 @@ public class UIManager : Generic.Singleton<UIManager>
         }
         if (loading) loading.SetActive(true);
 
+        StartCoroutine(SetStatScript());
+    }
+    private IEnumerator SetStatScript() 
+    {
+        if (scriptLanguage == ScriptLanguage.NULL) yield return null;
         statScript = new StatScript();
+        yield break;
     }
 
     private void FieldAwake()
@@ -298,6 +304,13 @@ public class UIManager : Generic.Singleton<UIManager>
     public void SetLogCanvasState(bool isOpen) 
     {
         _logCanvas.enabled = isOpen;
+    }
+
+    public void SetUILanguage(ScriptLanguage language) 
+    {
+        scriptLanguage = language;
+        UserAccount.Language = language;
+        FileRead.ParseLocalization(in LOCALIZATION_PATH, out _uiLocalization);
     }
 }
 

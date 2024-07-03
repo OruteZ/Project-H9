@@ -16,11 +16,11 @@ public class PlayerExpUI : UIElement
     // Start is called before the first frame update
     void Start()
     {
-        _maxExpText = GameManager.instance.GetMaxExp();
+        _maxExpText = GameManager.instance.LevelSystem.MaxExp;
         _currentExpText = 0;
         _targetCurrentExpText = 0;
         _playerExpBar.GetComponent<PlayerExpBar>().SetPlayerExpBar(0, "0 / 100");
-        UIManager.instance.onPlayerStatChanged.AddListener(() => SetPlayerExpUI(GameManager.instance.curExp));
+        UIManager.instance.onPlayerStatChanged.AddListener(() => SetPlayerExpUI(GameManager.instance.LevelSystem.CurExp));
         //_playerLevelUpBar.SetActive(false);
     }
     void Update()
@@ -57,7 +57,7 @@ public class PlayerExpUI : UIElement
     }
     public void SetPlayerExpUI(int targetCurExp)
     {
-        _maxExpText = GameManager.instance.GetMaxExp();
+        _maxExpText = GameManager.instance.LevelSystem.MaxExp;
         _targetCurrentExpText = targetCurExp;
     }
     IEnumerator ShowLevelUpText() 

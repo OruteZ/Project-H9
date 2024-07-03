@@ -10,8 +10,26 @@ public class UserData
     private string _fileName;
     public string FileName => _fileName;
     private int _version = 102;
+    public bool isFirstOpen = true;
 
+    public int Level = 1;
+    public int EXP = 0;
     public Vector3Int Position;
+    public UnitStat Stat;
+    public HashSet<int> ClearedQuests = new HashSet<int>();
+    public Dictionary<int, QuestSaveWrapper> QuestProgress = new Dictionary<int, QuestSaveWrapper>();
+
+    public int skillPoint = 0;
+    public List<int> learnedSkills = new();
+
+    public int money = 0;
+    public int equippedItemIndex = 0;
+    public List<ItemSaveWrapper> inventory = new();
+    public List<ItemSaveWrapper> consumableInventory = new();
+    public List<ItemSaveWrapper> otherInventory = new();
+
+    public OptionSetting optionSetting;
+
     public int Version => _version;
 
     public Dictionary<string, int> Events = new Dictionary<string, int>();
@@ -39,6 +57,8 @@ public static class UserDataFileSystem
 
         // load resource Assets/Resources/Map Data/World Obj Data.asset
         userData.Position = Resources.Load<WorldData>("Map Data/World Obj Data").playerPosition;
+        userData.Stat = null;
+        Debug.Log($"New file: save{ind}.json");
     }
 
     public static void Save(in UserData userData)
@@ -54,7 +74,7 @@ public static class UserDataFileSystem
         userData = null;
         if (!File.Exists(filePath))
         {
-            Debug.LogError($"?????? ???????? ??????: \"{filePath}\"");
+            Debug.LogError($"UserData Load failed \"{filePath}\"");
             return false;
         }
 

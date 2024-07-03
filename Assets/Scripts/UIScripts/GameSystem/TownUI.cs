@@ -2,20 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class TownUI : UISystem
 {
-    [SerializeField] private GameObject _AmmunitionWindow;
-    [SerializeField] private GameObject _SaloonWindow;
-    [SerializeField] private GameObject _SheriffWindow;
+    [SerializeField] private GameObject _ammunitionWindow;
+    [SerializeField] private GameObject _ammunitionText;
+    [SerializeField] private GameObject _saloonWindow;
+    [SerializeField] private GameObject _saloonText;
+    [SerializeField] private GameObject _sheriffWindow;
+    [SerializeField] private GameObject _sheriffText;
 
     private Vector3Int _currentInteractPosition = Vector3Int.zero;
     private int _currentTownIndex = 0;
     private Town.BuildingType _currentBuildingType = Town.BuildingType.NULL;
 
-    private Town.BuildingType _previousBuildingType = Town.BuildingType.NULL;
-
     private const int SALOON_REST_COST = 1;
+
+    [SerializeField] private GameObject _bountyUIElements;
+
 
     public bool isTownUIOpened { get; private set; }
 
@@ -41,17 +46,25 @@ public class TownUI : UISystem
 
     public void OpenAmmunitionWindow(int townIndex)
     {
-        _AmmunitionWindow.SetActive(true);
+        _ammunitionWindow.SetActive(true);
     }
     public void OpenSaloonWindow(int townIndex)
     {
-        _SaloonWindow.SetActive(true);
+        _saloonText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[1101];
+        _saloonWindow.SetActive(true);
     }
     public void OpenSheriffWindow(int townIndex)
     {
-        _SheriffWindow.SetActive(true);
+        SetBountyUI(townIndex);
+        _sheriffText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[1102];
+        _sheriffWindow.SetActive(true);
     }
 
+    #region Ammunition
+
+    #endregion
+
+    #region Saloon
     public void ClickTakeARestButton() 
     {
         Inventory inven = GameManager.instance.playerInventory;
@@ -74,6 +87,43 @@ public class TownUI : UISystem
         FieldSystem.turnSystem.EndTurn();
         CloseUI();
     }
+    #endregion
+
+    #region Sherrif
+    public void SetBountyUI(int townIndex) 
+    {
+        //need data table work
+
+        //List<QuestInfo> selectableQuests = new();
+
+        //foreach (var i in GameManager.instance.Quests)
+        //{
+        //    if (i.townIndex == townIndex)
+        //    {
+        //        selectableQuests.Add(i);
+        //    }
+        //}
+        //if (selectableQuests.Count != _bountyUIElements.transform.childCount)
+        //{
+        //    Debug.LogError("Unexpected number of selectable quests");
+        //    return;
+        //}
+
+        //for (int i = 0; i < _bountyUIElements.transform.childCount; i++)
+        //{
+        //    _bountyUIElements.transform.GetChild(i).gameObject.SetActive(!selectableQuests[i].IsCleared);
+        //    if (!selectableQuests[i].IsCleared)
+        //    {
+        //        _bountyUIElements.transform.GetChild(i).GetComponent<BountyUIElement>().SetBountyUIElement(selectableQuests[i]);
+        //    }
+        //}
+    }
+    public void StartBounty(QuestInfo qInfo) 
+    {
+        UIManager.instance.gameSystemUI.questUI.AddQuestListUI(qInfo);
+    }
+    #endregion
+
     //Invoke when player stop(start to move)
     private void CheckPlayerInTown()
     {
@@ -90,12 +140,9 @@ public class TownUI : UISystem
             _doorIcon.SetActive(false);
             UIManager.instance.SetUILayer(1);
             CloseUI();
-            _previousBuildingType = Town.BuildingType.NULL;
             return;
         }
         _doorIcon.SetActive(true);
-        //if (_currentBuildingType == _previousBuildingType) return;
-        //if (UIManager.instance.gameSystemUI.conversationUI.isConverstating) return;
 
     }
 
@@ -110,9 +157,9 @@ public class TownUI : UISystem
     public override void CloseUI()
     {
         isTownUIOpened = false;
-        _AmmunitionWindow.SetActive(false);
-        _SaloonWindow.SetActive(false);
-        _SheriffWindow.SetActive(false);
+        _ammunitionWindow.SetActive(false);
+        _saloonWindow.SetActive(false);
+        _sheriffWindow.SetActive(false);
         base.CloseUI();
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -323,13 +324,24 @@ public class GameManager : Generic.Singleton<GameManager>
         OnNotifiedQuestStart?.Invoke(quest);
     }
 
-    public void Save()
+    public void Save(bool isAutoSave = false, bool isBrancheSave = false)
     {
         if (user == null) Debug.Log($"try saved, but user is null");
         user.Level = LevelSystem.Level;
         user.EXP = LevelSystem.CurExp;
         var player = FieldSystem.unitSystem.GetPlayer();
         user.Position = player.hexPosition;
+        user.SaveTime = DateTime.Now;
+
+        // 현재 진행중인 메인퀘스트 제목을 description으로 할당
+        foreach (var quest in Quests)
+        {
+            if (quest.QuestType == 1 && quest.IsInProgress && !quest.IsCleared)
+            {
+                user.Description = $"{quest.QuestName}";
+                break;
+            }
+        }
 
         user.ClearedQuests.Clear();
         user.QuestProgress.Clear();
@@ -368,6 +380,9 @@ public class GameManager : Generic.Singleton<GameManager>
             user.inventory.Add(sw);
         }
 
-        UserDataFileSystem.Save(in user);
+        if (isAutoSave)
+            UserDataFileSystem.AutoSave(in user);
+        else
+            UserDataFileSystem.Save(in user, isBrancheSave);
     }
 }

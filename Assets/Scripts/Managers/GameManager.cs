@@ -304,7 +304,7 @@ public class GameManager : Generic.Singleton<GameManager>
         OnNotifiedQuestStart?.Invoke(quest);
     }
 
-    public void Save(bool isAutoSave = false)
+    public void Save(bool isAutoSave = false, bool isBrancheSave = false)
     {
         if (user == null) Debug.Log($"try saved, but user is null");
         user.Level = LevelSystem.Level;
@@ -339,6 +339,6 @@ public class GameManager : Generic.Singleton<GameManager>
         if (isAutoSave)
             UserDataFileSystem.AutoSave(in user);
         else
-            UserDataFileSystem.Save(in user);
+            UserDataFileSystem.Save(in user, isBrancheSave);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Generic;
+using Unity.VisualScripting;
 using UnityEngine.Rendering;
 using UnityEngine.Pool;
 
@@ -23,7 +23,7 @@ public enum TileEffectType
 /// <summary>
 /// 타일을 넘겨받으면 원하는 이펙트를 타일에 적용시켜주는 클래스
 /// </summary>
-public class TileEffectManager : Singleton<TileEffectManager>
+public class TileEffectManager : Generic.Singleton<TileEffectManager>
 {
     public GameObject friendlyEffect;
     public GameObject hostileEffect;
@@ -56,6 +56,11 @@ public class TileEffectManager : Singleton<TileEffectManager>
     
     public RectTransform combatCanvas;
     public RectTransform aimEffect;
+
+    [field: Header("Cover Effect")] 
+    public GameObject coverPosition;
+    public GameObject coverAvailable;
+    
 
     public void SetPlayer(Player p)
     {
@@ -120,7 +125,13 @@ public class TileEffectManager : Singleton<TileEffectManager>
     #region MOVE
     private void MovableTileEffect()
     {
-        int range = _player.currentActionPoint / _player.GetAction<MoveAction>().GetCost();
+        //if world state, get sight range, else get action po
+        int range = 0;
+        if(GameManager.instance.CompareState(GameState.Combat))
+            range = _player.stat.curActionPoint / _player.GetAction<MoveAction>().GetCost();
+        else
+            range = _player.stat.sightRange;
+        
         Vector3Int start = _player.hexPosition;
 
         var tiles = FieldSystem.tileSystem.GetWalkableTiles(start, range);
@@ -157,7 +168,11 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
     private IEnumerator MovableTileEffectCoroutine()
     {
-        int range = _player.currentActionPoint / _player.GetAction<MoveAction>().GetCost();
+        int range = 0;
+        if(GameManager.instance.CompareState(GameState.Combat))
+            range = _player.stat.curActionPoint / _player.GetAction<MoveAction>().GetCost();
+        else
+            range = _player.stat.sightRange;
         int prevRouteLength = -1;
         while (true)
         {
@@ -496,16 +511,18 @@ public class TileEffectManager : Singleton<TileEffectManager>
     #endregion
     
     #region COVER
+
+    [SerializeField] private int coverEffectRange;
     private void CoverEffect()
     {
-        const int range = 2;
+        const int range = 1;
 
         var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, range).Where(
             tile => tile.GetTileObject<CoverableObj>() is not null);
 
-        foreach (var tile in tiles)
+        foreach (Tile tile in tiles)
         {
-            SetEffectBase(tile.hexPosition, TileEffectType.Friendly);
+            // SetEffectBase(tile.hexPosition, TileEffectType.Normal);
         }
         
         _curCoroutine = StartCoroutine(CoverEffectCoroutine());
@@ -514,21 +531,55 @@ public class TileEffectManager : Singleton<TileEffectManager>
     private IEnumerator CoverEffectCoroutine()
     {
         const int range = 2;
+        const float diff = 1;
 
         while (true)
         {
+            
+            // 1. Set Mouse Overed Tile : Normal
             yield return null;
             ClearEffect(_effectsRelatedTarget);
-            if (Player.TryGetMouseOverTilePos(out var target) is false) continue;
+            if (Player.TryGetMouseOverTilePos(out Vector3Int target) is false)
+            {
+                Debug.LogWarning("Tile is null");
+                continue;
+            }
+            // if (Hex.Distance(target, _player.hexPosition) > range)
+            // {
+            //     Debug.LogWarning("Tile is null");
+            //     continue;
+            // }
             
-            if (FieldSystem.tileSystem.GetTile(target).visible is false) continue;
-            if (Hex.Distance(target, _player.hexPosition) > range) continue;
+            Tile tile = FieldSystem.tileSystem.GetTile(target);
+            SetEffectTarget(target, coverPosition);
             
-            var tile = FieldSystem.tileSystem.GetTile(target);
-            if (tile.GetTileObject<CoverableObj>() is null) continue;
+            if (tile.GetTileObject<CoverableObj>() is null)
+            {
+                Debug.LogError("target tile has no cover");
+                continue;
+            }
             
-            SetEffectTarget(target, TileEffectType.Normal);
+            
+            Vector2 coverDir = 
+                Hex.Hex2Orth(tile.hexPosition)
+                - Hex.Hex2Orth(_player.hexPosition);
+            
+            var coverTiles = FieldSystem.tileSystem.GetTilesInRange(target, coverEffectRange);
+            foreach (Vector3Int pos in coverTiles.Select(t => t.hexPosition))
+            {
+                // if (Hex.Distance(_player.hexPosition, pos) > _player.stat.sightRange) continue;
+                
+                Vector2 posDir = 
+                    Hex.Hex2Orth(pos)
+                    - Hex.Hex2Orth(target);
+
+                float angle = Vector3.SignedAngle(coverDir, posDir,Vector3.up);
+                if((angle is >= 0 - diff and <= 60 + diff) || 
+                   (angle is <= 360 + diff and >= 300 - diff))
+                    SetEffectTarget(pos, coverAvailable);
+            }
         }
+        // ReSharper disable once IteratorNeverReturns
     }
     #endregion
     private new void Awake()
@@ -577,7 +628,21 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
         if (_effectsRelatedTarget.ContainsKey(position) is false)
         {
-            var gObject = Instantiate(GetEffect(type), worldPosition, Quaternion.identity);
+            GameObject gObject = 
+                Instantiate(GetEffect(type), worldPosition, Quaternion.identity);
+            _effectsRelatedTarget.Add(position, gObject);
+        }
+    }
+    
+    private void SetEffectTarget(Vector3Int position, GameObject effect)
+    {
+        Vector3 worldPosition = Hex.Hex2World(position);
+        worldPosition.y += 0.03f;
+
+        if (_effectsRelatedTarget.ContainsKey(position) is false)
+        {
+            GameObject gObject = 
+                Instantiate(effect, worldPosition, Quaternion.identity);
             _effectsRelatedTarget.Add(position, gObject);
         }
     }
@@ -611,9 +676,9 @@ public class TileEffectManager : Singleton<TileEffectManager>
         return TileEffectType.None;
     }
     
-    private void ClearEffect(Dictionary<Vector3Int, GameObject> pool)
+    private static void ClearEffect(Dictionary<Vector3Int, GameObject> pool)
     {
-        foreach (var go in pool.Values)
+        foreach (GameObject go in pool.Values)
         {
             Destroy(go);
         }

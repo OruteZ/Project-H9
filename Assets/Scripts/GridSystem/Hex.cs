@@ -41,6 +41,14 @@ public static class Hex
 
         return new Vector3(x, 0, y);
     }
+    
+    public static Vector2 Hex2Orth(Vector3 position)
+    {
+        float x = Radius * (Sqrt3 * position.x + Sqrt3 * 0.5f * position.y);
+        float y = -position.y * 1.5f;
+
+        return new Vector2(x, y);
+    }
 
     public static Vector3 World2Hex(Vector3 position)
     {
@@ -198,6 +206,15 @@ public static class Hex
         }
 
         return results;
+    }
+    
+    public static float GetRotateAngle(Vector3Int from, Vector3Int to)
+    {
+        Vector2 fromPos = Hex2Orth(from);
+        Vector2 toPos = Hex2Orth(to);
+        
+        float angle = Vector2.SignedAngle(Vector2.up, toPos - fromPos);
+        return angle;
     }
 
     public static Vector3Int upLeft => new Vector3Int(-1, 1, 0);

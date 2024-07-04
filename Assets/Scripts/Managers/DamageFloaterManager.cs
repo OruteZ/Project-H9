@@ -1,18 +1,18 @@
 using UnityEngine;
 using TMPro;
 
-public class DamageFlaoterWrapper : ObjectPoolWrapper<RectTransform>
+public class DamageFloaterWrapper : ObjectPoolWrapper<RectTransform>
 {
-    public TextMeshProUGUI TMP;
-    public Vector3 StartWorldPosition;
-    public float FloatingSpeed = 2f;
-    public float ScaleStart = 0.04f;
-    public float ScaleEnd = 0.01f;
-    public float ScaleSpeed = 8.0f;
+    public readonly TextMeshProUGUI tmp;
+    public Vector3 startWorldPosition;
+    public const float FLOATING_SPEED = 2f;
+    public const float SCALE_START = 0.04f;
+    public const float SCALE_END = 0.01f;
+    public const float SCALE_SPEED = 8.0f;
 
-    public DamageFlaoterWrapper(RectTransform instance, float lifeTime, TextMeshProUGUI tmp) : base(instance, lifeTime)
+    public DamageFloaterWrapper(RectTransform instance, float lifeTime, TextMeshProUGUI tmp) : base(instance, lifeTime)
     {
-        TMP = tmp;
+        this.tmp = tmp;
     }
 
     public override void Reset()
@@ -21,7 +21,7 @@ public class DamageFlaoterWrapper : ObjectPoolWrapper<RectTransform>
     }
 }
 
-public class DamageFloaterManager : ObjectPool<RectTransform, DamageFlaoterWrapper>
+public class DamageFloaterManager : ObjectPool<RectTransform, DamageFloaterWrapper>
 {
     public override void Init(string objectKey, Transform parent, float generalLifeTime, uint expectedSize=10, string rootName="")
     {
@@ -30,12 +30,12 @@ public class DamageFloaterManager : ObjectPool<RectTransform, DamageFlaoterWrapp
         SupplyPool(expectedSize / 2);
     }
 
-    public override DamageFlaoterWrapper Set()
+    public override DamageFloaterWrapper Set()
     {
         if (_limitSize > _pool.Count || 0 == _pool.Count)
             SupplyPool(_limitSize);
 
-        var target = _pool.Dequeue();
+        DamageFloaterWrapper target = _pool.Dequeue();
         target.Enable = false;
         target.Instance.gameObject.SetActive(true);
         _working.Add(target);
@@ -46,10 +46,16 @@ public class DamageFloaterManager : ObjectPool<RectTransform, DamageFlaoterWrapp
     {
         for (int i = 0; i < size; i++)
         {
-            var ins = GameObject.Instantiate(_prefab, Vector3.zero, _prefab.transform.rotation, _root) as GameObject;
-            var insRect = ins.GetComponent<RectTransform>();
-            var insTmp = ins.GetComponent<TextMeshProUGUI>();
-            var insWrap = new DamageFlaoterWrapper(insRect, _generalLifeTime, insTmp);
+            GameObject           ins = Object.Instantiate(
+                                _prefab, 
+                                Vector3.zero,
+                                _prefab.transform.rotation,
+                                _root
+                                );
+            
+            RectTransform        insRect = ins.GetComponent<RectTransform>();
+            TextMeshProUGUI      insTmp = ins.GetComponent<TextMeshProUGUI>();
+            DamageFloaterWrapper insWrap = new (insRect, _generalLifeTime, insTmp);
             _pool.Enqueue(insWrap);
         }
     }
@@ -58,12 +64,12 @@ public class DamageFloaterManager : ObjectPool<RectTransform, DamageFlaoterWrapp
     {
         for (int i = _working.Count - 1; 0 <= i; i--)
         {
-            var target = _working[i];
+            DamageFloaterWrapper target = _working[i];
             if (target.Enable)
                 continue;
 
-            target.Instance.anchoredPosition += Vector2.up * (target.FloatingSpeed * deltaTime);
-            var lerp = Mathf.Lerp(target.Instance.localScale.x, target.ScaleEnd, deltaTime * target.ScaleSpeed);
+            target.Instance.anchoredPosition += Vector2.up * (DamageFloaterWrapper.FLOATING_SPEED * deltaTime);
+            float lerp = Mathf.Lerp(target.Instance.localScale.x, DamageFloaterWrapper.SCALE_END, deltaTime * DamageFloaterWrapper.SCALE_SPEED);
             target.Instance.localScale = Vector3.one * lerp;
 
             target.Duration += deltaTime;

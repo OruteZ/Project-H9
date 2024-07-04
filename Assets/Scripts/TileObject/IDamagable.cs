@@ -6,5 +6,5 @@ public interface IDamageable
     Vector3Int GetHex();
     int GetCurrentHp();
     int GetMaxHp();
-    int GetHitRateModifier();
+    int GetHitRateModifier(Unit attacker);
 }

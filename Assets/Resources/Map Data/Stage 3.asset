@@ -283,8 +283,39 @@ MonoBehaviour:
     walkable: 1
     rayThroughable: 1
     gridVisible: 1
-  tileObjectData: []
+  tileObjectData:
+  - prefab: {fileID: 5448703369446324689, guid: 8bfc7eb7abe46654f838612fda4333b8,
+      type: 3}
+    hexPosition: {x: 5, y: 2, z: -7}
+    rotation: -0
+    arguments:
+    - 1
+    - 1
   envData:
+  - material: {fileID: 2100000, guid: e4739197ddcfbab489e1d405ef527455, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 0
+    hexPosition: {x: 0, y: 0, z: 0}
+    height: -1.15
+    position: {x: 10.392304, y: -1.15, z: 0}
+    rotation: 0
+    scale: {x: 100, y: 15, z: 100}
+  - material: {fileID: 2100000, guid: e4739197ddcfbab489e1d405ef527455, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 0
+    hexPosition: {x: 0, y: 0, z: 0}
+    height: -1.15
+    position: {x: 10.392304, y: -1.15, z: 0}
+    rotation: 0
+    scale: {x: 100, y: 15, z: 100}
+  - material: {fileID: 2100000, guid: e4739197ddcfbab489e1d405ef527455, type: 2}
+    mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
+    hexPositioned: 0
+    hexPosition: {x: 0, y: 0, z: 0}
+    height: -1.15
+    position: {x: 10.392304, y: -1.15, z: 0}
+    rotation: 0
+    scale: {x: 100, y: 15, z: 100}
   - material: {fileID: 2100000, guid: e4739197ddcfbab489e1d405ef527455, type: 2}
     mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
     hexPositioned: 0
@@ -749,21 +780,13 @@ MonoBehaviour:
     position: {x: 4.330127, y: -8.91, z: -1.5}
     rotation: 0
     scale: {x: 0.7, y: 0.8, z: 0.7}
-  - material: {fileID: 2100000, guid: 73b56c95ded863249b249e6df28d0918, type: 2}
-    mesh: {fileID: 4300000, guid: 6aaae776b6965754d8eae1882070c385, type: 3}
-    hexPositioned: 1
-    hexPosition: {x: 5, y: 2, z: -7}
-    height: -2.66
-    position: {x: 10.392304, y: -2.66, z: -3}
-    rotation: 0
-    scale: {x: 1, y: 1, z: 1}
   enemySpawnPoints:
   - list:
     - {x: 2, y: 5, z: -7}
   - list:
-    - {x: 6, y: 3, z: -9}
+    - {x: 5, y: 3, z: -8}
   - list:
-    - {x: 7, y: 3, z: -10}
+    - {x: 7, y: 2, z: -9}
   - list:
     - {x: 6, y: 2, z: -8}
   - list:
@@ -782,8 +805,7 @@ MonoBehaviour:
     - {x: 6, y: 3, z: -9}
   - list:
     - {x: 6, y: 3, z: -9}
-  - list:
-    - {x: 6, y: 3, z: -9}
+  - list: []
   - list:
     - {x: 4, y: 4, z: -8}
   - list:
@@ -808,7 +830,7 @@ MonoBehaviour:
     - {x: 7, y: 1, z: -8}
   playerSpawnPoint:
   - {x: 5, y: 3, z: -8}
-  - {x: 0, y: 3, z: -3}
+  - {x: 6, y: 0, z: -6}
   - {x: 0, y: 4, z: -4}
   - {x: 1, y: 3, z: -4}
   - {x: 0, y: 4, z: -4}

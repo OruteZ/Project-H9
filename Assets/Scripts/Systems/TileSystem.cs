@@ -457,7 +457,7 @@ public class TileSystem : MonoBehaviour
     private void RemoveDemoWorld()
     {
         var tiles = GetComponentsInChildren<Tile>();
-        foreach (var tile in tiles)
+        foreach (Tile tile in tiles)
         {
             DestroyImmediate(tile.gameObject);
         }
@@ -474,12 +474,10 @@ public class TileSystem : MonoBehaviour
             infoList.Add(new TileInfo(dataString[i])); 
         }
         
-        foreach (var tile in tiles)
+        foreach (Tile tile in tiles)
         {
-            foreach (var info in infoList)
+            foreach (TileInfo info in infoList.Where(info => info.pos == tile.hexPosition))
             {
-                if (info.pos != tile.hexPosition) continue;
-
                 tile.visible = info.visible;
                 tile.walkable = info.walkable;
                 tile.gridVisible = info.gridVisible;

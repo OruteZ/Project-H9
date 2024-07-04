@@ -57,7 +57,7 @@ public static class Service
     /// </summary>
     public static void SetText(Damage.Type type, string text, Vector3 position, float scale = 1.0f)
     {
-        DamageFlaoterWrapper floater = null;
+        DamageFloaterWrapper floater = null;
         if (type.HasFlag(Damage.Type.Critical))
         {
             floater = _floaters[1].Set();
@@ -80,9 +80,9 @@ public static class Service
         }
         var randValue = new Vector3(Random.value - 0.5f, Random.value, Random.value) * 2.0f;
       
-        floater.TMP.text = text;
+        floater.tmp.text = text;
         floater.Instance.position = position + randValue;
-        floater.Instance.localScale = Vector3.one * scale * floater.ScaleStart;
+        floater.Instance.localScale = Vector3.one * scale * DamageFloaterWrapper.SCALE_START;
     }
 
     public static void OnUpdated(float deltaTime)

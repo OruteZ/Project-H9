@@ -64,12 +64,20 @@ public class CoverableObj : TileObject, IDamageable
         return maxHp;
     }
 
-    public int GetHitRateModifier()
+    public int GetHitRateModifier(Unit attacker)
     {
-        return 0;
+        return 100000;
     }
 
     #endregion
+
+    // Get the direction from the player to the cover
+    // 
+    public Vector3Int GetCoverDirection(Vector3Int playerHexPosition)
+    {
+        // Get the direction from the player to the cover
+        return hexPosition - playerHexPosition;
+    }
 }
 
 public enum CoverType

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Rendering;
@@ -12,11 +13,27 @@ public class TurnSystem : MonoBehaviour
     
     public Unit turnOwner;  
     public int turnNumber;
+    public int worldTurnNumber;
+
+    public int GetTurnNumber()
+    {
+        // compare state
+        if (GameManager.instance.CompareState(GameState.World))
+        {
+            return worldTurnNumber;
+        }
+        else
+        {
+            return turnNumber;
+        }
+    }
 
     private void Start()
     {
-        turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.runtimeWorldData.worldTurn : 0;
-        onTurnChanged.AddListener(() => { turnNumber++; 
+        turnNumber = GameManager.instance.CompareState(GameState.World) ? 
+            GameManager.instance.runtimeWorldData.worldTurn : 0;
+        
+        onTurnChanged.AddListener(() => { worldTurnNumber++; 
             if (GameManager.instance.CompareState(GameState.World)) 
                 GameManager.instance.runtimeWorldData.worldTurn++; }
         );
@@ -28,6 +45,12 @@ public class TurnSystem : MonoBehaviour
     public void SetUp()
     {
        CalculateTurnOwner();
+
+       if (GameManager.instance.CompareState(GameState.World))
+       {
+           Player player = FieldSystem.unitSystem.GetPlayer();
+           player.onMoved.AddListener((a) => worldTurnNumber++);
+       }
     }
 
     /// <summary>
@@ -35,16 +58,16 @@ public class TurnSystem : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
-        var player = FieldSystem.unitSystem.GetPlayer();
-        if (player is not null)
-        {
-            if (FieldSystem.unitSystem.GetPlayer().IsBusy()) return;
-        }
-        else
-        {
-            Debug.Log($"Player is null, Turn system is rest.");
-            return;
-        }
+        // var player = FieldSystem.unitSystem.GetPlayer();
+        // if (player is not null)
+        // {
+        //     if (FieldSystem.unitSystem.GetPlayer().IsBusy()) return;
+        // }
+        //
+        // else {
+        //     Debug.Log($"Player is null, Turn system is rest.");
+        //     return;
+        // }
         
         // turnOwner.animator.ResetTrigger("Idle");
         
@@ -77,13 +100,8 @@ public class TurnSystem : MonoBehaviour
             
             List<Unit> units = FieldSystem.unitSystem.units;
             List<Unit> turnOrder = new List<Unit>();
-            List<int> currentRounds = new List<int>();
-            
-            for (int i = 0; i < units.Count; i++) 
-            {
-                currentRounds.Add(units[i].currentRound);
-            }
-            
+            List<int> currentRounds = units.Select(t => t.currentRound).ToList();
+
             while (turnOrder.Count < ORDER_LENGTH * 4)
             {
                 int minOrderValueUnitIndex = 0;

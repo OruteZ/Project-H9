@@ -60,8 +60,11 @@ public class CoverAction : BaseAction
         
         // unit.animator.SetTrigger(COVER);
         
-        var coverType = FieldSystem.tileSystem.GetTile(_targetPos).GetTileObject<CoverableObj>().GetCoverType();
-        unit.SetCoverType(coverType);
+        Tile tile = FieldSystem.tileSystem.GetTile(_targetPos);
+        CoverableObj coverableObj = tile.GetTileObject<CoverableObj>();
+        CoverType coverType = coverableObj.GetCoverType();
+        
+        unit.SetCoverType(coverType, coverableObj);
         
         // wait until animation is done
         yield return new WaitUntil(() => _animationDone);

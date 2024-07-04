@@ -73,6 +73,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public BulletData goldenBulletEffect = new();
 
     public CoverType coverType;
+    public CoverableObj coverableObj;
 
     public int currentRound;
 
@@ -161,7 +162,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         onTurnStart.Invoke(this);
 
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out var appliedValue);
-        SetCoverType(CoverType.None);
+        SetCoverType(CoverType.None, null);
 
         if (hp <= 0)
         {
@@ -680,8 +681,22 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         return stat.GetOriginalStat(StatType.MaxHp);
     }
 
-    public int GetHitRateModifier()
+    public int GetHitRateModifier(Unit attacker = null)
     {
+        bool Coverable(Vector3Int atkFrom)
+        {
+            if (coverType == CoverType.None) return false;
+            Vector3Int coverDir = coverableObj.GetCoverDirection(atkFrom);
+            Vector3Int atkDir = atkFrom - coverableObj.hexPosition;
+            
+            float angle = Hex.GetRotateAngle(coverDir, atkDir);
+            return angle is <= 60 or >= 300;
+        }
+        
+        if(attacker != null && 
+           Coverable(attacker.hexPosition) is false)
+            return 0;
+        
         return coverType switch
         {
             CoverType.Light => -20,
@@ -692,10 +707,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     #endregion
 
-    public void SetCoverType(CoverType type)
+    public void SetCoverType(CoverType type, CoverableObj coverableObj)
     {
-        Debug.Log("Set Cover Type: " + type);
-        coverType = type;
+        this.coverType = type;
+        this.coverableObj = coverableObj;
     }
 }
 

@@ -35,7 +35,7 @@ public class SkillManager : Generic.Singleton<SkillManager>
         {
             _sp = value;
             UIManager.instance.gameSystemUI.ChangeSkillButtonRedDotText(value);
-            if (UIManager.instance != null)
+            if (UIManager.instance != null && UIManager.instance.scriptLanguage != ScriptLanguage.NULL)
             {
                 if (_sp <= 0)
                 {

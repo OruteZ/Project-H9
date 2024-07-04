@@ -35,9 +35,12 @@ public class OptionUI : UISystem
         GameManager.instance.initialOptionSetting.resolution = new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height);
         GameManager.instance.initialOptionSetting.isFullScreen = Screen.fullScreen;
 
-        //need loading userdata
         _optionSetting = GameManager.instance.initialOptionSetting;
 
+    }
+    private void Start()
+    {
+        LoadOption(GameManager.instance.user.optionSetting);
         SetOptionWindow();
     }
     public OptionSetting GetOptionSetting()

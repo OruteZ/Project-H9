@@ -21,13 +21,16 @@ public class QuestUI : UISystem
 
     void Awake()
     {
-        _questText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[30];
         _popupWindow.SetActive(false);
         _listPool = new QuestListPool();
         _listPool.Init("Prefab/Quest List UI Element", _listElementContainer.transform, 0);
         _questWindow.SetActive(true);
 
         worldCamera = CameraManager.instance.worldCamera;
+    }
+    private void Start()
+    {
+        _questText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[30];
     }
 
     public void AddQuestListUI(QuestInfo info) 

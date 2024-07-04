@@ -223,11 +223,6 @@ public class GameManager : Generic.Singleton<GameManager>
         runtimeWorldData = Instantiate(_defaultWorldData);
         runtimeWorldData.discoveredWorldTileSet = new HashSet<Vector3Int>();
         
-        var watch = DGS.Stopwatch.StartNew();
-        var qi = new QuestParser();
-        Quests = qi.GetQuests();
-        watch.Stop();
-        Debug.Log($"<color=blue>Quest parse time: {watch.ElapsedMilliseconds}</color>");
 
 #if UNITY_EDITOR
         // 유니티 에디터에서 GameManager를 첫 시작 시, Default player 데이터를 생성함.
@@ -241,7 +236,10 @@ public class GameManager : Generic.Singleton<GameManager>
             user = DataLoader.Data;
             DataLoader.Clear();
 
-            if (user.optionSetting.lauguage == ScriptLanguage.NULL) user.optionSetting = initialOptionSetting;
+            if (user.optionSetting.lauguage == ScriptLanguage.NULL) 
+            {
+                user.optionSetting = initialOptionSetting;
+            }
             UserAccount.Language = user.optionSetting.lauguage;
             UIManager.instance.scriptLanguage = user.optionSetting.lauguage;
 
@@ -281,8 +279,12 @@ public class GameManager : Generic.Singleton<GameManager>
             }
         }
 
-        UIManager.instance.gameSystemUI.alarmUI.ClearAlarmUI();
-        UIManager.instance.pauseMenuUI.optionUI.LoadOption(user.optionSetting);
+        var watch = DGS.Stopwatch.StartNew();
+        var qi = new QuestParser();
+        Quests = qi.GetQuests();
+        watch.Stop();
+        Debug.Log($"<color=blue>Quest parse time: {watch.ElapsedMilliseconds}</color>");
+
     }
 
     private void Start()

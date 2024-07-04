@@ -53,6 +53,7 @@ public class PinUI : UISystem
     public void SetPinUI(Vector3Int dest) 
     {
         Tile target = FieldSystem.tileSystem.GetTile(dest);
+        if (FieldSystem.tileSystem == null) Debug.LogError("??");
         if (target is null) 
         {
             Debug.LogError("해당 Hex 좌표의 Tile은 존재하지 않습니다. Hex 좌표: " + dest);

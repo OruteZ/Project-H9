@@ -88,7 +88,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
     private void SaveCurrentWorldData()
     {
-        runtimeWorldData.worldTurn = FieldSystem.turnSystem.worldTurnNumber;
+        runtimeWorldData.worldTurn = FieldSystem.turnSystem.GetTurnNumber(GameState.World);
 
         runtimeWorldData.playerPosition = FieldSystem.unitSystem.GetPlayer().hexPosition;
         

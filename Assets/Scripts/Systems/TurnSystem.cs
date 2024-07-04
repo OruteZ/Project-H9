@@ -11,35 +11,45 @@ public class TurnSystem : MonoBehaviour
 {
     [HideInInspector] public UnityEvent onTurnChanged;
     
-    public Unit turnOwner;  
-    public int turnNumber;
-    public int worldTurnNumber;
+    public Unit turnOwner;
+
+    public int turnNumber => GetTurnNumber();
+    private int _combatTurnNumber;
+    private int _worldTurnNumber;
 
     public int GetTurnNumber()
     {
         // compare state
         if (GameManager.instance.CompareState(GameState.World))
         {
-            return worldTurnNumber;
+            return _worldTurnNumber;
         }
         else
         {
-            return turnNumber;
+            return _combatTurnNumber;
+        }
+    }
+
+    public int GetTurnNumber(GameState state)
+    {
+        if (state == GameState.World)
+        {
+            return _worldTurnNumber;
+        }
+        else
+        {
+            return _combatTurnNumber;
         }
     }
 
     private void Start()
     {
-        turnNumber = GameManager.instance.CompareState(GameState.World) ? 
-            GameManager.instance.runtimeWorldData.worldTurn : 0;
-        
-        onTurnChanged.AddListener(() => { worldTurnNumber++; 
-            if (GameManager.instance.CompareState(GameState.World)) 
-                GameManager.instance.runtimeWorldData.worldTurn++; }
-        );
+        _worldTurnNumber = GameManager.instance.runtimeWorldData.worldTurn;
+        _combatTurnNumber = 0;
         
         onTurnChanged.AddListener(() => UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI());
         onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));
+        onTurnChanged.AddListener(() => GameManager.instance.runtimeWorldData.worldTurn = _worldTurnNumber);
     }
 
     public void SetUp()
@@ -49,7 +59,11 @@ public class TurnSystem : MonoBehaviour
        if (GameManager.instance.CompareState(GameState.World))
        {
            Player player = FieldSystem.unitSystem.GetPlayer();
-           player.onMoved.AddListener((a) => worldTurnNumber++);
+           player.onMoved.AddListener((a) =>
+           {
+               _worldTurnNumber++;
+               onTurnChanged.Invoke();
+           });
        }
     }
 

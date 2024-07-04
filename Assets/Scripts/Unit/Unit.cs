@@ -686,11 +686,21 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         bool Coverable(Vector3Int atkFrom)
         {
             if (coverType == CoverType.None) return false;
-            Vector3Int coverDir = coverableObj.GetCoverDirection(atkFrom);
-            Vector3Int atkDir = atkFrom - coverableObj.hexPosition;
+            if (coverableObj == null) return false;
+            // Vector3Int coverDir = coverableObj.GetCoverDirection(atkFrom);
+            // Vector3Int atkDir = atkFrom - coverableObj.hexPosition;
+            //
+            // float angle = Hex.GetRotateAngle(coverDir, atkDir);
+            // return angle is <= 60 or >= 300;
+
+            Vector2 coverDir = Hex.Hex2Orth(coverableObj.hexPosition - hexPosition);
+            Vector2 atk = Hex.Hex2Orth(atkFrom - coverableObj.hexPosition);
             
-            float angle = Hex.GetRotateAngle(coverDir, atkDir);
-            return angle is <= 60 or >= 300;
+            float angle = Vector2.SignedAngle(coverDir, atk);
+            if ((angle is >= 0 - 1 and <= 60 + 1) ||
+                (angle is <= 360 + 1 and >= 300 - 1))
+                return true;
+            else return false;
         }
         
         if(attacker != null && 

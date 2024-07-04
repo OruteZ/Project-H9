@@ -29,6 +29,8 @@ public class UserData
     public List<ItemSaveWrapper> consumableInventory = new();
     public List<ItemSaveWrapper> otherInventory = new();
 
+    public OptionSetting optionSetting;
+
     public string Description = string.Empty;
     public DateTime SaveTime;
     private int _branched = 1;

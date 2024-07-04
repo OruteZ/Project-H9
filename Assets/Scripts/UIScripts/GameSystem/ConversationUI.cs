@@ -48,7 +48,7 @@ public class ConversationUI : UISystem
             string n = conversationTable[i][3];
             string img = conversationTable[i][4];
             string o = conversationTable[i][4 + (int)ScriptLanguage.English];
-            string t = conversationTable[i][4 + (int)UIManager.instance.scriptLanguage];
+            string t = conversationTable[i][4 + (int)UserAccount.Language];
             ConversationInfo info = new ConversationInfo(idx, g, s, n, img, o, t);
             _conversationInfo.Add(info);
         }

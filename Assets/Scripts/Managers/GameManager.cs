@@ -49,6 +49,7 @@ public class GameManager : Generic.Singleton<GameManager>
     
     public UnityEvent<int> onPlayerCombatFinished = new UnityEvent<int>(); // <LinkIndex>, Combat manager ��ũ��Ʈ�� Player �׼� ��ũ��Ʈ(not player data)�� ������ �ű�����
 
+    public OptionSetting initialOptionSetting;
     
     #region ITEM_TEST
     public void AddItem(int id)
@@ -240,6 +241,10 @@ public class GameManager : Generic.Singleton<GameManager>
             user = DataLoader.Data;
             DataLoader.Clear();
 
+            if (user.optionSetting.lauguage == ScriptLanguage.NULL) user.optionSetting = initialOptionSetting;
+            UserAccount.Language = user.optionSetting.lauguage;
+            UIManager.instance.scriptLanguage = user.optionSetting.lauguage;
+
             LevelSystem = new CLevelSystem(user.Level, user.EXP);
             if (user.Stat == null)
             {
@@ -275,7 +280,9 @@ public class GameManager : Generic.Singleton<GameManager>
                 playerInventory.TryAddItem(item);
             }
         }
+
         UIManager.instance.gameSystemUI.alarmUI.ClearAlarmUI();
+        UIManager.instance.pauseMenuUI.optionUI.LoadOption(user.optionSetting);
     }
 
     private void Start()
@@ -379,6 +386,10 @@ public class GameManager : Generic.Singleton<GameManager>
             }
             user.inventory.Add(sw);
         }
+        //option
+        user.optionSetting = UIManager.instance.pauseMenuUI.optionUI.GetOptionSetting();
+
+        UserDataFileSystem.Save(in user);
 
         if (isAutoSave)
             UserDataFileSystem.AutoSave(in user);

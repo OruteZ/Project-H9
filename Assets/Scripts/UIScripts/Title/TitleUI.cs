@@ -5,6 +5,7 @@ using UnityEngine;
 public class TitleUI : MonoBehaviour
 {
     [SerializeField] private GameObject _optionWindow;
+    [SerializeField] private LoadUI _loadPanel;
     [SerializeField] private GameObject _loadingManager;
 
     private bool _isOpenOption = false;
@@ -22,6 +23,13 @@ public class TitleUI : MonoBehaviour
             DataLoader.New();
             _isStarted = true;
             LoadingManager.instance.LoadingScene("WorldScene");
+        }
+    }
+    public void OnClickLoadPanel()
+    {
+        if (!_isStarted)
+        {
+            _loadPanel.OpenUI();
         }
     }
     public void OnClickLoadSlot(in UserData userData)

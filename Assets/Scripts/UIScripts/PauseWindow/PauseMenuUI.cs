@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 public class PauseMenuUI : UISystem
 {
     public OptionUI optionUI { get; private set; }
+    [SerializeField] private LoadUI _loadPanel;
+
     private void Awake()
     {
         optionUI = GetComponent<OptionUI>();
@@ -36,13 +38,15 @@ public class PauseMenuUI : UISystem
     }
     public override void CloseUI()
     {
+        base.CloseUI();
         optionUI.CloseUI();
+        _loadPanel.CloseUI();
         if (optionUI.isOpened) base.CloseUI();
     }
 
-    public void Save()
+    public void OnOpenLoadUIClick()
     {
-        GameManager.instance.Save();
+        _loadPanel.OpenUI();
     }
 
     public void ExitGame()

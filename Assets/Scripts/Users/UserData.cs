@@ -1,14 +1,16 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using Newtonsoft.Json;
+using Unity.VisualScripting;
+using UnityEngine;
 
 [Serializable]
 public class UserData 
 {
-    private string _fileName;
-    public string FileName => _fileName;
+    private string _fileFullName; // ex) save1_1.json 
+    private string _fileName; // save1_1.json 중 'save1'
     private int _version = 102;
     public bool isFirstOpen = true;
 
@@ -30,13 +32,21 @@ public class UserData
 
     public OptionSetting optionSetting;
 
-    public int Version => _version;
+    public string Description = string.Empty;
+    public DateTime SaveTime;
+    private int _branched = 1;
 
     public Dictionary<string, int> Events = new Dictionary<string, int>();
+
+    [JsonIgnore] public string FileName => _fileName;
+    [JsonIgnore] public string FileFullName => _fileFullName;
+    [JsonIgnore] public int Version => _version;
+    [JsonIgnore] public int Branched { get { return _branched; } set { _branched = value; _fileFullName = $"{_fileName}_{_branched}.json"; } }
 
     public UserData(string fileName)
     {
         _fileName = fileName;
+        _fileFullName = $"{fileName}_{_branched}.json";
     }
 }
 
@@ -48,12 +58,12 @@ public static class UserDataFileSystem
     public static void New(out UserData userData)
     {
         int ind = 1;
-        while (File.Exists($"{_defaultPath}/save{ind}.json"))
+        while (File.Exists($"{_defaultPath}/save{ind}_1.json"))
         {
             ind++;
         }
 
-        userData = new UserData($"save{ind}.json");
+        userData = new UserData($"save{ind}");
 
         // load resource Assets/Resources/Map Data/World Obj Data.asset
         userData.Position = Resources.Load<WorldData>("Map Data/World Obj Data").playerPosition;
@@ -61,12 +71,28 @@ public static class UserDataFileSystem
         Debug.Log($"New file: save{ind}.json");
     }
 
-    public static void Save(in UserData userData)
+    public static void Save(in UserData userData, bool isNewBranch=false)
     {
         string jsonData = JsonConvert.SerializeObject(userData, Formatting.Indented);
-        var path = $"{_defaultPath}/{userData.FileName}";
+        var path = $"{_defaultPath}/{userData.FileFullName}";
         File.WriteAllText(path, jsonData);
-        Debug.Log($"Save {userData.FileName} => {path}");
+
+        if (isNewBranch)
+        {
+            int branchCount = 1;
+            while (File.Exists($"{_defaultPath}/{userData.FileName}_{branchCount}.json"))
+            {
+                branchCount++;
+            }
+            userData.Branched = branchCount;
+        }
+    }
+
+    public static void AutoSave(in UserData userData)
+    {
+        string jsonData = JsonConvert.SerializeObject(userData, Formatting.Indented);
+        var path = $"{_defaultPath}/autosaved.json";
+        File.WriteAllText(path, jsonData);
     }
 
     public static bool Load(out UserData userData, string filePath)

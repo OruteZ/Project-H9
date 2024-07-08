@@ -144,6 +144,8 @@ public class TurnOrderUIElement : UIElement, IPointerEnterHandler, IPointerExitH
             outline.OutlineColor = Color.red;
         }
         outline.OutlineMode = CustomOutline.Mode.OutlineAll;
+
+        UIManager.instance.combatUI.turnOrderUI.EffectMouseOverEnemy((Enemy)unit);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -156,5 +158,7 @@ public class TurnOrderUIElement : UIElement, IPointerEnterHandler, IPointerExitH
             outline.OutlineColor = Color.red;
         }
         outline.OutlineMode = CustomOutline.Mode.NULL;
+
+        UIManager.instance.combatUI.turnOrderUI.EffectMouseOverEnemy(null);
     }
 }

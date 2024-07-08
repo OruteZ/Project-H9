@@ -104,7 +104,7 @@ public class PlayerStatLevelUpElement : UIElement, IPointerEnterHandler, IPointe
         string descriptionText = currentStat.ToString();
         if (!statLevelInfo.IsLevelUpFully())
         {
-            descriptionText += " -> " + (currentStat + increseStat).ToString();
+            descriptionText += " ¡æ " + (currentStat + increseStat).ToString();
         }
         _statDescriptionText.GetComponent<TextMeshProUGUI>().text = descriptionText;
 

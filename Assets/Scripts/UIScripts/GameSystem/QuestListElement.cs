@@ -75,7 +75,7 @@ public class QuestListElement : UIElement, IPointerClickHandler
 
         string[] rewardTexts = { "", "", "", "" };
 
-        _resultText = UIManager.instance.UILocalization[33];
+        _resultText = UIManager.instance.UILocalization[33] + ": ";
         if (qInfo.MoneyReward > 0)
         {
             rewardTexts[0] = qInfo.MoneyReward.ToString() + "$";

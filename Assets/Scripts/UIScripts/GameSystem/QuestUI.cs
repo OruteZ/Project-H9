@@ -27,6 +27,18 @@ public class QuestUI : UISystem
         _questWindow.SetActive(true);
 
         worldCamera = CameraManager.instance.worldCamera;
+
+        UIManager.instance.onTSceneChanged.AddListener((s) =>
+        {
+            if (s == GameState.World)
+            {
+                _questWindow.SetActive(true);
+            }
+            else if (s == GameState.Combat)
+            {
+                _questWindow.SetActive(false);
+            }
+        });
     }
     private void Start()
     {

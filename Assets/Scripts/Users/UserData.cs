@@ -8,9 +8,9 @@ using UnityEngine;
 [Serializable]
 public class UserData 
 {
-    private string _fileFullName; // ex) save1_1.json 
-    private string _fileName; // save1_1.json 중 'save1'
-    private int _version = 102;
+    public string FileFullName; // ex) save1_1.json 
+    public string FileName; // save1_1.json 중 'save1'
+    public int Version = 103;
     public bool isFirstOpen = true;
 
     public int Level = 1;
@@ -33,19 +33,20 @@ public class UserData
 
     public string Description = string.Empty;
     public DateTime SaveTime;
-    private int _branched = 1;
+    private int Branched = 1;
 
     public Dictionary<string, int> Events = new Dictionary<string, int>();
 
-    [JsonIgnore] public string FileName => _fileName;
-    [JsonIgnore] public string FileFullName => _fileFullName;
-    [JsonIgnore] public int Version => _version;
-    [JsonIgnore] public int Branched { get { return _branched; } set { _branched = value; _fileFullName = $"{_fileName}_{_branched}.json"; } }
-
     public UserData(string fileName)
     {
-        _fileName = fileName;
-        _fileFullName = $"{fileName}_{_branched}.json";
+        FileName = fileName;
+        FileFullName = $"{fileName}_{Branched}.json";
+    }
+
+    public void SetBranch(int branch)
+    {
+        Branched = branch;
+        FileFullName = $"{FileName}_{branch}.json";
     }
 }
 
@@ -63,7 +64,7 @@ public static class UserDataFileSystem
         }
 
         userData = new UserData($"save{ind}");
-
+        Debug.Log($"New File {userData.FileName}");
         // load resource Assets/Resources/Map Data/World Obj Data.asset
         userData.Position = Resources.Load<WorldData>("Map Data/World Obj Data").playerPosition;
         userData.Stat = null;
@@ -72,8 +73,6 @@ public static class UserDataFileSystem
     public static void Save(in UserData userData, bool isNewBranch=false)
     {
         string jsonData = JsonConvert.SerializeObject(userData, Formatting.Indented);
-        var path = $"{_defaultPath}/{userData.FileFullName}";
-        File.WriteAllText(path, jsonData);
 
         if (isNewBranch)
         {
@@ -82,8 +81,11 @@ public static class UserDataFileSystem
             {
                 branchCount++;
             }
-            userData.Branched = branchCount;
+            userData.SetBranch(branchCount);
         }
+        var path = $"{_defaultPath}/{userData.FileFullName}";
+        Debug.Log($"saved {path}");
+        File.WriteAllText(path, jsonData);
     }
 
     public static void AutoSave(in UserData userData)

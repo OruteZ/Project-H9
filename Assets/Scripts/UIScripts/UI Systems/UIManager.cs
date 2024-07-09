@@ -87,6 +87,9 @@ public class UIManager : Generic.Singleton<UIManager>
         if (loading) loading.SetActive(true);
 
         StartCoroutine(SetStatScript());
+
+        if (Service.IsMissingRoot())
+            Service.CreateRoot();
     }
     private IEnumerator SetStatScript() 
     {

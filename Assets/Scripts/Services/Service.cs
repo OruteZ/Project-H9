@@ -8,15 +8,26 @@ public static class Service
 
     static Service()
     {
+        CreateRoot();
+    }
+    public static bool IsMissingRoot()
+    {
+        if (_rootCanvas == null)
+            return true;
+        return false;
+    }
+
+    public static void CreateRoot()
+    {
         // if current scene name is "Combat Map Editor" return
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Combat Map Editor") return;
-        
         var prefabObj = Resources.Load($"Prefab/Canvas/WorldTextCanvas") as GameObject;
         var worldCanvasObj = GameObject.Instantiate(prefabObj, Vector3.zero, Quaternion.identity);
         _rootCanvas = worldCanvasObj.transform;
         _rootCanvas.name = "WorldTextCanvas";
         GameObject.DontDestroyOnLoad(_rootCanvas);
 
+        _floaters.Clear();
         var commonDmg = new DamageFloaterManager();
         commonDmg.Init("Prefab/Damage Floater", _rootCanvas, 0.5f);
         var criticalDmg = new DamageFloaterManager();
@@ -32,6 +43,7 @@ public static class Service
         UIManager.instance.onNonHited.AddListener(MissedText);
         UIManager.instance.onHealed.AddListener(DamagedText); // 피해를 입는 것과 같은 규칙 따름.
     }
+
 
     public static void MissedText(IDamageable unit)
     {

@@ -1,9 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using TMPro;
+using System.Linq;
 
 public class LoadUI : UISystem
 {
@@ -22,7 +22,6 @@ public class LoadUI : UISystem
     private string _slotStr;
     private string _hourStr;
     private string _dayStr;
-    private List<UserData> _lists = new List<UserData>();
 
     public void Awake()
     {
@@ -87,25 +86,33 @@ public class LoadUI : UISystem
         }
 
         DirectoryInfo di = new DirectoryInfo(UserDataFileSystem.DefaultPath);
+        var userDatas = new List<UserData>();
+        var autosavedDatas = new List<UserData>();
         foreach (FileInfo file in di.GetFiles())
         {
             if (IsCorrectSaveFile(file))
             {
                 if (UserDataFileSystem.Load(out var userData, file.FullName))
                 {
-                    _lists.Add(userData);
-                    var ins = GameObject.Instantiate(_slotPrefab);
-                    ins.transform.parent = _slotParent;
-                    var name = file.Name.Split(".")[0];
-                    var slotText = $"[{name}] {userData.Description}";
-                    ins.transform.Find("SlotText").GetComponent<TMP_Text>().text = slotText;
-                    var dateText =  $"{userData.SaveTime}";
-                    ins.transform.Find("DateText").GetComponent<TMP_Text>().text = dateText;
-
-                    ins.GetComponentInChildren<Button>().onClick.AddListener(
-                        () => {_titleUI.OnClickLoadSlot(userData);  });
+                    if (file.Name == "autosaved.json")
+                        autosavedDatas.Add(userData);
+                    else
+                        userDatas.Add(userData);
                 }
             }
+        }
+
+        for (int i = 0; i < autosavedDatas.Count; i++)
+        {
+            var userData = autosavedDatas[i];
+            CreateSlot(userData, isAutosaved:true);
+        }
+
+        List<UserData> orderedUserDatas = userDatas.OrderByDescending(x => x.SaveTime).ToList();
+        for (int i = 0 ; i < orderedUserDatas.Count; i++)
+        {
+            var userData = orderedUserDatas[i];
+            CreateSlot(userData);
         }
     }
 
@@ -129,6 +136,20 @@ public class LoadUI : UISystem
         if (file.Extension != ".json")
             return false;
         return true;
+    }
+
+    private void CreateSlot(UserData userData, bool isAutosaved = false)
+    {
+        var ins = GameObject.Instantiate(_slotPrefab);
+        ins.transform.parent = _slotParent;
+        var name = userData.FileName;
+        var slotText = (isAutosaved) ? $"[AUTOSAVED] {userData.Description}" : $"[{name}] {userData.Description}";
+        ins.transform.Find("SlotText").GetComponent<TMP_Text>().text = slotText;
+        var dateText = $"{userData.SaveTime}";
+        ins.transform.Find("DateText").GetComponent<TMP_Text>().text = dateText;
+
+        ins.GetComponentInChildren<Button>().onClick.AddListener(
+            () => { _titleUI.OnClickLoadSlot(userData); });
     }
     
 }

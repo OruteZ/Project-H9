@@ -391,8 +391,6 @@ public class GameManager : Generic.Singleton<GameManager>
         //option
         user.optionSetting = UIManager.instance.pauseMenuUI.optionUI.GetOptionSetting();
 
-        UserDataFileSystem.Save(in user);
-
         if (isAutoSave)
             UserDataFileSystem.AutoSave(in user);
         else

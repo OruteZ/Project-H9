@@ -184,6 +184,7 @@ public class AlarmUI : UISystem
                     break;
                 }
         }
+        if (ui is null) return;
         ui.GetComponent<AlarmUIElement>().SetAlarmUIElement(info);
         ui.SetActive(true);
     } 

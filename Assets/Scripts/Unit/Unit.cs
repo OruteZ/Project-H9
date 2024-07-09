@@ -402,6 +402,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
         onActionStart.Invoke(activeUnitAction, targetPosition);
         activeUnitAction.Execute();
+        if (this is Player) UIManager.instance.combatUI.combatPopupTextUI.ClearText();
         return true;
     }
 
@@ -502,6 +503,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             Debug.Log("actionSuccess: " + actionSuccess);
 
             if (actionSuccess is false) ClearBusy();
+        }
+        else
+        {
+            UIManager.instance.combatUI.combatPopupTextUI.SetActionSeleteTextUI(action);
         }
     }
 

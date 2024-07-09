@@ -22,7 +22,7 @@ public class TurnSystem : MonoBehaviour
         );
         
         onTurnChanged.AddListener(() => UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI());
-        onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));
+        onTurnChanged.AddListener(() => UIManager.instance.combatUI.combatPopupTextUI.SetStartTurnTextUI(turnOwner));
     }
 
     public void SetUp()

@@ -20,7 +20,11 @@ public class TownUI : UISystem
     private const int SALOON_REST_COST = 1;
 
     [SerializeField] private GameObject _bountyUIElements;
-
+    private enum TownNameIndex 
+    {
+        Linsdale,
+        Westville
+    }
 
     public bool isTownUIOpened { get; private set; }
 
@@ -41,7 +45,7 @@ public class TownUI : UISystem
     {
         Player p = FieldSystem.unitSystem.GetPlayer();
         PlayerEvents.OnMovedPlayer.AddListener((pos) => { /*if (p.GetSelectedAction().GetActionType() == ActionType.Move)*/ CheckPlayerInTown(); });
-        UIManager.instance.onTSceneChanged.AddListener((gs) => { _doorIcon.SetActive(gs == GameState.World); });
+        UIManager.instance.onTSceneChanged.AddListener((gs) => { _doorIcon.SetActive(false); });
     }
 
     public void OpenAmmunitionWindow(int townIndex)
@@ -92,35 +96,40 @@ public class TownUI : UISystem
     #region Sherrif
     public void SetBountyUI(int townIndex) 
     {
-        //need data table work
+        List<QuestInfo> subQuests = new();
 
-        //List<QuestInfo> selectableQuests = new();
+        foreach (var i in GameManager.instance.Quests)
+        {
+            if (i.QuestSheriff == ((TownNameIndex)townIndex).ToString())
+            {
+                subQuests.Add(i);
+            }
+        }
+        if (subQuests.Count != _bountyUIElements.transform.childCount)
+        {
+            Debug.LogError("Unexpected number of selectable quests");
+            return;
+        }
 
-        //foreach (var i in GameManager.instance.Quests)
-        //{
-        //    if (i.townIndex == townIndex)
-        //    {
-        //        selectableQuests.Add(i);
-        //    }
-        //}
-        //if (selectableQuests.Count != _bountyUIElements.transform.childCount)
-        //{
-        //    Debug.LogError("Unexpected number of selectable quests");
-        //    return;
-        //}
-
-        //for (int i = 0; i < _bountyUIElements.transform.childCount; i++)
-        //{
-        //    _bountyUIElements.transform.GetChild(i).gameObject.SetActive(!selectableQuests[i].IsCleared);
-        //    if (!selectableQuests[i].IsCleared)
-        //    {
-        //        _bountyUIElements.transform.GetChild(i).GetComponent<BountyUIElement>().SetBountyUIElement(selectableQuests[i]);
-        //    }
-        //}
+        for (int i = 0; i < _bountyUIElements.transform.childCount; i++)
+        {
+            _bountyUIElements.transform.GetChild(i).gameObject.SetActive(!subQuests[i].IsCleared);
+            if (!subQuests[i].IsCleared)
+            {
+                _bountyUIElements.transform.GetChild(i).GetComponent<BountyUIElement>().SetBountyUIElement(subQuests[i]);
+            }
+        }
     }
     public void StartBounty(QuestInfo qInfo) 
     {
-        UIManager.instance.gameSystemUI.questUI.AddQuestListUI(qInfo);
+        foreach (var q in GameManager.instance.Quests) 
+        {
+            if (q.Index == qInfo.Index) 
+            {
+                q.OnConditionEventOccured();
+            }
+        }
+        SetBountyUI(_currentTownIndex);
     }
     #endregion
 

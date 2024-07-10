@@ -5933,7 +5933,7 @@ MonoBehaviour:
   m_text: "\uD604\uC0C1\uC218\uBC30\uC9C0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ec34ddf54f9cb894297eb20b2a4ac758, type: 2}
-  m_sharedMaterial: {fileID: 1332136792565309436, guid: 9bf5481cad2250a42b40542cdbaa30f8,
+  m_sharedMaterial: {fileID: -712520717157279917, guid: ec34ddf54f9cb894297eb20b2a4ac758,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -8092,7 +8092,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3492918288233461377
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14593,7 +14593,8 @@ MonoBehaviour:
   m_text: x
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ec34ddf54f9cb894297eb20b2a4ac758, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -712520717157279917, guid: ec34ddf54f9cb894297eb20b2a4ac758,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -15600,11 +15601,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bounty Poster (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 6641008491250547846, guid: cb28d875af96bd04880b8c88c29045b2,
-        type: 3}
-      propertyPath: _bountyStartButton
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6988743494749123767, guid: cb28d875af96bd04880b8c88c29045b2,
         type: 3}
       propertyPath: m_Pivot.x
@@ -15708,6 +15704,11 @@ PrefabInstance:
     - target: {fileID: 6988743494749123767, guid: cb28d875af96bd04880b8c88c29045b2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7018351550385126906, guid: cb28d875af96bd04880b8c88c29045b2,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -20801,11 +20802,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bounty Poster (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 6641008491250547846, guid: cb28d875af96bd04880b8c88c29045b2,
-        type: 3}
-      propertyPath: _bountyStartButton
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6988743494749123767, guid: cb28d875af96bd04880b8c88c29045b2,
         type: 3}
       propertyPath: m_Pivot.x
@@ -20909,6 +20905,11 @@ PrefabInstance:
     - target: {fileID: 6988743494749123767, guid: cb28d875af96bd04880b8c88c29045b2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7018351550385126906, guid: cb28d875af96bd04880b8c88c29045b2,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

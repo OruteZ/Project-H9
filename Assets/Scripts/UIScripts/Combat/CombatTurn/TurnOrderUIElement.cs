@@ -86,7 +86,7 @@ public class TurnOrderUIElement : UIElement, IPointerEnterHandler, IPointerExitH
         {
             _frame.color = UICustomColor.EnemyTurnColor;
 
-            Debug.Log(_enemyDatabase.GetInfo(unit.Index).model.name);
+            //Debug.Log(_enemyDatabase.GetInfo(unit.Index).model.name);
             _characterIcon.sprite = Resources.Load<Sprite>(
                 "UnitCapture/" + 
                 _enemyDatabase.GetInfo(unit.Index).model.name);

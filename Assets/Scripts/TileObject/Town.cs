@@ -10,12 +10,11 @@ public class Town : TileObject
         Saloon,
         Sheriff
     }
-    private int _townIndex;
+    [SerializeField] private int _townIndex;
     [SerializeField] private BuildingType _buildingType;
     
     protected override void SetTile(Tile t)
     {
-        Debug.Log("Se tTile call");
         base.SetTile(t);
 
         t.walkable = true;
@@ -27,13 +26,8 @@ public class Town : TileObject
 
     public override void OnCollision(Unit other)
     {
-        Debug.Log($"플레이어 진입 : {_townIndex}번 마을의 {_buildingType} 건물");
-
-        //other.GetSelectedAction().ForceFinish();
-
-        Debug.Log("On Collision Calls");
+        //Debug.Log($"플레이어 진입 : {_townIndex}번 마을의 {_buildingType} 건물");
         PlayerEvents.OnPlayerEnterTown.Invoke(hexPosition, _townIndex, _buildingType);
-
     }
 
 

@@ -42,14 +42,12 @@ public class QuestUI : UISystem
     }
     private void Start()
     {
-        _questText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[30];
+        _questText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[200];
     }
 
     public void AddQuestListUI(QuestInfo info) 
     {
         var ui = _listPool.Set();
-        Debug.Log($"info Pin null: {info.Pin == null}");
-        Debug.Log($"info Pin len: {info.Pin.Length}");
         if (info.Pin.Length > 0) 
         {
             Vector3Int pinPos = new Vector3Int(info.Pin[0], info.Pin[1], info.Pin[2]);
@@ -79,7 +77,15 @@ public class QuestUI : UISystem
 
         _listPool.Sort();
 
-        listElement.CompleteQuestUI(out string popupText);
+        string popupText;
+        if (info.CurTurn == 0)
+        {
+            listElement.FailQuestUI(out popupText);
+        }
+        else
+        {
+            listElement.CompleteQuestUI(out popupText);
+        }
         StartCoroutine(EndQuestUI(popupText));
     }
     IEnumerator StartQuestUI(string popupText)
@@ -118,7 +124,6 @@ public class QuestUI : UISystem
             yield return new WaitForSeconds(1.5f);
             _popupWindow.SetActive(false);
             yield return new WaitForSeconds(.5f);
-            UIManager.instance.gameSystemUI.conversationUI.StartNextConversation();
 
             player = FieldSystem.unitSystem.GetPlayer();
             if (player == null) 

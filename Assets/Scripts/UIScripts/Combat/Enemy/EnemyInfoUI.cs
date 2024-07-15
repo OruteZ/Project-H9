@@ -21,9 +21,9 @@ public class EnemyInfoUI : UIElement
         UIManager.instance.onTSceneChanged.AddListener((gs) => { CloseStatTooltip(); });
     }
 
-    public void OpenInventoryTooltip(GameObject ui, Vector3 pos, bool isCharacterItem = true)
+    public void OpenInventoryTooltip(GameObject ui, Vector3 pos, bool isAPVisible = false)
     {
-        _enemyWeaponTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui, pos, isCharacterItem);
+        _enemyWeaponTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui, pos, isAPVisible);
     }
     public void CloseInventoryTooltip()
     {

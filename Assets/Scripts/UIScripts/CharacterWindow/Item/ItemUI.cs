@@ -5,14 +5,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class ItemUI : UISystem
 {
     [SerializeField] private GameObject _moneyText;
-
-    [SerializeField] private GameObject _weaponItemButton;
-    [SerializeField] private GameObject _consumeItemButton;
-    [SerializeField] private GameObject _otherItemButton;
+    [SerializeField] private GameObject _itemTypeButton;
 
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject _inventoryTooltip;
@@ -49,12 +47,16 @@ public class ItemUI : UISystem
     }
     public override void OpenUI()
     {
-        _weaponItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[50];
-        _consumeItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[51];
-        _otherItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[52];
+        TypeButtonLocalize();
         base.OpenUI();
         ClosePopupWindow();
         SetInventoryUI();
+    }
+    public void TypeButtonLocalize()
+    {
+        _itemTypeButton.transform.Find("Weapon Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[50];
+        _itemTypeButton.transform.Find("Consumable Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[51];
+        _itemTypeButton.transform.Find("Other Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[52];
     }
 
     public void SetInventoryUI() 
@@ -89,8 +91,9 @@ public class ItemUI : UISystem
     {
         if (_inventoryInteractionButtons.gameObject.activeSelf is true) return;
         _currentMouseOverElement = ui;
-        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui, pos);
+        _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui, pos, false, ui == _equippedElement);
     }
+
     public void OpenInventoryInteraction(GameObject ui)
     {
         _interactionElement = ui;
@@ -158,7 +161,7 @@ public class ItemUI : UISystem
         ClosePopupWindow();
         if (_draggedItem is WeaponItem)
         {
-            UIManager.instance.characterUI.equipmentUI.SetEquipmentParticle();
+            GetComponent<EquipmentUI>().SetEquipmentParticle();
         }
     }
 
@@ -212,7 +215,7 @@ public class ItemUI : UISystem
         _draggedElement.GetComponent<RectTransform>().position = Vector3.zero;
 
         SetInventoryUI();
-        UIManager.instance.characterUI.equipmentUI.ClearEquipmentParticle();
+        GetComponent<EquipmentUI>().ClearEquipmentParticle();
     }
 
     public int GetInventoryUIIndex(GameObject element)

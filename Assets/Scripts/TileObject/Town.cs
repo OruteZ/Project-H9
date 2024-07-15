@@ -12,6 +12,8 @@ public class Town : TileObject
     }
     [SerializeField] private int _townIndex;
     [SerializeField] private BuildingType _buildingType;
+
+    public int[] townItemIndexes;
     
     protected override void SetTile(Tile t)
     {
@@ -55,4 +57,7 @@ public class Town : TileObject
         effect.TryGetValue(_buildingType, out TileEffectType effType);
         return effType;
     }
+
+    public int GetTownIndex() => _townIndex;
+    public BuildingType GetTownType() => _buildingType;
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using BT;
 using UnityEngine;
 
@@ -33,12 +34,11 @@ public interface INode
             
         }
 
-        List<INode> children = new List<INode>();
-        foreach (var child in info.children)
-        {
-            children.Add(GetNode(child, tree));
-        }
-        
+        List<INode> children = 
+            info.
+            children.
+            Select(child => GetNode(child, tree)).ToList();
+
         INode result = info.node switch
         {
             BTNodeType.Selector => new SelectorNode(children),

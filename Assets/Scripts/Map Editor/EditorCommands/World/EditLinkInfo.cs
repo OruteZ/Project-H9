@@ -56,7 +56,10 @@ public class EditLinkInfo : IEditorCommand
         foreach (var link in _links)
         {
             link.linkIndex = linkIndex;
-            link.combatMapIndex = combatMapIndex;
+            FieldSystem.
+                tileSystem.
+                GetTile(link.hexPosition).
+                combatStageIndex = combatMapIndex;
         }
         
         //find editor and save

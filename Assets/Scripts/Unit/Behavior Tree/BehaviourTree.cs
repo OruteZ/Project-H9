@@ -40,20 +40,25 @@ public class BehaviourTree : ScriptableObject
             log += node;
             Debug.Log(log);
             
-            if (node is SelectorNode selector)
+            switch (node)
             {
-                foreach (INode child in selector.GetChildren())
+                case SelectorNode selector:
                 {
-                    PrintNode(child, depth + 1);
-                }
+                    foreach (INode child in selector.GetChildren())
+                    {
+                        PrintNode(child, depth + 1);
+                    }
 
-                return;
-            }
-            if (node is SequenceNode sequence)
-            {
-                foreach (INode child in sequence.GetChildren())
+                    return;
+                }
+                case SequenceNode sequence:
                 {
-                    PrintNode(child, depth + 1);
+                    foreach (INode child in sequence.GetChildren())
+                    {
+                        PrintNode(child, depth + 1);
+                    }
+
+                    break;
                 }
             }
         }

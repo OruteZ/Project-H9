@@ -206,12 +206,12 @@ public class GameManager : Generic.Singleton<GameManager>
     
     public bool IsPioneeredWorldTile(Vector3Int tilePos)
     {
-        return runtimeWorldData.discoveredWorldTileSet.Contains(tilePos);
+        return runtimeWorldData.FindDiscovered(tilePos, out int idx);
     }
     
     public void AddPioneeredWorldTile(Vector3Int tilePos)
     {
-        if (!runtimeWorldData.discoveredWorldTileSet.Add(tilePos));
+        runtimeWorldData.TryAddDiscovered(tilePos);
     }
     
     private new void Awake()
@@ -220,8 +220,18 @@ public class GameManager : Generic.Singleton<GameManager>
         if(this == null) return;
         Application.targetFrameRate = 90;
 
-        runtimeWorldData = Instantiate(_defaultWorldData);
-        runtimeWorldData.discoveredWorldTileSet = new HashSet<Vector3Int>();
+        // todo : Load World Data
+        // if (DataLoader.IsReady)
+        // {
+        //     
+        // }
+        // else
+        {
+            runtimeWorldData = Instantiate(_defaultWorldData);
+        }
+        
+        
+        // runtimeWorldData.discoveredWorldTileSet = new HashSet<Vector3Int>();
         
 
 #if UNITY_EDITOR

@@ -66,7 +66,7 @@ public class RemoveLink : IEditorCommand
         
         //save link
         var worldEditor = Object.FindObjectOfType<WorldMapEditor>().GetComponent<WorldMapEditor>();
-        worldEditor.SaveLink();
+        worldEditor.SaveData();
     }
 
     public void Undo()
@@ -82,7 +82,7 @@ public class RemoveLink : IEditorCommand
             
             //save link
             var worldEditor = Object.FindObjectOfType<WorldMapEditor>().GetComponent<WorldMapEditor>();
-            worldEditor.SaveLink();
+            worldEditor.SaveData();
         }
     }
 }

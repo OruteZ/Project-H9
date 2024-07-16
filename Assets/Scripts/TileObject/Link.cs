@@ -136,12 +136,14 @@ public class Link : TileObject
         if (GameManager.instance.CompareState(GameState.Editor)) return;
         if (_linkIndex == 0)
         {
-            Debug.LogError("link index가 0입니다! 플레이를 끄고 빨리 고치세요 휴먼!");
+            Debug.LogError("link index가 0입니다! 플레이를 끄고 빨리 고치세요 휴먼!" +
+                           "현재 위치 : " + hexPosition);
+            
         }
-        if (combatMapIndex == 0)
-        {
-            Debug.LogError("combat map index가 0입니다! 플레이를 끄고 빨리 고치세요 휴먼!");
-        }
+        // if (combatMapIndex == 0)
+        // {
+        //     Debug.LogError("combat map index가 0입니다! 플레이를 끄고 빨리 고치세요 휴먼!");
+        // }
     }
 #endif
 }

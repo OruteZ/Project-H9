@@ -1,18 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using System.Linq;
 using Castle.Core.Internal;
 using TMPro;
 using UnityEngine;
 
-public class WorldLinkInfoEditor : MonoBehaviour
+public class WorldTileCombatIndexEditor : MonoBehaviour
 {
     [SerializeField] private Canvas _editorCanvas;
-    [SerializeField] private TMP_InputField _linkIndexInputField;
     [SerializeField] private TMP_InputField _combatMapIndexInputField;
     
-    private EditLinkInfo _editCmd;
-    private List<Link> _linkObjects;
+    private EditCombatStage _editCmd;
+    private List<TileCombatStageInfo> _stageInfos;
 
     private void Awake()
     {
@@ -20,45 +18,37 @@ public class WorldLinkInfoEditor : MonoBehaviour
         //disable canvas
         _editorCanvas.enabled = false;
 
-        _linkObjects = new();
+        _stageInfos = new();
     }
 
-    public void ShowEditorUI(IEnumerable<Link> links)
+    public void ShowEditorUI(IEnumerable<TileCombatStageInfo> links)
     {
-        if(links.IsNullOrEmpty())
+        var e = links as TileCombatStageInfo[] ?? links.ToArray();
+        if(e.IsNullOrEmpty())
         {
-            Debug.Log("No link object");
+            Debug.LogError("No link object");
             return;
         }
         
         //enable canvas
         _editorCanvas.enabled = true;
 
-        LoadLinkInfo(links);
+        LoadStageInfo(e);
     }
 
-    public void SetEditCommand(EditLinkInfo cmd)
+    public void SetEditCommand(EditCombatStage cmd)
     {
         _editCmd = cmd;
     }
 
-    public void ApplyLinkInfo()
+    public void ApplyStageInfo()
     {
-        //read input field text
-        string linkIndex = _linkIndexInputField.text;
         string combatMapIndex = _combatMapIndexInputField.text;
         
         //if input field text is '-', return;
-        if (linkIndex == "-" || combatMapIndex == "-")
+        if (combatMapIndex == "-")
         {
             Debug.Log("Link index or combat map index is not set");
-            return;
-        }
-        
-        //input값 정수인지 체크 + 파싱
-        if(int.TryParse(linkIndex, out int linkIndexInt) == false)
-        {
-            Debug.Log("Link index is not integer");
             return;
         }
         
@@ -69,7 +59,7 @@ public class WorldLinkInfoEditor : MonoBehaviour
         }
         
         //apply link index and combat map index
-        _editCmd.ApplyIndexes(linkIndexInt, combatMapIndexInt);
+        _editCmd.ApplyIndexes(combatMapIndexInt);
         DisableUI();
     }
     
@@ -84,39 +74,26 @@ public class WorldLinkInfoEditor : MonoBehaviour
         _editorCanvas.enabled = false;
     }
     
-    private void LoadLinkInfo(IEnumerable<Link> links)
+    private void LoadStageInfo(IEnumerable<TileCombatStageInfo> links)
     {
-        _linkObjects = new List<Link>(links);
+        _stageInfos = new List<TileCombatStageInfo>(links);
         
         List<int> linkIndexes = new List<int>();
         List<int> combatMapIndexes = new List<int>();
         
         //get link index and combat map index
-        foreach (var link in _linkObjects)
+        foreach (var info in _stageInfos)
         {
-            linkIndexes.Add(link.linkIndex);
+            linkIndexes.Add(info.combatStageIndex);
             combatMapIndexes.Add(
                 FieldSystem.
                 tileSystem.
-                GetTile(link.hexPosition).
+                GetTile(info.hexPosition).
                 combatStageIndex
                 );
         }
         
-        string linkIndex = "";
         string combatMapIndex = "";
-        
-        //if all index is same, convert index to string
-        //else set to '-'
-        if (linkIndexes.TrueForAll(x => x == linkIndexes[0]))
-        {
-            linkIndex = linkIndexes[0].ToString();
-        }
-        else
-        {
-            linkIndex = "-";
-        }
-        
         if (combatMapIndexes.TrueForAll(x => x == combatMapIndexes[0]))
         {
             combatMapIndex = combatMapIndexes[0].ToString();
@@ -127,7 +104,6 @@ public class WorldLinkInfoEditor : MonoBehaviour
         }
         
         //set input field text
-        _linkIndexInputField.text = linkIndex;
         _combatMapIndexInputField.text = combatMapIndex;
     }
 }

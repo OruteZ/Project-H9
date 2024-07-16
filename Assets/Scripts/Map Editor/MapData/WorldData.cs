@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -15,11 +17,14 @@ public class WorldData : ScriptableObject
 
     public List<WorldFlags> flags;
 
-    public HashSet<Vector3Int> discoveredWorldTileSet;
+    [SerializeField]
+    private List<Vector3Int> discoveredWorldTileSet = new ();
+    
+    public List<TileCombatStageInfo> specificCombatIndexedTiles = new ();
 
     public int worldTurn;
     
-    public void SaveChangesToScriptableObject(ScriptableObject obj)
+    public static void SaveChangesToScriptableObject(ScriptableObject obj)
     {
         #if UNITY_EDITOR
         EditorUtility.SetDirty(obj);
@@ -31,7 +36,7 @@ public class WorldData : ScriptableObject
     {
         if (model == null)
         {
-            var linkDB = Resources.Load<LinkDatabase>("DataBase/LinkDatabase");
+            LinkDatabase linkDB = Resources.Load<LinkDatabase>("DataBase/LinkDatabase");
             model = linkDB.GetData(linkIndex).model;
         }
         
@@ -45,7 +50,7 @@ public class WorldData : ScriptableObject
             linkIndex = linkIndex,
             combatMapIndex = combatMapIndex,
             model = model,
-            isRepeatable = isRepeatable
+            isRepeatable = isRepeatable 
         });
 
         return true;
@@ -53,7 +58,45 @@ public class WorldData : ScriptableObject
 
     public void RemoveLink(Vector3Int hexPosition, int linkIndex)
     {
-        links.RemoveAll(x => x.pos == hexPosition && x.linkIndex == linkIndex);
+        links.RemoveAll(
+            match:
+            x => 
+                x.pos == hexPosition &&
+                x.linkIndex == linkIndex
+            );
+    }
+    
+
+    public bool FindDiscovered(Vector3Int tilePos, out int index)
+    {
+        Vector3IntCompare comparer = new Vector3IntCompare();
+        
+        index = discoveredWorldTileSet.BinarySearch(tilePos, comparer);
+        return index >= 0;
+    }
+    
+    public bool TryAddDiscovered(Vector3Int pos)
+    {
+        //find binary search
+        if(FindDiscovered(pos, out int index))
+            return false;
+        
+        //if not found, add
+        //binary search return negative value
+        discoveredWorldTileSet.Insert(~index, pos);
+        return true;
+    }
+    
+    public void RemoveDiscovered(Vector3Int pos)
+    {
+        //find binary search
+        if(FindDiscovered(pos, out int index) is false) return;
+        
+        //if found, remove
+        if (index >= 0)
+        {
+            discoveredWorldTileSet.RemoveAt(index);
+        }
     }
 }
 

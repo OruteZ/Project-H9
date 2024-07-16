@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,22 +8,33 @@ using UnityEngine.Events;
 public class EditorMouseController : MonoBehaviour
 {
     private readonly HashSet<Tile> _selectedTiles = new ();
-    [HideInInspector] public UnityEvent onSelectedTileChanged;
     
     private readonly Stack<IEditorCommand> _undoStack = new();
 
     [SerializeField] private SerializableDictionary<KeyCode, string> commands;
 
+    public Canvas[] EditorUI;
+
+    [HideInInspector] public UnityEvent onCommandExecuted = new ();
+    [HideInInspector] public UnityEvent onSelectedTileChanged = new ();
+    
     private void Awake()
     {
         _selectedTiles.Clear();
         _undoStack.Clear();
         
-        onSelectedTileChanged ??= new UnityEvent();
+        // onSelectedTileChanged.RemoveAllListeners();
+        // onCommandExecuted.RemoveAllListeners();
     }
 
     private void Update()
     {
+        //if EditorUI is active, skip
+        if (EditorUI.Any(ui => ui.enabled))
+        {
+            return;
+        }
+        
         if (Input.GetMouseButton(0))
         {
             var tile = GetTile();
@@ -60,14 +72,16 @@ public class EditorMouseController : MonoBehaviour
                 {
                     if (_undoStack.Count > 0)
                     {
-                        var undoCommand = _undoStack.Pop();
+                        IEditorCommand undoCommand = _undoStack.Pop();
                         undoCommand.Undo();
                     }
+                    
+                    onCommandExecuted.Invoke();
                     continue;
                 }
                 
                 //create IEditorCommand instance
-                var commandInstance = (IEditorCommand) Activator.CreateInstance
+                IEditorCommand commandInstance = (IEditorCommand) Activator.CreateInstance
                     (Type.GetType(command.Value) ?? throw new InvalidOperationException());
                 
                 //execute command
@@ -75,6 +89,8 @@ public class EditorMouseController : MonoBehaviour
                 
                 //push command to undo stack
                 _undoStack.Push(commandInstance);
+                
+                onCommandExecuted.Invoke();
             }
         }
         
@@ -91,8 +107,8 @@ public class EditorMouseController : MonoBehaviour
 
     private Tile GetTile()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hit, 100f, LayerMask.GetMask("Tile")))
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, LayerMask.GetMask("Tile")))
         {
             return hit.collider.GetComponent<Tile>();
         }

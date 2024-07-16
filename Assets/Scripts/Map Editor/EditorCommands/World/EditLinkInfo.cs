@@ -10,7 +10,7 @@ public class EditLinkInfo : IEditorCommand
     
     public void Execute(IEnumerable<Tile> tiles)
     {
-        _links = new();
+        _links = new List<Link>();
         
         //get all links that has same position with tiles
         var links = Object.FindObjectsOfType<Link>();
@@ -51,19 +51,22 @@ public class EditLinkInfo : IEditorCommand
     
     public void ApplyIndexes(int linkIndex, int combatMapIndex)
     {
-        
         //set link index and combat map index
-        foreach (var link in _links)
+        foreach (Link link in _links.Where(link => link != null))
         {
             link.linkIndex = linkIndex;
-            FieldSystem.
-                tileSystem.
-                GetTile(link.hexPosition).
-                combatStageIndex = combatMapIndex;
+            // FieldSystem.
+            //     tileSystem.
+            //     GetTile(link.hexPosition).
+            //     combatStageIndex = combatMapIndex;
         }
         
         //find editor and save
-        var worldEditor = Object.FindObjectOfType<WorldMapEditor>().GetComponent<WorldMapEditor>();
-        worldEditor.SaveLink();
+        WorldMapEditor worldEditor = 
+            Object
+                .FindObjectOfType<WorldMapEditor>()
+                .GetComponent<WorldMapEditor>();
+        
+        worldEditor.SaveData();
     }
 }

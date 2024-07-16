@@ -12,6 +12,8 @@ public class UserData
     public string FileName; // save1_1.json 중 'save1'
     public int Version = 103;
     public bool isFirstOpen = true;
+    
+    public WorldData worldData;
 
     public int Level = 1;
     public int EXP = 0;

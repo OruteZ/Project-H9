@@ -550,7 +550,7 @@ internal struct TileInfo
     public readonly bool visible;
     public readonly bool gridVisible;
 
-    public TileInfo(List<string> data) : this()
+    public TileInfo(IReadOnlyList<string> data) : this()
     {
         SetPos(data[POSITION]);
         walkable = int.Parse(data[WALKABLE]) == 1;

@@ -1426,69 +1426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61004d495e826ef4090f3732a6f61ae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSpeed: 10
-  fastSpeed: 20
-  movementSpeed: 10
-  movementTime: 2
-  newPosition: {x: 0, y: 0, z: 0}
-  lookAtOffset: 0
-  dampingCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.24352351
-      value: 0.8712402
-      inSlope: 0.6203161
-      outSlope: 0.6203161
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.16239542
-    - serializedVersion: 3
-      time: 0.4997818
-      value: 0.9947064
-      inSlope: 0.029549252
-      outSlope: 0.029549252
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.7282181
-      value: 0.8978755
-      inSlope: -0.84508884
-      outSlope: -0.84508884
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.1140244
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.001216
-      value: -0.0014143735
-      inSlope: -2.2971241
-      outSlope: -2.2971241
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.04815183
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  dampingValue: 0.1
-  dampingDuration: 0.1
-  maxZ: -7
-  minZ: -27
-  maxX: 20
-  minX: 0
 --- !u!4 &1022354574
 Transform:
   m_ObjectHideFlags: 0
@@ -2102,7 +2039,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linkDatabase: {fileID: 11400000, guid: 2c91b1e7feda0bf4fb788b6de4da005b, type: 2}
-  currentLinkIndex: 0
   mapData: {fileID: 11400000, guid: 8f404bdefa4f5744e9fe19822a56f4d9, type: 2}
   currentStageIndex: 0
   playerSpawnPoint: {x: 0, y: 0, z: 0}
@@ -2200,7 +2136,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Link Index
+  m_text: 'Max Enemy
+
+    Size'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3163,16 +3101,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879c5451901f410abf4f5b0d45e620b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSelectedTileChanged:
-    m_PersistentCalls:
-      m_Calls: []
   commands:
     isConst: 1
+    defaultKey: 0
     keys: 710000006500000072000000
     values:
     - SetPlayerSpawn
     - SetEnemySpawn
     - RemoveEnemySpawn
+  EditorUI: []
+  onCommandExecuted:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelectedTileChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &578627836389963225
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,10 +22,10 @@ public class CombatStageData : ScriptableObject
     [SerializeField] private EnvironmentData[] envData;
     
     [SerializeField]
-    private List<PositionList> enemySpawnPoints;
+    private List<Vector3Int> enemySpawnPoints;
     
     [SerializeField]
-    private List<Vector3Int> playerSpawnPoint;
+    private Vector3Int playerSpawnPoint;
     
     public List<TileData> GetTileDataList()
     {
@@ -73,60 +73,62 @@ public class CombatStageData : ScriptableObject
         #endif
     }
 
-    public bool TryGetEnemyPoints(int linkIndex, out Vector3Int[] points)
+    public bool TryGetEnemyPoints(LinkData linkData, out Vector3Int[] points)
     {
-        enemySpawnPoints ??= new List<PositionList>();
-        if(enemySpawnPoints.Count <= linkIndex)
+        enemySpawnPoints ??= new List<Vector3Int>();
+        
+        if(enemySpawnPoints.Count < linkData.combatEnemy.Length)
         {
+            Debug.LogError(
+                "Not enough enemy spawn points. " +
+                $"spawn point count : {enemySpawnPoints.Count} / enemy count : {linkData.combatEnemy.Length}," +
+                $"enemy idx info : {linkData.index}," +
+                $"map idx info : {name}"
+            );
             points = Array.Empty<Vector3Int>();
             return false;
         }
         
-        points = enemySpawnPoints[linkIndex].list.ToArray();
+        // set random points
+        points = 
+            enemySpawnPoints.
+            OrderBy(x => UnityEngine.Random.value).
+            Take(linkData.combatEnemy.Length).
+            ToArray();
+        
         return true;
     }
     
-    public bool TryGetPlayerPoint(int linkIndex, out Vector3Int point)
+    public bool TryGetAllEnemyPoints(out Vector3Int[] points)
     {
-        if(playerSpawnPoint.Count <= linkIndex)
-        {
-            point = Hex.zero;
-            return false;
-        }
+        enemySpawnPoints ??= new List<Vector3Int>();
         
-        point = playerSpawnPoint[linkIndex];
+        // set random points
+        points = 
+            enemySpawnPoints.
+                OrderBy(x => UnityEngine.Random.value).
+                ToArray();
+        
         return true;
     }
     
-    public void SetEnemyPoints(int linkIndex, IEnumerable<Vector3Int> points)
+    public bool TryGetPlayerPoint(out Vector3Int point)
     {
-        if(enemySpawnPoints.Count <= linkIndex)
-        {
-            var diff = linkIndex - enemySpawnPoints.Count;
-            for (int i = 0; i <= diff; i++)
-            {
-                enemySpawnPoints.Add(new PositionList());
-            }
-        }
-        
-        enemySpawnPoints[linkIndex].list = points.ToList();
+        point = playerSpawnPoint;
+        return true;
+    }
+    
+    public void SetEnemyPoints(IEnumerable<Vector3Int> points)
+    {
+        enemySpawnPoints = points.ToList();
         #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
         #endif
     }
     
-    public void SetPlayerPoint(int linkIndex, Vector3Int point)
+    public void SetPlayerPoint(Vector3Int point)
     {
-        if(playerSpawnPoint.Count <= linkIndex)
-        {
-            var diff = linkIndex - playerSpawnPoint.Count;
-            for (int i = 0; i <= diff; i++)
-            {
-                playerSpawnPoint.Add(Hex.zero);
-            }
-        }
-
-        playerSpawnPoint[linkIndex] = point;
+        playerSpawnPoint = point;
         
         #if UNITY_EDITOR
         EditorUtility.SetDirty(this);

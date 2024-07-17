@@ -25,13 +25,17 @@ public class SetEnemySpawn : IEditorCommand
             _addedPositions.Push(tile.hexPosition);
         }
         
-        if(_addedPositions.Count + existingPoints.Count > 
-           _mapEditor.GetCurrentLink().combatEnemy.Length)
-        {
-            Debug.LogError("Too many enemy spawn points");
-            return;
-        }
-        foreach (var pos in _addedPositions)
+        // if(_addedPositions.Count + existingPoints.Count > 
+        //    _mapEditor.GetCurrentMaxSize())
+        // {
+        //     Debug.LogError("Too many enemy spawn points"
+        //         + " Cur max Size" + _mapEditor.GetCurrentMaxSize()
+        //         + " Cur size" + _addedPositions.Count
+        //         + " Existing size" + existingPoints.Count);
+        //     return;
+        // }
+        
+        foreach (Vector3Int pos in _addedPositions)
         {
             _mapEditor.spawnPoints.Add(pos);
         }

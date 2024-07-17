@@ -79,7 +79,7 @@ public class CombatEditorViewer : MonoBehaviour
         }
         
         //find all spawn points not in tile viewer objects and add
-        foreach (var spawnPoint in spawnPoints)
+        foreach (Vector3Int spawnPoint in spawnPoints)
         {
             bool isFound = _spawnPointViewerObjs.Any(view => view.position == spawnPoint);
 
@@ -112,7 +112,7 @@ public class CombatEditorViewer : MonoBehaviour
         //find player spawn point not in player spawn point viewer object and add
         if (_playerSpawnPointViewerObj == null)
         {
-            var playerSpawnPointViewer = Instantiate(playerSpawnPointViewerObj, transform);
+            GameObject playerSpawnPointViewer = Instantiate(playerSpawnPointViewerObj, transform);
             playerSpawnPointViewer.transform.position = Hex.Hex2World(playerSpawnPoint);
                 
             _playerSpawnPointViewerObj = playerSpawnPointViewer.GetComponent<HexTransform>();

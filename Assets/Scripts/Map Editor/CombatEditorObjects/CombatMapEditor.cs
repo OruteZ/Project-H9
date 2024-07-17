@@ -3,11 +3,11 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class CombatMapEditor : MonoBehaviour
 {
     public LinkDatabase linkDatabase;
-    public int currentLinkIndex;
     
     public CombatStageData mapData;
     public int currentStageIndex;
@@ -24,35 +24,30 @@ public class CombatMapEditor : MonoBehaviour
     {
         SetSpawnPositions();
     }
-    
-    public LinkData GetCurrentLink()
-    {
-        return linkDatabase.GetData(currentLinkIndex);
-    }
 
     public void Save()
     {
-        mapData.SetEnemyPoints(currentLinkIndex, spawnPoints.ToArray());
-        mapData.SetPlayerPoint(currentLinkIndex, playerSpawnPoint);
+        mapData.SetEnemyPoints(spawnPoints.ToArray());
+        mapData.SetPlayerPoint(playerSpawnPoint);
 
         onPointsChanged.Invoke();
     }
     
     public void SetLinkIndex()
     {
-        if (int.TryParse(inputLinkIndex.text, out var index))
-        {
-            if (index == currentLinkIndex)
-            {
-                inputLinkIndex.text = index.ToString();
-                return;
-            }
-            ChangeLink(index);
-        }
-        else
-        {
-            inputLinkIndex.text = currentLinkIndex.ToString();
-        }
+        // if (int.TryParse(inputLinkIndex.text, out int index))
+        // {
+        //     if (index == maxSpawnsCount)
+        //     {
+        //         inputLinkIndex.text = index.ToString();
+        //         return;
+        //     }
+        //     ChangeLink(index);
+        // }
+        // else
+        // {
+        //     inputLinkIndex.text = maxSpawnsCount.ToString();
+        // }
     }
     
     public void SetStageIndex()
@@ -76,33 +71,31 @@ public class CombatMapEditor : MonoBehaviour
     private void SetSpawnPositions()
     {
         //set player spawn
-        playerSpawnPoint = mapData.TryGetPlayerPoint(currentLinkIndex, out var playerPoint)
+        playerSpawnPoint = mapData.TryGetPlayerPoint(out Vector3Int playerPoint)
             ? playerPoint : Hex.zero;
 
         //set enemies spawn
         spawnPoints.Clear();
-        if (mapData.TryGetEnemyPoints(currentLinkIndex, out var points))
+        mapData.TryGetAllEnemyPoints(out var points);
+            
+        foreach (Vector3Int point in points)
         {
-            foreach (var point in points)
-            {
-                spawnPoints.Add(point);
-            }
+            spawnPoints.Add(point);
         }
         
         onPointsChanged.Invoke();
     }
     
-    private void ChangeLink(int linkIndex)
-    {
-        currentLinkIndex = linkIndex;
-        SetSpawnPositions();
-    }
+    // private void ChangeLink(int linkIndex)
+    // {
+    //     SetSpawnPositions();
+    // }
 
     private void ChangeMap(CombatStageData data)
     {
         mapData = data;
         
-        var loader = FindObjectOfType<MapSaveAndLoader>();
+        MapSaveAndLoader loader = FindObjectOfType<MapSaveAndLoader>();
         loader.saveData = data;
         loader.LoadMap();
 

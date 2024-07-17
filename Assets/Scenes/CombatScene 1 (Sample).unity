@@ -4870,9 +4870,6 @@ MonoBehaviour:
   onAnyUnitMoved:
     m_PersistentCalls:
       m_Calls: []
-  onPlayerMoved:
-    m_PersistentCalls:
-      m_Calls: []
   onAnyUnitDead:
     m_PersistentCalls:
       m_Calls: []
@@ -23471,6 +23468,9 @@ MonoBehaviour:
   passiveIndexList: 
   infiniteActionPointTrigger: 0
   lightFootTrigger: 0
+  freeReloadTrigger: 0
+  goldenBulletCount: 0
+  coverType: 0
   currentRound: 0
   onTurnStart:
     m_PersistentCalls:
@@ -23494,6 +23494,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onHpChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onWeaponChange:
     m_PersistentCalls:
       m_Calls: []
   onMoved:

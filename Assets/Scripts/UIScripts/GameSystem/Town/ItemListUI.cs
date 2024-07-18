@@ -73,6 +73,7 @@ public class ItemListUI : UIElement
             t.Instance.transform.SetAsLastSibling();
         }
 
+        _townIndex = townIndex;
         _itemUI = itemUI;
         itemUI.TypeButtonLocalize();
         _listShadow.GetComponent<Image>().enabled = (GetComponent<RectTransform>().sizeDelta.y <= _itemListElementContainer.GetComponent<RectTransform>().sizeDelta.y);

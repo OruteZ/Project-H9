@@ -119,7 +119,7 @@ public class CustomOutline : MonoBehaviour
         ClearOutline();
         foreach (var renderer in renderers)
         {
-
+            if (renderer is null) continue;
             // Append outline shaders
             var materials = renderer.sharedMaterials.ToList();
 

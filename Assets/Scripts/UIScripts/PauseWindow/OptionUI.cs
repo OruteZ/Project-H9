@@ -42,6 +42,18 @@ public class OptionUI : UISystem
     {
         LoadOption(GameManager.instance.user.optionSetting);
         SetOptionWindow();
+
+        _optionWindow.transform.Find("Option Text").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2000];
+        _optionWindow.transform.Find("Volume Option/Volume Text").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2001];
+        _optionWindow.transform.Find("Volume Option/Main Volume Bar/Texts/Master Volume Text").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2002];
+        _optionWindow.transform.Find("Volume Option/BGM Volume Bar/Texts/BGM Volume Text").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2003];
+        _optionWindow.transform.Find("Volume Option/SFX Volume Bar/Texts/SFX Volume Text").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2004];
+        _optionWindow.transform.Find("Screen Option/Screen Text").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2005];
+        _optionWindow.transform.Find("Screen Option/Full Screen Toggle/Full Screen Text").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2006];
+        _optionWindow.transform.Find("Language Option/Language Text").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2007];
+
+        _optionWindow.transform.Find("Close Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[14];
+        _optionWindow.transform.Find("Reset Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[15];
     }
     public OptionSetting GetOptionSetting()
     {
@@ -72,7 +84,11 @@ public class OptionUI : UISystem
     {
         if (_optionSetting.lauguage != prevLanguage)
         {
+            UIManager.instance.SetUILanguage(_optionSetting.lauguage);
             _lauguageChangePopup.SetActive(true);
+            _lauguageChangePopup.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2008];
+            _lauguageChangePopup.transform.Find("Buttons/Yes Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[10];
+            _lauguageChangePopup.transform.Find("Buttons/No Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[11];
         }
         else
         {
@@ -89,8 +105,9 @@ public class OptionUI : UISystem
         GameManager.instance.Save();
         UIManager.instance.pauseMenuUI.BackToTitle();
     }
-    public void OnClickCancelLanguageBtn() 
+    public void OnClickCancelLanguageBtn()
     {
+        UIManager.instance.SetUILanguage(prevLanguage);
         _optionSetting.lauguage = prevLanguage;
         CloseUI();
     }

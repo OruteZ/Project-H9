@@ -176,7 +176,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public void EndTurn()
     {
 #if UNITY_EDITOR
-        Debug.Log(unitName + " Turn Ended");
+        //Debug.Log(unitName + " Turn Ended");
 #endif
         onTurnEnd.Invoke(this);
 
@@ -403,6 +403,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
         onActionStart.Invoke(activeUnitAction, targetPosition);
         activeUnitAction.Execute();
+        if (this is Player) UIManager.instance.combatUI.combatPopupTextUI.ClearText();
         return true;
     }
 
@@ -483,14 +484,14 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         if (action.IsSelectable() is false) return;
         if (action.GetCost() > currentActionPoint)
         {
-            Debug.Log("Cost is loss, Cost is " + action.GetCost());
+            //Debug.Log("Cost is loss, Cost is " + action.GetCost());
             return;
         }
 
         if (HasStatusEffect(StatusEffectType.Stun)) return;
 
 #if UNITY_EDITOR
-        Debug.Log("Select Action : " + action);
+        //Debug.Log("Select Action : " + action);
 #endif
 
         activeUnitAction = action;
@@ -503,6 +504,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             Debug.Log("actionSuccess: " + actionSuccess);
 
             if (actionSuccess is false) ClearBusy();
+        }
+        else
+        {
+            UIManager.instance.combatUI.combatPopupTextUI.SetActionSeleteTextUI(action);
         }
     }
 

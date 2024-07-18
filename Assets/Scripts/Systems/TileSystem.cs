@@ -188,7 +188,6 @@ public class TileSystem : MonoBehaviour
     /// </summary>
     public void AddLink(Vector3Int position, float rotation, int linkIndex, int mapIndex = 1, bool isRepeatable = false)
     {
-        Debug.Log("Add Link Call");
         
         //if link that has same position with tile already exist, skip
         var tile = GetTile(position);

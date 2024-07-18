@@ -77,6 +77,10 @@ public class DynamiteAction : BaseAction
         
         Explode();
     }
+    public override int GetSkillIndex() 
+    {
+        return 12001;
+    }
 
     #region PRIVATE
 

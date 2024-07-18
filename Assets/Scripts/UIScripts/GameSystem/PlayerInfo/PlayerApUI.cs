@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class PlayerApUI : UIElement, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject _apElements;
+    [SerializeField] private GameObject _apText;
     [SerializeField] private GameObject _apTooltip;
     void Start()
     {
@@ -28,6 +29,8 @@ public class PlayerApUI : UIElement, IPointerEnterHandler, IPointerExitHandler
 
             _apElements.transform.GetChild(i).GetComponent<PlayerApUIElement>().SetApUIElement(isExist, isFilled, isFlickering);
         }
+
+        _apText.GetComponent<TextMeshProUGUI>().text = curAp.ToString() + " / " + maxAp.ToString();
     }
     public void OnPointerEnter(PointerEventData eventData)
     {

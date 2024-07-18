@@ -30,23 +30,34 @@ public class UnitSystem : MonoBehaviour
     public CombatRewardHelper rewardHelper;
 
     private CustomOutline.Mode[] outlineMode = { CustomOutline.Mode.NULL, CustomOutline.Mode.OutlineAll, CustomOutline.Mode.SilhouetteOnly };
-    private int modeIndex = 0;
+    private int modeIndex = 2;
+
+    private void Start()
+    {
+        SetPlayerOutline();
+        FieldSystem.onStageStart.AddListener(SetPlayerOutline);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(HotKey.changeOutlineModeKey)) 
         {
-            Player player = GetPlayer();
-            if (player is null) return;
-            player.TryGetComponent(out CustomOutline outline);
-            if (outline is null) 
-            {
-                outline = player.AddComponent<CustomOutline>();
-                outline.OutlineColor = Color.red;
-            }
-
-            if (++modeIndex >= outlineMode.Length) modeIndex = 0;
-            outline.OutlineMode = outlineMode[modeIndex];
+            modeIndex++;
+            SetPlayerOutline();
         }
+    }
+    private void SetPlayerOutline()
+    {
+        Player player = GetPlayer();
+        if (player is null) return;
+        player.TryGetComponent(out CustomOutline outline);
+        if (outline is null)
+        {
+            outline = player.AddComponent<CustomOutline>();
+            outline.OutlineColor = Color.red;
+        }
+
+        if (modeIndex >= outlineMode.Length) modeIndex = 0;
+        outline.OutlineMode = outlineMode[modeIndex];
     }
 
     /// <summary>

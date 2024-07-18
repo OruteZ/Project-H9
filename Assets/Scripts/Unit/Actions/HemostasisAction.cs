@@ -40,4 +40,10 @@ public class HemostasisAction : BaseAction
             bleeding.damage--;
         }
     }
+
+    public override int GetSkillIndex()
+    {
+        Debug.LogError("unexpected access");
+        return 0;
+    }
 }

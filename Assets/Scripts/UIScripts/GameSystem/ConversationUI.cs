@@ -14,11 +14,8 @@ public class ConversationUI : UISystem
 
     public bool isConverstating { get; private set; }
 
-    public QuestInfo _questInfo;
-    private bool _isStartQuest;
+    private List<(QuestInfo, bool)> _conversationQueue;
 
-    private QuestInfo _tmpQuestInfo;
-    private bool _tmpIsStartQuest;
     private List<ConversationInfo> _conversationInfo;
     private List<ConversationInfo> _groupInfo;
     private int _sequenceNumber;
@@ -34,8 +31,7 @@ public class ConversationUI : UISystem
             Debug.LogError("대화 테이블을 찾을 수 없습니다.");
             return;
         }
-        _questInfo = null;
-        _isStartQuest = true;
+        _conversationQueue = new();
         _groupInfo = null;
         _sequenceNumber = 0;
 
@@ -86,16 +82,8 @@ public class ConversationUI : UISystem
 
     public void PrepareToStartConversation(QuestInfo info, bool isQuestStarting)
     {
-        _tmpQuestInfo = _questInfo;
-        _tmpIsStartQuest = _isStartQuest;
-
-        _questInfo = info;
-        _isStartQuest = isQuestStarting;
-        if (!_isStartQuest)
-        {
-            UIManager.instance.gameSystemUI.pinUI.ClearPinUI();
-            StartNextConversation();
-        }
+        _conversationQueue.Add((info, isQuestStarting));
+        if (!isConverstating) { StartNextConversation(); }
     }
     public void ProgressConversation() 
     {
@@ -117,40 +105,48 @@ public class ConversationUI : UISystem
         _groupInfo = null;
         _sequenceNumber = 0;
         _conversationWindow.SetActive(false);
-        isConverstating = false;
-        
-        
 
-        if (_isStartQuest)
+        if (_conversationQueue[0].Item2)
         {
-            UIManager.instance.gameSystemUI.questUI.AddQuestListUI(_questInfo);
-            _questInfo = null;
+            UIManager.instance.gameSystemUI.questUI.AddQuestListUI(_conversationQueue[0].Item1);
         }
         else
         {
             // todo : 임시 엔딩 추가를 위한 코드입니다. 차후 삭제해야 합니다.
-            if (_questInfo is { Index: 13 })
+            if (_conversationQueue[0].Item1 is { Index: 13 })
             {
                 Debug.LogError("엔딩 씬으로 이동합니다.");
                 SceneManager.LoadScene("EndingScene");
             }
-            
-            UIManager.instance.gameSystemUI.questUI.DeleteQuestListUI(_questInfo);
-            _questInfo = _tmpQuestInfo;
-            _isStartQuest = _tmpIsStartQuest;
+            UIManager.instance.gameSystemUI.questUI.DeleteQuestListUI(_conversationQueue[0].Item1);
         }
-        
+        _conversationQueue.RemoveAt(0);
+        isConverstating = false;
+        StopAllCoroutines();
+        StartCoroutine(DelayedStartConversation());
+    }
+    private IEnumerator DelayedStartConversation() 
+    {
+        do
+        {
+            yield return new WaitForSeconds(2.0f);
+        } while (isConverstating);
+
+        StartNextConversation();
+        yield break;
     }
     public void StartNextConversation()
     {
-        if (_questInfo == null) return;
-        if (_isStartQuest)
+        if (_conversationQueue.Count <= 0) return;
+        QuestInfo _curquestInfo = _conversationQueue[0].Item1;
+
+        if (_conversationQueue[0].Item2)
         {
-            _groupInfo = GetConversationGroup(_questInfo.StartConversation);
+            _groupInfo = GetConversationGroup(_curquestInfo.StartConversation);
         }
         else
         {
-            _groupInfo = GetConversationGroup(_questInfo.EndConversation);
+            _groupInfo = GetConversationGroup(_curquestInfo.EndConversation);
         }
         if (_groupInfo == null)
         {

@@ -107,4 +107,8 @@ public class FanningAction : BaseAction, IShootingAction
         
         unit.TryAttack(_target, _hitRateModifier);
     }
+    public override int GetSkillIndex()
+    {
+        return 22001;
+    }
 }

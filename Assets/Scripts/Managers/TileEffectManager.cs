@@ -80,8 +80,6 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     #region PRIVATE
     private void TileEffectSet()
     {
-        Debug.Log("Setting Tile Effect");
-        
         ClearEffect();
         switch (_player.GetSelectedAction().GetActionType())
         {

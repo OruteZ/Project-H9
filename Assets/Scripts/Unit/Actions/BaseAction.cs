@@ -20,7 +20,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     [SerializeField] protected int range;
     [SerializeField] protected int radius;
     [SerializeField] protected int damage;
-    
+
     public void SetData(ActiveInfo info)
     {
         cost = info.cost;
@@ -128,4 +128,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     
     public virtual void TossAnimationEvent(string eventString)
     { }
+    public virtual int GetSkillIndex() 
+    {
+        return 0;
+    }
 }

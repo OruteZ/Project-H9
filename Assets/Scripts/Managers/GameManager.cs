@@ -185,6 +185,7 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             list = playerActiveIndexList;
         }
+        
 
         int previousSkillPositionIndex = -1;
         if (skillInfo.IsActive())
@@ -200,6 +201,7 @@ public class GameManager : Generic.Singleton<GameManager>
                 }
             }
         }
+
         if (previousSkillPositionIndex == -1)
         {
             list.Add(skillInfo.index);
@@ -208,6 +210,9 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             list.Insert(previousSkillPositionIndex, skillInfo.index);
         }
+
+        playerPassiveIndexList = playerPassiveIndexList.Distinct().ToList();
+        playerActiveIndexList = playerActiveIndexList.Distinct().ToList();
     }
     
     public bool IsPioneeredWorldTile(Vector3Int tilePos)

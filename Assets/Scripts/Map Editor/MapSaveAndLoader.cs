@@ -137,11 +137,11 @@ public class MapSaveAndLoader : MonoBehaviour
         }
         
         //instantiate environments
-        foreach (var envData in saveData.GetEnvDataList())
+        foreach (EnvironmentData envData in saveData.GetEnvDataList())
         {
-            var envObj = new GameObject();
-            var meshRenderer = envObj.AddComponent<MeshRenderer>();
-            var meshFilter = envObj.AddComponent<MeshFilter>();
+            GameObject envObj = new GameObject();
+            MeshRenderer meshRenderer = envObj.AddComponent<MeshRenderer>();
+            MeshFilter meshFilter = envObj.AddComponent<MeshFilter>();
             envObj.transform.parent = envParent.transform;
 
             //paste data

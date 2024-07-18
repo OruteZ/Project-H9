@@ -60,8 +60,15 @@ public class CoverAction : BaseAction
         
         // unit.animator.SetTrigger(COVER);
         
-        var coverType = FieldSystem.tileSystem.GetTile(_targetPos).GetTileObject<CoverableObj>().GetCoverType();
-        unit.SetCoverType(coverType);
+        CoverableObj coverObj = FieldSystem.tileSystem.GetTile(_targetPos).GetTileObject<CoverableObj>();
+        if (coverObj == null)
+        {
+            throw new System.Exception(
+                "CoverObj Component is null"
+                + " at " + _targetPos);
+        }
+        
+        coverObj.SetUnit(unit);
         
         // wait until animation is done
         yield return new WaitUntil(() => _animationDone);

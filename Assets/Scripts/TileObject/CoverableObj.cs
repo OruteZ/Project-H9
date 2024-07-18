@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CoverableObj : TileObject, IDamageable
 {
@@ -6,6 +7,7 @@ public class CoverableObj : TileObject, IDamageable
     [SerializeField] private int currentHp;
     
     [SerializeField] private CoverType coverType;
+    [SerializeField] private Unit unit;
     
     public override void SetUp()
     {
@@ -34,6 +36,20 @@ public class CoverableObj : TileObject, IDamageable
     public CoverType GetCoverType()
     {
         return coverType;
+    }
+    
+    public void SetUnit(Unit newUnit)
+    {
+        unit = newUnit;
+        
+        UnityAction onDodged = () => TakeDamage(1, newUnit);
+        
+        newUnit.onDodged.AddListener(onDodged);
+        newUnit.onMoved.AddListener((u) =>
+        {
+            newUnit.onDodged.RemoveListener(onDodged);
+            unit = null;
+        });
     }
 
     #region IDamageable
@@ -74,7 +90,7 @@ public class CoverableObj : TileObject, IDamageable
 
 public enum CoverType
 {
-    Light,
-    Heavy,
-    None
+    LIGHT,
+    HEAVY,
+    NONE
 }

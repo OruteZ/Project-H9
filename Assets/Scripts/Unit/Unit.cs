@@ -93,6 +93,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     [HideInInspector] public UnityEvent<Unit> onDead; //me
     [HideInInspector] public UnityEvent<Unit, int> onHit; // attacker, damage
     [HideInInspector] public UnityEvent<IDamageable> onStartShoot; // target
+    [HideInInspector] public UnityEvent onDodged; // target
 
     [HideInInspector]
     public UnityEvent<IDamageable, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
@@ -113,7 +114,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         _index = index;
         unitName = newName;
         stat = unitStat;
-        coverType = CoverType.None;
+        coverType = CoverType.NONE;
 
         _unitActionArray = GetComponents<IUnitAction>();
         foreach (IUnitAction action in _unitActionArray)
@@ -161,7 +162,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         onTurnStart.Invoke(this);
 
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out var appliedValue);
-        SetCoverType(CoverType.None);
+        SetCoverType(CoverType.NONE);
 
         if (hp <= 0)
         {
@@ -684,8 +685,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         return coverType switch
         {
-            CoverType.Light => -20,
-            CoverType.Heavy => -30,
+            CoverType.LIGHT => -20,
+            CoverType.HEAVY => -30,
             _ => 0
         };
     }

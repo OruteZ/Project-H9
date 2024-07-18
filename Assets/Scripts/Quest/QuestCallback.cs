@@ -14,6 +14,11 @@ public class QuestCallback
                         , UnityAction<QuestInfo> InvokeQuestEnd
         )
     {
+
+        // 퀘스트 앞/뒤 대화 콜백
+        OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.PrepareToStartConversation(q, true); });
+        OnNotifiedQuestEnd.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.PrepareToStartConversation(q, false); });
+
         var watch = DGS.Stopwatch.StartNew();
         foreach (var quest in Quests)
         {
@@ -87,10 +92,6 @@ public class QuestCallback
         }
         watch.Stop();
         Debug.Log($"<color=blue>Quest link time: {watch.ElapsedMilliseconds}</color>");
-
-        // 퀘스트 앞/뒤 대화 콜백
-        OnNotifiedQuestStart.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.PrepareToStartConversation(q, true); });
-        OnNotifiedQuestEnd.AddListener((q) => { UIManager.instance.gameSystemUI.conversationUI.PrepareToStartConversation(q, false); });
 
     }
 }

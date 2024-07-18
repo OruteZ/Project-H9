@@ -86,7 +86,7 @@ public class TurnOrderUIElement : UIElement, IPointerEnterHandler, IPointerExitH
         {
             _frame.color = UICustomColor.EnemyTurnColor;
 
-            Debug.Log(_enemyDatabase.GetInfo(unit.Index).model.name);
+            //Debug.Log(_enemyDatabase.GetInfo(unit.Index).model.name);
             _characterIcon.sprite = Resources.Load<Sprite>(
                 "UnitCapture/" + 
                 _enemyDatabase.GetInfo(unit.Index).model.name);
@@ -144,6 +144,8 @@ public class TurnOrderUIElement : UIElement, IPointerEnterHandler, IPointerExitH
             outline.OutlineColor = Color.red;
         }
         outline.OutlineMode = CustomOutline.Mode.OutlineAll;
+
+        UIManager.instance.combatUI.turnOrderUI.EffectMouseOverEnemy((Enemy)unit);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -156,5 +158,7 @@ public class TurnOrderUIElement : UIElement, IPointerEnterHandler, IPointerExitH
             outline.OutlineColor = Color.red;
         }
         outline.OutlineMode = CustomOutline.Mode.NULL;
+
+        UIManager.instance.combatUI.turnOrderUI.EffectMouseOverEnemy(null);
     }
 }

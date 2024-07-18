@@ -37,7 +37,6 @@ public class FieldSystem : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Field System : Awake");
         tileSystem = GetComponent<TileSystem>();
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();

@@ -125,7 +125,7 @@ public class EnemyDatabase : ScriptableObject
             if (data.index == index) return data;
         }
 
-        Debug.LogError("Wrong index");
+        Debug.LogError("Wrong index: " + index);
         throw new Exception();
     }
 }

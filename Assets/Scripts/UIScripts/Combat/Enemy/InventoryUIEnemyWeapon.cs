@@ -8,7 +8,7 @@ public class InventoryUIEnemyWeapon : InventoryUIBaseElement, IPointerEnterHandl
     [SerializeField] private EnemyInfoUI _infoUI;
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _infoUI.OpenInventoryTooltip(gameObject, GetComponent<RectTransform>().position, false);
+        _infoUI.OpenInventoryTooltip(gameObject, GetComponent<RectTransform>().position, true);
     }
     public void OnPointerExit(PointerEventData eventData)
     {

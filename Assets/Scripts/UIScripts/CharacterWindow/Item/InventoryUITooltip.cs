@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class InventoryUITooltip : UIElement,IPointerExitHandler
 {
+    [SerializeField] private GameObject _itemEquippedText;
     [SerializeField] private GameObject _itemNameText;
     [SerializeField] private GameObject _itemDescriptionText;
     [SerializeField] private GameObject _itemCostUI;
@@ -19,16 +20,16 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
         UIManager.instance.characterUI.itemUI.ClosePopupWindow();
     }
 
-    public void SetInventoryUITooltip(GameObject ui, Vector3 pos, bool isCharacterItem = true)
+    public void SetInventoryUITooltip(GameObject ui, Vector3 pos, bool isAPVisible = false, bool isEquippedItem = false)
     {
         Item item = ui.GetComponent<InventoryUIBaseElement>().item;
         if (item is not null)
         {
-            SetInventoryUITooltip(item.GetData(), pos, isCharacterItem);
+            SetInventoryUITooltip(item.GetData(), pos, isAPVisible, isEquippedItem);
         }
     }
 
-    public void SetInventoryUITooltip(ItemData data, Vector3 pos, bool isCharacterItem = true)
+    public void SetInventoryUITooltip(ItemData data, Vector3 pos, bool isAPVisible = false, bool isEquippedItem = false)
     {
         if (_data == data && GetComponent<RectTransform>().position == pos) return;
 
@@ -44,9 +45,9 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
 
         UIManager.instance.SetUILayer(3);
 
-        SetInventoryTooltipText(data);
+        SetInventoryTooltipText(data, isEquippedItem);
 
-        if (GameManager.instance.CompareState(GameState.Combat) && isCharacterItem)
+        if (GameManager.instance.CompareState(GameState.Combat) && !isAPVisible)
         {
             if (data.itemType == ItemType.Revolver || data.itemType == ItemType.Repeater || data.itemType == ItemType.Shotgun)
             {
@@ -65,10 +66,13 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
         OpenUI();
         StartCoroutine(GetCursorDominion());
     }
-    private void SetInventoryTooltipText(ItemData data)
+    private void SetInventoryTooltipText(ItemData data, bool isEquippedItem)
     {
+        _itemEquippedText.gameObject.SetActive(isEquippedItem);
+
         ItemScript script = GameManager.instance.itemDatabase.GetItemScript(data.nameIdx);
         _itemNameText.GetComponent<TextMeshProUGUI>().text = script.GetName();
+
         string description = data.GetInventoryTooltipContents();
         _itemDescriptionText.GetComponent<TextMeshProUGUI>().text = description;
     }

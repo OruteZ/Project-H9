@@ -70,12 +70,17 @@ public class QuestListElement : UIElement, IPointerClickHandler
     {
         currentQuestInfo = qInfo;
         _questNameText.GetComponent<TextMeshProUGUI>().text = qInfo.QuestName;
-        _questDescriptText.GetComponent<TextMeshProUGUI>().text = "- " + qInfo.QuestTooltip;
-        popupStr = UIManager.instance.UILocalization[31] + "\n" + qInfo.QuestName;
+
+        string desc = "- " + qInfo.QuestTooltip;
+        if (currentQuestInfo.ExpireTurn != -1) desc += " / " + UIManager.instance.UILocalization[205] + ": " + currentQuestInfo.CurTurn;
+        PlayerEvents.OnProcessedWorldTurn.AddListener((t) => { ProgressTurnRemaining(); });
+        _questDescriptText.GetComponent<TextMeshProUGUI>().text = desc;
+
+        popupStr = UIManager.instance.UILocalization[201] + "\n" + qInfo.QuestName;
 
         string[] rewardTexts = { "", "", "", "" };
 
-        _resultText = UIManager.instance.UILocalization[33];
+        _resultText = UIManager.instance.UILocalization[204] + ": ";
         if (qInfo.MoneyReward > 0)
         {
             rewardTexts[0] = qInfo.MoneyReward.ToString() + "$";
@@ -118,18 +123,35 @@ public class QuestListElement : UIElement, IPointerClickHandler
 
         OpenUI();
     }
+    private void ProgressTurnRemaining()
+    {
+        string desc = "- " + currentQuestInfo.QuestTooltip;
+        if (currentQuestInfo.ExpireTurn != -1) desc += " / " + UIManager.instance.UILocalization[205] + ": " + currentQuestInfo.CurTurn;
+        _questDescriptText.GetComponent<TextMeshProUGUI>().text = "- " + currentQuestInfo.QuestTooltip;
+        _questDescriptText.GetComponent<TextMeshProUGUI>().text = desc;
+    }
+    public void FailQuestUI(out string popupStr)
+    {
+        popupStr = UIManager.instance.UILocalization[203];
+        if (!_isDestroying)
+        {
+            _isDestroying = true;
+            CloseUI();
+            return;
+        }
+    }
 
     public void CompleteQuestUI(out string popupStr)
     {
-        popupStr = UIManager.instance.UILocalization[32] + "\n" + _displayText;
-        if (!_isDestroying) 
+        popupStr = UIManager.instance.UILocalization[202] + "\n" + _displayText;
+        if (!_isDestroying)
         {
             _isDestroying = true;
             if (gameObject.activeInHierarchy)
             {
                 StartCoroutine(CompleteQuestEffect());
             }
-            else 
+            else
             {
                 CloseUI();
             }
@@ -150,11 +172,18 @@ public class QuestListElement : UIElement, IPointerClickHandler
         CloseUI();
         yield break;
     }
+    public override void CloseUI()
+    {
+        PlayerEvents.OnProcessedWorldTurn.RemoveListener((t) => { ProgressTurnRemaining(); });
+        base.CloseUI();
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (currentQuestInfo.Pin != null)
         {
+            Vector3Int pinPos = new Vector3Int(currentQuestInfo.Pin[0], currentQuestInfo.Pin[1], currentQuestInfo.Pin[2]);
+            UIManager.instance.gameSystemUI.pinUI.SetPinUI(pinPos);
             UIManager.instance.gameSystemUI.pinUI.OnClickPin();
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenuUI : UISystem
 {
     public OptionUI optionUI { get; private set; }
+    [SerializeField] private GameObject _menuPanel;
     [SerializeField] private LoadUI _loadPanel;
 
     private void Awake()
@@ -16,6 +18,15 @@ public class PauseMenuUI : UISystem
         optionUI = GetComponent<OptionUI>();
 
         //uiSubsystems.Add(optionUI);
+    }
+    private void Start()
+    {
+        _menuPanel.transform.Find("PauseMenu Text").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2100];
+        _menuPanel.transform.Find("Buttons/Resume Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2101];
+        _menuPanel.transform.Find("Buttons/SaveOpen Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2102];
+        _menuPanel.transform.Find("Buttons/Option Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2103];
+        _menuPanel.transform.Find("Buttons/MainMenu Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2104];
+        _menuPanel.transform.Find("Buttons/Exit Button/Text (TMP)").GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[2105];
     }
     public void OnResumeBtnClick()
     {

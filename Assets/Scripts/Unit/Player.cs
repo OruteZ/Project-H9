@@ -163,9 +163,9 @@ public class Player : Unit
             var unitVision = FieldSystem.unitSystem.GetUnit(tile.hexPosition);
             if (unitVision != null)
             {
-                Debug.Log("Unit : " + unitVision.gameObject.name);
-                Debug.Log("Vision Check = " + FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition));
-                Debug.Log("Distance = " + Hex.Distance(hexTransform.position, tile.hexPosition));
+                //Debug.Log("Unit : " + unitVision.gameObject.name);
+                //Debug.Log("Vision Check = " + FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition));
+                //Debug.Log("Distance = " + Hex.Distance(hexTransform.position, tile.hexPosition));
             }
 #endif
         }

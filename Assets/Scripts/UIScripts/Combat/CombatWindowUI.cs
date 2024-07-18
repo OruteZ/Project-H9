@@ -27,7 +27,7 @@ public class CombatWindowUI : UISystem
     /// <summary>
     /// 현재 시작되는 턴 주인에 맞춰서 화면 중앙에 텍스트를 출력하는 기능
     /// </summary>
-    public StartTurnTextUI startTurnTextUI { get; private set; }
+    public CombatPopupTextUI combatPopupTextUI { get; private set; }
     public TurnOrderUI turnOrderUI { get; private set; }
     public CombatResultUI combatResultUI { get; private set; }
     public BuffUI buffUI { get; private set; }
@@ -42,7 +42,7 @@ public class CombatWindowUI : UISystem
         combatActionUI = GetComponent<CombatActionUI>();
         enemyHpUI = GetComponent<EnemyHpUI>();
         enemyStatUI = GetComponent<EnemyStatUI>();
-        startTurnTextUI = GetComponent<StartTurnTextUI>();
+        combatPopupTextUI = GetComponent<CombatPopupTextUI>();
         turnOrderUI = GetComponent<TurnOrderUI>();
         combatResultUI = resultWindowInstance.GetComponent<CombatResultUI>();
         buffUI = GetComponent<BuffUI>();
@@ -50,7 +50,7 @@ public class CombatWindowUI : UISystem
         //uiSubsystems.Add(combatActionUI);
         uiSubsystems.Add(enemyHpUI);
         uiSubsystems.Add(enemyStatUI);
-        uiSubsystems.Add(startTurnTextUI);
+        uiSubsystems.Add(combatPopupTextUI);
         //uiSubsystems.Add(turnOrderUI);
         uiSubsystems.Add(combatResultUI);
         uiSubsystems.Add(buffUI);

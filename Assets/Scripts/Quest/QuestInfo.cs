@@ -42,6 +42,8 @@ public class QuestInfo
     private int _itemReward;
     private int _skillReward;
 
+    private string _questSheriff;
+
     // current infos (not table)
     private bool _isInProgress = false;
     private bool _isCleared = false;
@@ -67,6 +69,7 @@ public class QuestInfo
     public int ExpReward { get => _expReward; }
     public int ItemReward { get => _itemReward; }
     public int SkillReward { get => _skillReward; }
+    public string QuestSheriff { get => _questSheriff; }
 
     public QuestInfo(int index
                     , int questType
@@ -84,7 +87,8 @@ public class QuestInfo
                     , int moneyReward
                     , int expReward
                     , int itemReward
-                    , int skillReward)
+                    , int skillReward
+                    , string questSheriff)
     {
         _index = index;
         _questType = questType;
@@ -103,6 +107,7 @@ public class QuestInfo
         _expReward = expReward;
         _itemReward = itemReward;
         _skillReward = skillReward;
+        _questSheriff = questSheriff;
 
         _curTurn = _expireTurn;
         _curConditionArguments = new int[_conditionArguments.Length];
@@ -225,6 +230,7 @@ public class QuestInfo
     
     public void ProgressExpireTurn()
     {
+        if (!IsInProgress) return;
         _curTurn--;
         if (_curTurn == 0)
         {
@@ -232,7 +238,6 @@ public class QuestInfo
         }
     }
 
-    /// ===========================================================================
     private void StartQuest()
     {
         if (_isCleared) return;

@@ -64,6 +64,7 @@ public class QuestParser
             int expReward = int.Parse(line[14]);
             int itemReward = int.Parse(line[15]);
             int skillReward = int.Parse(line[16]);
+            string questSheriff = line[17];
 
             questInfos.Add(new QuestInfo(index
                                         , questType
@@ -81,7 +82,8 @@ public class QuestParser
                                         , moneyReward
                                         , expReward
                                         , itemReward
-                                        , skillReward));
+                                        , skillReward
+                                        , questSheriff));
         }
         return true;
     }

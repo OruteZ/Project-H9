@@ -167,7 +167,7 @@ public class SkillUI : UISystem
 
     private void UpdateSkillPointUI()
     {
-        _skillPointText.GetComponent<TextMeshProUGUI>().text = "SP: " + _skillManager.GetSkillPoint().ToString();
+        _skillPointText.GetComponent<TextMeshProUGUI>().text = "Skill Point: " + _skillManager.GetSkillPoint().ToString();
     }
 
     public void OnCloseBtnClick()

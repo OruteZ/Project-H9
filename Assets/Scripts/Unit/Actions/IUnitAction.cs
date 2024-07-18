@@ -71,6 +71,8 @@ public interface IUnitAction {
     public void ForceFinish();
 
     public void TossAnimationEvent(string eventString);
+
+    public int GetSkillIndex();
 }
 
 public enum ActionType {

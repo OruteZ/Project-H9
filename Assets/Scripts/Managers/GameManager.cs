@@ -20,9 +20,15 @@ public enum GameState
 public class GameManager : Generic.Singleton<GameManager>
 {
     private const string COMBAT_SCENE_NAME = "CombatScene";
+    
+    [Header("World Transform Camera")]
+    public Canvas worldCanvas;
 
     [HideInInspector]
     public UserData user;
+    
+    
+    [Header("User Data")]
     public Inventory playerInventory;
     [SerializeField]
     public ItemDatabase itemDatabase;

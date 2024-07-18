@@ -691,6 +691,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         };
     }
 
+    public UnityEvent<int, int> OnHpChanged => onHpChanged;
+
     #endregion
 
     public void SetCoverType(CoverType type)

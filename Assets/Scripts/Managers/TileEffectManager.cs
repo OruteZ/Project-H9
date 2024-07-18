@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Generic;
+using Unity.VisualScripting;
 using UnityEngine.Rendering;
 using UnityEngine.Pool;
 
@@ -23,7 +23,7 @@ public enum TileEffectType
 /// <summary>
 /// 타일을 넘겨받으면 원하는 이펙트를 타일에 적용시켜주는 클래스
 /// </summary>
-public class TileEffectManager : Singleton<TileEffectManager>
+public class TileEffectManager : Generic.Singleton<TileEffectManager>
 {
     public GameObject friendlyEffect;
     public GameObject hostileEffect;
@@ -56,6 +56,11 @@ public class TileEffectManager : Singleton<TileEffectManager>
     
     public RectTransform combatCanvas;
     public RectTransform aimEffect;
+    
+    
+    [field : Header("Cover Effect")]
+    public Material coverMaterial;
+    private List<CoverableObj> _coverableObjs;
 
     public void SetPlayer(Player p)
     {
@@ -501,6 +506,22 @@ public class TileEffectManager : Singleton<TileEffectManager>
         foreach (var tile in tiles)
         {
             SetEffectBase(tile.hexPosition, TileEffectType.Friendly);
+            
+            CoverableObj coverable = tile.GetTileObject<CoverableObj>();
+            if (coverable is null) continue;
+
+            var materialList = 
+                coverable.
+                gameObject.
+                GetComponent<MeshRenderer>().
+                materials.ToList();
+            
+            if(materialList.Count > 1) continue;
+            materialList.Add(coverMaterial);
+            
+            coverable.gameObject.GetComponent<MeshRenderer>().materials = materialList.ToArray();
+            
+            _coverableObjs.Add(coverable);
         }
         
         _curCoroutine = StartCoroutine(CoverEffectCoroutine());
@@ -519,7 +540,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
             if (FieldSystem.tileSystem.GetTile(target).visible is false) continue;
             if (Hex.Distance(target, _player.hexPosition) > range) continue;
             
-            var tile = FieldSystem.tileSystem.GetTile(target);
+            Tile tile = FieldSystem.tileSystem.GetTile(target);
             if (tile.GetTileObject<CoverableObj>() is null) continue;
             
             SetEffectTarget(target, TileEffectType.Normal);
@@ -532,6 +553,7 @@ public class TileEffectManager : Singleton<TileEffectManager>
 
         _effectsBase = new Dictionary<Vector3Int, GameObject>();
         _effectsRelatedTarget = new Dictionary<Vector3Int, GameObject>();
+        _coverableObjs = new List<CoverableObj>();
     }
 
     private void ClearEffect()
@@ -545,6 +567,21 @@ public class TileEffectManager : Singleton<TileEffectManager>
         ClearEffect(_effectsRelatedTarget);
 
         aimEffectRectTsf.gameObject.SetActive(false);
+        
+        //remove cover effect
+        foreach (var coverable in _coverableObjs)
+        {
+            var materialList = 
+                coverable.
+                gameObject.
+                GetComponent<MeshRenderer>().
+                materials.ToList();
+            
+            if(materialList.Count <= 1) continue;
+            materialList.RemoveAt(1);
+            
+            coverable.gameObject.GetComponent<MeshRenderer>().materials = materialList.ToArray();
+        }
     }
 
     private void SetEffectBase(Vector3Int position, TileEffectType type)

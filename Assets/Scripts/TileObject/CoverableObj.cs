@@ -9,9 +9,12 @@ public class CoverableObj : TileObject, IDamageable
     [SerializeField] private CoverType coverType;
     [SerializeField] private Unit unit;
     
+    private UnityEvent<int, int> _onHpChanged = new UnityEvent<int, int>();
+    
     public override void SetUp()
     {
         base.SetUp();
+        _onHpChanged.RemoveAllListeners();
         
         currentHp = maxHp;
     }
@@ -84,6 +87,8 @@ public class CoverableObj : TileObject, IDamageable
     {
         return 0;
     }
+
+    public UnityEvent<int, int> OnHpChanged => _onHpChanged;
 
     #endregion
 }

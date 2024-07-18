@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public interface IDamageable
 {
@@ -7,4 +8,6 @@ public interface IDamageable
     int GetCurrentHp();
     int GetMaxHp();
     int GetHitRateModifier();
+    
+    UnityEvent<int, int> OnHpChanged { get; }
 }

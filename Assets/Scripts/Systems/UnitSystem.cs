@@ -14,7 +14,7 @@ public class UnitSystem : MonoBehaviour
     [SerializeField] private EnemyDatabase enemyDB;
     [SerializeField] private PassiveDatabase passiveDB;
     [SerializeField] private ActiveDatabase activeDB;
-    [SerializeField] private BehaviourTreeDatabase aiDB;
+    // [SerializeField] private BehaviourTreeDatabase aiDB;
     [SerializeField] private LinkDatabase linkDB;
     
     public List<Unit> units;
@@ -183,7 +183,7 @@ public class UnitSystem : MonoBehaviour
                 info.stat.ResetModifier();
                 
                 enemy.SetUp(enemy.dataIndex, enemyDB.GetEnemyName(info.nameIndex), (UnitStat)info.stat.Clone(), weaponDB.Clone(info.weaponIndex), info.model, new List<Passive>());
-                enemy.SetupAI(aiDB.GetTree(info.btIndex));
+                // enemy.SetupAI(aiDB.GetTree(info.btIndex));
                 enemy.isVisible = false;
 
                 _totalExp += info.rewardExp;

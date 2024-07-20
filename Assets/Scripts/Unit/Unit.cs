@@ -280,6 +280,11 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
         return default;
     }
+    
+    public IUnitAction GetAction(ActionType actionType)
+    {
+        return _unitActionArray.FirstOrDefault(unitAction => unitAction.GetActionType() == actionType);
+    }
 
     public IUnitAction[] GetUnitActionArray()
     {

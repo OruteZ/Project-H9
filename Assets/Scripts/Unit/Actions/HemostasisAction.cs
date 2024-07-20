@@ -6,7 +6,7 @@ public class HemostasisAction : BaseAction
 {
     public override ActionType GetActionType()
     {
-        return ActionType.Hemostasis;
+        return ActionType.HEMOSTASIS;
     }
 
     public override void SetTarget(Vector3Int targetPos)

@@ -150,13 +150,13 @@ public class LogUI : UISystem
         string actionType = localization[11];
         switch (action.GetActionType())
         {
-            case ActionType.Attack: actionType = localization[12]; break;
-            case ActionType.Dynamite: actionType = localization[13]; break;
-            case ActionType.Fanning: actionType = localization[14]; break;
-            case ActionType.Hemostasis: actionType = localization[15]; break;
-            case ActionType.Move: actionType = localization[16]; break;
-            case ActionType.Reload: actionType = localization[17]; break;
-            case ActionType.ItemUsing: 
+            case ActionType.ATTACK: actionType = localization[12]; break;
+            case ActionType.DYNAMITE: actionType = localization[13]; break;
+            case ActionType.FANNING: actionType = localization[14]; break;
+            case ActionType.HEMOSTASIS: actionType = localization[15]; break;
+            case ActionType.MOVE: actionType = localization[16]; break;
+            case ActionType.RELOAD: actionType = localization[17]; break;
+            case ActionType.ITEM_USING: 
                 int itemIdx = ((ItemUsingAction)action).GetItem().GetData().nameIdx;
                 ItemScript script = GameManager.instance.itemDatabase.GetItemScript(itemIdx);
                 string itemName = script.GetName();

@@ -78,15 +78,15 @@ public interface IUnitAction {
 }
 
 public enum ActionType {
-    None,
-    Move,
-    Spin,
-    Attack,
-    Dynamite,
-    Idle,
-    Reload,
-    Fanning,
-    Hemostasis,
-    ItemUsing,
-    Cover,
+    NONE,
+    MOVE,
+    SPIN,
+    ATTACK,
+    DYNAMITE,
+    IDLE,
+    RELOAD,
+    FANNING,
+    HEMOSTASIS,
+    ITEM_USING,
+    COVER,
 }

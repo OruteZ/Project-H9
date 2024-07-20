@@ -12,7 +12,7 @@ public class ActiveDatabase : ScriptableObject
     #region STATIC
     ActionType GetActionRange(string actionName)
     {
-        return Enum.TryParse<ActionType>(actionName, out var type) ? type : ActionType.None;
+        return Enum.TryParse<ActionType>(actionName, out var type) ? type : ActionType.NONE;
     }
     #endregion
     

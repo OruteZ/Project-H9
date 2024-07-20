@@ -32,7 +32,7 @@ public class FanningAction : BaseAction, IShootingAction
 
     public override ActionType GetActionType()
     {
-        return ActionType.Fanning;
+        return ActionType.FANNING;
     }
 
     public override void SetTarget(Vector3Int targetPos)

@@ -15,7 +15,7 @@ public class ReloadAction : BaseAction
 
     public override ActionType GetActionType()
     {
-        return ActionType.Reload;
+        return ActionType.RELOAD;
     }
 
     public override void SetTarget(Vector3Int targetPos)

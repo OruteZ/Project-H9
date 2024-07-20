@@ -17,7 +17,7 @@ public class DynamiteAction : BaseAction
 
     public override ActionType GetActionType()
     {
-        return ActionType.Dynamite;
+        return ActionType.DYNAMITE;
     }
     
     public override void SetTarget(Vector3Int targetPos)

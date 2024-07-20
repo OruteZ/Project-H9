@@ -8,7 +8,7 @@ public class AttackAction : BaseAction, IShootingAction
 {
 
     private int _atkCount;
-    public override ActionType GetActionType() => ActionType.Attack;
+    public override ActionType GetActionType() => ActionType.ATTACK;
 
     private enum State
     {

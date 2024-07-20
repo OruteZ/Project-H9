@@ -68,7 +68,7 @@ public class EnemyStatUI : UISystem
 
             if (Input.GetMouseButtonDown(1))
             {
-                if (player.GetSelectedAction().GetActionType() is not ActionType.Idle) return;
+                if (player.GetSelectedAction().GetActionType() is not ActionType.IDLE) return;
                 if (enemy.isVisible)
                 {
                     SetEnemyStatUI(enemy);

@@ -7,7 +7,7 @@ public class IdleAction : BaseAction
 {
     public override ActionType GetActionType()
     {
-        return ActionType.Idle;
+        return ActionType.IDLE;
     }
 
     public override void SetTarget(Vector3Int targetPos)

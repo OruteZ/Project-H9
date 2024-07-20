@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class MoveAction : BaseAction
 {
-    public override ActionType GetActionType() => ActionType.Move;
+    public override ActionType GetActionType() => ActionType.MOVE;
 
     private int maxMoveDistance => unit.currentActionPoint;
     private List<Tile> _path;

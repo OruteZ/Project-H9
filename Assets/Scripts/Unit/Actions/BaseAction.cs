@@ -76,31 +76,31 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
     {
         switch (GetActionType())
         {
-            case ActionType.None:
+            case ActionType.NONE:
                 break;
-            case ActionType.Move:
+            case ActionType.MOVE:
                 unit.animator.ResetTrigger(MOVE);
                 break;
-            case ActionType.Spin:
+            case ActionType.SPIN:
                 // unit.animator.ResetTrigger(MOVE);
                 break;
-            case ActionType.Attack:
+            case ActionType.ATTACK:
                 unit.animator.ResetTrigger(SHOOT);
                 break;
-            case ActionType.Dynamite:
+            case ActionType.DYNAMITE:
                 unit.animator.ResetTrigger(DYNAMITE);
                 break;
-            case ActionType.Idle:
+            case ActionType.IDLE:
                 break;
-            case ActionType.Reload:
+            case ActionType.RELOAD:
                 unit.animator.ResetTrigger(RELOAD);
                 break;
-            case ActionType.Fanning:
+            case ActionType.FANNING:
                 unit.animator.ResetTrigger(FANNING);
                 break;
-            case ActionType.Hemostasis:
+            case ActionType.HEMOSTASIS:
                 break;
-            case ActionType.ItemUsing:
+            case ActionType.ITEM_USING:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

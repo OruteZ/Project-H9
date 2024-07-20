@@ -12,7 +12,7 @@ public class CoverAction : BaseAction
     
     public override ActionType GetActionType()
     {
-        return ActionType.Cover;
+        return ActionType.COVER;
     }
 
     public override void SetTarget(Vector3Int targetPos)

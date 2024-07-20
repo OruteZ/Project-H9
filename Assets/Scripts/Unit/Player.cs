@@ -38,7 +38,7 @@ public class Player : Unit
         var isMouseOnTile = TryGetMouseOverTilePos(out var onMouseTilePos);
 
         if (isMouseOnTile && GetSelectedAction().GetActionType() is
-                ActionType.Attack or ActionType.Fanning or ActionType.ItemUsing)
+                ActionType.ATTACK or ActionType.FANNING or ActionType.ITEM_USING)
         {
             var target = FieldSystem.unitSystem.GetUnit(onMouseTilePos);
             if (target is not Player and not null)

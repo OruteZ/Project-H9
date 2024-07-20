@@ -32,6 +32,11 @@ public class ReloadAction : BaseAction
         return 0;
     }
 
+    public override bool CanExecute(Vector3Int targetPos)
+    {
+        return IsSelectable();
+    }
+
     public override bool IsSelectable()
     {
         if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;

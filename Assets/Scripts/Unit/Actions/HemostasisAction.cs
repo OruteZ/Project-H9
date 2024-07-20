@@ -17,6 +17,11 @@ public class HemostasisAction : BaseAction
         return true;
     }
 
+    public override bool CanExecute(Vector3Int targetPos)
+    {
+        return IsSelectable();
+    }
+
     public override bool IsSelectable()
     {
         if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;

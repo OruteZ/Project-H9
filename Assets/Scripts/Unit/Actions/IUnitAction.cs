@@ -42,6 +42,8 @@ public interface IUnitAction {
     /// </summary>
     /// <returns></returns>
     bool CanExecute();
+    
+    bool CanExecute(Vector3Int targetPos);
 
     /// <summary>
     /// 해당 UnitAction을 선택할 수 있는지 여부를 반환합니다.

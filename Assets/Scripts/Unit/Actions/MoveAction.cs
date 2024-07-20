@@ -32,6 +32,14 @@ public class MoveAction : BaseAction
         return 0;
     }
 
+    public override bool CanExecute(Vector3Int targetPos)
+    {
+        SetTarget(targetPos);
+        ReloadPath();
+        
+        return CanExecute();
+    }
+
     public override bool IsSelectable()
     {
         return !unit.CheckAttackMoveTrigger();
@@ -46,7 +54,8 @@ public class MoveAction : BaseAction
     {
         _startPosition = unit.hexPosition;
         _destinationPosition = targetPos;
-        _currentPositionIndex = 1;
+
+        ReloadPath();
     }
 
     public override bool CanExecute()
@@ -57,7 +66,6 @@ public class MoveAction : BaseAction
             return false;
         }
 
-        _path = FieldSystem.tileSystem.FindPath(_startPosition, _destinationPosition, maxMoveDistance);
         if (_path == null)
         {
             Debug.Log("There is no path");
@@ -66,14 +74,14 @@ public class MoveAction : BaseAction
             return false;
         }
         
-        var unitAp = unit.stat.GetOriginalStat(StatType.CurActionPoint);
+        int unitAp = unit.stat.GetOriginalStat(StatType.CurActionPoint);
         //if dist * cost is more than ap, cant move
         if ((_path.Count - 1) * GetCost() > unitAp)
         {
             Debug.Log("not enough ap");
             return false;
         }
-
+        
         if (_path.Count < 1)
         {
             Debug.Log("제자리");
@@ -86,7 +94,22 @@ public class MoveAction : BaseAction
     private void Awake()
     {
         _currentPositionIndex = -1;
-    }   
+    }
+
+    private void ReloadPath()
+    {
+        
+        if (_path is not null &&
+            _path[0].hexPosition == _startPosition &&
+            _path[^1].hexPosition == _destinationPosition)
+        {
+            _currentPositionIndex = 1;
+            return;
+        }
+        
+        _path = FieldSystem.tileSystem.FindPath(_startPosition, _destinationPosition, maxMoveDistance);
+        _currentPositionIndex = 1;
+    }
 
     protected override IEnumerator ExecuteCoroutine()
     {
@@ -167,7 +190,7 @@ public class MoveAction : BaseAction
         return rotationSpeed;
     }
 
-    public bool isThereAPathLeft()
+    public bool IsThereAPathLeft()
     {
         //Debug.Log($"{_path?.Count} - {_currentPositionIndex}");
         return _path?.Count - 1 > _currentPositionIndex;

@@ -51,6 +51,14 @@ public class FanningAction : BaseAction, IShootingAction
         return false;
     }
 
+    public override bool CanExecute(Vector3Int targetPos)
+    {
+        if (FieldSystem.unitSystem.GetUnit(targetPos) == unit) return false;
+        if (IsThereWallBetweenUnitAndTarget(targetPos)) return false;
+        
+        return true;
+    }
+
     public override bool IsSelectable()
     {
         if (unit.weapon.currentAmmo == 0) return false;

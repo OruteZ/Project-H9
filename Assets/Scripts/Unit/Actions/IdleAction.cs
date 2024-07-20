@@ -25,6 +25,11 @@ public class IdleAction : BaseAction
         return 0;   
     }
 
+    public override bool CanExecute(Vector3Int targetPos)
+    {
+        return false;
+    }
+
     public override bool IsSelectable()
     {
         return true;

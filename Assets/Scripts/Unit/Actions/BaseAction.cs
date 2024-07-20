@@ -34,6 +34,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 
     public abstract ActionType GetActionType();
     public abstract bool CanExecute();
+    public abstract bool CanExecute(Vector3Int targetPos);
 
     public void Execute()
     {

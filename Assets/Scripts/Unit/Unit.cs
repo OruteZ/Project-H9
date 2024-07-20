@@ -381,6 +381,16 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     protected bool TryExecuteUnitAction(Vector3Int targetPosition)
     {
+        if (IsExecutable(targetPosition) is false) return false;
+
+        onActionStart.Invoke(activeUnitAction, targetPosition);
+        activeUnitAction.Execute();
+        if (this is Player) UIManager.instance.combatUI.combatPopupTextUI.ClearText();
+        return true;
+    }
+
+    public bool IsExecutable(Vector3Int targetPosition)
+    {
         if (activeUnitAction is null)
         {
             Debug.Log("Active action is null");
@@ -400,10 +410,13 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             Debug.Log("Already Executing");
             return false;
         }
+        
+        if (activeUnitAction.GetCost() > currentActionPoint)
+        {
+            Debug.Log("Cost is loss, Cost is " + activeUnitAction.GetCost());
+            return false;
+        }
 
-        onActionStart.Invoke(activeUnitAction, targetPosition);
-        activeUnitAction.Execute();
-        if (this is Player) UIManager.instance.combatUI.combatPopupTextUI.ClearText();
         return true;
     }
 

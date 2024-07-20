@@ -57,6 +57,26 @@ public class ItemUsingAction : BaseAction
         return true;
     }
 
+    public override bool CanExecute(Vector3Int targetPos)
+    {
+        if (_item is null) return false;
+        if (_itemUsedTrigger) return false;
+        if (_item.IsImmediate()) return true;
+        
+        if (FieldSystem.tileSystem.GetTile(targetPos) is null)
+        {
+            Debug.LogWarning("center tile is null");
+            return false;
+        }
+        if (range < Hex.Distance(unit.hexPosition, targetPos))
+        {
+            Debug.LogWarning("Too Far to throw Item");
+            return false;
+        }
+
+        return true;
+    }
+
     public override bool IsSelectable()
     {
         if (_itemUsedTrigger) return false;

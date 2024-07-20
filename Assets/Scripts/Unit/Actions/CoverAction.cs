@@ -39,6 +39,25 @@ public class CoverAction : BaseAction
         return true;
     }
 
+    public override bool CanExecute(Vector3Int targetPos)
+    {
+        var tile = FieldSystem.tileSystem.GetTile(targetPos);
+        
+        if (tile is null)
+        {
+            Debug.LogWarning("target tile is null");
+            return false;
+        }
+        
+        if (tile.GetTileObject<CoverableObj>() is null)
+        {
+            Debug.LogWarning("target tile has no cover");
+            return false;
+        }
+        
+        return true;
+    }
+
     public override bool IsSelectable()
     {
         return true;

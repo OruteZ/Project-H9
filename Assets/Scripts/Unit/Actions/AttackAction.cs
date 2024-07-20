@@ -22,6 +22,27 @@ public class AttackAction : BaseAction, IShootingAction
     // private State _state;
     // private float _stateTimer;
 
+    public override bool CanExecute(Vector3Int targetPos)
+    {
+        if (IsThereWallBetweenUnitAnd(targetPos))
+        {
+            Debug.Log("There is wall. cant attack");
+            return false;
+        }
+
+        if (weapon.GetWeaponType() == ItemType.Shotgun)
+        {
+            // if distance is greater than range, return false
+            if (Hex.Distance(unit.hexPosition, _target.hexPosition) > weapon.GetRange())
+            {
+                Debug.Log("Distance is greater than range, cant attack");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public override bool IsSelectable()
     {
         if (weapon.currentAmmo == 0) return false;

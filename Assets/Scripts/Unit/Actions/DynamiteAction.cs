@@ -31,6 +31,23 @@ public class DynamiteAction : BaseAction
         return false;
     }
 
+    public override bool CanExecute(Vector3Int targetPos)
+    {
+        if (FieldSystem.tileSystem.GetTile(targetPos) is null)
+        {
+            Debug.LogWarning("center tile is null");
+            return false;
+        }
+
+        if (range < Hex.Distance(unit.hexPosition, targetPos))
+        {
+            Debug.LogWarning("Too Far to throw bomb");
+            return false;
+        }
+
+        return true;
+    }
+
     public override bool IsSelectable()
     {
         if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;

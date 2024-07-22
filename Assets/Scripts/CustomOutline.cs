@@ -136,7 +136,7 @@ public class CustomOutline : MonoBehaviour
     {
         foreach (var renderer in renderers)
         {
-
+            if (renderer == null || renderer.sharedMaterials == null) continue;
             // Remove outline shaders
             var materials = renderer.sharedMaterials.ToList();
 

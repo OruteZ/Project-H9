@@ -33,7 +33,6 @@ public class PlayerSummaryStatusUI : UIElement
         
         
         InitExpectedValues();
-        SetCurrentStatusUI();
     }
 
     void StageStart()
@@ -41,6 +40,7 @@ public class PlayerSummaryStatusUI : UIElement
         InitExpectedValues();
         FieldSystem.turnSystem.onTurnChanged.AddListener(InitExpectedValues);
         FieldSystem.unitSystem.GetPlayer().onActionStart.AddListener((a, p) => { InitExpectedValues(); });
+        FieldSystem.unitSystem.GetPlayer().onWeaponChange.AddListener((w) => { InitExpectedValues(); });
     }
     
     public void InitExpectedValues() 

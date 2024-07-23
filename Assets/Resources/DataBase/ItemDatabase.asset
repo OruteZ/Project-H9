@@ -397,7 +397,7 @@ MonoBehaviour:
     itemEffectDuration: 0
     itemPrice: 0
     weaponDamage: 1
-    weaponAmmo: 2
+    weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
     weaponCriticalDamage: 0
@@ -677,101 +677,107 @@ MonoBehaviour:
     _itemName: null
     _itemDescription: null
   - _itemIndex: 601
-    _itemName: Raw Meat
-    _itemDescription: Restore hp by <itemEffectAmount>
+    _itemName: "\uB0A0\uACE0\uAE30"
+    _itemDescription: "\uCCB4\uB825 <itemEffectAmount> \uD68C\uBCF5"
   - _itemIndex: 701
-    _itemName: Knife
-    _itemDescription: Throw it at the enemy and deal <itemEffectAmount> damage
+    _itemName: "\uD22C\uCC99\uC6A9 \uB2E8\uAC80"
+    _itemDescription: "\uC801\uC5D0\uAC8C \uB358\uC838 <itemEffectAmount> \uD53C\uD574\uB97C
+      \uC785\uD798"
   - _itemIndex: 801
-    _itemName: Splint
-    _itemDescription: Reduce <keyword:16> stack by <itemEffectAmount>
+    _itemName: "\uBD80\uBAA9"
+    _itemDescription: "<keyword:16> <itemEffectAmount>\uC2A4\uD0DD \uAC10\uC18C"
   - _itemIndex: 901
-    _itemName: Cigar
-    _itemDescription: Increase concentration by <itemEffectAmount> for <itemEffectDuration>
-      turn(s)
+    _itemName: "\uB2F4\uBC30"
+    _itemDescription: "<itemEffectDuration>\uD134 \uB3D9\uC548 \uC9D1\uC911\uB825
+      <itemEffectAmount> \uC0C1\uC2B9"
   - _itemIndex: 1001
-    _itemName: Matchbox
-    _itemDescription: Throw it at the enemy and give <keyword:10> <itemEffectAmount>
-      stack(s)
+    _itemName: "\uC131\uB0E5\uAC11"
+    _itemDescription: "\uC801\uC5D0\uAC8C \uB358\uC838 <keyword:10> <itemEffectAmount>\uC2A4\uD0DD
+      \uBD80\uC5EC"
   - _itemIndex: 101
-    _itemName: Thomas' Letter
-    _itemDescription: 
+    _itemName: "\uD1A0\uB9C8\uC2A4\uC758 \uD3B8\uC9C0"
+    _itemDescription: "\uD1A0\uB9C8\uC2A4\uAC00 \uAC00\uC9C0\uACE0 \uC788\uB358 \uD3B8\uC9C0"
   - _itemIndex: 301
-    _itemName: Paterson Revolver
+    _itemName: "\uD328\uD130\uC2A8 \uB9AC\uBCFC\uBC84"
     _itemDescription: 
   - _itemIndex: 302
-    _itemName: Dragoon Revolver
+    _itemName: "\uB4DC\uB798\uAD70 \uB9AC\uBCFC\uBC84"
     _itemDescription: 
   - _itemIndex: 303
-    _itemName: Double Action Revolver
+    _itemName: "\uB354\uBE14\uC561\uC158 \uB9AC\uBCFC\uBC84"
     _itemDescription: 
   - _itemIndex: 304
-    _itemName: Schofield Revolver
+    _itemName: "\uC2A4\uCF54\uD544\uB4DC \uB9AC\uBCFC\uBC84"
     _itemDescription: 
   - _itemIndex: 305
-    _itemName: Peacemaker
-    _itemDescription: Sturdy and reliable revolver
+    _itemName: "\uD53C\uC2A4\uBA54\uC774\uCEE4"
+    _itemDescription: "\uACAC\uACE0\uD558\uACE0 \uC2E0\uB8B0\uC131\uC774 \uC88B\uC740
+      \uB9AC\uBCFC\uBC84"
   - _itemIndex: 401
-    _itemName: Henry Rifle
+    _itemName: "\uD5E8\uB9AC \uC18C\uCD1D"
     _itemDescription: 
   - _itemIndex: 402
-    _itemName: Spencer Rifle
+    _itemName: "\uC2A4\uD39C\uC11C \uC18C\uCD1D"
     _itemDescription: 
   - _itemIndex: 403
-    _itemName: Yellow Boy
+    _itemName: "\uC610\uB85C\uC6B0 \uBCF4\uC774"
     _itemDescription: 
   - _itemIndex: 404
-    _itemName: Springfield
+    _itemName: "\uC2A4\uD504\uB9C1\uD544\uB4DC"
     _itemDescription: 
   - _itemIndex: 405
-    _itemName: Bolt Action Rifle
+    _itemName: "\uBCFC\uD2B8\uC561\uC158 \uC18C\uCD1D"
     _itemDescription: 
   - _itemIndex: 501
-    _itemName: Double Barrel Shotgun
+    _itemName: "\uB354\uBE14\uBC30\uB7F4 \uC0B0\uD0C4\uCD1D"
     _itemDescription: 
   - _itemIndex: 602
-    _itemName: Canteen
-    _itemDescription: Restore hp by <itemEffectAmount>
+    _itemName: "\uC218\uD1B5"
+    _itemDescription: "\uCCB4\uB825 <itemEffectAmount> \uD68C\uBCF5"
   - _itemIndex: 603
-    _itemName: Coffee
-    _itemDescription: Restore hp by <itemEffectAmount>
+    _itemName: "\uCEE4\uD53C"
+    _itemDescription: "\uCCB4\uB825 <itemEffectAmount> \uD68C\uBCF5"
   - _itemIndex: 604
-    _itemName: Jerky
-    _itemDescription: Restore hp by <itemEffectAmount>
+    _itemName: "\uC721\uD3EC"
+    _itemDescription: "\uCCB4\uB825 <itemEffectAmount> \uD68C\uBCF5"
   - _itemIndex: 605
-    _itemName: Canned Beans
-    _itemDescription: Restore hp by <itemEffectAmount>
+    _itemName: "\uCF69 \uD1B5\uC870\uB9BC"
+    _itemDescription: "\uCCB4\uB825 <itemEffectAmount> \uD68C\uBCF5"
   - _itemIndex: 702
-    _itemName: Spike
-    _itemDescription: Throw it at the enemy and deal <itemEffectAmount> damage
+    _itemName: "\uBABB"
+    _itemDescription: "\uC801\uC5D0\uAC8C \uB358\uC838 <itemEffectAmount> \uD53C\uD574\uB97C
+      \uC785\uD798"
   - _itemIndex: 703
-    _itemName: Pickaxe
-    _itemDescription: Throw it at the enemy and deal <itemEffectAmount> damage
+    _itemName: "\uACE1\uAD2D\uC774"
+    _itemDescription: "\uC801\uC5D0\uAC8C \uB358\uC838 <itemEffectAmount> \uD53C\uD574\uB97C
+      \uC785\uD798"
   - _itemIndex: 704
-    _itemName: Knife
-    _itemDescription: Throw it at the enemy and deal <itemEffectAmount> damage
+    _itemName: "\uB2E8\uAC80"
+    _itemDescription: "\uC801\uC5D0\uAC8C \uB358\uC838 <itemEffectAmount> \uD53C\uD574\uB97C
+      \uC785\uD798"
   - _itemIndex: 705
-    _itemName: Dynamite
-    _itemDescription: Throw it at the enemy and deal <itemEffectAmount> damage
+    _itemName: "\uB2E4\uC774\uB108\uB9C8\uC774\uD2B8"
+    _itemDescription: "\uC801\uC5D0\uAC8C \uB358\uC838 <itemEffectAmount> \uD53C\uD574\uB97C
+      \uC785\uD798"
   - _itemIndex: 802
-    _itemName: Sandbag
-    _itemDescription: Reduce <keyword:10> stack by <itemEffectAmount>
+    _itemName: "\uBAA8\uB798\uC8FC\uBA38\uB2C8"
+    _itemDescription: "<keyword:10> <itemEffectAmount>\uC2A4\uD0DD \uAC10\uC18C"
   - _itemIndex: 803
-    _itemName: Whisky
-    _itemDescription: Reduce <keyword:15> stack by <itemEffectAmount>
+    _itemName: "\uC704\uC2A4\uD0A4"
+    _itemDescription: "<keyword:15> <itemEffectAmount>\uC2A4\uD0DD \uAC10\uC18C"
   - _itemIndex: 902
-    _itemName: Leather Boots
-    _itemDescription: Increase speed by <itemEffectAmount> for <itemEffectDuration>
-      turn(s)
+    _itemName: "\uAC00\uC8FD \uBD80\uCE20"
+    _itemDescription: "<itemEffectDuration>\uD134 \uB3D9\uC548 \uC18D\uB3C4 <itemEffectAmount>
+      \uC0C1\uC2B9"
   - _itemIndex: 903
-    _itemName: Scope
-    _itemDescription: Increase sight range by <itemEffectAmount> for <itemEffectDuration>
-      turn(s)
+    _itemName: "\uC870\uC900\uACBD"
+    _itemDescription: "<itemEffectDuration>\uD134 \uB3D9\uC548 \uC2DC\uC57C \uAC70\uB9AC
+      <itemEffectAmount> \uC99D\uAC00"
   - _itemIndex: 1002
-    _itemName: Ball and Chain
-    _itemDescription: Sprinkle salt on the enemy and give <keyword:13> <itemEffectAmount>
-      stack(s)
+    _itemName: "\uC871\uC1C4"
+    _itemDescription: "\uC801\uC5D0\uAC8C \uCC44\uC6CC <keyword:13> <itemEffectAmount>\uC2A4\uD0DD
+      \uBD80\uC5EC"
   - _itemIndex: 1003
-    _itemName: Wanted Poster
-    _itemDescription: Swing at the enemy and give <keyword:14> <itemEffectAmount>
-      stack(s)
+    _itemName: "\uD604\uC0C1\uC218\uBC30\uC9C0"
+    _itemDescription: "\uC801\uC744 \uD5A5\uD574 \uD718\uB458\uB7EC <keyword:14>
+      <itemEffectAmount>\uC2A4\uD0DD \uBD80\uC5EC"

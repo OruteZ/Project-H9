@@ -31,7 +31,7 @@ public class PlayerMagazineUIElement : UIElement
 
     public virtual void Reload(int maxAmmo, Magazine magazine, int expectedCnt = 0)
     {
-        if (maxAmmo < 0 || _elements.Count <= maxAmmo)
+        if (maxAmmo < 0 || _elements.Count < maxAmmo)
             Debug.LogError($"HUD magazine UI => SetMaxSize()'s size is incorrect. ({gameObject.name} maxAmmo:{maxAmmo})");
 
 

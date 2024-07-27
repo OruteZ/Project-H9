@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using KieranCoppins.DecisionTrees;
+using PassiveSkill;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -14,6 +16,15 @@ public class EnemyAI : MonoBehaviour
     
     [SerializeField]
     private Unit _unit;
+    
+    [SerializeField]
+    private int attackCnt = 0;
+    
+    [SerializeField]
+    private int moveCnt = 0;
+    
+    public int AtkCount => attackCnt;
+    public int MoveCount => moveCnt;
     
     public Vector3Int playerPosMemory;
 
@@ -41,12 +52,66 @@ public class EnemyAI : MonoBehaviour
         StartCoroutine(result.Execute());
     }
     
-    public Vector3Int GetPlayerPosMemory()
+    public bool GetPlayerPosMemory(out Vector3Int result)
     {
-        return playerPosMemory;
+        ref Vector3Int playerMemory = ref playerPosMemory;
+        Vector3Int playerPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
+
+        if (playerMemory == playerPos)
+        {
+            result = playerMemory;
+            return true;
+        }
+        if (FieldSystem.tileSystem.VisionCheck(GetUnit().hexPosition, playerPos))
+        {
+            playerMemory = playerPos;
+            result = playerMemory;
+
+            return true;
+        }
+        if(GetUnit().stat.sightRange < Hex.Distance(GetUnit().hexPosition, playerPos))
+        {
+            playerMemory = playerPos;
+            result = playerMemory;
+            
+            return true;
+        }
+
+        result = Hex.none;
+        return false;
+    }
+
+    public void ReloadCounts()
+    {
+        int cost = _unit.stat.GetStat(StatType.CurActionPoint);
+        bool hasInfShoot = _unit.GetAllPassiveList().Any(p
+            => p.GetEffectType().Any(e => e == PassiveEffectType.InfinityShootPoint)
+            );
+        bool hasDoubleShoot = _unit.GetAllPassiveList().
+            Any(p => p.GetEffectType().Any(e => e == PassiveEffectType.DoubleShootPoint)
+            );
+
+        if (hasInfShoot)
+        {
+            attackCnt = cost;
+            moveCnt = 0;
+        }
+        
+        else if (hasDoubleShoot)
+        {
+            attackCnt = 2;
+            moveCnt = cost - 2;
+        }
+        
+        else
+        {
+            attackCnt = 1;
+            moveCnt = cost - 1;
+        }
     }
 }
 
+[Serializable]
 public struct AIResult
 {
     //constructor

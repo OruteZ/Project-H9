@@ -1,11 +1,16 @@
 using KieranCoppins.DecisionTrees;
 using UnityEngine;
 
-public class IsOutOfSightPos : H9Condition
+public class OutOfSight : H9Function<bool>
 {
-    [HideInInspector] [SerializeField] private Function<Vector3Int> position;
-
-    public IsOutOfSightPos(Function<Vector3Int> position)
+    [SerializeField]
+    private ActionType actionType;
+    
+    [HideInInspector] 
+    [SerializeField] 
+    private Function<Vector3Int> position;
+    
+    public OutOfSight(Function<Vector3Int> position)
     {
         this.position = position;
     }
@@ -14,11 +19,6 @@ public class IsOutOfSightPos : H9Condition
     {
         base.Initialise(metaData);
         position.Initialise(metaData);
-    }
-
-    public override DecisionTreeNode GetBranch()
-    {
-        return Evaluate() ? TrueNode : FalseNode;
     }
     
     private bool Evaluate()
@@ -37,5 +37,15 @@ public class IsOutOfSightPos : H9Condition
         }
              
         return false;
+    }
+
+    public override bool Invoke()
+    {
+        return Evaluate();
+    }
+
+    public override string GetSummary(BaseNodeView nodeView)
+    {
+        return "Check if target is out of sight";
     }
 }

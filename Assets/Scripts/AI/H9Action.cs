@@ -10,7 +10,7 @@ public abstract class H9Action : Action
     {
         base.Initialise(metaData);
         
-        Debug.Log("Initialising action" + this.name);
+        Debug.Log("Initialising action" + name);
         ai = (metaData as H9DecisionTree)?.GetAI();
     }
 

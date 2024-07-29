@@ -1487,5 +1487,16 @@ MonoBehaviour:
     position: {x: 0, y: -0.7, z: 0}
     rotation: 0
     scale: {x: 100, y: 14.9, z: 100}
-  enemySpawnPoints: []
-  playerSpawnPoint: {x: 0, y: 0, z: 0}
+  enemySpawnPoints:
+  - {x: 2, y: 6, z: -8}
+  - {x: 3, y: 5, z: -8}
+  - {x: 4, y: 4, z: -8}
+  - {x: 5, y: 3, z: -8}
+  - {x: 6, y: 2, z: -8}
+  - {x: 7, y: 1, z: -8}
+  - {x: 7, y: 4, z: -11}
+  - {x: 8, y: 3, z: -11}
+  - {x: 7, y: 3, z: -10}
+  - {x: 7, y: 2, z: -9}
+  - {x: 9, y: 1, z: -10}
+  playerSpawnPoint: {x: 0, y: 3, z: -3}

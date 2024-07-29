@@ -4,22 +4,34 @@ using UnityEngine;
 
 public class Distance : H9Function<int>
 {
-    [SerializeField] [HideInInspector] private Vector3Int posA;
-    [SerializeField, HideInInspector] private Vector3Int posB;
+    [SerializeField, HideInInspector] private Function<Vector3Int> posA;
+    [SerializeField, HideInInspector] private Function<Vector3Int> posB;
     
     //constructor
-    public Distance(Vector3Int posA, Vector3Int posB)
+    public Distance(Function<Vector3Int> posA, Function<Vector3Int> posB)
     {
         this.posA = posA;
         this.posB = posB;
     }
 
+    public override void Initialise<T1>(T1 metaData)
+    {
+        base.Initialise(metaData);
+        posA.Initialise(metaData);
+        posB.Initialise(metaData);
+    }
+
     public override int Invoke()
     {
-        return Hex.Distance(posA, posB);
+        return Hex.Distance(posA.Invoke(), posB.Invoke());
     }
     
     public override string GetSummary(BaseNodeView nodeView)
+    {
+        return "Get distance to target";
+    }
+    
+    public override string GetDescription(BaseNodeView nodeView)
     {
         return "Get distance to target";
     }

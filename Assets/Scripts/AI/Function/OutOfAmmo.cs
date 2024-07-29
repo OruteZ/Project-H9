@@ -11,4 +11,14 @@ public class OutOfAmmo : H9Function<bool>
     {
         return "Check if unit is out of ammo";
     }
+    
+    public override void Initialise<T1>(T1 metaData)
+    {
+        base.Initialise(metaData);
+    }
+
+    public override string GetDescription(BaseNodeView nodeView)
+    {
+        return "Check if unit is out of ammo";
+    }
 }

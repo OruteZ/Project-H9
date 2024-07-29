@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using KieranCoppins.DecisionTrees;
 using PassiveSkill;
 using UnityEditor;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class Enemy : Unit
     [Header("Index")]
     public int dataIndex;
     
-    // [SerializeField] private BehaviourTree ai;
+    [SerializeField] EnemyAI ai;
     private static readonly int IDLE = Animator.StringToHash("Idle");
     private static readonly int START_TURN = Animator.StringToHash("StartTurn");
 
@@ -24,30 +25,44 @@ public class Enemy : Unit
         base.SetUp(index, newName, unitStat, weapon, unitModel, passiveList);
     }
 
-    // public void SetupAI(BehaviourTree ai)
-    // {
-    //     if (ai is null)
-    //     {
-    //         Debug.LogError("Ai is null");
-    //         
-    //         #if UNITY_EDITOR
-    //         EditorApplication.isPaused = true;
-    //         #else
-    //         throw new System.Exception("Ai is null");
-    //         #endif
-    //     }
-    //
-    //     this.ai = Instantiate(ai);
-    //     this.ai.Setup(this);
-    // }
-    //
+    public void SetupAI(DecisionTree tree)
+    {
+        if (ai is null)
+        {
+            Debug.LogError("Ai is null");
+            
+            #if UNITY_EDITOR
+            EditorApplication.isPaused = true;
+            #else
+            throw new System.Exception("Ai is null");
+            #endif
+        }
+    
+        ai.Setup(this, tree);
+    }
+    
     public void Update()
     {
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
         if (FieldSystem.unitSystem.IsCombatFinish(out var none)) return;
+        
+        var result = ai.Think();
+        if (result.action is null)
+        {
+            //end turn
+            FieldSystem.turnSystem.EndTurn();
+            return;
+        }
 
-        // ai.Operate();
+        if (TrySelectAction(result.action) && TryExecute(result.position))
+        {
+            //do nothing : Success Action
+        }
+        else
+        {
+            FieldSystem.turnSystem.EndTurn();
+        }
     }
 
     public override void TakeDamage(int damage, Unit attacker = null,  Damage.Type type = Damage.Type.Default)
@@ -72,7 +87,7 @@ public class Enemy : Unit
             return false;
         }
 #if UNITY_EDITOR
-        Debug.Log("Select Action : " + action);
+        // Debug.Log("Select Action : " + action);
 #endif
 
         activeUnitAction = action;
@@ -93,5 +108,5 @@ public class Enemy : Unit
         }
     }
 
-    // public BehaviourTree GetAI() => ai;
+    public EnemyAI GetAI() => ai;
 }

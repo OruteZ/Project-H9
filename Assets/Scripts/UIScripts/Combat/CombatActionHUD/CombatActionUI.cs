@@ -226,7 +226,7 @@ public class CombatActionUI : UISystem
     {
         if (UIManager.instance.UIState != GameState.Combat) return;
         if (FieldSystem.turnSystem.turnOwner is not Player) return;
-        if (!FieldSystem.unitSystem.isEnemyExist()) return;
+        if (!FieldSystem.unitSystem.IsEnemyExist()) return;
         _buttonNameTooltip.GetComponent<CombatActionNameTooltip>().CloseUI();
         //Debug.Log(activeBundle + " / " + displayedBundle);
         _activeActionBundle = activeBundle;

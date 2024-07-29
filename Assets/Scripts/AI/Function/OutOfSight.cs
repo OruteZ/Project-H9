@@ -48,4 +48,9 @@ public class OutOfSight : H9Function<bool>
     {
         return "Check if target is out of sight";
     }
+    
+    public override string GetDescription(BaseNodeView nodeView)
+    {
+        return "Check if target is out of sight";
+    }
 }

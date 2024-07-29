@@ -24,6 +24,12 @@ public class AttackAction : BaseAction, IShootingAction
 
     public override bool CanExecute(Vector3Int targetPos)
     {
+        if (FieldSystem.unitSystem.GetUnit(targetPos) is null)
+        {
+            Debug.Log("There is no target, cant attack");
+            return false;
+        }
+        
         if (IsThereWallBetweenUnitAnd(targetPos))
         {
             Debug.Log("There is wall. cant attack");

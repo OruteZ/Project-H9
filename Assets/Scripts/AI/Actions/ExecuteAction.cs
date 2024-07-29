@@ -3,13 +3,26 @@ using System.Collections.Generic;
 using KieranCoppins.DecisionTrees;
 using UnityEngine;
 
-public class ExecuteAction : H9Action
+public class ExecuteAction : H9Action, IAiResult
 {
     [HideInInspector] [SerializeField] private Function<IUnitAction> action;
+    [SerializeField, HideInInspector] private Function<Vector3Int> targetPos;
 
-    public ExecuteAction(Function<IUnitAction> action)
+    public ExecuteAction(Function<IUnitAction> action, Function<Vector3Int> targetPos)
     {
         this.action = action;
+        this.targetPos = targetPos;
+    }
+    
+    public override void Initialise<T1>(T1 metaData)
+    {
+        base.Initialise(metaData);
+        action.Initialise(metaData);
+
+        if (targetPos != null)
+        {
+            targetPos.Initialise(metaData);
+        }
     }
 
     public override IEnumerator Execute()
@@ -18,8 +31,11 @@ public class ExecuteAction : H9Action
         yield break;
     }
     
-    public IUnitAction GetAction()
+    public AIResult GetResult()
     {
-        return action.Invoke();
+        return new AIResult(
+            action.Invoke(), 
+            targetPos != null ? targetPos.Invoke() : Hex.none
+            );
     }
 }

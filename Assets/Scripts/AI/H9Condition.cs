@@ -9,6 +9,6 @@ public abstract class H9Condition : Decision
     {
         base.Initialise(metaData);
         
-        ai = (metaData as H9DecisionTree)?.GetAI();
+        ai = (metaData as EnemyAI);
     }
 }

@@ -14,7 +14,7 @@ public class UnitSystem : MonoBehaviour
     [SerializeField] private EnemyDatabase enemyDB;
     [SerializeField] private PassiveDatabase passiveDB;
     [SerializeField] private ActiveDatabase activeDB;
-    // [SerializeField] private BehaviourTreeDatabase aiDB;
+    [SerializeField] private AIDatabase aiDB;
     [SerializeField] private LinkDatabase linkDB;
     
     public List<Unit> units;
@@ -147,6 +147,7 @@ public class UnitSystem : MonoBehaviour
             if (unit is Player p)
             {
                 #region PLYAER PASSIVE SETUP
+                
                 var playerPassiveIndexList = GameManager.instance.playerPassiveIndexList;
                 if (playerPassiveIndexList == null)
                 {
@@ -159,6 +160,7 @@ public class UnitSystem : MonoBehaviour
                 //remove passive that has null condition && world state
                 if(GameManager.instance.CompareState(GameState.World)) 
                     playerPassiveList.RemoveAll(pas => pas.GetConditionType()[0] is not ConditionType.Null);
+                
                 #endregion
 
                 var activeList = GameManager.instance.playerActiveIndexList;
@@ -183,7 +185,7 @@ public class UnitSystem : MonoBehaviour
                 info.stat.ResetModifier();
                 
                 enemy.SetUp(enemy.dataIndex, enemyDB.GetEnemyName(info.nameIndex), (UnitStat)info.stat.Clone(), weaponDB.Clone(info.weaponIndex), info.model, new List<Passive>());
-                // enemy.SetupAI(aiDB.GetTree(info.btIndex));
+                enemy.SetupAI(aiDB.GetTree(info.btIndex));
                 enemy.isVisible = false;
 
                 _totalExp += info.rewardExp;
@@ -290,24 +292,11 @@ public class UnitSystem : MonoBehaviour
 
         return result;
     }
+    
     public List<Unit> GetUnitListInRange(Vector3Int start, int range)
     {
         var positions = Hex.GetCircleGridList(range, start);
-        var result = new List<Unit>();
-        if (units is null)
-        {
-            return result;
-        }
-
-        foreach (var pos in positions)
-        {
-            if (TryGetUnit(pos, out var u))
-            {
-                result.Add(u);
-            }
-        }
-
-        return result;
+        return GetUnitListInRange(positions);
     }
 
     public void OnUnitMoved(Unit unit)
@@ -347,21 +336,13 @@ public class UnitSystem : MonoBehaviour
         return enemyDB.GetInfo(index);
     }
 
-    public bool isEnemyExist() 
+    public bool IsEnemyExist()
     {
-        foreach (var unit in units) 
-        {
-            if (unit is Enemy) return true;
-        }
-        return false;
+        return units.OfType<Enemy>().Any();
     }
+    
     public int GetEnemyCount()
     {
-        int cnt = 0;
-        foreach (var unit in units)
-        {
-            if (unit is Enemy) cnt++;
-        }
-        return cnt;
+        return units.OfType<Enemy>().Count();
     }
 }

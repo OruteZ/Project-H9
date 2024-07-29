@@ -1,9 +1,9 @@
 using KieranCoppins.DecisionTrees;
 using UnityEngine;
 
-public class GetMaxAtkCount : H9Function<int>
+public class GetAtkCount : H9Function<float>
 {
-    public override int Invoke()
+    public override float Invoke()
     {
         return ai.AtkCount;
     }

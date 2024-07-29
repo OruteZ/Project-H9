@@ -384,6 +384,11 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         SelectAction(itemUsingAction);
     }
 
+    /// <summary>
+    /// 이 함수는 TryExecute에 의해서만 호출되어야 합니다. 그러지 않을경우, Busy처리가 되지 않습니다.
+    /// </summary>
+    /// <param name="targetPosition"></param>
+    /// <returns></returns>
     protected bool TryExecuteUnitAction(Vector3Int targetPosition)
     {
         if (IsExecutable(targetPosition) is false) return false;

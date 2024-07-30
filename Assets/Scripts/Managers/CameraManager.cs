@@ -79,7 +79,7 @@ public class CameraManager : Singleton<CameraManager>
         worldCamera.SetPriority(5);
         _currentUnitCamera = null;
 
-        if (GameManager.instance.CompareState(GameState.Combat))
+        if (GameManager.instance.CompareState(GameState.COMBAT))
         {
             SetCombatCamOption();
         }

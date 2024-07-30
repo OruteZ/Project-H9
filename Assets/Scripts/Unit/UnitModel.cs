@@ -68,7 +68,7 @@ public class UnitModel : MonoBehaviour
         if(weaponModel != null)
             Destroy(weaponModel.gameObject);
         
-        if (GameManager.instance.CompareState(GameState.Combat))
+        if (GameManager.instance.CompareState(GameState.COMBAT))
         {
             weaponModel = Instantiate(weapon.model, hand).GetComponent<WeaponModel>();
             weaponModel.SetHandPosRot(isWesternFrontierAsset);

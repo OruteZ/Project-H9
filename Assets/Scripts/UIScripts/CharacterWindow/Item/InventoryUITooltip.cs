@@ -47,7 +47,7 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
 
         SetInventoryTooltipText(data, isEquippedItem);
 
-        if (GameManager.instance.CompareState(GameState.Combat) && !isAPVisible)
+        if (GameManager.instance.CompareState(GameState.COMBAT) && !isAPVisible)
         {
             if (data.itemType == ItemType.Revolver || data.itemType == ItemType.Repeater || data.itemType == ItemType.Shotgun)
             {

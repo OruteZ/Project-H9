@@ -12,10 +12,10 @@ using DGS = System.Diagnostics;
 
 public enum GameState
 {
-    Combat,
-    World,
-    Editor,
-    None
+    COMBAT,
+    WORLD,
+    EDITOR,
+    NONE
 }
 public class GameManager : Generic.Singleton<GameManager>
 {
@@ -39,7 +39,7 @@ public class GameManager : Generic.Singleton<GameManager>
     public List<QuestInfo> Quests;
     
     [SerializeField]
-    private GameState _currentState = GameState.World;
+    private GameState _currentState = GameState.WORLD;
 
     [SerializeField] private CombatStageData _stageData;
     [SerializeField] private int _currentLinkIndex = -1;
@@ -128,7 +128,7 @@ public class GameManager : Generic.Singleton<GameManager>
         SaveCurrentWorldData();  //Save World Data
         Save(); // Save User Data. World Data랑 하나로 합칠 가능성이 높음.
 
-        ChangeState(GameState.Combat);
+        ChangeState(GameState.COMBAT);
         FieldSystem.onCombatEnter.Invoke(true);
         _currentLinkIndex = linkIndex;
         _stageData = Resources.Load<CombatStageData>($"Map Data/Stage {stageIndex}");
@@ -147,7 +147,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
     public void FinishCombat()
     {
-        ChangeState(GameState.World);
+        ChangeState(GameState.WORLD);
 
         backToWorldTrigger = true;
         LoadingManager.instance.LoadingScene(worldSceneName, () =>
@@ -158,7 +158,7 @@ public class GameManager : Generic.Singleton<GameManager>
 
     public void SetEditor()
     {
-        ChangeState(GameState.Editor);
+        ChangeState(GameState.EDITOR);
     }
 
     public bool CompareState(GameState state)

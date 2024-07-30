@@ -43,7 +43,7 @@ public class CombatPopupTextUI : UISystem
     /// <param name="unit"> 현재 시작되는 턴 주인 </param>
     public void SetStartTurnTextUI(Unit unit) 
     {
-        if (!GameManager.instance.CompareState(GameState.Combat)) return;
+        if (!GameManager.instance.CompareState(GameState.COMBAT)) return;
 
         StopAllCoroutines();
         if (unit is Player)
@@ -70,7 +70,7 @@ public class CombatPopupTextUI : UISystem
     }
     public void SetActionSeleteTextUI(IUnitAction action)
     {
-        if (!GameManager.instance.CompareState(GameState.Combat)) return;
+        if (!GameManager.instance.CompareState(GameState.COMBAT)) return;
         if (FieldSystem.turnSystem.turnOwner is not Player) return;
         if (action is IdleAction) 
         {

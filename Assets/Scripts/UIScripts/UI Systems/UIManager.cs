@@ -79,10 +79,10 @@ public class UIManager : Generic.Singleton<UIManager>
         debugUI = _debugCanvas.GetComponent<DebugUI>();
         infoPopup = _infoPopupCanvas.GetComponent<InfoPopup>();
 
-        UIState = GameState.World;
+        UIState = GameState.WORLD;
         if (!GameManager.instance.CompareState(UIState)) 
         {
-            ChangeScene(GameState.Combat);
+            ChangeScene(GameState.COMBAT);
         }
         if (loading) loading.SetActive(true);
 
@@ -276,12 +276,12 @@ public class UIManager : Generic.Singleton<UIManager>
         //Debug.Log("Current State is " + gameState);
         switch (gameState)
         {
-            case GameState.World:
+            case GameState.WORLD:
                 {
                     ChangeUIToWorldScene();
                     break;
                 }
-            case GameState.Combat:
+            case GameState.COMBAT:
                 {
                     ChangeUIToCombatScene();
                     break;

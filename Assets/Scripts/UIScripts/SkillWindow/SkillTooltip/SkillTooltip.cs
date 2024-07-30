@@ -98,7 +98,7 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         {
             if (_skillManager.IsEnoughSkillPoint())
             {
-                if (GameManager.instance.CompareState(GameState.World))
+                if (GameManager.instance.CompareState(GameState.WORLD))
                 {
                     buttonText.text = UIManager.instance.UILocalization[34];
                     _isButtonInteractable = true;

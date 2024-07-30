@@ -47,12 +47,14 @@ public class CoverableObj : TileObject, IDamageable
         
         UnityAction onDodged = () => TakeDamage(1, newUnit);
         
-        newUnit.onDodged.AddListener(onDodged);
-        newUnit.onMoved.AddListener((u) =>
-        {
-            newUnit.onDodged.RemoveListener(onDodged);
-            unit = null;
-        });
+        
+        // todo : Damage Context »ý¼º
+        // newUnit.onDodged.AddListener(onDodged);
+        // newUnit.onMoved.AddListener((u) =>
+        // {
+        //     newUnit.onDodged.RemoveListener(onDodged);
+        //     unit = null;
+        // });
     }
 
     #region IDamageable

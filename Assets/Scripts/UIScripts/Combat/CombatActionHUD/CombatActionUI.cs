@@ -76,7 +76,7 @@ public class CombatActionUI : UISystem
 
     void Update()
     {
-        if (UIManager.instance.UIState != GameState.Combat) return;
+        if (UIManager.instance.UIState != GameState.COMBAT) return;
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;
 
@@ -149,7 +149,7 @@ public class CombatActionUI : UISystem
     }
     private void InitActions()
     {
-        if (UIManager.instance.UIState != GameState.Combat) return;
+        if (UIManager.instance.UIState != GameState.COMBAT) return;
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;
         UIManager.instance.onStartedCombatTurn.AddListener((u) => { if (u is Player) { SetActionBundle(_baseActionBundle, _baseActionBundle); } else { SetActionBundle(null, null); } });
@@ -224,7 +224,7 @@ public class CombatActionUI : UISystem
 
     private void SetActionBundle(GameObject activeBundle, GameObject displayedBundle)
     {
-        if (UIManager.instance.UIState != GameState.Combat) return;
+        if (UIManager.instance.UIState != GameState.COMBAT) return;
         if (FieldSystem.turnSystem.turnOwner is not Player) return;
         if (!FieldSystem.unitSystem.IsEnemyExist()) return;
         _buttonNameTooltip.GetComponent<CombatActionNameTooltip>().CloseUI();

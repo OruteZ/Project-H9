@@ -14,7 +14,7 @@ public class TurnOrderUI : UISystem
     void Start()
     {
         TurnOrderUIObjectPooling(30);
-        UIManager.instance.onTSceneChanged.AddListener((gs) => { if (gs == GameState.World) CloseUI(); });
+        UIManager.instance.onTSceneChanged.AddListener((gs) => { if (gs == GameState.WORLD) CloseUI(); });
     }
     public override void CloseUI()
     {

@@ -25,7 +25,7 @@ public class AlarmUI : UISystem
     private void Awake()
     {
         CloseUI();
-        UIManager.instance.onTSceneChanged.AddListener((gs) => { if (gs == GameState.World) CloseUI(); });
+        UIManager.instance.onTSceneChanged.AddListener((gs) => { if (gs == GameState.WORLD) CloseUI(); });
 
         ClearAlarmUI();
     }

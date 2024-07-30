@@ -233,7 +233,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     private void EquipWeapon(Weapon newWeapon, bool isOnSetup = false)
     {
-        bool changingInCombat = (GameManager.instance.CompareState(GameState.Combat) && isOnSetup == false);
+        bool changingInCombat = (GameManager.instance.CompareState(GameState.COMBAT) && isOnSetup == false);
         if (changingInCombat && stat.curActionPoint < 4) return;
 
         newWeapon.unit = this;
@@ -364,7 +364,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         if (item is null) return;
         if (!item.IsUsable()) return;
-        if (GameManager.instance.CompareState(GameState.World))
+        if (GameManager.instance.CompareState(GameState.WORLD))
         {
             if (item.IsImmediate())
             {
@@ -538,7 +538,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         if (activeUnitAction is not MoveAction) ConsumeCost(activeUnitAction.GetCost());
 
         ClearBusy();
-        if (GameManager.instance.CompareState(GameState.Combat))
+        if (GameManager.instance.CompareState(GameState.COMBAT))
         {
             var idleAction = GetAction<IdleAction>();
             SelectAction(idleAction is null ? GetAction<MoveAction>() : idleAction);

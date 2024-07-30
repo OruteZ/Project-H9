@@ -74,7 +74,7 @@ public class UnitSystem : MonoBehaviour
         rewardHelper = new CombatRewardHelper(GameManager.instance.itemDatabase);
 
         //get all link data and instantiate enemy
-        if (GameManager.instance.CompareState(GameState.Combat))
+        if (GameManager.instance.CompareState(GameState.COMBAT))
         {
             var linkDataIdx = GameManager.instance.GetLinkIndex();
             var linkData = linkDB.GetData(linkDataIdx);
@@ -132,7 +132,7 @@ public class UnitSystem : MonoBehaviour
                 units.Add(enemy);
             }
         }
-        else if (GameManager.instance.CompareState(GameState.World))
+        else if (GameManager.instance.CompareState(GameState.WORLD))
         {
             //find childeren unit
             var childCount = unitParent.childCount;
@@ -163,7 +163,7 @@ public class UnitSystem : MonoBehaviour
                 var playerPassiveList = playerPassiveIndexList.Select(idx => passiveDB.GetPassive(idx, unit)).ToList();
                 
                 //remove passive that has null condition && world state
-                if(GameManager.instance.CompareState(GameState.World)) 
+                if(GameManager.instance.CompareState(GameState.WORLD)) 
                     playerPassiveList.RemoveAll(pas => pas.GetConditionType()[0] is not ConditionType.Null);
                 
                 #endregion
@@ -179,7 +179,7 @@ public class UnitSystem : MonoBehaviour
                 p.SetUp(-1, "Player", GameManager.instance.user.Stat, 
                     weaponDB.Clone(GameManager.instance.playerWeaponIndex),
                     GameManager.instance.playerModel, playerPassiveList);
-                if (GameManager.instance.CompareState(GameState.World))
+                if (GameManager.instance.CompareState(GameState.WORLD))
                 {
                     p.hexTransform.position = GameManager.instance.runtimeWorldData.playerPosition;
                 }
@@ -219,7 +219,7 @@ public class UnitSystem : MonoBehaviour
             unit.onDead.AddListener(OnUnitDead);
             unit.onMoved.AddListener(OnUnitMoved);
             
-            if(GameManager.instance.CompareState(GameState.Combat)) {
+            if(GameManager.instance.CompareState(GameState.COMBAT)) {
                 CameraManager.instance.CreateUnitCamera(unit);
             }
             
@@ -229,7 +229,7 @@ public class UnitSystem : MonoBehaviour
 
     public bool IsCombatFinish(out bool hasPlayerWin)
     {
-        if (GameManager.instance.CompareState(GameState.World))
+        if (GameManager.instance.CompareState(GameState.WORLD))
         {
             Debug.LogError("Wrong function Call : check finish combat in world scene");
             throw new NotSupportedException();

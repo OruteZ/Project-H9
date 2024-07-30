@@ -31,7 +31,7 @@ public class EnemyHpUI : UISystem
     /// </summary>
     public void SetEnemyHpBars()
     {
-        if (GameManager.instance.CompareState(GameState.World)) return;
+        if (GameManager.instance.CompareState(GameState.WORLD)) return;
         List<Unit> units = FieldSystem.unitSystem.units;
         List<Enemy> newEnemies = new List<Enemy>();
         foreach (Unit unit in units)

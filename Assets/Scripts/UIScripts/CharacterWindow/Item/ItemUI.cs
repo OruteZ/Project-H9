@@ -188,7 +188,7 @@ public class ItemUI : UISystem
                 bool isWeaponItem = (_draggedItem is WeaponItem);
                 if (isEquipmentCell)
                 {
-                    if (GameManager.instance.CompareState(GameState.Combat) && FieldSystem.unitSystem.GetPlayer().currentActionPoint < Inventory.WEAPON_COST) break;
+                    if (GameManager.instance.CompareState(GameState.COMBAT) && FieldSystem.unitSystem.GetPlayer().currentActionPoint < Inventory.WEAPON_COST) break;
                     if (!isWeaponItem || !_draggedItem.TryEquip()) continue;
                     GameManager.instance.playerInventory.EquipItem(_draggedItem.GetData().itemType, GetInventoryUIIndex(_originalDraggedElement));
                 }
@@ -252,7 +252,7 @@ public class ItemUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (_inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().isEquipable)
         {
-            if (GameManager.instance.CompareState(GameState.Combat) && (player.currentActionPoint < Inventory.WEAPON_COST)) return;
+            if (GameManager.instance.CompareState(GameState.COMBAT) && (player.currentActionPoint < Inventory.WEAPON_COST)) return;
             //Item tmpItem = _interactionItem;
             //_interactionElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(_equippedItem);
             //_equippedElement.GetComponent<InventoryUIElement>().SetInventoryUIElement(tmpItem);
@@ -261,7 +261,7 @@ public class ItemUI : UISystem
         }
         else
         {
-            if (GameManager.instance.CompareState(GameState.Combat) && (player.currentActionPoint < Inventory.ITEM_COST)) return;
+            if (GameManager.instance.CompareState(GameState.COMBAT) && (player.currentActionPoint < Inventory.ITEM_COST)) return;
             GameManager.instance.playerInventory.UseItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
             UIManager.instance.SetUILayer(1);
             //UIManager.instance.gameSystemUI.OnCharacterBtnClick();

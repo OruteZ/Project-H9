@@ -83,20 +83,20 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
             case "WorldScene":
             case "UITestScene":
                 {
-                    return GameState.World;
+                    return GameState.WORLD;
                 }
             case "CombatScene":
                 {
-                    return GameState.Combat;
+                    return GameState.COMBAT;
                 }
             case "TitleScene":
                 {
-                    return GameState.None;
+                    return GameState.NONE;
                 }
         }
 
         Debug.LogError(sceneName + "이라는 Scene을 찾을 수 없습니다.");
-        return GameState.World;
+        return GameState.WORLD;
     }
     
     /// <summary>
@@ -108,8 +108,8 @@ public class LoadingManager : Generic.Singleton<LoadingManager>
     {
         return gameState switch
         {
-            GameState.World => "WorldScene",
-            GameState.Combat => "CombatScene",
+            GameState.WORLD => "WorldScene",
+            GameState.COMBAT => "CombatScene",
             _ => null
         };
     }

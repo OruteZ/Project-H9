@@ -128,7 +128,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     {
         //if world state, get sight range, else get action po
         int range = 0;
-        if(GameManager.instance.CompareState(GameState.Combat))
+        if(GameManager.instance.CompareState(GameState.COMBAT))
             range = _player.stat.curActionPoint / _player.GetAction<MoveAction>().GetCost();
         else
             range = _player.stat.sightRange;
@@ -145,7 +145,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             }
             
             TileEffectType effectType = TileEffectType.Normal;
-            if (GameManager.instance.CompareState(GameState.Combat))
+            if (GameManager.instance.CompareState(GameState.COMBAT))
             {
                 int distance = Hex.Distance(tile.hexPosition, _player.hexPosition);
                 int sightRange = _player.stat.sightRange;
@@ -170,7 +170,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     private IEnumerator MovableTileEffectCoroutine()
     {
         int range = 0;
-        if(GameManager.instance.CompareState(GameState.Combat))
+        if(GameManager.instance.CompareState(GameState.COMBAT))
             range = _player.stat.curActionPoint / _player.GetAction<MoveAction>().GetCost();
         else
             range = _player.stat.sightRange;
@@ -516,9 +516,9 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     [SerializeField] private int coverEffectRange;
     private void CoverEffect()
     {
-        const int range = 1;
+        const int RANGE = 1;
 
-        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, range).Where(
+        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, RANGE).Where(
             tile => tile.GetTileObject<CoverableObj>() is not null);
 
         foreach (Tile tile in tiles)
@@ -663,6 +663,18 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         if (_effectsRelatedTarget.ContainsKey(position) is false)
         {
             var gObject = Instantiate(GetEffect(type), worldPosition, Quaternion.identity);
+            _effectsRelatedTarget.Add(position, gObject);
+        }
+    }
+    
+    private void SetEffectTarget(Vector3Int position, GameObject effect)
+    {
+        Vector3 worldPosition = Hex.Hex2World(position);
+        worldPosition.y += 0.03f;
+
+        if (_effectsRelatedTarget.ContainsKey(position) is false)
+        {
+            var gObject = Instantiate(effect, worldPosition, Quaternion.identity);
             _effectsRelatedTarget.Add(position, gObject);
         }
     }

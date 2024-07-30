@@ -67,7 +67,7 @@ public class Link : TileObject
     public override void SetVisible(bool value)
     {
         //if editor mode, value always true
-        if (GameManager.instance.CompareState(GameState.Editor)) value = true;
+        if (GameManager.instance.CompareState(GameState.EDITOR)) value = true;
         
         meshRenderer.enabled = value && IsEncounterEnable();
         _vision = value;
@@ -134,7 +134,7 @@ public class Link : TileObject
 #if UNITY_EDITOR
     private void Update()
     {
-        if (GameManager.instance.CompareState(GameState.Editor)) return;
+        if (GameManager.instance.CompareState(GameState.EDITOR)) return;
         if (_linkIndex == 0)
         {
             Debug.LogError("link index가 0입니다! 플레이를 끄고 빨리 고치세요 휴먼!" +

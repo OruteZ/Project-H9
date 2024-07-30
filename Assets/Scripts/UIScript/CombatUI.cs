@@ -20,7 +20,7 @@ public class CombatUI : MonoBehaviour
     
     private void System_OnTurnChanged()
     {
-        if (FieldSystem.turnSystem.turnOwner is Player && GameManager.instance.CompareState(GameState.Combat))
+        if (FieldSystem.turnSystem.turnOwner is Player && GameManager.instance.CompareState(GameState.COMBAT))
         {
             TurnOnPlayerActionUI();
         }

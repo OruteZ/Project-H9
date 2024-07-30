@@ -29,7 +29,7 @@ public class Player : Unit
     }
     public void Update()
     {
-        if (GameManager.instance.CompareState(GameState.Editor)) return;
+        if (GameManager.instance.CompareState(GameState.EDITOR)) return;
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
         if (UIManager.instance.isMouseOverUI) return;
@@ -55,7 +55,7 @@ public class Player : Unit
             else SetBusy();
         }
 
-        if (Input.GetMouseButton(1) && GameManager.instance.CompareState(GameState.Combat))
+        if (Input.GetMouseButton(1) && GameManager.instance.CompareState(GameState.COMBAT))
         {
             SelectAction(GetAction<IdleAction>());
             UIManager.instance.combatUI.ClosePopupWindow();
@@ -75,7 +75,7 @@ public class Player : Unit
     {
         base.StartTurn();
         
-        if (GameManager.instance.CompareState(GameState.World))
+        if (GameManager.instance.CompareState(GameState.WORLD))
         {
             SelectAction(GetAction<MoveAction>());
             ReloadSight();
@@ -115,7 +115,7 @@ public class Player : Unit
                 return false;
             }
 
-            if (GameManager.instance.CompareState(GameState.World))
+            if (GameManager.instance.CompareState(GameState.WORLD))
             {
                 pos = tile.hexPosition;
                 return true;
@@ -155,7 +155,7 @@ public class Player : Unit
                     if (tileObj is Link) PlayerEvents.OnEnteredLinkinSight?.Invoke(tileObj as Link); // 으아악 미친코드다
             }
 
-            if(GameManager.instance.CompareState(GameState.World) && tile.inSight) continue;
+            if(GameManager.instance.CompareState(GameState.WORLD) && tile.inSight) continue;
             var isInVision = FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition);
             tile.inSight = isInVision && isInDistance;
 

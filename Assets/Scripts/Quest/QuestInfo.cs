@@ -204,7 +204,7 @@ public class QuestInfo
     {
         if (_isCleared) return;
 
-        if (!GameManager.instance.CompareState(GameState.World))
+        if (!GameManager.instance.CompareState(GameState.WORLD))
             return;
         
         if (!_isInProgress)
@@ -218,7 +218,7 @@ public class QuestInfo
     {
         if (_isCleared) return;
 
-        if (!GameManager.instance.CompareState(GameState.World))
+        if (!GameManager.instance.CompareState(GameState.WORLD))
             return;
 
         if (_isInProgress)
@@ -257,7 +257,7 @@ public class QuestInfo
                 return;
             }
             
-            if (GameManager.instance.CompareState(GameState.Combat))
+            if (GameManager.instance.CompareState(GameState.COMBAT))
             {
                 GameManager.instance.runtimeWorldData.TryAddLink(linkHex, 0, linkIdx);
             }

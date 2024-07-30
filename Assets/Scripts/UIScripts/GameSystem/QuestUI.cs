@@ -30,11 +30,11 @@ public class QuestUI : UISystem
 
         UIManager.instance.onTSceneChanged.AddListener((s) =>
         {
-            if (s == GameState.World)
+            if (s == GameState.WORLD)
             {
                 _questWindow.SetActive(true);
             }
-            else if (s == GameState.Combat)
+            else if (s == GameState.COMBAT)
             {
                 _questWindow.SetActive(false);
             }

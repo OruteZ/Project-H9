@@ -30,7 +30,7 @@ public class SoundManager : Singleton<SoundManager>
         
         FieldSystem.onStageAwake.AddListener(() =>
         {
-            if(GameManager.instance.CompareState(GameState.World))
+            if(GameManager.instance.CompareState(GameState.WORLD))
                 PlayBGM(worldBgmClips, Random.Range(0, worldBgmClips.Length));
             
             else 
@@ -43,7 +43,7 @@ public class SoundManager : Singleton<SoundManager>
         // if bgm play is at finish line, play next bgm
         if (!bgmSource.isPlaying)
         {
-            if(GameManager.instance.CompareState(GameState.World))
+            if(GameManager.instance.CompareState(GameState.WORLD))
                 PlayBGM(worldBgmClips, Random.Range(0, worldBgmClips.Length));
             
             else 

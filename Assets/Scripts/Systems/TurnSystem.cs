@@ -20,7 +20,7 @@ public class TurnSystem : MonoBehaviour
     public int GetTurnNumber()
     {
         // compare state
-        if (GameManager.instance.CompareState(GameState.World))
+        if (GameManager.instance.CompareState(GameState.WORLD))
         {
             return _worldTurnNumber;
         }
@@ -32,7 +32,7 @@ public class TurnSystem : MonoBehaviour
 
     public int GetTurnNumber(GameState state)
     {
-        if (state == GameState.World)
+        if (state == GameState.WORLD)
         {
             return _worldTurnNumber;
         }
@@ -57,7 +57,7 @@ public class TurnSystem : MonoBehaviour
     {
        CalculateTurnOwner();
 
-       if (GameManager.instance.CompareState(GameState.World))
+       if (GameManager.instance.CompareState(GameState.WORLD))
        {
            Player player = FieldSystem.unitSystem.GetPlayer();
            player.onMoved.AddListener((a) =>
@@ -106,7 +106,7 @@ public class TurnSystem : MonoBehaviour
     }
     private void CalculateTurnOwner()
     {
-        if (GameManager.instance.CompareState(GameState.Combat) is false)
+        if (GameManager.instance.CompareState(GameState.COMBAT) is false)
         {
             turnOwner = FieldSystem.unitSystem.GetPlayer();
         }

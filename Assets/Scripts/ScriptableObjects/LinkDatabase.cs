@@ -26,10 +26,10 @@ public class LinkDatabase : ScriptableObject
         {
             var newData = new LinkData
             {
-                index = int.Parse(data[(int)LinkColumn.Index]),
-                groupNameIndex = int.Parse(data[(int)LinkColumn.GroupNameIndex]),
-                combatEnemy = FileRead.ConvertStringToArray<int>(data[(int)LinkColumn.CombatEnemy]),
-                model = Resources.Load<GameObject>("Prefab/UnitModels/"+data[(int)LinkColumn.Model]),
+                index = int.Parse(data[(int)LinkColumn.INDEX]),
+                groupNameIndex = int.Parse(data[(int)LinkColumn.GROUP_NAME_INDEX]),
+                combatEnemy = FileRead.ConvertStringToArray<int>(data[(int)LinkColumn.COMBAT_ENEMY]),
+                model = Resources.Load<GameObject>("Prefab/UnitModels/"+data[(int)LinkColumn.MODEL]),
             };
             //if model is null, set NULL_MODEL
             if (newData.model == null)
@@ -102,10 +102,10 @@ public struct LinkData
 
 internal enum LinkColumn
 {
-    Index,
-    GroupNameIndex,
-    CombatEnemy,
-    Model,
+    INDEX,
+    GROUP_NAME_INDEX,
+    COMBAT_ENEMY,
+    MODEL,
 }
 
 //public struct LinkName

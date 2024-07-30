@@ -137,7 +137,7 @@ public class LogUI : UISystem
     
     private void TChangeScene(GameState gameState)
     {
-        if (gameState == GameState.Combat)
+        if (gameState == GameState.COMBAT)
         {
             var message = localization[7];
             _builder.Append($"{message}\n");

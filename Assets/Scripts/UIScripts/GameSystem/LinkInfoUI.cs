@@ -38,7 +38,7 @@ public class LinkInfoUI : UISystem
 
     private void Update()
     {
-        if (!GameManager.instance.CompareState(GameState.World))
+        if (!GameManager.instance.CompareState(GameState.WORLD))
         {
             _uiCloseCount = 0;
             _currentLink = null;

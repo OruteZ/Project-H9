@@ -141,7 +141,7 @@ public class SkillUI : UISystem
         {
             state = LearnStatus.Learned;
         }
-        if (_skill.isLearnable && GameManager.instance.CompareState(GameState.World))
+        if (_skill.isLearnable && GameManager.instance.CompareState(GameState.WORLD))
         {
             state = LearnStatus.Learnable;
         }

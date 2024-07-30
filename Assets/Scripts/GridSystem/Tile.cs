@@ -83,7 +83,7 @@ public class Tile : MonoBehaviour, IEquatable<Tile>
         for (var index = 0; index < environments.Count; index++)
         {
             var obj = environments[index];
-            if (GameManager.instance.CompareState(GameState.Combat))
+            if (GameManager.instance.CompareState(GameState.COMBAT))
             {
                 if (_inSight is false)
                 {

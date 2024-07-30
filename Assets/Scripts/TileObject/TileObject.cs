@@ -75,7 +75,7 @@ public abstract class TileObject : MonoBehaviour
     public virtual void SetVisible(bool value)
     {
         //if editor mode, value always true
-        if (GameManager.instance.CompareState(GameState.Editor)) value = true;
+        if (GameManager.instance.CompareState(GameState.EDITOR)) value = true;
         
         meshRenderer.enabled = value;
         vision = value;

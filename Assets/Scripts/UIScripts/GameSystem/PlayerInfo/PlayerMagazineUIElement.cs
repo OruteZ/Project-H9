@@ -44,7 +44,7 @@ public class PlayerMagazineUIElement : UIElement
         for (int i = maxAmmo - magazine.bullets.Count; i < maxAmmo; i++)
         {
             _elements[i].Fill();
-            if (GameManager.instance.CompareState(GameState.World) || !magazine.bullets[bulletCnt].isGoldenBullet)
+            if (GameManager.instance.CompareState(GameState.WORLD) || !magazine.bullets[bulletCnt].isGoldenBullet)
             {
                 _elements[i].transform.GetChild(1).GetComponent<Image>().sprite = _bulletSprite;
             }

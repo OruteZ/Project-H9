@@ -85,7 +85,7 @@ public class TileSystem : MonoBehaviour
         foreach (Tile t in tilesInChildren)
         {
             AddTile(t);
-            if (GameManager.instance.CompareState(GameState.World) && 
+            if (GameManager.instance.CompareState(GameState.WORLD) && 
                 GameManager.instance.IsPioneeredWorldTile(t.hexPosition) is false)
             {
                 FogOfWar fow = Instantiate(worldFogOfWarPrefab, fogs).GetComponent<FogOfWar>(); 
@@ -94,7 +94,7 @@ public class TileSystem : MonoBehaviour
         }
         
         //if world state
-        if (GameManager.instance.CompareState(GameState.World))
+        if (GameManager.instance.CompareState(GameState.WORLD))
         {
             // get all specific tile index values
             var infos = GameManager.instance.runtimeWorldData.specificCombatIndexedTiles;
@@ -120,7 +120,7 @@ public class TileSystem : MonoBehaviour
         var mapData = GameManager.instance.runtimeWorldData;
         if (mapData is not null)
         {
-            if(GameManager.instance.CompareState(GameState.World)) 
+            if(GameManager.instance.CompareState(GameState.WORLD)) 
                 foreach (LinkObjectData link in mapData.links)
                 {
                     AddLink(link.pos, link.rotation, link.linkIndex, link.combatMapIndex);
@@ -139,7 +139,7 @@ public class TileSystem : MonoBehaviour
         foreach (Tile t in GetAllTiles())
         {
             t.inSight = GameManager.instance.IsPioneeredWorldTile(t.hexPosition) && 
-                        GameManager.instance.CompareState(GameState.World);
+                        GameManager.instance.CompareState(GameState.WORLD);
         }
         
         _gridLayout.LayoutGrid();

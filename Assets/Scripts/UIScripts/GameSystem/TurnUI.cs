@@ -42,7 +42,7 @@ public class TurnUI : UISystem
     public void SetTurnTextUI() 
     {
         int currentTurn = 0;
-        if (GameManager.instance.CompareState(GameState.Combat))
+        if (GameManager.instance.CompareState(GameState.COMBAT))
         {
             Player player = FieldSystem.unitSystem.GetPlayer();
             if (player is null) return;
@@ -97,10 +97,10 @@ public class TurnUI : UISystem
     private bool IsButtonInteractable()
     {
         if (FieldSystem.turnSystem.turnOwner is not Player) return false;
-        if (GameManager.instance.CompareState(GameState.Combat) && FieldSystem.unitSystem.IsCombatFinish(out var none))
+        if (GameManager.instance.CompareState(GameState.COMBAT) && FieldSystem.unitSystem.IsCombatFinish(out var none))
             return false;
         if (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive()) return false;
-        if (GameManager.instance.CompareState(GameState.World) 
+        if (GameManager.instance.CompareState(GameState.WORLD) 
             && FieldSystem.unitSystem.GetPlayer().currentActionPoint != 0 
             && FieldSystem.unitSystem.GetPlayer().GetSelectedAction() is not MoveAction) 
             return false;
@@ -109,7 +109,7 @@ public class TurnUI : UISystem
     }
     private bool IsButtonHighlighted() 
     {
-        if (GameManager.instance.CompareState(GameState.World))
+        if (GameManager.instance.CompareState(GameState.WORLD))
         {
             return (FieldSystem.unitSystem.GetPlayer().currentActionPoint <= 0);
         }

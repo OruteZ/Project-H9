@@ -125,7 +125,7 @@ public class PlayerStatLevelUpUI : UISystem
 
         UIManager.instance.onTSceneChanged.AddListener((gs) =>
             {
-                if (gs == GameState.Combat)
+                if (gs == GameState.COMBAT)
                 {
                     _statLevelUpButton.SetActive(false);
                 }
@@ -203,13 +203,13 @@ public class PlayerStatLevelUpUI : UISystem
     public void AddPlayerStatPoint() 
     {
         _statPoint++;
-        _statLevelUpButton.SetActive(GameManager.instance.CompareState(GameState.World));
+        _statLevelUpButton.SetActive(GameManager.instance.CompareState(GameState.WORLD));
         PlayerEvents.OnIncStatPoint?.Invoke();
     }
 
     public void OpenPlayerStatLevelUpUI()
     {
-        if (!GameManager.instance.CompareState(GameState.World)) return;
+        if (!GameManager.instance.CompareState(GameState.WORLD)) return;
         if (_isOpenUI) return;
         int cnt = 0;
         for (int i = 0; i < _statCards.Length; i++)

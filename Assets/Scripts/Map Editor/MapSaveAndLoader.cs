@@ -172,7 +172,7 @@ public class MapSaveAndLoader : MonoBehaviour
 
     private void Awake()
     {
-        if (GameManager.instance.CompareState(GameState.Combat))
+        if (GameManager.instance.CompareState(GameState.COMBAT))
         {
             saveData = GameManager.instance.GetStageData();
             LoadMap();

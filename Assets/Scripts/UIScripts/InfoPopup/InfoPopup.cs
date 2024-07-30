@@ -92,7 +92,7 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
         {
             if (!user.Events.TryGetValue("INFO_POPUP_COMBAT_TURN", out var value) || value == 0)
             {
-                if (scene == GameState.Combat)
+                if (scene == GameState.COMBAT)
                 {
                     Show(MESSAGE.COMBAT_TURN);
                     user.Events.TryAdd("INFO_POPUP_COMBAT_TURN", 1);
@@ -104,7 +104,7 @@ public class InfoPopup : Generic.Singleton<InfoPopup>
         {
             if (!user.Events.TryGetValue("INFO_POPUP_COMBAT_ACTION", out var value) || value == 0)
             {
-                if (scene == GameState.Combat)
+                if (scene == GameState.COMBAT)
                 {
                     Show(MESSAGE.COMBAT_ACTION);
                     user.Events.TryAdd("INFO_POPUP_COMBAT_ACTION", 1);

@@ -43,7 +43,7 @@ public class InventoryInteractionUI : UIElement
                 {
                     isEquipable = false;
                     _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[39];
-                    if (GameManager.instance.CompareState(GameState.World) && item.GetData().itemType != ItemType.Heal)
+                    if (GameManager.instance.CompareState(GameState.WORLD) && item.GetData().itemType != ItemType.Heal)
                     {
                         _useBtn.SetActive(false);
                     }

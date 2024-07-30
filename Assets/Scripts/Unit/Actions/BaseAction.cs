@@ -102,7 +102,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
                 break;
             case ActionType.ITEM_USING:
                 break;
-            case ActionType.Cover:
+            case ActionType.COVER:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

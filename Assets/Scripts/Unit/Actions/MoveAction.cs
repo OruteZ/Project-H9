@@ -23,7 +23,7 @@ public class MoveAction : BaseAction
 
     public override int GetCost()
     {
-        if (GameManager.instance.CompareState(GameState.World)) return 0;
+        if (GameManager.instance.CompareState(GameState.WORLD)) return 0;
         
         //fracture ? 2 : 1;
         return unit.HasStatusEffect(StatusEffectType.Fracture) ? 2 : 1;

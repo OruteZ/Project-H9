@@ -1,14 +1,14 @@
 using KieranCoppins.DecisionTrees;
 using UnityEngine;
 
-public class FloatCompare : Function<bool>
+public class FloatCompare : H9Function<bool>
 {
     public ComparisonType comparisonType;
     
-    [HideInInspector, SerializeField] private Function<float> value;
-    [SerializeField, HideInInspector] private Function<float> compareWith;
+    [HideInInspector, SerializeField] private H9Function<float> value;
+    [SerializeField, HideInInspector] private H9Function<float> compareWith;
     
-    public FloatCompare(Function<float> value, Function<float> compareWith)
+    public FloatCompare(H9Function<float> value, H9Function<float> compareWith)
     {
         this.value = value;
         this.compareWith = compareWith;

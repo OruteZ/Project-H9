@@ -1,9 +1,9 @@
 using KieranCoppins.DecisionTrees;
 using UnityEngine;
 
-public class GetMaxMoveCount : H9Function<int>
+public class GetMoveCount : H9Function<float>
 {
-    public override int Invoke()
+    public override float Invoke()
     {
         return ai.MoveCount;
     }

@@ -11,13 +11,18 @@ public class Enemy : Unit
     [Header("Index")]
     public int dataIndex;
     
-    [SerializeField] EnemyAI ai;
+    [SerializeField] private EnemyAI ai;
     private static readonly int IDLE = Animator.StringToHash("Idle");
     private static readonly int START_TURN = Animator.StringToHash("StartTurn");
 
     protected override void Awake()
     {
         base.Awake();
+
+        if (ai == null && TryGetComponent(out ai) is false)
+        {
+            ai = gameObject.AddComponent<EnemyAI>();
+        }
     }
 
     public override void SetUp(int index, string newName, UnitStat unitStat, Weapon weapon, GameObject unitModel, List<Passive> passiveList)
@@ -27,9 +32,10 @@ public class Enemy : Unit
 
     public void SetupAI(DecisionTree tree)
     {
-        if (ai is null)
+        // null check : AI
+        if (ai == null)
         {
-            Debug.LogError("Ai is null");
+            Debug.LogError("Enemy Ai Component is null");
             
             #if UNITY_EDITOR
             EditorApplication.isPaused = true;
@@ -37,8 +43,20 @@ public class Enemy : Unit
             throw new System.Exception("Ai is null");
             #endif
         }
-    
-        ai.Setup(this, tree);
+
+        // null check : Decision Tree
+        if (tree == null)
+        {
+            Debug.LogError("Decision Tree is null");
+            
+            #if UNITY_EDITOR
+            EditorApplication.isPaused = true;
+            #else
+            throw new System.Exception("Decision Tree is null");
+            #endif
+        }
+
+        if (ai != null) ai.Setup(this, tree);
     }
     
     public void Update()
@@ -51,7 +69,7 @@ public class Enemy : Unit
         if (result.action is null)
         {
             //end turn
-            FieldSystem.turnSystem.EndTurn();
+            EndTurn();
             return;
         }
 
@@ -61,7 +79,7 @@ public class Enemy : Unit
         }
         else
         {
-            FieldSystem.turnSystem.EndTurn();
+            EndTurn();
         }
     }
 

@@ -7,16 +7,21 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using KieranCoppins.DecisionTrees;
 
 public class UnitSystem : MonoBehaviour
 {
+    [Header("Database")]
     [SerializeField] private WeaponDatabase weaponDB;
     [SerializeField] private EnemyDatabase enemyDB;
     [SerializeField] private PassiveDatabase passiveDB;
     [SerializeField] private ActiveDatabase activeDB;
-    [SerializeField] private AIDatabase aiDB;
     [SerializeField] private LinkDatabase linkDB;
     
+    const string AI_PATH = "AI/";
+    //---
+    
+    [Space(10)]
     public List<Unit> units;
     public UnityEvent<Unit> onAnyUnitMoved;
     public UnityEvent<Unit> onAnyUnitDead;
@@ -181,11 +186,30 @@ public class UnitSystem : MonoBehaviour
             }
             else if(unit is Enemy enemy)
             {
-                var info = enemyDB.GetInfo(enemy.dataIndex);
+                EnemyData info = enemyDB.GetInfo(enemy.dataIndex);
                 info.stat.ResetModifier();
                 
                 enemy.SetUp(enemy.dataIndex, enemyDB.GetEnemyName(info.nameIndex), (UnitStat)info.stat.Clone(), weaponDB.Clone(info.weaponIndex), info.model, new List<Passive>());
-                enemy.SetupAI(aiDB.GetTree(info.btIndex));
+                // enemy.SetupAI();
+
+                string path = AI_PATH + "AI " + info.btIndex;
+                Debug.Log("AI Path : " + path);
+                ScriptableObject ai = Resources.Load<ScriptableObject>(path);
+                if(ai is null)
+                {
+                    Debug.LogError("AI is null, path : " + path);
+                    throw new Exception();
+                }
+                
+                Debug.Log("Found ScriptableObject : " + ai.name);
+                if(ai is DecisionTree dt) {
+                    enemy.SetupAI(dt);
+                }
+                else {
+                    Debug.LogError("AI is not DecisionTree");
+                    throw new Exception();
+                }
+
                 enemy.isVisible = false;
 
                 _totalExp += info.rewardExp;

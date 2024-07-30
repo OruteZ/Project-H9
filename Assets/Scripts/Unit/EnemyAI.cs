@@ -15,10 +15,10 @@ using Action = KieranCoppins.DecisionTrees.Action;
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField]
-    private DecisionTree _tree;
+    private DecisionTree tree;
     
     [SerializeField]
-    private Unit _unit;
+    private Unit unit;
     
     [SerializeField]
     private int attackCnt = 0;
@@ -32,25 +32,30 @@ public class EnemyAI : MonoBehaviour
     public Vector3Int playerPosMemory;
     public Unit GetUnit()
     {
-        return _unit;
+        return unit;
     }
 
     public void Setup(Unit unit, DecisionTree tree)
     {
-        _unit = unit;
+        this.unit = unit;
         playerPosMemory = FieldSystem.unitSystem.GetPlayer().hexPosition;
 
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener((u) =>
         {
-            if (u == _unit)
+            if (u == this.unit)
                 ReloadPlayerPosMemory();
 
             else if (u is Player)
                 ReloadPlayerPosMemory();
         });
+        this.unit.onTurnStart.AddListener((n) =>
+        {
+            ReloadCounts();
+        });
+        this.unit.onFinishAction.AddListener(OnFinishAction);
 
-        _tree = Instantiate(tree);
-        _tree.Initialise(this);
+        this.tree = Instantiate(tree);
+        this.tree.Initialise(this);
     }
     
     /// <summary>
@@ -59,7 +64,7 @@ public class EnemyAI : MonoBehaviour
     /// <returns></returns>
     public AIResult Think()
     {
-        var result = _tree.Root.MakeDecision();
+        var result = tree.Root.MakeDecision();
         if (result is FinishTurn)
         {
             return new AIResult(null, Hex.none);
@@ -70,14 +75,18 @@ public class EnemyAI : MonoBehaviour
             Debug.LogError("result is null");
             return new AIResult(null, Hex.none);
         }
+
+        if (result is not IAiResult ret)
+        {
+            Debug.LogError("result is not IAiResult");
+            return new AIResult(null, Hex.none);
+        }
         
-        var ret = result as ExecuteAction;
-        
-        StartCoroutine(ret.Execute());
+        // StartCoroutine(ret.Execute());
         return ret.GetResult();
     }
-    
-    public void ReloadPlayerPosMemory()
+
+    private void ReloadPlayerPosMemory()
     {
         Vector3Int playerPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
 
@@ -99,39 +108,34 @@ public class EnemyAI : MonoBehaviour
         playerPosMemory = playerPos;
     }
 
-    public void ReloadCounts()
+    private void ReloadCounts()
     {
-        int cost = _unit.stat.GetStat(StatType.CurActionPoint);
-        bool hasInfShoot = _unit.GetAllPassiveList().Any(p
+        int ap = unit.stat.GetStat(StatType.CurActionPoint);
+        bool hasInfShoot = unit.GetAllPassiveList().Any(p
             => p.GetEffectType().Any(e => e == PassiveEffectType.InfinityShootPoint)
             );
-        bool hasDoubleShoot = _unit.GetAllPassiveList().
+        bool hasDoubleShoot = unit.GetAllPassiveList().
             Any(p => p.GetEffectType().Any(e => e == PassiveEffectType.DoubleShootPoint)
             );
+        
+        int atkCost = unit.GetAction<AttackAction>().GetCost();
+        int moveCost = unit.GetAction<MoveAction>().GetCost();
 
         if (hasInfShoot)
         {
-            attackCnt = cost;
-            moveCnt = 0;
+            attackCnt = ap / atkCost;
         }
-        
         else if (hasDoubleShoot)
         {
-            attackCnt = 2;
-            moveCnt = cost - 2;
+            attackCnt = Mathf.Clamp(ap / atkCost, 0, 2);
         }
-        
         else
         {
-            attackCnt = 1;
-            moveCnt = cost - 1;
+            attackCnt = Mathf.Clamp(ap / atkCost, 0, 1);
         }
 
-        _unit.onFinishAction.AddListener(OnFinishAction);
-        _unit.onTurnEnd.AddListener((n) =>
-        {
-            _unit.onFinishAction.RemoveListener(OnFinishAction);
-        });
+        int restAp = ap - attackCnt * atkCost;
+        moveCnt = restAp / moveCost;
     }
 
     private void OnFinishAction(IUnitAction ac)

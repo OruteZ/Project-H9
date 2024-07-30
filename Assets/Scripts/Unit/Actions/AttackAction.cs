@@ -35,6 +35,13 @@ public class AttackAction : BaseAction, IShootingAction
             Debug.Log("There is wall. cant attack");
             return false;
         }
+        
+        //vision check
+        if (FieldSystem.tileSystem.VisionCheck(targetPos, unit.hexPosition) is false)
+        {
+            Debug.Log("Target is not in vision, cant attack");
+            return false;
+        }
 
         if (weapon.GetWeaponType() == ItemType.Shotgun)
         {

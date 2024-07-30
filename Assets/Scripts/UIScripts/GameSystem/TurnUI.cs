@@ -50,7 +50,7 @@ public class TurnUI : UISystem
         }
         else 
         {
-            currentTurn = FieldSystem.turnSystem.turnNumber;
+            currentTurn = FieldSystem.turnSystem.GetTurnNumber();
         }
         _turnText.GetComponent<TextMeshProUGUI>().text = "Turn " + currentTurn;
     }

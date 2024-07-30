@@ -57,7 +57,7 @@ public class Revolver : Weapon
 
         finalHitRate = Mathf.Round(10 * finalHitRate) * 0.1f;
         finalHitRate = Mathf.Clamp(finalHitRate, 0, 100);
-        finalHitRate += target.GetHitRateModifier();
+        finalHitRate += target.GetHitRateModifier(unit);
 
 
 #if UNITY_EDITOR

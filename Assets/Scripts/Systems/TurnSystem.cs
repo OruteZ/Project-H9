@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Rendering;
@@ -10,24 +11,61 @@ public class TurnSystem : MonoBehaviour
 {
     [HideInInspector] public UnityEvent onTurnChanged;
     
-    public Unit turnOwner;  
-    public int turnNumber;
+    public Unit turnOwner;
+
+    public int turnNumber => GetTurnNumber();
+    private int _combatTurnNumber;
+    private int _worldTurnNumber;
+
+    public int GetTurnNumber()
+    {
+        // compare state
+        if (GameManager.instance.CompareState(GameState.World))
+        {
+            return _worldTurnNumber;
+        }
+        else
+        {
+            return _combatTurnNumber;
+        }
+    }
+
+    public int GetTurnNumber(GameState state)
+    {
+        if (state == GameState.World)
+        {
+            return _worldTurnNumber;
+        }
+        else
+        {
+            return _combatTurnNumber;
+        }
+    }
 
     private void Start()
     {
-        turnNumber = GameManager.instance.CompareState(GameState.World) ? GameManager.instance.runtimeWorldData.worldTurn : 0;
-        onTurnChanged.AddListener(() => { turnNumber++; 
-            if (GameManager.instance.CompareState(GameState.World)) 
-                GameManager.instance.runtimeWorldData.worldTurn++; }
-        );
+        _worldTurnNumber = GameManager.instance.runtimeWorldData.worldTurn;
+        _combatTurnNumber = 0;
         
         onTurnChanged.AddListener(() => UIManager.instance.gameSystemUI.turnUI.SetTurnTextUI());
+        // onTurnChanged.AddListener(() => UIManager.instance.combatUI.startTurnTextUI.SetStartTurnTextUI(turnOwner));
+        onTurnChanged.AddListener(() => GameManager.instance.runtimeWorldData.worldTurn = _worldTurnNumber);
         onTurnChanged.AddListener(() => UIManager.instance.combatUI.combatPopupTextUI.SetStartTurnTextUI(turnOwner));
     }
 
     public void SetUp()
     {
        CalculateTurnOwner();
+
+       if (GameManager.instance.CompareState(GameState.World))
+       {
+           Player player = FieldSystem.unitSystem.GetPlayer();
+           player.onMoved.AddListener((a) =>
+           {
+               _worldTurnNumber++;
+               onTurnChanged.Invoke();
+           });
+       }
     }
 
     /// <summary>
@@ -35,16 +73,16 @@ public class TurnSystem : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
-        var player = FieldSystem.unitSystem.GetPlayer();
-        if (player is not null)
-        {
-            if (FieldSystem.unitSystem.GetPlayer().IsBusy()) return;
-        }
-        else
-        {
-            Debug.Log($"Player is null, Turn system is rest.");
-            return;
-        }
+        // var player = FieldSystem.unitSystem.GetPlayer();
+        // if (player is not null)
+        // {
+        //     if (FieldSystem.unitSystem.GetPlayer().IsBusy()) return;
+        // }
+        //
+        // else {
+        //     Debug.Log($"Player is null, Turn system is rest.");
+        //     return;
+        // }
         
         // turnOwner.animator.ResetTrigger("Idle");
         
@@ -78,13 +116,8 @@ public class TurnSystem : MonoBehaviour
             
             List<Unit> units = FieldSystem.unitSystem.units;
             List<Unit> turnOrder = new List<Unit>();
-            List<int> currentRounds = new List<int>();
-            
-            for (int i = 0; i < units.Count; i++) 
-            {
-                currentRounds.Add(units[i].currentRound);
-            }
-            
+            List<int> currentRounds = units.Select(t => t.currentRound).ToList();
+
             while (turnOrder.Count < ORDER_LENGTH * 4)
             {
                 int minOrderValueUnitIndex = 0;

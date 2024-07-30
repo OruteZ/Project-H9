@@ -27,7 +27,6 @@ public class GameManager : Generic.Singleton<GameManager>
     [HideInInspector]
     public UserData user;
     
-    
     [Header("User Data")]
     public Inventory playerInventory;
     [SerializeField]
@@ -185,7 +184,6 @@ public class GameManager : Generic.Singleton<GameManager>
         {
             list = playerActiveIndexList;
         }
-        
 
         int previousSkillPositionIndex = -1;
         if (skillInfo.IsActive())
@@ -409,9 +407,12 @@ public class GameManager : Generic.Singleton<GameManager>
             }
             user.inventory.Add(sw);
         }
+
         //option
         user.optionSetting = UIManager.instance.pauseMenuUI.optionUI.GetOptionSetting();
 
+        UserDataFileSystem.Save(in user);
+        
         if (isAutoSave)
             UserDataFileSystem.AutoSave(in user);
         else

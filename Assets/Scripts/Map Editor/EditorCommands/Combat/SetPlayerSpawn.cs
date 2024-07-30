@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SetPlayerSpawn : IEditorCommand
 {
-    public Vector3Int beforePos;
-    public CombatMapEditor editor = Object.FindObjectOfType<CombatMapEditor>();
+    private Vector3Int beforePos;
+    private readonly CombatMapEditor editor = Object.FindObjectOfType<CombatMapEditor>();
 
     public void Execute(IEnumerable<Tile> tiles)
     {

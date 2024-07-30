@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3826597235932717598}
   - component: {fileID: 3826597235932717568}
   - component: {fileID: 3826597235932717599}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: FodOfWarEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4476375830901453382}
   - component: {fileID: 1164531855192675221}
   - component: {fileID: 1164531855192675222}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: FogOfWar
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c01c49bb321454f9702ce564b4c229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectType: 0
   vision: 0
   hexTransform: {fileID: 0}
   meshRenderer: {fileID: 2715423338037739766}

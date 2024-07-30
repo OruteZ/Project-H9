@@ -19,15 +19,18 @@ public class CustomOutlineTest : MonoBehaviour
             }
         }
     }
-    private bool IsMouseClickedOutlineObject(out GameObject clickedObject)
+    private static bool IsMouseClickedOutlineObject(out GameObject clickedObject)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        bool isSuccessRaycast = Physics.Raycast(ray, out var hit, float.MaxValue);
-        if (isSuccessRaycast)
+        if (Camera.main != null)
         {
-            GameObject obj = hit.collider.gameObject;
-            clickedObject = obj;
-            return true;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            bool isSuccessRaycast = Physics.Raycast(ray, out var hit, float.MaxValue);
+            if (isSuccessRaycast)
+            {
+                GameObject obj = hit.collider.gameObject;
+                clickedObject = obj;
+                return true;
+            }
         }
 
         clickedObject = null;

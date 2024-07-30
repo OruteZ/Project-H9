@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1841399454949109969}
   - component: {fileID: 8670539963334298760}
   - component: {fileID: 7335056779320883007}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Coverable
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -32,8 +32,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.4, z: 0}
   m_LocalScale: {x: 1.73, y: 10, z: 1.73}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2054269339111258192}
+  m_Children: [{fileID: 2054269339111258192}]
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

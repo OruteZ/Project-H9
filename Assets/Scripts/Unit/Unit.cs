@@ -73,6 +73,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public BulletData goldenBulletEffect = new();
 
     public CoverType coverType;
+    public CoverableObj coverableObj;
 
     public int currentRound;
 
@@ -93,7 +94,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     [HideInInspector] public UnityEvent<Unit> onDead; //me
     [HideInInspector] public UnityEvent<Unit, int> onHit; // attacker, damage
     [HideInInspector] public UnityEvent<IDamageable> onStartShoot; // target
-    [HideInInspector] public UnityEvent onDodged; // target
 
     [HideInInspector]
     public UnityEvent<IDamageable, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
@@ -162,7 +162,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         onTurnStart.Invoke(this);
 
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out var appliedValue);
-        SetCoverType(CoverType.NONE);
+        SetCoverType(CoverType.NONE, null);
 
         if (hp <= 0)
         {
@@ -175,9 +175,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public void EndTurn()
     {
-#if UNITY_EDITOR
-        //Debug.Log(unitName + " Turn Ended");
-#endif
         onTurnEnd.Invoke(this);
 
         // reset idle trigger animator
@@ -709,8 +706,26 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         return stat.GetOriginalStat(StatType.MaxHp);
     }
 
-    public int GetHitRateModifier()
+    public int GetHitRateModifier(Unit attacker = null)
     {
+        bool Coverable(Vector3Int atkFrom)
+        {
+            if (coverType == CoverType.NONE) return false;
+            if (coverableObj == null) return false;
+            Vector2 coverDir = Hex.Hex2Orth(coverableObj.hexPosition - hexPosition);
+            Vector2 atk = Hex.Hex2Orth(atkFrom - coverableObj.hexPosition);
+            
+            float angle = Vector2.SignedAngle(coverDir, atk);
+            if ((angle is >= 0 - 1 and <= 60 + 1) ||
+                (angle is <= 360 + 1 and >= 300 - 1))
+                return true;
+            else return false;
+        }
+        
+        if(attacker != null && 
+           Coverable(attacker.hexPosition) is false)
+            return 0;
+        
         return coverType switch
         {
             CoverType.LIGHT => -20,
@@ -723,10 +738,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     #endregion
 
-    public void SetCoverType(CoverType type)
+    public void SetCoverType(CoverType type, CoverableObj coverableObj)
     {
-        Debug.Log("Set Cover Type: " + type);
-        coverType = type;
+        this.coverType = type;
+        this.coverableObj = coverableObj;
     }
 }
 

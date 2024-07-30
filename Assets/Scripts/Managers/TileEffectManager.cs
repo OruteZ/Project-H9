@@ -56,11 +56,14 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     
     public RectTransform combatCanvas;
     public RectTransform aimEffect;
-    
-    
-    [field : Header("Cover Effect")]
+
+    [field: Header("Cover Effect")] 
+    public GameObject coverPosition;
+    public GameObject coverAvailable;
     public Material coverMaterial;
     private List<CoverableObj> _coverableObjs;
+
+    
 
     public void SetPlayer(Player p)
     {
@@ -123,28 +126,39 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     #region MOVE
     private void MovableTileEffect()
     {
-        int range = _player.currentActionPoint / _player.GetAction<MoveAction>().GetCost();
+        //if world state, get sight range, else get action po
+        int range = 0;
+        if(GameManager.instance.CompareState(GameState.Combat))
+            range = _player.stat.curActionPoint / _player.GetAction<MoveAction>().GetCost();
+        else
+            range = _player.stat.sightRange;
+        
         Vector3Int start = _player.hexPosition;
 
         var tiles = FieldSystem.tileSystem.GetWalkableTiles(start, range);
-        foreach (var tile in tiles)
+        foreach (Tile tile in tiles)
         {
+            if (tile is null)
+            {
+                Debug.LogError("Tile is null");
+                continue;
+            }
+            
             TileEffectType effectType = TileEffectType.Normal;
             if (GameManager.instance.CompareState(GameState.Combat))
             {
-                if (Hex.Distance(tile.hexPosition, _player.hexPosition) > _player.stat.sightRange) continue;
+                int distance = Hex.Distance(tile.hexPosition, _player.hexPosition);
+                int sightRange = _player.stat.sightRange;
+                if (distance > sightRange) continue;
                 if (!FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition)) continue;
             }
             else //GameState.World
             {
                 bool containsFog = tile.tileObjects.OfType<FogOfWar>().Any();
                 if (containsFog) continue;
-                foreach (var tileObject in tile.tileObjects)
+                foreach (Town tileObject in tile.tileObjects.OfType<Town>())
                 {
-                    if (tileObject is Town)
-                    {
-                        effectType = ((Town)tileObject).GetTileEffectType();
-                    }
+                    effectType = (tileObject).GetTileEffectType();
                 }
             }
             SetEffectBase(tile.hexPosition, effectType);
@@ -155,7 +169,11 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
 
     private IEnumerator MovableTileEffectCoroutine()
     {
-        int range = _player.currentActionPoint / _player.GetAction<MoveAction>().GetCost();
+        int range = 0;
+        if(GameManager.instance.CompareState(GameState.Combat))
+            range = _player.stat.curActionPoint / _player.GetAction<MoveAction>().GetCost();
+        else
+            range = _player.stat.sightRange;
         int prevRouteLength = -1;
         while (true)
         {
@@ -494,14 +512,16 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     #endregion
     
     #region COVER
+
+    [SerializeField] private int coverEffectRange;
     private void CoverEffect()
     {
-        const int range = 2;
+        const int range = 1;
 
         var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, range).Where(
             tile => tile.GetTileObject<CoverableObj>() is not null);
 
-        foreach (var tile in tiles)
+        foreach (Tile tile in tiles)
         {
             SetEffectBase(tile.hexPosition, TileEffectType.Friendly);
             
@@ -520,6 +540,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             coverable.gameObject.GetComponent<MeshRenderer>().materials = materialList.ToArray();
             
             _coverableObjs.Add(coverable);
+            // SetEffectBase(tile.hexPosition, TileEffectType.Normal);
         }
         
         _curCoroutine = StartCoroutine(CoverEffectCoroutine());
@@ -527,22 +548,56 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     
     private IEnumerator CoverEffectCoroutine()
     {
-        const int range = 2;
+        const int RANGE = 2;
+        const float DIFF = 1;
 
         while (true)
         {
+            
+            // 1. Set Mouse Overed Tile : Normal
             yield return null;
             ClearEffect(_effectsRelatedTarget);
-            if (Player.TryGetMouseOverTilePos(out var target) is false) continue;
-            
-            if (FieldSystem.tileSystem.GetTile(target).visible is false) continue;
-            if (Hex.Distance(target, _player.hexPosition) > range) continue;
+            if (Player.TryGetMouseOverTilePos(out Vector3Int target) is false)
+            {
+                Debug.LogWarning("Tile is null");
+                continue;
+            }
+            // if (Hex.Distance(target, _player.hexPosition) > range)
+            // {
+            //     Debug.LogWarning("Tile is null");
+            //     continue;
+            // }
             
             Tile tile = FieldSystem.tileSystem.GetTile(target);
-            if (tile.GetTileObject<CoverableObj>() is null) continue;
+            SetEffectTarget(target, coverPosition);
             
-            SetEffectTarget(target, TileEffectType.Normal);
+            if (tile.GetTileObject<CoverableObj>() is null)
+            {
+                Debug.LogError("target tile has no cover");
+                continue;
+            }
+            
+            
+            Vector2 coverDir = 
+                Hex.Hex2Orth(tile.hexPosition)
+                - Hex.Hex2Orth(_player.hexPosition);
+            
+            var coverTiles = FieldSystem.tileSystem.GetTilesInRange(target, coverEffectRange);
+            foreach (Vector3Int pos in coverTiles.Select(t => t.hexPosition))
+            {
+                // if (Hex.Distance(_player.hexPosition, pos) > _player.stat.sightRange) continue;
+                
+                Vector2 posDir = 
+                    Hex.Hex2Orth(pos)
+                    - Hex.Hex2Orth(target);
+
+                float angle = Vector3.SignedAngle(coverDir, posDir,Vector3.up);
+                if((angle is >= 0 - DIFF and <= 60 + DIFF) || 
+                   (angle is <= 360 + DIFF and >= 300 - DIFF))
+                    SetEffectTarget(pos, coverAvailable);
+            }
         }
+        // ReSharper disable once IteratorNeverReturns
     }
     #endregion
     private new void Awake()

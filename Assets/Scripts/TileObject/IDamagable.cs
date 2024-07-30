@@ -7,7 +7,7 @@ public interface IDamageable
     Vector3Int GetHex();
     int GetCurrentHp();
     int GetMaxHp();
-    int GetHitRateModifier();
     
     UnityEvent<int, int> OnHpChanged { get; }
+    int GetHitRateModifier(Unit attacker);
 }

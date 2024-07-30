@@ -65,9 +65,9 @@ public class MapSaveAndLoader : MonoBehaviour
     [ContextMenu("Load Current map")]
     public void LoadMap()
     {
-        var envParent = GameObject.Find("Environments");
-        var tileParent = GameObject.Find("Tiles");
-        var tileObjParent = GameObject.Find("TileObjects");
+        GameObject envParent = GameObject.Find("Environments");
+        GameObject tileParent = GameObject.Find("Tiles");
+        GameObject tileObjParent = GameObject.Find("TileObjects");
 
         if (envParent is null)
         {
@@ -89,30 +89,30 @@ public class MapSaveAndLoader : MonoBehaviour
         
         //Clear tiles
         var tiles = tileParent.GetComponentsInChildren<Tile>();
-        for (int i = 0; i < tiles.Length; i++)
+        foreach (Tile tile in tiles)
         {
-            DestroyImmediate(tiles[i].gameObject);
+            DestroyImmediate(tile.gameObject);
         }
         
         //Clear tile objects
         var objects = tileObjParent.GetComponentsInChildren<TileObject>();
-        for (int i = 0; i < objects.Length; i++)
+        foreach (TileObject tileObj in objects)
         {
-            DestroyImmediate(objects[i].gameObject);
+            DestroyImmediate(tileObj.gameObject);
         }
         
         //Clear environments
         var envs = envParent.GetComponentsInChildren<HexTransform>();
-        for (int i = 0; i < envs.Length; i++)
+        foreach (HexTransform env in envs)
         {
-            DestroyImmediate(envs[i].gameObject);
+            DestroyImmediate(env.gameObject);
         }
         
         
         //instantiate tiles
-        foreach (var tileData in saveData.GetTileDataList())
+        foreach (TileData tileData in saveData.GetTileDataList())
         {
-            var tile = Instantiate(tilePrefab, tileParent.transform).GetComponent<Tile>();
+            Tile tile = Instantiate(tilePrefab, tileParent.transform).GetComponent<Tile>();
             tile.visible = tileData.visible;
             tile.rayThroughable = tileData.rayThroughable;
             tile.gridVisible = tileData.gridVisible;
@@ -127,9 +127,10 @@ public class MapSaveAndLoader : MonoBehaviour
         layout.LayoutGrid();
         
         //instantiate tile objects
-        foreach (var tileObjectData in saveData.GetTileObjectDataList())
+        foreach (TileObjectData tileObjectData in saveData.GetTileObjectDataList())
         {
-            var tileObject = Instantiate(tileObjectData.prefab).GetComponent<TileObject>();
+            TileObject tileObject = Instantiate(tileObjectData.prefab).GetComponent<TileObject>();
+            tileObject.transform.parent = tileObjParent.transform;
             tileObject.hexPosition = tileObjectData.hexPosition;
             tileObject.gameObject.transform.localRotation = Quaternion.Euler(0, tileObjectData.rotation, 0);
             tileObject.SetArgs(tileObjectData.arguments);
@@ -139,9 +140,9 @@ public class MapSaveAndLoader : MonoBehaviour
         //instantiate environments
         foreach (EnvironmentData envData in saveData.GetEnvDataList())
         {
-            GameObject envObj = new GameObject();
+            GameObject   envObj = new GameObject();
             MeshRenderer meshRenderer = envObj.AddComponent<MeshRenderer>();
-            MeshFilter meshFilter = envObj.AddComponent<MeshFilter>();
+            MeshFilter   meshFilter = envObj.AddComponent<MeshFilter>();
             envObj.transform.parent = envParent.transform;
 
             //paste data

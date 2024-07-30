@@ -11,7 +11,7 @@ public class Revolver : Weapon
     {
     }
 
-    public override ItemType GetWeaponType() => ItemType.REVOLVER;
+    public override ItemType GetWeaponType() => ItemType.Revolver;
     public override float GetDistancePenalty() => 5;
     public override int GetRange()
     {

@@ -49,18 +49,18 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
             _repeater.gameObject.SetActive(false);
 
         var weaponType = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
-        if (weaponType == ItemType.REVOLVER)
+        if (weaponType == ItemType.Revolver)
         {
             _revolvers.gameObject.SetActive(true);
             _revolvers.Reload(maxAmmo, magazine, flickerCnt);
             _revolverRotation = 359.99f - 60 * (maxAmmo - magazine.bullets.Count);
         }
-        if (weaponType == ItemType.SHOTGUN)
+        if (weaponType == ItemType.Shotgun)
         {
             _shotguns.gameObject.SetActive(true);
             _shotguns.Reload(maxAmmo, magazine, flickerCnt);
         }
-        if (weaponType == ItemType.REPEATER)
+        if (weaponType == ItemType.Repeater)
         {
             _repeater.gameObject.SetActive(true);
             _repeater.Reload(maxAmmo, magazine, flickerCnt);

@@ -8,7 +8,7 @@ public class Repeater : Weapon
     {
     }
 
-    public override ItemType GetWeaponType() => ItemType.REPEATER;
+    public override ItemType GetWeaponType() => ItemType.Repeater;
     public override float GetDistancePenalty() => 5;
     public override int GetRange()
     {

@@ -15,7 +15,7 @@ public class ItemListUI : UIElement
 
     private ItemListPool _listPool = null;
 
-    private ItemType _itemType = ItemType.REVOLVER;
+    private ItemType _itemType = ItemType.Revolver;
     private int _townIndex;
     private ItemUI _itemUI;
 
@@ -59,8 +59,8 @@ public class ItemListUI : UIElement
                 Debug.LogError("Can't Create Ammunition Item List");
                 return;
             }
-            if ((_itemType is not ItemType.REVOLVER) && (iData.itemType is ItemType.REVOLVER or ItemType.REPEATER or ItemType.SHOTGUN)) continue;
-            if ((_itemType is not ItemType.HEAL) && !(iData.itemType is ItemType.REVOLVER or ItemType.REPEATER or ItemType.SHOTGUN)) continue;
+            if ((_itemType is not ItemType.Revolver) && (iData.itemType is ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun)) continue;
+            if ((_itemType is not ItemType.Heal) && !(iData.itemType is ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun)) continue;
 
             iDatas.Add(iData);
         }
@@ -90,7 +90,7 @@ public class ItemListUI : UIElement
         _listItemTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(itemData, pos);
         _listItemTooltip.SetActive(true);
 
-        if (itemData.itemType is ItemType.REVOLVER or ItemType.REPEATER or ItemType.SHOTGUN)
+        if (itemData.itemType is ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun)
         {
             _equippedItemTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(GameManager.instance.playerInventory.GetEquippedItem().GetData(), pos, false, true);
             _equippedItemTooltip.SetActive(true);
@@ -112,8 +112,8 @@ public class ItemListUI : UIElement
 
             if (_itemUI is not null)
             {
-                if (iData.itemType is ItemType.REVOLVER or ItemType.REPEATER or ItemType.SHOTGUN) _itemUI.ClickWeaponBtn();
-                else if (iData.itemType is ItemType.ETC) _itemUI.ClickOtherBtn();
+                if (iData.itemType is ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun) _itemUI.ClickWeaponBtn();
+                else if (iData.itemType is ItemType.Etc) _itemUI.ClickOtherBtn();
                 else _itemUI.ClickConsumableBtn();
             }
         }
@@ -121,12 +121,12 @@ public class ItemListUI : UIElement
 
     public void OnClickWeaponBtn() 
     {
-        _itemType = ItemType.REVOLVER;
+        _itemType = ItemType.Revolver;
         SetItemListUI(_townIndex, _itemUI);
     }
     public void OnClickConsumableBtn()
     {
-        _itemType = ItemType.HEAL;
+        _itemType = ItemType.Heal;
         SetItemListUI(_townIndex, _itemUI);
     }
 }

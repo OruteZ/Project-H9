@@ -662,7 +662,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public void SetGoldBullet()
     {
-        if (weapon.GetWeaponType() == ItemType.REVOLVER && goldenBulletCount != 0)
+        if (weapon.GetWeaponType() == ItemType.Revolver && goldenBulletCount != 0)
         {
             weapon.magazine.ClearEffectAll();
 

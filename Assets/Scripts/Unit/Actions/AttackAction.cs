@@ -43,7 +43,7 @@ public class AttackAction : BaseAction, IShootingAction
             return false;
         }
 
-        if (weapon.GetWeaponType() == ItemType.SHOTGUN)
+        if (weapon.GetWeaponType() == ItemType.Shotgun)
         {
             // if distance is greater than range, return false
             if (Hex.Distance(unit.hexPosition, _target.hexPosition) > weapon.GetRange())
@@ -104,7 +104,7 @@ public class AttackAction : BaseAction, IShootingAction
             return false;
         }
 
-        if (weapon.GetWeaponType() == ItemType.SHOTGUN)
+        if (weapon.GetWeaponType() == ItemType.Shotgun)
         {
             // if distance is greater than range, return false
             if (Hex.Distance(unit.hexPosition, _target.hexPosition) > weapon.GetRange())

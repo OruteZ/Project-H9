@@ -26,10 +26,10 @@ public class WeaponDatabase : ScriptableObject
         var data = GetData(dataIndex);
         Weapon weapon = data.type switch
         {
-            ItemType.CHARACTER => new Melee(data),
-            ItemType.REVOLVER => new Revolver(data),
-            ItemType.REPEATER => new Repeater(data),
-            ItemType.SHOTGUN => new Shotgun(data),
+            ItemType.Character => new Melee(data),
+            ItemType.Revolver => new Revolver(data),
+            ItemType.Repeater => new Repeater(data),
+            ItemType.Shotgun => new Shotgun(data),
             _ => throw new ArgumentOutOfRangeException()
         };
         //
@@ -63,7 +63,7 @@ public class WeaponDatabase : ScriptableObject
         foreach (var d in dataList)
         {
             if((ItemType) Enum.Parse(typeof(ItemType), d[2]) 
-               is not (ItemType.REVOLVER or ItemType.REPEATER or ItemType.SHOTGUN)) continue;
+               is not (ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun)) continue;
             
             var curData = new WeaponData
             {
@@ -87,9 +87,9 @@ public class WeaponDatabase : ScriptableObject
             {
                 curData.weaponModel = curData.type switch
                 {
-                    ItemType.REVOLVER => Resources.Load<GameObject>("Prefab/Item/SM_Wep_Revolver_01"),
-                    ItemType.REPEATER => Resources.Load<GameObject>("Prefab/Item/SM_Wep_Rifle_01"),
-                    ItemType.SHOTGUN => Resources.Load<GameObject>("Prefab/Item/SM_Wep_Shotgun_01"),
+                    ItemType.Revolver => Resources.Load<GameObject>("Prefab/Item/SM_Wep_Revolver_01"),
+                    ItemType.Repeater => Resources.Load<GameObject>("Prefab/Item/SM_Wep_Rifle_01"),
+                    ItemType.Shotgun => Resources.Load<GameObject>("Prefab/Item/SM_Wep_Shotgun_01"),
                     _ => curData.weaponModel
                 };
             }

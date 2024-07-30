@@ -137,7 +137,7 @@ public class ItemUsingAction : BaseAction
 
     private void Throw() 
     {
-        if(_dynamitePrefab == null || _item.GetData().itemType is not ItemType.DAMAGE)
+        if(_dynamitePrefab == null || _item.GetData().itemType is not ItemType.Damage)
         {
             Debug.LogError("Dynamite Prefab is null");
             //stop action immediately

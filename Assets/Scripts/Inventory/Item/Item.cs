@@ -26,32 +26,32 @@ public abstract class Item : IItem
             
             switch (data.itemType)
             {
-                case ItemType.NULL:
+                case ItemType.Null:
                     //exception
                     Debug.LogError("ItemType is Null, index is " + data.id);
                     break;
-                case ItemType.ETC:
+                case ItemType.Etc:
                     item = new EtcItem(data);
                     break;
-                case ItemType.CHARACTER:
-                case ItemType.REVOLVER:
-                case ItemType.REPEATER:
-                case ItemType.SHOTGUN:
+                case ItemType.Character:
+                case ItemType.Revolver:
+                case ItemType.Repeater:
+                case ItemType.Shotgun:
                     item = new WeaponItem(data);
                     break;
-                case ItemType.HEAL:
+                case ItemType.Heal:
                     item = new HealItem(data);
                     break;
-                case ItemType.DAMAGE:
+                case ItemType.Damage:
                     item = new DamageItem(data);
                     break;
-                case ItemType.CLEANSE:
+                case ItemType.Cleanse:
                     item = new CleanseItem(data);
                     break;
-                case ItemType.BUFF:
+                case ItemType.Buff:
                     item = new BuffItem(data);
                     break;
-                case ItemType.DEBUFF:
+                case ItemType.Debuff:
                     item = new DebuffItem(data);
                     break;
                 default:
@@ -89,19 +89,19 @@ public abstract class Item : IItem
 
         public bool IsImmediate()
         {
-            return GetData().itemType is ItemType.BUFF or ItemType.CLEANSE or ItemType.HEAL;
+            return GetData().itemType is ItemType.Buff or ItemType.Cleanse or ItemType.Heal;
         }
 
         public bool IsUsable()
         {
             switch (GetData().itemType)
             {
-                case ItemType.NULL:
-                case ItemType.ETC:
-                case ItemType.CHARACTER:
-                case ItemType.REVOLVER:
-                case ItemType.REPEATER:
-                case ItemType.SHOTGUN:
+                case ItemType.Null:
+                case ItemType.Etc:
+                case ItemType.Character:
+                case ItemType.Revolver:
+                case ItemType.Repeater:
+                case ItemType.Shotgun:
                     return false;
                 //else : return true;
                 default:

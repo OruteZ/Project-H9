@@ -18,7 +18,7 @@ public class ItemUI : UISystem
     [SerializeField] private GameObject _draggedElement;
     [SerializeField] private GameObject _equippedElement;
 
-    private ItemType _displayInventoryType = ItemType.REVOLVER;
+    private ItemType _displayInventoryType = ItemType.Revolver;
 
     private GameObject _currentMouseOverElement = null;
     private GameObject _interactionElement = null;
@@ -233,17 +233,17 @@ public class ItemUI : UISystem
 
     public void ClickWeaponBtn()
     {
-        _displayInventoryType = ItemType.REVOLVER;
+        _displayInventoryType = ItemType.Revolver;
         SetInventoryUI();
     }
     public void ClickConsumableBtn()
     {
-        _displayInventoryType = ItemType.HEAL;
+        _displayInventoryType = ItemType.Heal;
         SetInventoryUI();
     }
     public void ClickOtherBtn()
     {
-        _displayInventoryType = ItemType.ETC;
+        _displayInventoryType = ItemType.Etc;
         SetInventoryUI();
     }
 

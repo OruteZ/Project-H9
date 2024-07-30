@@ -10,7 +10,7 @@ public class Shotgun : Weapon
     {
     }
 
-    public override ItemType GetWeaponType() => ItemType.SHOTGUN;
+    public override ItemType GetWeaponType() => ItemType.Shotgun;
     public override float GetDistancePenalty() => 2;
     public override int GetRange()
     {

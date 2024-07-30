@@ -53,15 +53,15 @@ public class CharacterTooltipText : UIElement, IPointerEnterHandler, IPointerExi
             if (statName == "Additional Hit Rate" || statName == "Critical Chance" || statName == "Critical Damage")
             {
                 ItemType playerWeaponType = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
-                if (playerWeaponType == ItemType.REVOLVER)
+                if (playerWeaponType == ItemType.Revolver)
                 {
                     str = UIManager.instance.UILocalization[45];
                 }
-                else if (playerWeaponType == ItemType.REPEATER)
+                else if (playerWeaponType == ItemType.Repeater)
                 {
                     str = UIManager.instance.UILocalization[46];
                 }
-                else if (playerWeaponType == ItemType.SHOTGUN)
+                else if (playerWeaponType == ItemType.Shotgun)
                 {
                     str = UIManager.instance.UILocalization[47];
                 }

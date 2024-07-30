@@ -27,23 +27,23 @@ public class InventoryInteractionUI : UIElement
         _useBtn.SetActive(true);
         switch (item.GetData().itemType)
         {
-            case ItemType.REVOLVER:
-            case ItemType.REPEATER:
-            case ItemType.SHOTGUN:
+            case ItemType.Revolver:
+            case ItemType.Repeater:
+            case ItemType.Shotgun:
                 {
                     isEquipable = true;
                     _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[40];
                     break;
                 }
-            case ItemType.HEAL:
-            case ItemType.DAMAGE:
-            case ItemType.CLEANSE:
-            case ItemType.BUFF:
-            case ItemType.DEBUFF:
+            case ItemType.Heal:
+            case ItemType.Damage:
+            case ItemType.Cleanse:
+            case ItemType.Buff:
+            case ItemType.Debuff:
                 {
                     isEquipable = false;
                     _useBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[39];
-                    if (GameManager.instance.CompareState(GameState.WORLD) && item.GetData().itemType != ItemType.HEAL)
+                    if (GameManager.instance.CompareState(GameState.WORLD) && item.GetData().itemType != ItemType.Heal)
                     {
                         _useBtn.SetActive(false);
                     }

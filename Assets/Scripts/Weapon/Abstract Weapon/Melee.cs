@@ -10,7 +10,7 @@ public class Melee : Weapon
 
     public override ItemType GetWeaponType()
     {
-        throw new System.NotImplementedException();
+        return ItemType.Character;
     }
 
     public override int GetFinalDamage()

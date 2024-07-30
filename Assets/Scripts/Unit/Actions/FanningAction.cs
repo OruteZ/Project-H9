@@ -64,7 +64,7 @@ public class FanningAction : BaseAction, IShootingAction
         if (unit.weapon.CurrentAmmo == 0) return false;
         if (unit.CheckAttackedTrigger()) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
-        if (unit.weapon.GetWeaponType() != ItemType.REVOLVER) return false;
+        if (unit.weapon.GetWeaponType() != ItemType.Revolver) return false;
         
         return true;
     }

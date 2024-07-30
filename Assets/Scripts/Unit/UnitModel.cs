@@ -79,7 +79,7 @@ public class UnitModel : MonoBehaviour
         {
             weaponModel = Instantiate(weapon.model, waist).GetComponent<WeaponModel>();
             weaponModel.SetWaistPosRot(isWesternFrontierAsset);
-            SetAnimator(ItemType.NULL);
+            SetAnimator(ItemType.Null);
         }
     }
 
@@ -104,7 +104,7 @@ public class UnitModel : MonoBehaviour
     {
         animator.runtimeAnimatorController =
             (RuntimeAnimatorController)Resources.Load("Animator/" 
-                                                      + (type is ItemType.NULL ? "Standing" : type) +
+                                                      + (type is ItemType.Null ? "Standing" : type) +
                                                       " Animator Controller");
         
         animator.SetTrigger(IDLE);
@@ -151,7 +151,7 @@ public class UnitModel : MonoBehaviour
     {
         if (unit.HasStatusEffect(StatusEffectType.UnArmed))
         {
-            SetAnimator(ItemType.CHARACTER);
+            SetAnimator(ItemType.Character);
         }
         else
         {

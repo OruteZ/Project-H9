@@ -258,7 +258,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             else
             {
                 
-                if(_player.weapon.GetWeaponType() is not ItemType.SHOTGUN) 
+                if(_player.weapon.GetWeaponType() is not ItemType.Shotgun) 
                     SetEffectBase(unit.hexPosition, attackOutOfRangeEffect);
             }
         }

@@ -78,9 +78,9 @@ namespace PassiveSkill
                 passive.NotFullfillCondition(this);
             }
         }
-        protected void CountHit(IDamageable d, int dmg, bool isHit, bool isCri)
+        protected void CountHit(Damage context)
         {
-            if (_isFanning && isHit)
+            if (_isFanning && context.Contains(Damage.Type.MISS) is false)
             {
                 _fanningHitCnt++;
             }

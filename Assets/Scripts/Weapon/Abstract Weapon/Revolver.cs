@@ -11,37 +11,27 @@ public class Revolver : Weapon
     {
     }
 
-    public override ItemType GetWeaponType() => ItemType.Revolver;
+    public override ItemType GetWeaponType() => ItemType.REVOLVER;
     public override float GetDistancePenalty() => 5;
     public override int GetRange()
     {
-        return weaponRange + magazine.GetNextBullet().data.range + unitStat.revolverAdditionalRange;
+        return weaponRange + magazine.GetNextBullet().data.range + UnitStat.revolverAdditionalRange;
     }
 
-    public override void Attack(IDamageable target, out bool isCritical)
-    {
-        Debug.Log("Weapon attack Call" + " : " + nameIndex);
-
-        isCritical = Random.value * 100 < criticalChance + magazine.GetNextBullet().data.criticalChance + unitStat.criticalChance;
-        if (isCritical)
-        {
-            CriticalAttack(target);
-        }
-        else
-        {
-            NonCriticalAttack(target);
-        }
+    public override float GetFinalCriticalRate()
+    { 
+        return criticalChance + magazine.GetNextBullet().data.criticalChance + UnitStat.criticalChance;
     }
 
     public override int GetFinalDamage()
     {
-        return Mathf.RoundToInt(weaponDamage + magazine.GetNextBullet().data.damage + unitStat.revolverAdditionalDamage);
+        return Mathf.RoundToInt(weaponDamage + magazine.GetNextBullet().data.damage + UnitStat.revolverAdditionalDamage);
     }
 
     public override int GetFinalCriticalDamage()
     {
-        float dmg = weaponDamage + magazine.GetNextBullet().data.damage + unitStat.revolverAdditionalDamage;
-        dmg += dmg * ((criticalDamage + magazine.GetNextBullet().data.criticalDamage + unitStat.revolverCriticalDamage) * 0.01f);
+        float dmg = weaponDamage + magazine.GetNextBullet().data.damage + UnitStat.revolverAdditionalDamage;
+        dmg += dmg * ((criticalDamage + magazine.GetNextBullet().data.criticalDamage + UnitStat.revolverCriticalDamage) * 0.01f);
 
         return Mathf.RoundToInt(dmg);
     }
@@ -51,7 +41,7 @@ public class Revolver : Weapon
         int distance = Hex.Distance(unit.hexPosition, target.GetHex());
         int range = GetRange();
 
-        float finalHitRate = (hitRate + +magazine.GetNextBullet().data.hitRate + unitStat.concentration * (100 - distance * GetDistancePenalty() *
+        float finalHitRate = (hitRate + +magazine.GetNextBullet().data.hitRate + UnitStat.concentration * (100 - distance * GetDistancePenalty() *
             (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1)
             )) * 0.01f;
 
@@ -63,7 +53,7 @@ public class Revolver : Weapon
 #if UNITY_EDITOR
         UIManager.instance.debugUI.SetDebugUI
             (finalHitRate, unit, (Unit)target, distance, weaponRange,
-                unitStat.revolverAdditionalRange,
+                UnitStat.revolverAdditionalRange,
                 GetDistancePenalty() *
                 (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
 #endif
@@ -74,12 +64,12 @@ public class Revolver : Weapon
     private void NonCriticalAttack(IDamageable target)
     {
         int damage = GetFinalDamage();
-        target.TakeDamage(damage, unit);
+        // target.TakeDamage(damage, unit);
     }
 
     private void CriticalAttack(IDamageable target)
     {
         int damage = GetFinalCriticalDamage();
-        target.TakeDamage(damage, unit, Damage.Type.Critical);
+        // target.TakeDamage(damage, unit, Damage.Type.CRITICAL);
     }
 }

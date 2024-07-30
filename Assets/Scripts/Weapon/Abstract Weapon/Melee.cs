@@ -8,11 +8,6 @@ public class Melee : Weapon
     {
     }
 
-    public override void Attack(IDamageable target, out bool isCritical)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override ItemType GetWeaponType()
     {
         throw new System.NotImplementedException();
@@ -34,6 +29,11 @@ public class Melee : Weapon
     }
 
     public override float GetDistancePenalty()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override float GetFinalCriticalRate()
     {
         throw new System.NotImplementedException();
     }

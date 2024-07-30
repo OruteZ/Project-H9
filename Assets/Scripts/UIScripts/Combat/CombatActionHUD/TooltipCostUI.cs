@@ -8,7 +8,7 @@ public class TooltipCostUI : UIElement
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
         int curAp = player.currentActionPoint;
-        int curAmmo = player.weapon.currentAmmo;
+        int curAmmo = player.weapon.CurrentAmmo;
 
         bool apCheck = apCost <= curAp;
         bool ammoCheck = ammoCost <= curAmmo;

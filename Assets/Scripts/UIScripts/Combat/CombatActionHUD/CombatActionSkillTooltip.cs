@@ -103,8 +103,8 @@ public class CombatActionSkillTooltip : UIElement
         _skillNameText.GetComponent<TextMeshProUGUI>().color = UICustomColor.UINameColor;
         _skillDescriptionText.GetComponent<TextMeshProUGUI>().text = desc;
 
-        ItemType sectionType = ItemType.Etc + info.section;
-        bool isThereSectionCondition = (ItemType.Revolver <= sectionType && sectionType <= ItemType.Shotgun);
+        ItemType sectionType = ItemType.ETC + info.section;
+        bool isThereSectionCondition = (ItemType.REVOLVER <= sectionType && sectionType <= ItemType.SHOTGUN);
         _skillSectionIcon.SetActive(isThereSectionCondition);
         _skillSectionText.SetActive(isThereSectionCondition);
         if (isThereSectionCondition)

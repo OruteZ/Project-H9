@@ -281,13 +281,13 @@ public class CombatActionUI : UISystem
                 }
             case CombatActionType.Items:
                 {
-                    SetItemUI(ItemType.Heal);
+                    SetItemUI(ItemType.HEAL);
                     _itemWindow.SetActive((_selectedActionType != actionType) || (!_itemWindow.activeSelf));
                     break;
                 }
             case CombatActionType.Weapons:
                 {
-                    SetItemUI(ItemType.Revolver);
+                    SetItemUI(ItemType.REVOLVER);
                     _itemWindow.SetActive((_selectedActionType != actionType) || (!_itemWindow.activeSelf));
                     break;
                 }

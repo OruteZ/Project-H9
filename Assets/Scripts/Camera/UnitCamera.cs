@@ -38,7 +38,7 @@ public class UnitCamera : MonoBehaviour
             Destroy(gameObject);
         });
         
-        owner.onFinishShoot.AddListener((a,b,c,d) =>
+        owner.onFinishShoot.AddListener((context) =>
         {
             ShakeCamera(5, 1, 0.1f);
         });

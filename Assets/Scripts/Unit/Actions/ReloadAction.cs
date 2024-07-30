@@ -40,7 +40,7 @@ public class ReloadAction : BaseAction
     public override bool IsSelectable()
     {
         if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
-        return weapon.currentAmmo < weapon.maxAmmo;
+        return weapon.CurrentAmmo < weapon.maxAmmo;
     }
 
     public override bool CanExecuteImmediately()
@@ -63,8 +63,8 @@ public class ReloadAction : BaseAction
 
         for (int i = 0; i < weapon.maxAmmo; i++)
         {
-            if (weapon.maxAmmo <= weapon.currentAmmo) weapon.currentAmmo = weapon.maxAmmo;
-            else weapon.currentAmmo++;
+            if (weapon.maxAmmo <= weapon.CurrentAmmo) weapon.CurrentAmmo = weapon.maxAmmo;
+            else weapon.CurrentAmmo++;
             UIManager.instance.onActionChanged.Invoke();
 
             yield return new WaitForSeconds(RELOAD_TIME);

@@ -5,7 +5,7 @@ public class GetAmmo : H9Function<float>
 {
     public override float Invoke()
     {
-        return ai.GetUnit().weapon.currentAmmo;
+        return ai.GetUnit().weapon.CurrentAmmo;
     }
 
     public override string GetSummary(BaseNodeView nodeView)

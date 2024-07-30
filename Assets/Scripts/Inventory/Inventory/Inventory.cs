@@ -227,17 +227,17 @@ public class Inventory : IInventory
     {
         switch (type)
         {
-            case ItemType.Revolver:
-            case ItemType.Repeater:
-            case ItemType.Shotgun:
+            case ItemType.REVOLVER:
+            case ItemType.REPEATER:
+            case ItemType.SHOTGUN:
                 {
                     return _weaponItems;
                 }
-            case ItemType.Heal:
-            case ItemType.Damage:
-            case ItemType.Cleanse:
-            case ItemType.Buff:
-            case ItemType.Debuff:
+            case ItemType.HEAL:
+            case ItemType.DAMAGE:
+            case ItemType.CLEANSE:
+            case ItemType.BUFF:
+            case ItemType.DEBUFF:
                 {
                     return _consumableItems;
                 }

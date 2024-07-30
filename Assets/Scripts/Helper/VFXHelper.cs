@@ -10,15 +10,15 @@ public static class VFXHelper
 
         switch (type)
         {
-            case ItemType.Revolver: 
+            case ItemType.REVOLVER: 
                 fxKey = "Prefab/VFX/FX_GunSmoke_01";
                 time = 2.0f;
                 return true;
-            case ItemType.Repeater: 
+            case ItemType.REPEATER: 
                 fxKey = "Prefab/VFX/FX_GunSmoke_01";
                 time = 2.0f;
                 return true;
-            case ItemType.Shotgun: 
+            case ItemType.SHOTGUN: 
                 fxKey = "Prefab/VFX/FX_GunSmoke_01";
                 time = 2.0f;
                 return true;
@@ -34,9 +34,9 @@ public static class VFXHelper
 
         switch (type)
         {
-            case ItemType.Revolver: 
-            case ItemType.Repeater:
-            case ItemType.Shotgun:
+            case ItemType.REVOLVER: 
+            case ItemType.REPEATER:
+            case ItemType.SHOTGUN:
                 // 총기 종류에 상관없이 같은 탄환 궤적
                 fxKey = "Prefab/VFX/BulletLineRender";
                 time = 0.1f;
@@ -54,9 +54,9 @@ public static class VFXHelper
 
         switch (shootedWeaponType)
         {
-            case ItemType.Revolver: 
-            case ItemType.Repeater:
-            case ItemType.Shotgun:
+            case ItemType.REVOLVER: 
+            case ItemType.REPEATER:
+            case ItemType.SHOTGUN:
                 // 총기 종류에 상관없이 같은 출혈
                 fxKey = "Prefab/VFX/FX_BloodSplat_01";
                 time = 2.5f;

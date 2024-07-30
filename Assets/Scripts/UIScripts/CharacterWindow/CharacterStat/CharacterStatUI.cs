@@ -147,19 +147,19 @@ public class CharacterStatUI : UISystem
             ("Bonus Hit Rate", StatType.AdditionalHitRate),
             ("Critical Chance",     StatType.CriticalChance)
         };
-        if (weaponType is ItemType.Revolver)
+        if (weaponType is ItemType.REVOLVER)
         {
             _strAndType.Add(("Damage", StatType.RevolverAdditionalDamage));
             _strAndType.Add(("Critical Chance", StatType.CriticalChance));
             _strAndType.Add(("Critical Damage", StatType.RevolverCriticalDamage));
         }
-        else if (weaponType is ItemType.Repeater)
+        else if (weaponType is ItemType.REPEATER)
         {
             _strAndType.Add(("Damage", StatType.RepeaterAdditionalDamage));
             _strAndType.Add(("Critical Chance", StatType.CriticalChance));
             _strAndType.Add(("Critical Damage", StatType.RepeaterCriticalDamage));
         }
-        else if (weaponType is ItemType.Shotgun)
+        else if (weaponType is ItemType.SHOTGUN)
         {
             _strAndType.Add(("Damage", StatType.ShotgunAdditionalDamage));
             _strAndType.Add(("Critical Chance", StatType.CriticalChance));

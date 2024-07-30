@@ -171,9 +171,9 @@ public class Player : Unit
         }
     }
 
-    public override void TakeDamage(int damage, Unit attacker, Damage.Type type = Damage.Type.Default)
+    public override void TakeDamage(Damage damage)
     {
-        base.TakeDamage(damage, attacker, type);
+        base.TakeDamage(damage);
 
         UIManager.instance.onPlayerStatChanged.Invoke();
         GameManager.instance.user.Stat = stat;

@@ -44,10 +44,10 @@ public class CoverableObj : TileObject, IDamageable
     public void SetUnit(Unit newUnit)
     {
         unit = newUnit;
-        
-        UnityAction onDodged = () => TakeDamage(1, newUnit);
-        
-        
+
+        UnityAction onDodged = () => TakeDamage(new Damage(1, 1, Damage.Type.DEFAULT, newUnit, this));
+
+
         // todo : Damage Context »ý¼º
         // newUnit.onDodged.AddListener(onDodged);
         // newUnit.onMoved.AddListener((u) =>
@@ -58,9 +58,9 @@ public class CoverableObj : TileObject, IDamageable
     }
 
     #region IDamageable
-    public void TakeDamage(int damage, Unit attacker, Damage.Type type = Damage.Type.Default)
+    public void TakeDamage(Damage damage)
     {
-        currentHp -= damage;
+        currentHp -= 1;
         if (currentHp <= 0)
         {
             currentHp = 0;

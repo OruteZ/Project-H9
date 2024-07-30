@@ -43,7 +43,7 @@ public class AttackAction : BaseAction, IShootingAction
             return false;
         }
 
-        if (weapon.GetWeaponType() == ItemType.Shotgun)
+        if (weapon.GetWeaponType() == ItemType.SHOTGUN)
         {
             // if distance is greater than range, return false
             if (Hex.Distance(unit.hexPosition, _target.hexPosition) > weapon.GetRange())
@@ -58,7 +58,7 @@ public class AttackAction : BaseAction, IShootingAction
 
     public override bool IsSelectable()
     {
-        if (weapon.currentAmmo == 0) return false;
+        if (weapon.CurrentAmmo == 0) return false;
         if (unit.CheckAttackedTrigger()) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
 
@@ -104,7 +104,7 @@ public class AttackAction : BaseAction, IShootingAction
             return false;
         }
 
-        if (weapon.GetWeaponType() == ItemType.Shotgun)
+        if (weapon.GetWeaponType() == ItemType.SHOTGUN)
         {
             // if distance is greater than range, return false
             if (Hex.Distance(unit.hexPosition, _target.hexPosition) > weapon.GetRange())

@@ -15,7 +15,7 @@ public class ShootAGoldenBulletCondition : BaseCondition
 
     private void CheckBullet(IUnitAction action, Vector3Int pos)
     {
-        if (unit.weapon.GetWeaponType() != ItemType.Revolver || action is not AttackAction || !unit.weapon.magazine.GetNextBullet().isGoldenBullet) return;
+        if (unit.weapon.GetWeaponType() != ItemType.REVOLVER || action is not AttackAction || !unit.weapon.magazine.GetNextBullet().isGoldenBullet) return;
         passive.FullfillCondition(this);
     }
 }

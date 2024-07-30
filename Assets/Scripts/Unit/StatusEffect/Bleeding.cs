@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine.iOS;
 
 public class Bleeding : StatusEffect
 {
@@ -18,7 +19,12 @@ public class Bleeding : StatusEffect
 
     public override void OnTurnStarted()
     {
-        controller.GetUnit().TakeDamage(damage, creator);
+        //build damage context
+        Damage damageContext
+            = new(damage, damage, Damage.Type.BLOODED, creator, controller.GetUnit());
+        
+        
+        controller.GetUnit().TakeDamage(damageContext);
     }
     
     public override void OnTurnFinished() { }

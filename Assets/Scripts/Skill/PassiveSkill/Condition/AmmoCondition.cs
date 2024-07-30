@@ -8,7 +8,7 @@ namespace PassiveSkill
 
         protected override void ConditionSetup()
         {
-            unit.onTurnStart.AddListener((u) => { CheckAmmo(unit.weapon.currentAmmo, unit.weapon.currentAmmo); });
+            unit.onTurnStart.AddListener((u) => { CheckAmmo(unit.weapon.CurrentAmmo, unit.weapon.CurrentAmmo); });
             unit.onAmmoChanged.AddListener(CheckAmmo);
         }
 

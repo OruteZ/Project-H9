@@ -18,9 +18,9 @@ public class CriticalShotCondition : BaseCondition
         passive.NotFullfillCondition(this);
     }
 
-    private void TargetOff(IDamageable target, int damage, bool isHit, bool isCritical)
+    private void TargetOff(Damage context )
     {
-        if (isCritical)
+        if (context.Contains(Damage.Type.CRITICAL))
         {
             passive.FullfillCondition(this);
         }
@@ -44,9 +44,9 @@ public class NonCriticalShotCondition : BaseCondition
         passive.NotFullfillCondition(this);
     }
 
-    private void TargetOff(IDamageable target, int damage, bool isHit, bool isCritical)
+    private void TargetOff(Damage context )
     {
-        if (!isCritical)
+        if (context.Contains(Damage.Type.CRITICAL) is false)
         {
             passive.FullfillCondition(this);
         }

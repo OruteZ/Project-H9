@@ -130,7 +130,7 @@ public class ItemData
     public string GetInventoryTooltipContents()
     {
         string description = "";
-        if (itemType is ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun)
+        if (itemType is ItemType.REVOLVER or ItemType.REPEATER or ItemType.SHOTGUN)
         {
             string weaponTypeText = itemType.ToString();
             string weaponDamageText = weaponDamage.ToString() + " Damage";
@@ -152,15 +152,15 @@ public class ItemData
 
 public enum ItemType
 {
-    Null,
-    Etc,
-    Character,
-    Revolver,
-    Repeater,
-    Shotgun,
-    Heal,
-    Damage,
-    Cleanse,
-    Buff,
-    Debuff,
+    NULL,
+    ETC,
+    CHARACTER,
+    REVOLVER,
+    REPEATER,
+    SHOTGUN,
+    HEAL,
+    DAMAGE,
+    CLEANSE,
+    BUFF,
+    DEBUFF,
 }

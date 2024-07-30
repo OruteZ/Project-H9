@@ -19,7 +19,7 @@ public abstract class Weapon
 
     public Magazine magazine;
 
-    public int currentAmmo
+    public int CurrentAmmo
     {
         get => magazine.bullets.Count;
         set
@@ -42,7 +42,7 @@ public abstract class Weapon
         }
     }
     
-    public UnitStat unitStat => unit.stat;
+    public UnitStat UnitStat => unit.stat;
     public Unit unit;
 
     protected const float SHOTGUN_OVER_RANGE_PENALTY = 3f;
@@ -72,18 +72,12 @@ public abstract class Weapon
 
         magazine = new Magazine(maxAmmo);
     }
-   
-    /// <summary>
-    /// 적을 향해 사격합니다.
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="isCritical"></param>
-    public abstract void Attack(IDamageable target, out bool isCritical);
     public abstract ItemType GetWeaponType();
     public abstract int GetFinalDamage();
     public abstract int GetFinalCriticalDamage();
     public abstract float GetFinalHitRate(IDamageable target);
     public abstract float GetDistancePenalty();
+    public abstract float GetFinalCriticalRate();
 
     public abstract int GetRange();
 }

@@ -80,7 +80,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     private List<IDisplayableEffect> _displayableEffects;
 
     // ReSharper disable once InconsistentNaming
-    public static readonly UnityEvent<Unit> onAnyUnitActionFinished = new UnityEvent<Unit>();
+    private static readonly UnityEvent<Unit> onAnyUnitActionFinished = new UnityEvent<Unit>();
     [HideInInspector] public UnityEvent<Unit> onTurnStart; // me
     [HideInInspector] public UnityEvent<Unit> onTurnEnd; // me
     [HideInInspector] public UnityEvent<IUnitAction, Vector3Int> onActionStart; // action, target position
@@ -92,11 +92,9 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     [HideInInspector] public UnityEvent<Weapon> onWeaponChange; // after
     [HideInInspector] public UnityEvent<Unit> onMoved; // me
     [HideInInspector] public UnityEvent<Unit> onDead; //me
-    [HideInInspector] public UnityEvent<Unit, int> onHit; // attacker, damage
+    [HideInInspector] public UnityEvent<Damage> onHit; // attacker, damage
     [HideInInspector] public UnityEvent<IDamageable> onStartShoot; // target
-
-    [HideInInspector]
-    public UnityEvent<IDamageable, int, bool, bool> onFinishShoot; // target, totalDamage, isHit, isCritical
+    [HideInInspector] public UnityEvent<Damage> onFinishShoot; // target, totalDamage, isHit, isCritical
 
     [HideInInspector] public UnityEvent<Unit> onKill; // target
     [HideInInspector] public UnityEvent onUnitActionDataChanged;
@@ -123,7 +121,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         }
 
         _passiveList = passiveList;
-        foreach (var passive in _passiveList)
+        foreach (Passive passive in _passiveList)
         {
             if (passive is null)
             {
@@ -181,23 +179,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         animator.SetTrigger("Idle");
 
         FieldSystem.turnSystem.EndTurn();
-    }
-
-    public virtual void TakeDamage(int damage, Unit attacker, Damage.Type type = Damage.Type.Default)
-    {
-        if (gameObject == null) return;
-
-        stat.Consume(StatType.CurHp, damage); //for test
-        UIManager.instance.onTakeDamaged.Invoke(this, damage, type);
-        onHit.Invoke(FieldSystem.turnSystem.turnOwner, damage);
-
-        if (hp <= 0 && _hasDead is false)
-        {
-            _hasDead = true;
-            onAnyUnitActionFinished.AddListener(DeadCall);
-
-            _killer = attacker;
-        }
     }
 
     private Unit _killer;
@@ -437,8 +418,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         onStartShoot.Invoke(target);
 
-        bool isCritical = false;
-        bool hit = weapon.GetFinalHitRate(target) + hitRateOffset > UnityEngine.Random.value * 100;
+        bool hit = weapon.GetFinalHitRate(target) + hitRateOffset > Random.value * 100;
 
         if (VFXHelper.TryGetGunFireFXInfo(weapon.GetWeaponType(), out var fxGunFireKey, out var fxGunFireTime))
         {
@@ -451,14 +431,30 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             var startPos = _unitModel.GetGunpointPosition();
             var destPos = Hex.Hex2World(target.GetHex()) + Vector3.up;
             if (!hit)
-                destPos += new Vector3(UnityEngine.Random.value * 2 - 1, UnityEngine.Random.value * 2 - 1,
+                destPos += new Vector3(Random.value * 2 - 1, UnityEngine.Random.value * 2 - 1,
                     UnityEngine.Random.value * 2 - 1);
             VFXManager.instance.TryLineRender(fxBulletLine, traceTime, startPos, destPos);
         }
+        
+        
+        //===============build context================================
+        Damage.Type type = hit ? Damage.Type.DEFAULT : Damage.Type.MISS;
+        if (hit)
+        {
+            float criticalRate = weapon.GetFinalCriticalRate();
+            bool isCriticalHit = criticalRate >= Random.value * 100;
+            
+            if (isCriticalHit)
+            {
+                type |= Damage.Type.CRITICAL;
+            }
+        }
+        Damage context = 
+            new (weapon.GetFinalDamage(), weapon.GetFinalCriticalDamage(), type, this, target);
+        //================================================================
 
         if (hit)
         {
-            weapon.Attack(target, out isCritical);
             bool existKey =
                 VFXHelper.TryGetBloodingFXKey(weapon.GetWeaponType(), out string fxBloodingKey, out float bloodingTime);
             if (existKey)
@@ -471,12 +467,12 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         {
             UIManager.instance.onNonHited.Invoke(target);
         }
-
-        weapon.currentAmmo--;
+        
+        target.TakeDamage(context);
+        weapon.CurrentAmmo--;
         UIManager.instance.onPlayerStatChanged.Invoke();
 
-        int damage = hit ? isCritical ? weapon.GetFinalCriticalDamage() : weapon.GetFinalDamage() : 0;
-        onFinishShoot.Invoke(target, damage, hit, isCritical);
+        onFinishShoot.Invoke(context);
     }
 
     public void DestroyThis()
@@ -666,7 +662,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public void SetGoldBullet()
     {
-        if (weapon.GetWeaponType() == ItemType.Revolver && goldenBulletCount != 0)
+        if (weapon.GetWeaponType() == ItemType.REVOLVER && goldenBulletCount != 0)
         {
             weapon.magazine.ClearEffectAll();
 
@@ -690,6 +686,23 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
 
     #region IDAMAGEABLE
+
+    public virtual void TakeDamage(Damage damageContext)
+    {
+        if (gameObject == null) return;
+
+        stat.Consume(StatType.CurHp, damageContext.GetFinalAmount()); //for test
+        UIManager.instance.onTakeDamaged.Invoke(this, damageContext.GetFinalAmount(), damageContext.type);
+        onHit.Invoke(damageContext);
+
+        if (hp <= 0 && _hasDead is false)
+        {
+            _hasDead = true;
+            onAnyUnitActionFinished.AddListener(DeadCall);
+
+            _killer = damageContext.attacker;
+        }
+    }
 
     public Vector3Int GetHex()
     {

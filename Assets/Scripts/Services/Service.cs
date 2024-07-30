@@ -49,7 +49,7 @@ public static class Service
     {
         var pos = Hex.Hex2World(unit.GetHex());
         
-        Service.SetText(Damage.Type.Default, "MISS", pos, 1.0f);
+        Service.SetText(Damage.Type.DEFAULT, "MISS", pos, 1.0f);
     }
 
     public static void DamagedText(IDamageable unit, int damage, Damage.Type type)
@@ -70,19 +70,19 @@ public static class Service
     public static void SetText(Damage.Type type, string text, Vector3 position, float scale = 1.0f)
     {
         DamageFloaterWrapper floater = null;
-        if (type.HasFlag(Damage.Type.Critical))
+        if (type.HasFlag(Damage.Type.CRITICAL))
         {
             floater = _floaters[1].Set();
         }
-        else if (type.HasFlag(Damage.Type.Burned))
+        else if (type.HasFlag(Damage.Type.BURNED))
         {
             floater = _floaters[0].Set();
         }
-        else if (type.HasFlag(Damage.Type.Blooded))
+        else if (type.HasFlag(Damage.Type.BLOODED))
         {
             floater = _floaters[0].Set();
         }
-        else if (type.HasFlag(Damage.Type.Heal))
+        else if (type.HasFlag(Damage.Type.HEAL))
         {
             floater = _floaters[2].Set();
         }

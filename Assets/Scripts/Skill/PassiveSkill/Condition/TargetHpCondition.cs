@@ -21,7 +21,7 @@ namespace PassiveSkill
             else passive.NotFullfillCondition(this);
         }
 
-        private void TargetOff(IDamageable target, int damage, bool none, bool __)
+        private void TargetOff(Damage context)
         {
             passive.NotFullfillCondition(this);
         }
@@ -46,7 +46,7 @@ namespace PassiveSkill
             else passive.NotFullfillCondition(this);
         }
 
-        private void TargetOff(IDamageable target, int damage, bool none, bool __)
+        private void TargetOff(Damage context)
         {
             passive.NotFullfillCondition(this);
         }
@@ -71,7 +71,7 @@ namespace PassiveSkill
             else passive.NotFullfillCondition(this);
         }
 
-        private void TargetOff(IDamageable target, int damage, bool none, bool __)
+        private void TargetOff(Damage context)
         {
             passive.NotFullfillCondition(this);
         }
@@ -97,7 +97,7 @@ namespace PassiveSkill
             // else passive.DisableCondition();
         }
 
-        private void TargetOff(IDamageable target, int damage, bool none, bool __)
+        private void TargetOff(Damage context)
         {
             passive.NotFullfillCondition(this);
         }

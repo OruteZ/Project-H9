@@ -20,7 +20,7 @@ public class SweetSpotEffect : BaseEffect, IDisplayableEffect
             unit.stat.Add(StatType.CriticalChance, GetAmount());
         }
     }
-    private void ClearEffect(IDamageable target, int dmg, bool isHit, bool isCrit)
+    private void ClearEffect(Damage context)
     {
         unit.stat.Subtract(StatType.CriticalChance, GetAmount());
     }

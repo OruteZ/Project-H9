@@ -49,7 +49,7 @@ public class InventoryUITooltip : UIElement,IPointerExitHandler
 
         if (GameManager.instance.CompareState(GameState.COMBAT) && !isAPVisible)
         {
-            if (data.itemType == ItemType.Revolver || data.itemType == ItemType.Repeater || data.itemType == ItemType.Shotgun)
+            if (data.itemType == ItemType.REVOLVER || data.itemType == ItemType.REPEATER || data.itemType == ItemType.SHOTGUN)
             {
                 _itemCostUI.GetComponent<TooltipCostUI>().SetTooltipCostUI(Inventory.WEAPON_COST, 0, false);
             }

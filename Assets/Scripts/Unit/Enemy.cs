@@ -83,9 +83,9 @@ public class Enemy : Unit
         }
     }
 
-    public override void TakeDamage(int damage, Unit attacker = null,  Damage.Type type = Damage.Type.Default)
+    public override void TakeDamage(Damage damage)
     {
-        base.TakeDamage(damage, attacker, type);
+        base.TakeDamage(damage);
         UIManager.instance.onActionChanged.Invoke();
     }
     

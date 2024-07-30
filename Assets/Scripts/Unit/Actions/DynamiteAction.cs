@@ -109,7 +109,9 @@ public class DynamiteAction : BaseAction
     {
         foreach(var target in _targets)
         {
-            target.TakeDamage(damage, unit);
+            Damage dmgCtxt = new Damage(damage, damage, Damage.Type.DEFAULT, unit, target);
+            
+            target.TakeDamage(dmgCtxt);
             if(target.HasDead()) continue;
             
             target.TryAddStatus(new Burning(damage, 10, unit));  //for test

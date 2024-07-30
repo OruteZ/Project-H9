@@ -25,17 +25,17 @@ public class PlayerMainStatUI : UIElement
         int dmg = weapon.weaponDamage;
         float criDmg = 100;
         ItemType wT = weapon.GetWeaponType();
-        if (wT == ItemType.Revolver) 
+        if (wT == ItemType.REVOLVER) 
         {
             dmg += stat.revolverAdditionalDamage;
             criDmg += stat.revolverCriticalDamage;
         }
-        else if (wT == ItemType.Repeater)
+        else if (wT == ItemType.REPEATER)
         {
             dmg += stat.repeaterAdditionalDamage;
             criDmg += stat.repeaterCriticalDamage;
         }
-        else if (wT == ItemType.Shotgun)
+        else if (wT == ItemType.SHOTGUN)
         {
             dmg += stat.shotgunAdditionalDamage;
             criDmg += stat.shotgunCriticalDamage;

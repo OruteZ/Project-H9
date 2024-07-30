@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Magazine
 {
-    public List<Bullet> bullets;
+    public readonly List<Bullet> bullets;
     public Magazine(int maxAmmo) 
     {
         bullets = new List<Bullet>();

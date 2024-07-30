@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public interface IDamageable
 {
-    void TakeDamage(int damage, Unit attacker, Damage.Type type = Damage.Type.Default);
+    void TakeDamage(Damage damageContext);
     Vector3Int GetHex();
     int GetCurrentHp();
     int GetMaxHp();

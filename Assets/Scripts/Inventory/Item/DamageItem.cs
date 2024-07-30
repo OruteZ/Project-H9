@@ -14,7 +14,11 @@ public class DamageItem : Item
         var unit = FieldSystem.unitSystem.GetUnit(target);
         if (unit == null) return false;
         
-        unit.TakeDamage(GetData().itemEffectAmount, user);
+        // build damage context
+        int dmg = GetData().itemEffectAmount;
+        Damage damageContext = new Damage(dmg, dmg,Damage.Type.DEFAULT, user, unit);
+        
+        unit.TakeDamage(damageContext);
         stackCount--;
         
         GameManager.instance.playerInventory.CollectZeroItem();

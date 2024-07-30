@@ -43,7 +43,7 @@ public class FanningAction : BaseAction, IShootingAction
 
     public override int GetAmmoCost()
     {
-        return Mathf.Max(unit.weapon.currentAmmo, 1);
+        return Mathf.Max(unit.weapon.CurrentAmmo, 1);
     }
 
     public override bool CanExecuteImmediately()
@@ -61,10 +61,10 @@ public class FanningAction : BaseAction, IShootingAction
 
     public override bool IsSelectable()
     {
-        if (unit.weapon.currentAmmo == 0) return false;
+        if (unit.weapon.CurrentAmmo == 0) return false;
         if (unit.CheckAttackedTrigger()) return false;
         if (unit.HasStatusEffect(StatusEffectType.UnArmed)) return false;
-        if (unit.weapon.GetWeaponType() != ItemType.Revolver) return false;
+        if (unit.weapon.GetWeaponType() != ItemType.REVOLVER) return false;
         
         return true;
     }
@@ -102,7 +102,7 @@ public class FanningAction : BaseAction, IShootingAction
         
         unit.animator.SetTrigger(FANNING_FIRE);
         
-        yield return new WaitUntil(() => unit.weapon.currentAmmo == 0);
+        yield return new WaitUntil(() => unit.weapon.CurrentAmmo == 0);
 
         unit.animator.SetTrigger(FANNING_FINISH);
         yield return new WaitForSeconds(FINISH_TIME);

@@ -92,7 +92,7 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
         bool isPlayerAlreadyActiveAction = playerSelectedAction.IsActive();
 
         bool isEnoughApCost = (buttonAction.GetCost() <= player.currentActionPoint);
-        bool isEnoughAmmoCost = (buttonAction.GetAmmoCost() <= player.weapon.currentAmmo);
+        bool isEnoughAmmoCost = (buttonAction.GetAmmoCost() <= player.weapon.CurrentAmmo);
         bool isEnoughCost = isEnoughApCost && isEnoughAmmoCost;
         if ((!isPlayerTurn) || isPlayerAlreadyActiveAction || !isEnoughCost)
         {

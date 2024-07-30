@@ -8,15 +8,15 @@ public readonly struct Damage
     public readonly int criticalAmount;
     public readonly Type type;
     public readonly Unit attacker;
-    public readonly Unit target;
+    public readonly IDamageable target;
     
     // constructor
-    private Damage(
+    public Damage(
         int amount, 
         int criticalAmount,
         Type type, 
         Unit attacker,
-        Unit target
+        IDamageable target
         )
     
     {

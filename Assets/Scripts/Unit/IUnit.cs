@@ -16,13 +16,6 @@ public interface IUnit
     void StartTurn();
 
     /// <summary>
-    /// damage 만큼 피해를 입습니다.
-    /// </summary>
-    /// <param name="damage">피해량</param>
-    /// <param name="attacker">공격을 가한 개체입니다.</param>
-    void TakeDamage(int damage, Unit attacker = null, Damage.Type type = Damage.Type.Default);
-
-    /// <summary>
     /// Unit의 상태를 설정합니다.
     /// </summary>
     /// <param name="index">유닛의 index</param>

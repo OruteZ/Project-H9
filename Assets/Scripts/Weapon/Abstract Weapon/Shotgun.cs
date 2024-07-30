@@ -10,31 +10,23 @@ public class Shotgun : Weapon
     {
     }
 
-    public override ItemType GetWeaponType() => ItemType.Shotgun;
+    public override ItemType GetWeaponType() => ItemType.SHOTGUN;
     public override float GetDistancePenalty() => 2;
     public override int GetRange()
     {
-        return weaponRange + magazine.GetNextBullet().data.range + unitStat.shotgunAdditionalDamage;
+        return weaponRange + magazine.GetNextBullet().data.range + UnitStat.shotgunAdditionalDamage;
     }
 
-    public override void Attack(IDamageable target, out bool isCritical)
+    public override float GetFinalCriticalRate()
     {
         Debug.Log("Weapon attack Call" + " : " + nameIndex);
 
-        isCritical = Random.value * 100 < unitStat.criticalChance + criticalChance + magazine.GetNextBullet().data.criticalChance;
-        if (isCritical)
-        {
-            CriticalAttack(target);
-        }
-        else
-        {
-            NonCriticalAttack(target);
-        }
+        return  UnitStat.criticalChance + criticalChance + magazine.GetNextBullet().data.criticalChance;
     }
 
     public override int GetFinalDamage()
     {
-        float baseDamage = (weaponDamage + magazine.GetNextBullet().data.damage + unitStat.shotgunAdditionalDamage);
+        float baseDamage = (weaponDamage + magazine.GetNextBullet().data.damage + UnitStat.shotgunAdditionalDamage);
 
         int range = GetRange();
         int distance = Hex.Distance(unit.hexPosition, _targetHex);
@@ -48,7 +40,7 @@ public class Shotgun : Weapon
     public override int GetFinalCriticalDamage()
     {
         float dmg = GetFinalDamage();
-        dmg += dmg * ((unitStat.shotgunCriticalDamage + criticalDamage + +magazine.GetNextBullet().data.criticalDamage) * 0.01f);
+        dmg += dmg * ((UnitStat.shotgunCriticalDamage + criticalDamage + +magazine.GetNextBullet().data.criticalDamage) * 0.01f);
 
         return Mathf.RoundToInt(dmg);
     }
@@ -65,23 +57,11 @@ public class Shotgun : Weapon
 #if UNITY_EDITOR
         UIManager.instance.debugUI.SetDebugUI
             (finalHitRate, unit, (Unit)target, distance, weaponRange,
-                unitStat.revolverAdditionalRange,
+                UnitStat.revolverAdditionalRange,
                 GetDistancePenalty() *
                 (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
 #endif
 
         return finalHitRate;
-    }
-
-    private void NonCriticalAttack(IDamageable target)
-    {
-        int damage = GetFinalDamage();
-        target.TakeDamage(damage, unit);
-    }
-
-    private void CriticalAttack(IDamageable target)
-    {
-        int damage = GetFinalCriticalDamage();
-        target.TakeDamage(damage, unit, Damage.Type.Critical);
     }
 }

@@ -1,7 +1,45 @@
 using Unity.Collections.LowLevel.Unsafe;
+using UnityEngine;
 
-public struct Damage
+public readonly struct Damage
 {
+
+    public readonly int amount;
+    public readonly int criticalAmount;
+    public readonly Type type;
+    public readonly Unit attacker;
+    public readonly Unit target;
+    
+    // constructor
+    private Damage(
+        int amount, 
+        int criticalAmount,
+        Type type, 
+        Unit attacker,
+        Unit target
+        )
+    
+    {
+        this.amount = amount;
+        this.criticalAmount = criticalAmount;
+        this.type = type;
+        this.attacker = attacker;
+        this.target = target;
+    }
+    
+    
+    public bool Contains(Type value)
+    {
+        return (type & value) == value;
+    }
+    public int GetFinalAmount()
+    {
+        if (Contains(Type.CRITICAL)) return criticalAmount;
+        if (Contains(Type.MISS)) return 0;
+
+        return amount;
+    }
+    
     /// <summary>
     /// 비트연산으로 동작하는 DamageType
     /// </summary>
@@ -14,42 +52,11 @@ public struct Damage
     /// </comment>
     [System.Flags]
     public enum Type { 
-        Default = 1 << 0,
-        Critical = 1 << 1,
-        Blooded = 1 << 2,
-        Burned = 1 << 3,
-        Heal = 1 << 4,
-        Miss = 0,
+        MISS = 1 << 0,
+        DEFAULT = 1 << 1,
+        CRITICAL = 1 << 2,
+        BLOODED = 1 << 3,
+        BURNED = 1 << 4,
+        HEAL = 1 << 5,
     };
-    
-    public bool Contains(Type value)
-    {
-        return (_type & value) == value;
-    }
-    
-    public void Add(Type value)
-    {
-        _type |= value;
-    }
-    
-    public void Remove(Type value)
-    {
-        _type &= ~value;
-    }
-    
-    public int GetFinalAmount()
-    {
-        if (Contains(Type.Critical)) return criticalAmount;
-        if (Contains(Type.Miss)) return 0;
-
-        return amount;
-    }
-
-    private int amount;
-    private int criticalAmount;
-    
-    private Type _type;
-    
-    private Unit attacker;
-    private Unit target;
 }

@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI.Extensions;
 
 public class CoverableObj : TileObject, IDamageable
 {
@@ -9,7 +11,7 @@ public class CoverableObj : TileObject, IDamageable
     [SerializeField] private CoverType coverType;
     [SerializeField] private Unit unit;
     
-    private UnityEvent<int, int> _onHpChanged = new UnityEvent<int, int>();
+    private readonly UnityEvent<int, int> _onHpChanged = new UnityEvent<int, int>();
     
     public override void SetUp()
     {
@@ -45,22 +47,30 @@ public class CoverableObj : TileObject, IDamageable
     {
         unit = newUnit;
 
-        UnityAction onDodged = () => TakeDamage(new Damage(1, 1, Damage.Type.DEFAULT, newUnit, this));
+        newUnit.onHit.AddListener(OnUnitDodged);
+        newUnit.onMoved.AddListener(OnUnitMoved);
+    }
 
+    private void OnUnitDodged(Damage context)
+    {
+        // Take damage 1
+        if (!context.Contains(Damage.Type.MISS)) return;
 
-        // todo : Damage Context »ý¼º
-        // newUnit.onDodged.AddListener(onDodged);
-        // newUnit.onMoved.AddListener((u) =>
-        // {
-        //     newUnit.onDodged.RemoveListener(onDodged);
-        //     unit = null;
-        // });
+        Damage selfDamage = new Damage(1, 1, Damage.Type.DEFAULT, context.attacker, this);
+        TakeDamage(selfDamage);
+    }
+
+    private void OnUnitMoved(Unit u)
+    {
+        u.onHit.RemoveListener(OnUnitDodged);
+        u.onMoved.RemoveListener(OnUnitMoved);
+        unit = null;
     }
 
     #region IDamageable
     public void TakeDamage(Damage damage)
     {
-        currentHp -= 1;
+        currentHp -= damage.GetFinalAmount();
         if (currentHp <= 0)
         {
             currentHp = 0;
@@ -95,7 +105,6 @@ public class CoverableObj : TileObject, IDamageable
     #endregion
 
     // Get the direction from the player to the cover
-    // 
     public Vector3Int GetCoverDirection(Vector3Int playerHexPosition)
     {
         // Get the direction from the player to the cover

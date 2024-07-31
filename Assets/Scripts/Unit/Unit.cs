@@ -92,9 +92,9 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     [HideInInspector] public UnityEvent<Weapon> onWeaponChange; // after
     [HideInInspector] public UnityEvent<Unit> onMoved; // me
     [HideInInspector] public UnityEvent<Unit> onDead; //me
-    [HideInInspector] public UnityEvent<Damage> onHit; // attacker, damage
+    [HideInInspector] public UnityEvent<Damage> onHit; // Damage Context
     [HideInInspector] public UnityEvent<IDamageable> onStartShoot; // target
-    [HideInInspector] public UnityEvent<Damage> onFinishShoot; // target, totalDamage, isHit, isCritical
+    [HideInInspector] public UnityEvent<Damage> onFinishShoot; // Damage Context
 
     [HideInInspector] public UnityEvent<Unit> onKill; // target
     [HideInInspector] public UnityEvent onUnitActionDataChanged;
@@ -159,7 +159,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         onTurnStart.Invoke(this);
 
-        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out var appliedValue);
+        stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out int appliedValue);
         SetCoverType(CoverType.NONE, null);
 
         if (hp <= 0)
@@ -725,6 +725,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         {
             if (coverType == CoverType.NONE) return false;
             if (coverableObj == null) return false;
+            
             Vector2 coverDir = Hex.Hex2Orth(coverableObj.hexPosition - hexPosition);
             Vector2 atk = Hex.Hex2Orth(atkFrom - coverableObj.hexPosition);
             
@@ -732,7 +733,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             if ((angle is >= 0 - 1 and <= 60 + 1) ||
                 (angle is <= 360 + 1 and >= 300 - 1))
                 return true;
-            else return false;
+            
+            return false;
         }
         
         if(attacker != null && 
@@ -751,10 +753,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     #endregion
 
-    public void SetCoverType(CoverType type, CoverableObj coverableObj)
+    public void SetCoverType(CoverType type, CoverableObj obj)
     {
-        this.coverType = type;
-        this.coverableObj = coverableObj;
+        coverType = type;
+        coverableObj = obj;
     }
 }
 

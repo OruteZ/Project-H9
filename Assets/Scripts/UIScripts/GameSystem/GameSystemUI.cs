@@ -17,6 +17,7 @@ public class GameSystemUI : UISystem
     public AlarmUI alarmUI { get; private set; }
     public ItemUI itemUI { get; private set; }
     public EquipmentUI equipmentUI { get; private set; }
+    public TargetListUI targetListUI { get; private set; }
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class GameSystemUI : UISystem
         alarmUI = GetComponent<AlarmUI>();
         itemUI = GetComponent<ItemUI>();
         equipmentUI = GetComponent<EquipmentUI>();
+        targetListUI = GetComponent<TargetListUI>();
 
         uiSubsystems.Add(playerInfoUI);
         uiSubsystems.Add(questUI);
@@ -43,6 +45,7 @@ public class GameSystemUI : UISystem
         uiSubsystems.Add(alarmUI);
         uiSubsystems.Add(itemUI);
         uiSubsystems.Add(equipmentUI);
+        uiSubsystems.Add(targetListUI);
 
         ChangeSkillButtonRedDotText(SkillManager.instance.GetSkillPoint());
         UIManager.instance.onTSceneChanged.AddListener((s) => { ChangeSkillButtonRedDotText(SkillManager.instance.GetSkillPoint()); });
@@ -58,6 +61,10 @@ public class GameSystemUI : UISystem
         if (Input.GetKeyDown(HotKey.openSkillUIKey))
         {
             OnSkillBtnClick();
+        }
+        if (Input.GetKeyDown(HotKey.openTargetListKey))
+        {
+            targetListUI.OnClickTargetListButton();
         }
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.L))    //level up test button

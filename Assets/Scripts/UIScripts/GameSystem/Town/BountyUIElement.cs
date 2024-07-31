@@ -16,7 +16,7 @@ public class BountyUIElement : UIElement
     public void SetBountyUIElement(QuestInfo qInfo)
     {
         questInfo = qInfo;
-           EnemyData eData = FieldSystem.unitSystem.GetEnemyData(qInfo.GoalArg[0]);
+        EnemyData eData = FieldSystem.unitSystem.GetEnemyData(qInfo.GoalArg[0]);
         Texture2D enemyTexture = Resources.Load("UnitCapture/" + eData.modelName) as Texture2D;
         Sprite enemySpr = Sprite.Create(enemyTexture, new Rect(0, 0, enemyTexture.width, enemyTexture.height), new Vector2(0.5f, 0.5f));
 

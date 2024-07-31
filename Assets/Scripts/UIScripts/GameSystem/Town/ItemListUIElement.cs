@@ -27,7 +27,7 @@ public class ItemListUIElement : UIElement, IPointerEnterHandler, IPointerExitHa
         _listUI = listUI;
         _itemIcon.GetComponent<Image>().sprite = iData.icon;
         _itemNameText.GetComponent<TextMeshProUGUI>().text = GameManager.instance.itemDatabase.GetItemScript(iData.nameIdx).GetName();
-        _itemPriceText.GetComponent<TextMeshProUGUI>().text = iData.itemPrice.ToString()+'$';
+        _itemPriceText.GetComponent<TextMeshProUGUI>().text = iData.itemPrice.ToString()+ '¡Ë';
 
         if (GameManager.instance.playerInventory.GetGold() < iData.itemPrice) _itemPriceText.GetComponent<TextMeshProUGUI>().color = Color.red;
         else _itemPriceText.GetComponent<TextMeshProUGUI>().color = Color.white;

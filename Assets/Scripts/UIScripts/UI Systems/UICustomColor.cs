@@ -48,7 +48,8 @@ public static class UICustomColor
     public static readonly Color32 QuestNameColor = UINameColor;
     public static readonly Color32 ItemTextColor = UINameColor;
     public static readonly Color32 SkillTextColor = UINameColor;
-
+    public static readonly Color32 QuestClearTextColor = new Color32(72, 219, 18, 255);
+    public static readonly Color32 QuestDisableTextColor = new Color32(128, 128, 128, 255);
     public static string GetColorHexCode(Color32 color)
     {
         string r = string.Format("{0:X2}", color.r);

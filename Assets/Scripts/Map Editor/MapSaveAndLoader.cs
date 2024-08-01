@@ -134,7 +134,7 @@ public class MapSaveAndLoader : MonoBehaviour
             tileObject.hexPosition = tileObjectData.hexPosition;
             tileObject.gameObject.transform.localRotation = Quaternion.Euler(0, tileObjectData.rotation, 0);
             tileObject.SetArgs(tileObjectData.arguments);
-            tileObject.SetUp();
+            // tileObject.SetUp();
         }
         
         //instantiate environments

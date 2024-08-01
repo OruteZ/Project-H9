@@ -8,19 +8,17 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
 {
     [SerializeField] private GameObject _magazineTooltip;
 
-    [SerializeField] private PlayerMagazineUIElement _revolvers;
+    [SerializeField] private PlayerRevolverMagazineUIElement _revolvers;
     [SerializeField] private PlayerMagazineUIElement _shotguns;
     [SerializeField] private PlayerMagazineUIElement _repeater;
 
     private float _revolverRotation = 0;
 
-    private int MAGAZINE_SIZE = 6;
-    private int MAGAZINE_COUNT = 7;
     void Start()
     {
-        _revolvers.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 359.99f);
         if (_magazineTooltip == null) return;
         _magazineTooltip?.SetActive(false);
+        _revolvers.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 359.99f);
     }
     public void SetMagazineUI(bool isOnlyDisplayMaxMagazine)
     {
@@ -40,6 +38,7 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
             magazine = FieldSystem.unitSystem.GetPlayer().weapon.magazine;
             flickerCnt = UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedMagUsage;
         }
+        maxAmmo = GameManager.instance.itemDatabase.GetItemData(GameManager.instance.playerWeaponIndex).weaponAmmo;
 
         if (_revolvers.gameObject.activeSelf == true)
             _revolvers.gameObject.SetActive(false);
@@ -53,7 +52,7 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
         {
             _revolvers.gameObject.SetActive(true);
             _revolvers.Reload(maxAmmo, magazine, flickerCnt);
-            _revolverRotation = 359.99f - 60 * (maxAmmo - magazine.bullets.Count);
+            _revolverRotation = 359.99f - (360 / maxAmmo) * (maxAmmo - magazine.bullets.Count);
         }
         if (weaponType == ItemType.Shotgun)
         {
@@ -68,7 +67,7 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
     }
     private void Update()
     {
-        if (!_revolvers.gameObject.activeSelf) return;
+        if (_revolvers is null || !_revolvers.gameObject.activeSelf) return;
             float rotation = _revolvers.GetComponent<RectTransform>().eulerAngles.z;
         if (LerpCalculation.CalculateLerpValue(ref rotation, _revolverRotation, 10f))
         {

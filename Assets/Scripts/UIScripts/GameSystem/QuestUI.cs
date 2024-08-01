@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -18,6 +19,8 @@ public class QuestUI : UISystem
     private WorldCamera worldCamera;
 
     private QuestListPool _listPool = null;
+
+    private List<QuestInfo> _currentProgressingQuests = new();
 
     void Awake()
     {
@@ -64,7 +67,7 @@ public class QuestUI : UISystem
         ui.Instance.GetComponent<QuestListElement>().SetQuestListElement(info, out string popupText);
         _listPool.Sort();
         StartCoroutine(StartQuestUI(popupText));
-
+        _currentProgressingQuests.Add(info);
     }
     public void DeleteQuestListUI(QuestInfo info) 
     {
@@ -87,6 +90,8 @@ public class QuestUI : UISystem
             listElement.CompleteQuestUI(out popupText);
         }
         StartCoroutine(EndQuestUI(popupText));
+        _currentProgressingQuests.Remove(info);
+        GameManager.instance.user.ClearedQuests.Add(info.Index);
     }
     IEnumerator StartQuestUI(string popupText)
     {
@@ -163,4 +168,6 @@ public class QuestUI : UISystem
         if (_skillTooltip.activeSelf) _skillTooltip.GetComponent<SkillTooltip>().CloseUI();
         base.ClosePopupWindow();
     }
+
+    public List<QuestInfo> GetCurrentProgressingQuests => _currentProgressingQuests;
 }

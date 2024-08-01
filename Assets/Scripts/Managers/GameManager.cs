@@ -342,6 +342,16 @@ public class GameManager : Generic.Singleton<GameManager>
         #endregion
     }
 
+    public QuestInfo GetQuestInfo(int index)
+    {
+        foreach (var q in Quests) 
+        {
+            if (q.Index == index) return q;
+        }
+        //Debug.LogError("Can't Find QuestInfo");
+        return null;
+    }
+
     private void InvokeQuestEnd(QuestInfo quest)
     {
         OnNotifiedQuestEnd?.Invoke(quest);

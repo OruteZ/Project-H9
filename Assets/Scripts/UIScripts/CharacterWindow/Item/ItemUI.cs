@@ -14,6 +14,7 @@ public class ItemUI : UISystem
 
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject _inventoryTooltip;
+    [SerializeField] private GameObject _equippedTooltip;
     [SerializeField] private GameObject _inventoryInteractionButtons;
     [SerializeField] private GameObject _draggedElement;
     [SerializeField] private GameObject _equippedElement;
@@ -44,6 +45,18 @@ public class ItemUI : UISystem
         SetInventoryUI();
 
         IInventory.OnInventoryChanged.AddListener(SetInventoryUI);
+    }
+    private void Update()
+    {
+        float inventoryTooltipYSize = _inventoryTooltip.GetComponent<RectTransform>().sizeDelta.y * UIManager.instance.GetCanvasScale();
+
+        Vector3 tmpPos = _inventoryTooltip.GetComponent<RectTransform>().position;
+        tmpPos.y -= inventoryTooltipYSize;
+        tmpPos = ScreenOverCorrector.GetCorrectedUIPosition(GetComponent<Canvas>(), tmpPos, _equippedTooltip);
+
+        _equippedTooltip.GetComponent<RectTransform>().position = tmpPos;
+        tmpPos.y += inventoryTooltipYSize;
+        _inventoryTooltip.GetComponent<RectTransform>().position = tmpPos;
     }
     public override void OpenUI()
     {
@@ -85,13 +98,23 @@ public class ItemUI : UISystem
     }
     private void SetMoneyUI() 
     {
-        _moneyText.GetComponent<TextMeshProUGUI>().text = GameManager.instance.playerInventory.GetGold().ToString() + "$";
+        _moneyText.GetComponent<TextMeshProUGUI>().text = GameManager.instance.playerInventory.GetGold().ToString() + "￠";
     }
     public void OpenInventoryTooltip(GameObject ui, Vector3 pos)
     {
         if (_inventoryInteractionButtons.gameObject.activeSelf is true) return;
         _currentMouseOverElement = ui;
         _inventoryTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(ui, pos, false, ui == _equippedElement);
+
+
+        Item item = ui.GetComponent<InventoryUIBaseElement>().item;
+        bool isItemExist = (item != null);
+        bool isItemEquipped = (ui == _equippedElement);
+        if (!isItemExist || isItemEquipped) return;
+
+        bool isItemWeapon = (item.GetData().itemType is ItemType.Revolver or ItemType.Repeater or ItemType.Shotgun);
+        if(isItemWeapon) _equippedTooltip.GetComponent<InventoryUITooltip>().SetInventoryUITooltip(_equippedItem.GetData(), pos, false, true);
+
     }
 
     public void OpenInventoryInteraction(GameObject ui)
@@ -119,9 +142,10 @@ public class ItemUI : UISystem
         {
             _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         }
-        if (!IsMouseOverUI(_inventoryTooltip) && _inventoryInteractionButtons.gameObject.activeSelf is false)
+        if (!IsMouseOverUI(_inventoryTooltip) && !IsMouseOverUI(_equippedTooltip) && _inventoryInteractionButtons.gameObject.activeSelf is false)
         {
             _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+            _equippedTooltip.GetComponent<InventoryUITooltip>().CloseUI();
         }
     }
     private bool IsMouseOverUI(GameObject ui)
@@ -268,6 +292,7 @@ public class ItemUI : UISystem
         }
         _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+        _equippedTooltip.GetComponent<InventoryUITooltip>().CloseUI();
         SetInventoryUI();
     }
     public void ClickSellItemBtn()
@@ -275,6 +300,7 @@ public class ItemUI : UISystem
         GameManager.instance.playerInventory.SellItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
         _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+        _equippedTooltip.GetComponent<InventoryUITooltip>().CloseUI();
         SetInventoryUI();
     }
     public void ClickRemoveItemBtn()
@@ -282,6 +308,7 @@ public class ItemUI : UISystem
         GameManager.instance.playerInventory.DeleteItem(_interactionItem, _interactionIndex);
         _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
+        _equippedTooltip.GetComponent<InventoryUITooltip>().CloseUI();
         SetInventoryUI();
     }
 }

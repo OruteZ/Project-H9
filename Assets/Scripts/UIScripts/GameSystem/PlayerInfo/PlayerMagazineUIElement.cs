@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class PlayerMagazineUIElement : UIElement
 {
-    [SerializeField] private Sprite _bulletSprite;
-    [SerializeField] private Sprite _goldenBulletSprite;
+    [SerializeField] protected Sprite _bulletSprite;
+    [SerializeField] protected Sprite _goldenBulletSprite;
 
-    private int prevCnt = 0;
-    private int _maxSize = -1;
-    private List<PlayerBulletUIElement> _elements = new List<PlayerBulletUIElement>();
+    protected int prevCnt = 0;
+    protected int _maxSize = -1;
+    protected List<PlayerBulletUIElement> _elements = new List<PlayerBulletUIElement>();
 
     private void Awake()
     {
         _maxSize = transform.childCount;
+        _elements.Clear();
         for (int i = 0; i < transform.childCount; i++)
         {
             _elements.Add(transform.GetChild(i).GetComponent<PlayerBulletUIElement>());
@@ -28,9 +29,9 @@ public class PlayerMagazineUIElement : UIElement
         _elements[idx].GetComponent<Image>().sprite = _goldenBulletSprite;
     }
 
-    public void Reload(int maxAmmo, Magazine magazine, int expectedCnt = 0)
+    public virtual void Reload(int maxAmmo, Magazine magazine, int expectedCnt = 0)
     {
-        if (maxAmmo < 0 || _elements.Count <= maxAmmo)
+        if (maxAmmo < 0 || _elements.Count < maxAmmo)
             Debug.LogError($"HUD magazine UI => SetMaxSize()'s size is incorrect. ({gameObject.name} maxAmmo:{maxAmmo})");
 
 

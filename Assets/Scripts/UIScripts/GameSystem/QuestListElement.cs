@@ -7,13 +7,13 @@ using TMPro;
 
 public class QuestListElement : UIElement, IPointerClickHandler
 {
-    [SerializeField] private GameObject _questNameText;
-    [SerializeField] private GameObject _questDescriptText;
-    [SerializeField] private GameObject _questRewardText;
+    [SerializeField] protected GameObject _questNameText;
+    [SerializeField] protected GameObject _questDescriptText;
+    [SerializeField] protected GameObject _questRewardText;
 
-    public QuestInfo currentQuestInfo { get; private set; }
+    public QuestInfo currentQuestInfo { get; protected set; }
 
-    private bool _isDestroying = false;
+    protected bool _isDestroying = false;
 
     private string _resultText = "";
     private string _displayText = "";
@@ -66,10 +66,11 @@ public class QuestListElement : UIElement, IPointerClickHandler
         UIManager.instance.gameSystemUI.questUI.ClosePopupWindow();
     }
 
-    public void SetQuestListElement(QuestInfo qInfo, out string popupStr)
+    public virtual void SetQuestListElement(QuestInfo qInfo, out string popupStr)
     {
         currentQuestInfo = qInfo;
         _questNameText.GetComponent<TextMeshProUGUI>().text = qInfo.QuestName;
+        _questNameText.GetComponent<TextMeshProUGUI>().color = UICustomColor.QuestNameColor;
 
         string desc = "- " + qInfo.QuestTooltip;
         if (currentQuestInfo.ExpireTurn != -1) desc += " / " + UIManager.instance.UILocalization[205] + ": " + currentQuestInfo.CurTurn;
@@ -160,8 +161,8 @@ public class QuestListElement : UIElement, IPointerClickHandler
     }
     IEnumerator CompleteQuestEffect() 
     {
-        _questNameText.GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillIconLearnedColor;
-        _questDescriptText.GetComponent<TextMeshProUGUI>().color = UICustomColor.SkillIconLearnedColor;
+        _questNameText.GetComponent<TextMeshProUGUI>().color = UICustomColor.QuestClearTextColor;
+        _questDescriptText.GetComponent<TextMeshProUGUI>().color = UICustomColor.QuestClearTextColor;
         //_questRewardText.GetComponent<TextMeshProUGUI>().color = UICustomColor.DisableStateColor;
         //_questDescriptText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Italic;
         //_questDescriptText.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
@@ -178,7 +179,7 @@ public class QuestListElement : UIElement, IPointerClickHandler
         base.CloseUI();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public virtual void OnPointerClick(PointerEventData eventData)
     {
         if (currentQuestInfo.Pin != null)
         {

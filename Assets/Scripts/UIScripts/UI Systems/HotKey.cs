@@ -12,5 +12,5 @@ public static class HotKey
     public static KeyCode openStatLevelUpUIKey = KeyCode.C;
     public static KeyCode openActionUIKey = KeyCode.Tab;
     public static KeyCode changeOutlineModeKey = KeyCode.BackQuote;
-
+    public static KeyCode openTargetListKey = KeyCode.Q;
 }

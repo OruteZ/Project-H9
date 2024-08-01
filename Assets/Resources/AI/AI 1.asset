@@ -79,8 +79,8 @@ MonoBehaviour:
   Guid: 12935378d12a738478db811becd26a2c
   PositionalData:
     serializedVersion: 2
-    x: 366
-    y: 72
+    x: 354.5
+    y: 95.99999
     width: 256
     height: 106
   Child: {fileID: 7889825745576560060}
@@ -206,8 +206,8 @@ MonoBehaviour:
   Guid: ea26b72e3c45ce740ad103119b0f4180
   PositionalData:
     serializedVersion: 2
-    x: 312
-    y: 1127
+    x: 288
+    y: 1159.24
     width: 256
     height: 106
 --- !u!114 &-3382908665130894629
@@ -288,7 +288,7 @@ MonoBehaviour:
   Guid: ce174640ed4adfa4e947d506b941771a
   PositionalData:
     serializedVersion: 2
-    x: 1321
+    x: 1340
     y: 905
     width: 150
     height: 94
@@ -326,8 +326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b172a3453879dc42b31ffab07278046, type: 3}
   m_Name: AI 1
   m_EditorClassIdentifier: 
-  _viewPosition: {x: -145, y: -526, z: 0}
-  _viewScale: {x: 0.8695652, y: 0.8695652, z: 1}
+  _viewPosition: {x: -89, y: 55, z: 0}
+  _viewScale: {x: 0.57175326, y: 0.57175326, z: 1}
   Root: {fileID: -8098248551746100217}
   Nodes:
   - {fileID: -8098248551746100217}
@@ -428,10 +428,6 @@ MonoBehaviour:
     OutputGUID: b38b67504df180a45bdee771eeabd023
     OutputPortName: Output
   - InputGUID: 91c867654be24474489344df91aa2aa6
-    InputPortName: targetPos
-    OutputGUID: 79a639759dda7044db29bb712eaca213
-    OutputPortName: Output
-  - InputGUID: 91c867654be24474489344df91aa2aa6
     InputPortName: main
     OutputGUID: 25b8b1b5b7c00a94ba517bc21205bac1
     OutputPortName: FALSE
@@ -451,18 +447,6 @@ MonoBehaviour:
     InputPortName: main
     OutputGUID: 25b8b1b5b7c00a94ba517bc21205bac1
     OutputPortName: TRUE
-  - InputGUID: 7656b1fb7898dee4bbb2cfa20534c656
-    InputPortName: value
-    OutputGUID: 119b49dd8c656e64f80749729e17cc6b
-    OutputPortName: Output
-  - InputGUID: 7656b1fb7898dee4bbb2cfa20534c656
-    InputPortName: compareWith
-    OutputGUID: ce174640ed4adfa4e947d506b941771a
-    OutputPortName: Output
-  - InputGUID: 44cfd57cb04497c4482b8f2db6c9af4f
-    InputPortName: Condition
-    OutputGUID: 7656b1fb7898dee4bbb2cfa20534c656
-    OutputPortName: Output
   - InputGUID: f12ee3b968d720a4e94f32098a1e0dbd
     InputPortName: main
     OutputGUID: 44cfd57cb04497c4482b8f2db6c9af4f
@@ -531,6 +515,18 @@ MonoBehaviour:
     InputPortName: main
     OutputGUID: f12ee3b968d720a4e94f32098a1e0dbd
     OutputPortName: FALSE
+  - InputGUID: 44cfd57cb04497c4482b8f2db6c9af4f
+    InputPortName: Condition
+    OutputGUID: 7656b1fb7898dee4bbb2cfa20534c656
+    OutputPortName: Output
+  - InputGUID: 7656b1fb7898dee4bbb2cfa20534c656
+    InputPortName: value
+    OutputGUID: 119b49dd8c656e64f80749729e17cc6b
+    OutputPortName: Output
+  - InputGUID: 7656b1fb7898dee4bbb2cfa20534c656
+    InputPortName: compareWith
+    OutputGUID: ce174640ed4adfa4e947d506b941771a
+    OutputPortName: Output
 --- !u!114 &360641257093424632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,8 +563,8 @@ MonoBehaviour:
   Guid: 52dc418a933ad97408d473cfbb4fbfc0
   PositionalData:
     serializedVersion: 2
-    x: 420.99997
-    y: 601.85016
+    x: 466.49994
+    y: 666
     width: 201
     height: 94
 --- !u!114 &2275174251831736208
@@ -668,8 +664,8 @@ MonoBehaviour:
   Guid: c1cbeb936f4ef024cb772ec823ded6d3
   PositionalData:
     serializedVersion: 2
-    x: 851.9165
-    y: 190.00002
+    x: 900
+    y: 190
     width: 256
     height: 106
 --- !u!114 &4967058418249283595
@@ -768,8 +764,8 @@ MonoBehaviour:
   Guid: 79a639759dda7044db29bb712eaca213
   PositionalData:
     serializedVersion: 2
-    x: 1134.5
-    y: 201.99998
+    x: 1156
+    y: 202
     width: 201
     height: 94
 --- !u!114 &6789328065086735335
@@ -807,8 +803,8 @@ MonoBehaviour:
   Guid: afcc0343418f1b34e8a5aeba8d75ed0e
   PositionalData:
     serializedVersion: 2
-    x: 114
-    y: 131
+    x: 178
+    y: 252.99998
     width: 150
     height: 94
 --- !u!114 &6917901801280099519
@@ -826,8 +822,8 @@ MonoBehaviour:
   Guid: 527e008a9aea15e43bfc51a8a0aec137
   PositionalData:
     serializedVersion: 2
-    x: -83
-    y: 376
+    x: -14
+    y: 666
     width: 150
     height: 94
 --- !u!114 &7468018173980790344
@@ -845,8 +841,8 @@ MonoBehaviour:
   Guid: 119b49dd8c656e64f80749729e17cc6b
   PositionalData:
     serializedVersion: 2
-    x: 1119.5
-    y: 904.6461
+    x: 1134
+    y: 906
     width: 201
     height: 94
 --- !u!114 &7889825745576560060

@@ -513,6 +513,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     
     #region COVER
 
+    [Tooltip("The range of the cover effect")]
     [SerializeField] private int coverEffectRange;
     private void CoverEffect()
     {
@@ -569,13 +570,13 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             // }
             
             Tile tile = FieldSystem.tileSystem.GetTile(target);
-            SetEffectTarget(target, coverPosition);
             
             if (tile.GetTileObject<CoverableObj>() is null)
             {
-                Debug.LogError("target tile has no cover");
                 continue;
             }
+            
+            SetEffectTarget(target, coverPosition);
             
             
             Vector2 coverDir = 
@@ -624,6 +625,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         //remove cover effect
         foreach (var coverable in _coverableObjs)
         {
+            if (coverable == null) continue;
             var materialList = 
                 coverable.
                 gameObject.

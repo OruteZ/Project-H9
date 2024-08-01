@@ -723,32 +723,25 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public int GetHitRateModifier(Unit attacker = null)
     {
-        bool Coverable(Vector3Int atkFrom)
+        int modifier = 0;
+        
+        // cover modifier
+        if (attacker != null && coverableObj != null)
         {
-            if (coverType == CoverType.NONE) return false;
-            if (coverableObj == null) return false;
-            
-            Vector2 coverDir = Hex.Hex2Orth(coverableObj.hexPosition - hexPosition);
-            Vector2 atk = Hex.Hex2Orth(atkFrom - coverableObj.hexPosition);
-            
-            float angle = Vector2.SignedAngle(coverDir, atk);
-            if ((angle is >= 0 - 1 and <= 60 + 1) ||
-                (angle is <= 360 + 1 and >= 300 - 1))
-                return true;
-            
-            return false;
+            bool coverable = CoverableObj.Coverable(attacker.hexPosition, coverableObj.hexPosition, hexPosition);
+            if (coverable)
+            {
+                modifier += coverType switch
+                {
+                    CoverType.NONE => 0,
+                    CoverType.LIGHT => -20,
+                    CoverType.HEAVY => -30,
+                };
+            }
         }
-        
-        if(attacker != null && 
-           Coverable(attacker.hexPosition) is false)
-            return 0;
-        
-        return coverType switch
-        {
-            CoverType.LIGHT => -20,
-            CoverType.HEAVY => -30,
-            _ => 0
-        };
+        // cover fin 
+
+        return (int) modifier;
     }
 
     public UnityEvent<int, int> OnHpChanged => onHpChanged;

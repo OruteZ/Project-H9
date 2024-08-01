@@ -74,9 +74,11 @@ public class CoverAction : BaseAction
     protected override IEnumerator ExecuteCoroutine()
     {
         // unit . cover
-        
-        _animationDone = true;
         // play animation
+        
+        transform.LookAt(FieldSystem.tileSystem.GetTile(_targetPos).transform);
+        transform.localRotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, 0);
+        
         
         unit.animator.SetBool(COVER, true);
         

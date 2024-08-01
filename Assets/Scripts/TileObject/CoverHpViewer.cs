@@ -20,11 +20,16 @@ public class CoverHpViewer : MonoBehaviour
         {
             throw new ArgumentNullException($"HpText is null : object name {gameObject.name}");
         }
-        
+
         coverableObj.OnHpChanged.AddListener(OnHpChanged);
-        
-        ResetPosition();
+        FieldSystem.onStageStart.AddListener(StageStart);
+    }
+
+    private void StageStart()
+    {
         Reload();
+        ResetPosition();
+        FieldSystem.unitSystem.GetPlayer().onMoved.AddListener((n) => ChainVisible());
     }
 
     private void OnHpChanged(int arg0, int arg1)
@@ -34,10 +39,21 @@ public class CoverHpViewer : MonoBehaviour
 
     private void Reload()
     {
+        if(coverableObj == null) Destroy(gameObject);
+        
         if (TryGetHpInfo(out int hp, out int maxHp))
         {
             hpText.text = $"{hp}/{maxHp}";
         }
+    }
+    
+    private void ChainVisible()
+    {
+        if (coverableObj is null) return;
+        if (hpText is null) return;
+        
+        bool isVisible = coverableObj.IsVisible();
+        hpText.gameObject.SetActive(isVisible);
     }
 
     [ContextMenu("Reset Position")]
@@ -49,7 +65,7 @@ public class CoverHpViewer : MonoBehaviour
         if(hpText is null) return;
         
         Vector3 textPos = coverableObj.transform.position;
-        textPos += Vector3.up * 0.5f;
+        textPos += Vector3.up * 3;
         hpText.transform.position = textPos;
     }
     

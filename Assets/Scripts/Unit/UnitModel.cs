@@ -116,8 +116,14 @@ public class UnitModel : MonoBehaviour
     private void OnHit(Damage context)
     {
         if (_deadFlag) return;
+
+        if (context.Contains(Damage.Type.MISS) is false // MISS일 경우 : 피격 이펙트 X
+            && animator.GetBool(COVER) is false    // Cover 상태일 경우 : 엄폐중 피격 이펙트 없어 우선 x
+            )   
+        {
+            animator.SetTrigger(GET_HIT1);
+        }
         
-        if(context.Contains(Damage.Type.MISS) is false) animator.SetTrigger(GET_HIT1);
         //if hp is 0, die
         if (unit.hp <= 0)
         {
@@ -138,6 +144,7 @@ public class UnitModel : MonoBehaviour
     private bool _fireTrigger;
     
     private readonly Dictionary<StatusEffectType, GameObject> _statusEffectFX = new ();
+    private static readonly int COVER = Animator.StringToHash("Cover");
 
     private void ResetStatusEffectTrigger()
     {

@@ -133,7 +133,7 @@ public class CoverableObj : TileObject, IDamageable
         
         // is coverToAtkFrom between cwVector and ccwVector?
         float angle = Vector3.Angle(midVector, coverToAtkFrom);
-        if (angle <= 60)
+        if (angle <= 61)
         {
             return true;
         }

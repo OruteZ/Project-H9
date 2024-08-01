@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class HexGridLayout : MonoBehaviour
 {
-    [Header("Tile Settings")] public float thickness;
+    [Header("Tile Settings")] 
+    public float thickness;
     public float height;
     public bool isFlatTopped;
     public Material material;
@@ -47,7 +48,7 @@ public class HexGridLayout : MonoBehaviour
         }
 
 
-        foreach (var grid in grids)
+        foreach (Tile grid in grids)
         {
             if (grid.gridVisible is false)
             {

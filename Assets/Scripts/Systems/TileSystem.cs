@@ -61,6 +61,17 @@ public class TileSystem : MonoBehaviour
         return result;
     }
     
+    #if UNITY_EDITOR
+    public List<Tile> GetAllTilesEditor()
+    {
+        var tilesInChildren = GetComponentsInChildren<Tile>();  
+        var result = new List<Tile>();
+        result.AddRange(tilesInChildren);
+
+        return result;
+    }
+    #endif
+    
     /// <summary>
     /// 현재 존재하는 모든 타일의 Hex 위치를 반환합니다.
     /// </summary>
@@ -447,97 +458,43 @@ public class TileSystem : MonoBehaviour
         return true;
     }
     
-    //demo code : 간단한 맵 생성용
-    [Header("Hex World Inspector")]
-    public int range;
+    //==========================Create World==================================
+    [Header("Creating World")]
+    [SerializeField] private int range;
+    [SerializeField] private Transform tilesParent;
+    [SerializeField] private Vector3Int center;
 
-    [Header("Square World Inspector")] 
-    public int width;
-    public int height;
-    
-    [ContextMenu("Create Hex World")]
-    public void CreateHexWorld()
+    [ContextMenu("Generate World")]
+    public void GenerateWorld()
     {
-        var positions = Hex.GetCircleGridList(range, Hex.zero);
-        Debug.Log(positions.Count);
-        foreach (var pos in positions)
-        {
-            var tile = Instantiate(tilePrefab, tileParent.transform).GetComponent<Tile>();
-            tile.hexPosition = pos;
-            tile.visible = tile.walkable = tile.rayThroughable = tile.gridVisible =  true;
-            tile.gameObject.name = $"Tile : {tile.hexPosition}";
-        }
+        IEnumerable<Vector3Int> list = Hex.GetCircleGridList(range, center);
+        IEnumerable<Tile> tiles = GetAllTilesEditor();
+
+        // only positions that not in tiles
+        IEnumerable<Vector3Int> positions = list.Where(pos => tiles.All(tile => tile.hexPosition != pos));
         
-        gridLayout.LayoutGrid();
-    }
-
-    [ContextMenu("Create Rect World")]
-    public void CreateRectWorld()
-    {
-        var positions = Hex.GetSquareGridList(width, height);
-        Debug.Log(positions.Count);
-        foreach (var pos in positions)
+        foreach (Vector3Int pos in positions)
         {
-            var tile = Instantiate(tilePrefab, tileParent.transform).GetComponent<Tile>();
+            Tile tile = Instantiate(tilePrefab, tilesParent).GetComponent<Tile>();
+            
             tile.hexPosition = pos;
-            tile.visible = tile.walkable = tile.rayThroughable = tile.gridVisible = true;
-            tile.gameObject.name = $"Tile : {tile.hexPosition}";
-        }
-
-        gridLayout.LayoutGrid();
-    }
-
-    [ContextMenu("Remove Demo World")]
-    private void RemoveDemoWorld()
-    {
-        var tiles = GetComponentsInChildren<Tile>();
-        foreach (Tile tile in tiles)
-        {
-            DestroyImmediate(tile.gameObject);
+            tile.walkable = true;
+            tile.visible = true;
+            tile.rayThroughable = true;
+            tile.gridVisible = true;
+            
+            tile.gameObject.name = "Tile : " + pos;
         }
     }
 
-    [ContextMenu("Read Tile Data")]
-    private void SetTileData()
+    [SerializeField] private bool viewGeneratorCenter;
+    private void OnDrawGizmos()
     {
-        var tiles = GetComponentsInChildren<Tile>();
-        var dataString = FileRead.Read("MapData/" + dataName, out var columnInfo);
-        List<TileInfo> infoList = new List<TileInfo>();
-        for (var i = 0; i < infoList.Count; i++)
+        if (viewGeneratorCenter)
         {
-            infoList.Add(new TileInfo(dataString[i])); 
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(Hex.Hex2World(center), range * 2);
         }
-        
-        foreach (Tile tile in tiles)
-        {
-            foreach (TileInfo info in infoList.Where(info => info.pos == tile.hexPosition))
-            {
-                tile.visible = info.visible;
-                tile.walkable = info.walkable;
-                tile.gridVisible = info.gridVisible;
-                tile.rayThroughable = info.rayThroughable;
-            }
-        }
-    }
-
-    private static Vector3Int ParseVector3Int(string positionString)
-    {
-        // Remove the parentheses
-        if (positionString.StartsWith("(") && positionString.EndsWith(")")) {
-            positionString = positionString.Substring(1, positionString.Length-2);
-        }
-
-        // split the items
-        string[] array = positionString.Split(',');
-
-        // store as a Vector3
-        Vector3Int result = new Vector3Int(
-            int.Parse(array[0]),
-            int.Parse(array[1]),
-            int.Parse(array[2])
-            );
-
-        return result;
     }
 }
 
@@ -557,45 +514,4 @@ internal class PathNode
 
     public Vector3Int position;
     public readonly PathNode from;
-}
-
-internal struct TileInfo
-{
-    private const int POSITION =        0;
-    private const int WALKABLE =        1;
-    private const int RAY_THROUGHABLE = 2;
-    private const int VISIBLE =         3;
-    private const int GRID_VISIBLE =    4;
-    
-    public Vector3Int pos;
-    public readonly bool walkable;
-    public readonly bool rayThroughable;
-    public readonly bool visible;
-    public readonly bool gridVisible;
-
-    public TileInfo(IReadOnlyList<string> data) : this()
-    {
-        SetPos(data[POSITION]);
-        walkable = int.Parse(data[WALKABLE]) == 1;
-        rayThroughable = int.Parse(data[RAY_THROUGHABLE]) == 1;
-        visible = int.Parse(data[VISIBLE]) == 1;
-        gridVisible = int.Parse(data[GRID_VISIBLE]) == 1;
-    }
-    private void SetPos(string positionStr)
-    {
-        if (positionStr.StartsWith("(") && positionStr.EndsWith(")")) {
-            positionStr = positionStr.Substring(1, positionStr.Length-2);
-        }
-
-        // split the items
-        string[] array = positionStr.Split(',');
-
-        // store as a Vector3
-        Vector2Int result = new Vector2Int(
-            int.Parse(array[0]),
-            int.Parse(array[1])
-        );
-
-        this.pos = Hex.ColToHex(result);
-    }
 }

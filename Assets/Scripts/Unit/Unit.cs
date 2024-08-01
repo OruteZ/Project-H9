@@ -161,6 +161,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out int appliedValue);
         SetCoverType(CoverType.NONE, null);
+        animator.SetBool(COVER, false);
 
         if (hp <= 0)
         {
@@ -568,6 +569,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     #region STATUE EFFECT
 
     private UnitStatusEffectController _seController;
+    private static readonly int COVER = Animator.StringToHash("Cover");
 
     public bool HasStatusEffect(StatusEffectType type)
     {

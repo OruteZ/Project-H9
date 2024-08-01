@@ -57,13 +57,16 @@ public class WorldMapEditor : MonoBehaviour
             {
                 linkComponent.hexPosition = linkData.pos;
             }
-            
-            //remove "(Clone)" from name
-            // link.name = linkData.model.name.Replace("(Clone)", "");
+        }
+        
+        // combat indexed tiles
+        foreach (TileCombatStageInfo info in worldData.specificCombatIndexedTiles)
+        {
+            Tile tile = FieldSystem.tileSystem.GetTile(info.hexPosition);
+            tile.combatStageIndex = info.combatStageIndex;
         }
     }
     
-    [ContextMenu("Save Link")]
     public void SaveData()
     {
         //Get link data by link object
@@ -110,7 +113,7 @@ public class WorldMapEditor : MonoBehaviour
         WorldData.SaveChangesToScriptableObject(worldData);
         onLinkChanged.Invoke();
     }
-    
+
     #if UNITY_EDITOR
     [ContextMenu("Save Tile Combat data")]
     public void LoadTileCombatData()
@@ -120,10 +123,15 @@ public class WorldMapEditor : MonoBehaviour
             Debug.LogError("This function is only available in editor mode");
             return;
         }
-        
+
+        TileSystem tileSystem = FindObjectOfType<TileSystem>();
         foreach (TileCombatStageInfo tileCombatStageInfo in worldData.specificCombatIndexedTiles)
         {
-            Tile tile = FieldSystem.tileSystem.GetTile(tileCombatStageInfo.hexPosition);
+            Tile tile = tileSystem.GetTileInEditor(tileCombatStageInfo.hexPosition);
+            if (tile == null)
+            {
+                Debug.LogError("Cannot Found tile that has position " + tileCombatStageInfo.hexPosition.ToString());
+            }
             tile.combatStageIndex = tileCombatStageInfo.combatStageIndex;
         }
     }

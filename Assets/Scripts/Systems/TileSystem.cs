@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class TileSystem : MonoBehaviour
@@ -227,6 +228,25 @@ public class TileSystem : MonoBehaviour
     {
         return _tiles.GetValueOrDefault(position);
     }
+
+    #if UNITY_EDITOR
+    public Tile GetTileInEditor(Vector3Int position)
+    {
+        if (EditorApplication.isPlaying)
+        {
+            Debug.LogError("This Function Only Called in editor");
+            return null;
+        }
+        
+        var tilesInChildren = GetComponentsInChildren<Tile>();  
+        foreach (Tile t in tilesInChildren)
+        {
+            if (t.hexPosition == position) return t;
+        }
+        
+        return null;
+    }
+    #endif
     
     /// <summary>
     /// 해당 Hex좌표에 존재하는 모든 TileObject를 가져옵니다.

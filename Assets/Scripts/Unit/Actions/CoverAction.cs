@@ -7,7 +7,8 @@ public class CoverAction : BaseAction
     
     private Vector3Int _targetPos;
     private bool _animationDone;
-    
+    private static readonly int COVER = Animator.StringToHash("Cover");
+
     #endregion
     
     public override ActionType GetActionType()
@@ -77,7 +78,7 @@ public class CoverAction : BaseAction
         _animationDone = true;
         // play animation
         
-        // unit.animator.SetTrigger(COVER);
+        unit.animator.SetBool(COVER, true);
         
         CoverableObj coverObj = FieldSystem.tileSystem.GetTile(_targetPos).GetTileObject<CoverableObj>();
         if (coverObj == null)

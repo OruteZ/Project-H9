@@ -38,16 +38,15 @@ public class UnitModel : MonoBehaviour
 
     [SerializeField] private bool isWesternFrontierAsset = true;
 
-    public void Setup(Unit unit)
+    public void Setup(Unit newUnit)
     {
         if (TryGetComponent(out animator) is false)
         {
             Debug.LogError("Animator is null");
             throw new Exception();
-            return;
         }
 
-        this.unit = unit;
+        unit = newUnit;
         _visual = transform.GetComponentInChildren<SkinnedMeshRenderer>();
         
         _deadFlag = false;
@@ -55,10 +54,10 @@ public class UnitModel : MonoBehaviour
         
         #region EVENTS
 
-        unit.onHit.AddListener(OnHit);
-        unit.onTurnStart.AddListener(OnStartTurn);
-        unit.onStatusEffectChanged.AddListener(OnStatusEffectChanged);
-        unit.onMoved.AddListener((a) => transform.localPosition = Vector3.zero);
+        newUnit.onHit.AddListener(OnHit);
+        newUnit.onTurnStart.AddListener(OnStartTurn);
+        newUnit.onStatusEffectChanged.AddListener(OnStatusEffectChanged);
+        newUnit.onMoved.AddListener((a) => transform.localPosition = Vector3.zero);
 
         #endregion
     }
@@ -118,7 +117,7 @@ public class UnitModel : MonoBehaviour
     {
         if (_deadFlag) return;
         
-        animator.SetTrigger(GET_HIT1);
+        if(context.Contains(Damage.Type.MISS) is false) animator.SetTrigger(GET_HIT1);
         //if hp is 0, die
         if (unit.hp <= 0)
         {
@@ -353,7 +352,7 @@ public class UnitModel : MonoBehaviour
 
     
     /// <summary>
-    /// Animation Event¸¦ ¹Þ¾Æ ÇØ´ç UnitAction¿¡ Àü´ÞÇÕ´Ï´Ù. Animation Event´Â °¢ Animation Clip¿¡ ¼³Á¤µÇ¾î ÀÖ½À´Ï´Ù.
+    /// Animation Eventï¿½ï¿½ ï¿½Þ¾ï¿½ ï¿½Ø´ï¿½ UnitActionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. Animation Eventï¿½ï¿½ ï¿½ï¿½ Animation Clipï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.
     /// </summary>
     /// <param name="eventStringArgument"></param>
     public void GetAnimationEvent(string eventStringArgument)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LerpCalculation
+public static class LerpCalculation
 {
     public static bool CalculateLerpValue(ref float currentValue, float targetValue)
     {

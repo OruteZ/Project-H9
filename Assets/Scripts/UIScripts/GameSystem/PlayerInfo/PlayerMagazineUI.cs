@@ -47,7 +47,7 @@ public class PlayerMagazineUI : UIElement, IPointerEnterHandler, IPointerExitHan
         if (_repeater.gameObject.activeSelf == true)
             _repeater.gameObject.SetActive(false);
 
-        var weaponType = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
+        ItemType weaponType = FieldSystem.unitSystem.GetPlayer().weapon.GetWeaponType();
         if (weaponType == ItemType.Revolver)
         {
             _revolvers.gameObject.SetActive(true);

@@ -23,7 +23,16 @@ public class Movable : H9Function<bool>
         MoveAction action = ai.GetUnit().GetAction<MoveAction>();
         if(action is null) return false;
         
-        return action.CanExecute(targetPos.Invoke()) && action.IsSelectable();
+        Vector3Int startPos = ai.GetUnit().hexPosition;
+        Vector3Int endPos = targetPos.Invoke();
+        
+        var path = FieldSystem.tileSystem.FindPath(startPos, endPos);
+        if (path.Count == 0)
+        {
+            return false;
+        }
+        
+        return action.CanExecute(path[1].hexPosition) && action.IsSelectable();
     }
 
     public override string GetSummary(BaseNodeView nodeView)

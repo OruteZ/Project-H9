@@ -59,7 +59,7 @@ public class EnemyAI : MonoBehaviour
     }
     
     /// <summary>
-    /// AI°¡ Decision Tree¸¦ ÅëÇØ¼­ ÆÇ´ÜÀ» ÁøÇà ÇÑ ÈÄ °á°ú¸¦ µµÃâÇÕ´Ï´Ù.
+    /// AIê°€ Decision Treeë¥¼ í†µí•´ì„œ íŒë‹¨ì„ ì§„í–‰ í•œ í›„ ê²°ê³¼ë¥¼ ë„ì¶œí•©ë‹ˆë‹¤.
     /// </summary>
     /// <returns></returns>
     public AIResult Think()

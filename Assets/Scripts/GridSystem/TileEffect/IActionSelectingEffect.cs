@@ -1,4 +1,6 @@
-﻿public interface IActionSelectingEffect
+﻿using System.Collections.Generic;
+
+public interface IActionSelectingEffect
 {
     /// <summary>
     /// Stop All Effect
@@ -9,16 +11,20 @@
     /// Show User's Tile Effect
     /// </summary>
     /// <param name="user"></param>
-    void ShowTileEffect(Unit user);
+    void ShowEffect(Unit user);
 
     /// <summary>
     /// Get ActionType that this effect has
     /// </summary>
-    /// <param name="setting"></param>
-    ActionType GetActionType();
+    List<ActionType> GetActionType();
+
+    /// <summary>
+    /// Checks this type be contained in this Effect 
+    /// </summary>
+    bool HasActionType(ActionType type);
     
     // initialize
-    void SetupTileEffect(TileEffectSetting setting);
+    void SetupTileEffect(TileEffectSetting setting, TileEffectManager effecter);
 }
 
 // ReSharper disable once InvalidXmlDocComment

@@ -105,10 +105,12 @@ public class Player : Unit
         }
         
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hit, float.MaxValue ,layerMask : LayerMask.GetMask("Tile")))
+        if (H9Math.IsRayIntersectingPlane(ray, out float t, 0))
         {
-            var tile = hit.collider.GetComponent<Tile>();
+            Vector3 collisionPosition = ray.origin + ray.direction * t;
+            Vector3Int collisionHex = Hex.Round(Hex.World2Hex(collisionPosition));
 
+            Tile tile = FieldSystem.tileSystem.GetTile(collisionHex);
             if (tile is null)
             {
                 pos = Vector3Int.zero;

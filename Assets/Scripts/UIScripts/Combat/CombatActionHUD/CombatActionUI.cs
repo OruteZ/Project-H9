@@ -10,10 +10,11 @@ public enum CombatActionType
     Move =      1,
     Attack =    2,
     Reload =    3,
-    Skills =    4,
-    Items =     5,
-    Weapons =   6,
-    PlayerSkill = 7
+    Cover =     4,
+    Skills =    5,
+    Items =     6,
+    Weapons =   7,
+    PlayerSkill = 8
 }
 
 public class CombatActionUI : UISystem
@@ -71,6 +72,13 @@ public class CombatActionUI : UISystem
         _buttonNameTooltip.SetActive(false);
         _skillTooltip.SetActive(false);
         _itemWindow.SetActive(false);
+
+        for (int i = 0; i < _baseActionBundle.transform.childCount; i++)
+        {
+            _baseActionBundle.transform.GetChild(i).transform.localEulerAngles = new Vector3(0, 0, i * (-360 / _baseActionBundle.transform.childCount));
+            _baseActionBundle.transform.GetChild(i).GetChild(0).transform.localEulerAngles = new Vector3(0, 0, i * (360 / _baseActionBundle.transform.childCount));
+        }
+
         CloseUI();
     }
 
@@ -164,7 +172,7 @@ public class CombatActionUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;
         List<IUnitAction> actions = new List<IUnitAction>(player.GetUnitActionArray());
-        ActionType[] baseActionType = { ActionType.MOVE, ActionType.ATTACK, ActionType.RELOAD, ActionType.IDLE, ActionType.ITEM_USING };
+        ActionType[] baseActionType = { ActionType.MOVE, ActionType.ATTACK, ActionType.RELOAD, ActionType.COVER, ActionType.IDLE, ActionType.ITEM_USING };
 
         List<IUnitAction> ba = new List<IUnitAction>();
         for (int j = 0; j < baseActionType.Length; j++)
@@ -196,14 +204,14 @@ public class CombatActionUI : UISystem
             return;
         }
         _baseActions.Clear();
-        CombatActionType[] baseCombatActionType = { CombatActionType.Move, CombatActionType.Attack, CombatActionType.Reload };
+        CombatActionType[] baseCombatActionType = { CombatActionType.Move, CombatActionType.Attack, CombatActionType.Reload, CombatActionType.Cover };
         for (int i = 0; i < baseCombatActionType.Length; i++)
         {
             _baseActions.Add(baseCombatActionType[i], ba[i]);
             _baseActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetCombatActionButton(baseCombatActionType[i], i, ba[i]);
         }
-        _idleAction = ba[3];
-        _itmeUsingAction = ba[4];
+        _idleAction = ba[_baseActions.Count];
+        _itmeUsingAction = ba[_baseActions.Count + 1];
 
         //skill action
         _skillActions.Clear();
@@ -269,6 +277,7 @@ public class CombatActionUI : UISystem
             case CombatActionType.Move:
             case CombatActionType.Attack:
             case CombatActionType.Reload:
+            case CombatActionType.Cover:
                 {
                     FieldSystem.unitSystem.GetPlayer().SelectAction(_baseActions[actionType]);
                     SetActionBundle(_activeActionBundle, null);
@@ -396,9 +405,10 @@ public class CombatActionUI : UISystem
         _baseActionBundle.transform.GetChild(0).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(1).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(2).GetComponent<CombatActionButtonElement>().SetInteractable();
-        _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable(isSkillExist);
-        _baseActionBundle.transform.GetChild(4).GetComponent<CombatActionButtonElement>().SetInteractable(isEnoughCostForItem && _itmeUsingAction.IsSelectable());
-        _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(isEnoughCostForWeapon);
+        _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable();
+        _baseActionBundle.transform.GetChild(4).GetComponent<CombatActionButtonElement>().SetInteractable(isSkillExist);
+        _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(isEnoughCostForItem && _itmeUsingAction.IsSelectable());
+        _baseActionBundle.transform.GetChild(6).GetComponent<CombatActionButtonElement>().SetInteractable(isEnoughCostForWeapon);
     }
 
     public void ShowRequiredCost(IUnitAction action)

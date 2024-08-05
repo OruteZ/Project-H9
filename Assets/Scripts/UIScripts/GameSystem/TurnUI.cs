@@ -25,6 +25,9 @@ public class TurnUI : UISystem
         UIManager.instance.onPlayerStatChanged.AddListener(SetEndTurnButton);
         _endTurnButtonEffect.GetComponent<Animator>().enabled = false;
         _endTurnButtonIcon.GetComponent<Image>().sprite = _turnOffSprite;
+
+        _endTurnButton.SetActive(GameManager.instance.CompareState(GameState.COMBAT));
+        UIManager.instance.onTSceneChanged.AddListener((gs) => { _endTurnButton.SetActive(gs == GameState.COMBAT); });
     }
 
     private void Update()

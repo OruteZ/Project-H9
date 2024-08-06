@@ -11,7 +11,17 @@ public class MoveAction : BaseAction
 {
     public override ActionType GetActionType() => ActionType.MOVE;
 
-    private int maxMoveDistance => unit.currentActionPoint;
+    private int MaxMoveDistance()
+    {
+        if(GameManager.instance.CompareState(GameState.COMBAT))
+        {
+            return unit.currentActionPoint;
+        }
+        else
+        {
+            return unit.stat.sightRange;
+        }
+    } 
     private List<Tile> _path;
     private int _currentPositionIndex;
 
@@ -109,7 +119,7 @@ public class MoveAction : BaseAction
             return;
         }
         
-        _path = FieldSystem.tileSystem.FindPath(_startPosition, _destinationPosition, maxMoveDistance);
+        _path = FieldSystem.tileSystem.FindPath(_startPosition, _destinationPosition, MaxMoveDistance());
         _currentPositionIndex = 1;
     }
 

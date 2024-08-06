@@ -64,4 +64,21 @@ public class FieldSystem : MonoBehaviour
         if(GameManager.instance.CompareState(GameState.EDITOR) is false) 
             turnSystem.StartTurn();
     }
+
+    // ==================== Static Methods ====================
+    public static List<IDamageable> GetAllDamageable()
+    {
+        List<Unit> units = unitSystem.units;
+        IEnumerable<TileObject> tileObjs = tileSystem.GetAllTileObjects();
+        return units.Concat(tileObjs.OfType<IDamageable>()).ToList();
+    }
+    
+    public static IDamageable GetDamageable(Vector3Int pos)
+    {
+        IDamageable unit = unitSystem.GetUnit(pos);
+        if (unit is not null) return unit;
+        
+        List<IDamageable> tileObj = tileSystem.GetTileObject(pos).OfType<IDamageable>().ToList();
+        return tileObj.Count > 0 ? tileObj[0] : null;
+    }
 }

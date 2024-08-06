@@ -125,7 +125,6 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     
     private void MovableTileEffect()
     {
-        // if (GameManager.instance.CompareState(GameState.WORLD)) return;
         
         //if world state, get sight range, else get action po
         int range = 0;
@@ -152,7 +151,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 int sightRange = _player.stat.sightRange;
                 if (distance > sightRange) continue;
                 if (!FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition)) continue;
-            }
+                SetEffectBase(tile.hexPosition, effectType);}
             else //GameState.World
             {
                 bool containsFog = tile.tileObjects.OfType<FogOfWar>().Any();
@@ -162,7 +161,6 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                     effectType = (tileObject).GetTileEffectType();
                 }
             }
-            SetEffectBase(tile.hexPosition, effectType);
         }
 
         _movableEffectDelay = movableDelay;
@@ -246,23 +244,30 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     #region SHOOT
     private void AttackTileEffect()
     {
-        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, _player.weapon.GetRange()).Where(
+        IEnumerable<Tile> tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, _player.weapon.GetRange()).Where(
             tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
-        var units = FieldSystem.unitSystem.units.Where(
+        IEnumerable<Unit> units = FieldSystem.unitSystem.units.Where(
             unit => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) && unit is not Player);
 
         //white range tile
         foreach (var tile in tiles)
         {
+            // condition 1 : no unit on tile
             if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
+            
+            // condition 1 : in sight range
             if (Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
-
+            
             SetEffectBase(tile.hexPosition, attackTileEffect);
         }
 
         //target range tile
-        foreach (var unit in units)
+        foreach (Unit unit in units)
         {
+            // condition 1 : raycheck true
+            // condition 2 : vision check true
+            // condition 3 : in sight range
+             
             if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, unit.hexPosition) is false) continue;
             if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
             if (Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
@@ -299,11 +304,11 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 }
             
                 //remove units in sweet spot range circle
-                foreach (var unit in FieldSystem.unitSystem.units)
+                foreach (Unit unit in FieldSystem.unitSystem.units)
                 {
                     if (unit is Player) continue;
                     if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
-                    if(Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
+                    if (Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
                     if (sweetSpot == Hex.Distance(_player.hexPosition, unit.hexPosition))
                     {
                         if (_effectsBase.ContainsKey(unit.hexPosition))

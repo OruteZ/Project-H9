@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class BaseSelectingActionEffect : ScriptableObject, IActionSelectingEffect
 {
-    protected TileEffectSetting Setting;
-    protected TileEffectManager Effecter;
+    protected TileEffectSetting setting;
+    protected TileEffectManager effecter;
 
     [SerializeField] private List<ActionType> targetTypes;
     
@@ -23,8 +23,8 @@ public abstract class BaseSelectingActionEffect : ScriptableObject, IActionSelec
 
     public void SetupTileEffect(TileEffectSetting setting, TileEffectManager effecter)
     {
-        Setting = setting;
-        Effecter = effecter;
+        this.setting = setting;
+        this.effecter = effecter;
         OnSetup();
     }
 

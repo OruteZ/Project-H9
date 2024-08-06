@@ -21,7 +21,7 @@ public class MoveActionEffect : BaseSelectingActionEffect
         
         _baseEffect.Clear();
         _dynamicEffect.Clear();
-        Effecter.StopCoroutine(_dynamicCoroutine);
+        effecter.StopCoroutine(_dynamicCoroutine);
     }
 
     public override void ShowEffect(Unit user)
@@ -38,7 +38,7 @@ public class MoveActionEffect : BaseSelectingActionEffect
             TrySetBaseTile(tile);
         }
 
-        _dynamicCoroutine = Effecter.StartCoroutine(DynamicCoroutine());
+        _dynamicCoroutine = effecter.StartCoroutine(DynamicCoroutine());
     }
 
     private IEnumerator DynamicCoroutine()
@@ -156,8 +156,8 @@ public class MoveActionEffect : BaseSelectingActionEffect
     private void InstantiateTile(bool isBase, Vector3Int hex)
     {
         // get value from setting
-        GameObject defaultTile = Setting.tileEffectDefault;
-        Color color = isBase ? Setting.movableTileColor : Setting.routeColor;
+        GameObject defaultTile = setting.tileEffectDefault;
+        Color color = isBase ? setting.movableTileColor : setting.routeColor;
         
         // instantiate
         Vector3 spawnPoint = Hex.Hex2World(hex);

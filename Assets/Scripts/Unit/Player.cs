@@ -117,13 +117,7 @@ public class Player : Unit
                 return false;
             }
 
-            if (GameManager.instance.CompareState(GameState.WORLD))
-            {
-                pos = tile.hexPosition;
-                return true;
-            }
-
-            if (tile.inSight)
+            if (GameManager.instance.CompareState(GameState.WORLD) || tile.inSight)
             {
                 pos = tile.hexPosition;
                 return true;

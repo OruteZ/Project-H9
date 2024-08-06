@@ -113,7 +113,7 @@ public class FanningAction : BaseAction, IShootingAction
     {
         if (eventString != AnimationEventNames.GUN_FIRE) return;
         
-        unit.TryAttack(_target, _hitRateModifier);
+        unit.TryAttack(_target);
     }
     public override int GetSkillIndex()
     {

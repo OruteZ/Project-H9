@@ -415,11 +415,11 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         return activeUnitAction;
     }
 
-    public void TryAttack(IDamageable target, float hitRateOffset)
+    public void TryAttack(IDamageable target)
     {
         onStartShoot.Invoke(target);
 
-        bool hit = weapon.GetFinalHitRate(target) + hitRateOffset > Random.value * 100;
+        bool hit = weapon.GetFinalHitRate(target)> Random.value * 100;
 
         if (VFXHelper.TryGetGunFireFXInfo(weapon.GetWeaponType(), out var fxGunFireKey, out var fxGunFireTime))
         {

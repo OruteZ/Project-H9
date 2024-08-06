@@ -10,21 +10,14 @@ public class AttackAction : BaseAction, IShootingAction
     private int _atkCount;
     public override ActionType GetActionType() => ActionType.ATTACK;
 
-    private enum State
-    {
-        Aiming,
-        Shooting,
-        CoolOff
-    }
-
     private Weapon weapon => unit.weapon;
-    private Unit _target;
+    private IDamageable _target;
     // private State _state;
     // private float _stateTimer;
 
     public override bool CanExecute(Vector3Int targetPos)
     {
-        if (FieldSystem.unitSystem.GetUnit(targetPos) is null)
+        if (FieldSystem.GetDamageable(targetPos) is null)
         {
             Debug.Log("There is no target, cant attack");
             return false;
@@ -46,7 +39,7 @@ public class AttackAction : BaseAction, IShootingAction
         if (weapon.GetWeaponType() == ItemType.Shotgun)
         {
             // if distance is greater than range, return false
-            if (Hex.Distance(unit.hexPosition, _target.hexPosition) > weapon.GetRange())
+            if (Hex.Distance(unit.hexPosition, _target.GetHex()) > weapon.GetRange())
             {
                 Debug.Log("Distance is greater than range, cant attack");
                 return false;
@@ -82,10 +75,10 @@ public class AttackAction : BaseAction, IShootingAction
 
     public override void SetTarget(Vector3Int targetPos)
     {
-        _target = FieldSystem.unitSystem.GetUnit(targetPos);
+        _target = FieldSystem.GetDamageable(targetPos);
         Debug.Log("Attack Target : " + _target);
     }
-    public Unit GetTarget() 
+    public IDamageable GetTarget() 
     {
         return _target;
     }
@@ -98,7 +91,7 @@ public class AttackAction : BaseAction, IShootingAction
             return false;
         }
 
-        if (IsThereWallBetweenUnitAnd(_target.hexPosition))
+        if (IsThereWallBetweenUnitAnd(_target.GetHex()))
         {
             Debug.Log("There is wall. cant attack");
             return false;
@@ -107,7 +100,7 @@ public class AttackAction : BaseAction, IShootingAction
         if (weapon.GetWeaponType() == ItemType.Shotgun)
         {
             // if distance is greater than range, return false
-            if (Hex.Distance(unit.hexPosition, _target.hexPosition) > weapon.GetRange())
+            if (Hex.Distance(unit.hexPosition, _target.GetHex()) > weapon.GetRange())
             {
                 Debug.Log("Distance is greater than range, cant attack");
                 return false;
@@ -130,7 +123,7 @@ public class AttackAction : BaseAction, IShootingAction
         while ((timer -= Time.deltaTime) > 0)
         {
             Transform tsf;
-            Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
+            Vector3 aimDirection = (Hex.Hex2World(_target.GetHex()) - (tsf = transform).position).normalized;
         
             float rotationSpeed = 10f;
             transform.forward = Vector3.Slerp(tsf.forward, aimDirection, Time.deltaTime * rotationSpeed);
@@ -151,12 +144,12 @@ public class AttackAction : BaseAction, IShootingAction
         while (cnt-- > 0) yield return null;
         
         unit.animator.SetTrigger(IDLE);
-        if(unit.maximumShootCountInTurn - 1 <= _atkCount)
+        
+        _atkCount++;
+        if(unit.maximumShootCountInTurn <= _atkCount)
         {
             unit.TryAddStatus(new Recoil(unit));
         }
-        
-        _atkCount++;
     }
 
     public override void SetUp(Unit unit)

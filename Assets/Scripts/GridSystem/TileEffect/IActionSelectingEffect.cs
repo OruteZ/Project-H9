@@ -24,7 +24,7 @@ public interface IActionSelectingEffect
     bool HasActionType(ActionType type);
     
     // initialize
-    void SetupTileEffect(TileEffectSetting setting, TileEffectManager effecter);
+    void SetupTileEffect(TileEffectSetting setting, TileEffectManager effector);
 }
 
 // ReSharper disable once InvalidXmlDocComment

@@ -21,7 +21,7 @@ public class AttackActionEffect : BaseSelectingActionEffect
         
         _baseEffect.Clear();
         _dynamicEffect.Clear();
-        effecter.StopCoroutine(_dynamicCoroutine);
+        effector.StopCoroutine(_dynamicCoroutine);
     }
 
     public override void ShowEffect(Unit user)
@@ -36,7 +36,7 @@ public class AttackActionEffect : BaseSelectingActionEffect
             SetBaseInSweetSpot(user);
         }
         
-        _dynamicCoroutine = effecter.StartCoroutine(DynamicCoroutine(user));
+        _dynamicCoroutine = effector.StartCoroutine(DynamicCoroutine(user));
     }
 #region BASE EFFECT
     private void SetBaseInWeaponRange(Unit user)

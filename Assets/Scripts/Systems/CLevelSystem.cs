@@ -9,7 +9,9 @@ public class CLevelSystem
 
         if (_curExp >= MaxExp)
         {
-            Debug.LogWarning($"초기 curExp가 너무 높게 설정되었습니다({curExp}/{MaxExp}). curExp가 maxExp보다 높지만, 레벨업을 진행하지 않고 진행합니다. 처음 경험치를 획득할 시 레벨업이 함께 진행될 예정입니다.\n만약, 시작부터 5레벨인상태로 시작하고싶다면 원활한 이용을 위해 초기 level을 건드는 것이 아니라, 경험치를 늘리는 치트를 만드는 것을 권장합니다.");
+            Debug.LogWarning($"초기 curExp가 너무 높게 설정되었습니다({curExp}/{MaxExp}).\n " +
+                             $"curExp가 maxExp보다 높지만, 레벨업을 진행하지 않고 진행합니다. 처음 경험치를 획득할 시 레벨업이 함께 진행될 예정입니다.\n" +
+                             $"만약, 시작부터 5레벨인상태로 시작하고싶다면 원활한 이용을 위해 초기 level을 건드는 것이 아니라, 경험치를 늘리는 치트를 만드는 것을 권장합니다.");
         }
     }
 
@@ -20,6 +22,7 @@ public class CLevelSystem
     public int MaxExp => _level * 100;
     private const int LEVEL_UP_REWARD_SKILL_POINT = 3;
     private const int PLAYER_STAT_CONDITION_INTERVAL = 1;
+    private const int PLAYER_MAXHP_UP = 2;
 
     public void GetExp(int exp)
     {
@@ -39,6 +42,9 @@ public class CLevelSystem
         _level++;
 
         var user = GameManager.instance.user;
+        var baseMaxHp = user.Stat.GetOriginalStat(StatType.MaxHp);
+        user.Stat.SetOriginalStat(StatType.MaxHp,baseMaxHp + PLAYER_MAXHP_UP);
+        
         user.Stat.Recover(StatType.CurHp, user.Stat.GetStat(StatType.MaxHp), out int appliedValue);
         SkillManager.instance.AddSkillPoint(LEVEL_UP_REWARD_SKILL_POINT);
         if (_level % PLAYER_STAT_CONDITION_INTERVAL == 0)

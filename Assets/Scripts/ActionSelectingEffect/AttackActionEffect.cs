@@ -1,26 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackActionEffect : BaseSelectingActionEffect
 {
     private Dictionary<Vector3Int, GameObject> _baseEffect;
-    private Dictionary<Vector3Int, GameObject> _dynamicEffect;
 
     private Coroutine _dynamicCoroutine;
     
-    private RectTransform _effectCanvas;
-    private RectTransform _aimEffectRectTsf;
-    private RectTransform _aimEffect;
-    
+    private Canvas _effectCanvas;
+    private HitRateUI _hitRateUI;
+
+    protected override void OnSetup()
+    {
+        _baseEffect = new Dictionary<Vector3Int, GameObject>();
+
+        _effectCanvas = effector.GetCanvas();
+        _hitRateUI = Instantiate(setting.hitRateUIPrefab, _effectCanvas.transform).GetComponent<HitRateUI>();
+        _hitRateUI.SetupEffect(_effectCanvas);
+    }
+
     public override void StopEffect()
     {
         _baseEffect.Values.ToList().ForEach(Destroy);
-        _dynamicEffect.Values.ToList().ForEach(Destroy);
-        
         _baseEffect.Clear();
-        _dynamicEffect.Clear();
+        
         effector.StopCoroutine(_dynamicCoroutine);
     }
 
@@ -149,9 +155,9 @@ public class AttackActionEffect : BaseSelectingActionEffect
     {
         while (true)
         {
-            if (Player.TryGetMouseOverTilePos(out var target) is false)
+            if (Player.TryGetMouseOverTilePos(out Vector3Int target) is false)
             {
-                _aimEffectRectTsf.gameObject.SetActive(false);
+                _hitRateUI.OffTarget();
                 yield return null;
                 continue;
             }
@@ -159,7 +165,7 @@ public class AttackActionEffect : BaseSelectingActionEffect
             IDamageable damageable = FieldSystem.GetDamageable(target);
             if (damageable is null || (Unit)damageable == user)
             {
-                _aimEffectRectTsf.gameObject.SetActive(false);
+                _hitRateUI.OffTarget();
                 yield return null;
                 continue;
             }
@@ -167,7 +173,7 @@ public class AttackActionEffect : BaseSelectingActionEffect
             // vision check
             if(FieldSystem.tileSystem.VisionCheck(user.hexPosition, target) is false)
             {
-                _aimEffectRectTsf.gameObject.SetActive(false);
+                _hitRateUI.OffTarget();
                 yield return null;
                 continue;
             }
@@ -175,7 +181,7 @@ public class AttackActionEffect : BaseSelectingActionEffect
             // ray check
             if(FieldSystem.tileSystem.RayThroughCheck(user.hexPosition, target) is false)
             {
-                _aimEffectRectTsf.gameObject.SetActive(false);
+                _hitRateUI.OffTarget();
                 yield return null;
                 continue;
             }
@@ -183,13 +189,10 @@ public class AttackActionEffect : BaseSelectingActionEffect
             // sight range check
             if(Hex.Distance(user.hexPosition, target) > user.stat.sightRange)
             {
-                _aimEffectRectTsf.gameObject.SetActive(false);
+                _hitRateUI.OffTarget();
                 yield return null;
                 continue;
             }
-            
-            // set rect
-            _aimEffectRectTsf.gameObject.SetActive(true);
 
             float hitRate = user.weapon.GetFinalHitRate(damageable);
 
@@ -198,25 +201,9 @@ public class AttackActionEffect : BaseSelectingActionEffect
                 user.GetAllPassiveList().Any(p => p.index == 21006);
 
             if (hasGoldenBullet) hitRate += 20;
-
-            Vector2 viewportPosition = 
-                Camera.main.WorldToViewportPoint(
-                    Hex.Hex2World(damageable.GetHex()) + Vector3.up * 
-                    (0.5f));
             
-            var sizeDelta = _effectCanvas.sizeDelta;
+            _hitRateUI.SetTarget(damageable, hitRate);
             
-            Vector2 worldObjectScreenPosition = new Vector2(
-                ((viewportPosition.x * sizeDelta.x) - (sizeDelta.x * 0.5f)),
-                ((viewportPosition.y * sizeDelta.y) - (sizeDelta.y * 0.5f)));
-            _aimEffectRectTsf.anchoredPosition = worldObjectScreenPosition;
-            
-            float size = hitRate * 0.01f;
-            _aimEffect.localScale = new Vector3(size, size, 1);
-            
-            //hitrate text
-            _aimEffectRectTsf.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = 
-                $"{hitRate}%";
             
             yield return null;
         }

@@ -721,6 +721,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         return stat.GetOriginalStat(StatType.MaxHp);
     }
 
+    public Transform GetTsf => transform;
+
     public int GetHitRateModifier(Unit attacker = null)
     {
         int modifier = 0;

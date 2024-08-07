@@ -2,10 +2,11 @@
 using System.Threading;
 using UnityEngine;
 
+[System.Serializable]
 public abstract class BaseSelectingActionEffect : ScriptableObject, IActionSelectingEffect
 {
-    protected TileEffectSetting setting;
-    protected TileEffectManager effector;
+    protected ActionSelectingEffectSetting setting;
+    protected ActionSelectingEffector effector;
 
     [SerializeField] private List<ActionType> targetTypes;
     
@@ -21,7 +22,7 @@ public abstract class BaseSelectingActionEffect : ScriptableObject, IActionSelec
         return targetTypes.Contains(type);
     }
 
-    public void SetupTileEffect(TileEffectSetting setting, TileEffectManager effector)
+    public void SetupTileEffect(ActionSelectingEffectSetting setting, ActionSelectingEffector effector)
     {
         this.setting = setting;
         this.effector = effector;

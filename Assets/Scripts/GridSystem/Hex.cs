@@ -191,17 +191,18 @@ public static class Hex
     /// </summary>
     /// <param name="width"></param>
     /// <param name="height"></param>
+    /// <param name="start"></param>
     /// <returns></returns>
-    public static List<Vector3Int> GetSquareGridList(int width, int height)
+    public static List<Vector3Int> GetSquareGridList(int width, int height, Vector3Int start)
     {
         var results = new List<Vector3Int>();
         
         for (int h = 0; h < height; h++)
         {
-            int start = -(h / 2);
-            for (int w = start; w < start + width; w++)
+            int w_start = -(h / 2);
+            for (int w = w_start; w < w_start + width; w++)
             {
-                results.Add(new Vector3Int(w, h, -(w + h)));
+                results.Add(new Vector3Int(w, h, -(w + h)) + start);
             }
         }
 

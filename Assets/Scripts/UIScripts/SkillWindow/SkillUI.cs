@@ -33,13 +33,44 @@ public class SkillUI : UISystem
     [SerializeField] private GameObject _skillTooltipWindow;
     [SerializeField] private GameObject _skillPointText;
 
-    [SerializeField] private GameObject[] _skillRootNodes;
+    [SerializeField] private GameObject _skillTree;
+    [SerializeField] private GameObject _skillCharacterSection;
+    [SerializeField] private GameObject _skillRevoloverSection;
+    [SerializeField] private GameObject _skillRepeaterSection;
+    [SerializeField] private GameObject _skillShotgunSection;
+
+    [SerializeField] private GameObject _skillCharacterSectionButton;
+    [SerializeField] private GameObject _skillRevoloverSectionButton;
+    [SerializeField] private GameObject _skillRepeaterSectionButton;
+    [SerializeField] private GameObject _skillShotgunSectionButton;
+    public enum SkillSection 
+    {
+        Character,
+        Revolover,
+        Repeater,
+        Shotgun
+    }
+    private SkillSection skillSection = SkillSection.Character;
+    private List<GameObject> _skillRootNodes;
 
     [SerializeField] private GameObject _skillTreeScroll;
     private bool _isScrollInit;
     public SkillTooltip skillTooltip { get; private set; }
     private void Awake()
     {
+        _skillCharacterSection.SetActive(true);
+        _skillRevoloverSection.SetActive(false);
+        _skillRepeaterSection.SetActive(false);
+        _skillShotgunSection.SetActive(false);
+        _skillRootNodes = new();
+        for (int i = 0; i < _skillCharacterSection.transform.GetChild(1).childCount; i++)
+        {
+            if (_skillCharacterSection.transform.GetChild(1).GetChild(i).GetComponent<SkillTreeElement>().isRootNode)
+            {
+                _skillRootNodes.Add(_skillCharacterSection.transform.GetChild(1).GetChild(i).gameObject);
+            }
+        }
+
         _skillTreeScroll.GetComponent<Scrollbar>().value = 1;
     }
     void Start()
@@ -49,6 +80,11 @@ public class SkillUI : UISystem
         //GetComponent<Image>().sprite = null;
         _isScrollInit = false;
         UpdateAllSkillUINode();
+
+        _skillCharacterSectionButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[16];
+        _skillRevoloverSectionButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[17];
+        _skillRepeaterSectionButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[18];
+        _skillShotgunSectionButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[19];
     }
     private void Update()
     {
@@ -114,6 +150,7 @@ public class SkillUI : UISystem
         UpdateSkillPointUI();
         for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
         {
+            if (!_skillUIButtons.activeInHierarchy) continue;
             UpdateSkillUINode(_skillUIButtons.transform.GetChild(i).gameObject);
         }
     }
@@ -187,5 +224,49 @@ public class SkillUI : UISystem
             KeywordScript kw = _skillManager.GetSkillKeyword(i);
             _skillTooltipWindow.GetComponent<SkillTooltip>().SetKeywordTooltipContents(kw);
         }
+    }
+
+    public void SetSkillSection(int s)
+    {
+        SkillSection section = (SkillSection)s;
+        skillSection = section;
+        GameObject[] contents =
+        {
+            _skillCharacterSection,
+            _skillRevoloverSection,
+            _skillRepeaterSection,
+            _skillShotgunSection
+        };
+        GameObject[] buttons =
+        {
+            _skillCharacterSectionButton,
+            _skillRevoloverSectionButton,
+            _skillRepeaterSectionButton,
+            _skillShotgunSectionButton
+        };
+
+        for (int i = 0; i < contents.Length; i++)
+        {
+            contents[i].SetActive(false);
+            ColorBlock b = buttons[i].GetComponent<Button>().colors;
+            b.normalColor = buttons[i].GetComponent<Button>().colors.pressedColor;
+            buttons[i].GetComponent<Button>().colors = b;
+        }
+        contents[(int)section].SetActive(true);
+        ColorBlock block = buttons[(int)section].GetComponent<Button>().colors;
+        block.normalColor = buttons[(int)section].GetComponent<Button>().colors.selectedColor;
+        buttons[(int)section].GetComponent<Button>().colors = block;
+
+        _skillTree.GetComponent<ScrollRect>().content = contents[(int)section].GetComponent<RectTransform>();
+        _skillRootNodes.Clear();
+        for (int i = 0; i < contents[(int)section].transform.GetChild(1).childCount; i++)
+        {
+            if (contents[(int)section].transform.GetChild(1).GetChild(i).GetComponent<SkillTreeElement>().isRootNode) 
+            {
+                _skillRootNodes.Add(contents[(int)section].transform.GetChild(1).GetChild(i).gameObject);
+            }
+        }
+
+        UpdateAllSkillUINode();
     }
 }

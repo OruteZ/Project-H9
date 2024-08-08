@@ -17,6 +17,7 @@ public class SkillTreeElement : UIElement
 
     private SkillIcon _skillIcon;
 
+    public bool isRootNode = false;
     public float effectSpeed { get; private set; }
     private void Start()
     {
@@ -115,6 +116,10 @@ public class SkillTreeElement : UIElement
     public void AddPostArrow(GameObject arrow) 
     {
         _postLine.Add(arrow);
+    }
+    public void DeletePostArrow(GameObject arrow) 
+    {
+        _postLine.Remove(arrow);
     }
     private void ClearPostArrowList()
     {

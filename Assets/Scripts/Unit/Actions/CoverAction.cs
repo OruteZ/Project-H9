@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CoverAction : BaseAction
@@ -61,7 +63,11 @@ public class CoverAction : BaseAction
 
     public override bool IsSelectable()
     {
-        return true;
+        // if there is a coverable object in the target tile
+        IEnumerable<Tile> adjustTiles = 
+            FieldSystem.tileSystem.GetTilesInRange(unit.hexPosition, 1);
+
+        return adjustTiles.Any(tile => tile.GetTileObject<CoverableObj>() != null);
     }
 
     public override bool CanExecuteImmediately()

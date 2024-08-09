@@ -527,8 +527,11 @@ public class TileSystem : MonoBehaviour
             {
                 Gizmos.color = Color.red;
                 Vector3 leftTop = Hex.Hex2World(start);
-                Vector3 rightBottom =
-                    Hex.Hex2World(Hex.GetSquareGridList(width, height, start).Last());
+                
+                var gridList = Hex.GetSquareGridList(width, height, start);
+                Vector3 rightBottom = gridList.Count > 0 ?
+                    Hex.Hex2World(gridList.Last()) :
+                    Hex.Hex2World(start);
                 
                 Vector3 c = (leftTop + rightBottom) / 2;
                 

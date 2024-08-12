@@ -11,7 +11,7 @@ public class FanningAction : BaseAction, IShootingAction
     private const float SHOT_TIME = 0.15f;
     private const float FINISH_TIME = 1f;
     
-    private Unit _target;
+    private IDamageable _target;
 
     private float _hitRateModifier;
 
@@ -37,7 +37,7 @@ public class FanningAction : BaseAction, IShootingAction
 
     public override void SetTarget(Vector3Int targetPos)
     {
-        _target = FieldSystem.unitSystem.GetUnit(targetPos);
+        _target = FieldSystem.GetDamageable(targetPos);
         Debug.Log("Panning Target : " + _target);
     }
 
@@ -53,7 +53,8 @@ public class FanningAction : BaseAction, IShootingAction
 
     public override bool CanExecute(Vector3Int targetPos)
     {
-        if (FieldSystem.unitSystem.GetUnit(targetPos) == unit) return false;
+        if (FieldSystem.GetDamageable(targetPos) is null) return false;
+        if ((Unit)FieldSystem.GetDamageable(targetPos) == unit) return false;
         if (IsThereWallBetweenUnitAndTarget(targetPos)) return false;
         
         return true;
@@ -71,8 +72,8 @@ public class FanningAction : BaseAction, IShootingAction
 
     public override bool CanExecute()
     {
-        if (_target is null || _target == unit) return false;
-        if (IsThereWallBetweenUnitAndTarget(_target.hexPosition)) return false;
+        if (_target is null || (Unit)_target == unit) return false;
+        if (IsThereWallBetweenUnitAndTarget(_target.GetHex())) return false;
         
         return true;
     }
@@ -89,7 +90,7 @@ public class FanningAction : BaseAction, IShootingAction
         unit.animator.SetTrigger(FANNING);
         
         Transform tsf;
-        Vector3 aimDirection = (Hex.Hex2World(_target.hexPosition) - (tsf = transform).position).normalized;
+        Vector3 aimDirection = (Hex.Hex2World(_target.GetHex()) - (tsf = transform).position).normalized;
         aimDirection.y = 0;
 
         float totalTime = 0;
@@ -113,7 +114,7 @@ public class FanningAction : BaseAction, IShootingAction
     {
         if (eventString != AnimationEventNames.GUN_FIRE) return;
         
-        unit.TryAttack(_target, _hitRateModifier);
+        unit.TryAttack(_target);
     }
     public override int GetSkillIndex()
     {

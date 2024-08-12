@@ -39,9 +39,6 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     private Dictionary<Vector3Int, GameObject> _effectsBase;
     private Dictionary<Vector3Int, GameObject> _effectsRelatedTarget;
 
-    private IObjectPool<GameObject> _baseEffectPool;
-    private IObjectPool<GameObject> _targetEffectPool;
-
     private Coroutine _curCoroutine;
 
     public Material combatFowMaterial;
@@ -62,9 +59,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     public GameObject coverAvailable;
     public Material coverMaterial;
     private List<CoverableObj> _coverableObjs;
-
     
-
     public void SetPlayer(Player p)
     {
         _player = p;
@@ -124,8 +119,13 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     
 
     #region MOVE
+
+    [SerializeField] private float movableDelay;
+    private float _movableEffectDelay;
+    
     private void MovableTileEffect()
     {
+        
         //if world state, get sight range, else get action po
         int range = 0;
         if(GameManager.instance.CompareState(GameState.COMBAT))
@@ -151,7 +151,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 int sightRange = _player.stat.sightRange;
                 if (distance > sightRange) continue;
                 if (!FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition)) continue;
-            }
+                SetEffectBase(tile.hexPosition, effectType);}
             else //GameState.World
             {
                 bool containsFog = tile.tileObjects.OfType<FogOfWar>().Any();
@@ -161,26 +161,36 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                     effectType = (tileObject).GetTileEffectType();
                 }
             }
-            SetEffectBase(tile.hexPosition, effectType);
         }
 
+        _movableEffectDelay = movableDelay;
         _curCoroutine = StartCoroutine(MovableTileEffectCoroutine());
     }
-
+    
     private IEnumerator MovableTileEffectCoroutine()
     {
+        
         int range = 0;
         if(GameManager.instance.CompareState(GameState.COMBAT))
             range = _player.stat.curActionPoint / _player.GetAction<MoveAction>().GetCost();
         else
             range = _player.stat.sightRange;
+        
         int prevRouteLength = -1;
         while (true)
         {
+            // _movableEffectDelay -= Time.deltaTime;
+            // if (_movableEffectDelay > 0)
+            // {
+            //     yield return null;
+            //     continue;
+            // }
+            
             yield return null;
             ClearEffect(_effectsRelatedTarget);
 
-            if (Player.TryGetMouseOverTilePos(out var target) is false)
+            // check movable
+            if (Player.TryGetMouseOverTilePos(out Vector3Int target) is false)
             {
                 ClearEffect(_effectsRelatedTarget);
                 continue;
@@ -196,6 +206,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 continue;
             }
 
+            // set route
             var route = FieldSystem.tileSystem.FindPath(_player.hexPosition, target);
             if (route is null)
             {
@@ -203,9 +214,11 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 continue;
             }
 
+            // is over movable range
+            // route contains start position, so Count - 1
             if(route.Count - 1 <= range)
             {
-                foreach (var pos in route.Select(tile => tile.hexPosition))
+                foreach (Vector3Int pos in route.Select(tile => tile.hexPosition))
                 {
                     SetEffectTarget(pos, TileEffectType.Friendly);
                 }
@@ -215,6 +228,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 ClearEffect(_effectsRelatedTarget);
             }
 
+            // check routePath
             if (prevRouteLength != route.Count)
             {
                 UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedApUsage = route.Count - 1;
@@ -230,23 +244,30 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     #region SHOOT
     private void AttackTileEffect()
     {
-        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, _player.weapon.GetRange()).Where(
+        IEnumerable<Tile> tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, _player.weapon.GetRange()).Where(
             tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
-        var units = FieldSystem.unitSystem.units.Where(
+        IEnumerable<Unit> units = FieldSystem.unitSystem.units.Where(
             unit => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) && unit is not Player);
 
         //white range tile
         foreach (var tile in tiles)
         {
+            // condition 1 : no unit on tile
             if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
+            
+            // condition 1 : in sight range
             if (Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
-
+            
             SetEffectBase(tile.hexPosition, attackTileEffect);
         }
 
         //target range tile
-        foreach (var unit in units)
+        foreach (Unit unit in units)
         {
+            // condition 1 : raycheck true
+            // condition 2 : vision check true
+            // condition 3 : in sight range
+             
             if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, unit.hexPosition) is false) continue;
             if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
             if (Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
@@ -283,11 +304,11 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 }
             
                 //remove units in sweet spot range circle
-                foreach (var unit in FieldSystem.unitSystem.units)
+                foreach (Unit unit in FieldSystem.unitSystem.units)
                 {
                     if (unit is Player) continue;
                     if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
-                    if(Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
+                    if (Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
                     if (sweetSpot == Hex.Distance(_player.hexPosition, unit.hexPosition))
                     {
                         if (_effectsBase.ContainsKey(unit.hexPosition))
@@ -697,22 +718,9 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         };
     }
     
-    private TileEffectType GetEffectType(GameObject effect)
+    private static void ClearEffect(Dictionary<Vector3Int, GameObject> pool)
     {
-        if (effect == friendlyEffect) return TileEffectType.Friendly;
-        if (effect == hostileEffect) return TileEffectType.Hostile;
-        if (effect == impossibleEffect) return TileEffectType.Impossible;
-        if (effect == invisibleEffect) return TileEffectType.Invisible;
-        if (effect == ammunitionEffect) return TileEffectType.Ammunition;
-        if (effect == salonEffect) return TileEffectType.Saloon;
-        if (effect == sheriffEffect) return TileEffectType.Sheriff;
-        if (effect == normalEffect) return TileEffectType.Normal;
-        return TileEffectType.None;
-    }
-    
-    private void ClearEffect(Dictionary<Vector3Int, GameObject> pool)
-    {
-        foreach (var go in pool.Values)
+        foreach (GameObject go in pool.Values)
         {
             Destroy(go);
         }

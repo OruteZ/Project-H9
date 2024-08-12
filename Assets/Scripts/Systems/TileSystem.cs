@@ -457,17 +457,41 @@ public class TileSystem : MonoBehaviour
 
         return true;
     }
-    
+
     //==========================Create World==================================
+    enum CreateType
+    {
+        RECT,
+        HEXAGON
+    }
+    
+    
     [Header("Creating World")]
+    [Header("Hexagon Setting")]
     [SerializeField] private int range;
-    [SerializeField] private Transform tilesParent;
     [SerializeField] private Vector3Int center;
+
+    [Space(5)] 
+    [Header("Rect Setting")] 
+    [SerializeField] private Vector3Int start;
+    [SerializeField] private int width;
+    [SerializeField] private int height;
+    [Tooltip("Debug Red line's height")]
+    [SerializeField] private int gizmoHeight;
+    
+    [SerializeField] private Transform tilesParent;
+    [SerializeField] private CreateType createType;
 
     [ContextMenu("Generate World")]
     public void GenerateWorld()
     {
-        IEnumerable<Vector3Int> list = Hex.GetCircleGridList(range, center);
+        IEnumerable<Vector3Int> list = 
+            createType == CreateType.HEXAGON ? 
+                Hex.GetCircleGridList(range, center) :
+                Hex.GetSquareGridList(width, height, start);
+        
+        
+        
         IEnumerable<Tile> tiles = GetAllTilesEditor();
 
         // only positions that not in tiles
@@ -485,6 +509,8 @@ public class TileSystem : MonoBehaviour
             
             tile.gameObject.name = "Tile : " + pos;
         }
+        
+        gridLayout.LayoutGrid();
     }
 
     [SerializeField] private bool viewGeneratorCenter;
@@ -492,8 +518,27 @@ public class TileSystem : MonoBehaviour
     {
         if (viewGeneratorCenter)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(Hex.Hex2World(center), range * 2);
+            if(createType == CreateType.HEXAGON)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(Hex.Hex2World(center), range * 2);
+            }
+            else
+            {
+                if(width == 0 || height == 0) return;
+                
+                Gizmos.color = Color.red;
+                Vector3 leftTop = Hex.Hex2World(start);
+                
+                var gridList = Hex.GetSquareGridList(width, height, start);
+                Vector3 rightBottom = gridList.Count > 0 ?
+                    Hex.Hex2World(gridList.Last()) :
+                    Hex.Hex2World(start);
+                
+                Vector3 c = (leftTop + rightBottom) / 2;
+                
+                Gizmos.DrawWireCube(c, rightBottom - leftTop + new Vector3(0, gizmoHeight, 0));
+            }
         }
     }
 }

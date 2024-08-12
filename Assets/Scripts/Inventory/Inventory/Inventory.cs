@@ -195,7 +195,16 @@ public class Inventory : IInventory
         }
         return items.Count(i => i.Equals(items[itemIndex]));
     }
-    
+    public bool IsItemExist(ItemType type) 
+    {
+        var list = GetCorrectTypeItemList(type);
+        foreach (var element in list) 
+        {
+            if (element != null) return true;
+        }
+        return false;
+    }
+
     public void PrintItems()
     {
         List<IItem> items = GetAllItemList();

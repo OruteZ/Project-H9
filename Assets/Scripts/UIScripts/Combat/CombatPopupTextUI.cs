@@ -131,4 +131,46 @@ public class CombatPopupTextUI : UISystem
         }
         ClearText();
     }
+
+
+    public void SetActionCantSeleteTextUI(CombatActionType actionType)
+    {
+        if (!GameManager.instance.CompareState(GameState.COMBAT)) return;
+        if (FieldSystem.turnSystem.turnOwner is not Player) return;
+
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        string mainText = "";
+
+        if (actionType is CombatActionType.Cover)
+        {
+            mainText = UIManager.instance.UILocalization[1113];
+        }
+        else if (actionType is CombatActionType.Items)
+        {
+            mainText = UIManager.instance.UILocalization[1114];
+        }
+        else if (actionType is CombatActionType.Weapons)
+        {
+            mainText = UIManager.instance.UILocalization[1115];
+        }
+        else
+        {
+            return;
+        }
+        StopAllCoroutines();
+
+        StartCoroutine(ShowCantSelectText(mainText, 2.0f));
+    }
+    IEnumerator ShowCantSelectText(string text, float time)
+    {
+        _isTurnTextDisplayed = false;
+        _isActionTextDisplayed = true;
+
+        _mainText.enabled = true;
+        _mainText.text = text;
+        _subText.enabled = false;
+        _subText.text = "";
+        yield return new WaitForSeconds(time);
+        ClearText();
+    }
 }

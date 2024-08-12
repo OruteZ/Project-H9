@@ -70,6 +70,10 @@ public class CombatActionButtonElement : UIElement, IPointerEnterHandler, IPoint
         {
             UIManager.instance.combatUI.combatActionUI.SelectAction(actionType, buttonIndex);
         }
+        else
+        {
+            UIManager.instance.combatUI.combatPopupTextUI.SetActionCantSeleteTextUI(actionType);
+        }
     }
     public override bool IsInteractable()
     {

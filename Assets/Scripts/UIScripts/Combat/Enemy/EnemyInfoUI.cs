@@ -8,6 +8,7 @@ public class EnemyInfoUI : UIElement
 {
     [SerializeField] private GameObject _enemyCountText;
     [SerializeField] private GameObject _enemyPortrait;
+    [SerializeField] private GameObject _enemyLevelText;
     [SerializeField] private GameObject _enemyWeapon;
     [SerializeField] private GameObject[] _enemyStats = new GameObject[4];
     [SerializeField] private GameObject _enemyStatTooltip;
@@ -48,6 +49,7 @@ public class EnemyInfoUI : UIElement
         string countText = count + "x";
         if (count == 0) countText = "";
         _enemyCountText.GetComponent<TextMeshProUGUI>().text = countText;
+        _enemyLevelText.GetComponent<TextMeshProUGUI>().text = data.level.ToString();
         Texture2D enemyTexture = Resources.Load("UnitCapture/" + data.modelName) as Texture2D;
         Sprite enemySpr = Sprite.Create(enemyTexture, new Rect(0, 0, enemyTexture.width, enemyTexture.height), new Vector2(0.5f, 0.5f));
         if (enemySpr == null) enemySpr = _defaultEnemyImage;

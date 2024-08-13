@@ -26,6 +26,7 @@ public class EnemyDatabase : ScriptableObject
         RewardGold,
         RewardXP,
         RewardItem,
+        Level,
     }
     #endregion
     [SerializeField] 
@@ -75,6 +76,8 @@ public class EnemyDatabase : ScriptableObject
             curData.stat.SetOriginalStat(StatType.ShotgunAdditionalDamage, 0);
             curData.stat.SetOriginalStat(StatType.ShotgunAdditionalRange, 0);
             curData.stat.SetOriginalStat(StatType.ShotgunCriticalDamage, int.Parse(data[(int)Col.CriticalDamage]));
+
+            curData.level = int.Parse(data[(int)Col.Level]);
 
             enemyInfos.Add(curData);
         }
@@ -149,6 +152,8 @@ public struct EnemyData
     public int rewardGold;
     public int rewardExp;
     public int[] rewardItem;
+
+    public int level;
 }
 
 public struct UnitModelData

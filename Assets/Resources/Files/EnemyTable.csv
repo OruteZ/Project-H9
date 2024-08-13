@@ -1,21 +1,21 @@
-﻿index,enemyName,modelFile,hp,concentration,sightRange,speed,actionPoint,additionalHitRate,criticalChance,criticalDamage,equippedWeapon,behaviorPattern,enemySkill,rewardGold,rewardXP,rewardItem,주석
-0,0,,1,1,1,1,1,1,1,1,1,1,,0,0,,
-1,1001,Character_Bandit_Male_01,2,60,4,60,4,0,10,100,302,1,,1,200,"601,50",
-2,1001,Character_Bandit_Male_01,3,60,4,60,4,0,10,100,302,1,,1,200,"601,50,701,25",
-3,1001,Character_Bandit_Male_01,5,60,4,60,4,0,10,100,302,1,,1,200,"601,50,701,50",
-4,1002,Character_Mexican_Male_01,10,60,4,60,4,0,10,100,304,1,,1,400,"304,50,601,50,901,20",
-5,1002,Character_Mexican_Male_02,10,60,4,60,4,0,10,100,304,1,,1,400,"304,50,601,50,902,10,903,10",
-6,1004,Character_Thug_Male_02,10,60,4,60,4,0,10,100,304,1,,1,400,"304,50,601,50,902,20",
-7,1003,Character_Soldier_Male_01,15,60,4,60,4,0,10,100,305,1,,1,600,"305,50,601,50,903,20",
-101,101,Character_Badguy_01,20,60,4,70,4,0,10,100,304,1,,1,600,"304,100,603,100,903,50",마차강도 제임스 / modelFile을 나중에 Character_Badguy_01로 바꾸기
-102,102,Character_Business_Man_01,15,60,4,80,4,0,10,100,304,1,,1,400,"101,100,302,100,602,100,902,50",토마스 / modelFile을 나중에 Character_Business_Man_01로 바꾸기
-103,103,Character_GoldMiner_Male_02,25,70,4,70,4,0,10,100,305,1,,1,600,"305,100,903,50,901,50",웨스트빌 주정뱅이
-104,6,Character_Cowboy_01,10,60,6,50,4,0,10,100,403,1,,1,300,,무법자1 / Character_Cowboy_01
-105,7,Character_Badguy_01,20,60,4,60,4,0,10,100,305,1,,1,300,,무법자2 / Character_Badguy_01
-106,9,Character_Gunman_01,10,60,4,80,4,0,10,100,301,1,,1,300,,무법자3 / Character_Gunman_01
-15,15,Character_Traveler_Female_01,10,60,4,70,4,0,10,100,302,1,,1,200,,
-16,16,Character_Priest_Male_01,15,60,4,60,4,0,10,100,302,1,,1,300,,
-17,17,Character_Salesman_Male_01,20,60,4,60,4,0,10,100,304,1,,1,400,,
-18,18,Character_GoldMiner_Male_01,15,60,4,60,4,0,10,100,304,1,,1,400,,
-19,19,Character_Captain_Male_01,20,60,4,70,4,0,10,100,305,1,,1,500,,
-20,20,Character_Cowgirl_01,25,60,4,70,4,0,10,100,305,1,,1,600,,
+﻿index,enemyName,modelFile,hp,concentration,sightRange,speed,actionPoint,additionalHitRate,criticalChance,criticalDamage,equippedWeapon,behaviorPattern,enemySkill,rewardGold,rewardXP,rewardItem,enemyLevel,주석
+0,0,,1,1,1,1,1,1,1,1,1,1,,0,0,,1,
+1,1001,Character_Bandit_Male_01,2,60,4,60,4,0,10,100,302,1,,1,200,"601,50",1,
+2,1001,Character_Bandit_Male_01,3,60,4,60,4,0,10,100,302,1,,1,200,"601,50,701,25",1,
+3,1001,Character_Bandit_Male_01,5,60,4,60,4,0,10,100,302,1,,1,200,"601,50,701,50",1,
+4,1002,Character_Mexican_Male_01,10,60,4,60,4,0,10,100,304,1,,1,400,"304,50,601,50,901,20",0,
+5,1002,Character_Mexican_Male_02,10,60,4,60,4,0,10,100,304,1,,1,400,"304,50,601,50,902,10,903,10",0,
+6,1004,Character_Thug_Male_02,10,60,4,60,4,0,10,100,304,1,,1,400,"304,50,601,50,902,20",0,
+7,1003,Character_Soldier_Male_01,15,60,4,60,4,0,10,100,305,1,,1,600,"305,50,601,50,903,20",0,
+101,101,Character_Badguy_01,20,60,4,70,4,0,10,100,304,1,,1,600,"304,100,603,100,903,50",0,마차강도 제임스
+102,102,Character_Business_Man_01,15,60,4,80,4,0,10,100,304,1,,1,400,"101,100,302,100,602,100,902,50",0,토마스
+103,103,Character_GoldMiner_Male_02,25,70,4,70,4,0,10,100,305,1,,1,600,"305,100,903,50,901,50",0,웨스트빌 주정뱅이
+104,6,Character_Cowboy_01,10,60,6,50,4,0,10,100,403,1,,1,300,,0,무법자1
+105,7,Character_Badguy_01,20,60,4,60,4,0,10,100,305,1,,1,300,,0,무법자2
+106,9,Character_Gunman_01,10,60,4,80,4,0,10,100,301,1,,1,300,,0,무법자3
+15,15,Character_Traveler_Female_01,10,60,4,70,4,0,10,100,302,1,,1,200,,0,
+16,16,Character_Priest_Male_01,15,60,4,60,4,0,10,100,302,1,,1,300,,0,
+17,17,Character_Salesman_Male_01,20,60,4,60,4,0,10,100,304,1,,1,400,,0,
+18,18,Character_GoldMiner_Male_01,15,60,4,60,4,0,10,100,304,1,,1,400,,0,
+19,19,Character_Captain_Male_01,20,60,4,70,4,0,10,100,305,1,,1,500,,0,
+20,20,Character_Cowgirl_01,25,60,4,70,4,0,10,100,305,1,,1,600,,0,

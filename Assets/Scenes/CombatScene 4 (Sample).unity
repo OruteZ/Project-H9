@@ -3055,7 +3055,6 @@ Transform:
   - {fileID: 2067336359}
   - {fileID: 593195563}
   - {fileID: 1188354055}
-  - {fileID: 7325291389233921880}
   - {fileID: 5821073473479836541}
   - {fileID: 9035979764457861189}
   - {fileID: 5472092165430020259}
@@ -4446,7 +4445,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   turnOwner: {fileID: 0}
-  turnNumber: 0
 --- !u!114 &230774712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4463,7 +4461,6 @@ MonoBehaviour:
   enemyDB: {fileID: 11400000, guid: 450d8f5528bf2864ab9655c7c32be5b7, type: 2}
   passiveDB: {fileID: 11400000, guid: 4725cab2e80d6194c87de84a6b4cb490, type: 2}
   activeDB: {fileID: 11400000, guid: 4baa4a6f772e8644098cd35918c7e865, type: 2}
-  aiDB: {fileID: 11400000, guid: 0c0069e2b2bd9f5488e0ed802e89630c, type: 2}
   linkDB: {fileID: 0}
   units: []
   onAnyUnitMoved:
@@ -4503,8 +4500,14 @@ MonoBehaviour:
   tileObjParent: {fileID: 0}
   environments: {fileID: 175661819}
   range: 10
+  center: {x: 0, y: 0, z: 0}
+  start: {x: 0, y: 0, z: 0}
   width: 12
   height: 8
+  gizmoHeight: 0
+  tilesParent: {fileID: 0}
+  createType: 0
+  viewGeneratorCenter: 0
 --- !u!114 &230774714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22100,6 +22103,7 @@ MonoBehaviour:
   freeReloadTrigger: 0
   goldenBulletCount: 0
   coverType: 0
+  coverableObj: {fileID: 0}
   currentRound: 0
   onTurnStart:
     m_PersistentCalls:
@@ -29376,7 +29380,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7325291389233921880}
   m_Father: {fileID: 230774715}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -42237,7 +42242,7 @@ Transform:
   m_Children:
   - {fileID: 5472067922817104425}
   m_Father: {fileID: 175661819}
-  m_RootOrder: 110
+  m_RootOrder: 109
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5475214994128355691
 GameObject:
@@ -42381,7 +42386,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 175661819}
-  m_RootOrder: 108
+  m_RootOrder: 107
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5826862626471401677
 GameObject:
@@ -42546,6 +42551,7 @@ GameObject:
   - component: {fileID: 7346130255554878514}
   - component: {fileID: 7296592011767529028}
   - component: {fileID: 7346130255554878515}
+  - component: {fileID: 7346130255554878516}
   m_Layer: 0
   m_Name: SM_Bld_Outhouse_01
   m_TagString: Untagged
@@ -42577,12 +42583,12 @@ Transform:
   m_GameObject: {fileID: 7323917528754408730}
   m_LocalRotation: {x: -0, y: -0.99992985, z: -0, w: 0.011845155}
   m_LocalPosition: {x: 4.330127, y: -0.11997557, z: -7.5}
-  m_LocalScale: {x: 0.7138061, y: 0.71380615, z: 0.7138061}
+  m_LocalScale: {x: 0.71380603, y: 0.71380615, z: 0.71380603}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7325147328961421472}
-  m_Father: {fileID: 175661819}
-  m_RootOrder: 107
+  m_Father: {fileID: 1423698521}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -178.643, z: 0}
 --- !u!33 &7337302694258399346
 MeshFilter:
@@ -42697,6 +42703,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position: {x: 0, y: 5, z: -5}
+--- !u!114 &7346130255554878516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7323917528754408730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83337b60d67140e5a6f188a9d339f09b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 3
+  vision: 0
+  hexTransform: {fileID: 7346130255554878515}
+  meshRenderer: {fileID: 7346130255554878514}
+  maxHp: 1
+  currentHp: 1
+  coverType: 1
+  unit: {fileID: 0}
 --- !u!33 &9007407542981246207
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -42760,7 +42786,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 175661819}
-  m_RootOrder: 109
+  m_RootOrder: 108
   m_LocalEulerAnglesHint: {x: 0, y: -17.9, z: 0}
 --- !u!1 &9039718877751421941
 GameObject:

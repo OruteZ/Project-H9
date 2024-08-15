@@ -503,7 +503,7 @@ public class TileSystem : MonoBehaviour
         IEnumerable<Tile> tiles = GetAllTilesEditor();
 
         // only positions that not in tiles
-        IEnumerable<Vector3Int> positions = list.Where(pos => tiles.All(tile => tile.hexPosition != pos));
+        IEnumerable<Vector3Int> positions = list.Where(pos => tiles.All(t => t.hexPosition != pos));
         
         foreach (Vector3Int pos in positions)
         {

@@ -58,6 +58,7 @@ public class UnitModel : MonoBehaviour
         newUnit.onTurnStart.AddListener(OnStartTurn);
         newUnit.onStatusEffectChanged.AddListener(OnStatusEffectChanged);
         newUnit.onMoved.AddListener((a) => transform.localPosition = Vector3.zero);
+        // newUnit.onCoverChanged.AddListener(SetCoverFlag);
 
         #endregion
     }
@@ -99,6 +100,24 @@ public class UnitModel : MonoBehaviour
         }
     }
     #region PRIVATE
+    
+    #region COVER
+    private void SetCoverFlag(CoverType coverType)
+    {
+        //set hex positionq
+        var hex = unit.GetHex();
+        var worldPos = Hex.Hex2World( hex );
+        worldPos.y = 0;
+        
+        // add inner radius to direction
+        var direction = unit.GetCoverDirection();
+
+        worldPos += direction * Hex.InnerRadius * 0.5f;
+        transform.position = worldPos;
+    }
+    
+    
+    #endregion
     private void SetAnimator(ItemType type)
     {
         animator.runtimeAnimatorController =
@@ -371,5 +390,18 @@ public class UnitModel : MonoBehaviour
         }
         
         unit.GetSelectedAction()?.TossAnimationEvent(eventStringArgument);
+        GetEvent(eventStringArgument);
+    }
+    
+    private void GetEvent(string eventStringArgument)
+    {
+        if (eventStringArgument == AnimationEventNames.COVER)
+        {
+            SetCoverFlag(CoverType.HEAVY);
+        }
+        else if (eventStringArgument == AnimationEventNames.COVER_END)
+        {
+            SetCoverFlag(CoverType.NONE);
+        }
     }
 }

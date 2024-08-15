@@ -100,6 +100,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     [HideInInspector] public UnityEvent onUnitActionDataChanged;
     [HideInInspector] public UnityEvent onSelectedChanged;
     [HideInInspector] public UnityEvent onStatusEffectChanged;
+    [HideInInspector] public UnityEvent<CoverType> onCoverChanged;
 
     private IUnitAction[] _unitActionArray; // All Unit Actions attached to this Unit
     protected IUnitAction activeUnitAction; // Currently active action
@@ -170,6 +171,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         }
         else SelectAction(GetAction<IdleAction>());
 
+        
     }
 
     public void EndTurn()
@@ -754,6 +756,17 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         coverType = type;
         coverableObj = obj;
+        
+        onCoverChanged.Invoke(type);
+    }
+    
+    public Vector3 GetCoverDirection()
+    {
+        //if coverableObj is null, return
+        if (coverableObj is null) return Vector3.zero;
+        
+        // Get the direction from the player to the cover
+        return Hex.Hex2World(coverableObj.hexPosition) - Hex.Hex2World(hexPosition);
     }
 }
 

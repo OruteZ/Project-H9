@@ -552,18 +552,14 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             _coverableObjs.Add(coverable);
 
             // find in children
-            if (coverable.gameObject.GetComponentInChildren<MeshRenderer>() is not MeshRenderer meshRenderer)
-            {
-                meshRenderer = coverable.gameObject.GetComponent<MeshRenderer>();
-            }
-            if (meshRenderer is null) continue;
+            var meshRenderer = coverable.meshRenderer;
             
             List<Material> materialList = meshRenderer.materials.ToList();
             
             if(materialList.Count > 1) continue;
             materialList.Add(coverMaterial);
-            
-            coverable.gameObject.GetComponent<MeshRenderer>().materials = materialList.ToArray();
+                
+            coverable.meshRenderer.materials = materialList.ToArray();
             
             // SetEffectBase(tile.hexPosition, TileEffectType.Normal);
         }
@@ -649,19 +645,14 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         //remove cover effect
         foreach (CoverableObj coverable in _coverableObjs.Where(coverable => coverable != null))
         {
-            if (coverable.gameObject.GetComponentInChildren<MeshRenderer>() is not MeshRenderer meshRenderer)
-            {
-                meshRenderer = coverable.gameObject.GetComponent<MeshRenderer>();
-            }
-            
-            if (meshRenderer is null) continue;
+            var meshRenderer = coverable.meshRenderer;
             
             List<Material> materialList = meshRenderer.materials.ToList();
             
             if(materialList.Count <= 1) continue;
             materialList.RemoveAt(1);
             
-            coverable.gameObject.GetComponent<MeshRenderer>().materials = materialList.ToArray();
+            coverable.meshRenderer.materials = materialList.ToArray();
         }
     }
 

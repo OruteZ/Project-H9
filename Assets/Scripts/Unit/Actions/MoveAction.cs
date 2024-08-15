@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -142,6 +143,24 @@ public class MoveAction : BaseAction
             //다음 움직임 타겟 타일의 위치 가져오기
             Vector3 targetPos = Hex.Hex2World(_path[_currentPositionIndex].hexPosition);
             targetPos.y = transform.position.y;
+            
+            // if there is enemy link, stop moving and start combat
+            if (FieldSystem.tileSystem.GetTileObject(_path[_currentPositionIndex].hexPosition).
+                Any(item => item is Link link))
+            {
+                unit.animator.ResetTrigger(MOVE);
+                unit.animator.SetTrigger(IDLE);
+                
+                Link link = FieldSystem.tileSystem.GetTileObject(_path[_currentPositionIndex].hexPosition)
+                    .First(item => item is Link) as Link;
+
+                int linkIndex = link.linkIndex;
+                int combatStageIndex = link.GetCombatStageIndex();
+                
+                GameManager.instance.StartCombat(combatStageIndex, linkIndex);
+                
+                yield break;
+            }
 
             //moveDirection 설정
             Vector3 moveDirection = (targetPos - transform.position).normalized;

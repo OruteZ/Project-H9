@@ -131,6 +131,11 @@ public class Link : TileObject
         InitRenderer();
     }
 
+    public int GetCombatStageIndex()
+    {
+        return tile.combatStageIndex;
+    }
+
 #if UNITY_EDITOR
     private void Update()
     {

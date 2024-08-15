@@ -27,6 +27,9 @@ public class CombatStageData : ScriptableObject
     [SerializeField]
     private Vector3Int playerSpawnPoint;
     
+    [SerializeField]
+    private StageStyle stageStyle;
+    
     public List<TileData> GetTileDataList()
     {
         //return deep copy of data list
@@ -193,11 +196,13 @@ public struct TileObjectData
     public GameObject prefab;
     public Vector3Int hexPosition;
     public float rotation;
+    public Vector3 positionOffset;
     public string[] arguments;
 
     public TileObjectData(TileObject obj)
     {
         hexPosition = obj.hexPosition;
+        positionOffset = obj.gameObject.transform.position - Hex.Hex2World(hexPosition);
         rotation = obj.gameObject.transform.localRotation.y;
         arguments = obj.GetArgs();
         

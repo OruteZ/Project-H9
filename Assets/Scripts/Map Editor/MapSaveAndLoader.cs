@@ -132,6 +132,7 @@ public class MapSaveAndLoader : MonoBehaviour
             TileObject tileObject = Instantiate(tileObjectData.prefab).GetComponent<TileObject>();
             tileObject.transform.parent = tileObjParent.transform;
             tileObject.hexPosition = tileObjectData.hexPosition;
+            tileObject.gameObject.transform.position += tileObjectData.positionOffset;
             tileObject.gameObject.transform.localRotation = Quaternion.Euler(0, tileObjectData.rotation, 0);
             tileObject.SetArgs(tileObjectData.arguments);
             // tileObject.SetUp();

@@ -549,19 +549,22 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             
             CoverableObj coverable = tile.GetTileObject<CoverableObj>();
             if (coverable is null) continue;
+            _coverableObjs.Add(coverable);
 
-            var materialList = 
-                coverable.
-                gameObject.
-                GetComponent<MeshRenderer>().
-                materials.ToList();
+            // find in children
+            if (coverable.gameObject.GetComponentInChildren<MeshRenderer>() is not MeshRenderer meshRenderer)
+            {
+                meshRenderer = coverable.gameObject.GetComponent<MeshRenderer>();
+            }
+            if (meshRenderer is null) continue;
+            
+            List<Material> materialList = meshRenderer.materials.ToList();
             
             if(materialList.Count > 1) continue;
             materialList.Add(coverMaterial);
             
             coverable.gameObject.GetComponent<MeshRenderer>().materials = materialList.ToArray();
             
-            _coverableObjs.Add(coverable);
             // SetEffectBase(tile.hexPosition, TileEffectType.Normal);
         }
         
@@ -644,14 +647,16 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         aimEffectRectTsf.gameObject.SetActive(false);
         
         //remove cover effect
-        foreach (var coverable in _coverableObjs)
+        foreach (CoverableObj coverable in _coverableObjs.Where(coverable => coverable != null))
         {
-            if (coverable == null) continue;
-            var materialList = 
-                coverable.
-                gameObject.
-                GetComponent<MeshRenderer>().
-                materials.ToList();
+            if (coverable.gameObject.GetComponentInChildren<MeshRenderer>() is not MeshRenderer meshRenderer)
+            {
+                meshRenderer = coverable.gameObject.GetComponent<MeshRenderer>();
+            }
+            
+            if (meshRenderer is null) continue;
+            
+            List<Material> materialList = meshRenderer.materials.ToList();
             
             if(materialList.Count <= 1) continue;
             materialList.RemoveAt(1);

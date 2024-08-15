@@ -187,9 +187,18 @@ public class TileSystem : MonoBehaviour
     /// <returns> 추가된 Tile을 반환합니다. </returns>
     private Tile AddTile(Tile tile)
     {
+        if (tile is null) return null;
+        
+        if(_tiles.ContainsKey(tile.hexPosition))
+        {
+            Debug.LogError("중복 타일이 존재합니다. name : " + tile.gameObject.name + ", pos : " + tile.hexPosition);
+            Destroy(tile.gameObject);
+            return null;
+        }
+        
         if (!_tiles.TryAdd(tile.hexPosition, tile))
         {
-            throw new Exception("Tile 추가에 실패했습니다.");
+            throw new Exception("Tile 추가에 실패했습니다. hexp : " + tile.hexPosition);
         }
         
         return tile;
@@ -200,7 +209,6 @@ public class TileSystem : MonoBehaviour
     /// </summary>
     public void AddLink(Vector3Int position, float rotation, int linkIndex, int mapIndex = 1, bool isRepeatable = false)
     {
-        
         //if link that has same position with tile already exist, skip
         var tile = GetTile(position);
         if (tile is null)

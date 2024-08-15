@@ -525,8 +525,6 @@ public class TileSystem : MonoBehaviour
             }
             else
             {
-                if(width == 0 || height == 0) return;
-                
                 Gizmos.color = Color.red;
                 Vector3 leftTop = Hex.Hex2World(start);
                 

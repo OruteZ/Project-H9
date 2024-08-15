@@ -105,6 +105,8 @@ public class CoverableObj : TileObject, IDamageable
         return maxHp;
     }
 
+    public Transform GetTsf => transform;
+
     public int GetHitRateModifier(Unit attacker)
     {
         return 100000;

@@ -21,7 +21,7 @@ public class MoveActionEffect : BaseSelectingActionEffect
         
         _baseEffect.Clear();
         _dynamicEffect.Clear();
-        effecter.StopCoroutine(_dynamicCoroutine);
+        effector.StopCoroutine(_dynamicCoroutine);
     }
 
     public override void ShowEffect(Unit user)
@@ -38,7 +38,7 @@ public class MoveActionEffect : BaseSelectingActionEffect
             TrySetBaseTile(tile);
         }
 
-        _dynamicCoroutine = effecter.StartCoroutine(DynamicCoroutine());
+        _dynamicCoroutine = effector.StartCoroutine(DynamicCoroutine());
     }
 
     private IEnumerator DynamicCoroutine()

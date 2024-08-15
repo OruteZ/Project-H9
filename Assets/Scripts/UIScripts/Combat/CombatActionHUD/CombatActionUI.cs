@@ -37,7 +37,7 @@ public class CombatActionUI : UISystem
     private Dictionary<CombatActionType, IUnitAction> _baseActions = new Dictionary<CombatActionType, IUnitAction>();
     private List<IUnitAction> _skillActions = new List<IUnitAction>();
     private IUnitAction _idleAction;
-    private IUnitAction _itmeUsingAction;
+    private IUnitAction _itemUsingAction;
     private CombatActionType _selectedActionType = CombatActionType.Null;
 
     private KeyCode[] _shortCutKey =
@@ -211,7 +211,7 @@ public class CombatActionUI : UISystem
             _baseActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetCombatActionButton(baseCombatActionType[i], i, ba[i]);
         }
         _idleAction = ba[_baseActions.Count];
-        _itmeUsingAction = ba[_baseActions.Count + 1];
+        _itemUsingAction = ba[_baseActions.Count + 1];
 
         //skill action
         _skillActions.Clear();
@@ -371,7 +371,7 @@ public class CombatActionUI : UISystem
 
         for (int i = 0; i < _baseActionBundle.transform.childCount; i++) 
         {
-            if (i == SKILL_BUTTON_INDEX) continue;
+            if (i >= SKILL_BUTTON_INDEX) continue;
             GameObject btn = _baseActionBundle.transform.GetChild(i).gameObject;
             if (btn.GetComponent<CombatActionButtonElement>().IsInteractable())
             {
@@ -398,17 +398,17 @@ public class CombatActionUI : UISystem
         bool isSkillExist = _skillActionBundle.transform.GetChild(0).gameObject.activeSelf;
 
         //item & weapon button activate
-        Player player = FieldSystem.unitSystem.GetPlayer();
-        bool isEnoughCostForItem = (player.currentActionPoint >= Inventory.ITEM_COST);
-        bool isEnoughCostForWeapon = (player.currentActionPoint >= Inventory.WEAPON_COST);
+        Inventory inven = GameManager.instance.playerInventory;
+        bool isItemExist = inven.IsItemExist(ItemType.Heal);
+        bool isWeaponExist = inven.IsItemExist(ItemType.Revolver);
 
         _baseActionBundle.transform.GetChild(0).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(1).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(2).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable();
         _baseActionBundle.transform.GetChild(4).GetComponent<CombatActionButtonElement>().SetInteractable(isSkillExist);
-        _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(isEnoughCostForItem && _itmeUsingAction.IsSelectable());
-        _baseActionBundle.transform.GetChild(6).GetComponent<CombatActionButtonElement>().SetInteractable(isEnoughCostForWeapon);
+        _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(isItemExist && _itemUsingAction.IsSelectable());
+        _baseActionBundle.transform.GetChild(6).GetComponent<CombatActionButtonElement>().SetInteractable(isWeaponExist);
     }
 
     public void ShowRequiredCost(IUnitAction action)

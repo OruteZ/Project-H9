@@ -287,6 +287,8 @@ MonoBehaviour:
   - prefab: {fileID: 0}
     hexPosition: {x: 3, y: 4, z: -7}
     rotation: -0
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
     arguments:
     - 1
     - 1
@@ -805,3 +807,4 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
   enemySpawnPoints: []
   playerSpawnPoint: {x: 0, y: 0, z: 0}
+  stageStyle: 1

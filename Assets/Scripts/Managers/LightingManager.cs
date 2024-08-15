@@ -1,5 +1,6 @@
 using Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 
 public class LightingManager : Singleton<LightingManager>
@@ -30,16 +31,17 @@ public class LightingManager : Singleton<LightingManager>
     {
         // set active false all
         westernLight.SetActive(false);
-        westernPpVolume.SetActive(false);
         snowMountainLight.SetActive(false);
-        snowMountainPpVolume.SetActive(false);
+        
+        westernPpVolume.GetComponent<Volume>().weight = 0;
+        snowMountainPpVolume.GetComponent<Volume>().weight = 0;
         
         // if data is null, set western
         var stageData = GameManager.instance.GetStageData();
         if (stageData is null)
         {
+            westernPpVolume.GetComponent<Volume>().weight = 1;
             westernLight.SetActive(true);
-            westernPpVolume.SetActive(true);
             return;
         }
         
@@ -50,12 +52,41 @@ public class LightingManager : Singleton<LightingManager>
         {
             case StageStyle.WESTERN:
                 westernLight.SetActive(true);
-                westernPpVolume.SetActive(true);
+                westernPpVolume.GetComponent<Volume>().weight = 1;
                 break;
             case StageStyle.SNOW:
                 snowMountainLight.SetActive(true);
-                snowMountainPpVolume.SetActive(true);
+                snowMountainPpVolume.GetComponent<Volume>().weight = 1;
                 break;
+        }
+    }
+
+    public void LerpChange(StageStyle from, StageStyle to, float value)
+    {
+        Mathf.Clamp01(value);
+        
+        var fromPPVolume = GetPPVolume(from);
+        var toPPVolume = GetPPVolume(to);
+        
+        if (fromPPVolume is null || toPPVolume is null) return;
+        
+        fromPPVolume.SetActive(true);
+        toPPVolume.SetActive(true);
+        
+        fromPPVolume.GetComponent<Volume>().weight = 1 - value;
+        toPPVolume.GetComponent<Volume>().weight = value;
+    }
+    
+    private GameObject GetPPVolume(StageStyle stageStyle)
+    {
+        switch (stageStyle)
+        {
+            case StageStyle.WESTERN:
+                return westernPpVolume;
+            case StageStyle.SNOW:
+                return snowMountainPpVolume;
+            default:
+                return null;
         }
     }
 }

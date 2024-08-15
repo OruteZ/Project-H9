@@ -197,6 +197,8 @@ public struct TileObjectData
     public Vector3Int hexPosition;
     public float rotation;
     public Vector3 positionOffset;
+    public Vector3 scale;
+    
     public string[] arguments;
 
     public TileObjectData(TileObject obj)
@@ -204,6 +206,7 @@ public struct TileObjectData
         hexPosition = obj.hexPosition;
         positionOffset = obj.gameObject.transform.position - Hex.Hex2World(hexPosition);
         rotation = obj.gameObject.transform.localRotation.y;
+        scale = obj.gameObject.transform.localScale;
         arguments = obj.GetArgs();
         
         #if UNITY_EDITOR

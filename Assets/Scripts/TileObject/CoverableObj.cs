@@ -50,6 +50,7 @@ public class CoverableObj : TileObject, IDamageable
 
         newUnit.onHit.AddListener(OnHit);
         newUnit.onMoved.AddListener(OnUnitMoved);
+        newUnit.SetCoverType(coverType, this);
     }
 
     private void OnHit(Damage context)

@@ -30,6 +30,11 @@ public class CombatStageData : ScriptableObject
     [SerializeField]
     private StageStyle stageStyle;
     
+    public StageStyle GetStageStyle()
+    {
+        return stageStyle;
+    }
+    
     public List<TileData> GetTileDataList()
     {
         //return deep copy of data list

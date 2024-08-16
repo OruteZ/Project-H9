@@ -9,7 +9,7 @@ public class LightingManager : Singleton<LightingManager>
     [SerializeField] private GameObject westernLight;
     [SerializeField] private GameObject westernPpVolume;
     
-    [Header("SNOW MOUNTAIN"), Space(10)]
+    [Space(10),Header("SNOW MOUNTAIN")]
     [SerializeField] private GameObject snowMountainLight;
     [SerializeField] private GameObject snowMountainPpVolume;
     
@@ -23,6 +23,7 @@ public class LightingManager : Singleton<LightingManager>
         
         westernLight.SetActive(true);
         westernPpVolume.SetActive(true);
+        westernPpVolume.GetComponent<Volume>().weight = 1;
         snowMountainLight.SetActive(false);
         snowMountainPpVolume.SetActive(false);
     }

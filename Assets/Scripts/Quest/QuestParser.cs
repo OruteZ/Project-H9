@@ -11,7 +11,7 @@ public class QuestParser
     {
         ParseLocalization(out var localizationData);
         ParseQuestInfos(in localizationData, out var questInfos);
-        // !유저데이터와 동기화하는 함수() 필요
+        // TODO : 유저데이터와 동기화하는 함수() 필요
         return questInfos;
     }
 

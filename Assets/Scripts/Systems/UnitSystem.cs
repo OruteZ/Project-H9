@@ -171,7 +171,7 @@ public class UnitSystem : MonoBehaviour
                 var activeList = GameManager.instance.playerActiveIndexList;
                 foreach (var activeIdx in activeList)
                 {
-                    activeDB.GetAction(p, activeIdx);
+                    activeDB.AddAction(p, activeIdx);
                 }
                 p.AddComponent<IdleAction>();
 

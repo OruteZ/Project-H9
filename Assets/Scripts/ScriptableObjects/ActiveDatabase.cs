@@ -5,6 +5,7 @@ using UnityEngine;
 using PassiveSkill;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Rendering;
 
 [CreateAssetMenu(fileName = "ActiveDatabase", menuName = "ScriptableObjects/ActiveDatabase", order = 0)]
 public class ActiveDatabase : ScriptableObject
@@ -12,7 +13,7 @@ public class ActiveDatabase : ScriptableObject
     #region STATIC
     ActionType GetActionRange(string actionName)
     {
-        return Enum.TryParse<ActionType>(actionName, out var type) ? type : ActionType.NONE;
+        return Enum.TryParse<ActionType>(actionName, out var type) ? type : ActionType.None;
     }
     #endregion
     
@@ -45,7 +46,7 @@ public class ActiveDatabase : ScriptableObject
         }
     }
 
-    public void GetAction(Unit unit, int index)
+    public void AddAction(Unit unit, int index)
     {
         for (int i = 0; i < infos.Count; i++)
         {
@@ -57,12 +58,14 @@ public class ActiveDatabase : ScriptableObject
                 string componentName = info.action + "Action";
                 IUnitAction action = 
                     unit.gameObject.AddComponent(Type.GetType(componentName)) as IUnitAction;
+                Debug.Log(action);
 
                 action?.SetData(info);
                 break;
             }
         }
         
+        Debug.LogError("No Action");
     }
 
     public ActiveInfo GetActiveInfo(int index)

@@ -172,7 +172,7 @@ public class CombatActionUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;
         List<IUnitAction> actions = new List<IUnitAction>(player.GetUnitActionArray());
-        ActionType[] baseActionType = { ActionType.MOVE, ActionType.ATTACK, ActionType.RELOAD, ActionType.COVER, ActionType.IDLE, ActionType.ITEM_USING };
+        ActionType[] baseActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload, ActionType.Cover, ActionType.Idle, ActionType.ItemUsing };
 
         List<IUnitAction> ba = new List<IUnitAction>();
         for (int j = 0; j < baseActionType.Length; j++)

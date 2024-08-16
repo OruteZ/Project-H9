@@ -11,7 +11,7 @@ public class ItemUsingAction : BaseAction
 
     public override ActionType GetActionType()
     {
-        return ActionType.ITEM_USING;
+        return ActionType.ItemUsing;
     }
 
     public bool GetItemUsedTrigger()

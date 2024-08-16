@@ -81,34 +81,34 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         ClearEffect();
         switch (_player.GetSelectedAction().GetActionType())
         {
-            case ActionType.MOVE:
+            case ActionType.Move:
                 MovableTileEffect();
                 break;
-            case ActionType.SPIN:
+            case ActionType.Spin:
                 break;
-            case ActionType.ATTACK:
+            case ActionType.Attack:
                 AttackTileEffect();
                 break;
-            case ActionType.DYNAMITE:
+            case ActionType.Dynamite:
                 DynamiteTileEffect();
                 break;
-            case ActionType.IDLE:
+            case ActionType.Idle:
                 ClearEffect(_effectsBase);
                 ClearEffect(_effectsRelatedTarget);
                 break;
-            case ActionType.RELOAD:
+            case ActionType.Reload:
                 break;
-            case ActionType.FANNING:
+            case ActionType.Fanning:
                 AttackTileEffect();
                 break;
-            case ActionType.NONE:
+            case ActionType.None:
                 break;
-            case ActionType.HEMOSTASIS:
+            case ActionType.Hemostasis:
                 break;
-            case ActionType.ITEM_USING:
+            case ActionType.ItemUsing:
                 ItemTileEffect();
                 break;
-            case ActionType.COVER:
+            case ActionType.Cover:
                 CoverEffect();
                 break;
             default:

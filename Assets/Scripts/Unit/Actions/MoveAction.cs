@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class MoveAction : BaseAction
 {
-    public override ActionType GetActionType() => ActionType.MOVE;
+    public override ActionType GetActionType() => ActionType.Move;
 
     private int MaxMoveDistance()
     {

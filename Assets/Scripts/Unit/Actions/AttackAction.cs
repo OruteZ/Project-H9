@@ -8,7 +8,7 @@ public class AttackAction : BaseAction, IShootingAction
 {
 
     private int _atkCount;
-    public override ActionType GetActionType() => ActionType.ATTACK;
+    public override ActionType GetActionType() => ActionType.Attack;
 
     private Weapon weapon => unit.weapon;
     private IDamageable _target;

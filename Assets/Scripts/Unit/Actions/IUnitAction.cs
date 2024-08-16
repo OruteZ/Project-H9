@@ -77,16 +77,21 @@ public interface IUnitAction {
     public int GetSkillIndex();
 }
 
+/// <summary>
+/// UnitAction의 종류를 나타내는 Enum입니다.
+/// Action Component의 이름과 일치 시켜야 합니다.
+/// 따라서 항상 Pascal Case를 유지합니다.
+/// </summary>
 public enum ActionType {
-    NONE,
-    MOVE,
-    SPIN,
-    ATTACK,
-    DYNAMITE,
-    IDLE,
-    RELOAD,
-    FANNING,
-    HEMOSTASIS,
-    ITEM_USING,
-    COVER,
+    None,
+    Move,
+    Spin,
+    Attack,
+    Dynamite,
+    Idle,
+    Reload,
+    Fanning,
+    Hemostasis,
+    ItemUsing,
+    Cover,
 }

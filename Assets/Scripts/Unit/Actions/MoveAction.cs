@@ -158,6 +158,7 @@ public class MoveAction : BaseAction
                 int combatStageIndex = link.GetCombatStageIndex();
                 
                 GameManager.instance.StartCombat(combatStageIndex, linkIndex);
+                link.Invoke(nameof(link.Remove), 0);
                 
                 yield break;
             }

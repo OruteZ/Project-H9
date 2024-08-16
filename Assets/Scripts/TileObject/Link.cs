@@ -56,9 +56,14 @@ public class Link : TileObject
         EncounterManager.instance.AddValue(hexPosition, FieldSystem.turnSystem.turnNumber);
         GameManager.instance.StartCombat(tile.combatStageIndex, linkIndex: linkIndex);
         
+        Remove();
+    }
+
+    public void Remove()
+    {
         if (isRepeatable is false)
         {
-            Destroy(gameObject);
+            // Destroy(gameObject);
             //call gameManager's runtime world data
             GameManager.instance.runtimeWorldData.RemoveLink(hexPosition, _linkIndex);
         }

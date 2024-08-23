@@ -59,9 +59,14 @@ public class SkillUI : UISystem
     private void Awake()
     {
         _skillCharacterSection.SetActive(true);
-        _skillRevoloverSection.SetActive(false);
-        _skillRepeaterSection.SetActive(false);
-        _skillShotgunSection.SetActive(false);
+        _skillRevoloverSection.SetActive(true);
+        _skillRepeaterSection.SetActive(true);
+        _skillShotgunSection.SetActive(true);
+        _skillCharacterSection.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+        _skillRevoloverSection.GetComponent<RectTransform>().localPosition = new Vector3(_skillRevoloverSection.GetComponent<RectTransform>().sizeDelta.x, 0, 0);
+        _skillRepeaterSection.GetComponent<RectTransform>().localPosition = new Vector3(_skillRepeaterSection.GetComponent<RectTransform>().sizeDelta.x, 0, 0);
+        _skillShotgunSection.GetComponent<RectTransform>().localPosition = new Vector3(_skillShotgunSection.GetComponent<RectTransform>().sizeDelta.x, 0, 0);
+
         _skillRootNodes = new();
         for (int i = 0; i < _skillCharacterSection.transform.GetChild(1).childCount; i++)
         {
@@ -148,10 +153,20 @@ public class SkillUI : UISystem
     public void UpdateAllSkillUINode()
     {
         UpdateSkillPointUI();
-        for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
+        GameObject[] selections =
+            {
+                _skillCharacterSection,
+                _skillRevoloverSection,
+                _skillRepeaterSection,
+                _skillShotgunSection
+            };
+        for (int j = 0; j < selections.Length; j++)
         {
-            if (!_skillUIButtons.activeInHierarchy) continue;
-            UpdateSkillUINode(_skillUIButtons.transform.GetChild(i).gameObject);
+            Transform buttons = selections[j].transform.GetChild(1);
+            for (int i = 0; i < buttons.childCount; i++)
+            {
+                UpdateSkillUINode(buttons.GetChild(i).gameObject);
+            }
         }
     }
     public void UpdateRelatedSkillNodes(int index)
@@ -168,7 +183,7 @@ public class SkillUI : UISystem
     }
     private void UpdateSkillUINode(GameObject ui)
     {
-        if (ui == null || !ui.activeSelf) return;
+        if (ui == null) return;
         SkillTreeElement _skillElement = ui.GetComponent<SkillTreeElement>();
         Skill _skill = _skillManager.GetSkill(_skillElement.GetSkillUIIndex());
         if (_skill == null) return;
@@ -247,26 +262,27 @@ public class SkillUI : UISystem
 
         for (int i = 0; i < contents.Length; i++)
         {
-            contents[i].SetActive(false);
+            contents[i].GetComponent<RectTransform>().localPosition = new Vector3(contents[i].GetComponent<RectTransform>().sizeDelta.x, 0, 0);
             ColorBlock b = buttons[i].GetComponent<Button>().colors;
             b.normalColor = buttons[i].GetComponent<Button>().colors.pressedColor;
             buttons[i].GetComponent<Button>().colors = b;
         }
-        contents[(int)section].SetActive(true);
+        contents[(int)section].GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
         ColorBlock block = buttons[(int)section].GetComponent<Button>().colors;
         block.normalColor = buttons[(int)section].GetComponent<Button>().colors.selectedColor;
         buttons[(int)section].GetComponent<Button>().colors = block;
 
         _skillTree.GetComponent<ScrollRect>().content = contents[(int)section].GetComponent<RectTransform>();
         _skillRootNodes.Clear();
-        for (int i = 0; i < contents[(int)section].transform.GetChild(1).childCount; i++)
+
+        _skillUIButtons = contents[(int)section].transform.GetChild(1).gameObject;
+        for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
         {
-            if (contents[(int)section].transform.GetChild(1).GetChild(i).GetComponent<SkillTreeElement>().isRootNode) 
+            if (_skillUIButtons.transform.GetChild(i).GetComponent<SkillTreeElement>().isRootNode) 
             {
                 _skillRootNodes.Add(contents[(int)section].transform.GetChild(1).GetChild(i).gameObject);
             }
         }
-
         UpdateAllSkillUINode();
     }
 }

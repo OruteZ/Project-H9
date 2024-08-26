@@ -46,7 +46,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 200
+    rewardExp: 10
     rewardItem: 5902000032000000
     level: 1
   - index: 2
@@ -64,7 +64,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 200
+    rewardExp: 10
     rewardItem: 5902000032000000bd02000019000000
     level: 1
   - index: 3
@@ -82,9 +82,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 200
+    rewardExp: 20
     rewardItem: 5902000032000000bd02000032000000
-    level: 1
+    level: 2
   - index: 4
     nameIndex: 1002
     modelName: Character_Mexican_Male_01
@@ -100,9 +100,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 25
     rewardItem: 300100003200000059020000320000008503000014000000
-    level: 0
+    level: 3
   - index: 5
     nameIndex: 1002
     modelName: Character_Mexican_Male_02
@@ -118,9 +118,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 25
     rewardItem: 30010000320000005902000032000000860300000a000000870300000a000000
-    level: 0
+    level: 4
   - index: 6
     nameIndex: 1004
     modelName: Character_Thug_Male_02
@@ -136,9 +136,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 25
     rewardItem: 300100003200000059020000320000008603000014000000
-    level: 0
+    level: 3
   - index: 7
     nameIndex: 1003
     modelName: Character_Soldier_Male_01
@@ -154,9 +154,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 600
+    rewardExp: 25
     rewardItem: 310100003200000059020000320000008703000014000000
-    level: 0
+    level: 4
   - index: 101
     nameIndex: 101
     modelName: Character_Badguy_01
@@ -172,9 +172,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 600
+    rewardExp: 25
     rewardItem: 30010000640000005b020000640000008703000032000000
-    level: 0
+    level: 3
   - index: 102
     nameIndex: 102
     modelName: Character_Business_Man_01
@@ -190,9 +190,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 25
     rewardItem: 65000000640000002e010000640000005a020000640000008603000032000000
-    level: 0
+    level: 2
   - index: 103
     nameIndex: 103
     modelName: Character_GoldMiner_Male_02
@@ -208,9 +208,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 600
+    rewardExp: 50
     rewardItem: 310100006400000087030000320000008503000032000000
-    level: 0
+    level: 4
   - index: 104
     nameIndex: 6
     modelName: Character_Cowboy_01
@@ -226,9 +226,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 300
+    rewardExp: 30
     rewardItem: 
-    level: 0
+    level: 4
   - index: 105
     nameIndex: 7
     modelName: Character_Badguy_01
@@ -244,9 +244,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 300
+    rewardExp: 30
     rewardItem: 
-    level: 0
+    level: 5
   - index: 106
     nameIndex: 9
     modelName: Character_Gunman_01
@@ -262,9 +262,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 300
+    rewardExp: 30
     rewardItem: 
-    level: 0
+    level: 4
   - index: 15
     nameIndex: 15
     modelName: Character_Traveler_Female_01
@@ -280,9 +280,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 200
+    rewardExp: 10
     rewardItem: 
-    level: 0
+    level: 1
   - index: 16
     nameIndex: 16
     modelName: Character_Priest_Male_01
@@ -298,9 +298,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 300
+    rewardExp: 20
     rewardItem: 
-    level: 0
+    level: 2
   - index: 17
     nameIndex: 17
     modelName: Character_Salesman_Male_01
@@ -316,9 +316,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 30
     rewardItem: 
-    level: 0
+    level: 3
   - index: 18
     nameIndex: 18
     modelName: Character_GoldMiner_Male_01
@@ -334,9 +334,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 20
     rewardItem: 
-    level: 0
+    level: 2
   - index: 19
     nameIndex: 19
     modelName: Character_Captain_Male_01
@@ -352,9 +352,9 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 500
+    rewardExp: 30
     rewardItem: 
-    level: 0
+    level: 3
   - index: 20
     nameIndex: 20
     modelName: Character_Cowgirl_01
@@ -370,6 +370,42 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 600
+    rewardExp: 40
     rewardItem: 
-    level: 0
+    level: 4
+  - index: 8
+    nameIndex: 1001
+    modelName: Character_Bandit_Male_01
+    model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
+    stat:
+      OnChangedStat:
+        m_PersistentCalls:
+          m_Calls: []
+      original: 000000001e0000001e0000003c000000040000003c0000000400000000000000000000000a000000000000000000000064000000000000000000000064000000000000000000000064000000
+      _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+    weaponIndex: 304
+    btIndex: 1
+    skillIndex: 
+    rewardGold: 1
+    rewardExp: 50
+    rewardItem: 
+    level: 5
+  - index: 9
+    nameIndex: 1002
+    modelName: Character_Gunman_01
+    model: {fileID: 1964704263138806, guid: e3d9a5b7a19f9684d9b63308cdfa95bd, type: 3}
+    stat:
+      OnChangedStat:
+        m_PersistentCalls:
+          m_Calls: []
+      original: 0000000023000000230000004600000004000000460000000400000000000000000000000a000000000000000000000064000000000000000000000064000000000000000000000064000000
+      _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+    weaponIndex: 304
+    btIndex: 1
+    skillIndex: 
+    rewardGold: 1
+    rewardExp: 60
+    rewardItem: 
+    level: 6

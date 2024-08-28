@@ -42,7 +42,7 @@ public class TileSystem : MonoBehaviour
     public Transform environments;
     
     private Dictionary<Vector3Int, Tile> _tiles = new();
-    private List<TileObject> _tileObjects = new();
+    private readonly List<TileObject> _tileObjects = new();
     
     private HexGridLayout _gridLayout;
     private HexGridLayout gridLayout => _gridLayout ??= tileParent.GetComponent<HexGridLayout>();
@@ -216,7 +216,6 @@ public class TileSystem : MonoBehaviour
             Debug.LogError("Link를 추가할 타일이 없습니다.");
             return;
         }
-
         if (tile.tileObjects.Any(obj => obj is Link))
         {
             Debug.LogError("이미 Link가 있는 타일에 Link를 추가하려고 합니다." +
@@ -287,6 +286,11 @@ public class TileSystem : MonoBehaviour
     public void DeleteTileObject(TileObject obj) 
     {
         _tileObjects.Remove(obj);
+    }
+
+    public void AddTileObject(TileObject obj)
+    {
+        _tileObjects.Add(obj);
     }
 
     /// <summary>
@@ -467,6 +471,7 @@ public class TileSystem : MonoBehaviour
     }
 
     //==========================Create World==================================
+    #if UNITY_EDITOR
     enum CreateType
     {
         RECT,
@@ -497,8 +502,6 @@ public class TileSystem : MonoBehaviour
             createType == CreateType.HEXAGON ? 
                 Hex.GetCircleGridList(range, center) :
                 Hex.GetSquareGridList(width, height, start);
-        
-        
         
         IEnumerable<Tile> tiles = GetAllTilesEditor();
 
@@ -547,6 +550,8 @@ public class TileSystem : MonoBehaviour
             }
         }
     }
+    
+    #endif
 }
 
 /// <summary>

@@ -94,4 +94,8 @@ public enum ActionType {
     Hemostasis,
     ItemUsing,
     Cover,
+    
+    //Linsdale Boss Action
+    SpreadDynamite,
+    SuicideDynamite,
 }

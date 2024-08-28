@@ -115,10 +115,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         UIManager.instance.onActionChanged.Invoke();
     }
 
-    protected virtual IEnumerator ExecuteCoroutine()
-    {
-        yield return null; 
-    }
+    protected abstract IEnumerator ExecuteCoroutine();
 
     public virtual void ForceFinish()
     {

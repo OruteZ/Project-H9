@@ -14,7 +14,7 @@ public class BuffItem : Item
         int amount = GetData().itemEffectAmount;
         int duration = GetData().itemEffectDuration;
 
-        var itemBuff = new ItemBuff(GetData().id, statType, amount, duration, user);
+        ItemBuff itemBuff = new (GetData().id, statType, amount, duration, user);
         
         stackCount--;
         GameManager.instance.playerInventory.CollectZeroItem();

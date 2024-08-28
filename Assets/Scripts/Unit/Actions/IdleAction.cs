@@ -40,6 +40,11 @@ public class IdleAction : BaseAction
         return false;
     }
 
+    protected override IEnumerator ExecuteCoroutine()
+    {
+        yield return null;
+    }
+
     public override bool CanExecute()
     {
         return false;

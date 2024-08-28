@@ -52,7 +52,7 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
         }
 
         string durationText = duration.ToString();
-        if (duration <= 0 || duration >= 100)
+        if (duration is <= 0 or >= 100)
         {
             durationText = "";
         }

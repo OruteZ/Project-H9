@@ -84,7 +84,7 @@ public class UnitStatusEffectController
         if (_statusEffects is null) return null;
         
         var list = new List<IDisplayableEffect>();
-        foreach (var statusEffect in _statusEffects)
+        foreach (StatusEffect statusEffect in _statusEffects)
         {
             list.Add(statusEffect);
         }

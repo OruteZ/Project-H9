@@ -54,6 +54,7 @@ public abstract class TileObject : MonoBehaviour
         
         SetTile(tile);
         vision = IsVisible();
+        FieldSystem.tileSystem.AddTileObject(this);
     }
 
     protected virtual void SetTile(Tile t)
@@ -94,9 +95,10 @@ public abstract class TileObject : MonoBehaviour
 
 public enum TileObjectType
 {
-    Link,
-    FogOfWar,
-    Town,
-    Coverable,
-    None
+    LINK,
+    FOG_OF_WAR,
+    TOWN,
+    COVERABLE,
+    DYNAMITE,
+    NONE,
 }

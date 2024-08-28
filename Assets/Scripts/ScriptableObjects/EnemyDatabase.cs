@@ -141,6 +141,8 @@ public struct EnemyData
     public string modelName;
     public GameObject model;
     
+    public EnemyType enemyType;
+    
     [Header("UnitStat")]
     public UnitStat stat;
     
@@ -166,4 +168,11 @@ public struct EnemyName
     public int nameIndex;
     public string Ename;
     public string name;
+}
+
+public enum EnemyType
+{
+    NORMAL = 0 ,
+    BOSS_LINSDALE = 1,
+    
 }

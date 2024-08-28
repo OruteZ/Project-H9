@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using KieranCoppins.DecisionTrees;
+using UnityEngine.Serialization;
 
 public class UnitSystem : MonoBehaviour
 {
@@ -29,7 +30,8 @@ public class UnitSystem : MonoBehaviour
     
     [SerializeField] private Transform unitParent;
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private GameObject enemyPrefab;
+    
+    [FormerlySerializedAs("enemyPrefab")] [SerializeField] private GameObject[] enemyPrefabs;
     
     private int _totalExp;
     public CombatRewardHelper rewardHelper;
@@ -113,12 +115,16 @@ public class UnitSystem : MonoBehaviour
             
             for (int i = 0; i < enemyCount; i++)
             {
-                var enemyIdx = linkData.combatEnemy[i];
+                int enemyIdx = linkData.combatEnemy[i];
+                
+                // get enemy data
+                EnemyData info = enemyDB.GetInfo(enemyIdx);
+                GameObject prefab = enemyPrefabs[(int)info.enemyType];
                 //instantiate GameObject
-                var enemy = Instantiate(enemyPrefab, unitParent).GetComponent<Enemy>();
+                Enemy enemy = Instantiate(prefab, unitParent).GetComponent<Enemy>();
                 
                 //set enemy rotation y randomly
-                var rot = enemy.transform.rotation.eulerAngles;
+                Vector3 rot = enemy.transform.rotation.eulerAngles;
                 rot.y = UnityEngine.Random.Range(0, 360);
                 enemy.transform.rotation = Quaternion.Euler(rot);
                 
@@ -147,7 +153,7 @@ public class UnitSystem : MonoBehaviour
             }
         }
 
-        foreach (var unit in units)
+        foreach (Unit unit in units)
         {
             if (unit is Player p)
             {
@@ -189,7 +195,13 @@ public class UnitSystem : MonoBehaviour
                 EnemyData info = enemyDB.GetInfo(enemy.dataIndex);
                 info.stat.ResetModifier();
                 
-                enemy.SetUp(enemy.dataIndex, enemyDB.GetEnemyName(info.nameIndex), (UnitStat)info.stat.Clone(), weaponDB.Clone(info.weaponIndex), info.model, new List<Passive>());
+                enemy.SetUp(enemy.dataIndex,
+                    enemyDB.GetEnemyName(info.nameIndex), 
+                    (UnitStat)info.stat.Clone(), 
+                    weaponDB.Clone(info.weaponIndex), 
+                    info.model, 
+                    new List<Passive>()
+                    );
                 // enemy.SetupAI();
 
                 string path = AI_PATH + "AI " + info.btIndex;
@@ -254,7 +266,7 @@ public class UnitSystem : MonoBehaviour
     /// <returns>Player reference, or null</returns>
     public Player GetPlayer()
     {
-        foreach (var unit in units)
+        foreach (Unit unit in units)
         {
             if (unit is Player u) return u;
         }

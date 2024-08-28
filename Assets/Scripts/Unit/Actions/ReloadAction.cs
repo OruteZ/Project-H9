@@ -40,7 +40,7 @@ public class ReloadAction : BaseAction
     public override bool IsSelectable()
     {
         if (unit.GetAction<ItemUsingAction>().GetItemUsedTrigger()) return false;
-        return weapon.CurrentAmmo < weapon.maxAmmo;
+        return true;
     }
 
     public override bool CanExecuteImmediately()

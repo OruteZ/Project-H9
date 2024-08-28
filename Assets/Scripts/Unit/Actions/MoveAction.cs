@@ -20,9 +20,10 @@ public class MoveAction : BaseAction
         }
         else
         {
-            return unit.stat.sightRange;
+            return 100;
         }
     } 
+    
     private List<Tile> _path;
     private int _currentPositionIndex;
 

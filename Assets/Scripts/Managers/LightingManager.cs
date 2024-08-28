@@ -12,6 +12,11 @@ public class LightingManager : Singleton<LightingManager>
     [Space(10),Header("SNOW MOUNTAIN")]
     [SerializeField] private GameObject snowMountainLight;
     [SerializeField] private GameObject snowMountainPpVolume;
+
+    [Space(10), Header("Plane")] 
+    [SerializeField] private GameObject planeLight;
+    [SerializeField] private GameObject planePpVolume;
+    
     
     protected override void Awake()
     {
@@ -21,11 +26,15 @@ public class LightingManager : Singleton<LightingManager>
         
         FieldSystem.onStageAwake.AddListener(OnStageAwake);
         
-        westernLight.SetActive(true);
-        westernPpVolume.SetActive(true);
-        westernPpVolume.GetComponent<Volume>().weight = 1;
+        westernLight.SetActive(false);
+        westernPpVolume.GetComponent<Volume>().weight = 0;
+        
         snowMountainLight.SetActive(false);
-        snowMountainPpVolume.SetActive(false);
+        snowMountainPpVolume.GetComponent<Volume>().weight = 0;
+        
+        // start point is plane , change after
+        planeLight.SetActive(true);
+        planePpVolume.GetComponent<Volume>().weight = 1;
     }
 
     private void OnStageAwake()
@@ -36,17 +45,19 @@ public class LightingManager : Singleton<LightingManager>
         
         westernPpVolume.GetComponent<Volume>().weight = 0;
         snowMountainPpVolume.GetComponent<Volume>().weight = 0;
+        planePpVolume.GetComponent<Volume>().weight = 0;
         
         // if data is null, set western
         var stageData = GameManager.instance.GetStageData();
         if (stageData is null)
         {
-            westernPpVolume.GetComponent<Volume>().weight = 1;
-            westernLight.SetActive(true);
+            // default if plane
+            planeLight.SetActive(true);
+            planePpVolume.GetComponent<Volume>().weight = 1;
             return;
         }
         
-        var stageType = stageData.GetStageStyle();
+        StageStyle stageType = stageData.GetStageStyle();
         
         
         switch (stageType)
@@ -58,6 +69,10 @@ public class LightingManager : Singleton<LightingManager>
             case StageStyle.SNOW:
                 snowMountainLight.SetActive(true);
                 snowMountainPpVolume.GetComponent<Volume>().weight = 1;
+                break;
+            case StageStyle.PLANE:
+                planeLight.SetActive(true);
+                planePpVolume.GetComponent<Volume>().weight = 1;
                 break;
         }
     }
@@ -86,6 +101,8 @@ public class LightingManager : Singleton<LightingManager>
                 return westernPpVolume;
             case StageStyle.SNOW:
                 return snowMountainPpVolume;
+            case StageStyle.PLANE:
+                return planePpVolume;
             default:
                 return null;
         }

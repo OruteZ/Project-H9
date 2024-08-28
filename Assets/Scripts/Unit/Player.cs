@@ -35,7 +35,7 @@ public class Player : Unit
         if (UIManager.instance.isMouseOverUI) return;
         // if (HasStatusEffect(StatusEffectType.Stun)) EndTurn();
 
-        var isMouseOnTile = TryGetMouseOverTilePos(out var onMouseTilePos);
+        var isMouseOnTile = TryGetMouseOverTilePos(out Vector3Int onMouseTilePos);
 
         if (isMouseOnTile && GetSelectedAction().GetActionType() is
                 ActionType.Attack or ActionType.Fanning or ActionType.ItemUsing)

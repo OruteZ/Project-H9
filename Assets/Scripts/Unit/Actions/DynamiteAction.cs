@@ -8,11 +8,14 @@ using UnityEngine.Serialization;
 
 public class DynamiteAction : BaseAction
 {
+    [SerializeField] private float fallOff;
+    [SerializeField] private float burningDamage;
+    
     public override void SetUp(Unit unit)
     {
         base.SetUp(unit);
         
-        dynamitePrefab = Resources.Load<GameObject>("Prefab/" + nameof(Dynamite));
+        dynamitePrefab = Resources.Load<GameObject>("Prefab/" + nameof(DynamiteVisualEffect));
     }
 
     public override ActionType GetActionType()
@@ -99,6 +102,14 @@ public class DynamiteAction : BaseAction
         return 12001;
     }
 
+    protected override void SetAmount(float[] amounts)
+    {
+        if (amounts.Length != 2) return;
+        
+        fallOff = amounts[0];
+        burningDamage = amounts[1];
+    }
+
     #region PRIVATE
 
     private Vector3Int _center;
@@ -107,14 +118,17 @@ public class DynamiteAction : BaseAction
 
     private void Explode()
     {
-        foreach(var target in _targets)
+        foreach(Unit target in _targets)
         {
-            Damage dmgCtxt = new Damage(damage, damage, Damage.Type.DEFAULT, unit, target);
+            int distance = Hex.Distance(_center, target.hexPosition);
+            int calculatedDamage = damage - Mathf.RoundToInt(fallOff * (radius - distance));
             
-            target.TakeDamage(dmgCtxt);
+            Damage dmgContext = new(calculatedDamage, calculatedDamage, Damage.Type.DEFAULT, unit, target);
+            
+            target.TakeDamage(dmgContext);
             if(target.HasDead()) continue;
             
-            target.TryAddStatus(new Burning(damage, 10, unit));  //for test
+            target.TryAddStatus(new Burning((int)burningDamage, 10, unit));  //for test
         }
     }
 
@@ -127,14 +141,18 @@ public class DynamiteAction : BaseAction
 
     private void Throw() 
     {
-        Dynamite dynamite = Instantiate(dynamitePrefab, unit.transform.position, Quaternion.identity).GetComponent<Dynamite>();
-        dynamite.SetDestination(_center, () => _waitingForExplosion = false);
+        DynamiteVisualEffect dynamiteVisualEffect = Instantiate(
+            dynamitePrefab, 
+            unit.transform.position, 
+            Quaternion.identity)
+            .GetComponent<DynamiteVisualEffect>();
+        
+        dynamiteVisualEffect.SetDestination(_center, () => _waitingForExplosion = false);
     }
 
     public override void TossAnimationEvent(string args)
     {
         if (args != AnimationEventNames.THROW) return;
-        
         {
             Throw();
         }

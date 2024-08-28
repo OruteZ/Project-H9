@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Events;
-using UnityEngine.iOS;
-
-public class Bleeding : StatusEffect
+﻿public class Bleeding : StatusEffect
 {
     public Bleeding(int damage, Unit creator) : base(creator)
     {

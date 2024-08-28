@@ -174,7 +174,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         if(GameManager.instance.CompareState(GameState.COMBAT))
             range = _player.stat.curActionPoint / _player.GetAction<MoveAction>().GetCost();
         else
-            range = _player.stat.sightRange;
+            range = int.MaxValue;
         
         int prevRouteLength = -1;
         while (true)

@@ -145,8 +145,8 @@ public class ItemUsingAction : BaseAction
             return;
         }
 
-        Dynamite dynamite = Instantiate(_dynamitePrefab, unit.transform.position, Quaternion.identity).GetComponent<Dynamite>();
-        dynamite.SetDestination(_targetPos, () => _waitingForExplosion = false);
+        DynamiteVisualEffect dynamiteVisualEffect = Instantiate(_dynamitePrefab, unit.transform.position, Quaternion.identity).GetComponent<DynamiteVisualEffect>();
+        dynamiteVisualEffect.SetDestination(_targetPos, () => _waitingForExplosion = false);
     }
 
     public override void TossAnimationEvent(string args)

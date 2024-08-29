@@ -15,6 +15,26 @@ public class SkillTreeEditorPositionCorrector : MonoBehaviour
 #if UNITY_EDITOR
         if (!Application.isPlaying && isSkillTreeEditing)
         {
+            //buttons
+            float minX = 99999;
+            float maxX = -99999;
+            float minY = 0;
+            for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
+            {
+                Transform obj = _skillUIButtons.transform.GetChild(i);
+                if (obj.localPosition.x < minX) minX = obj.localPosition.x;
+                if (obj.localPosition.x > maxX) maxX = obj.localPosition.x;
+                if (obj.localPosition.y < minY) minY = obj.localPosition.y;
+            }
+            float middle = (maxX + minX) / 2;
+            for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
+            {
+                Transform obj = _skillUIButtons.transform.GetChild(i);
+                obj.localPosition += new Vector3(-middle, 0, 0);
+            }
+
+
+
             //Arrows
             List<GameObject> destroyArrows = new();
             for (int i = 0; i < _skillUIArrows.transform.childCount; i++)
@@ -63,30 +83,9 @@ public class SkillTreeEditorPositionCorrector : MonoBehaviour
                 DestroyImmediate(destroyArrows[i]);
             }
 
-            //buttons
-            float minX = 99999;
-            float maxX = -99999;
-            float minY = 0;
-            for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
-            {
-                Transform obj = _skillUIButtons.transform.GetChild(i);
-                if (obj.localPosition.x < minX) minX = obj.localPosition.x;
-                if (obj.localPosition.x > maxX) maxX = obj.localPosition.x;
-                if (obj.localPosition.y < minY) minY = obj.localPosition.y;
-            }
-            float dist = maxX - minX;
-            float movement = 0;
-            if (Mathf.Abs(maxX) > Mathf.Abs(minX)) movement = -(Mathf.Abs(maxX) - Mathf.Abs(minX)) / 2;
-            if (Mathf.Abs(maxX) < Mathf.Abs(minX)) movement = +(Mathf.Abs(minX) - Mathf.Abs(maxX)) / 2;
-            for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
-            {
-                Transform obj = _skillUIButtons.transform.GetChild(i);
-                obj.localPosition += new Vector3(movement, 0, 0);
-            }
 
             Vector2 size = _skillUIArrows.GetComponent<RectTransform>().sizeDelta;
             size.y = -minY + 100;
-
             _skillUIArrows.GetComponent<RectTransform>().sizeDelta = size;
             _skillUIButtons.GetComponent<RectTransform>().sizeDelta = size;
             GetComponent<RectTransform>().sizeDelta = size;

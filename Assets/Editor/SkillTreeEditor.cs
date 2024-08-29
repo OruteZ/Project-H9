@@ -15,8 +15,8 @@ public class SkillTreeEditor : EditorWindow
     private Transform skillArrows;
 
     private readonly Vector2 buttonInitPosition = new Vector2(737.5f, -100);
-    private const float X_GAP = 150;
-    private const float Y_GAP = 200;
+    private const float X_GAP = 100;
+    private const float Y_GAP = 150;
 
     [MenuItem("Tools/SkillTreeEditor")]
     public static void Open()

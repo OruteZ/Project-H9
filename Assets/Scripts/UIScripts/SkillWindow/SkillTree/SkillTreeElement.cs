@@ -19,11 +19,13 @@ public class SkillTreeElement : UIElement
 
     public bool isRootNode = false;
     public float effectSpeed { get; private set; }
+    private void Awake()
+    {
+    }
     private void Start()
     {
         ClearPostArrowList();
         effectSpeed = 10;
-        StartCoroutine(ChangeEffectColor((int)LearnStatus.NotLearnable, 0));
 
         _skillIcon = _SkillImage.GetComponent<SkillIcon>();
         _skillIcon.SetSkillIndex(skillIndex);
@@ -47,6 +49,7 @@ public class SkillTreeElement : UIElement
     {
         StartCoroutine(ChangeEffectColor(state, 1 / effectSpeed));
     }
+
     IEnumerator ChangeEffectColor(LearnStatus state, float speed)
     {
         if (state != LearnStatus.NotLearnable)

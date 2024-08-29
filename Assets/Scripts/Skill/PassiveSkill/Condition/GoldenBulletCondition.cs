@@ -1,39 +1,42 @@
-using PassiveSkill;
 using UnityEngine;
 
-public class ShootAGoldenBulletCondition : BaseCondition
+namespace PassiveSkill
 {
-    public ShootAGoldenBulletCondition(float amt) : base(amt)
-    { }
-    public override ConditionType GetConditionType() => ConditionType.ShootAGoldenBullet;
-
-    protected override void ConditionSetup()
+    public class ShootAGoldenBulletCondition : BaseCondition
     {
-        unit.onActionStart.AddListener(CheckBullet);
-        unit.onFinishAction.AddListener((a) => { passive.NotFullfillCondition(this); });
+        public ShootAGoldenBulletCondition(float amt) : base(amt)
+        { }
+        public override ConditionType GetConditionType() => ConditionType.ShootAGoldenBullet;
+
+        protected override void ConditionSetup()
+        {
+            unit.onActionStart.AddListener(CheckBullet);
+            unit.onFinishAction.AddListener((a) => { passive.NotFullfillCondition(this); });
+        }
+
+        private void CheckBullet(IUnitAction action, Vector3Int pos)
+        {
+            if (unit.weapon.GetWeaponType() != ItemType.Revolver || action is not AttackAction || !unit.weapon.magazine.GetNextBullet().isGoldenBullet) return;
+            passive.FullfillCondition(this);
+        }
     }
 
-    private void CheckBullet(IUnitAction action, Vector3Int pos)
+    public class TargetIsHitedByGoldenBulletThisTurn : BaseCondition
     {
-        if (unit.weapon.GetWeaponType() != ItemType.Revolver || action is not AttackAction || !unit.weapon.magazine.GetNextBullet().isGoldenBullet) return;
-        passive.FullfillCondition(this);
-    }
-}
+        public TargetIsHitedByGoldenBulletThisTurn(float amt) : base(amt)
+        { }
+        public override ConditionType GetConditionType() => ConditionType.TargetIsHitedByGoldenBulletThisTurn;
 
-public class TargetIsHitByGoldenBulletInThisTurn : BaseCondition
-{
-    public TargetIsHitByGoldenBulletInThisTurn(float amt) : base(amt)
-    { }
-    public override ConditionType GetConditionType() => ConditionType.TargetIsHitByGoldenBulletInThisTurn;
+        protected override void ConditionSetup()
+        {
+            unit.onStartShoot.AddListener(CheckTarget);
+            unit.onFinishAction.AddListener((a) => { passive.NotFullfillCondition(this); });
+        }
 
-    protected override void ConditionSetup()
-    {
-        unit.onStartShoot.AddListener(CheckTarget);
-        unit.onFinishAction.AddListener((a) => { passive.NotFullfillCondition(this); });
-    }
-
-    private void CheckTarget(IDamageable dmgAble)
-    {
-        passive.FullfillCondition(this);
+        private void CheckTarget(IDamageable dmgable)
+        {
+            if (dmgable is Unit unit && unit.isHitedByGoldenBulletThisTurn) passive.FullfillCondition(this);
+            else passive.NotFullfillCondition(this);
+        }
     }
 }

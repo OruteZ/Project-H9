@@ -1,54 +1,57 @@
-using PassiveSkill;
+using UnityEngine;
 
-public class CriticalShotCondition : BaseCondition
+namespace PassiveSkill
 {
-    public override ConditionType GetConditionType() => ConditionType.Critical;
-
-    protected override void ConditionSetup()
+    public class CriticalShotCondition : BaseCondition
     {
-        unit.onStartShoot.AddListener(SetTarget);
-        unit.onFinishShoot.AddListener(TargetOff);
-    }
+        public override ConditionType GetConditionType() => ConditionType.Critical;
 
-    public CriticalShotCondition(float amt) : base(amt)
-    { }
-
-    private void SetTarget(IDamageable target)
-    {
-        passive.NotFullfillCondition(this);
-    }
-
-    private void TargetOff(Damage context )
-    {
-        if (context.Contains(Damage.Type.CRITICAL))
+        protected override void ConditionSetup()
         {
-            passive.FullfillCondition(this);
+            unit.onStartShoot.AddListener(SetTarget);
+            unit.onFinishShoot.AddListener(TargetOff);
+        }
+
+        public CriticalShotCondition(float amt) : base(amt)
+        { }
+
+        private void SetTarget(IDamageable target)
+        {
+            passive.NotFullfillCondition(this);
+        }
+
+        private void TargetOff(Damage context)
+        {
+            if (context.Contains(Damage.Type.CRITICAL))
+            {
+                passive.FullfillCondition(this);
+            }
         }
     }
-}
-public class NonCriticalShotCondition : BaseCondition
-{
-    public override ConditionType GetConditionType() => ConditionType.NonCritical;
-
-    protected override void ConditionSetup()
+    public class NonCriticalShotCondition : BaseCondition
     {
-        unit.onStartShoot.AddListener(SetTarget);
-        unit.onFinishShoot.AddListener(TargetOff);
-    }
+        public override ConditionType GetConditionType() => ConditionType.NonCritical;
 
-    public NonCriticalShotCondition(float amt) : base(amt)
-    { }
-
-    private void SetTarget(IDamageable target)
-    {
-        passive.NotFullfillCondition(this);
-    }
-
-    private void TargetOff(Damage context )
-    {
-        if (context.Contains(Damage.Type.CRITICAL) is false)
+        protected override void ConditionSetup()
         {
-            passive.FullfillCondition(this);
+            unit.onStartShoot.AddListener(SetTarget);
+            unit.onFinishShoot.AddListener(TargetOff);
+        }
+
+        public NonCriticalShotCondition(float amt) : base(amt)
+        { }
+
+        private void SetTarget(IDamageable target)
+        {
+            passive.NotFullfillCondition(this);
+        }
+
+        private void TargetOff(Damage context)
+        {
+            if (context.Contains(Damage.Type.CRITICAL) is false)
+            {
+                passive.FullfillCondition(this);
+            }
         }
     }
 }

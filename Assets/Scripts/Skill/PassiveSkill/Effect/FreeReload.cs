@@ -18,11 +18,11 @@ public class FreeReload : BaseEffect
 
     public override void OnConditionEnable()
     {
-        unit.freeReloadTrigger = true;
+        unit.tacticalReloadChance += GetAmount();
     }
 
     public override void OnConditionDisable()
     {
-        unit.freeReloadTrigger = false;
+        unit.tacticalReloadChance -= GetAmount();
     }
 }

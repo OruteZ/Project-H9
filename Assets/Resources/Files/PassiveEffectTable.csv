@@ -1,18 +1,27 @@
 ﻿index,effect,주석
 0,null,
-1,condition을 만족할 때 stat N 증가,
-2,LightFootStep,
-3,InfinityShootPoint,한 턴에 사격 할 수 있는 횟수 무제한
-4,TwoShootPoint,한 턴에 사격 할 수 있는 횟수 2회
-5,FreeReload,다음 재장전이 행동력을 사용하지 않음
-6,GoldenBullet,황금 총알
-7,TwoGoldenBullet,황금 총알 2개
-8,3턴동안 stat N 증가,
-9,SweetSpot,스윗 스팟 (이미 만들어 놓은거 일로 옮기고 효과 바꿈)
-10,이번 액션 동안 stat N 증가,
-11,1턴동안 stat N 증가,
+1,IncreaseStatByCondition,조건을 만족하는 동안 stat N 증가
+2,IncreaseStatDuringAction,이번 액션 동안 stat N 증가
+3,IncreaseStatFor1Turns,1턴동안 stat N 증가
+4,IncreaseStatFor2Turns,2턴동안 stat N 증가
+5,IncreaseStatFor3Turns,3턴동안 stat N 증가
+6,IncreaseStatFor4Turns,4턴동안 stat N 증가
+7,IncreaseStatFor5Turns,5턴동안 stat N 증가
+8,,
+9,,
+10,DoubleShootPoint,한 턴에 사격 할 수 있는 횟수 2회
+11,InfinityShootPoint,한 턴에 사격 할 수 있는 횟수 무제한
 12,,
 13,,
 14,,
-15,,
-16,,
+15,LightFootStep,사격 후 이동 가능
+16,FreeReload,일정 확률로 다음 재장전이 행동력을 사용하지 않음
+17,GoldenBullet,일정 확률로 황금 총알 추가
+18,SweetSpot,일정 거리에 있을 시 치확 30% 증가
+19,DemolitionDynamite,엄폐물에 가하는 피해 N% 증가
+20,,
+21,,
+22,,
+23,,
+24,,
+25,,

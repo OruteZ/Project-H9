@@ -108,6 +108,9 @@ public class FanningAction : BaseAction, IShootingAction
         unit.animator.SetTrigger(FANNING_FINISH);
         yield return new WaitForSeconds(FINISH_TIME);
         unit.TryAddStatus(new Recoil(unit));
+
+        System.Random rand = new System.Random();
+        unit.freeReloadTrigger = (rand.Next(0, 100) < unit.tacticalReloadChance);
     }
 
     public override void TossAnimationEvent(string eventString)

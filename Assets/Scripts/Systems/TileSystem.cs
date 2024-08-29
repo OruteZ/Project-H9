@@ -275,7 +275,31 @@ public class TileSystem : MonoBehaviour
     {
         return _tileObjects.FindAll(obj => obj.hexPosition == position);
     }
-    
+    public List<TileObject> GetTileObjectListInRange(IEnumerable<Vector3Int> positions)
+    {
+        var result = new List<TileObject>();
+        if (_tileObjects is null)
+        {
+            return result;
+        }
+
+        foreach (var pos in positions)
+        {
+            var tObjects = GetTileObject(pos);
+            if (tObjects is not null)
+            {
+                result.AddRange(tObjects);
+            }
+        }
+
+        return result;
+    }
+    public List<TileObject> GetTileObjectListInRange(Vector3Int start, int range)
+    {
+        var positions = Hex.GetCircleGridList(range, start);
+        return GetTileObjectListInRange(positions);
+    }
+
     /// <summary>
     /// 존재하는 모든 TileObjects를 반환합니다.
     /// </summary>

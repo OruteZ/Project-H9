@@ -1,20 +1,10 @@
-﻿
-using System;
-using UnityEngine;
-using PassiveSkill;
+﻿using PassiveSkill;
 
-public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
+public class IncreaseStatByCondition : BaseEffect, IDisplayableEffect
 {
-    public StatUpDependedOnCondition(StatType statType, int amount) : base(statType, amount)
-    { }
-
-    protected override void EffectSetup()
-    { }
-
-    public override PassiveEffectType GetEffectType()
-    {
-        return PassiveEffectType.StatUpDependedOnCondition;
-    }
+    public IncreaseStatByCondition(StatType statType, int amount) : base(statType, amount) { }
+    public override PassiveEffectType GetEffectType() => PassiveEffectType.IncreaseStatByCondition;
+    protected override void EffectSetup() { }
 
     public override void OnConditionEnable()
     {
@@ -22,7 +12,6 @@ public class StatUpDependedOnCondition : BaseEffect, IDisplayableEffect
         enable = true;
         unit.stat.Add(GetStatType(), GetAmount());
     }
-
     public override void OnConditionDisable()
     {
         if (enable is false) return;

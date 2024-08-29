@@ -15,7 +15,7 @@ public class DynamiteAction : BaseAction
     {
         base.SetUp(unit);
         
-        dynamitePrefab = Resources.Load<GameObject>("Prefab/" + nameof(DynamiteVisualEffect));
+        dynamitePrefab = Resources.Load<GameObject>("Prefab/DynamiteEffect");
     }
 
     public override ActionType GetActionType()
@@ -27,6 +27,7 @@ public class DynamiteAction : BaseAction
     {
         _center = targetPos;
         _targets = FieldSystem.unitSystem.GetUnitListInRange(targetPos, radius);
+        _tileObjects = FieldSystem.tileSystem.GetTileObjectListInRange(targetPos, radius);
     }
 
     public override bool CanExecuteImmediately()
@@ -114,6 +115,7 @@ public class DynamiteAction : BaseAction
 
     private Vector3Int _center;
     private List<Unit> _targets;
+    private List<TileObject> _tileObjects;
     private bool _waitingForExplosion;
 
     private void Explode()
@@ -129,6 +131,18 @@ public class DynamiteAction : BaseAction
             if(target.HasDead()) continue;
             
             target.TryAddStatus(new Burning((int)burningDamage, 10, unit));  //for test
+        }
+        
+        foreach (var tObject in _tileObjects)
+        {
+            if (tObject is not IDamageable damageableObject) continue;
+            if (damageableObject is CoverableObj)
+            {
+                damage = Mathf.RoundToInt(damage * unit.coverObjDmgMultiplier);
+            }
+            Damage dmgCtxt = new Damage(damage, damage, Damage.Type.DEFAULT, unit, damageableObject);
+
+            damageableObject.TakeDamage(dmgCtxt);
         }
     }
 

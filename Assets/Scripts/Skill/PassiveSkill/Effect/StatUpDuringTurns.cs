@@ -1,14 +1,14 @@
 using PassiveSkill;
-using UnityEngine;
 
-public class StatUpDuringATurn : BaseEffect, IDisplayableEffect
+public class IncreaseStatForOneTurn : BaseEffect, IDisplayableEffect
 {
-    int _duration;
-    public StatUpDuringATurn(StatType statType, int amount) : base(statType, amount)
+    protected int _duration;
+    public IncreaseStatForOneTurn(StatType statType, int amount) : base(statType, amount) { }
+    public override PassiveEffectType GetEffectType() => PassiveEffectType.IncreaseStatForOneTurn;
+    protected override void EffectSetup()
     {
+        unit.onTurnEnd.AddListener(OnTurnFinished);
     }
-
-    public override PassiveEffectType GetEffectType() => PassiveEffectType.StatUpDuringThreeTurns;
 
     public override void OnConditionEnable()
     {
@@ -16,10 +16,8 @@ public class StatUpDuringATurn : BaseEffect, IDisplayableEffect
         enable = true;
         _duration = 1;
     }
+    public override void OnConditionDisable() { }
 
-    public override void OnConditionDisable()
-    {
-    }
     public void OnTurnFinished(Unit u)
     {
         if (!enable || u != unit) return;
@@ -32,12 +30,7 @@ public class StatUpDuringATurn : BaseEffect, IDisplayableEffect
             unit.RemoveDisplayableEffect(this);
         }
     }
-
     #region IDISPLAYABLE_EFFECT
-    protected override void EffectSetup()
-    {
-        unit.onTurnEnd.AddListener(OnTurnFinished);
-    }
     public int GetIndex() => passive.index;
     public int GetStack() => GetAmount();
     public int GetDuration() => _duration;
@@ -50,14 +43,22 @@ public class StatUpDuringATurn : BaseEffect, IDisplayableEffect
     }
     #endregion
 }
-public class StatUpDuringThreeTurns : BaseEffect, IDisplayableEffect
+public class IncreaseStatForTwoTurns : IncreaseStatForOneTurn
 {
-    int _duration;
-    public StatUpDuringThreeTurns(StatType statType, int amount) : base(statType, amount)
-    {
-    }
+    public IncreaseStatForTwoTurns(StatType statType, int amount) : base(statType, amount) { }
+    public override PassiveEffectType GetEffectType() => PassiveEffectType.IncreaseStatForTwoTurns;
 
-    public override PassiveEffectType GetEffectType() => PassiveEffectType.StatUpDuringThreeTurns;
+    public override void OnConditionEnable()
+    {
+        if (!enable) unit.stat.Add(GetStatType(), GetAmount());
+        enable = true;
+        _duration = 2;
+    }
+}
+public class IncreaseStatForThreeTurns : IncreaseStatForOneTurn
+{
+    public IncreaseStatForThreeTurns(StatType statType, int amount) : base(statType, amount) { }
+    public override PassiveEffectType GetEffectType() => PassiveEffectType.IncreaseStatForThreeTurns;
 
     public override void OnConditionEnable()
     {
@@ -65,37 +66,28 @@ public class StatUpDuringThreeTurns : BaseEffect, IDisplayableEffect
         enable = true;
         _duration = 3;
     }
+}
+public class IncreaseStatForFourTurns : IncreaseStatForOneTurn
+{
+    public IncreaseStatForFourTurns(StatType statType, int amount) : base(statType, amount) { }
+    public override PassiveEffectType GetEffectType() => PassiveEffectType.IncreaseStatForFourTurns;
 
-    public override void OnConditionDisable()
+    public override void OnConditionEnable()
     {
+        if (!enable) unit.stat.Add(GetStatType(), GetAmount());
+        enable = true;
+        _duration = 4;
     }
-    public void OnTurnFinished(Unit u)
-    {
-        if (!enable || u != unit) return;
-        //calcuate duration
-        _duration -= 1;
-        if (_duration <= 0)
-        {
-            enable = false;
-            unit.stat.Subtract(GetStatType(), GetAmount());
-            unit.RemoveDisplayableEffect(this);
-        }
-    }
+}
+public class IncreaseStatForFiveTurns : IncreaseStatForOneTurn
+{
+    public IncreaseStatForFiveTurns(StatType statType, int amount) : base(statType, amount) { }
+    public override PassiveEffectType GetEffectType() => PassiveEffectType.IncreaseStatForFiveTurns;
 
-    #region IDISPLAYABLE_EFFECT
-    protected override void EffectSetup()
+    public override void OnConditionEnable()
     {
-        unit.onTurnEnd.AddListener(OnTurnFinished);
+        if (!enable) unit.stat.Add(GetStatType(), GetAmount());
+        enable = true;
+        _duration = 5;
     }
-    public int GetIndex() => passive.index;
-    public int GetStack() => GetAmount();
-    public int GetDuration() => _duration;
-
-    public bool CanDisplay()
-    {
-        if (passive is null) return false;
-        if (passive.GetConditionType()[0] is ConditionType.Null) return false;
-        return enable;
-    }
-    #endregion
 }

@@ -45,7 +45,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 200
+    rewardExp: 10
     rewardItem: 5902000032000000
   - index: 2
     nameIndex: 1001
@@ -62,7 +62,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 200
+    rewardExp: 10
     rewardItem: 5902000032000000bd02000019000000
   - index: 3
     nameIndex: 1001
@@ -79,7 +79,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 200
+    rewardExp: 20
     rewardItem: 5902000032000000bd02000032000000
   - index: 4
     nameIndex: 1002
@@ -96,7 +96,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 25
     rewardItem: 300100003200000059020000320000008503000014000000
   - index: 5
     nameIndex: 1002
@@ -113,7 +113,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 25
     rewardItem: 30010000320000005902000032000000860300000a000000870300000a000000
   - index: 6
     nameIndex: 1004
@@ -130,7 +130,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 25
     rewardItem: 300100003200000059020000320000008603000014000000
   - index: 7
     nameIndex: 1003
@@ -147,7 +147,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 600
+    rewardExp: 25
     rewardItem: 310100003200000059020000320000008703000014000000
   - index: 101
     nameIndex: 101
@@ -164,7 +164,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 600
+    rewardExp: 25
     rewardItem: 30010000640000005b020000640000008703000032000000
   - index: 102
     nameIndex: 102
@@ -181,7 +181,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 25
     rewardItem: 65000000640000002e010000640000005a020000640000008603000032000000
   - index: 103
     nameIndex: 103
@@ -198,7 +198,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 600
+    rewardExp: 50
     rewardItem: 310100006400000087030000320000008503000032000000
   - index: 104
     nameIndex: 6
@@ -215,7 +215,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 300
+    rewardExp: 30
     rewardItem: 
   - index: 105
     nameIndex: 7
@@ -232,7 +232,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 300
+    rewardExp: 30
     rewardItem: 
   - index: 106
     nameIndex: 9
@@ -249,7 +249,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 300
+    rewardExp: 30
     rewardItem: 
   - index: 15
     nameIndex: 15
@@ -266,7 +266,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 200
+    rewardExp: 10
     rewardItem: 
   - index: 16
     nameIndex: 16
@@ -283,7 +283,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 300
+    rewardExp: 20
     rewardItem: 
   - index: 17
     nameIndex: 17
@@ -300,7 +300,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 30
     rewardItem: 
   - index: 18
     nameIndex: 18
@@ -317,7 +317,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 400
+    rewardExp: 20
     rewardItem: 
   - index: 19
     nameIndex: 19
@@ -334,7 +334,7 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 500
+    rewardExp: 30
     rewardItem: 
   - index: 20
     nameIndex: 20
@@ -351,5 +351,56 @@ MonoBehaviour:
     btIndex: 1
     skillIndex: 
     rewardGold: 1
-    rewardExp: 600
+    rewardExp: 40
+    rewardItem: 
+  - index: 8
+    nameIndex: 1001
+    modelName: Character_Bandit_Male_01
+    model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
+    stat:
+      OnChangedStat:
+        m_PersistentCalls:
+          m_Calls: []
+      original: 000000001e0000001e0000003c000000040000003c0000000400000000000000000000000a000000000000000000000064000000000000000000000064000000000000000000000064000000
+      _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+    weaponIndex: 304
+    btIndex: 1
+    skillIndex: 
+    rewardGold: 1
+    rewardExp: 50
+    rewardItem: 
+  - index: 9
+    nameIndex: 1002
+    modelName: Character_Gunman_01
+    model: {fileID: 1964704263138806, guid: e3d9a5b7a19f9684d9b63308cdfa95bd, type: 3}
+    stat:
+      OnChangedStat:
+        m_PersistentCalls:
+          m_Calls: []
+      original: 0000000023000000230000004600000004000000460000000400000000000000000000000a000000000000000000000064000000000000000000000064000000000000000000000064000000
+      _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+    weaponIndex: 304
+    btIndex: 1
+    skillIndex: 
+    rewardGold: 1
+    rewardExp: 60
+    rewardItem: 
+  - index: 107
+    nameIndex: 107
+    modelName: Character_NativeAmericanWarrior_Male_01
+    model: {fileID: 1447239715599880, guid: 697a476db0002c54c90c3d2c8e8718ba, type: 3}
+    stat:
+      OnChangedStat:
+        m_PersistentCalls:
+          m_Calls: []
+      original: 0000000032000000320000003c000000040000003c0000000400000000000000000000000a000000000000000000000064000000000000000000000064000000000000000000000064000000
+      _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+    weaponIndex: 0
+    btIndex: 1
+    skillIndex: 
+    rewardGold: 1
+    rewardExp: 100
     rewardItem: 

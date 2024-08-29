@@ -24,8 +24,8 @@
 
         public StatType GetStatType() => _statType;
         public int GetAmount() => _amount;
-        protected abstract void EffectSetup();
         public abstract PassiveEffectType GetEffectType();
+        protected abstract void EffectSetup();
         public bool IsEnable()
         {
             return enable;

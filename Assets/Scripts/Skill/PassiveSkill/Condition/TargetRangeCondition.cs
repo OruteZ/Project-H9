@@ -82,32 +82,4 @@ namespace PassiveSkill
             passive.NotFullfillCondition(this);
         }
     }
-    public class TargetOnSweetSpotCondition : BaseCondition
-    {
-        public TargetOnSweetSpotCondition(float amt) : base(amt)
-        { }
-
-        public override ConditionType GetConditionType() => ConditionType.TargetOnSweetSpot;
-
-        protected override void ConditionSetup()
-        {
-            unit.onStartShoot.AddListener(SetTarget);
-            unit.onFinishShoot.AddListener(TargetOff);
-            unit.onKill.AddListener(Debug.LogError);
-        }
-
-        private void SetTarget(IDamageable target)
-        {
-            var dist = Hex.Distance(unit.hexPosition, target.GetHex());
-            if (unit.weapon is not Repeater repeater) return;
-
-            if (dist == repeater.GetSweetSpot()) passive.FullfillCondition(this);
-            else passive.NotFullfillCondition(this);
-        }
-
-        private void TargetOff(Damage context)
-        {
-            passive.NotFullfillCondition(this);
-        }
-    }
 }

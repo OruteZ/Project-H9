@@ -47,7 +47,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     private List<Passive> _passiveList;
     public List<int> passiveIndexList;
-    
+
+    #region Skill_Effects
     private readonly List<int> _shootCntList = new(){1};
     public int maximumShootCountInTurn
     {
@@ -65,15 +66,21 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             _shootCntList.Add(value);
         }
     }
-    public bool infiniteActionPointTrigger;
-    public bool lightFootTrigger;
-    public bool freeReloadTrigger;
+    public bool infiniteActionPointTrigger = false;
+    public bool lightFootTrigger = false;
 
-    public int goldenBulletCount;
+    public float tacticalReloadChance = 0;
+    public bool freeReloadTrigger = false;
+
+    public float goldenBulletChance = 0;
+    public int goldenBulletCount = 0;
     public BulletData goldenBulletEffect = new();
+    public bool isHitedByGoldenBulletThisTurn = false;
 
     public CoverType coverType;
     public CoverableObj coverableObj;
+    public float coverObjDmgMultiplier = 1;
+    #endregion
 
     public int currentRound;
 
@@ -182,6 +189,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         animator.SetTrigger("Idle");
 
         FieldSystem.turnSystem.EndTurn();
+        isHitedByGoldenBulletThisTurn = false;
     }
 
     private Unit _killer;
@@ -666,6 +674,12 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public void SetGoldBullet()
     {
+        float chance = goldenBulletChance;
+        goldenBulletCount = Mathf.FloorToInt(chance / 100.0f);
+        chance -= goldenBulletCount * 100;
+        System.Random rand = new System.Random();
+        if (rand.Next(0, 100) < chance) goldenBulletCount++;
+
         if (weapon.GetWeaponType() == ItemType.Revolver && goldenBulletCount != 0)
         {
             weapon.magazine.ClearEffectAll();

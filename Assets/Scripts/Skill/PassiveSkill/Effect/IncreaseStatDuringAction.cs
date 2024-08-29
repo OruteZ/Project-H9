@@ -1,22 +1,24 @@
 using PassiveSkill;
 
-public class StatUpWhileAction : BaseEffect, IDisplayableEffect
+public class IncreaseStatDuringAction : BaseEffect, IDisplayableEffect
 {
-    public StatUpWhileAction(StatType statType, int amount) : base(statType, amount)
+    public IncreaseStatDuringAction(StatType statType, int amount) : base(statType, amount) {}
+    public override PassiveEffectType GetEffectType() => PassiveEffectType.IncreaseStatDuringAction;
+    protected override void EffectSetup()
     {
+        unit.onFinishAction.AddListener(OnTurnFinished);
     }
-
-    public override PassiveEffectType GetEffectType() => PassiveEffectType.StatUpWhileAction;
 
     public override void OnConditionEnable()
     {
-        if (!enable) unit.stat.Add(GetStatType(), GetAmount());
+        if (enable) return; 
+        unit.stat.Add(GetStatType(), GetAmount());
         enable = true;
     }
-
     public override void OnConditionDisable()
     {
     }
+
     public void OnTurnFinished(IUnitAction action)
     {
         if (!enable) return;
@@ -26,10 +28,6 @@ public class StatUpWhileAction : BaseEffect, IDisplayableEffect
     }
 
     #region IDISPLAYABLE_EFFECT
-    protected override void EffectSetup()
-    {
-        unit.onFinishAction.AddListener(OnTurnFinished);
-    }
     public int GetIndex() => passive.index;
     public int GetStack() => GetAmount();
     public int GetDuration() => 0;

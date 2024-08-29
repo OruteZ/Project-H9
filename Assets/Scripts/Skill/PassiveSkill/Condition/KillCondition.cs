@@ -1,64 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using PassiveSkill;
 
-public class KillCondition : BaseCondition
+namespace PassiveSkill
 {
-    public KillCondition(float amt) : base(amt)
-    { }
-
-    public override ConditionType GetConditionType() => ConditionType.KillEnemy;
-
-    protected override void ConditionSetup()
+    public class KillCondition : BaseCondition
     {
-        unit.onKill.AddListener(OnKill);
-    }
+        public KillCondition(float amt) : base(amt)
+        { }
 
-    protected void OnKill(Unit target)
-    {
-        passive.FullfillCondition(this);
-    }
-}
+        public override ConditionType GetConditionType() => ConditionType.KillEnemy;
 
-public class KillOnSweetSpotCondition : BaseCondition
-{
-    public KillOnSweetSpotCondition(float amt) : base(amt)
-    { }
-
-    public override ConditionType GetConditionType() => ConditionType.KillEnemyOnSweetSpot;
-
-    IDamageable _killTarget;
-    protected override void ConditionSetup()
-    {
-        _killTarget = null;
-        unit.onStartShoot.AddListener(SetTarget);
-        unit.onKill.AddListener(OnKill);
-    }
-
-    private void SetTarget(IDamageable target)
-    {
-        var dist = Hex.Distance(unit.hexPosition, target.GetHex());
-        if (unit.weapon is not Repeater repeater) return;
-
-        if (dist == repeater.GetSweetSpot()) 
+        protected override void ConditionSetup()
         {
-            _killTarget = target;
+            unit.onKill.AddListener(OnKill);
         }
-        else
-        {
-            _killTarget = null;
-        }
-    }
-    protected void OnKill(Unit target)
-    {
-        if (target == (Unit)_killTarget)
+
+        protected void OnKill(Unit target)
         {
             passive.FullfillCondition(this);
         }
-        else
+    }
+    public class FailToKillCondition : BaseCondition
+    {
+        IDamageable _target;
+        public FailToKillCondition(float amt) : base(amt)
+        { }
+
+        public override ConditionType GetConditionType() => ConditionType.FailToKillEnemy;
+
+        protected override void ConditionSetup()
         {
+            unit.onStartShoot.AddListener(SetTarget);
+            unit.onFinishShoot.AddListener(CheckCondition);
+        }
+
+        private void SetTarget(IDamageable target)
+        {
+            if (target.GetCurrentHp() < 0) return;
             passive.NotFullfillCondition(this);
+            _target = target;
+        }
+
+        private void CheckCondition(Damage context)
+        {
+            if (_target == null || _target.GetCurrentHp() < 0) passive.FullfillCondition(this);
+            else passive.NotFullfillCondition(this);
         }
     }
 }
+
+

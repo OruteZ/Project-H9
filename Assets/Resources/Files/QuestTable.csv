@@ -1,6 +1,6 @@
 ﻿index,questType,questName,questTooltip,startScript,endScript,condition,conditionArguments,expireTurn,goalType,goalArguments,pinTile,createLink,moneyReward,expReward,itemReward,skillReward,questSheriff,주석
-1,1,1,17,1,17,GAME_START,0,-1,KILL_LINK,"1,1","29,14,-43",,1,25,0,22001,,
-2,1,19,18,0,18,QUEST_END,1,-1,KILL_LINK,"2,1","26,12,-38",,1,25,0,0,,
+1,1,1,17,1,19,GAME_START,0,-1,KILL_LINK,"1,1","29,14,-43",,1,25,0,22001,,
+2,1,19,18,0,20,QUEST_END,1,-1,KILL_LINK,"2,1","26,12,-38",,1,25,0,0,,
 3,1,20,2,0,2,QUEST_END,2,-1,MOVE_TO,"24,9,-33","24,9,-33",,1,25,302,0,,린스데일 보안관 만나기
 4,1,7,8,7,8,QUEST_END,3,-1,KILL_LINK,"14,1","21,3,-24","14,21,3,-24",1,25,304,0,,인근 목장에서 보호세를 뜯는 코스티건 갱원들을 저지하기
 5,1,21,22,0,0,QUEST_END,4,-1,MOVE_TO,"24,9,-33","24,9,-33",,1,25,403,31005,,보안관 사무실로 돌아가기

@@ -402,8 +402,9 @@ MonoBehaviour:
   unitParent: {fileID: 138153909}
   playerPrefab: {fileID: 6124971653560633283, guid: cc1fdefa695e8d543ac4d65fe4794e0b,
     type: 3}
-  enemyPrefab: {fileID: 8432919960963151837, guid: 0d24151a5a76fd14a8e8707030ea71cf,
-    type: 3}
+  enemyPrefabs:
+  - {fileID: 8432919960963151837, guid: 0d24151a5a76fd14a8e8707030ea71cf, type: 3}
+  - {fileID: 8432919960963151837, guid: 61d53fc8cd769374aa9253cb6845d5d6, type: 3}
 --- !u!114 &230774713
 MonoBehaviour:
   m_ObjectHideFlags: 0

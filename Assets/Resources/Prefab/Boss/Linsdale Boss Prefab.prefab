@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4857559302490165608}
   - component: {fileID: 5998892576793103489}
   - component: {fileID: -820386173975125870}
+  - component: {fileID: 5789281334216270802}
   - component: {fileID: 8432919960963151392}
   - component: {fileID: 8432919960963151395}
   - component: {fileID: 8432919960963151402}
@@ -145,9 +146,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 0
   ammoCost: 0
-  range: 0
-  radius: 0
-  damage: 0
+  range: 5
+  radius: 1
+  damage: 10
   dynamiteCount: 3
   durationTurn: 3
   dynamitePrefab: {fileID: 7756329116870450271, guid: 1e7a6c6d50ba6d24c9faf1a5bc2c603e,
@@ -166,13 +167,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 0
   ammoCost: 0
-  range: 0
-  radius: 0
-  damage: 0
-  fallOff: 0
+  range: 5
+  radius: 1
+  damage: 5
+  fallOff: 1
   burningDamage: 0
   dynamitePrefab: {fileID: 7756329116870450271, guid: b882947213b1ed2479113dd0371871fa,
     type: 3}
+--- !u!114 &5789281334216270802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581996cb78fd40e3af8c89f890658011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
+  executableHp: 10
+  explosionRange: 3
 --- !u!114 &8432919960963151392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,10 +230,14 @@ MonoBehaviour:
   passiveIndexList: 
   infiniteActionPointTrigger: 0
   lightFootTrigger: 0
+  tacticalReloadChance: 0
   freeReloadTrigger: 0
+  goldenBulletChance: 0
   goldenBulletCount: 0
+  isHitedByGoldenBulletThisTurn: 0
   coverType: 0
   coverableObj: {fileID: 0}
+  coverObjDmgMultiplier: 1
   currentRound: 0
   onTurnStart:
     m_PersistentCalls:

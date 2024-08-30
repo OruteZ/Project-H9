@@ -117,6 +117,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public virtual void SetUp(int index, string newName, UnitStat unitStat, Weapon newWeapon, GameObject unitModel,
         List<Passive> passiveList)
     {
+        _displayableEffects = new List<IDisplayableEffect>();
         _index = index;
         unitName = newName;
         stat = unitStat;
@@ -158,8 +159,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
         _seController = new UnitStatusEffectController(this);
 
-        _displayableEffects = new List<IDisplayableEffect>();
-
         goldenBulletEffect.criticalChance = 100;
     }
 
@@ -173,12 +172,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
         if (hp <= 0)
         {
-            EndTurn();
             DeadCall(this);
+            EndTurn();
         }
         else SelectAction(GetAction<IdleAction>());
-
-        
     }
 
     public void EndTurn()

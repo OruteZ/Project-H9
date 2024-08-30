@@ -168,9 +168,8 @@ public class MoveAction : BaseAction
             Vector3 moveDirection = (targetPos - transform.position).normalized;
             
             //회전
-            Vector3 rotateDirection = moveDirection;
             Vector3 forwardVec2 = Vector3.Slerp(transform.forward,
-                rotateDirection, GetRotationSpeed() * Time.deltaTime);
+                moveDirection, GetRotationSpeed() * Time.deltaTime);
 
             transform.forward = forwardVec2;
             transform.position += moveDirection * (GetMoveSpeed() * Time.deltaTime);

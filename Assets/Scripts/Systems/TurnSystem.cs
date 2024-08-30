@@ -14,8 +14,8 @@ public class TurnSystem : MonoBehaviour
     public Unit turnOwner;
 
     public int turnNumber => GetTurnNumber();
-    private int _combatTurnNumber;
-    private int _worldTurnNumber;
+    [SerializeField] private int _combatTurnNumber;
+    [SerializeField] private int _worldTurnNumber;
 
     public int GetTurnNumber()
     {

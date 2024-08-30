@@ -1,4 +1,4 @@
-public static class LazyLevelHelper 
+public static class LazyLevelHandler 
 {
     private static int EXP;
 

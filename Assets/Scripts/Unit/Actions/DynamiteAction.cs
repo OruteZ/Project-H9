@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 
 public class DynamiteAction : BaseAction
 {
+    [Header("Arguments")]
     [SerializeField] private float fallOff;
     [SerializeField] private float burningDamage;
     
@@ -130,7 +131,7 @@ public class DynamiteAction : BaseAction
             target.TakeDamage(dmgContext);
             if(target.HasDead()) continue;
             
-            target.TryAddStatus(new Burning((int)burningDamage, 10, unit));  //for test
+            if(burningDamage > 0) target.TryAddStatus(new Burning((int)burningDamage, 10, unit));  //for test
         }
         
         foreach (var tObject in _tileObjects)
@@ -153,11 +154,13 @@ public class DynamiteAction : BaseAction
     [SerializeField]
     private GameObject dynamitePrefab;
 
-    private void Throw() 
+    private void Throw()
     {
+        Vector3 spawnPosition = unit.hand.position;
+        
         DynamiteVisualEffect dynamiteVisualEffect = Instantiate(
             dynamitePrefab, 
-            unit.transform.position, 
+            spawnPosition, 
             Quaternion.identity)
             .GetComponent<DynamiteVisualEffect>();
         

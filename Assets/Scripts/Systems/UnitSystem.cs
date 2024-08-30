@@ -201,7 +201,7 @@ public class UnitSystem : MonoBehaviour
                     weaponDB.Clone(info.weaponIndex), 
                     info.model, 
                     new List<Passive>()
-                    );
+                );
                 // enemy.SetupAI();
 
                 string path = AI_PATH + "AI " + info.btIndex;
@@ -346,11 +346,11 @@ public class UnitSystem : MonoBehaviour
         RemoveUnit(unit);
         onAnyUnitDead.Invoke(unit);
         
-        if (IsCombatFinish(out var playerWin))
+        if (IsCombatFinish(out bool playerWin))
         {
             if (playerWin)
             {
-                LazyLevelHelper.ReservationExp(_totalExp);
+                LazyLevelHandler.ReservationExp(_totalExp);
                 rewardHelper.ApplyReward();
             }
             FieldSystem.onCombatFinish.Invoke(playerWin);

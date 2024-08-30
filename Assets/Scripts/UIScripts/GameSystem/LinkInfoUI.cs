@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -59,7 +60,8 @@ public class LinkInfoUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
         List<TileObject> tObjects = FieldSystem.tileSystem.GetTileObject(linkHexPos);
         if (player == null || tObjects == null) return;
-        Link link = (Link)tObjects.Find(obj => obj.gameObject.TryGetComponent(out Link l));
+        List<TileObject> links = tObjects.Where(obj => obj is Link).ToList();
+        Link link = (Link)links.Find(obj => obj.gameObject.TryGetComponent(out Link l));
         if (link == null || link == _currentLink) return;
 
         if (link.IsVisible())

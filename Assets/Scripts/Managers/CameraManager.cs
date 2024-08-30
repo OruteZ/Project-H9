@@ -22,7 +22,7 @@ public class CameraManager : Singleton<CameraManager>
             return;
         }
         
-        var uCam = Instantiate(unitCameraPrefab, _cameraParentTransform).GetComponent<UnitCamera>();
+        UnitCamera uCam = Instantiate(unitCameraPrefab, _cameraParentTransform).GetComponent<UnitCamera>();
         _unitCameras.Add(target, uCam);
         uCam.SetOwner(target);
     }

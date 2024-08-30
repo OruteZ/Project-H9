@@ -22,7 +22,10 @@ public class LightingManager : Singleton<LightingManager>
     {
         base.Awake();
         if (this == null) return;
-        if (instance != this) return;
+        if (instance != this)
+        {
+            Destroy(gameObject);
+        }
         
         FieldSystem.onStageAwake.AddListener(OnStageAwake);
         

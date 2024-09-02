@@ -21,7 +21,7 @@ MonoBehaviour:
     effectStat: 13000000
     effectAmount: 01000000
   - index: 11002
-    condition: 28000000
+    condition: 10000000
     conditionAmount:
     - 0
     effect: 01000000
@@ -38,14 +38,14 @@ MonoBehaviour:
     condition: 00000000
     conditionAmount:
     - 0
-    effect: 0f000000
+    effect: 02000000
     effectStat: 00000000
     effectAmount: 00000000
   - index: 11005
     condition: 00000000
     conditionAmount:
     - 0
-    effect: 0b000000
+    effect: 03000000
     effectStat: 00000000
     effectAmount: 00000000
   - index: 11006
@@ -87,41 +87,34 @@ MonoBehaviour:
     condition: 00000000
     conditionAmount:
     - 0
-    effect: 0a000000
+    effect: 04000000
     effectStat: 00000000
     effectAmount: 00000000
-  - index: 11012
-    condition: 00000000
-    conditionAmount:
-    - 0
-    effect: 13000000
-    effectStat: 00000000
-    effectAmount: 2c010000
   - index: 21001
-    condition: 0700000038000000
+    condition: 0700000011000000
     conditionAmount:
     - 6
     - 0
-    effect: 02000000
+    effect: 0a000000
     effectStat: 09000000
     effectAmount: 14000000
   - index: 21002
-    condition: 0a00000038000000
+    condition: 0a00000011000000
     conditionAmount:
     - 1
     - 0
-    effect: 02000000
+    effect: 01000000
     effectStat: 15000000
     effectAmount: 64000000
   - index: 21003
-    condition: 00000000
+    condition: 12000000
     conditionAmount:
-    - 0
-    effect: 10000000
+    - 10
+    effect: 05000000
     effectStat: 00000000
     effectAmount: 0a000000
   - index: 21004
-    condition: 15000000
+    condition: 13000000
     conditionAmount:
     - 0
     effect: 0b000000
@@ -131,93 +124,64 @@ MonoBehaviour:
     condition: 00000000
     conditionAmount:
     - 0
-    effect: 11000000
+    effect: 06000000
     effectStat: 00000000
-    effectAmount: 64000000
+    effectAmount: 00000000
   - index: 21006
-    condition: 190000002c000000
+    condition: 14000000
     conditionAmount:
     - 0
-    - 0
-    effect: 02000000
+    effect: 01000000
     effectStat: 08000000
     effectAmount: 14000000
   - index: 21007
     condition: 00000000
     conditionAmount:
     - 0
-    effect: 11000000
+    effect: 07000000
     effectStat: 00000000
-    effectAmount: 64000000
+    effectAmount: 00000000
   - index: 21008
-    condition: 1a000000
+    condition: 1400000015000000
     conditionAmount:
+    - 0
     - 0
     effect: 01000000
     effectStat: 13000000
     effectAmount: 04000000
-  - index: 21009
-    condition: 00000000
-    conditionAmount:
-    - 0
-    effect: 10000000
-    effectStat: 00000000
-    effectAmount: 0a000000
-  - index: 21010
-    condition: 38000000
-    conditionAmount:
-    - 0
-    effect: 0200000002000000
-    effectStat: 0800000013000000
-    effectAmount: fbffffff01000000
-  - index: 21011
-    condition: 00000000
-    conditionAmount:
-    - 0
-    effect: 11000000
-    effectStat: 00000000
-    effectAmount: 1e000000
   - index: 31001
-    condition: 00000000
+    condition: 1c000000
     conditionAmount:
     - 0
-    effect: 12000000
+    effect: 09000000
     effectStat: 00000000
     effectAmount: 1e000000
   - index: 31002
-    condition: 1e000000
+    condition: 16000000
     conditionAmount:
     - 0
     effect: 01000000
     effectStat: 13000000
     effectAmount: 02000000
   - index: 31003
-    condition: 0f00000013000000
+    condition: 190000001c000000
     conditionAmount:
     - 0
     - 0
-    effect: 05000000
+    effect: 08000000
     effectStat: 05000000
     effectAmount: 14000000
   - index: 31004
-    condition: 1f000000
+    condition: 18000000
     conditionAmount:
     - 0
-    effect: 0b000000
+    effect: 01000000
     effectStat: 07000000
     effectAmount: 01000000
   - index: 31005
-    condition: 0f000000
+    condition: 1c000000
     conditionAmount:
     - 0
     effect: 01000000
     effectStat: 04000000
     effectAmount: 02000000
-  - index: 31006
-    condition: 1e00000028000000
-    conditionAmount:
-    - 0
-    - 0
-    effect: 01000000
-    effectStat: 09000000
-    effectAmount: 32000000

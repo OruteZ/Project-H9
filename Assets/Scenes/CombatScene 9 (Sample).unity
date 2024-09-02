@@ -1566,7 +1566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfaa46b7832912646ac47a1980b710cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkable: 1
+  walkable: 0
   visible: 1
   rayThroughable: 1
   gridVisible: 1
@@ -4619,7 +4619,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 72
+  m_RootOrder: 71
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &277439759
 MonoBehaviour:
@@ -10245,7 +10245,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 65
+  m_RootOrder: 64
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &729352833
 MonoBehaviour:
@@ -10443,7 +10443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   visible: 1
-  rayThroughable: 0
+  rayThroughable: 1
   gridVisible: 1
   combatStageIndex: 0
   _inSight: 0
@@ -14755,7 +14755,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 71
+  m_RootOrder: 70
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1075067759
 MonoBehaviour:
@@ -16342,7 +16342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   visible: 1
-  rayThroughable: 0
+  rayThroughable: 1
   gridVisible: 1
   combatStageIndex: 0
   _inSight: 0
@@ -19884,7 +19884,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 66
+  m_RootOrder: 65
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1316938957
 MonoBehaviour:
@@ -20274,7 +20274,6 @@ Transform:
   - {fileID: 1737189162}
   - {fileID: 1737335544}
   - {fileID: 1253196376}
-  - {fileID: 2081133594}
   - {fileID: 1954291011}
   - {fileID: 729352832}
   - {fileID: 1316938956}
@@ -20285,6 +20284,7 @@ Transform:
   - {fileID: 1075067758}
   - {fileID: 277439758}
   - {fileID: 1905931760}
+  - {fileID: 2081133594}
   m_Father: {fileID: 230774715}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21084,7 +21084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   visible: 1
-  rayThroughable: 0
+  rayThroughable: 1
   gridVisible: 1
   combatStageIndex: 0
   _inSight: 0
@@ -22366,7 +22366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012a762915388bb4688f6a3d002645a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveData: {fileID: 11400000, guid: 211c89a24bb60944ea5a62264cc68f1f, type: 2}
+  saveData: {fileID: 11400000, guid: 19f9fd37be8fec448a84392826ddf2de, type: 2}
   tilePrefab: {fileID: 7055767354360999130, guid: 2b4c0590199488d4fae5ab62e5bca496,
     type: 3}
   layout: {fileID: 1333147564}
@@ -24434,7 +24434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   visible: 1
-  rayThroughable: 0
+  rayThroughable: 1
   gridVisible: 1
   combatStageIndex: 0
   _inSight: 0
@@ -27632,7 +27632,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 67
+  m_RootOrder: 66
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1848449351
 MonoBehaviour:
@@ -29023,7 +29023,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 73
+  m_RootOrder: 72
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1905931761
 MonoBehaviour:
@@ -29219,7 +29219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfaa46b7832912646ac47a1980b710cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkable: 0
+  walkable: 1
   visible: 1
   rayThroughable: 1
   gridVisible: 1
@@ -29573,7 +29573,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 64
+  m_RootOrder: 63
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1954291012
 MonoBehaviour:
@@ -29888,7 +29888,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 69
+  m_RootOrder: 68
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1976752677
 MonoBehaviour:
@@ -31393,7 +31393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfaa46b7832912646ac47a1980b710cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkable: 0
+  walkable: 1
   visible: 1
   rayThroughable: 1
   gridVisible: 1
@@ -31954,7 +31954,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 68
+  m_RootOrder: 67
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2070104761
 MonoBehaviour:
@@ -32299,7 +32299,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 63
+  m_RootOrder: 73
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2081133595
 MonoBehaviour:
@@ -32810,7 +32810,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1333147565}
-  m_RootOrder: 70
+  m_RootOrder: 69
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2129200041
 MonoBehaviour:

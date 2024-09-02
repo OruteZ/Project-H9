@@ -41,6 +41,9 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
         IEnumerator Coroutine()
         {
             yield return ExecuteCoroutine();
+
+            //test
+            //UIManager.instance.gameSystemUI.speechUI.SetUnitSpeechText(unit, GetActionType().ToString());
             FinishAction();
         }
         

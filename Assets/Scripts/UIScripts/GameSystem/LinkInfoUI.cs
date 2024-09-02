@@ -59,7 +59,7 @@ public class LinkInfoUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
         List<TileObject> tObjects = FieldSystem.tileSystem.GetTileObject(linkHexPos);
         if (player == null || tObjects == null) return;
-        Link link = (Link)tObjects.Find(obj => obj.gameObject.TryGetComponent(out Link l));
+        Link link = (Link)tObjects.Find(obj => obj != null && obj.gameObject.TryGetComponent(out Link l));
         if (link == null || link == _currentLink) return;
 
         if (link.IsVisible())

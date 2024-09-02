@@ -131,6 +131,7 @@ public class Player : Unit
     private int _cacheSightRange = -1;
     public void ReloadSight()
     {
+
         int availableMaxSightRange =
             Mathf.Max(_cacheSightRange, stat.sightRange);
         _cacheSightRange = stat.sightRange;

@@ -17,6 +17,8 @@ public class LightingManager : Singleton<LightingManager>
     [SerializeField] private GameObject planeLight;
     [SerializeField] private GameObject planePpVolume;
     
+    private StageStyle currentStageStyle;
+    
     
     protected override void Awake()
     {
@@ -38,6 +40,7 @@ public class LightingManager : Singleton<LightingManager>
         // start point is plane , change after
         planeLight.SetActive(true);
         planePpVolume.GetComponent<Volume>().weight = 1;
+        currentStageStyle = StageStyle.PLANE;
     }
 
     private void OnStageAwake()
@@ -57,27 +60,11 @@ public class LightingManager : Singleton<LightingManager>
             // default if plane
             planeLight.SetActive(true);
             planePpVolume.GetComponent<Volume>().weight = 1;
+            currentStageStyle = StageStyle.PLANE;
             return;
         }
-        
-        StageStyle stageType = stageData.GetStageStyle();
-        
-        
-        switch (stageType)
-        {
-            case StageStyle.WESTERN:
-                westernLight.SetActive(true);
-                westernPpVolume.GetComponent<Volume>().weight = 1;
-                break;
-            case StageStyle.SNOW:
-                snowMountainLight.SetActive(true);
-                snowMountainPpVolume.GetComponent<Volume>().weight = 1;
-                break;
-            case StageStyle.PLANE:
-                planeLight.SetActive(true);
-                planePpVolume.GetComponent<Volume>().weight = 1;
-                break;
-        }
+
+        SetStageStyle(stageData.GetStageStyle());
     }
 
     public void LerpChange(StageStyle from, StageStyle to, float value)
@@ -87,6 +74,9 @@ public class LightingManager : Singleton<LightingManager>
         var fromPPVolume = GetPPVolume(from);
         var toPPVolume = GetPPVolume(to);
         
+        var fromLight = GetLight(from);
+        var toLight = GetLight(to);
+        
         if (fromPPVolume is null || toPPVolume is null) return;
         
         fromPPVolume.SetActive(true);
@@ -94,6 +84,19 @@ public class LightingManager : Singleton<LightingManager>
         
         fromPPVolume.GetComponent<Volume>().weight = 1 - value;
         toPPVolume.GetComponent<Volume>().weight = value;
+        
+        if (fromLight is null || toLight is null) return;
+        
+        if (value > 0.5f)
+        {
+            fromLight.SetActive(false);
+            toLight.SetActive(true);
+        }
+        else
+        {
+            fromLight.SetActive(true);
+            toLight.SetActive(false);
+        }
     }
     
     private GameObject GetPPVolume(StageStyle stageStyle)
@@ -109,5 +112,26 @@ public class LightingManager : Singleton<LightingManager>
             default:
                 return null;
         }
+    }
+    
+    private GameObject GetLight(StageStyle stageStyle)
+    {
+        switch (stageStyle)
+        {
+            case StageStyle.WESTERN:
+                return westernLight;
+            case StageStyle.SNOW:
+                return snowMountainLight;
+            case StageStyle.PLANE:
+                return planeLight;
+            default:
+                return null;
+        }
+    }
+
+    public void SetStageStyle(StageStyle stageStyle)
+    {
+        LerpChange(currentStageStyle, stageStyle, 1);
+        currentStageStyle = stageStyle;
     }
 }

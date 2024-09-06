@@ -63,6 +63,12 @@ public class WorldMapEditor : MonoBehaviour
         foreach (TileCombatStageInfo info in worldData.specificCombatIndexedTiles)
         {
             Tile tile = FieldSystem.tileSystem.GetTile(info.hexPosition);
+            if (tile == null)
+            {
+                Debug.LogError("Cannot Found tile that has position " + info.hexPosition.ToString());
+                continue;
+            }
+            
             tile.combatStageIndex = info.combatStageIndex;
         }
     }

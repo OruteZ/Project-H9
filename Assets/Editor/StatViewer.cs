@@ -4,7 +4,7 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(UnitStat))]
 public class UnitStatPropertyDrawer : PropertyDrawer
 {
-    // °¢ ¹è¿­ÀÇ Foldout »óÅÂ¸¦ °ü¸®ÇÏ±â À§ÇÑ bool °ª
+    // ê° ë°°ì—´ì˜ Foldout ìƒíƒœë¥¼ ê´€ë¦¬í•˜ê¸° ìœ„í•œ bool ê°’
     private bool originalFoldout = true;
     private bool additionalFoldout = true;
     private bool multiplierFoldout = true;
@@ -13,24 +13,24 @@ public class UnitStatPropertyDrawer : PropertyDrawer
     {
         EditorGUI.BeginProperty(position, label, property);
 
-        // ±âº» ÁÙ ³ôÀÌ¿Í °£°İ ¼³Á¤
+        // ê¸°ë³¸ ì¤„ ë†’ì´ì™€ ê°„ê²© ì„¤ì •
         float lineHeight = EditorGUIUtility.singleLineHeight;
         float padding = EditorGUIUtility.standardVerticalSpacing;
 
         float yOffset = position.y;
 
-        // original, _additional, _multiplier ÇÁ·ÎÆÛÆ¼¸¦ Ã£½À´Ï´Ù.
+        // original, _additional, _multiplier í”„ë¡œí¼í‹°ë¥¼ ì°¾ìŠµë‹ˆë‹¤.
         var originalProp = property.FindPropertyRelative("original");
         var additionalProp = property.FindPropertyRelative("_additional");
         var multiplierProp = property.FindPropertyRelative("_multiplier");
 
-        // original ¹è¿­ µå·Ó´Ù¿î
+        // original ë°°ì—´ ë“œë¡­ë‹¤ìš´
         yOffset = DrawStatArrayFoldout(ref yOffset, position, originalProp, "Original Stats", ref originalFoldout, lineHeight, padding);
 
-        // _additional ¹è¿­ µå·Ó´Ù¿î
+        // _additional ë°°ì—´ ë“œë¡­ë‹¤ìš´
         yOffset = DrawStatArrayFoldout(ref yOffset, position, additionalProp, "Additional Stats", ref additionalFoldout, lineHeight, padding);
 
-        // _multiplier ¹è¿­ µå·Ó´Ù¿î
+        // _multiplier ë°°ì—´ ë“œë¡­ë‹¤ìš´
         yOffset = DrawStatArrayFoldout(ref yOffset, position, multiplierProp, "Multiplier Stats", ref multiplierFoldout, lineHeight, padding);
 
         EditorGUI.EndProperty();
@@ -38,7 +38,7 @@ public class UnitStatPropertyDrawer : PropertyDrawer
 
     private float DrawStatArrayFoldout(ref float yOffset, Rect position, SerializedProperty arrayProp, string label, ref bool foldout, float lineHeight, float padding)
     {
-        // FoldoutÀ» ±×¸®±â À§ÇÑ Rect ¼³Á¤
+        // Foldoutì„ ê·¸ë¦¬ê¸° ìœ„í•œ Rect ì„¤ì •
         Rect foldoutRect = new Rect(position.x, yOffset, position.width, lineHeight);
         foldout = EditorGUI.Foldout(foldoutRect, foldout, label);
 
@@ -47,7 +47,7 @@ public class UnitStatPropertyDrawer : PropertyDrawer
             EditorGUI.indentLevel++;
             yOffset += lineHeight + padding;
 
-            // ¹è¿­ÀÇ °¢ ¿ä¼Ò Ãâ·Â
+            // ë°°ì—´ì˜ ê° ìš”ì†Œ ì¶œë ¥
             for (int i = 1; i < arrayProp.arraySize; i++)
             {
                 SerializedProperty elementProp = arrayProp.GetArrayElementAtIndex(i);
@@ -74,7 +74,7 @@ public class UnitStatPropertyDrawer : PropertyDrawer
 
         float totalHeight = 0f;
 
-        // °¢ ¹è¿­ Foldout »óÅÂ¿¡ µû¸¥ ³ôÀÌ °è»ê
+        // ê° ë°°ì—´ Foldout ìƒíƒœì— ë”°ë¥¸ ë†’ì´ ê³„ì‚°
         totalHeight += GetArrayHeight(property.FindPropertyRelative("original"), originalFoldout, lineHeight, padding);
         totalHeight += GetArrayHeight(property.FindPropertyRelative("_additional"), additionalFoldout, lineHeight, padding);
         totalHeight += GetArrayHeight(property.FindPropertyRelative("_multiplier"), multiplierFoldout, lineHeight, padding);

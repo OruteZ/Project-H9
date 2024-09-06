@@ -59,6 +59,9 @@ public class SuicideDynamiteAction : BaseAction
     protected override IEnumerator ExecuteCoroutine()
     {
         effect.SetActive(true);
+        
+        yield return new WaitForSeconds(1f);
+        
         yield return true;
     }
 }

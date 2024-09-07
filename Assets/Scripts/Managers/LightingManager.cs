@@ -5,19 +5,13 @@ using UnityEngine.Serialization;
 
 public class LightingManager : Singleton<LightingManager>
 {
-    [Header("Western")]
-    [SerializeField] private GameObject westernLight;
-    [SerializeField] private GameObject westernPpVolume;
+    [SerializeField] private Light sunLight;
+    [SerializeField] private Light reflectionLight;
+    [SerializeField] private Volume PpVolume;
     
-    [Space(10),Header("SNOW MOUNTAIN")]
-    [SerializeField] private GameObject snowMountainLight;
-    [SerializeField] private GameObject snowMountainPpVolume;
-
-    [Space(10), Header("Plane")] 
-    [SerializeField] private GameObject planeLight;
-    [SerializeField] private GameObject planePpVolume;
+    [SerializeField] private LightSetting[] _lightSettings;
     
-    private StageStyle currentStageStyle;
+    private StageStyle _currentStageStyle;
     
     
     protected override void Awake()
@@ -30,108 +24,62 @@ public class LightingManager : Singleton<LightingManager>
         }
         
         FieldSystem.onStageAwake.AddListener(OnStageAwake);
-        
-        westernLight.SetActive(false);
-        westernPpVolume.GetComponent<Volume>().weight = 0;
-        
-        snowMountainLight.SetActive(false);
-        snowMountainPpVolume.GetComponent<Volume>().weight = 0;
-        
-        // start point is plane , change after
-        planeLight.SetActive(true);
-        planePpVolume.GetComponent<Volume>().weight = 1;
-        currentStageStyle = StageStyle.PLANE;
     }
 
     private void OnStageAwake()
     {
-        // set active false all
-        westernLight.SetActive(false);
-        snowMountainLight.SetActive(false);
-        
-        westernPpVolume.GetComponent<Volume>().weight = 0;
-        snowMountainPpVolume.GetComponent<Volume>().weight = 0;
-        planePpVolume.GetComponent<Volume>().weight = 0;
-        
-        // if data is null, set western
-        var stageData = GameManager.instance.GetStageData();
-        if (stageData is null)
-        {
-            // default if plane
-            planeLight.SetActive(true);
-            planePpVolume.GetComponent<Volume>().weight = 1;
-            currentStageStyle = StageStyle.PLANE;
-            return;
-        }
-
-        SetStageStyle(stageData.GetStageStyle());
+        ApplyLightSetting(_lightSettings[0]);
+        _currentStageStyle = _lightSettings[0].stageStyle;
     }
 
-    public void LerpChange(StageStyle from, StageStyle to, float value)
+    private void LerpChange(StageStyle from, StageStyle to, float value)
     {
-        Mathf.Clamp01(value);
-        
-        var fromPPVolume = GetPPVolume(from);
-        var toPPVolume = GetPPVolume(to);
-        
-        var fromLight = GetLight(from);
-        var toLight = GetLight(to);
-        
-        if (fromPPVolume is null || toPPVolume is null) return;
-        
-        fromPPVolume.SetActive(true);
-        toPPVolume.SetActive(true);
-        
-        fromPPVolume.GetComponent<Volume>().weight = 1 - value;
-        toPPVolume.GetComponent<Volume>().weight = value;
-        
-        if (fromLight is null || toLight is null) return;
-        
-        if (value > 0.5f)
+        if (TryGetLight(from, out LightSetting fromLight) && TryGetLight(to, out LightSetting toLight))
         {
-            fromLight.SetActive(false);
-            toLight.SetActive(true);
-        }
-        else
-        {
-            fromLight.SetActive(true);
-            toLight.SetActive(false);
-        }
-    }
-    
-    private GameObject GetPPVolume(StageStyle stageStyle)
-    {
-        switch (stageStyle)
-        {
-            case StageStyle.WESTERN:
-                return westernPpVolume;
-            case StageStyle.SNOW:
-                return snowMountainPpVolume;
-            case StageStyle.PLANE:
-                return planePpVolume;
-            default:
-                return null;
-        }
-    }
-    
-    private GameObject GetLight(StageStyle stageStyle)
-    {
-        switch (stageStyle)
-        {
-            case StageStyle.WESTERN:
-                return westernLight;
-            case StageStyle.SNOW:
-                return snowMountainLight;
-            case StageStyle.PLANE:
-                return planeLight;
-            default:
-                return null;
+            sunLight.color = Color.Lerp(fromLight.globalColor, toLight.globalColor, value);
+            sunLight.intensity = Mathf.Lerp(fromLight.globalIntensity, toLight.globalIntensity, value);
+            sunLight.bounceIntensity = Mathf.Lerp(fromLight.globalIndirectMultiplier, toLight.globalIndirectMultiplier, value);
+            
+            reflectionLight.color = Color.Lerp(fromLight.reflectionColor, toLight.reflectionColor, value);
+            reflectionLight.intensity = Mathf.Lerp(fromLight.reflectionIntensity, toLight.reflectionIntensity, value);
+            reflectionLight.bounceIntensity = Mathf.Lerp(fromLight.reflectionIndirectMultiplier, toLight.reflectionIndirectMultiplier, value);
+            
+            PpVolume.profile = fromLight.ppVolume;
         }
     }
 
     public void SetStageStyle(StageStyle stageStyle)
     {
-        LerpChange(currentStageStyle, stageStyle, 1);
-        currentStageStyle = stageStyle;
+        LerpChange(_currentStageStyle, stageStyle, 1);
+        
+        _currentStageStyle = stageStyle;
+    }
+    
+    private bool TryGetLight(StageStyle stageStyle, out LightSetting ret)
+    {
+        foreach (LightSetting lightSetting in _lightSettings)
+        {
+            if (lightSetting.stageStyle == stageStyle)
+            {
+                ret = lightSetting;
+                return true;
+            }
+        }
+
+        ret = null;
+        return false;
+    }
+    
+    private void ApplyLightSetting(LightSetting lightSetting)
+    {
+        sunLight.color = lightSetting.globalColor;
+        sunLight.intensity = lightSetting.globalIntensity;
+        sunLight.bounceIntensity = lightSetting.globalIndirectMultiplier;
+        
+        reflectionLight.color = lightSetting.reflectionColor;
+        reflectionLight.intensity = lightSetting.reflectionIntensity;
+        reflectionLight.bounceIntensity = lightSetting.reflectionIndirectMultiplier;
+        
+        PpVolume.profile = lightSetting.ppVolume;
     }
 }

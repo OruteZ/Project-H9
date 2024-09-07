@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -10,8 +12,10 @@ public class LightingManager : Singleton<LightingManager>
     [SerializeField] private Volume PpVolume;
     
     [SerializeField] private LightSetting[] _lightSettings;
+    [SerializeField] private float _lerpDuration;
     
     private StageStyle _currentStageStyle;
+    private Coroutine _lerpCoroutine;
     
     
     protected override void Awake()
@@ -50,10 +54,27 @@ public class LightingManager : Singleton<LightingManager>
 
     public void SetStageStyle(StageStyle stageStyle)
     {
-        LerpChange(_currentStageStyle, stageStyle, 1);
+        if (_lerpCoroutine != null)
+        {
+            StopCoroutine(_lerpCoroutine);
+        }
+        _lerpCoroutine = StartCoroutine(LerpCoroutine(_currentStageStyle, stageStyle, 1));
         
         _currentStageStyle = stageStyle;
     }
+    
+    private IEnumerator LerpCoroutine(StageStyle from, StageStyle to, float duration)
+    {
+        float time = 0;
+        while (time < duration)
+        {
+            LerpChange(from, to, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        
+        LerpChange(from, to, 1);
+    }  
     
     private bool TryGetLight(StageStyle stageStyle, out LightSetting ret)
     {
@@ -82,4 +103,6 @@ public class LightingManager : Singleton<LightingManager>
         
         PpVolume.profile = lightSetting.ppVolume;
     }
+    
+    
 }

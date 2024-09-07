@@ -138,15 +138,15 @@ public class ConversationUI : UISystem
     public void StartNextConversation()
     {
         if (_conversationQueue.Count <= 0) return;
-        QuestInfo _curquestInfo = _conversationQueue[0].Item1;
+        QuestInfo curquestInfo = _conversationQueue[0].Item1;
 
         if (_conversationQueue[0].Item2)
         {
-            _groupInfo = GetConversationGroup(_curquestInfo.StartConversation);
+            _groupInfo = GetConversationGroup(curquestInfo.StartConversation);
         }
         else
         {
-            _groupInfo = GetConversationGroup(_curquestInfo.EndConversation);
+            _groupInfo = GetConversationGroup(curquestInfo.EndConversation);
         }
         if (_groupInfo == null)
         {

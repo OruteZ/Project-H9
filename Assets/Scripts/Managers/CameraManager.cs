@@ -33,7 +33,7 @@ public class CameraManager : Singleton<CameraManager>
     }
     private void LookAt(Unit target)
     {
-        if (_unitCameras.TryGetValue(target, out var unitCamera))
+        if (_unitCameras.TryGetValue(target, out UnitCamera unitCamera))
         {
             if (_currentUnitCamera != null)
             {
@@ -83,7 +83,7 @@ public class CameraManager : Singleton<CameraManager>
         {
             SetCombatCamOption();
         }
-        else
+        else if (GameManager.instance.CompareState(GameState.WORLD))
         {
             SetWorldCamOption();
         }
@@ -127,9 +127,12 @@ public class CameraManager : Singleton<CameraManager>
         FieldSystem.onCombatFinish.AddListener(OnCombatFinished);
         
         Unit player = FieldSystem.unitSystem.GetPlayer();
-        player.onBusyChanged.AddListener(OnPlayerBusyChanged);
+        if (player != null)
+        {
+            player.onBusyChanged.AddListener(OnPlayerBusyChanged);
+            LookAt(player);
+        }
         
-        LookAt(player);
     }
 
     private void OnTurnStarted()

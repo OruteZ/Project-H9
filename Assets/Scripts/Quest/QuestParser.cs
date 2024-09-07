@@ -10,7 +10,7 @@ public class QuestParser
     public List<QuestInfo> GetQuests()
     {
         ParseLocalization(out var localizationData);
-        ParseQuestInfos(in localizationData, out var questInfos);
+        ParseQuestInfos(in localizationData, out List<QuestInfo> questInfos);
         // TODO : 유저데이터와 동기화하는 함수() 필요
         return questInfos;
     }

@@ -17,8 +17,8 @@ public class WeaponDatabase : ScriptableObject
             if (data.index == index) return data;
         }
         
-        Debug.LogError("there are " + weaponList.Count + " weapons, there is no " + index + " index");
-        return null;
+        Debug.LogError("there are " + weaponList.Count + " weapons, there is no " + index + " index. returns default weapon");
+        return weaponList[0];
     }
     
     public Weapon Clone(int dataIndex)

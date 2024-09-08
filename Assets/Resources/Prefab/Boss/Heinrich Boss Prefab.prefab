@@ -1,0 +1,279 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8432919960963151837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8432919960963151394}
+  - component: {fileID: 8432919960963151397}
+  - component: {fileID: 8432919960963151396}
+  - component: {fileID: 8432919960963151399}
+  - component: {fileID: 8432919960963151398}
+  - component: {fileID: 2526869063167616149}
+  - component: {fileID: 3204557742888321598}
+  - component: {fileID: 8432919960963151392}
+  - component: {fileID: 8432919960963151395}
+  - component: {fileID: 8432919960963151402}
+  m_Layer: 10
+  m_Name: Heinrich Boss Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8432919960963151394
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.722431, y: 0, z: -4.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8432919960963151397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4903b8c0073cb0e4d85cbf51c73842c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
+--- !u!114 &8432919960963151396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb8c1692a078274687545adece96562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
+  rotationSpeed: 10
+  moveSpeed: 4
+--- !u!114 &8432919960963151399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b3cc784cd3504643a6ddc38c4871420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
+  ammoCost: 1
+  range: 0
+  radius: 0
+  damage: 0
+--- !u!114 &8432919960963151398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1df925ac8b091684682c6931a44c4f1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
+--- !u!114 &2526869063167616149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f648174c98f949cda9d9c9b91a2b3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
+  vanishHp: 10
+  moveMinRange: 20
+  originMaterial: {fileID: 0}
+  vanishMaterial: {fileID: 2100000, guid: 1c89ec304cf8d60488f1af44292f3fd2, type: 2}
+  _tirggered: 0
+--- !u!114 &3204557742888321598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e352dd60fd1461da4dd9b2c0a8ccd02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 4
+  ammoCost: 0
+  range: 0
+  radius: 0
+  damage: 0
+  trapPrefab: {fileID: 7756329116870450271, guid: 7a0c737e6707274499f0a727591cb97d,
+    type: 3}
+  boundDuration: 2
+  coolDown: 5
+  maxTrapCount: 10
+  hitrateBuffAmount: 0
+  hitrateBuffDuration: 0
+  damageBuffAmount: 0
+  damageBuffDuration: 0
+--- !u!114 &8432919960963151392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbeaa462d604364fb36744bf008da9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _position: {x: 7, y: 3, z: -10}
+--- !u!114 &8432919960963151395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a6265ef9ddce6343bf0ed5943c27c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: 
+  hexTransform: {fileID: 0}
+  stat:
+    OnChangedStat:
+      m_PersistentCalls:
+        m_Calls: []
+    original: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+  passiveIndexList: 
+  infiniteActionPointTrigger: 0
+  lightFootTrigger: 0
+  tacticalReloadChance: 0
+  freeReloadTrigger: 0
+  goldenBulletChance: 0
+  goldenBulletCount: 0
+  isHitedByGoldenBulletThisTurn: 0
+  coverType: 0
+  coverableObj: {fileID: 0}
+  coverObjDmgMultiplier: 1
+  currentRound: 0
+  onTurnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTurnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onActionStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onFinishAction:
+    m_PersistentCalls:
+      m_Calls: []
+  onBusyChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onCostChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onAmmoChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onHpChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onWeaponChange:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoved:
+    m_PersistentCalls:
+      m_Calls: []
+  onDead:
+    m_PersistentCalls:
+      m_Calls: []
+  onHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onStartShoot:
+    m_PersistentCalls:
+      m_Calls: []
+  onFinishShoot:
+    m_PersistentCalls:
+      m_Calls: []
+  onKill:
+    m_PersistentCalls:
+      m_Calls: []
+  onUnitActionDataChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelectedChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onStatusEffectChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onCoverChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  dataIndex: 1
+  ai: {fileID: 0}
+--- !u!136 &8432919960963151402
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432919960963151837}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}

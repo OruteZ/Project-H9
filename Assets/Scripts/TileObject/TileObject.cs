@@ -100,5 +100,6 @@ public enum TileObjectType
     TOWN,
     COVERABLE,
     DYNAMITE,
+    HEINRICH_TRAP,
     NONE,
 }

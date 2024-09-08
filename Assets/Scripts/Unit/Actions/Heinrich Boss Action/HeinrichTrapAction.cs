@@ -9,7 +9,6 @@ public class HeinrichTrapAction : BaseAction
     [SerializeField] private GameObject trapPrefab;
     
     [Header("Trap Settings")]
-    [SerializeField] private int damage;
     [SerializeField] private int boundDuration;
     [SerializeField] private int coolDown;
     [SerializeField] private int maxTrapCount;
@@ -93,7 +92,7 @@ public class HeinrichTrapAction : BaseAction
         yield return new WaitForSeconds(1.5f);
         
         bool isSetupFinished = false;
-        CreateTrap(unit.hexPosition, () => isSetupFinished = true);
+        CreateTrap(target.hexPosition, () => isSetupFinished = true);
         yield return new WaitUntil(() => isSetupFinished);
         
         _coolDown = coolDown;
@@ -114,6 +113,8 @@ public class HeinrichTrapAction : BaseAction
             HeinrichTrap oldestTrap = _traps.Dequeue();
             oldestTrap.RemoveSelf();
         }
+        
+        FieldSystem.tileSystem.AddTileObject(trap);
         
         trap.SetUp(unit, targetPos, damage, boundDuration, onFinishSetup);
     }

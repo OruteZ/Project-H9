@@ -17,6 +17,7 @@ MonoBehaviour:
     nameIndex: 0
     modelName: 
     model: {fileID: 0}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -30,10 +31,12 @@ MonoBehaviour:
     rewardGold: 0
     rewardExp: 0
     rewardItem: 
+    level: 1
   - index: 1
     nameIndex: 1001
     modelName: Character_Bandit_Male_01
     model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -47,10 +50,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 10
     rewardItem: 5902000032000000
+    level: 1
   - index: 2
     nameIndex: 1001
     modelName: Character_Bandit_Male_01
     model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -64,10 +69,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 10
     rewardItem: 5902000032000000bd02000019000000
+    level: 1
   - index: 3
     nameIndex: 1001
     modelName: Character_Bandit_Male_01
     model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -81,10 +88,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 20
     rewardItem: 5902000032000000bd02000032000000
+    level: 2
   - index: 4
     nameIndex: 1002
     modelName: Character_Mexican_Male_01
     model: {fileID: 1830787700065114, guid: dbbd35cb7d217034ca6e8b14a8c9da48, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -98,10 +107,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 25
     rewardItem: 300100003200000059020000320000008503000014000000
+    level: 3
   - index: 5
     nameIndex: 1002
     modelName: Character_Mexican_Male_02
     model: {fileID: 1930506485524798, guid: f7b944500ba277f418b2efff428244ff, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -115,10 +126,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 25
     rewardItem: 30010000320000005902000032000000860300000a000000870300000a000000
+    level: 4
   - index: 6
     nameIndex: 1004
     modelName: Character_Thug_Male_02
     model: {fileID: 1971472593742656, guid: a3d345d8d279f5b4d81157ffaa77a658, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -132,10 +145,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 25
     rewardItem: 300100003200000059020000320000008603000014000000
+    level: 3
   - index: 7
     nameIndex: 1003
     modelName: Character_Soldier_Male_01
     model: {fileID: 1000615490526886, guid: 3daf58e69f5924641b3bb371bbc5fda2, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -149,10 +164,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 25
     rewardItem: 310100003200000059020000320000008703000014000000
+    level: 4
   - index: 101
     nameIndex: 101
     modelName: Character_Badguy_01
     model: {fileID: 1942289980213182, guid: 085e53ee40ad24b40a83bd90705ad460, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -166,10 +183,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 25
     rewardItem: 30010000640000005b020000640000008703000032000000
+    level: 3
   - index: 102
     nameIndex: 102
     modelName: Character_Business_Man_01
     model: {fileID: 1214723647702548, guid: e85f10072d335224984d9b8ae2e93843, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -183,10 +202,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 25
     rewardItem: 65000000640000002e010000640000005a020000640000008603000032000000
+    level: 2
   - index: 103
     nameIndex: 103
     modelName: Character_GoldMiner_Male_02
     model: {fileID: 1968479938754796, guid: 4d2ee76a3bb7c9a4ba02c9cdca108f58, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -200,10 +221,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 50
     rewardItem: 310100006400000087030000320000008503000032000000
+    level: 4
   - index: 104
     nameIndex: 6
     modelName: Character_Cowboy_01
     model: {fileID: 1800371080893130, guid: e169e4d9dbd157b498e582065a5f9302, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -217,10 +240,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 30
     rewardItem: 
+    level: 4
   - index: 105
     nameIndex: 7
     modelName: Character_Badguy_01
     model: {fileID: 1942289980213182, guid: 085e53ee40ad24b40a83bd90705ad460, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -234,10 +259,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 30
     rewardItem: 
+    level: 5
   - index: 106
     nameIndex: 9
     modelName: Character_Gunman_01
     model: {fileID: 1964704263138806, guid: e3d9a5b7a19f9684d9b63308cdfa95bd, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -251,10 +278,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 30
     rewardItem: 
+    level: 4
   - index: 15
     nameIndex: 15
     modelName: Character_Traveler_Female_01
     model: {fileID: 1821211341035534, guid: c6815aa8714f9c845876d2c7d9bca33a, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -268,10 +297,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 10
     rewardItem: 
+    level: 1
   - index: 16
     nameIndex: 16
     modelName: Character_Priest_Male_01
     model: {fileID: 1584794483432000, guid: bef70bfcce1b36c47b4214c2c2b51834, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -285,10 +316,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 20
     rewardItem: 
+    level: 2
   - index: 17
     nameIndex: 17
     modelName: Character_Salesman_Male_01
     model: {fileID: 1074598233348488, guid: 4cea0b27c28fa2e4e9ca4a09837f7a0d, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -302,10 +335,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 30
     rewardItem: 
+    level: 3
   - index: 18
     nameIndex: 18
     modelName: Character_GoldMiner_Male_01
     model: {fileID: 1670876841442770, guid: bfeb5ee704c3c224c8b53c8251eb48b0, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -319,10 +354,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 20
     rewardItem: 
+    level: 2
   - index: 19
     nameIndex: 19
     modelName: Character_Captain_Male_01
     model: {fileID: 1947661023289072, guid: ca7a1c0df93083e44b3c4831a76e55cc, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -336,10 +373,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 30
     rewardItem: 
+    level: 3
   - index: 20
     nameIndex: 20
     modelName: Character_Cowgirl_01
     model: {fileID: 1506550050545096, guid: 24362449162558a49bc6904c0fda923a, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -353,10 +392,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 40
     rewardItem: 
+    level: 4
   - index: 8
     nameIndex: 1001
     modelName: Character_Bandit_Male_01
     model: {fileID: 1189580221944950, guid: 4bfcc847975bbe34e8be8a55db8603d4, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -370,10 +411,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 50
     rewardItem: 
+    level: 5
   - index: 9
     nameIndex: 1002
     modelName: Character_Gunman_01
     model: {fileID: 1964704263138806, guid: e3d9a5b7a19f9684d9b63308cdfa95bd, type: 3}
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -387,10 +430,12 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 60
     rewardItem: 
+    level: 6
   - index: 107
     nameIndex: 107
     modelName: Character_NativeAmericanWarrior_Male_01
     model: {fileID: 1447239715599880, guid: 697a476db0002c54c90c3d2c8e8718ba, type: 3}
+    enemyType: 1
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -404,3 +449,23 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 100
     rewardItem: 
+    level: 6
+  - index: 108
+    nameIndex: 107
+    modelName: Character_NativeAmericanWarrior_Male_01
+    model: {fileID: 1447239715599880, guid: 697a476db0002c54c90c3d2c8e8718ba, type: 3}
+    enemyType: 2
+    stat:
+      OnChangedStat:
+        m_PersistentCalls:
+          m_Calls: []
+      original: 0000000032000000320000003c000000040000003c0000000400000000000000000000000a000000000000000000000064000000000000000000000064000000000000000000000064000000
+      _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+    weaponIndex: 1
+    btIndex: 3
+    skillIndex: 
+    rewardGold: 1
+    rewardExp: 100
+    rewardItem: 
+    level: 6

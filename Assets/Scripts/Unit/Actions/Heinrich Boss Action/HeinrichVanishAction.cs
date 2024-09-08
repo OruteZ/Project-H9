@@ -116,14 +116,7 @@ public class HeinrichVanishAction : BaseAction
 
     private void SetVanish(bool b)
     {
-        if (b)
-        {
-            _renderer.material = vanishMaterial;
-        }
-        else
-        {
-            _renderer.material = originMaterial;
-        }
+        _renderer.material = b ? vanishMaterial : originMaterial;
     }
     
     private void RemoveVanish()

@@ -98,4 +98,7 @@ public enum ActionType {
     //Linsdale Boss Action
     SpreadDynamite,
     SuicideDynamite,
+    
+    //Heinrich Boss Action
+    HeinrichTrap,
 }

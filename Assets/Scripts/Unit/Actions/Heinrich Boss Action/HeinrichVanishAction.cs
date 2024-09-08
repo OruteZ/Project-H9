@@ -13,13 +13,15 @@ public class HeinrichVanishAction : BaseAction
     
     private Renderer _renderer;
 
-    private void Awake()
+    public override void SetUp(Unit unit)
     {
-        _renderer = unit.GetComponentInChildren<Renderer>();
+        base.SetUp(unit);
         
+        
+        _renderer = unit.GetComponentInChildren<Renderer>();
         originMaterial = _renderer.material;
     }
-    
+
     public override ActionType GetActionType()
     {
         return ActionType.HeinrichVanish;
@@ -116,11 +118,16 @@ public class HeinrichVanishAction : BaseAction
 
     private void SetVanish(bool b)
     {
-        _renderer.material = b ? vanishMaterial : originMaterial;
+        unit.vanishTrigger = b;
     }
     
     private void RemoveVanish()
     {
         SetVanish(false);
+        
+        // get player
+        var player = FieldSystem.unitSystem.GetPlayer();
+        //reload sight
+        player.ReloadSight();
     }
 }

@@ -67,7 +67,7 @@ public class HeinrichTrap : TileObject
         other.TakeDamage(damageContext);
         
         // create status effect : bound
-        StatusEffect rooted = new Rooted(owner);
+        StatusEffect rooted = new Rooted(owner, boundDuration);
         
         // apply status effect
         if (!other.TryAddStatus(rooted))

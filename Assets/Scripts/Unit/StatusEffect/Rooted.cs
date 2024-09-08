@@ -2,8 +2,9 @@ public class Rooted : StatusEffect
 {
     private int _duration;
     
-    public Rooted(Unit creator) : base(creator)
+    public Rooted(Unit creator, int duration) : base(creator)
     {
+        _duration = duration;
     }
 
     public override StatusEffectType GetStatusEffectType()

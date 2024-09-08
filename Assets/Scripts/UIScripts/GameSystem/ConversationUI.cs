@@ -45,6 +45,9 @@ public class ConversationUI : UISystem
             string img = conversationTable[i][4];
             string o = conversationTable[i][4 + (int)ScriptLanguage.English];
             string t = conversationTable[i][4 + (int)UserAccount.Language];
+            
+            if (string.IsNullOrEmpty(t)) t = o;
+            
             ConversationInfo info = new ConversationInfo(idx, g, s, n, img, o, t);
             _conversationInfo.Add(info);
         }
@@ -138,15 +141,15 @@ public class ConversationUI : UISystem
     public void StartNextConversation()
     {
         if (_conversationQueue.Count <= 0) return;
-        QuestInfo _curquestInfo = _conversationQueue[0].Item1;
+        QuestInfo curquestInfo = _conversationQueue[0].Item1;
 
         if (_conversationQueue[0].Item2)
         {
-            _groupInfo = GetConversationGroup(_curquestInfo.StartConversation);
+            _groupInfo = GetConversationGroup(curquestInfo.StartConversation);
         }
         else
         {
-            _groupInfo = GetConversationGroup(_curquestInfo.EndConversation);
+            _groupInfo = GetConversationGroup(curquestInfo.EndConversation);
         }
         if (_groupInfo == null)
         {
@@ -180,6 +183,8 @@ public class ConversationInfo
         sequence = s;
         speakerName = name/* + "*FixLater"*/;     //need Localization
         Texture2D texture = Resources.Load("UnitCapture/" + image) as Texture2D;
+        if (texture == null) texture = Resources.Load("UnitCapture/NULL") as Texture2D;
+        
         Sprite spr = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         speakerImage = spr;
         originalConversationText = originText;

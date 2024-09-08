@@ -27,7 +27,7 @@ public class WorldMapEditor : MonoBehaviour
         GameManager.instance.SetEditor();
         TileEffectManager.instance.gameObject.SetActive(false);
         
-        LoadData();
+        FieldSystem.onStageStart.AddListener(LoadData);
     }
 
     [ContextMenu("Load Link")]
@@ -121,7 +121,7 @@ public class WorldMapEditor : MonoBehaviour
     }
 
     #if UNITY_EDITOR
-    [ContextMenu("Save Tile Combat data")]
+    [ContextMenu("Load Tile Combat data In Editor Mode")]
     public void LoadTileCombatData()
     {
         if (EditorApplication.isPlaying)
@@ -138,6 +138,7 @@ public class WorldMapEditor : MonoBehaviour
             {
                 Debug.LogError("Cannot Found tile that has position " + tileCombatStageInfo.hexPosition.ToString());
             }
+            
             tile.combatStageIndex = tileCombatStageInfo.combatStageIndex;
         }
     }

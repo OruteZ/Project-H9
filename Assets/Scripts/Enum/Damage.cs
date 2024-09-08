@@ -58,5 +58,9 @@ public readonly struct Damage
         BLOODED = 1 << 3,
         BURNED = 1 << 4,
         HEAL = 1 << 5,
+        
+        // 하인리히 보스의 은신을 벗겨내기 위한 데미지 타입이지만, 이후 은신을 밝혀내는 데미지 특성이 될 지도 모름
+        UNVANISHABLE = 1 << 6,
+        
     };
 }

@@ -101,4 +101,5 @@ public enum ActionType {
     
     //Heinrich Boss Action
     HeinrichTrap,
+    HeinrichVanish
 }

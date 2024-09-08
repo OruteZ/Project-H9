@@ -56,7 +56,10 @@ public class MoveAction : BaseAction
 
     public override bool IsSelectable()
     {
-        return !unit.CheckAttackMoveTrigger();
+        if (unit.HasStatusEffect(StatusEffectType.Rooted)) return false;
+        if (unit.CheckAttackMoveTrigger()) return false;
+
+        return true;
     }
 
     public override bool CanExecuteImmediately()

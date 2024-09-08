@@ -26,8 +26,16 @@ public class WorldMapEditor : MonoBehaviour
         UIManager.instance.gameObject.SetActive(false);
         GameManager.instance.SetEditor();
         TileEffectManager.instance.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        // ctrl r to load link
         
-        FieldSystem.onStageStart.AddListener(LoadData);
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+        {
+            LoadData();
+        }
     }
 
     [ContextMenu("Load Link")]

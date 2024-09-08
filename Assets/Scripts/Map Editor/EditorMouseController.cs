@@ -57,7 +57,8 @@ public class EditorMouseController : MonoBehaviour
         }
         
         //each key in commands, if key is pressed
-        foreach (var command in commands)
+       if(Input.GetKey(KeyCode.LeftControl) is false) 
+           foreach (var command in commands)
         {
             if (Input.GetKeyDown(command.Key))
             {
@@ -102,6 +103,12 @@ public class EditorMouseController : MonoBehaviour
                 var command = _undoStack.Pop();
                 command.Undo();
             }
+        }
+        
+        // reload in ctrl+r
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+        {
+            onCommandExecuted.Invoke();
         }
     }
 

@@ -30,7 +30,11 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public bool isVisible
     {
         get => _unitModel.isVisible;
-        set => _unitModel.isVisible = value;
+        set
+        {
+            if (vanishTrigger) _unitModel.isVisible = false;
+            else _unitModel.isVisible = value;
+        }
     }
 
     #endregion
@@ -66,6 +70,9 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             _shootCntList.Add(value);
         }
     }
+    
+    public bool vanishTrigger = false;
+    
     public bool infiniteActionPointTrigger = false;
     public bool lightFootTrigger = false;
 
@@ -122,6 +129,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         unitName = newName;
         stat = unitStat;
         coverType = CoverType.NONE;
+        
+        var model = Instantiate(unitModel, transform);
+        _unitModel = model.GetComponent<UnitModel>();
+        _unitModel.Setup(this);
 
         _unitActionArray = GetComponents<IUnitAction>();
         foreach (IUnitAction action in _unitActionArray)
@@ -142,10 +153,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
             passiveIndexList.Add(passive.index);
         }
-
-        var model = Instantiate(unitModel, transform);
-        _unitModel = model.GetComponent<UnitModel>();
-        _unitModel.Setup(this);
 
         EquipWeapon(newWeapon, true);
         if (this is Player)

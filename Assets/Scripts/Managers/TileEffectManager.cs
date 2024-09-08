@@ -179,13 +179,6 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         int prevRouteLength = -1;
         while (true)
         {
-            // _movableEffectDelay -= Time.deltaTime;
-            // if (_movableEffectDelay > 0)
-            // {
-            //     yield return null;
-            //     continue;
-            // }
-            
             yield return null;
             ClearEffect(_effectsRelatedTarget);
 
@@ -201,6 +194,11 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 continue;
             }
             if (FieldSystem.unitSystem.GetUnit(target) is not null)
+            {
+                ClearEffect(_effectsRelatedTarget);
+                continue;
+            }
+            if(GameManager.instance.CompareState(GameState.WORLD) && GameManager.instance.IsPioneeredWorldTile(target) is false)
             {
                 ClearEffect(_effectsRelatedTarget);
                 continue;

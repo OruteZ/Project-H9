@@ -48,6 +48,17 @@ public class MoveAction : BaseAction
 
     public override bool CanExecute(Vector3Int targetPos)
     {
+        // 예외처리 : world Scene에서 구름에 가려진 부분
+        if (
+            GameManager.instance.CompareState(GameState.WORLD) &&
+            FieldSystem.tileSystem.GetTileObject(targetPos).Any(item => item is FogOfWar)
+            )
+        {
+            Debug.Log("Cloud");
+            return false;
+        }
+        
+        
         SetTarget(targetPos);
         ReloadPath();
         
@@ -56,7 +67,10 @@ public class MoveAction : BaseAction
 
     public override bool IsSelectable()
     {
-        return !unit.CheckAttackMoveTrigger();
+        if (unit.HasStatusEffect(StatusEffectType.Rooted)) return false;
+        if (unit.CheckAttackMoveTrigger()) return false;
+
+        return true;
     }
 
     public override bool CanExecuteImmediately()

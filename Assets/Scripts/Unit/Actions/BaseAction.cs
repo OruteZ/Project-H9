@@ -104,6 +104,10 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
                 break;
             case ActionType.Cover:
                 break;
+            case ActionType.HeinrichTrap:
+                break;
+            case ActionType.HeinrichVanish:
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }

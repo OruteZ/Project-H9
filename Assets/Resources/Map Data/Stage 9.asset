@@ -135,17 +135,17 @@ MonoBehaviour:
     gridVisible: 1
   - hexPosition: {x: 2, y: 2, z: -4}
     visible: 1
-    walkable: 0
+    walkable: 1
     rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 3, y: 2, z: -5}
     visible: 1
-    walkable: 0
+    walkable: 1
     rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 4, y: 2, z: -6}
     visible: 1
-    walkable: 1
+    walkable: 0
     rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 5, y: 2, z: -7}
@@ -201,7 +201,7 @@ MonoBehaviour:
   - hexPosition: {x: 4, y: 3, z: -7}
     visible: 1
     walkable: 1
-    rayThroughable: 0
+    rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 5, y: 3, z: -8}
     visible: 1
@@ -216,7 +216,7 @@ MonoBehaviour:
   - hexPosition: {x: 7, y: 3, z: -10}
     visible: 1
     walkable: 1
-    rayThroughable: 0
+    rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 8, y: 3, z: -11}
     visible: 1
@@ -261,12 +261,12 @@ MonoBehaviour:
   - hexPosition: {x: 5, y: 4, z: -9}
     visible: 1
     walkable: 1
-    rayThroughable: 0
+    rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 6, y: 4, z: -10}
     visible: 1
     walkable: 1
-    rayThroughable: 0
+    rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 7, y: 4, z: -11}
     visible: 1
@@ -328,11 +328,6 @@ MonoBehaviour:
     walkable: 1
     rayThroughable: 1
     gridVisible: 1
-  - hexPosition: {x: 7, y: 6, z: -13}
-    visible: 1
-    walkable: 0
-    rayThroughable: 1
-    gridVisible: 1
   - hexPosition: {x: -3, y: 6, z: -3}
     visible: 1
     walkable: 0
@@ -383,13 +378,18 @@ MonoBehaviour:
     walkable: 1
     rayThroughable: 1
     gridVisible: 1
+  - hexPosition: {x: 7, y: 6, z: -13}
+    visible: 1
+    walkable: 0
+    rayThroughable: 1
+    gridVisible: 1
   tileObjectData:
-  - prefab: {fileID: 7906068605278083229, guid: 4b58bcb498e32434781a95bb5e37f495,
+  - prefab: {fileID: 6568083678910775296, guid: 4b58bcb498e32434781a95bb5e37f495,
       type: 3}
     hexPosition: {x: 4, y: 2, z: -6}
     rotation: -0
     positionOffset: {x: 0, y: 0, z: 0}
-    scale: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
     arguments:
     - 1
     - 1
@@ -1088,7 +1088,7 @@ MonoBehaviour:
     hexPosition: {x: 10, y: 0, z: -10}
     height: 0
     position: {x: 17.320507, y: 0, z: 0}
-    rotation: 34.232594
+    rotation: 34.232597
     scale: {x: 1, y: 1, z: 1}
   enemySpawnPoints:
   - {x: 6, y: 5, z: -11}

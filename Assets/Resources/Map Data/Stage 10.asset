@@ -354,10 +354,12 @@ MonoBehaviour:
     rayThroughable: 1
     gridVisible: 1
   tileObjectData:
-  - prefab: {fileID: 7906068605278083229, guid: 4b58bcb498e32434781a95bb5e37f495,
+  - prefab: {fileID: 6568083678910775296, guid: 4b58bcb498e32434781a95bb5e37f495,
       type: 3}
     hexPosition: {x: 1, y: 5, z: -6}
     rotation: -0
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
     arguments:
     - 1
     - 1
@@ -927,7 +929,7 @@ MonoBehaviour:
     hexPositioned: 1
     hexPosition: {x: 0, y: 0, z: 0}
     height: 0
-    position: {x: -0.00000013204186, y: 0, z: 0.00000019226546}
+    position: {x: 0, y: 0, z: 0}
     rotation: 317.3801
     scale: {x: 1, y: 1, z: 1}
   - material: {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
@@ -935,7 +937,7 @@ MonoBehaviour:
     hexPositioned: 1
     hexPosition: {x: 4, y: 0, z: -4}
     height: 0
-    position: {x: 6.928203, y: 0, z: 0.0000000022877025}
+    position: {x: 6.928203, y: 0, z: 0}
     rotation: 257.77704
     scale: {x: 1, y: 1, z: 1}
   - material: {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
@@ -943,7 +945,7 @@ MonoBehaviour:
     hexPositioned: 1
     hexPosition: {x: -4, y: 8, z: -4}
     height: 0
-    position: {x: -0.0000000068789845, y: 0, z: -12}
+    position: {x: 0, y: 0, z: -12}
     rotation: 224.48616
     scale: {x: 1, y: 1, z: 1}
   - material: {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
@@ -966,3 +968,4 @@ MonoBehaviour:
   - {x: 2, y: 1, z: -3}
   - {x: 3, y: 5, z: -8}
   playerSpawnPoint: {x: -2, y: 7, z: -5}
+  stageStyle: 0

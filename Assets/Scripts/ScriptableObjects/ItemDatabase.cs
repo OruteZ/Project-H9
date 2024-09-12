@@ -123,6 +123,10 @@ public class ItemData
     public int itemTooltip;
     public Sprite icon;
     public GameObject itemModel;
+    
+    
+    // non_csv
+    public Damage.Type damageType = Damage.Type.DEFAULT;
 
     /// <summary>
     /// 해당 아이템의 툴팁 설명을 구성하여 불러옵니다.

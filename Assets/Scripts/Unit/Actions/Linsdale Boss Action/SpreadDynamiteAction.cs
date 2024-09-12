@@ -103,15 +103,16 @@ public class SpreadDynamiteAction : BaseAction
     [SerializeField]
     private GameObject dynamitePrefab;
 
-    private void Throw() 
+    private void Throw()
     {
+        Vector3 handPosition = unit.hand.position;
         
         IEnumerable<Tile> tiles = FieldSystem.tileSystem.GetTilesInRange(unit.hexPosition, radius);
         List<Tile> dynamiteTiles = SelectRandomTile(tiles.ToList(), dynamiteCount);
         
         foreach (Tile tile in dynamiteTiles)
         {
-            DynamiteVisualEffect visual = Instantiate(dynamitePrefab, unit.transform.position, Quaternion.identity)
+            DynamiteVisualEffect visual = Instantiate(dynamitePrefab, handPosition, Quaternion.identity)
                 .GetComponent<DynamiteVisualEffect>();
             Dynamite dynamite = visual.GetComponent<Dynamite>();
             
@@ -120,7 +121,6 @@ public class SpreadDynamiteAction : BaseAction
                 () => dynamite.SetUp(unit, tile.hexPosition, durationTurn, radius, damage),
                 false
                 );
-            
         }
     }
 

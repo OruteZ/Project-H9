@@ -115,6 +115,9 @@ MonoBehaviour:
   _explosionPrefab: {fileID: 1710508625926686, guid: 7d7fabff3e89cf141a4aadbcec9e3377,
     type: 3}
   _duration: 1
+  onSetDestination:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5436228698916405107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,4 +131,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
-  rotationAxis: {x: 1, y: 0, z: 0}
+  rotationAxis: {x: 1, y: 2, z: 0}

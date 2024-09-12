@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ public class SuicideDynamiteAction : BaseAction
     {
         base.SetUp(unit);
         
+        effect = new SuicideDisplayableEffect();
         effect.Setup(null, unit, explosionRange);
         effect.SetActive(false);
     }
@@ -57,15 +59,20 @@ public class SuicideDynamiteAction : BaseAction
     protected override IEnumerator ExecuteCoroutine()
     {
         effect.SetActive(true);
+        
+        yield return new WaitForSeconds(1f);
+        
         yield return true;
     }
 }
 
+[Serializable]
 public class SuicideDisplayableEffect : IDisplayableEffect
 {
     private bool _active;
     private int _range;
 
+    [SerializeField]
     private Unit _unit, _target;
     
     public int GetIndex()
@@ -105,6 +112,7 @@ public class SuicideDisplayableEffect : IDisplayableEffect
         _target = target;
         
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
+        
         _unit.AddDisplayableEffect(this);
     }
     

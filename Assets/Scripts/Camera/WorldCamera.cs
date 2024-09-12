@@ -25,7 +25,10 @@ public class WorldCamera : MonoBehaviour
     
     private void Start()
     {
-        SetPosition(FieldSystem.unitSystem.GetPlayer().transform.position);
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player is null) return;
+        
+        SetPosition(player.transform.position);
     }
     
     private void Update()

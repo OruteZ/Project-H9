@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -15,7 +16,7 @@ public class UnitCamera : MonoBehaviour
 
     private void Awake()
     {
-        _targetGroup = Instantiate(new GameObject("ViewPoint")).AddComponent<CinemachineTargetGroup>();
+        _targetGroup = new GameObject("ViewPoint").AddComponent<CinemachineTargetGroup>();
         
         _virtualCamera.Follow = _targetGroup.transform;
         _virtualCamera.LookAt = _targetGroup.transform;
@@ -45,13 +46,17 @@ public class UnitCamera : MonoBehaviour
         
         owner.onActionStart.AddListener((a, t) =>
         {
+            if (t == Hex.none) t = a.GetUnit().hexPosition;
+            
             _actionTargetTile = FieldSystem.tileSystem.GetTile(t);
+            if (_actionTargetTile is null) return;
             
             CatchTarget(_actionTargetTile.transform);
         });
         
         owner.onFinishAction.AddListener((a) =>
         {
+            if (_actionTargetTile is null) return;
             RemoveTarget(_actionTargetTile.transform);
             
             _actionTargetTile = null;
@@ -101,5 +106,10 @@ public class UnitCamera : MonoBehaviour
     private void RemoveTarget(Transform target)
     {
         _targetGroup.RemoveMember(target);
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(_targetGroup.gameObject);
     }
 }

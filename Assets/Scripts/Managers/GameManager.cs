@@ -300,7 +300,13 @@ public class GameManager : Generic.Singleton<GameManager>
 
         var watch = DGS.Stopwatch.StartNew();
         var qi = new QuestParser();
-        Quests = qi.GetQuests();
+        FieldSystem.onStageAwake.AddListener(() =>
+        {
+            if (!CompareState(GameState.EDITOR))
+            {
+                Quests = qi.GetQuests();
+            }
+        });
         watch.Stop();
         Debug.Log($"<color=blue>Quest parse time: {watch.ElapsedMilliseconds}</color>");
 

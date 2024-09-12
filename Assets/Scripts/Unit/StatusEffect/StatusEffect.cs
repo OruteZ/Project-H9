@@ -90,5 +90,6 @@ public enum StatusEffectType
     Concussion = 15,
     Fracture = 16,
     Blind = 17,
-    Recoil,
+    Recoil = 18,
+    Rooted = 19
 }

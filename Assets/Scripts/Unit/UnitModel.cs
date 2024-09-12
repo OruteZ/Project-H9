@@ -335,7 +335,7 @@ public class UnitModel : MonoBehaviour
             }
         }
         
-        foreach (var child in list)
+        foreach (Transform child in list)
         {
             DestroyImmediate(child.gameObject, true);
         }

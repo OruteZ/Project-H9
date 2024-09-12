@@ -174,5 +174,5 @@ public enum EnemyType
 {
     NORMAL = 0 ,
     BOSS_LINSDALE = 1,
-    
+    BOSS_HEINRICH = 2,
 }

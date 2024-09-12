@@ -74,11 +74,11 @@ MonoBehaviour:
   Guid: ebb20bb0d371d7a468aee95f72acd947
   PositionalData:
     serializedVersion: 2
-    x: 554
+    x: 546
     y: 21
     width: 150
     height: 94
-  value: 1
+  value: 5
 --- !u!114 &-5214322597354002962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,8 +98,8 @@ MonoBehaviour:
     y: 531
     width: 274
     height: 147
-  TrueNode: {fileID: 0}
-  FalseNode: {fileID: 0}
+  TrueNode: {fileID: -4167713834313210125}
+  FalseNode: {fileID: 5326464820399980193}
   Condition: {fileID: -4316969034829125077}
 --- !u!114 &-4316969034829125077
 MonoBehaviour:
@@ -120,7 +120,7 @@ MonoBehaviour:
     y: 378
     width: 201
     height: 118
-  comparisonType: 4
+  comparisonType: 1
   value: {fileID: -7658660522522470161}
   compareWith: {fileID: 4890076060552810918}
 --- !u!114 &-4167713834313210125
@@ -138,13 +138,13 @@ MonoBehaviour:
   Guid: cadc2c10fb9685d4292c1df860995f75
   PositionalData:
     serializedVersion: 2
-    x: 855.00006
-    y: 740.7501
+    x: 884.0001
+    y: 808.8501
     width: 256
     height: 106
   _flags: 0
-  action: {fileID: 0}
-  targetPos: {fileID: 0}
+  action: {fileID: 910291607607402289}
+  targetPos: {fileID: 3021646885029732261}
 --- !u!114 &-688897789913876133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
     y: 158
     width: 201
     height: 118
-  comparisonType: 4
+  comparisonType: 1
   value: {fileID: 9045057260398812297}
   compareWith: {fileID: -5546507040319510811}
 --- !u!114 &11400000
@@ -179,8 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b172a3453879dc42b31ffab07278046, type: 3}
   m_Name: AI 2
   m_EditorClassIdentifier: 
-  _viewPosition: {x: 129, y: 30, z: 0}
-  _viewScale: {x: 0.8695652, y: 0.8695652, z: 1}
+  _viewPosition: {x: 197, y: 35, z: 0}
+  _viewScale: {x: 1, y: 1, z: 1}
   Root: {fileID: -8098248551746100217}
   Nodes:
   - {fileID: -8098248551746100217}
@@ -197,6 +197,8 @@ MonoBehaviour:
   - {fileID: -4316969034829125077}
   - {fileID: -4167713834313210125}
   - {fileID: 910291607607402289}
+  - {fileID: 3021646885029732261}
+  - {fileID: 5326464820399980193}
   Inputs:
   - InputGUID: 3a4a749297d9b24468ef22439984be4b
     InputPortName: compareWith
@@ -242,6 +244,22 @@ MonoBehaviour:
     InputPortName: Condition
     OutputGUID: 30165d438c626a34c885b367e8107d54
     OutputPortName: Output
+  - InputGUID: cadc2c10fb9685d4292c1df860995f75
+    InputPortName: main
+    OutputGUID: 74db2e6769b9ff04bbe6397da8a47295
+    OutputPortName: TRUE
+  - InputGUID: cadc2c10fb9685d4292c1df860995f75
+    InputPortName: action
+    OutputGUID: 83e44b2d5c2755f4d852a94c979b356e
+    OutputPortName: Output
+  - InputGUID: cadc2c10fb9685d4292c1df860995f75
+    InputPortName: targetPos
+    OutputGUID: 3cc95a61eb82dc5438a6dd8c2bcb3e31
+    OutputPortName: Output
+  - InputGUID: 0b91953b71efe934b8637fa2933d1f24
+    InputPortName: main
+    OutputGUID: 74db2e6769b9ff04bbe6397da8a47295
+    OutputPortName: FALSE
 --- !u!114 &910291607607402289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,11 +275,11 @@ MonoBehaviour:
   Guid: 83e44b2d5c2755f4d852a94c979b356e
   PositionalData:
     serializedVersion: 2
-    x: 724
-    y: 584
-    width: 160
+    x: 750.0001
+    y: 631
+    width: 176
     height: 94
-  actionType: 0
+  actionType: 12
 --- !u!114 &2169268921408406219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +324,25 @@ MonoBehaviour:
   _flags: 0
   action: {fileID: -8521442030496869050}
   targetPos: {fileID: 3631232804589809120}
+--- !u!114 &3021646885029732261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c813cc7ecc4c509c2e2be928c1df51, type: 3}
+  m_Name: NullPos
+  m_EditorClassIdentifier: 
+  Guid: 3cc95a61eb82dc5438a6dd8c2bcb3e31
+  PositionalData:
+    serializedVersion: 2
+    x: 653.2001
+    y: 763.60004
+    width: -653.2001
+    height: -763.60004
 --- !u!114 &3631232804589809120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +381,27 @@ MonoBehaviour:
     y: 252
     width: 150
     height: 94
-  value: 2
+  value: 10
+--- !u!114 &5326464820399980193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c114b32dceff5c4b84f7d8c5764c402, type: 3}
+  m_Name: FinishTurn
+  m_EditorClassIdentifier: 
+  Guid: 0b91953b71efe934b8637fa2933d1f24
+  PositionalData:
+    serializedVersion: 2
+    x: 1396.3501
+    y: 830.25
+    width: 256
+    height: 106
+  _flags: 4
 --- !u!114 &9045057260398812297
 MonoBehaviour:
   m_ObjectHideFlags: 0

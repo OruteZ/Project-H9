@@ -60,8 +60,9 @@ public static class Service
         // 15보다 높은 값에만 scale을 추가로 주겠음
         float scale = 1.0f;
         if (damage > 15) scale = 1.5f;
+        if (type.HasFlag(Damage.Type.MISS)) return;
 
-        Service.SetText(type, damage.ToString(), pos, scale);
+        SetText(type, damage.ToString(), pos, scale);
     }
 
     /// <summary>

@@ -15,12 +15,12 @@ public class PassiveDatabase : ScriptableObject
     [ContextMenu("Read Csv")]
     public void ReadCsv()
     {
-        var infoList = FileRead.Read("PassiveSkillTable", out var columnInfo);
+        List<List<string>> infoList = FileRead.Read("PassiveSkillTable", out Dictionary<string, int> columnInfo);
 
         if (infos is null) infos = new List<PassiveInfo>();
         else infos.Clear();
         
-        foreach(var info in infoList)
+        foreach(List<string> info in infoList)
         {
             string[] conditionStrings = info[(int)PassiveColumn.Condition].Trim().Trim('\"').Split(',');
             string[] conditionAmountStrings = info[(int)PassiveColumn.ConditionAmount].Trim().Trim('\"').Split(',');

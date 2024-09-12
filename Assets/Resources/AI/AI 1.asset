@@ -57,10 +57,10 @@ MonoBehaviour:
   Guid: 44cfd57cb04497c4482b8f2db6c9af4f
   PositionalData:
     serializedVersion: 2
-    x: 999.06506
-    y: 1189.5
-    width: 274
-    height: 147
+    x: 1010
+    y: 1181
+    width: 256
+    height: 142
   TrueNode: {fileID: 5559388227829967861}
   FalseNode: {fileID: -8971841178813933627}
   Condition: {fileID: -5835009142573711867}
@@ -326,8 +326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b172a3453879dc42b31ffab07278046, type: 3}
   m_Name: AI 1
   m_EditorClassIdentifier: 
-  _viewPosition: {x: -89, y: 55, z: 0}
-  _viewScale: {x: 0.57175326, y: 0.57175326, z: 1}
+  _viewPosition: {x: -326, y: -715, z: 0}
+  _viewScale: {x: 1, y: 1, z: 1}
   Root: {fileID: -8098248551746100217}
   Nodes:
   - {fileID: -8098248551746100217}
@@ -527,6 +527,10 @@ MonoBehaviour:
     InputPortName: compareWith
     OutputGUID: ce174640ed4adfa4e947d506b941771a
     OutputPortName: Output
+  - InputGUID: 91c867654be24474489344df91aa2aa6
+    InputPortName: targetPos
+    OutputGUID: 79a639759dda7044db29bb712eaca213
+    OutputPortName: Output
 --- !u!114 &360641257093424632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,8 +546,8 @@ MonoBehaviour:
   Guid: b38b67504df180a45bdee771eeabd023
   PositionalData:
     serializedVersion: 2
-    x: 999.7495
-    y: 332.9185
+    x: 1033
+    y: 391
     width: 156
     height: 118
   a: {fileID: 4809893187693007687}
@@ -664,8 +668,8 @@ MonoBehaviour:
   Guid: c1cbeb936f4ef024cb772ec823ded6d3
   PositionalData:
     serializedVersion: 2
-    x: 900
-    y: 190
+    x: 905
+    y: 259
     width: 256
     height: 106
 --- !u!114 &4967058418249283595
@@ -683,8 +687,8 @@ MonoBehaviour:
   Guid: c924d00787c338640be4bbf9d3f75c51
   PositionalData:
     serializedVersion: 2
-    x: 1119.2505
-    y: 1485
+    x: 1160
+    y: 1497
     width: 160
     height: 94
   actionType: 3
@@ -703,8 +707,8 @@ MonoBehaviour:
   Guid: 8a31c5d9a55f8ff419299921a3ce87e5
   PositionalData:
     serializedVersion: 2
-    x: 1652.9576
-    y: 938.5127
+    x: 1656
+    y: 953
     width: 160
     height: 94
   actionType: 3
@@ -745,7 +749,7 @@ MonoBehaviour:
   Guid: 71f4aadcc8cdad443b6564d8601590a3
   PositionalData:
     serializedVersion: 2
-    x: 1298
+    x: 1320
     y: 1485
     width: 256
     height: 106
@@ -764,8 +768,8 @@ MonoBehaviour:
   Guid: 79a639759dda7044db29bb712eaca213
   PositionalData:
     serializedVersion: 2
-    x: 1156
-    y: 202
+    x: 1161
+    y: 271
     width: 201
     height: 94
 --- !u!114 &6789328065086735335

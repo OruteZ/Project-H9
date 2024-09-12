@@ -189,11 +189,20 @@ public class Player : Unit
     private void OnMoved(Unit unit)
     {
         ReloadSight();
-        foreach (var obj in FieldSystem.tileSystem.GetTile(hexPosition).tileObjects) 
-        { 
+        List<TileObject> objs = FieldSystem.tileSystem.GetTile(hexPosition).tileObjects;
+        for (int index = 0; index < objs.Count; index++)
+        {
+            TileObject obj = objs[index];
             obj.OnCollision(unit);
+            
+            // if obj destroyed, remove from list
+            if (obj == null)
+            {
+                objs.RemoveAt(index);
+                index--;
+            }
         }
-        
+
         PlayerEvents.OnMovedPlayer?.Invoke(hexPosition);
     }
 

@@ -82,7 +82,7 @@ public abstract class TileObject : MonoBehaviour
         vision = value;
     }
 
-    protected virtual void RemoveSelf()
+    protected internal virtual void RemoveSelf()
     {
         FieldSystem.tileSystem.DeleteTileObject(this);
         tile.RemoveObject(this);
@@ -100,5 +100,6 @@ public enum TileObjectType
     TOWN,
     COVERABLE,
     DYNAMITE,
+    HEINRICH_TRAP,
     NONE,
 }

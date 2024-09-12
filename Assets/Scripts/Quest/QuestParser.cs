@@ -9,8 +9,8 @@ public class QuestParser
     private readonly string QUEST_LOCALIZATION_PATH = $"QuestLocalizationTable";
     public List<QuestInfo> GetQuests()
     {
-        ParseLocalization(out var localizationData);
-        ParseQuestInfos(in localizationData, out var questInfos);
+        ParseLocalization(out Dictionary<int, string> localizationData);
+        ParseQuestInfos(in localizationData, out List<QuestInfo> questInfos);
         // TODO : 유저데이터와 동기화하는 함수() 필요
         return questInfos;
     }
@@ -41,9 +41,9 @@ public class QuestParser
             int index = int.Parse(line[0]);
             int questType = int.Parse(line[1]);
             int questNameRef = int.Parse(line[2]);
-            string questName = localizationData[questNameRef];
+            string questName = localizationData.GetValueOrDefault(questNameRef, "Null Name");
             int questTooltipRef = int.Parse(line[3]);
-            string questTooltip = localizationData[questTooltipRef];
+            string questTooltip = localizationData.GetValueOrDefault(questTooltipRef, "Null Tooltip");
             int startScript = int.Parse(line[4]);
             int endScript = int.Parse(line[5]);
 

@@ -314,6 +314,7 @@ public class TileSystem : MonoBehaviour
 
     public void AddTileObject(TileObject obj)
     {
+        obj.transform.SetParent(tileObjParent.transform);
         _tileObjects.Add(obj);
     }
 

@@ -14,8 +14,8 @@ public class TurnSystem : MonoBehaviour
     public Unit turnOwner;
 
     public int turnNumber => GetTurnNumber();
-    private int _combatTurnNumber;
-    private int _worldTurnNumber;
+    [SerializeField] private int _combatTurnNumber;
+    [SerializeField] private int _worldTurnNumber;
 
     public int GetTurnNumber()
     {
@@ -99,6 +99,8 @@ public class TurnSystem : MonoBehaviour
         }
         else
         {
+            if (GameManager.instance.CompareState(GameState.COMBAT)) _combatTurnNumber++;
+            
             onTurnChanged.Invoke(); // 유닛의 n번째 턴이 시작되기 위해 n번째 턴을 먼저 만들고 나서, 유닛의 StartTurn()
             turnOwner.StartTurn();
             GameManager.instance.Save(true);

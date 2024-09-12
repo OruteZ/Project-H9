@@ -26,8 +26,16 @@ public class WorldMapEditor : MonoBehaviour
         UIManager.instance.gameObject.SetActive(false);
         GameManager.instance.SetEditor();
         TileEffectManager.instance.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        // ctrl r to load link
         
-        LoadData();
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+        {
+            LoadData();
+        }
     }
 
     [ContextMenu("Load Link")]
@@ -63,6 +71,12 @@ public class WorldMapEditor : MonoBehaviour
         foreach (TileCombatStageInfo info in worldData.specificCombatIndexedTiles)
         {
             Tile tile = FieldSystem.tileSystem.GetTile(info.hexPosition);
+            if (tile == null)
+            {
+                Debug.LogError("Cannot Found tile that has position " + info.hexPosition.ToString());
+                continue;
+            }
+            
             tile.combatStageIndex = info.combatStageIndex;
         }
     }
@@ -115,7 +129,7 @@ public class WorldMapEditor : MonoBehaviour
     }
 
     #if UNITY_EDITOR
-    [ContextMenu("Save Tile Combat data")]
+    [ContextMenu("Load Tile Combat data In Editor Mode")]
     public void LoadTileCombatData()
     {
         if (EditorApplication.isPlaying)
@@ -132,6 +146,7 @@ public class WorldMapEditor : MonoBehaviour
             {
                 Debug.LogError("Cannot Found tile that has position " + tileCombatStageInfo.hexPosition.ToString());
             }
+            
             tile.combatStageIndex = tileCombatStageInfo.combatStageIndex;
         }
     }

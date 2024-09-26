@@ -31,8 +31,8 @@ public class EnvTileGenerator : MonoBehaviour
     [ContextMenu(("Remove Env"))]
     private void Remove()
     {
-        var envs = _envParent.GetComponentsInChildren<HexTransform>();
-        foreach(var env in envs)
+        HexTransform[] envs = _envParent.GetComponentsInChildren<HexTransform>();
+        foreach(HexTransform env in envs)
         {
             DestroyImmediate(env.gameObject);
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,6 +12,7 @@ public class CoverableObj : TileObject, IDamageable
     
     [SerializeField] private CoverType coverType;
     [SerializeField] private Unit unit;
+    [SerializeField] private Hex.Direction coverDirection;
     
     private readonly UnityEvent<int, int> _onHpChanged = new UnityEvent<int, int>();
     
@@ -27,16 +29,18 @@ public class CoverableObj : TileObject, IDamageable
         return new[]
         {
             maxHp.ToString(),
-            currentHp.ToString()
+            currentHp.ToString(),
+            coverDirection.ToString()
         };
     }
 
     public override void SetArgs(string[] args)
     {
-        if (args.Length != 2) throw new System.Exception("Invalid args length. Expected 2.");
+        if (args.Length != 2) throw new Exception("Invalid args length. Expected 2.");
         
         maxHp = int.Parse(args[0]);
         currentHp = int.Parse(args[1]);
+        coverDirection = (Hex.Direction) Enum.Parse(typeof(Hex.Direction), args[2]);
     }
     
     public CoverType GetCoverType()
@@ -63,7 +67,11 @@ public class CoverableObj : TileObject, IDamageable
         
         if (!context.Contains(Damage.Type.MISS)) return;
         
-        bool isCovered = Coverable(context.attacker.GetHex(), hexPosition, context.target.GetHex());
+        bool isCovered = Coverable(
+            context.attacker.GetHex(),
+            hexPosition, 
+            coverDirection
+            );
         if (!isCovered) return;
         
 
@@ -118,24 +126,21 @@ public class CoverableObj : TileObject, IDamageable
     #endregion
 
     // Get the direction from the player to the cover
-    public Vector3Int GetCoverDirection(Vector3Int playerHexPosition)
+    public Hex.Direction GetCoverDirections()
     {
-        // Get the direction from the player to the cover
-        return hexPosition - playerHexPosition;
+        return coverDirection;
     }
 
-    public static bool Coverable(Vector3Int atkFrom, Vector3Int coverObjPos, Vector3Int targetPos)
+    public static bool Coverable(Vector3Int atkHex, Vector3Int targetHex, Hex.Direction coverDirection)
     {
+        Vector3 target = Hex.Hex2World(targetHex) + Vector3.up;
+        Vector3 atk = Hex.Hex2World(atkHex) + Vector3.up;
         
-        Vector3 target = Hex.Hex2World(targetPos) + Vector3.up;
-        Vector3 cover = Hex.Hex2World(coverObjPos) + Vector3.up;
-        Vector3 atkFromWorld = Hex.Hex2World(atkFrom) + Vector3.up;
-        
-        Vector3 midVector = (cover - target).normalized;
-        Vector3 coverToAtkFrom = (atkFromWorld - cover).normalized;
+        Vector3 targetToAtkRay = (atk - target).normalized;
+        Vector3 midVector = Hex.Hex2World(Hex.GetDirectionHex(coverDirection));
         
         // is coverToAtkFrom between cwVector and ccwVector?
-        float angle = Vector3.Angle(midVector, coverToAtkFrom);
+        float angle = Vector3.Angle(midVector, targetToAtkRay);
         if (angle <= 61)
         {
             return true;

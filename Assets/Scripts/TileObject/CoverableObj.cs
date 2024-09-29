@@ -13,6 +13,9 @@ public class CoverableObj : TileObject, IDamageable
     [SerializeField] private CoverType coverType;
     [SerializeField] private Unit unit;
     [SerializeField] private Hex.Direction coverDirection;
+
+    [SerializeField] private Material lightCoverMaterial = TileEffectManager.instance.combatFowMaterial;
+    private bool _visible;
     
     private readonly UnityEvent<int, int> _onHpChanged = new UnityEvent<int, int>();
     
@@ -189,7 +192,6 @@ public class CoverableObj : TileObject, IDamageable
 
     private bool CheckMultipleDirection()
     {
-        
         // check if there are multiple coverable objects in the same position
         CoverableObj[] coverables = FindObjectsOfType<CoverableObj>();
         if (coverables.Length <= 1) return false;
@@ -202,6 +204,36 @@ public class CoverableObj : TileObject, IDamageable
         CoverableObj[] sameDirCoverables = samePosCoverables.Where(c => c.coverDirection == coverDirection).ToArray();
         
         return sameDirCoverables.Length > 1;
+    }
+
+    public override void SetVisible(bool value)
+    {
+        //if editor mode, value always true
+        if (GameManager.instance.CompareState(GameState.EDITOR)) return;
+        
+        _visible = value;
+        // if vis
+        
+        // matrial에 light cover material을 추가. 두 개의 material을 가지고 있어야 함.
+        // light cover material은 shader가 transparent이어야 함.
+        
+        // if visible, light cover material을 추가
+        // if not visible, light cover material을 제거
+        
+        if (value)
+        {
+            meshRenderer.materials = new[] {meshRenderer.material, lightCoverMaterial};
+        }
+        else
+        {
+            meshRenderer.materials = new[] {meshRenderer.material};
+        }
+        
+    }
+
+    public override bool IsVisible()
+    {
+        return _visible;
     }
 }
 

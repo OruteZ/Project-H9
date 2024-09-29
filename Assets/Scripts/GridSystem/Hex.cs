@@ -262,11 +262,11 @@ public static class Hex
 
     public enum Direction
     {
+        Right,
+        DownRight,
+        DownLeft ,
+        Left,
         UpLeft,
         UpRight,
-        Left,
-        Right,
-        DownLeft ,
-        DownRight
     }
 }

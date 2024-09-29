@@ -14,7 +14,7 @@ public class CoverableObj : TileObject, IDamageable
     [SerializeField] private Unit unit;
     [SerializeField] private Hex.Direction coverDirection;
 
-    [SerializeField] private Material lightCoverMaterial = TileEffectManager.instance.combatFowMaterial;
+    private static Material LightCoverMaterial => TileEffectManager.instance.combatFowMaterial;
     private bool _visible;
     
     private readonly UnityEvent<int, int> _onHpChanged = new UnityEvent<int, int>();
@@ -39,11 +39,13 @@ public class CoverableObj : TileObject, IDamageable
 
     public override void SetArgs(string[] args)
     {
-        if (args.Length != 2) throw new Exception("Invalid args length. Expected 2.");
+        if (args.Length != 3) throw new Exception("Invalid args length. Expected 2.");
         
         maxHp = int.Parse(args[0]);
         currentHp = int.Parse(args[1]);
         coverDirection = (Hex.Direction) Enum.Parse(typeof(Hex.Direction), args[2]);
+        
+        OnValidate();
     }
     
     public CoverType GetCoverType()
@@ -225,7 +227,7 @@ public class CoverableObj : TileObject, IDamageable
         
         if (value)
         {
-            meshRenderer.materials = new[] {meshRenderer.material, lightCoverMaterial};
+            meshRenderer.materials = new[] {meshRenderer.material, LightCoverMaterial};
         }
         else
         {

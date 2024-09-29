@@ -188,6 +188,9 @@ public class CoverableObj : TileObject, IDamageable
         {
             Debug.LogError("같은 위치에 여러개의 Coverable이 있을 수 있으나, 각 Coverable의 방향은 달라야 한다.");
         }
+        
+        // 방향을 확인 하고, 해당 방향에 맞추어서 Rotation 재설정. rotation이 0일경우 오른쪽 정면을 쳐다봄
+        transform.rotation = Quaternion.Euler(0, (int) coverDirection * 60, 0);
     }
 
     private bool CheckMultipleDirection()

@@ -24,7 +24,8 @@ public class BuffUI : UISystem
         StatusEffectType.Fracture,
         StatusEffectType.Blind,
         StatusEffectType.Bleeding,
-        StatusEffectType.Burning
+        StatusEffectType.Burning,
+        //StatusEffectType.Rooted
     };
 
     private void Awake()
@@ -76,15 +77,20 @@ public class BuffUI : UISystem
     private void SortDebuff()
     {
         List<IDisplayableEffect> sortedList = new List<IDisplayableEffect>();
-        for (int i = 0; i < _debuffSortPriority.Count; i++) 
+        for (int i = 0; i < _debuffSortPriority.Count; i++)
         {
-            for (int j = 0; j < _currentDebuffs.Count; j++)
+            for (int j = _currentDebuffs.Count - 1; j >= 0; j--)
             {
                 if (((StatusEffect)_currentDebuffs[j]).GetStatusEffectType() == _debuffSortPriority[i]) 
                 {
                     sortedList.Add(_currentDebuffs[j]);
+                    _currentDebuffs.RemoveAt(j);
                 }
             }
+        }
+        for (int j = 0; j < _currentDebuffs.Count; j++)
+        {
+            sortedList.Add(_currentDebuffs[j]);
         }
         _currentDebuffs = sortedList;
     }
@@ -100,6 +106,7 @@ public class BuffUI : UISystem
         bool isExistTooltipEffect = false;
         foreach (IDisplayableEffect effect in currentState)
         {
+            Debug.LogError(effect);
             if (effect.CanDisplay())
             {
                 UI.transform.GetChild(buffCount++).GetComponent<BuffUIElement>().SetBuffUIElement(effect, isBuff, true);
@@ -140,7 +147,7 @@ public class BuffUI : UISystem
 
     public Sprite GetDebuffIconSprite(StatusEffectType effType) 
     {
-        if ((int)effType >= (int)StatusEffectType.Burning && (int)effType <= (int)StatusEffectType.Recoil) 
+        if ((int)effType >= (int)StatusEffectType.Burning && (int)effType <= (int)StatusEffectType.Rooted) 
         {
             //Debug.Log(effType);
             return UIManager.instance.iconDB.GetIconInfo(effType.ToString());

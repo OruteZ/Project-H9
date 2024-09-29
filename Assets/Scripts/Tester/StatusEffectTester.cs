@@ -42,6 +42,10 @@ public class StatusEffectTester : MonoBehaviour
                 //duration
                 effect = new Recoil(null);
                 break;
+            case StatusEffectType.Rooted:
+                //duration
+                effect = new Rooted(null, duration);
+                break;
             case StatusEffectType.None:
             default:
                 throw new ArgumentOutOfRangeException();

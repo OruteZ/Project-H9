@@ -25,49 +25,53 @@ public class CoverAction : BaseAction
 
     public override bool CanExecute()
     {
-        var tile = FieldSystem.tileSystem.GetTile(_targetPos);
-        
-        if (tile is null)
-        {
-            Debug.LogWarning("target tile is null");
-            return false;
-        }
-        
-        if (tile.GetTileObject<CoverableObj>() is null)
-        {
-            Debug.LogWarning("target tile has no cover");
-            return false;
-        }
-        
-        return true;
+        // var tile = FieldSystem.tileSystem.GetTile(_targetPos);
+        //
+        // if (tile is null)
+        // {
+        //     Debug.LogWarning("target tile is null");
+        //     return false;
+        // }
+        //
+        // if (tile.GetTileObject<CoverableObj>() is null)
+        // {
+        //     Debug.LogWarning("target tile has no cover");
+        //     return false;
+        // }
+        //
+        // return true;
+
+        return false;
     }
 
     public override bool CanExecute(Vector3Int targetPos)
     {
-        var tile = FieldSystem.tileSystem.GetTile(targetPos);
-        
-        if (tile is null)
-        {
-            Debug.LogWarning("target tile is null");
-            return false;
-        }
-        
-        if (tile.GetTileObject<CoverableObj>() is null)
-        {
-            Debug.LogWarning("target tile has no cover");
-            return false;
-        }
-        
-        return true;
+        // var tile = FieldSystem.tileSystem.GetTile(targetPos);
+        //
+        // if (tile is null)
+        // {
+        //     Debug.LogWarning("target tile is null");
+        //     return false;
+        // }
+        //
+        // if (tile.GetTileObject<CoverableObj>() is null)
+        // {
+        //     Debug.LogWarning("target tile has no cover");
+        //     return false;
+        // }
+        //
+        return false;
     }
 
     public override bool IsSelectable()
     {
         // if there is a coverable object in the target tile
-        IEnumerable<Tile> adjustTiles = 
-            FieldSystem.tileSystem.GetTilesInRange(unit.hexPosition, 1);
+        // IEnumerable<Tile> adjustTiles = 
+        //     FieldSystem.tileSystem.GetTilesInRange(unit.hexPosition, 1);
+        //
+        // return adjustTiles.Any(tile => tile.GetTileObject<CoverableObj>() != null);
 
-        return adjustTiles.Any(tile => tile.GetTileObject<CoverableObj>() != null);
+        return false;
     }
 
     public override bool CanExecuteImmediately()

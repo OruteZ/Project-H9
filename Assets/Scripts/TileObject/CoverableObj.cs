@@ -177,6 +177,32 @@ public class CoverableObj : TileObject, IDamageable
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(coverPos, coverPos + coverToAtkFrom * 10);
     }
+
+    private void OnValidate()
+    {
+        // 같은 위치에 여러개의 Coverable이 있을 수 있으나, 각 Coverable의 방향은 달라야 한다.
+        if (CheckMultipleDirection())
+        {
+            Debug.LogError("같은 위치에 여러개의 Coverable이 있을 수 있으나, 각 Coverable의 방향은 달라야 한다.");
+        }
+    }
+
+    private bool CheckMultipleDirection()
+    {
+        
+        // check if there are multiple coverable objects in the same position
+        CoverableObj[] coverables = FindObjectsOfType<CoverableObj>();
+        if (coverables.Length <= 1) return false;
+        
+        // check if there are multiple coverable objects in the same position
+        CoverableObj[] samePosCoverables = coverables.Where(c => c.hexPosition == hexPosition).ToArray();
+        if (samePosCoverables.Length <= 1) return false;
+        
+        // check if there are multiple coverable objects in the same position
+        CoverableObj[] sameDirCoverables = samePosCoverables.Where(c => c.coverDirection == coverDirection).ToArray();
+        
+        return sameDirCoverables.Length > 1;
+    }
 }
 
 public enum CoverType

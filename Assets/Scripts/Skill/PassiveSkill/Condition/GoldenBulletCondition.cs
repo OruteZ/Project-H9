@@ -4,12 +4,14 @@ namespace PassiveSkill
 {
     public class ShootAGoldenBulletCondition : BaseCondition
     {
-        public ShootAGoldenBulletCondition(float amt) : base(amt)
-        { }
+        public ShootAGoldenBulletCondition(float amt) : base(amt) { }
         public override ConditionType GetConditionType() => ConditionType.ShootAGoldenBullet;
 
         protected override void ConditionSetup()
         {
+            unit.OnAimStart.AddListener(CheckBullet);
+            unit.OnAimEnd.AddListener((a) => { passive.NotFullfillCondition(this); });
+
             unit.onActionStart.AddListener(CheckBullet);
             unit.onFinishAction.AddListener((a) => { passive.NotFullfillCondition(this); });
         }
@@ -23,12 +25,14 @@ namespace PassiveSkill
 
     public class TargetIsHitedByGoldenBulletThisTurn : BaseCondition
     {
-        public TargetIsHitedByGoldenBulletThisTurn(float amt) : base(amt)
-        { }
+        public TargetIsHitedByGoldenBulletThisTurn(float amt) : base(amt) { }
         public override ConditionType GetConditionType() => ConditionType.TargetIsHitedByGoldenBulletThisTurn;
 
         protected override void ConditionSetup()
         {
+            unit.OnAimStart.AddListener((a, p) => CheckTarget(FieldSystem.unitSystem.GetUnit(p)));
+            unit.OnAimEnd.AddListener((a) => { passive.NotFullfillCondition(this); });
+
             unit.onStartShoot.AddListener(CheckTarget);
             unit.onFinishAction.AddListener((a) => { passive.NotFullfillCondition(this); });
         }

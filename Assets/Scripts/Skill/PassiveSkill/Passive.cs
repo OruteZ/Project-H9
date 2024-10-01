@@ -171,7 +171,6 @@ _ => throw new ArgumentOutOfRangeException(nameof(type), type[i], null)
         }
         public void Enable()
         {
-
             if (IsEffectEnable() && _condition[0] is NullCondition) return;
             //Debug.LogError("Effect On: " + index);
             foreach (IEffect effect in _effect)
@@ -181,8 +180,7 @@ _ => throw new ArgumentOutOfRangeException(nameof(type), type[i], null)
         }
         public void Disable()
         {
-
-            //Debug.LogError("Effect Off: " + index);
+            Debug.LogError("Effect Off: " + index);
             foreach (IEffect effect in _effect)
             {
                 effect.OnConditionDisable();

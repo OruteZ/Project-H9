@@ -11,8 +11,11 @@ namespace PassiveSkill
 
         protected override void ConditionSetup()
         {
+            unit.OnAimStart.AddListener((a, p) => SetTarget(FieldSystem.unitSystem.GetUnit(p)));
+            unit.OnAimEnd.AddListener((a)=>TargetOff());
+
             unit.onStartShoot.AddListener(SetTarget);
-            unit.onFinishShoot.AddListener(TargetOff);
+            unit.onFinishShoot.AddListener((d) => TargetOff());
             unit.onKill.AddListener(Debug.LogError);
         }
 
@@ -25,7 +28,7 @@ namespace PassiveSkill
             else passive.NotFullfillCondition(this);
         }
 
-        private void TargetOff(Damage context)
+        private void TargetOff()
         {
             passive.NotFullfillCondition(this);
         }

@@ -70,7 +70,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             _shootCntList.Add(value);
         }
     }
-    
+
+    public bool isAimming = false;
     public bool vanishTrigger = false;
     
     public bool infiniteActionPointTrigger = false;
@@ -109,6 +110,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     [HideInInspector] public UnityEvent<Damage> onHit; // Damage Context
     [HideInInspector] public UnityEvent<IDamageable> onStartShoot; // target
     [HideInInspector] public UnityEvent<Damage> onFinishShoot; // Damage Context
+    [HideInInspector] public UnityEvent<IUnitAction, Vector3Int> OnAimStart;
+    [HideInInspector] public UnityEvent<IUnitAction> OnAimEnd;
 
     [HideInInspector] public UnityEvent<Unit> onKill; // target
     [HideInInspector] public UnityEvent onUnitActionDataChanged;

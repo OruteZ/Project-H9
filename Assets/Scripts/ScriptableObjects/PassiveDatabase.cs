@@ -83,6 +83,7 @@ public class PassiveDatabase : ScriptableObject
                 return new Passive(owner, index, trigger, effect);
             }
         }
+        Debug.LogError("Can't Find Passive: index = " + index);
 
         return null;
     }

@@ -68,7 +68,7 @@ public abstract class TileObject : MonoBehaviour
         
     }
 
-    public bool IsVisible()
+    public virtual bool IsVisible()
     {
         return meshRenderer.enabled;
     }

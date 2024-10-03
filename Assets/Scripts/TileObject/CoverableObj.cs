@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,6 +12,10 @@ public class CoverableObj : TileObject, IDamageable
     
     [SerializeField] private CoverType coverType;
     [SerializeField] private Unit unit;
+    [SerializeField] private Hex.Direction coverDirection;
+
+    private static Material LightCoverMaterial => TileEffectManager.instance.combatFowMaterial;
+    private bool _visible;
     
     private readonly UnityEvent<int, int> _onHpChanged = new UnityEvent<int, int>();
     
@@ -27,16 +32,20 @@ public class CoverableObj : TileObject, IDamageable
         return new[]
         {
             maxHp.ToString(),
-            currentHp.ToString()
+            currentHp.ToString(),
+            coverDirection.ToString()
         };
     }
 
     public override void SetArgs(string[] args)
     {
-        if (args.Length != 2) throw new System.Exception("Invalid args length. Expected 2.");
+        if (args.Length != 3) throw new Exception("Invalid args length. Expected 2.");
         
         maxHp = int.Parse(args[0]);
         currentHp = int.Parse(args[1]);
+        coverDirection = (Hex.Direction) Enum.Parse(typeof(Hex.Direction), args[2]);
+        
+        OnValidate();
     }
     
     public CoverType GetCoverType()
@@ -63,7 +72,11 @@ public class CoverableObj : TileObject, IDamageable
         
         if (!context.Contains(Damage.Type.MISS)) return;
         
-        bool isCovered = Coverable(context.attacker.GetHex(), hexPosition, context.target.GetHex());
+        bool isCovered = Coverable(
+            context.attacker.GetHex(),
+            hexPosition, 
+            coverDirection
+            );
         if (!isCovered) return;
         
 
@@ -118,24 +131,21 @@ public class CoverableObj : TileObject, IDamageable
     #endregion
 
     // Get the direction from the player to the cover
-    public Vector3Int GetCoverDirection(Vector3Int playerHexPosition)
+    public Hex.Direction GetCoverDirections()
     {
-        // Get the direction from the player to the cover
-        return hexPosition - playerHexPosition;
+        return coverDirection;
     }
 
-    public static bool Coverable(Vector3Int atkFrom, Vector3Int coverObjPos, Vector3Int targetPos)
+    public static bool Coverable(Vector3Int atkHex, Vector3Int targetHex, Hex.Direction coverDirection)
     {
+        Vector3 target = Hex.Hex2World(targetHex) + Vector3.up;
+        Vector3 atk = Hex.Hex2World(atkHex) + Vector3.up;
         
-        Vector3 target = Hex.Hex2World(targetPos) + Vector3.up;
-        Vector3 cover = Hex.Hex2World(coverObjPos) + Vector3.up;
-        Vector3 atkFromWorld = Hex.Hex2World(atkFrom) + Vector3.up;
-        
-        Vector3 midVector = (cover - target).normalized;
-        Vector3 coverToAtkFrom = (atkFromWorld - cover).normalized;
+        Vector3 targetToAtkRay = (atk - target).normalized;
+        Vector3 midVector = Hex.Hex2World(Hex.GetDirectionHex(coverDirection));
         
         // is coverToAtkFrom between cwVector and ccwVector?
-        float angle = Vector3.Angle(midVector, coverToAtkFrom);
+        float angle = Vector3.Angle(midVector, targetToAtkRay);
         if (angle <= 61)
         {
             return true;
@@ -171,6 +181,64 @@ public class CoverableObj : TileObject, IDamageable
         
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(coverPos, coverPos + coverToAtkFrom * 10);
+    }
+
+    private void OnValidate()
+    {
+        // 같은 위치에 여러개의 Coverable이 있을 수 있으나, 각 Coverable의 방향은 달라야 한다.
+        if (CheckMultipleDirection())
+        {
+            Debug.LogError("같은 위치에 여러개의 Coverable이 있을 수 있으나, 각 Coverable의 방향은 달라야 한다.");
+        }
+        
+        // 방향을 확인 하고, 해당 방향에 맞추어서 Rotation 재설정. rotation이 0일경우 오른쪽 정면을 쳐다봄
+        transform.rotation = Quaternion.Euler(0, (int) coverDirection * 60, 0);
+    }
+
+    private bool CheckMultipleDirection()
+    {
+        // check if there are multiple coverable objects in the same position
+        CoverableObj[] coverables = FindObjectsOfType<CoverableObj>();
+        if (coverables.Length <= 1) return false;
+        
+        // check if there are multiple coverable objects in the same position
+        CoverableObj[] samePosCoverables = coverables.Where(c => c.hexPosition == hexPosition).ToArray();
+        if (samePosCoverables.Length <= 1) return false;
+        
+        // check if there are multiple coverable objects in the same position
+        CoverableObj[] sameDirCoverables = samePosCoverables.Where(c => c.coverDirection == coverDirection).ToArray();
+        
+        return sameDirCoverables.Length > 1;
+    }
+
+    public override void SetVisible(bool value)
+    {
+        //if editor mode, value always true
+        if (GameManager.instance.CompareState(GameState.EDITOR)) return;
+        
+        _visible = value;
+        // if vis
+        
+        // matrial에 light cover material을 추가. 두 개의 material을 가지고 있어야 함.
+        // light cover material은 shader가 transparent이어야 함.
+        
+        // if visible, light cover material을 추가
+        // if not visible, light cover material을 제거
+        
+        if (value)
+        {
+            meshRenderer.materials = new[] {meshRenderer.material, LightCoverMaterial};
+        }
+        else
+        {
+            meshRenderer.materials = new[] {meshRenderer.material};
+        }
+        
+    }
+
+    public override bool IsVisible()
+    {
+        return _visible;
     }
 }
 

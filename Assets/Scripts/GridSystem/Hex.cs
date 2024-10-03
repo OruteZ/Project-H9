@@ -220,6 +220,27 @@ public static class Hex
         return angle;
     }
 
+    public static Vector3Int GetDirectionHex(Direction dir)
+    {
+        switch (dir)
+        {
+            case Direction.UpLeft:
+                return upLeft;
+            case Direction.UpRight:
+                return upRight;
+            case Direction.Left:
+                return left;
+            case Direction.Right:
+                return right;
+            case Direction.DownLeft:
+                return downLeft;
+            case Direction.DownRight:
+                return downRight;
+            default:
+                return none;
+        }
+    }
+
     public static Vector3Int upLeft => new Vector3Int(-1, 1, 0);
     public static Vector3Int upRight => new Vector3Int(0, 1, -1);
     public static Vector3Int left => new Vector3Int(-1, 0, 1);
@@ -238,4 +259,14 @@ public static class Hex
         downLeft,
         downRight
     };
+
+    public enum Direction
+    {
+        Right,
+        DownRight,
+        DownLeft ,
+        Left,
+        UpLeft,
+        UpRight,
+    }
 }

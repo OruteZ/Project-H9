@@ -753,7 +753,12 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         // cover modifier
         if (attacker != null && coverableObj != null)
         {
-            bool coverable = CoverableObj.Coverable(attacker.hexPosition, coverableObj.hexPosition, hexPosition);
+            bool coverable = CoverableObj.Coverable(
+                attacker.hexPosition,
+                coverableObj.hexPosition,
+                coverableObj.GetCoverDirections()
+                );
+            
             if (coverable)
             {
                 modifier += coverType switch
@@ -761,6 +766,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
                     CoverType.NONE => 0,
                     CoverType.LIGHT => -20,
                     CoverType.HEAVY => -30,
+                    _ => 0
                 };
             }
         }

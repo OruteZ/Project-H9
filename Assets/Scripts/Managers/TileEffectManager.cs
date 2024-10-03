@@ -536,9 +536,9 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     [SerializeField] private int coverEffectRange;
     private void CoverEffect()
     {
-        const int RANGE = 1;
+        const int range = 1;
 
-        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, RANGE).Where(
+        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, range).Where(
             tile => tile.GetTileObject<CoverableObj>() is not null);
 
         foreach (Tile tile in tiles)
@@ -550,7 +550,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             _coverableObjs.Add(coverable);
 
             // find in children
-            var meshRenderer = coverable.meshRenderer;
+            Renderer meshRenderer = coverable.meshRenderer;
             
             List<Material> materialList = meshRenderer.materials.ToList();
             

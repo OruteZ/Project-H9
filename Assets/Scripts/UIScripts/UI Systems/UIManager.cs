@@ -201,6 +201,7 @@ public class UIManager : Generic.Singleton<UIManager>
         SetCanvasState(_skillCanvas, skillUI, false);
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
         if (!_characterCanvas.enabled) currentLayer = 1;
+        SoundManager.instance.PlaySFX("UI_WindowOpen");
     }
     public void SetSkillCanvasState(bool isOn)
     {
@@ -208,6 +209,7 @@ public class UIManager : Generic.Singleton<UIManager>
         SetCanvasState(_skillCanvas, skillUI, isOn);
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
         if (!_skillCanvas.enabled) currentLayer = 1;
+        SoundManager.instance.PlaySFX("UI_WindowOpen");
     }
     public void SetPauseMenuCanvasState(bool isOn)
     {
@@ -215,6 +217,7 @@ public class UIManager : Generic.Singleton<UIManager>
         SetCanvasState(_skillCanvas, skillUI, false);
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, isOn);
         if (!_pauseMenuCanvas.enabled) currentLayer = 1;
+        SoundManager.instance.PlaySFX("UI_WindowOpen");
     }
     public bool GetCharacterCanvasState()
     {

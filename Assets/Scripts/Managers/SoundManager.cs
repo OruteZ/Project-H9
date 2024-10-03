@@ -6,6 +6,7 @@ using UnityEngine.UI.Extensions;
 
 public class SoundManager : Singleton<SoundManager>
 {
+    public SoundEffectDatabase sfxDB;
     public AudioSource bgmSource;
     private List<AudioSource> _sfxSources;
 
@@ -86,6 +87,15 @@ public class SoundManager : Singleton<SoundManager>
         // 임시로 해당 위치에 효과음을 재생하는 코드, 차후 게임오브젝트를 직접 생성해서 만들어내고 
         // 오브젝트 풀링을 통해 관리하는 방식으로 변경해야 함
         AudioSource.PlayClipAtPoint(clip, position, mainVolume * sfxVolume);
+    }
+    public void PlaySFX(string sfxName) 
+    {
+        AudioClip clip = sfxDB.GetSFX(sfxName);
+
+        if (clip == null) return;
+
+        AudioSource source = GetComponent<AudioSource>();
+        source.PlayOneShot(clip, mainVolume * sfxVolume);
     }
 
     public void StopBGM()

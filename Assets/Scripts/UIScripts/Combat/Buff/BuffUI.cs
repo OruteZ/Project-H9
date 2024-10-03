@@ -51,7 +51,7 @@ public class BuffUI : UISystem
 
     public void SetBuffDebuffUI()
     {
-        Debug.LogError("SetBuff");
+        if (!GameManager.instance.CompareState(GameState.COMBAT)) return; 
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player == null) return;
         IDisplayableEffect[] playerBuffs = player.GetDisplayableEffects();

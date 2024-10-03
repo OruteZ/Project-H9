@@ -25,8 +25,6 @@ public class WorldTextUpdater : MonoBehaviour
 
     void Update()
     {
-        
-        
         // 예시: 텍스트를 항상 특정 위치에 고정
         if (_worldText != null)
         {
@@ -34,6 +32,4 @@ public class WorldTextUpdater : MonoBehaviour
             _worldText.transform.position += new Vector3(0, yOffset, 0);
         }
     }
-    
-    
 }

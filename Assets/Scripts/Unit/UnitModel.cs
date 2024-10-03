@@ -110,7 +110,8 @@ public class UnitModel : MonoBehaviour
         worldPos.y = 0;
         
         // add inner radius to direction
-        var direction = unit.GetCoverDirection();
+        // todo : 이후 애니메이션 기획이 어떻게 되느냐에 따라서 변경되어야 함
+        var direction = Hex.Hex2World(Hex.upLeft);
 
         worldPos += direction * Hex.InnerRadius * 0.5f;
         transform.position = worldPos;

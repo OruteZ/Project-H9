@@ -121,4 +121,9 @@ public class Tile : MonoBehaviour, IEquatable<Tile>
     {
         return tileObjects.Find(obj => obj is T) as T;
     }
+    
+    public T[] GetTileObjects<T>() where T : TileObject
+    {
+        return tileObjects.FindAll(obj => obj is T).Cast<T>().ToArray();
+    }
 }

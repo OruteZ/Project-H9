@@ -59,7 +59,7 @@ public class CoverableObj : TileObject, IDamageable
 
         newUnit.onHit.AddListener(OnHit);
         newUnit.onMoved.AddListener(OnUnitMoved);
-        newUnit.SetCoverType(coverType, this);
+        newUnit.AddCoverable(this);
     }
 
     private void OnHit(Damage context)
@@ -88,6 +88,7 @@ public class CoverableObj : TileObject, IDamageable
     {
         u.onHit.RemoveListener(OnHit);
         u.onMoved.RemoveListener(OnUnitMoved);
+        u.RemoveCoverable(this);
         unit = null;
     }
 

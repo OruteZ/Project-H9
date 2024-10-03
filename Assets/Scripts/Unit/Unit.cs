@@ -84,8 +84,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public BulletData goldenBulletEffect = new();
     public bool isHitedByGoldenBulletThisTurn = false;
 
-    public CoverType coverType;
-    public CoverableObj coverableObj;
+    public List<CoverableObj> currentCoverables;
     public float coverObjDmgMultiplier = 1;
     #endregion
 
@@ -114,7 +113,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     [HideInInspector] public UnityEvent onUnitActionDataChanged;
     [HideInInspector] public UnityEvent onSelectedChanged;
     [HideInInspector] public UnityEvent onStatusEffectChanged;
-    [HideInInspector] public UnityEvent<CoverType> onCoverChanged;
 
     private IUnitAction[] _unitActionArray; // All Unit Actions attached to this Unit
     protected IUnitAction activeUnitAction; // Currently active action
@@ -128,7 +126,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         _index = index;
         unitName = newName;
         stat = unitStat;
-        coverType = CoverType.NONE;
+        currentCoverables = new List<CoverableObj>();
         
         var model = Instantiate(unitModel, transform);
         _unitModel = model.GetComponent<UnitModel>();
@@ -174,7 +172,6 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         onTurnStart.Invoke(this);
 
         stat.Recover(StatType.CurActionPoint, stat.maxActionPoint, out int appliedValue);
-        SetCoverType(CoverType.NONE, null);
         animator.SetBool(COVER, false);
 
         if (hp <= 0)
@@ -187,6 +184,19 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public void EndTurn()
     {
+        // find all coverables
+        var curTile = FieldSystem.tileSystem.GetTile(hexPosition);
+        if (curTile is not null)
+        {
+            foreach (var obj in curTile.tileObjects)
+            {
+                if (obj is CoverableObj coverableObj)
+                {
+                    coverableObj.SetUnit(this);
+                }
+            }
+        }
+        
         onTurnEnd.Invoke(this);
 
         // reset idle trigger animator
@@ -746,29 +756,32 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public int GetHitRateModifier(Unit attacker = null)
     {
         int modifier = 0;
-        
-        // cover modifier
-        if (attacker != null && coverableObj != null)
+
+        if (attacker != null)
         {
-            bool coverable = CoverableObj.Coverable(
-                attacker.hexPosition,
-                coverableObj.hexPosition,
-                coverableObj.GetCoverDirections()
-                );
-            
-            if (coverable)
+            foreach(CoverableObj obj in currentCoverables)
             {
-                modifier += coverType switch
+                bool coverable = CoverableObj.Coverable(
+                    attacker.hexPosition,
+                    obj.hexPosition,
+                    obj.GetCoverDirections()
+                );
+
+                if (coverable)
                 {
-                    CoverType.NONE => 0,
-                    CoverType.LIGHT => -20,
-                    CoverType.HEAVY => -30,
-                    _ => 0
-                };
+                    modifier += obj.GetCoverType() switch
+                    {
+                        CoverType.NONE => 0,
+                        CoverType.LIGHT => -20,
+                        CoverType.HEAVY => -30,
+                        _ => 0
+                    };
+
+                    break;
+                }
             }
         }
-        // cover fin 
-
+        
         return (int) modifier;
     }
 
@@ -776,21 +789,15 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     #endregion
 
-    public void SetCoverType(CoverType type, CoverableObj obj)
+    public void AddCoverable(CoverableObj obj)
     {
-        coverType = type;
-        coverableObj = obj;
-        
-        onCoverChanged.Invoke(type);
+        if (currentCoverables is null) currentCoverables = new List<CoverableObj>();
+        currentCoverables.Add(obj);
     }
     
-    public Vector3 GetCoverDirection()
+    public void RemoveCoverable(CoverableObj obj)
     {
-        //if coverableObj is null, return
-        if (coverableObj is null) return Vector3.zero;
-        
-        // Get the direction from the player to the cover
-        return Hex.Hex2World(coverableObj.hexPosition) - Hex.Hex2World(hexPosition);
+        currentCoverables?.Remove(obj);
     }
 }
 

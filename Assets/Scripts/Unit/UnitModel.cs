@@ -110,8 +110,7 @@ public class UnitModel : MonoBehaviour
         worldPos.y = 0;
         
         // add inner radius to direction
-        // todo : 이후 애니메이션 기획이 어떻게 되느냐에 따라서 변경되어야 함
-        var direction = Hex.Hex2World(Hex.upLeft);
+        Vector3 direction = Hex.Hex2World(unit.currentCoverables[0].GetHex()) - worldPos;
 
         worldPos += direction * Hex.InnerRadius * 0.5f;
         transform.position = worldPos;
@@ -347,7 +346,7 @@ public class UnitModel : MonoBehaviour
         //set all transform
 
         //root
-        root = TryFind("Root", transform, out var tsf) ? tsf : null;
+        root = TryFind("Root", transform, out Transform tsf) ? tsf : null;
         hand = TryFind("IndexFinger_01 1", transform, out tsf) ? tsf : null;
         chest = TryFind("Spine_03", transform, out tsf) ? tsf : null;
         waist = TryFind("Hips", transform, out tsf) ? tsf : null;

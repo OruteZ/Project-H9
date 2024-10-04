@@ -1378,16 +1378,68 @@ MonoBehaviour:
     walkable: 0
     rayThroughable: 0
     gridVisible: 1
-  tileObjectData: []
+  tileObjectData:
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 8, y: 4, z: -12}
+    rotation: 0.86602545
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownLeft
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 8, y: 4, z: -12}
+    rotation: 0.5
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 3, y: 4, z: -7}
+    rotation: 0.5
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 3, y: 4, z: -7}
+    rotation: -0
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - Right
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 13, y: 4, z: -17}
+    rotation: 1
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - Left
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 13, y: 4, z: -17}
+    rotation: 0.86602545
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownLeft
   envData:
-  - material: {fileID: 2100000, guid: 6f3a909eabbed4042bc91d5f1fde5122, type: 2}
-    mesh: {fileID: 2156265809512432775, guid: 73f227a2d0f081041b6c2fc03954eec6, type: 3}
-    hexPositioned: 0
-    hexPosition: {x: 0, y: 0, z: 0}
-    height: -0.97
-    position: {x: 17.36, y: -0.97, z: -6.62}
-    rotation: 177.0025
-    scale: {x: 1.187248, y: 3.6976092, z: 2.398466}
   - material: {fileID: 2100000, guid: 113cf4be61808ba408517758c33fca10, type: 2}
     mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
     hexPositioned: 1

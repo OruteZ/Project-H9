@@ -647,11 +647,12 @@ MonoBehaviour:
   - prefab: {fileID: 515775582126048608, guid: 529962513f9411e41be9dcff28ad41f3, type: 3}
     hexPosition: {x: 3, y: 5, z: -8}
     rotation: -0
-    positionOffset: {x: 0, y: 0, z: 0}
+    positionOffset: {x: 0, y: -0.10546, z: 0}
     scale: {x: 2.1251667, y: 2.9333677, z: 2.1251667}
     arguments:
     - 3
     - 3
+    - Right
   - prefab: {fileID: 8616358203792594756, guid: 13c15c8925b70ac4ab62a031e34061ae,
       type: 3}
     hexPosition: {x: 7, y: 3, z: -10}
@@ -661,6 +662,7 @@ MonoBehaviour:
     arguments:
     - 3
     - 3
+    - Right
   - prefab: {fileID: 1141464491258737445, guid: 1b6ed9665124cef4f9ff8770ddcf0548,
       type: 3}
     hexPosition: {x: 1, y: 3, z: -4}
@@ -670,6 +672,67 @@ MonoBehaviour:
     arguments:
     - 3
     - 3
+    - Right
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 1, y: 3, z: -4}
+    rotation: 0.5
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 1, y: 3, z: -4}
+    rotation: -0
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - Right
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 3, y: 5, z: -8}
+    rotation: 0.8660254
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - UpLeft
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 3, y: 5, z: -8}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - UpRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 7, y: 3, z: -10}
+    rotation: 0.86602545
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownLeft
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 7, y: 3, z: -10}
+    rotation: 1
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - Left
   envData:
   - material: {fileID: 2100000, guid: 113cf4be61808ba408517758c33fca10, type: 2}
     mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}

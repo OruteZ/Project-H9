@@ -1668,7 +1668,137 @@ MonoBehaviour:
     walkable: 0
     rayThroughable: 0
     gridVisible: 1
-  tileObjectData: []
+  tileObjectData:
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: -3, y: 3, z: 0}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - UpRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: -3, y: 3, z: 0}
+    rotation: -0
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - Right
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 0, y: 1, z: -1}
+    rotation: -0
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - Right
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 0, y: 1, z: -1}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - UpRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 3, y: 2, z: -5}
+    rotation: 1
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - Left
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 3, y: 2, z: -5}
+    rotation: 0.86602545
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownLeft
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: -1, y: 5, z: -4}
+    rotation: 1
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - Left
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: -1, y: 5, z: -4}
+    rotation: 0.8660254
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - UpLeft
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: -2, y: -1, z: 3}
+    rotation: 0.5
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: -2, y: -1, z: 3}
+    rotation: 0.86602545
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownLeft
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 2, y: -4, z: 2}
+    rotation: 0.5
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 2, y: -4, z: 2}
+    rotation: 0.86602545
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownLeft
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 3, y: -2, z: -1}
+    rotation: 0.86602545
+    positionOffset: {x: 0, y: 0.4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownLeft
   envData:
   - material: {fileID: 2100000, guid: 113cf4be61808ba408517758c33fca10, type: 2}
     mesh: {fileID: -2432090755550338912, guid: 0691b1bd4db5b4d4b8a1bcf25ca1b6fd, type: 3}
@@ -4382,46 +4512,6 @@ MonoBehaviour:
     position: {x: 2.66, y: -0.97, z: -8.19}
     rotation: 177.0025
     scale: {x: 1.187248, y: 3.6976092, z: 2.398466}
-  - material: {fileID: 2100000, guid: 6f3a909eabbed4042bc91d5f1fde5122, type: 2}
-    mesh: {fileID: 2156265809512432775, guid: 73f227a2d0f081041b6c2fc03954eec6, type: 3}
-    hexPositioned: 0
-    hexPosition: {x: 0, y: 0, z: 0}
-    height: -1.06
-    position: {x: -2.54, y: -1.06, z: -5.15}
-    rotation: 177.0025
-    scale: {x: 1.187248, y: 3.6976092, z: 2.398466}
-  - material: {fileID: 2100000, guid: 6f3a909eabbed4042bc91d5f1fde5122, type: 2}
-    mesh: {fileID: 2156265809512432775, guid: 73f227a2d0f081041b6c2fc03954eec6, type: 3}
-    hexPositioned: 0
-    hexPosition: {x: 0, y: 0, z: 0}
-    height: -1.13
-    position: {x: 0.9, y: -1.13, z: -2.23}
-    rotation: 177.0025
-    scale: {x: 1.187248, y: 3.6976092, z: 2.398466}
-  - material: {fileID: 2100000, guid: 6f3a909eabbed4042bc91d5f1fde5122, type: 2}
-    mesh: {fileID: 2156265809512432775, guid: 73f227a2d0f081041b6c2fc03954eec6, type: 3}
-    hexPositioned: 0
-    hexPosition: {x: 0, y: 0, z: 0}
-    height: -1.25
-    position: {x: 3.51, y: -1.25, z: 2.28}
-    rotation: 177.0025
-    scale: {x: 1.187248, y: 3.6976092, z: 2.398466}
-  - material: {fileID: 2100000, guid: 6f3a909eabbed4042bc91d5f1fde5122, type: 2}
-    mesh: {fileID: 2156265809512432775, guid: 73f227a2d0f081041b6c2fc03954eec6, type: 3}
-    hexPositioned: 0
-    hexPosition: {x: 0, y: 0, z: 0}
-    height: -1.33
-    position: {x: 0, y: -1.33, z: 5.22}
-    rotation: 177.0025
-    scale: {x: 1.187248, y: 3.6976092, z: 2.398466}
-  - material: {fileID: 2100000, guid: 6f3a909eabbed4042bc91d5f1fde5122, type: 2}
-    mesh: {fileID: 2156265809512432775, guid: 73f227a2d0f081041b6c2fc03954eec6, type: 3}
-    hexPositioned: 0
-    hexPosition: {x: 0, y: 0, z: 0}
-    height: -1.09
-    position: {x: 6.98, y: -1.09, z: -3.67}
-    rotation: 177.0025
-    scale: {x: 1.187248, y: 3.6976092, z: 2.398466}
   - material: {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
     mesh: {fileID: 4300000, guid: 596def0f98593374094399990f23110b, type: 3}
     hexPositioned: 1
@@ -4433,9 +4523,9 @@ MonoBehaviour:
   - material: {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
     mesh: {fileID: 4300000, guid: 596def0f98593374094399990f23110b, type: 3}
     hexPositioned: 1
-    hexPosition: {x: 0, y: -2, z: 2}
+    hexPosition: {x: 0, y: -4, z: 4}
     height: 0
-    position: {x: -1.7320508, y: 0, z: 3}
+    position: {x: -3.4641016, y: 0, z: 6}
     rotation: 290.10046
     scale: {x: 1, y: 1, z: 1}
   - material: {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
@@ -4445,14 +4535,6 @@ MonoBehaviour:
     height: 0
     position: {x: 2.598076, y: 0, z: -4.5}
     rotation: 144.36838
-    scale: {x: 1, y: 1, z: 1}
-  - material: {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
-    mesh: {fileID: 4300000, guid: 596def0f98593374094399990f23110b, type: 3}
-    hexPositioned: 1
-    hexPosition: {x: 1, y: 2, z: -3}
-    height: 0
-    position: {x: 3.4641016, y: 0, z: -3}
-    rotation: 270.0332
     scale: {x: 1, y: 1, z: 1}
   - material: {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
     mesh: {fileID: 4300000, guid: 596def0f98593374094399990f23110b, type: 3}
@@ -4486,14 +4568,6 @@ MonoBehaviour:
     position: {x: 14.722431, y: 0, z: -1.5}
     rotation: 270.0332
     scale: {x: 1, y: 1, z: 1}
-  - material: {fileID: 2100000, guid: 6f3a909eabbed4042bc91d5f1fde5122, type: 2}
-    mesh: {fileID: 2156265809512432775, guid: 73f227a2d0f081041b6c2fc03954eec6, type: 3}
-    hexPositioned: 0
-    hexPosition: {x: 0, y: 0, z: 0}
-    height: -1.22
-    position: {x: -4.31, y: -1.22, z: 0.71}
-    rotation: 177.0025
-    scale: {x: 1.187248, y: 3.6976092, z: 2.398466}
   - material: {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
     mesh: {fileID: 4300000, guid: 596def0f98593374094399990f23110b, type: 3}
     hexPositioned: 1

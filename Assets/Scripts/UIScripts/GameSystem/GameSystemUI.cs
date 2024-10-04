@@ -18,6 +18,7 @@ public class GameSystemUI : UISystem
     public ItemUI itemUI { get; private set; }
     public EquipmentUI equipmentUI { get; private set; }
     public TargetListUI targetListUI { get; private set; }
+    public UnitSpeechUI speechUI { get; private set; }
 
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class GameSystemUI : UISystem
         itemUI = GetComponent<ItemUI>();
         equipmentUI = GetComponent<EquipmentUI>();
         targetListUI = GetComponent<TargetListUI>();
+        speechUI = GetComponent<UnitSpeechUI>();
 
         uiSubsystems.Add(playerInfoUI);
         uiSubsystems.Add(questUI);
@@ -46,6 +48,7 @@ public class GameSystemUI : UISystem
         uiSubsystems.Add(itemUI);
         uiSubsystems.Add(equipmentUI);
         uiSubsystems.Add(targetListUI);
+        uiSubsystems.Add(speechUI);
 
         ChangeSkillButtonRedDotText(SkillManager.instance.GetSkillPoint());
         UIManager.instance.onTSceneChanged.AddListener((s) => { ChangeSkillButtonRedDotText(SkillManager.instance.GetSkillPoint()); });

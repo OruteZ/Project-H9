@@ -3,65 +3,20 @@ using UnityEngine;
 namespace PassiveSkill
 {
     #region ActionBaseConditions
-    public class UsedFanningThisTurnCondition : BaseCondition
+    public class UsedFanningThisTurnCondition : ActionThisTurnCondition<FanningAction>
     {
         public UsedFanningThisTurnCondition(float amt) : base(amt) { }
         public override ConditionType GetConditionType() => ConditionType.UsedFanningThisTurn;
-
-        protected override void ConditionSetup()
-        {
-            unit.onFinishAction.AddListener(CheckAction);
-            FieldSystem.turnSystem.onTurnChanged.AddListener(ClearFlag);
-        }
-        private void CheckAction(IUnitAction unitAction)
-        {
-            if (unitAction is FanningAction) passive.FullfillCondition(this);
-        }
-        private void ClearFlag()
-        {
-            passive.NotFullfillCondition(this);
-        }
     }
-    public class UsingFanningCondition : BaseCondition
+    public class UsingFanningCondition : ActingCondition<FanningAction>
     {
-        public UsingFanningCondition(float amt) : base(amt) { }
+        public UsingFanningCondition(float amt) : base(amt) {}
         public override ConditionType GetConditionType() => ConditionType.UsingFanning;
-
-        protected override void ConditionSetup()
-        {
-            unit.onActionStart.AddListener(StartAction);
-            unit.onFinishAction.AddListener(EndAction);
-        }
-        protected void StartAction(IUnitAction unitAction, Vector3Int pos)
-        {
-            if (unitAction is FanningAction) passive.FullfillCondition(this);
-        }
-        protected void EndAction(IUnitAction unitAction)
-        {
-            if (unitAction is FanningAction) passive.NotFullfillCondition(this);
-        }
     }
-    public class NotUsedFanningThisTurnCondition : BaseCondition
+    public class NotUsedFanningThisTurnCondition : NotActedThisTurnCondition<FanningAction>
     {
         public NotUsedFanningThisTurnCondition(float amt) : base(amt) { }
         public override ConditionType GetConditionType() => ConditionType.NotUsedFanningThisTurn;
-
-        protected override void ConditionSetup()
-        {
-            unit.onFinishAction.AddListener(CheckAction);
-            FieldSystem.turnSystem.onTurnChanged.AddListener(CheckTurnOwner);
-        }
-        private void CheckAction(IUnitAction unitAction)
-        {
-            if (unitAction is FanningAction) passive.NotFullfillCondition(this);
-        }
-        private void CheckTurnOwner()
-        {
-            if (FieldSystem.turnSystem.turnOwner == unit)
-            {
-                passive.FullfillCondition(this);
-            }
-        }
     }
     #endregion
     public class HitSixFanningShotCondition : BaseCondition

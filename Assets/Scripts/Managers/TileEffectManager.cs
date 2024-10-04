@@ -151,15 +151,12 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 int sightRange = _player.stat.sightRange;
                 if (distance > sightRange) continue;
                 if (!FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition)) continue;
-                SetEffectBase(tile.hexPosition, effectType);}
+                SetEffectBase(tile.hexPosition, effectType);
+            }
             else //GameState.World
             {
                 bool containsFog = tile.tileObjects.OfType<FogOfWar>().Any();
                 if (containsFog) continue;
-                foreach (Town tileObject in tile.tileObjects.OfType<Town>())
-                {
-                    effectType = (tileObject).GetTileEffectType();
-                }
             }
         }
 
@@ -218,7 +215,13 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             {
                 foreach (Vector3Int pos in route.Select(tile => tile.hexPosition))
                 {
-                    SetEffectTarget(pos, TileEffectType.Friendly);
+                    TileEffectType effectType = TileEffectType.Friendly;
+                    Tile tile = FieldSystem.tileSystem.GetTile(pos);
+                    foreach (Town tileObject in tile.tileObjects.OfType<Town>())
+                    {
+                        effectType = (tileObject).GetTileEffectType();
+                    }
+                    SetEffectTarget(pos, effectType);
                 }
             }
             else

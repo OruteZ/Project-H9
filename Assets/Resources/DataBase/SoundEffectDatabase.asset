@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a090acb712ae81f47af6f3c8b981eb1f, type: 3}
+  m_Name: SoundEffectDatabase
+  m_EditorClassIdentifier: 
+  SFXInfos:
+  - name: UI_WindowOpen
+    clip: {fileID: 8300000, guid: f0a98d95e8a8529438520a40e49faeca, type: 3}
+  - name: UI_MenuClcik
+    clip: {fileID: 0}
+  - name: UI_ButtonClick
+    clip: {fileID: 8300000, guid: ec1da8c3fded6ed47ac6ad22f06534aa, type: 3}
+  - name: UI_Inventory
+    clip: {fileID: 8300000, guid: d6f0ae1cb030f6d4e8f700722fd2b851, type: 3}
+  - name: UI_SellBuyItem
+    clip: {fileID: 8300000, guid: 8900c12ed4ea1bb48beb102922ed3630, type: 3}
+  - name: UI_RemoveItem
+    clip: {fileID: 8300000, guid: 65eb216bbc8288a4cb768e0c0f8a285b, type: 3}
+  - name: UI_WeaponChange
+    clip: {fileID: 0}
+  - name: UI_SkillLearn
+    clip: {fileID: 0}
+  - name: UI_QuestOpen
+    clip: {fileID: 0}
+  - name: UI_ActionButton
+    clip: {fileID: 0}
+  - name: UI_Alarm
+    clip: {fileID: 8300000, guid: d63deb9d9af9bbe478d129b4e6ef1c76, type: 3}
+  - name: UI_StartTurn
+    clip: {fileID: 0}
+  - name: UI_Sheriff
+    clip: {fileID: 0}
+  - name: UI_Saloon
+    clip: {fileID: 0}
+  - name: UI_Ammunition
+    clip: {fileID: 0}
+  - name: UI_
+    clip: {fileID: 0}

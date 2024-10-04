@@ -6,7 +6,7 @@ public class IncreaseStatDuringAction : BaseEffect, IDisplayableEffect
     public override PassiveEffectType GetEffectType() => PassiveEffectType.IncreaseStatDuringAction;
     protected override void EffectSetup()
     {
-        unit.onFinishAction.AddListener(OnTurnFinished);
+        unit.onFinishAction.AddListener((a) => OnConditionDisable());
     }
 
     public override void OnConditionEnable()
@@ -16,10 +16,6 @@ public class IncreaseStatDuringAction : BaseEffect, IDisplayableEffect
         enable = true;
     }
     public override void OnConditionDisable()
-    {
-    }
-
-    public void OnTurnFinished(IUnitAction action)
     {
         if (!enable) return;
         enable = false;

@@ -51,6 +51,7 @@ public class BuffUI : UISystem
 
     public void SetBuffDebuffUI()
     {
+        if (!GameManager.instance.CompareState(GameState.COMBAT)) return; 
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player == null) return;
         IDisplayableEffect[] playerBuffs = player.GetDisplayableEffects();
@@ -106,7 +107,6 @@ public class BuffUI : UISystem
         bool isExistTooltipEffect = false;
         foreach (IDisplayableEffect effect in currentState)
         {
-            Debug.LogError(effect);
             if (effect.CanDisplay())
             {
                 UI.transform.GetChild(buffCount++).GetComponent<BuffUIElement>().SetBuffUIElement(effect, isBuff, true);

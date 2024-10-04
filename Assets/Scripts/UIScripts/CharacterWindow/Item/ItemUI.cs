@@ -61,6 +61,22 @@ public class ItemUI : UISystem
     public override void OpenUI()
     {
         TypeButtonLocalize();
+        int idx = _displayInventoryType switch
+        {
+            ItemType.Null => -1,
+            ItemType.Etc => 2,
+            ItemType.Character => 0,
+            ItemType.Revolver => 0,
+            ItemType.Repeater => 0,
+            ItemType.Shotgun => 0,
+            ItemType.Heal => 1,
+            ItemType.Damage => 1,
+            ItemType.Cleanse => 1,
+            ItemType.Buff => 1,
+            ItemType.Debuff => 1,
+            _ => throw new NotImplementedException()
+        };
+        _itemTypeButton.transform.GetChild(idx).GetComponent<Button>().Select();
         base.OpenUI();
         ClosePopupWindow();
         SetInventoryUI();
@@ -119,6 +135,7 @@ public class ItemUI : UISystem
 
     public void OpenInventoryInteraction(GameObject ui)
     {
+        SoundManager.instance.PlaySFX("UI_ButtonClick");
         _interactionElement = ui;
         for (int i = 0; i < _inventoryUI.transform.childCount; i++) 
         {
@@ -257,22 +274,26 @@ public class ItemUI : UISystem
 
     public void ClickWeaponBtn()
     {
+        SoundManager.instance.PlaySFX("UI_ButtonClick");
         _displayInventoryType = ItemType.Revolver;
         SetInventoryUI();
     }
     public void ClickConsumableBtn()
     {
+        SoundManager.instance.PlaySFX("UI_ButtonClick");
         _displayInventoryType = ItemType.Heal;
         SetInventoryUI();
     }
     public void ClickOtherBtn()
     {
+        SoundManager.instance.PlaySFX("UI_ButtonClick");
         _displayInventoryType = ItemType.Etc;
         SetInventoryUI();
     }
 
     public void ClickUseItemBtn()
     {
+        SoundManager.instance.PlaySFX("UI_ButtonClick");
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (_inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().isEquipable)
         {
@@ -297,6 +318,7 @@ public class ItemUI : UISystem
     }
     public void ClickSellItemBtn()
     {
+        SoundManager.instance.PlaySFX("UI_SellBuyItem");
         GameManager.instance.playerInventory.SellItem(_interactionItem.GetData().itemType, GetInventoryUIIndex(_interactionElement));
         _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();
@@ -305,6 +327,7 @@ public class ItemUI : UISystem
     }
     public void ClickRemoveItemBtn()
     {
+        SoundManager.instance.PlaySFX("UI_RemoveItem");
         GameManager.instance.playerInventory.DeleteItem(_interactionItem, _interactionIndex);
         _inventoryInteractionButtons.GetComponent<InventoryInteractionUI>().CloseUI();
         _inventoryTooltip.GetComponent<InventoryUITooltip>().CloseUI();

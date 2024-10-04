@@ -192,7 +192,7 @@ public class GameManager : Generic.Singleton<GameManager>
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 ActionType actionType = SkillManager.instance.activeDB.GetActiveInfo(list[i]).action;
-                if (addedActionType == actionType) 
+                if (addedActionType == actionType)
                 {
                     list.RemoveAt(i);
                     previousSkillPositionIndex = i;

@@ -17,6 +17,8 @@ public class Player : Unit
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnChanged);
         onSelectedChanged.AddListener(() => UIManager.instance.onActionChanged.Invoke());
+        OnAimStart.AddListener((a, p) => UIManager.instance.onActionChanged.Invoke());
+        OnAimEnd.AddListener((a) => UIManager.instance.onActionChanged.Invoke());
         PlayerEvents.OnStartedQuest.AddListener((quest) => OnForceFinish());
         PlayerEvents.OnSuccessQuest.AddListener((quest) => OnForceFinish());
         PlayerEvents.OnFailedQuest.AddListener((quest) => OnForceFinish());
@@ -34,6 +36,7 @@ public class Player : Unit
         if (!IsMyTurn()) return;
         if (UIManager.instance.isMouseOverUI) return;
         // if (HasStatusEffect(StatusEffectType.Stun)) EndTurn();
+        bool wasAimmed = isAimming;
 
         var isMouseOnTile = TryGetMouseOverTilePos(out Vector3Int onMouseTilePos);
 
@@ -44,10 +47,21 @@ public class Player : Unit
             if (target is not Player and not null)
             {
                 transform.LookAt(Hex.Hex2World(onMouseTilePos), Vector3.up);
+                isAimming = true;
+                
+            }
+            else
+            {
+                isAimming = false;
             }
         }
+        if (wasAimmed != isAimming) 
+        {
+            if (isAimming) OnAimStart.Invoke(GetSelectedAction(), onMouseTilePos);
+            else OnAimEnd.Invoke(GetSelectedAction());
+        }
 
-        if (Input.GetMouseButtonDown(0) && isMouseOnTile) 
+        if (Input.GetMouseButtonDown(0) && isMouseOnTile)
         {
             var actionSuccess = TryExecuteUnitAction(onMouseTilePos);
             
@@ -131,6 +145,7 @@ public class Player : Unit
     private int _cacheSightRange = -1;
     public void ReloadSight()
     {
+
         int availableMaxSightRange =
             Mathf.Max(_cacheSightRange, stat.sightRange);
         _cacheSightRange = stat.sightRange;

@@ -435,7 +435,7 @@ MonoBehaviour:
     nameIndex: 107
     modelName: Character_NativeAmericanWarrior_Male_01
     model: {fileID: 1447239715599880, guid: 697a476db0002c54c90c3d2c8e8718ba, type: 3}
-    enemyType: 1
+    enemyType: 0
     stat:
       OnChangedStat:
         m_PersistentCalls:
@@ -449,23 +449,4 @@ MonoBehaviour:
     rewardGold: 1
     rewardExp: 100
     rewardItem: 
-    level: 6
-  - index: 108
-    nameIndex: 107
-    modelName: Character_NativeAmericanWarrior_Male_01
-    model: {fileID: 1447239715599880, guid: 697a476db0002c54c90c3d2c8e8718ba, type: 3}
-    enemyType: 2
-    stat:
-      OnChangedStat:
-        m_PersistentCalls:
-          m_Calls: []
-      original: 0000000032000000320000003c000000040000003c0000000400000000000000000000000a000000000000000000000064000000000000000000000064000000000000000000000064000000
-      _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-      _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
-    weaponIndex: 1
-    btIndex: 3
-    skillIndex: 
-    rewardGold: 1
-    rewardExp: 100
-    rewardItem: 
-    level: 6
+    level: 5

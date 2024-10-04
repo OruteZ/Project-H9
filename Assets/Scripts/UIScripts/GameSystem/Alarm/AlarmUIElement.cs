@@ -8,8 +8,9 @@ public class AlarmUIElement : UIElement, IPointerEnterHandler, IPointerExitHandl
 {
     [SerializeField] private GameObject _alarmIcon;
     private AlarmInfo _alarmInfo;
-    public void SetAlarmUIElement(AlarmInfo info) 
+    public void SetAlarmUIElement(AlarmInfo info)
     {
+        SoundManager.instance.PlaySFX("UI_Alarm");
         _alarmInfo = info;
         _alarmIcon.GetComponent<Image>().sprite = info.icon;
     }

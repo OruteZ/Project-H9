@@ -33,6 +33,7 @@ public class InventoryUIElement : InventoryUIBaseElement, IPointerDownHandler, I
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (_itemFrame == null) return;
+        SoundManager.instance.PlaySFX("UI_Inventory");
         _itemFrame.SetActive(true);
         _itemUI.OpenInventoryTooltip(gameObject, GetComponent<RectTransform>().position);
     }

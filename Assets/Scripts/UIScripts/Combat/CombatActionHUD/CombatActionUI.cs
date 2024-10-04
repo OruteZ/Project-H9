@@ -402,13 +402,12 @@ public class CombatActionUI : UISystem
         bool isItemExist = inven.IsItemExist(ItemType.Heal);
         bool isWeaponExist = inven.IsItemExist(ItemType.Revolver);
 
-        _baseActionBundle.transform.GetChild(0).GetComponent<CombatActionButtonElement>().SetInteractable();
-        _baseActionBundle.transform.GetChild(1).GetComponent<CombatActionButtonElement>().SetInteractable();
-        _baseActionBundle.transform.GetChild(2).GetComponent<CombatActionButtonElement>().SetInteractable();
-        _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable();
-        _baseActionBundle.transform.GetChild(4).GetComponent<CombatActionButtonElement>().SetInteractable(isSkillExist);
-        _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(isItemExist && _itemUsingAction.IsSelectable());
-        _baseActionBundle.transform.GetChild(6).GetComponent<CombatActionButtonElement>().SetInteractable(isWeaponExist);
+        _baseActionBundle.transform.GetChild(0).GetComponent<CombatActionButtonElement>().SetInteractable();            //Move
+        _baseActionBundle.transform.GetChild(1).GetComponent<CombatActionButtonElement>().SetInteractable();            //Attack
+        _baseActionBundle.transform.GetChild(2).GetComponent<CombatActionButtonElement>().SetInteractable();            //Reload
+        _baseActionBundle.transform.GetChild(3).GetComponent<CombatActionButtonElement>().SetInteractable(isSkillExist);//Skill
+        _baseActionBundle.transform.GetChild(4).GetComponent<CombatActionButtonElement>().SetInteractable(isItemExist && _itemUsingAction.IsSelectable());//Item
+        _baseActionBundle.transform.GetChild(5).GetComponent<CombatActionButtonElement>().SetInteractable(isWeaponExist);//Weapon
     }
 
     public void ShowRequiredCost(IUnitAction action)

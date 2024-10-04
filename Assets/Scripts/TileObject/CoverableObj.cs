@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -64,22 +65,37 @@ public class CoverableObj : TileObject, IDamageable
 
     private void OnHit(Damage context)
     {
-        // set gizmo
-        gizmoFlag = true;
-        g_targetHex = context.target.GetHex();
-        g_atkFromHex = context.attacker.GetHex();
-        
+    //     Debug.Log("Coverable On Hit : " + gameObject.name);
+    //     
+    //     CoverableObj[] otherCovers = tile.GetTileObjects<CoverableObj>();
+    //     foreach (CoverableObj cover in otherCovers)
+    //     {
+    //         if (cover == this) continue;
+    //
+    //         if (cover.IsCovered(context.id)) return;
+    //     }
+    //     
+    //     
+    // set gizmo
+    //     
+    //     
+    //     
+    //     bool isCovered = Coverable(
+    //         context.attacker.GetHex(),
+    //         hexPosition, 
+    //         coverDirection
+    //     );
+    //     if (!isCovered) return;
+    //     
+    //
+    //     coveredDamages.Add(context.id);
+    //     Debug.Log("Covered Damage : " + context.id + " : " + gameObject.name);
+    //     
+    if (_onHitFlag is false) return;
+    _onHitFlag = false;
         
         if (!context.Contains(Damage.Type.MISS)) return;
         
-        bool isCovered = Coverable(
-            context.attacker.GetHex(),
-            hexPosition, 
-            coverDirection
-            );
-        if (!isCovered) return;
-        
-
         Damage selfDamage = new (1, 1, Damage.Type.DEFAULT, context.attacker, this);
         TakeDamage(selfDamage);
     }
@@ -137,17 +153,17 @@ public class CoverableObj : TileObject, IDamageable
         return coverDirection;
     }
 
-    public static bool Coverable(Vector3Int atkHex, Vector3Int targetHex, Hex.Direction coverDirection)
+    public static bool CanCover(Vector3Int atkHex, Vector3Int targetHex, Hex.Direction coverDirection)
     {
-        Vector3 target = Hex.Hex2World(targetHex) + Vector3.up;
-        Vector3 atk = Hex.Hex2World(atkHex) + Vector3.up;
+        Vector3 target = Hex.Hex2World(targetHex);
+        Vector3 atk = Hex.Hex2World(atkHex);
         
         Vector3 targetToAtkRay = (atk - target).normalized;
         Vector3 midVector = Hex.Hex2World(Hex.GetDirectionHex(coverDirection));
         
         // is coverToAtkFrom between cwVector and ccwVector?
         float angle = Vector3.Angle(midVector, targetToAtkRay);
-        if (angle <= 61)
+        if (angle <= 31)
         {
             return true;
         }
@@ -156,32 +172,33 @@ public class CoverableObj : TileObject, IDamageable
     }
 
     private bool gizmoFlag = false;
-    private Vector3Int g_targetHex;
-    private Vector3Int g_atkFromHex;
+    
+    [Space(10)]
+    [SerializeField] private Vector3Int g_targetHex;
+    [SerializeField]private Vector3Int g_atkFromHex;
 
-    public void OnDrawGizmos()
+    public void OnDrawGizmosSelected()
     {
-        if (!gizmoFlag) return;
+        // if (!gizmoFlag) return;
         
         // show 2 vectors
         Vector3 target = Hex.Hex2World(g_targetHex) + Vector3.up;
-        Vector3 coverPos = Hex.Hex2World(hexPosition) + Vector3.up;
         Vector3 atkFromPos = Hex.Hex2World(g_atkFromHex) + Vector3.up;
         
-        Vector3 midVector = (coverPos - target).normalized;
-        Vector3 cwVector = Quaternion.AngleAxis(60, Vector3.up) * midVector;
-        Vector3 ccwVector = Quaternion.AngleAxis(-60, Vector3.up) * midVector;
-        Vector3 coverToAtkFrom = (atkFromPos - coverPos).normalized;
+        Vector3 midVector = (Hex.Hex2World(Hex.GetDirectionHex(GetCoverDirections()))).normalized;
+        Vector3 cwVector = Quaternion.AngleAxis(30, Vector3.up) * midVector;
+        Vector3 ccwVector = Quaternion.AngleAxis(-30, Vector3.up) * midVector;
+        Vector3 coverToAtkFrom = (atkFromPos - target).normalized;
         
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(coverPos, coverPos + midVector * 10);
+        Gizmos.DrawLine(target, target + midVector * 10);
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(coverPos, coverPos + cwVector * 10);
+        Gizmos.DrawLine(target, target + cwVector * 10);
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(coverPos, coverPos + ccwVector * 10);
+        Gizmos.DrawLine(target, target + ccwVector * 10);
         
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(coverPos, coverPos + coverToAtkFrom * 10);
+        Gizmos.DrawLine(target, target + coverToAtkFrom * 10);
     }
 
     private void OnValidate()
@@ -226,20 +243,19 @@ public class CoverableObj : TileObject, IDamageable
         // if visible, light cover material을 추가
         // if not visible, light cover material을 제거
         
-        if (value)
-        {
-            meshRenderer.materials = new[] {meshRenderer.material, LightCoverMaterial};
-        }
-        else
-        {
-            meshRenderer.materials = new[] {meshRenderer.material};
-        }
+        meshRenderer.materials = value ? new[] {meshRenderer.material, LightCoverMaterial} : new[] {meshRenderer.material};
         
     }
 
     public override bool IsVisible()
     {
         return _visible;
+    }
+
+    private bool _onHitFlag;
+    public void SetFlag()
+    {
+        _onHitFlag = true;
     }
 }
 

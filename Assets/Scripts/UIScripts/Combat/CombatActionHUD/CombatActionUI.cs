@@ -204,14 +204,14 @@ public class CombatActionUI : UISystem
             return;
         }
         _baseActions.Clear();
-        CombatActionType[] baseCombatActionType = { CombatActionType.Move, CombatActionType.Attack, CombatActionType.Reload, CombatActionType.Cover };
+        CombatActionType[] baseCombatActionType = { CombatActionType.Move, CombatActionType.Attack, CombatActionType.Reload};
         for (int i = 0; i < baseCombatActionType.Length; i++)
         {
             _baseActions.Add(baseCombatActionType[i], ba[i]);
             _baseActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetCombatActionButton(baseCombatActionType[i], i, ba[i]);
         }
-        _idleAction = ba[_baseActions.Count];
-        _itemUsingAction = ba[_baseActions.Count + 1];
+        _idleAction = ba[_baseActions.Count + 1];
+        _itemUsingAction = ba[_baseActions.Count + 2];
 
         //skill action
         _skillActions.Clear();
@@ -277,7 +277,6 @@ public class CombatActionUI : UISystem
             case CombatActionType.Move:
             case CombatActionType.Attack:
             case CombatActionType.Reload:
-            case CombatActionType.Cover:
                 {
                     FieldSystem.unitSystem.GetPlayer().SelectAction(_baseActions[actionType]);
                     SetActionBundle(_activeActionBundle, null);

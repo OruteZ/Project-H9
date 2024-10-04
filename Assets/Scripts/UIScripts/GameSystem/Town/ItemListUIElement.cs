@@ -35,6 +35,7 @@ public class ItemListUIElement : UIElement, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        SoundManager.instance.PlaySFX("UI_Inventory");
         Vector3 pos = GetComponent<RectTransform>().position;
         pos.x += GetComponent<RectTransform>().sizeDelta.x / 2 * UIManager.instance.GetCanvasScale();
         pos.y += GetComponent<RectTransform>().sizeDelta.y / 2 * UIManager.instance.GetCanvasScale();

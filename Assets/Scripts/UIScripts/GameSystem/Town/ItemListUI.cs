@@ -108,6 +108,7 @@ public class ItemListUI : UIElement
         
         if (GameManager.instance.playerInventory.TryAddItem(Item.CreateItem(iData)))
         {
+            SoundManager.instance.PlaySFX("UI_SellBuyItem");
             GameManager.instance.playerInventory.AddGold(-iData.itemPrice);
 
             if (_itemUI is not null)

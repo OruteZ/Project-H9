@@ -413,7 +413,7 @@ public class TileSystem : MonoBehaviour
             int length = container.Count;
             for(int i = 0; i < length; i++)
             {
-                if (!container.TryDequeue(out var current)) return null;
+                if (!container.TryDequeue(out PathNode current)) return null;
                 if (current.position == destination)
                 {
                     var result = new List<Tile>();

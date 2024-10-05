@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public readonly struct Damage
 {
+    public static uint index = 0;
 
+    public readonly uint id;
     public readonly int amount;
     public readonly int criticalAmount;
     public readonly Type type;
@@ -20,6 +23,7 @@ public readonly struct Damage
         )
     
     {
+        id = index++;
         this.amount = amount;
         this.criticalAmount = criticalAmount;
         this.type = type;

@@ -647,6 +647,8 @@ MonoBehaviour:
   - prefab: {fileID: 515775582126048608, guid: 529962513f9411e41be9dcff28ad41f3, type: 3}
     hexPosition: {x: 3, y: 5, z: -8}
     rotation: -0
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 2.1251667, y: 2.9333677, z: 2.1251667}
     arguments:
     - 3
     - 3
@@ -654,6 +656,8 @@ MonoBehaviour:
       type: 3}
     hexPosition: {x: 7, y: 3, z: -10}
     rotation: -0
+    positionOffset: {x: 0, y: -0.24468, z: 0}
+    scale: {x: 2.2374, y: 3.1840441, z: 2.2374}
     arguments:
     - 3
     - 3
@@ -661,6 +665,8 @@ MonoBehaviour:
       type: 3}
     hexPosition: {x: 1, y: 3, z: -4}
     rotation: -0
+    positionOffset: {x: 0, y: -0.018, z: 0}
+    scale: {x: 1.8839136, y: 2.8435793, z: 1.8839136}
     arguments:
     - 3
     - 3
@@ -1806,3 +1812,4 @@ MonoBehaviour:
   - {x: 5, y: 5, z: -10}
   - {x: 3, y: 3, z: -6}
   playerSpawnPoint: {x: 2, y: 7, z: -9}
+  stageStyle: 0

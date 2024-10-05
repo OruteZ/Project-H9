@@ -764,7 +764,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         {
             foreach(CoverableObj obj in currentCoverables)
             {
-                bool coverable = CoverableObj.Coverable(
+                bool coverable = CoverableObj.CanCover(
                     attacker.hexPosition,
                     obj.hexPosition,
                     obj.GetCoverDirections()
@@ -780,6 +780,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
                         _ => 0
                     };
 
+                    obj.SetFlag();
+
                     break;
                 }
             }
@@ -794,7 +796,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public void AddCoverable(CoverableObj obj)
     {
-        if (currentCoverables is null) currentCoverables = new List<CoverableObj>();
+        currentCoverables ??= new List<CoverableObj>();
+
         currentCoverables.Add(obj);
     }
     

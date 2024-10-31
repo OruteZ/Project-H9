@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+// ReSharper disable InconsistentNaming
 
 public class FieldSystem : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class FieldSystem : MonoBehaviour
     /// CombatScene에서 Stage가 끝났을때 호출되는 이벤트입니다. WorldScene에서 호출되지 않습니다.
     /// </summary>
     private static UnityEvent<bool> _onCombatFinish;
+    
+    // AddListener를 쓰라고 public으로 한거지 invoke쓰면 대가리 깨짐
     public static UnityEvent<bool> onCombatFinish => _onCombatFinish ??= new UnityEvent<bool>();
 
 
@@ -35,11 +38,16 @@ public class FieldSystem : MonoBehaviour
     public static UnityEvent<bool> onCombatEnter => _onCombatEnter ??= new UnityEvent<bool>();
 
 
+    // Game Goal;
+    private static IGoal _goal;
+    
     private void Awake()
     {
         tileSystem = GetComponent<TileSystem>();
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();
+        
+        _goal = GameManager.instance.CompareState(GameState.WORLD) ? null : new KillAll();
     }
 
     private void Start()
@@ -47,6 +55,10 @@ public class FieldSystem : MonoBehaviour
         tileSystem.SetUpTilesAndObjects();
         unitSystem.SetUpUnits();
         turnSystem.SetUp();
+        
+        _goal?.Setup();
+        _goal?.AddListenerOnComplete(OnGameGoalComplete);
+        
         StartCoroutine(StartSceneCoroutine());
     }
 
@@ -63,6 +75,20 @@ public class FieldSystem : MonoBehaviour
         onStageStart.Invoke();
         if(GameManager.instance.CompareState(GameState.EDITOR) is false) 
             turnSystem.StartTurn();
+    }
+    
+    private void OnGameGoalComplete(bool isWin)
+    {
+        if (isWin)
+        {
+            Debug.Log("Game Goal Complete");
+            onCombatFinish.Invoke(true);
+        }
+        else
+        {
+            Debug.Log("Game Goal Failed");
+            onCombatFinish.Invoke(false);
+        }
     }
 
     // ==================== Static Methods ====================
@@ -81,4 +107,18 @@ public class FieldSystem : MonoBehaviour
         List<IDamageable> tileObj = tileSystem.GetTileObject(pos).OfType<IDamageable>().ToList();
         return tileObj.Count > 0 ? tileObj[0] : null;
     }
+    
+    public static bool IsCombatFinish(out bool isWin)
+    {
+        if (_goal is null)
+        {
+            isWin = false;
+            return false;
+        }
+
+        isWin = _goal.HasSuccess();
+        return _goal.IsFinished();
+    }
+    
+    public static IGoal GetGoal() => _goal;
 }

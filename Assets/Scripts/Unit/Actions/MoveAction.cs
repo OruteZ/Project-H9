@@ -160,7 +160,8 @@ public class MoveAction : BaseAction
             targetPos.y = transform.position.y;
             
             // if there is enemy link, stop moving and start combat
-            if (FieldSystem.tileSystem.GetTileObject(_path[_currentPositionIndex].hexPosition).
+            if (GameManager.instance.CompareState(GameState.WORLD) &&
+                FieldSystem.tileSystem.GetTileObject(_path[_currentPositionIndex].hexPosition).
                 Any(item => item is Link link))
             {
                 unit.animator.ResetTrigger(MOVE);

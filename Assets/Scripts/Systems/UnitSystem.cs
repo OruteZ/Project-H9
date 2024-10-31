@@ -238,27 +238,6 @@ public class UnitSystem : MonoBehaviour
             onUnitCreated.Invoke(unit);
         }
     }
-
-    public bool IsCombatFinish(out bool hasPlayerWin)
-    {
-        if (GameManager.instance.CompareState(GameState.WORLD))
-        {
-            Debug.LogError("Wrong function Call : check finish combat in world scene");
-            throw new NotSupportedException();
-        }
-
-        hasPlayerWin = false;
-        if (GetPlayer() is null) return true;
-        if (GetPlayer().hp <= 0) return true;
-        
-        if (units.Count == 1 && units[0] is Player)
-        {
-            hasPlayerWin = true;
-            return true;
-        }
-
-        return false;
-    }
     
     /// <summary>
     /// 현재 플레이어 객체를 가져옵니다.
@@ -346,7 +325,7 @@ public class UnitSystem : MonoBehaviour
         RemoveUnit(unit);
         onAnyUnitDead.Invoke(unit);
         
-        if (IsCombatFinish(out bool playerWin))
+        if (FieldSystem.IsCombatFinish(out bool playerWin))
         {
             if (playerWin)
             {

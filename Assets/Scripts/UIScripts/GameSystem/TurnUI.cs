@@ -100,7 +100,7 @@ public class TurnUI : UISystem
     private bool IsButtonInteractable()
     {
         if (FieldSystem.turnSystem.turnOwner is not Player) return false;
-        if (GameManager.instance.CompareState(GameState.COMBAT) && FieldSystem.unitSystem.IsCombatFinish(out var none))
+        if (GameManager.instance.CompareState(GameState.COMBAT) && FieldSystem.IsCombatFinish(out bool none))
             return false;
         if (FieldSystem.unitSystem.GetPlayer().GetSelectedAction().IsActive()) return false;
         if (GameManager.instance.CompareState(GameState.WORLD) 

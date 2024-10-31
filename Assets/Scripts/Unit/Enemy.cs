@@ -63,7 +63,7 @@ public class Enemy : Unit
     {
         if (IsBusy()) return;
         if (!IsMyTurn()) return;
-        if (FieldSystem.unitSystem.IsCombatFinish(out var none)) return;
+        if (FieldSystem.IsCombatFinish(out bool none)) return;
         
         var result = ai.Think();
         if (result.action is null)

@@ -129,6 +129,12 @@ public class MapSaveAndLoader : MonoBehaviour
         //instantiate tile objects
         foreach (TileObjectData tileObjectData in saveData.GetTileObjectDataList())
         {
+            if (tileObjectData.prefab is null)
+            {
+                Debug.LogError("Prefab is null");
+                continue;
+            }
+            
             TileObject tileObject = Instantiate(tileObjectData.prefab).GetComponent<TileObject>();
             tileObject.transform.parent = tileObjParent.transform;
             tileObject.hexPosition = tileObjectData.hexPosition;

@@ -495,8 +495,65 @@ public class TileSystem : MonoBehaviour
         return true;
     }
 
+    private GameObject hittedCoverObj;
+    private float ignoreRadius = 110.0f;
+    private void Update()
+    {
+        if (!GameManager.instance.CompareState(GameState.COMBAT)) return;
+
+        if (!CheckMousePositionValidation())
+        {
+            TileEffectManager.instance.SetCoverEffect(null);
+            TileEffectManager.instance.SetCoverableOutline(null);
+            return;
+        }
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            GameObject hitCoverObj = hit.collider.transform.parent.gameObject;
+            if (!hitCoverObj.TryGetComponent<CoverableObj>(out var component)) 
+            {
+                hitCoverObj = null;
+            }
+
+            if ((hittedCoverObj != null && hitCoverObj == null))
+            {
+                TileEffectManager.instance.SetCoverEffect(null);
+                TileEffectManager.instance.SetCoverableOutline(null);
+            }
+            else
+            {
+                if (hitCoverObj != null && Input.GetMouseButtonDown(0))
+                {
+                    TileEffectManager.instance.SetCoverEffect(hitCoverObj);
+                }
+
+                if (hittedCoverObj != hitCoverObj)
+                {
+                    TileEffectManager.instance.SetCoverableOutline(hitCoverObj);
+                }
+            }
+            hittedCoverObj = hitCoverObj;
+        }
+    }
+    private bool CheckMousePositionValidation()
+    {
+        if (!UIManager.instance.combatUI.combatActionUI.IsDisplayed()) return true;
+
+        GameObject player = FieldSystem.unitSystem.GetPlayer().gameObject;
+        Vector3 playerChestPosition = player.transform.position;
+        if (!player.TryGetComponent(out CapsuleCollider var)) return true;
+
+        playerChestPosition.y += player.GetComponent<CapsuleCollider>().center.y;
+        Vector2 screenPos = Camera.main.WorldToScreenPoint(playerChestPosition);
+        //Debug.LogError(Vector2.Distance(Input.mousePosition, screenPos));
+        if (Vector2.Distance(Input.mousePosition, screenPos) < ignoreRadius * UIManager.instance.GetCanvasScale()) return false;
+
+        return true;
+    }
+
     //==========================Create World==================================
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     enum CreateType
     {
         RECT,

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -19,13 +20,21 @@ public class CoverableObj : TileObject, IDamageable
     private bool _visible;
     
     private readonly UnityEvent<int, int> _onHpChanged = new UnityEvent<int, int>();
-    
+
+    private Material _material;
+    private Color _originColor;
+    private float _targetAlpha;
+
     public override void SetUp()
     {
         base.SetUp();
         _onHpChanged.RemoveAllListeners();
         
         currentHp = maxHp;
+
+        _material = transform.GetChild(1).GetComponent<MeshRenderer>().material;
+        _originColor = _material.color;
+        _targetAlpha = 1;
     }
     
     public override string[] GetArgs()
@@ -257,6 +266,43 @@ public class CoverableObj : TileObject, IDamageable
     {
         _onHitFlag = true;
     }
+
+    #region transparent
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.gameObject.TryGetComponent<Player>(out var c)) return;
+        StopCoroutine(BecomeTransparent());
+        StartCoroutine(BecomeTransparent());
+    }
+    IEnumerator BecomeTransparent()
+    {
+        _material.SetFloat("_Mode", 3);
+        _targetAlpha = -1.0f;
+        while (_material.color.a > _targetAlpha)
+        {
+            ChangeMaterialAlpha();
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        yield return new WaitForSeconds(0.125f);
+        _targetAlpha = 1.0f;
+        while (_material.color.a < _targetAlpha)
+        {
+            ChangeMaterialAlpha();
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        _material.SetFloat("_Mode", 1);
+
+        yield break;
+    }
+    const int TRANS_SPEED = 20;
+    private void ChangeMaterialAlpha()
+    {
+        Color c = _material.color;
+        LerpCalculation.CalculateLerpValue(ref c.a, _targetAlpha, TRANS_SPEED);
+        _material.color = c;
+    }
+    #endregion
 }
 
 public enum CoverType

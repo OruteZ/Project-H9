@@ -419,12 +419,13 @@ MonoBehaviour:
   aimEffectRectTsf: {fileID: 1843969269735109372}
   combatCanvas: {fileID: 1843969268906325107}
   aimEffect: {fileID: 1843969268467649097}
-  coverPosition: {fileID: 7055767354360999130, guid: ca0b6c45d1b291c4e96ad01398904372,
+  coverMain: {fileID: 7055767354360999130, guid: 88634d05558077948a6061d44aa0677e,
     type: 3}
-  coverAvailable: {fileID: 8327600173450480239, guid: 746588fae85de95469ce22a43b2031c5,
+  coverSub: {fileID: 7055767354360999130, guid: a6c729477b4ab0f45bac8f4b64ff7c8f,
     type: 3}
   coverMaterial: {fileID: 2100000, guid: 99d9e0b561f6e4c40a39abcc4ce4d846, type: 2}
-  coverEffectRange: 5
+  movableDelay: 0
+  coverEffectRange: 10
 --- !u!1 &8713377531277101679
 GameObject:
   m_ObjectHideFlags: 0

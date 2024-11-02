@@ -47,7 +47,7 @@ public class FieldSystem : MonoBehaviour
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();
         
-        _goal = GameManager.instance.CompareState(GameState.WORLD) ? null : new KillAll();
+        
     }
 
     private void Start()
@@ -55,8 +55,11 @@ public class FieldSystem : MonoBehaviour
         tileSystem.SetUpTilesAndObjects();
         unitSystem.SetUpUnits();
         turnSystem.SetUp();
+
+        _goal = GameManager.instance.CompareState(GameState.WORLD)
+            ? null
+            : GoalBuilder.BuildGoal(GameManager.instance.GetStageData().GetGoalInfo());
         
-        _goal?.Setup();
         _goal?.AddListenerOnComplete(OnGameGoalComplete);
         
         StartCoroutine(StartSceneCoroutine());

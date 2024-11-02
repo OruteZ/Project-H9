@@ -103,12 +103,14 @@ public class GameManager : Generic.Singleton<GameManager>
         
         foreach (Link link in FieldSystem.tileSystem.GetAllTileObjects().Where(obj => obj is Link))
         {
-            LinkObjectData linkData = new LinkObjectData();
-            linkData.pos = link.hexPosition;
-            linkData.rotation = link.gameObject.transform.rotation.eulerAngles.y;
-            linkData.linkIndex = link.linkIndex;
-            linkData.combatMapIndex = link.combatMapIndex;
-            linkData.isRepeatable = link.isRepeatable;
+            LinkObjectData linkData = new LinkObjectData
+            {
+                pos = link.hexPosition,
+                rotation = link.gameObject.transform.rotation.eulerAngles.y,
+                linkIndex = link.linkIndex,
+                combatMapIndex = link.combatMapIndex,
+                isRepeatable = link.isRepeatable
+            };
             // linkData.modelName = link.;
             // The Link Model is one-to-one with the Link Index,
             // todo : the model can also be saved only when this structure is changed.

@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.Events;
 
 public interface IGoal
@@ -7,7 +8,7 @@ public interface IGoal
     
     int GetStringIndex();
     string GetGoalString();
-    void Setup();
+    void Setup(Vector3Int targetPos, int turnLimit, int targetEnemy);
     
     void AddListenerOnComplete(UnityAction<bool> onComplete);
 }

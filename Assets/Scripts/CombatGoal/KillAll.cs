@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.Events;
 
 public class KillAll : IGoal
@@ -32,7 +33,7 @@ public class KillAll : IGoal
         return $" {currentEnemyCount} / {_initialEnemyCount} ";
     }
 
-    public void Setup()
+    public void Setup(Vector3Int targetPos, int turnLimit, int targetEnemy)
     {
         _onComplete = null;
         FieldSystem.unitSystem.onAnyUnitDead.AddListener(CheckGoal);

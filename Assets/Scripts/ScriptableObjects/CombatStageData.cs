@@ -20,6 +20,7 @@ public class CombatStageData : ScriptableObject
     [SerializeField] private TileData[] tileData;
     [SerializeField] private TileObjectData[] tileObjectData;
     [SerializeField] private EnvironmentData[] envData;
+    [SerializeField] private GoalInfo goalInfo;
     
     [SerializeField]
     private List<Vector3Int> enemySpawnPoints;
@@ -53,6 +54,11 @@ public class CombatStageData : ScriptableObject
         return envData.ToList();
     }
     
+    public GoalInfo GetGoalInfo()
+    {
+        return goalInfo;
+    }
+    
     public void SetTileDataList(List<TileData> list)
     {
         tileData = list.ToArray();
@@ -75,6 +81,15 @@ public class CombatStageData : ScriptableObject
     public void SetEnvDataList(List<EnvironmentData> list)
     {
         envData = list.ToArray();
+        
+        #if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+        #endif
+    }
+    
+    public void SetGoalInfo(GoalInfo info)
+    {
+        goalInfo = info;
         
         #if UNITY_EDITOR
         EditorUtility.SetDirty(this);

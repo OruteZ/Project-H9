@@ -22,7 +22,7 @@ public class CLevelSystem
     public int MaxExp => _level * 100;
     private const int LEVEL_UP_REWARD_SKILL_POINT = 3;
     private const int PLAYER_STAT_CONDITION_INTERVAL = 1;
-    private const int PLAYER_MAXHP_UP = 2;
+    private const int PLAYER_MAX_HP_UP = 2;
 
     public void GetExp(int exp)
     {
@@ -41,9 +41,9 @@ public class CLevelSystem
         _curExp -= MaxExp;
         _level++;
 
-        var user = GameManager.instance.user;
-        var baseMaxHp = user.Stat.GetOriginalStat(StatType.MaxHp);
-        user.Stat.SetOriginalStat(StatType.MaxHp,baseMaxHp + PLAYER_MAXHP_UP);
+        UserData user = GameManager.instance.user;
+        int baseMaxHp = user.Stat.GetOriginalStat(StatType.MaxHp);
+        user.Stat.SetOriginalStat(StatType.MaxHp,baseMaxHp + PLAYER_MAX_HP_UP);
         
         user.Stat.Recover(StatType.CurHp, user.Stat.GetStat(StatType.MaxHp), out int appliedValue);
         SkillManager.instance.AddSkillPoint(LEVEL_UP_REWARD_SKILL_POINT);

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using Castle.Core;
 using UnityEngine;
 
-public class CombatRewardHelper
+public class CombatRewardHandler
 {
     private int _gold;
     private readonly List<Pair<int, int>> _rewardCandidates = new List<Pair<int, int>>();
     private readonly List<int> _rewardItems = new List<int>();
     private readonly ItemDatabase _itemDB;
     
-    public CombatRewardHelper(ItemDatabase itemDB)
+    public CombatRewardHandler(ItemDatabase itemDB)
     {
         _gold = 0;
         _rewardItems.Clear();

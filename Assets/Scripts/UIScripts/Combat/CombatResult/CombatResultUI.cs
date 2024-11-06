@@ -89,7 +89,7 @@ public class CombatResultUI : UISystem
             _WinOrLoseText.text = _winComment;
             
             var exp = earnedExp;
-            var gold = FieldSystem.unitSystem.rewardHelper.GetRewardGold();
+            var gold = FieldSystem.unitSystem.rewardHandler.GetRewardGold();
             var bootyText = string.Empty;
             if (0 < exp && 0 < gold) bootyText = $"{exp} EXP, {gold} Gold";
             else if (0 < exp) bootyText = $"{exp} EXP";
@@ -98,7 +98,7 @@ public class CombatResultUI : UISystem
             _BootyText.text = bootyText;
 
             // set item panel
-            int[] itemidxs = FieldSystem.unitSystem.rewardHelper.GetRewardItemInfos();
+            int[] itemidxs = FieldSystem.unitSystem.rewardHandler.GetRewardItemInfos();
             var itemSize = _ResultBootyItemPrefab.GetComponent<RectTransform>().sizeDelta;
             var intervalX = 5; // hard code.
             var positionY = 16; // hard code.

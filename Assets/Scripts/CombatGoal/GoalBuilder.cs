@@ -1,4 +1,5 @@
 using System;
+using CombatGoal;
 using UnityEngine;
 
 public static class GoalBuilder
@@ -12,18 +13,20 @@ public static class GoalBuilder
             case GoalType.KILL_ALL_ENEMIES:
                 goal = new KillAll();
                 break;
-            case GoalType.KILL_BOSS:
-                // goal = new KillBoss();
-                // break;
-            case GoalType.SURVIVE:
-                // goal = new Survive();
-                // break;
-            case GoalType.MOVE_TO_POINT:
-                // goal = new MoveToPoint();
-                // break;
-            default:
-                Debug.LogError($"아직 미구현 상태 골 목표인 {goalInfo.goalType}입니다. " +
+            case GoalType.KILL_TARGET_ENEMY:
+                Debug.LogError($"아직 미구현 Goal인 {goalInfo.goalType}입니다. " +
                                $"기본값인 Kill ALl로 설정됩니다.");
+                goal = new KillAll();
+                break;
+            case GoalType.SURVIVE:
+                goal = new Survive();
+                break;
+            case GoalType.MOVE_TO_POINT:
+                Debug.LogError($"아직 미구현 Goal인 {goalInfo.goalType}입니다. " +
+                               $"기본값인 Kill ALl로 설정됩니다.");
+                goal = new KillAll();
+                break;
+            default:
                 goal = new KillAll();
                 break;
         }

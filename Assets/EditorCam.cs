@@ -5,8 +5,9 @@ using UnityEngine;
 public class EditorCam : MonoBehaviour
 {
     public float speed;
+    
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         Vector3 direction = Vector3.zero;
         if (Input.GetKey(KeyCode.W)) direction += Vector3.forward;

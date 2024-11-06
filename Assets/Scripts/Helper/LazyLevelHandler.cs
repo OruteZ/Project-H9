@@ -1,18 +1,18 @@
 public static class LazyLevelHandler 
 {
-    private static int EXP;
+    private static int _exp;
 
     public static void ReservationExp(int exp)
     {
-        EXP = exp;
+        _exp = exp;
         UIManager.instance.combatUI.combatResultUI.SetExpInformation(exp);
         FieldSystem.onStageStart.AddListener(GetExp);
     }
 
     private static void GetExp()
     {
-        GameManager.instance.LevelSystem.GetExp(EXP);
+        GameManager.instance.LevelSystem.GetExp(_exp);
         FieldSystem.onStageStart.RemoveListener(GetExp);
-        EXP = 0;
+        _exp = 0;
     }
 }

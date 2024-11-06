@@ -11,7 +11,8 @@ using UnityEditor.Rendering;
 public class ActiveDatabase : ScriptableObject
 {
     #region STATIC
-    ActionType GetActionRange(string actionName)
+
+    private static ActionType GetActionRange(string actionName)
     {
         return Enum.TryParse<ActionType>(actionName, out var type) ? type : ActionType.None;
     }
@@ -39,7 +40,7 @@ public class ActiveDatabase : ScriptableObject
                 cost = int.Parse(info[(int)Column.Cost]),
                 range = int.Parse(info[(int)Column.Range]),
                 radius = int.Parse(info[(int)Column.Radius]),
-                ammoCost = 0//int.Parse(info[(int)Column.AmmoCost]),
+                ammoCost = 0    //int.Parse(info[(int)Column.AmmoCost]),
             };
             
             infos.Add(curInfo);
@@ -52,7 +53,7 @@ public class ActiveDatabase : ScriptableObject
         {
             if (infos[i].index == index)
             {
-                var info = infos[i];
+                ActiveInfo info = infos[i];
                 
                 Debug.Log("Add Component");
                 string componentName = info.action + "Action";

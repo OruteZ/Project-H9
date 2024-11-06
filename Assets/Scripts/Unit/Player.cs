@@ -22,6 +22,7 @@ public class Player : Unit
         PlayerEvents.OnStartedQuest.AddListener((quest) => OnForceFinish());
         PlayerEvents.OnSuccessQuest.AddListener((quest) => OnForceFinish());
         PlayerEvents.OnFailedQuest.AddListener((quest) => OnForceFinish());
+        FieldSystem.onCombatFinish.AddListener((isWin) => OnForceFinish());
 
         TileEffectManager.instance.SetPlayer(this);
 
@@ -162,16 +163,16 @@ public class Player : Unit
             if (isInMoreClosedDistance) // 시야 끝거리에서만 보이지말고 한칸 들어오게 해달라는 미친 PM의 요청
             {
                 PlayerEvents.OnEnteredTileinSight?.Invoke(tile);
-                foreach (var tileObj in tile.tileObjects)
-                    if (tileObj is Link) PlayerEvents.OnEnteredLinkinSight?.Invoke(tileObj as Link); // 으아악 미친코드다
+                foreach (TileObject tileObj in tile.tileObjects)
+                    if (tileObj is Link l) PlayerEvents.OnEnteredLinkinSight?.Invoke(l); // 으아악 미친코드다
             }
 
             if(GameManager.instance.CompareState(GameState.WORLD) && tile.inSight) continue;
-            var isInVision = FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition);
+            bool isInVision = FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition);
             tile.inSight = isInVision && isInDistance;
 
 #if UNITY_EDITOR
-            var unitVision = FieldSystem.unitSystem.GetUnit(tile.hexPosition);
+            Unit unitVision = FieldSystem.unitSystem.GetUnit(tile.hexPosition);
             if (unitVision != null)
             {
                 //Debug.Log("Unit : " + unitVision.gameObject.name);

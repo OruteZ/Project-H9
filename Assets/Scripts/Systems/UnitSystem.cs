@@ -18,8 +18,8 @@ public class UnitSystem : MonoBehaviour
     [SerializeField] private PassiveDatabase passiveDB;
     [SerializeField] private ActiveDatabase activeDB;
     [SerializeField] private LinkDatabase linkDB;
-    
-    const string AI_PATH = "AI/";
+
+    private const string AI_PATH = "AI/";
     //---
     
     [Space(10)]
@@ -34,7 +34,7 @@ public class UnitSystem : MonoBehaviour
     [FormerlySerializedAs("enemyPrefab")] [SerializeField] private GameObject[] enemyPrefabs;
     
     private int _totalExp;
-    public CombatRewardHelper rewardHelper;
+    public CombatRewardHandler rewardHandler;
 
     private CustomOutline.Mode[] outlineMode = { CustomOutline.Mode.NULL, CustomOutline.Mode.OutlineAll, CustomOutline.Mode.SilhouetteOnly };
     private int modeIndex = 2;
@@ -43,6 +43,7 @@ public class UnitSystem : MonoBehaviour
     {
         SetPlayerOutline();
         FieldSystem.onStageStart.AddListener(SetPlayerOutline);
+        FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
     }
     private void Update()
     {
@@ -73,7 +74,7 @@ public class UnitSystem : MonoBehaviour
     public void SetUpUnits()
     {
         _totalExp = 0;
-        rewardHelper = new CombatRewardHelper(GameManager.instance.itemDatabase);
+        rewardHandler = new CombatRewardHandler(GameManager.instance.itemDatabase);
 
         //get all link data and instantiate enemy
         if (GameManager.instance.CompareState(GameState.COMBAT))
@@ -225,8 +226,8 @@ public class UnitSystem : MonoBehaviour
                 enemy.isVisible = false;
 
                 _totalExp += info.rewardExp;
-                rewardHelper.AddGold(info.rewardGold);
-                rewardHelper.AddItem(info.rewardItem);
+                rewardHandler.AddGold(info.rewardGold);
+                rewardHandler.AddItem(info.rewardItem);
             }
             unit.onDead.AddListener(OnUnitDead);
             unit.onMoved.AddListener(OnUnitMoved);
@@ -297,9 +298,9 @@ public class UnitSystem : MonoBehaviour
             return result;
         }
 
-        foreach (var pos in positions)
+        foreach (Vector3Int pos in positions)
         {
-            if (TryGetUnit(pos, out var u))
+            if (TryGetUnit(pos, out Unit u))
             {
                 result.Add(u);
             }
@@ -324,16 +325,6 @@ public class UnitSystem : MonoBehaviour
         Debug.Log($"OnUnitDeadCall : {unit.name}");
         RemoveUnit(unit);
         onAnyUnitDead.Invoke(unit);
-        
-        if (FieldSystem.IsCombatFinish(out bool playerWin))
-        {
-            if (playerWin)
-            {
-                LazyLevelHandler.ReservationExp(_totalExp);
-                rewardHelper.ApplyReward();
-            }
-            FieldSystem.onCombatFinish.Invoke(playerWin);
-        }
     }
 
     private void RemoveUnit(Unit unit)
@@ -359,5 +350,14 @@ public class UnitSystem : MonoBehaviour
     public int GetEnemyCount()
     {
         return units.OfType<Enemy>().Count();
+    }
+
+    private void OnCombatFinish(bool isWin)
+    {
+        if (isWin)
+        {
+            LazyLevelHandler.ReservationExp(_totalExp);
+            rewardHandler.ApplyReward();
+        }
     }
 }

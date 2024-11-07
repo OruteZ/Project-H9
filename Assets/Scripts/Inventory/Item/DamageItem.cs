@@ -16,7 +16,7 @@ public class DamageItem : Item
         
         // build damage context
         int dmg = GetData().itemEffectAmount;
-        Damage damageContext = new Damage(dmg, dmg, GetData().damageType, user, unit);
+        Damage damageContext = new Damage(dmg, dmg, GetData().damageType, user, null, unit);
         
         unit.TakeDamage(damageContext);
         stackCount--;

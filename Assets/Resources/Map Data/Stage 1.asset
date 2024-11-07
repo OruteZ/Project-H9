@@ -1934,11 +1934,29 @@ MonoBehaviour:
     rayThroughable: 0
     gridVisible: 1
   tileObjectData:
+  - prefab: {fileID: 9126146097697344923, guid: 4e762bd1fa31c354c8d0d6c1be0be61f,
+      type: 3}
+    hexPosition: {x: -1, y: 15, z: -14}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+  - prefab: {fileID: 2523278600671176856, guid: 9c0323843edd64b44bbc543f7fd388e9,
+      type: 3}
+    hexPosition: {x: -3, y: 15, z: -12}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
   - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
       type: 3}
-    hexPosition: {x: -2, y: 13, z: -11}
+    hexPosition: {x: -2, y: 15, z: -13}
     rotation: 0.50000006
-    positionOffset: {x: 0, y: 0.4, z: 0}
+    positionOffset: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}
     arguments:
     - 1
@@ -1946,44 +1964,32 @@ MonoBehaviour:
     - UpRight
   - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
       type: 3}
-    hexPosition: {x: -2, y: 13, z: -11}
-    rotation: 0.86602545
-    positionOffset: {x: 0, y: 0.4, z: 0}
+    hexPosition: {x: -2, y: 15, z: -13}
+    rotation: 1
+    positionOffset: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}
     arguments:
     - 1
     - 1
-    - DownLeft
+    - Left
   - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
       type: 3}
-    hexPosition: {x: -2, y: 13, z: -11}
-    rotation: 0.8660254
-    positionOffset: {x: 0, y: 0.4, z: 0}
+    hexPosition: {x: -2, y: 15, z: -13}
+    rotation: 0.5
+    positionOffset: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}
     arguments:
     - 1
     - 1
-    - UpLeft
-  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+    - DownRight
+  - prefab: {fileID: 9126146097697344923, guid: 48808e81bb4c57b468bb612fb010aa42,
       type: 3}
-    hexPosition: {x: 10, y: 7, z: -17}
-    rotation: 0.50000006
-    positionOffset: {x: 0, y: 0.4, z: 0}
+    hexPosition: {x: -3, y: 13, z: -10}
+    rotation: 0
+    positionOffset: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}
     arguments:
-    - 1
-    - 1
-    - UpRight
-  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
-      type: 3}
-    hexPosition: {x: 10, y: 7, z: -17}
-    rotation: -0
-    positionOffset: {x: 0, y: 0.4, z: 0}
-    scale: {x: 1, y: 1, z: 1}
-    arguments:
-    - 1
-    - 1
-    - Right
+    - 0
   envData:
   - material: {fileID: 2100000, guid: e60302d84b6108e4a8e0d3b9ca1c8b5b, type: 2}
     mesh: {fileID: 4300000, guid: c4e4bbe9fa8709847a807d98ebc6857f, type: 3}

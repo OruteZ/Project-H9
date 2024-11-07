@@ -45,9 +45,11 @@ public abstract class Weapon
     public UnitStat UnitStat => unit.stat;
     public Unit unit;
 
+    protected const int DISTANCE_PENALTY_SCALER = 5;
     protected const float SHOTGUN_OVER_RANGE_PENALTY = 3f;
     protected const float REVOLVER_OVER_RANGE_PENALTY = 2f;
     protected const float REPEATER_OVER_RANGE_PENALTY = 1.25f;
+    protected const float STRONG_OVER_RANGE_PENALTY = 100f;
 
     public Weapon(WeaponData data) 
     {
@@ -76,7 +78,7 @@ public abstract class Weapon
     public abstract int GetFinalDamage();
     public abstract int GetFinalCriticalDamage();
     public abstract float GetFinalHitRate(IDamageable target);
-    public abstract float GetDistancePenalty();
+    public abstract float CalculateDistancePenalty(IDamageable target);
     public abstract float GetFinalCriticalRate();
 
     public abstract int GetRange();

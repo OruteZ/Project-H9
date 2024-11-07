@@ -62,7 +62,7 @@ public class Dynamite : TileObject
             int distance = Hex.Distance(hexPosition, target.GetHex());
             if (distance > radius) continue;
             
-            Damage context = new (damage, damage, Damage.Type.DEFAULT, owner, target);
+            Damage context = new (damage, damage, Damage.Type.DEFAULT, owner, null, target);
             target.TakeDamage(context);
         }
 

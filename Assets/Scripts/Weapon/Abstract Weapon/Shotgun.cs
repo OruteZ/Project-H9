@@ -11,7 +11,7 @@ public class Shotgun : Weapon
     }
 
     public override ItemType GetWeaponType() => ItemType.Shotgun;
-    public override float GetDistancePenalty() => 2;
+    public override float CalculateDistancePenalty(IDamageable target) { return 0; }
     public override int GetRange()
     {
         return weaponRange + magazine.GetNextBullet().data.range + UnitStat.shotgunAdditionalDamage;
@@ -53,14 +53,6 @@ public class Shotgun : Weapon
         _targetHex = target.GetHex();
 
         float finalHitRate = distance <= range ? 100 : 0;
-
-#if UNITY_EDITOR
-        UIManager.instance.debugUI.SetDebugUI
-            (finalHitRate, unit, (Unit)target, distance, weaponRange,
-                UnitStat.revolverAdditionalRange,
-                GetDistancePenalty() *
-                (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
-#endif
 
         return finalHitRate;
     }

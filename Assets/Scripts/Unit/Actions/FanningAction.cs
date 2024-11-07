@@ -72,7 +72,7 @@ public class FanningAction : BaseAction, IShootingAction
 
     public override bool CanExecute()
     {
-        if (_target is null || (Unit)_target == unit) return false;
+        if (_target is null || _target is TileObject || (Unit)_target == unit) return false;
         if (IsThereWallBetweenUnitAndTarget(_target.GetHex())) return false;
         
         return true;

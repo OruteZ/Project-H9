@@ -39,7 +39,7 @@ public class Burning : StatusEffect
     {
         //unit takes damage by stack * 1;
         Damage damageContext
-            = new(damage, damage, Damage.Type.BURNED, creator, controller.GetUnit());
+            = new(damage, damage, Damage.Type.BURNED, creator, null, controller.GetUnit());
     }
 
     public override void OnTurnFinished()

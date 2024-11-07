@@ -478,7 +478,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             }
         }
         Damage context = 
-            new (weapon.GetFinalDamage(), weapon.GetFinalCriticalDamage(), type, this, target);
+            new (weapon.GetFinalDamage(), weapon.GetFinalCriticalDamage(), type, this, null, target);
         //================================================================
 
         if (hit)

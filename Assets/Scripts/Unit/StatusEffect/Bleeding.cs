@@ -16,7 +16,7 @@
     {
         //build damage context
         Damage damageContext
-            = new(damage, damage, Damage.Type.BLOODED, creator, controller.GetUnit());
+            = new(damage, damage, Damage.Type.BLOODED, creator, null, controller.GetUnit());
         
         
         controller.GetUnit().TakeDamage(damageContext);

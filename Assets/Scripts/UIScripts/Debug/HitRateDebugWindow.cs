@@ -30,14 +30,14 @@ public class HitRateDebugWindow : UISystem
     {
         _isOpened = false;
     }
-    public void SetText(float hitRate, Unit unit, Unit target, float dist, float wRange, float addRange, float penalty)
+    public void SetText(float hitRate, Unit unit, IDamageable target, float dist, float wRange, float addRange, float penalty)
     {
         if (_isOpened)
         {
             _text.GetComponent<TextMeshProUGUI>().text =
                 hitRate.ToString() + '\n' +
                 unit.unitName.ToString() + '\n' +
-                target.unitName.ToString() + '\n' +
+                target.ToString() + '\n' +
                 dist.ToString() + '\n' +
                 wRange.ToString() + '\n' +
                 addRange.ToString() + '\n' +

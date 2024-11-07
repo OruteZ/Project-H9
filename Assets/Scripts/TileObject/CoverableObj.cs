@@ -105,7 +105,7 @@ public class CoverableObj : TileObject, IDamageable
         
         if (!context.Contains(Damage.Type.MISS)) return;
         
-        Damage selfDamage = new (1, 1, Damage.Type.DEFAULT, context.attacker, this);
+        Damage selfDamage = new (1, 1, Damage.Type.DEFAULT, context.attacker, null, this);
         TakeDamage(selfDamage);
     }
 

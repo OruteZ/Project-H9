@@ -296,42 +296,32 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
         IEnumerable<Unit> units = FieldSystem.unitSystem.units.Where(
             unit => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) && unit is not Player);
+        IEnumerable<TileObject> tObj = FieldSystem.tileSystem.GetAllTileObjects().Where(
+            obj => obj is not CoverableObj && FieldSystem.tileSystem.VisionCheck(_player.hexPosition, obj.hexPosition));
 
         //white range tile
         foreach (var tile in tiles)
         {
-            // condition 1 : no unit on tile
-            if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
-            
-            // condition 1 : in sight range
+            // condition 1 : no walkable tile
+            if (!tile.walkable) continue;
+
+            //// condition 1 : no unit on tile
+            //if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
+
+            // condition 2 : in sight range
             if (Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
             
             SetEffectBase(tile.hexPosition, attackTileEffect);
         }
 
         //target range tile
-        foreach (Unit unit in units)
-        {
-            // condition 1 : raycheck true
-            // condition 2 : vision check true
-            // condition 3 : in sight range
-             
-            if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, unit.hexPosition) is false) continue;
-            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
-            if (Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
+        List<Vector3Int> unitPositions = new();
+        List<Vector3Int> tObjPositions = new();
+        foreach (Unit u in units) unitPositions.Add(u.hexPosition);
+        foreach (TileObject t in tObj) tObjPositions.Add(t.hexPosition);
+        AttackTargetTileEffect(unitPositions);
+        AttackTargetTileEffect(tObjPositions);
 
-            if (_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, unit.hexPosition))
-            {
-                SetEffectBase(unit.hexPosition, attackUnitEffect);
-            }
-            else
-            {
-                
-                if(_player.weapon.GetWeaponType() is not ItemType.Shotgun) 
-                    SetEffectBase(unit.hexPosition, attackOutOfRangeEffect);
-            }
-        }
-        
         //if weapon type is repeater && has sweet spot buff, show sweet spot
         if (_player.weapon is Repeater repeater && 
             _player.GetDisplayableEffects().Any(e => e is SweetSpotEffect))
@@ -373,43 +363,94 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
 
         _curCoroutine = StartCoroutine(AttackTargetEffectCoroutine());
     }
+    private void AttackTargetTileEffect(List<Vector3Int> targetHexPos)
+    {
+        for (int i = 0; i < targetHexPos.Count; i++) 
+        {
+            // condition 1 : raycheck true
+            // condition 2 : vision check true
+            // condition 3 : in sight range
+
+            if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, targetHexPos[i]) is false) continue;
+            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, targetHexPos[i]) is false) continue;
+            if (Hex.Distance(_player.hexPosition, targetHexPos[i]) > _player.stat.sightRange) continue;
+
+            if (_effectsBase.ContainsKey(targetHexPos[i]))
+            {
+                Destroy(_effectsBase[targetHexPos[i]]);
+                _effectsBase.Remove(targetHexPos[i]);
+            }
+
+            if (_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, targetHexPos[i]))
+            {
+                SetEffectBase(targetHexPos[i], attackUnitEffect);
+            }
+            else
+            {
+                if (_player.weapon.GetWeaponType() is not ItemType.Shotgun)
+                    SetEffectBase(targetHexPos[i], attackOutOfRangeEffect);
+            }
+        }
+    }
 
     private IEnumerator AttackTargetEffectCoroutine()
     {
-        Unit targetUnit = null;
+        Player player = FieldSystem.unitSystem.GetPlayer();
         while (true)
         {
-            if (Player.TryGetMouseOverTilePos(out var target) is false)
+            if (Player.TryGetMouseOverTilePos(out var targetHexPos) is false)
+            {
+                aimEffectRectTsf.gameObject.SetActive(false);
+                yield return null;
+                continue;
+            }
+
+            var targetUnit = FieldSystem.unitSystem.GetUnit(targetHexPos);
+            var targetTObj = FieldSystem.tileSystem.GetAllTileObjects().Where(
+            obj => obj.hexPosition == targetHexPos && obj is IDamageable);
+
+            //if ((targetUnit is null or Player) && targetTObj is null)
+            //{
+            //    aimEffectRectTsf.gameObject.SetActive(false);
+            //    yield return null;
+            //    continue;
+            //}
+
+
+            IDamageable targetObj = null;
+            Transform targetTransform = null;
+            if (targetUnit is not null && targetUnit is not Player)
+            {
+                targetObj = (IDamageable)targetUnit;
+                targetTransform = targetUnit.transform;
+            }
+            else if (targetTObj is not null && targetTObj.Count() == 1 && player.GetSelectedAction() is AttackAction)
+            {
+                targetObj = (IDamageable)targetTObj.First();
+                targetTransform = targetTObj.First().transform;
+            }
+            else
+            {
+                aimEffectRectTsf.gameObject.SetActive(false);
+                yield return null;
+                continue;
+            }
+
+            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, targetHexPos) is false)
             {
                 aimEffectRectTsf.gameObject.SetActive(false);
                 yield return null;
                 continue;
             }
             
-            
-            var newTarget = FieldSystem.unitSystem.GetUnit(target);
-            if (newTarget is null or Player)
+            if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, targetHexPos) is false)
             {
                 aimEffectRectTsf.gameObject.SetActive(false);
                 yield return null;
                 continue;
             }
             
-            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, newTarget.hexPosition) is false)
-            {
-                aimEffectRectTsf.gameObject.SetActive(false);
-                yield return null;
-                continue;
-            }
-            
-            if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, newTarget.hexPosition) is false)
-            {
-                aimEffectRectTsf.gameObject.SetActive(false);
-                yield return null;
-                continue;
-            }
-            
-            if (Hex.Distance(_player.hexPosition, newTarget.hexPosition) > _player.weapon.GetRange()
+            if (Hex.Distance(_player.hexPosition, targetHexPos) > _player.weapon.GetRange()
                 && _player.weapon is Shotgun)
             {
                 aimEffectRectTsf.gameObject.SetActive(false);
@@ -417,10 +458,9 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 continue;
             }
 
-            targetUnit = newTarget;
             
             aimEffectRectTsf.gameObject.SetActive(true);
-            var hitRate = _player.weapon.GetFinalHitRate(targetUnit);
+            var hitRate = _player.weapon.GetFinalHitRate(targetObj);
             float offset = 0;
             if (_player.GetSelectedAction() is FanningAction f)
             {
@@ -441,9 +481,11 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 }
             }
             hitRate += offset;
-            
-            Vector2 viewportPosition = Camera.main.WorldToViewportPoint(Hex.Hex2World(targetUnit.hexPosition) + 
-                                                                        Vector3.up * (targetUnit.transform.localScale.y * 0.5f));
+            if (hitRate >= 100) hitRate = 100;
+            if (hitRate <= 0) hitRate = 0;
+
+            Vector2 viewportPosition = Camera.main.WorldToViewportPoint(Hex.Hex2World(targetHexPos) + 
+                                                                        Vector3.up * (targetTransform.localScale.y * 0.5f));
             var sizeDelta = combatCanvas.sizeDelta;
             
             Vector2 worldObjectScreenPosition = new Vector2(
@@ -621,9 +663,14 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     }
     private void ClearOutlines()
     {
-        foreach (var ol in _outlines)
+        for (int i = _outlines.Count() - 1; i >= 0; i--)
         {
-            ol.ClearOutline();
+            if (_outlines[i] == null || _outlines[i].gameObject == null)
+            {
+                _outlines.Remove(_outlines[i]);
+                continue;
+            }
+            _outlines[i].ClearOutline();
         }
     }
     #endregion

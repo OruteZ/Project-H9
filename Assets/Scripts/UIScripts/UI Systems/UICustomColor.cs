@@ -52,15 +52,15 @@ public static class UICustomColor
     public static readonly Color32 QuestDisableTextColor = new Color32(128, 128, 128, 255);
     public static string GetColorHexCode(Color32 color)
     {
-        string r = string.Format("{0:X2}", color.r);
-        string g = string.Format("{0:X2}", color.g);
-        string b = string.Format("{0:X2}", color.b);
+        string r = $"{color.r:X2}";
+        string g = $"{color.g:X2}";
+        string b = $"{color.b:X2}";
 
         string result = (r + g + b).Replace("0x", "");
         return result.ToUpper();
     }
     public static string ChangeTextColor(string str, Color32 color) 
     {
-        return string.Format("<color=#{0}>{1}</color>", GetColorHexCode(color), str);
+        return $"<color=#{GetColorHexCode(color)}>{str}</color>";
     }
 }

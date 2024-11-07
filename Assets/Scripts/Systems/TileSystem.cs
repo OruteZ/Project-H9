@@ -121,14 +121,19 @@ public class TileSystem : MonoBehaviour
         }
         
 
-        var objects = GetComponentsInChildren<TileObject>().ToList();
+        List<TileObject> objects = GetComponentsInChildren<TileObject>().ToList();
         foreach (TileObject obj in objects)
         {
+            if (obj is null) continue;
+            
+            // hexPosition이 -1, -1, -1이면 랜덤으로 배치
+            if (obj.hexPosition == Hex.none) obj.hexPosition = GetRandomTile().hexPosition;
+            
             obj.SetUp();
             _tileObjects.Add(obj);
         }
         
-        //get runtime map data from gamemanager
+        //get runtime map data from game manager
         var mapData = GameManager.instance.runtimeWorldData;
         if (mapData is not null)
         {
@@ -493,6 +498,29 @@ public class TileSystem : MonoBehaviour
         }
 
         return true;
+    }
+    
+    private bool RandomObjSettable(Vector3Int pos)
+    {
+        var tile = GetTile(pos);
+        if (tile is null || tile.walkable is false) return false;
+        if (tile.tileObjects.Count > 0) return false;
+        if (FieldSystem.unitSystem.GetUnit(pos) is not null) return false;
+        if (FieldSystem.tileSystem.GetTileObjectListInRange(pos, 1).Count > 0) return false;
+        
+        return true;
+    }
+    
+    private Tile GetRandomTile()
+    {
+        var tiles = GetAllTiles();
+        Vector3Int targetPos;
+
+        do {
+            targetPos = tiles[UnityEngine.Random.Range(0, tiles.Count)].hexPosition;
+        } while (RandomObjSettable(targetPos) is false);
+        
+        return GetTile(targetPos);
     }
 
     //==========================Create World==================================

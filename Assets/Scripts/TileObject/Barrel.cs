@@ -9,8 +9,25 @@ public class Barrel : TileObject, IDamageable
     [SerializeField] private int maxHp;
     [SerializeField] private int currentHp;
     [SerializeField] private GameObject _firePrefab;
+    private List<GameObject> _fires;
 
     private readonly UnityEvent<int, int> _onHpChanged = new UnityEvent<int, int>();
+
+    private void Start()
+    {
+        if(objectType == TileObjectType.OIL_BARREL)
+        {
+            _fires = new();
+
+            for (int i = 0; i < 3 * (FIRE_RANGE) * (FIRE_RANGE + 1) + 1; i++)
+            {
+                GameObject fire = Instantiate(_firePrefab, transform.position, Quaternion.identity);
+                fire.transform.SetParent(transform.parent);
+                fire.SetActive(false);
+                _fires.Add(fire);
+            }
+        }
+    }
 
     public override void SetUp()
     {
@@ -104,8 +121,8 @@ public class Barrel : TileObject, IDamageable
     }
 
     const int EXPLOSION_RANGE_BREAK = 1;
-    const int EXPLOSION_RANGE_50 = 1;
-    const int EXPLOSION_RANGE_25 = 2;
+    public const int EXPLOSION_RANGE_50 = 1;
+    public const int EXPLOSION_RANGE_25 = 2;
     private void Explode()
     {
         List<IDamageable> targets = FieldSystem.GetAllDamageable();
@@ -114,21 +131,22 @@ public class Barrel : TileObject, IDamageable
             int distance = Hex.Distance(hexPosition, target.GetHex());
             int damage = 0;
 
-            if (distance == EXPLOSION_RANGE_50)
+            if (distance <= EXPLOSION_RANGE_50)
             {
                 damage = Mathf.FloorToInt(target.GetMaxHp() * (50 / 100.0f));
             }
-            else if (distance == EXPLOSION_RANGE_25)
+            else if (distance <= EXPLOSION_RANGE_25)
             {
                 damage = Mathf.FloorToInt(target.GetMaxHp() * (25 / 100.0f));
             }
             else continue;
 
-            if (target is CoverableObj cObj && distance == EXPLOSION_RANGE_BREAK)
+            if (target is CoverableObj cObj && distance > EXPLOSION_RANGE_BREAK)
             {
-                damage = cObj.GetMaxHp();
+                continue;
             }
 
+            if (damage <= 0) damage = 1;
             Damage context = new(damage, damage, Damage.Type.DEFAULT, null, this, target);
             target.TakeDamage(context);
         }
@@ -139,11 +157,35 @@ public class Barrel : TileObject, IDamageable
     private void CatchFire() 
     {
         IEnumerable<Tile> tiles = FieldSystem.tileSystem.GetTilesInRange(hexPosition, FIRE_RANGE);
+        int cnt = 0;
         foreach (var tile in tiles)
         {
-            GameObject fire = Instantiate(_firePrefab, tile.gameObject.transform.position, Quaternion.identity);
-            fire.transform.SetParent(transform.parent);
-            fire.GetComponent<FireFloor>().SetUp(tile.hexPosition, 20.0f, 30);
+            List<TileObject> tObj = FieldSystem.tileSystem.GetTileObject(tile.hexPosition);
+            foreach (var t in tObj)
+            {
+                if (t is FireFloor) continue;
+            }
+            _fires[cnt].SetActive(true);
+            _fires[cnt].GetComponent<FireFloor>().SetUp(tile.hexPosition, 20.0f, 30);
+            cnt++;
         }
+        StartCoroutine(test(cnt));
     }
+
+    private IEnumerator test(int cnt)
+    {
+        yield return new WaitForSeconds(Time.deltaTime);
+        for (int i = 0; i < _fires.Count; i++)
+        {
+            if (i >= cnt)
+            {
+                _fires[i].GetComponent<FireFloor>().ForcedDestroy();
+                continue;
+            }
+
+            _fires[i].GetComponent<FireFloor>().CheckDamegeable();
+        }
+        yield break;
+    }
+
 }

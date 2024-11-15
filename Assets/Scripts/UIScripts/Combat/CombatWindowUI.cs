@@ -31,6 +31,7 @@ public class CombatWindowUI : UISystem
     public TurnOrderUI turnOrderUI { get; private set; }
     public CombatResultUI combatResultUI { get; private set; }
     public BuffUI buffUI { get; private set; }
+    public TileObjectUI tileObjectUI { get; private set; }
 
     // Start is called before the first frame update
     private void Awake()
@@ -46,6 +47,7 @@ public class CombatWindowUI : UISystem
         turnOrderUI = GetComponent<TurnOrderUI>();
         combatResultUI = resultWindowInstance.GetComponent<CombatResultUI>();
         buffUI = GetComponent<BuffUI>();
+        tileObjectUI = GetComponent<TileObjectUI>();
 
         //uiSubsystems.Add(combatActionUI);
         uiSubsystems.Add(enemyHpUI);
@@ -54,6 +56,7 @@ public class CombatWindowUI : UISystem
         //uiSubsystems.Add(turnOrderUI);
         uiSubsystems.Add(combatResultUI);
         uiSubsystems.Add(buffUI);
+        uiSubsystems.Add(tileObjectUI);
     }
 
     public override void ClosePopupWindow()

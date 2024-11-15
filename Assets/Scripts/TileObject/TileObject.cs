@@ -105,5 +105,6 @@ public enum TileObjectType
     TNT_BARREL,
     OIL_BARREL,
     FIRE_FLOOR,
+    TRAP,
     BEER
 }

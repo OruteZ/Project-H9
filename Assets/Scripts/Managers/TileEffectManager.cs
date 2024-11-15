@@ -55,11 +55,17 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     public RectTransform aimEffect;
 
     [field: Header("Cover Effect")] 
-    public GameObject coverMain;
-    public GameObject coverSub;
-    public Material coverMaterial;
+    public GameObject coverMainEffect;
+    public GameObject coverSubEffect;
+    public Material coverObjMaterial;
     private List<CoverableObj> _coverableObjs;
     private Dictionary<Vector3Int, GameObject> _coverEffects;
+
+    [field: Header("Barrel Effect")]
+    public GameObject barrelNearEffect;
+    public GameObject barrelFarEffect;
+    private Dictionary<Vector3Int, GameObject> _barrelEffects;
+
 
     public void SetPlayer(Player p)
     {
@@ -77,29 +83,26 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     }
 
     private List<CustomOutline> _outlines = new();
-    GameObject prevCoverObj = null;
+    GameObject prevMouseOverObj = null;
     public void SetCoverEffect(GameObject coverObj)
     {
         ClearEffect(_coverEffects);
-        if (coverObj == prevCoverObj) 
-        { 
-            prevCoverObj = null; 
-            return; 
-        }
+        ClearEffect(_barrelEffects);
+        if (coverObj == prevMouseOverObj) return;
 
         if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
         if (coverObj != null)
         {
             Tile tile = FieldSystem.tileSystem.GetTile(coverObj.GetComponent<TileObject>().hexPosition);
             CoverableObj[] coverObjects = tile.GetTileObjects<CoverableObj>();
-            CoverEffect(coverObj, coverMain);
+            CoverTileEffect(coverObj, coverMainEffect);
             foreach (var obj in coverObjects)
             {
                 if (obj.gameObject == coverObj) continue;
-                CoverEffect(obj.gameObject, coverSub);
+                CoverTileEffect(obj.gameObject, coverSubEffect);
             }
         }
-        prevCoverObj = coverObj;
+        prevMouseOverObj = coverObj;
     }
     public void SetCoverableOutline(GameObject coverObj)
     {
@@ -109,16 +112,38 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         {
             Tile tile = FieldSystem.tileSystem.GetTile(coverObj.GetComponent<TileObject>().hexPosition);
             CoverableObj[] coverObjects = tile.GetTileObjects<CoverableObj>();
-            SetCoverObjectOutline(coverObj, new Color32(255, 217, 102, 255));
+            SetTileObjectOutline(coverObj, new Color32(255, 217, 102, 255));
             foreach (var obj in coverObjects)
             {
                 if (obj.gameObject == coverObj) continue;
-                SetCoverObjectOutline(obj.gameObject, new Color32(255, 242, 204, 128));
+                SetTileObjectOutline(obj.gameObject, new Color32(255, 242, 204, 128));
             }
 
-            if (prevCoverObj != null && prevCoverObj != coverObj) SetCoverEffect(coverObj);
+            if (prevMouseOverObj != null && prevMouseOverObj != coverObj) SetCoverEffect(coverObj);
         }
+    }
+    public void SetBarrelEffect(GameObject barrel)
+    {
+        ClearEffect(_coverEffects);
+        ClearEffect(_barrelEffects);
+        if (barrel == prevMouseOverObj) return;
 
+        if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
+        if (barrel != null)
+        {
+            Tile tile = FieldSystem.tileSystem.GetTile(barrel.GetComponent<TileObject>().hexPosition);
+            BarrelTileEffect(barrel);
+        }
+        prevMouseOverObj = barrel;
+    }
+    public void SetTileObjectOutline(GameObject tileObject)
+    {
+        ClearOutlines();
+        if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
+        if (tileObject != null)
+        {
+            SetTileObjectOutline(tileObject, new Color32(255, 0, 0, 255));
+        }
     }
     #region PRIVATE
 
@@ -142,6 +167,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 ClearEffect(_effectsBase);
                 ClearEffect(_effectsRelatedTarget);
                 ClearEffect(_coverEffects);
+                ClearEffect(_barrelEffects);
                 break;
             case ActionType.Reload:
                 break;
@@ -163,10 +189,11 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         }
     }
 
-    
+
 
     #region MOVE
 
+    [field: Header("Other Values")]
     [SerializeField] private float movableDelay;
     private float _movableEffectDelay;
     
@@ -624,10 +651,10 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
 
     #region COVER
 
-    const float DIFF = 31;
     [Tooltip("The range of the cover effect")]
     [SerializeField] private int coverEffectRange;
-    private void CoverEffect(GameObject coverObj, GameObject EffectObj)
+    const float DIFF = 31;
+    private void CoverTileEffect(GameObject coverObj, GameObject EffectObj)
     {
         Tile tile = FieldSystem.tileSystem.GetTile(coverObj.GetComponent<TileObject>().hexPosition);
 
@@ -647,14 +674,13 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 SetEffectTarget(pos, EffectObj, _coverEffects);
             }
         }
-
     }
-    private void SetCoverObjectOutline(GameObject coverObj, Color color)
+    private void SetTileObjectOutline(GameObject tileObj, Color color)
     {
-        coverObj.TryGetComponent(out CustomOutline outline);
+        tileObj.TryGetComponent(out CustomOutline outline);
         if (outline is null)
         {
-            outline = coverObj.gameObject.AddComponent<CustomOutline>();
+            outline = tileObj.gameObject.AddComponent<CustomOutline>();
             _outlines.Add(outline);
         }
         outline.OutlineColor = color;
@@ -674,15 +700,68 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         }
     }
     #endregion
+
+    #region BARREL
+    [SerializeField] private RuntimeAnimatorController _fadeInOutAnimator;
+    private Animator _animator;
+    public float _tileEffectAlpha;
+    private void BarrelTileEffect(GameObject barrelObj)
+    {
+        if (!barrelObj.TryGetComponent<Barrel>(out var barrel)) return;
+
+        var tiles = FieldSystem.tileSystem.GetTilesInRange(barrel.hexPosition, Barrel.EXPLOSION_RANGE_25);
+            //.Where(tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
+
+        foreach (var tile in tiles)
+        {
+            //if (Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
+            GameObject effectObj = null;
+
+            int distance = Hex.Distance(barrel.hexPosition, tile.hexPosition);
+            if (barrel.objectType == TileObjectType.TNT_BARREL && distance <= Barrel.EXPLOSION_RANGE_50)
+            {
+                effectObj = Instantiate(barrelNearEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
+            }
+            else if (distance <= Barrel.EXPLOSION_RANGE_25) 
+            {
+                effectObj = Instantiate(barrelFarEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
+            }
+            _barrelEffects.Add(tile.hexPosition, effectObj);
+        }
+        _curCoroutine = StartCoroutine(BarrelEffectCoroutine());
+    }
+
+    private IEnumerator BarrelEffectCoroutine()
+    {
+        _animator.runtimeAnimatorController = _fadeInOutAnimator;
+        _animator.enabled = true;
+        _animator.Rebind();
+        _animator.Play("Fade In & Out Tile Effect");
+        while (true)
+        {
+            yield return null;
+            foreach (var eo in _barrelEffects.Values) 
+            {
+                Color color = eo.GetComponent<Renderer>().material.color;
+                color.a = _tileEffectAlpha;
+                eo.GetComponent<Renderer>().material.color = color;
+            }
+        }
+    }
+    #endregion
     private new void Awake()
     {
+        _animator = GetComponent<Animator>();
+
         base.Awake();
 
         _effectsBase = new Dictionary<Vector3Int, GameObject>();
         _effectsRelatedTarget = new Dictionary<Vector3Int, GameObject>();
         _coverEffects = new Dictionary<Vector3Int, GameObject>();
+        _barrelEffects = new Dictionary<Vector3Int, GameObject>();
 
         _coverableObjs = new List<CoverableObj>();
+
     }
 
     private void ClearEffect()
@@ -695,6 +774,9 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         ClearEffect(_effectsBase);
         ClearEffect(_effectsRelatedTarget);
         ClearEffect(_coverEffects);
+        ClearEffect(_barrelEffects);
+
+        _animator.enabled = false;
 
         aimEffectRectTsf.gameObject.SetActive(false);
         

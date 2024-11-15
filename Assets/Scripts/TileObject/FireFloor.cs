@@ -8,7 +8,7 @@ public class FireFloor : TileObject
     [SerializeField] private float percentDamage;
     [SerializeField] private int duration;
     private int durationCount = 0;
-    private List<Unit> burnUnitInThisTurn;
+    private List<IDamageable> burnUnitInThisTurn;
 
     public override string[] GetArgs()
     {
@@ -34,8 +34,7 @@ public class FireFloor : TileObject
         }
 
         FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnEnd);
-        FieldSystem.unitSystem.onAnyUnitMoved.AddListener((u) => CheckUnit());
-        CheckUnit();
+        FieldSystem.unitSystem.onAnyUnitMoved.AddListener((u) => CheckDamegeable());
     }
 
     private void OnTurnEnd() 
@@ -47,19 +46,27 @@ public class FireFloor : TileObject
             return;
         }
         burnUnitInThisTurn.Clear();
-        CheckUnit();
+        CheckDamegeable();
     }
-    private void CheckUnit() 
+    public void CheckDamegeable() 
     {
         Unit unit = FieldSystem.unitSystem.GetUnit(hexPosition);
-        if (unit is null) return;
+        if (unit != null) 
+        {
+            Burn(unit);
+        }
 
-        Burn(unit);
+        List<TileObject> tObj = FieldSystem.tileSystem.GetTileObject(hexPosition);
+        if (tObj.Count > 0 && tObj[0] is Barrel b)
+        {
+            Burn(b);
+        }
     }
-    private void Burn(Unit unit)
+    private void Burn(IDamageable target)
     {
-        if (burnUnitInThisTurn.Contains(unit)) return;
-        int damage = Mathf.FloorToInt(unit.GetMaxHp() * percentDamage / 100.0f);
+        if (burnUnitInThisTurn.Contains(target)) return;
+        int damage = Mathf.FloorToInt(target.GetMaxHp() * percentDamage / 100.0f);
+        if (damage <= 0) damage = 1;
         Damage damageContext = new Damage
             (
             damage,
@@ -67,10 +74,15 @@ public class FireFloor : TileObject
             Damage.Type.BURNED,
             null,
             this,
-            unit
+            target
             );
 
-        unit.TakeDamage(damageContext);
-        burnUnitInThisTurn.Add(unit);
+        target.TakeDamage(damageContext);
+        burnUnitInThisTurn.Add(target);
+    }
+
+    public void ForcedDestroy()
+    {
+        RemoveSelf();
     }
 }

@@ -495,7 +495,7 @@ public class TileSystem : MonoBehaviour
         return true;
     }
 
-    private GameObject hittedCoverObj;
+    private GameObject prevMouseOverObj;
     private float ignoreRadius = 110.0f;
     private void Update()
     {
@@ -505,42 +505,62 @@ public class TileSystem : MonoBehaviour
         {
             TileEffectManager.instance.SetCoverEffect(null);
             TileEffectManager.instance.SetCoverableOutline(null);
+            TileEffectManager.instance.SetBarrelEffect(null);
+            TileEffectManager.instance.SetTileObjectOutline(null);
             return;
         }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            GameObject hitCoverObj = hit.collider.transform.parent.gameObject;
-            if (!hitCoverObj.TryGetComponent<CoverableObj>(out var component)) 
-            {
-                hitCoverObj = null;
-            }
+            GameObject mouseOverObj = hit.collider.transform.parent.gameObject;
 
-            if ((hittedCoverObj != null && hitCoverObj == null))
+            //coverable object
+            if (mouseOverObj.TryGetComponent<CoverableObj>(out var c))
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    TileEffectManager.instance.SetCoverEffect(mouseOverObj);
+                }
+
+                if (prevMouseOverObj != mouseOverObj)
+                {
+                    TileEffectManager.instance.SetCoverableOutline(mouseOverObj);
+                }
+            }
+            else if (prevMouseOverObj != null && prevMouseOverObj.TryGetComponent<CoverableObj>(out var _))
             {
                 TileEffectManager.instance.SetCoverEffect(null);
                 TileEffectManager.instance.SetCoverableOutline(null);
             }
-            else
-            {
-                if (hitCoverObj != null && Input.GetMouseButtonDown(0))
-                {
-                    TileEffectManager.instance.SetCoverEffect(hitCoverObj);
-                }
 
-                if (hittedCoverObj != hitCoverObj)
+            //barrel
+            if (mouseOverObj.TryGetComponent<Barrel>(out var b) && b.IsVisible())
+            {
+                if (prevMouseOverObj != mouseOverObj)
                 {
-                    TileEffectManager.instance.SetCoverableOutline(hitCoverObj);
+                    TileEffectManager.instance.SetBarrelEffect(mouseOverObj);
+                    TileEffectManager.instance.SetTileObjectOutline(mouseOverObj);
                 }
             }
-            hittedCoverObj = hitCoverObj;
+            else if (prevMouseOverObj != null && prevMouseOverObj.TryGetComponent<Barrel>(out var _))
+            {
+                TileEffectManager.instance.SetBarrelEffect(null);
+                TileEffectManager.instance.SetTileObjectOutline(null);
+            }
+
+
+            //other objects
+
+
+            prevMouseOverObj = mouseOverObj;
         }
     }
     private bool CheckMousePositionValidation()
     {
         if (!UIManager.instance.combatUI.combatActionUI.IsDisplayed()) return true;
 
-        GameObject player = FieldSystem.unitSystem.GetPlayer().gameObject;
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player == null) return false;
         Vector3 playerChestPosition = player.transform.position;
         if (!player.TryGetComponent(out CapsuleCollider var)) return true;
 

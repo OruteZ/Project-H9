@@ -91,6 +91,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         if (coverObj == prevMouseOverObj) return;
 
         if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
+        if (_player != FieldSystem.turnSystem.turnOwner) return;
         if (coverObj != null)
         {
             Tile tile = FieldSystem.tileSystem.GetTile(coverObj.GetComponent<TileObject>().hexPosition);
@@ -108,6 +109,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     {
         ClearOutlines();
         if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
+        if (_player != FieldSystem.turnSystem.turnOwner) return;
         if (coverObj != null)
         {
             Tile tile = FieldSystem.tileSystem.GetTile(coverObj.GetComponent<TileObject>().hexPosition);
@@ -129,6 +131,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         if (barrel == prevMouseOverObj) return;
 
         if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
+        if (_player != FieldSystem.turnSystem.turnOwner) return;
         if (barrel != null)
         {
             Tile tile = FieldSystem.tileSystem.GetTile(barrel.GetComponent<TileObject>().hexPosition);
@@ -140,6 +143,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     {
         ClearOutlines();
         if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
+        if (_player != FieldSystem.turnSystem.turnOwner) return;
         if (tileObject != null)
         {
             SetTileObjectOutline(tileObject, new Color32(255, 0, 0, 255));

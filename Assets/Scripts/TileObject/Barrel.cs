@@ -9,23 +9,17 @@ public class Barrel : TileObject, IDamageable
     [SerializeField] private int maxHp;
     [SerializeField] private int currentHp;
     [SerializeField] private GameObject _firePrefab;
-    private List<GameObject> _fires;
+    private GameObject fire;
 
     private readonly UnityEvent<int, int> _onHpChanged = new UnityEvent<int, int>();
 
     private void Start()
     {
-        if(objectType == TileObjectType.OIL_BARREL)
+        if (objectType == TileObjectType.OIL_BARREL)
         {
-            _fires = new();
-
-            for (int i = 0; i < 3 * (FIRE_RANGE) * (FIRE_RANGE + 1) + 1; i++)
-            {
-                GameObject fire = Instantiate(_firePrefab, transform.position, Quaternion.identity);
-                fire.transform.SetParent(transform.parent);
-                fire.SetActive(false);
-                _fires.Add(fire);
-            }
+            fire = Instantiate(_firePrefab, transform.position, Quaternion.identity);
+            fire.GetComponent<FireFloor>().SetUp(hexPosition, FIRE_RANGE, 20, 3);
+            fire.SetActive(false);
         }
     }
 
@@ -60,8 +54,8 @@ public class Barrel : TileObject, IDamageable
     }
 
     private void OnHit(Damage context)
-    {    
-        if (_onHitFlag is false) return;
+    {
+        if (_onHitFlag == false) return;
         _onHitFlag = false;
 
         if (!context.Contains(Damage.Type.MISS)) return;
@@ -72,6 +66,7 @@ public class Barrel : TileObject, IDamageable
     #region IDamageable
     public void TakeDamage(Damage damage)
     {
+        if (currentHp <= 0) return;
         currentHp -= damage.GetFinalAmount();
         if (currentHp <= 0)
         {
@@ -156,36 +151,8 @@ public class Barrel : TileObject, IDamageable
     const int FIRE_RANGE = 2;
     private void CatchFire() 
     {
-        IEnumerable<Tile> tiles = FieldSystem.tileSystem.GetTilesInRange(hexPosition, FIRE_RANGE);
-        int cnt = 0;
-        foreach (var tile in tiles)
-        {
-            List<TileObject> tObj = FieldSystem.tileSystem.GetTileObject(tile.hexPosition);
-            foreach (var t in tObj)
-            {
-                if (t is FireFloor) continue;
-            }
-            _fires[cnt].SetActive(true);
-            _fires[cnt].GetComponent<FireFloor>().SetUp(tile.hexPosition, 20.0f, 30);
-            cnt++;
-        }
-        StartCoroutine(test(cnt));
-    }
-
-    private IEnumerator test(int cnt)
-    {
-        yield return new WaitForSeconds(Time.deltaTime);
-        for (int i = 0; i < _fires.Count; i++)
-        {
-            if (i >= cnt)
-            {
-                _fires[i].GetComponent<FireFloor>().ForcedDestroy();
-                continue;
-            }
-
-            _fires[i].GetComponent<FireFloor>().CheckDamegeable();
-        }
-        yield break;
+        fire.SetActive(true);
+        fire.GetComponent<FireFloor>().Fire();
     }
 
 }

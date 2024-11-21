@@ -5,8 +5,8 @@ using QUEST_EVENT = QuestInfo.QUEST_EVENT;
 
 public class QuestParser
 {
-    private readonly string QUEST_FILE_PATH = $"QuestTable";
-    private readonly string QUEST_LOCALIZATION_PATH = $"QuestLocalizationTable";
+    private const string QUEST_FILE_PATH = "QuestTable";
+    private const string QUEST_LOCALIZATION_PATH = "QuestLocalizationTable";
     public List<QuestInfo> GetQuests()
     {
         ParseLocalization(out Dictionary<int, string> localizationData);

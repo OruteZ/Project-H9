@@ -20,7 +20,7 @@ public class QuestListElement : UIElement, IPointerClickHandler
     private string _itemName = "";
     private string _skillName = "";
 
-    void Awake()
+    private void Awake()
     {
         currentQuestInfo = null;
     }

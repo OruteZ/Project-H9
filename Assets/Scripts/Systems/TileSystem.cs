@@ -212,7 +212,7 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// Runtime에 Link를 추가합니다.
     /// </summary>
-    public void AddLink(Vector3Int position, float rotation, int linkIndex, int mapIndex = 1, bool isRepeatable = false)
+    public void AddLink(Vector3Int position, float rotation, int linkIndex, int mapIndex = 0, bool isRepeatable = false)
     {
         //if link that has same position with tile already exist, skip
         var tile = GetTile(position);

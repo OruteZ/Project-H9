@@ -43,10 +43,10 @@ public class CombatRewardHandler
         GameManager.instance.playerInventory.AddGold(_gold);
         
         // even index is item index, odd index is percent
-        for (int i = 0; i < _rewardCandidates.Count; i++)
+        foreach (Pair<int, int> p in _rewardCandidates)
         {
-            int index = _rewardCandidates[i].First;
-            float percent = _rewardCandidates[i].Second * 0.01f; // in excel, percent is 0 ~ 100;
+            int index = p.First;
+            float percent = p.Second * 0.01f; // in excel, percent is 0 ~ 100;
             
             //check percentage is success
             if (percent >= UnityEngine.Random.Range(0, 1))

@@ -22,7 +22,7 @@ public class Link : TileObject
             ReloadModel();
         }
     }
-    public int combatMapIndex;
+    public int combatMapIndex = 0;
     public bool isRepeatable = false;
 
     private bool _vision;
@@ -138,6 +138,7 @@ public class Link : TileObject
 
     public int GetCombatStageIndex()
     {
+        if(combatMapIndex != 0) return combatMapIndex;
         return tile.combatStageIndex;
     }
 

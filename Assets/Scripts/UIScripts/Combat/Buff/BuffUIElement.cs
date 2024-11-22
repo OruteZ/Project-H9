@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,31 @@ using UnityEngine.EventSystems;
 
 public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
+    private static IconDatabase _iconDatabase;
+    private const string ICON_DATABASE_PATH = "DataBase/IconDatabase";
+    
     [SerializeField] private GameObject _buffImage;
     [SerializeField] private GameObject _buffEffect;
     [SerializeField] private GameObject _buffText;
 
     public IDisplayableEffect displayedEffect { get; private set; }
     private bool _isPlayer = false;
+    
+    private IconDatabase GetDB()
+    {
+        if (_iconDatabase == null)
+        {
+            _iconDatabase = Resources.Load<IconDatabase>(ICON_DATABASE_PATH);
+        }
+
+        if (_iconDatabase == null)
+        {
+            Debug.LogError($"cant found icon database from path {ICON_DATABASE_PATH}");
+            throw new NullReferenceException();
+        }
+        
+        return _iconDatabase;
+    }
 
     public void SetBuffUIElement(IDisplayableEffect effect, bool isBuff, bool isPlayer)
     {
@@ -20,6 +40,7 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
         _isPlayer = isPlayer;
         // buff image setting
         Sprite icon = null;
+        // lagecy code
         if (effect is StatusEffect sEffect)
         {
             icon = UIManager.instance.combatUI.buffUI.GetDebuffIconSprite(sEffect.GetStatusEffectType());
@@ -33,6 +54,9 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
             icon = GameManager.instance.itemDatabase.GetItemData(item.GetIndex()).icon;
         }
         _buffImage.GetComponent<Image>().sprite = icon;
+        
+        // 최신 코드 : icondb에서 읽어오기
+        // icon = GetDB().GetIcon(effect.GetIconIndex());
 
         //Outline Effect Setting
         if (isBuff)

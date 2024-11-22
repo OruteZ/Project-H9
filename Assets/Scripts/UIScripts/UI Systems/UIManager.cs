@@ -37,6 +37,7 @@ public class UIManager : Generic.Singleton<UIManager>
     //[HideInInspector]
     public bool isMouseOverUI;
     public int currentLayer;/* { get; private set; }*/
+    [SerializeField] private GameObject clickMask;
 
     public GameState UIState { get; private set; }
 
@@ -140,6 +141,8 @@ public class UIManager : Generic.Singleton<UIManager>
     {
         if (currentLayer == layerLevel) return;
         currentLayer = layerLevel;
+        //Debug.LogError(layerLevel > 1);
+        clickMask.SetActive(layerLevel > 1 && GameManager.instance.CompareState(GameState.WORLD));
 
         switch (currentLayer) 
         {
@@ -200,7 +203,7 @@ public class UIManager : Generic.Singleton<UIManager>
         SetCanvasState(_characterCanvas, characterUI, isOn);
         SetCanvasState(_skillCanvas, skillUI, false);
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
-        if (!_characterCanvas.enabled) currentLayer = 1;
+        if (!_characterCanvas.enabled) SetUILayer(1);
         SoundManager.instance.PlaySFX("UI_WindowOpen");
     }
     public void SetSkillCanvasState(bool isOn)
@@ -208,7 +211,7 @@ public class UIManager : Generic.Singleton<UIManager>
         SetCanvasState(_characterCanvas, characterUI, false);
         SetCanvasState(_skillCanvas, skillUI, isOn);
         SetCanvasState(_pauseMenuCanvas, pauseMenuUI, false);
-        if (!_skillCanvas.enabled) currentLayer = 1;
+        if (!_skillCanvas.enabled) SetUILayer(1);
         SoundManager.instance.PlaySFX("UI_WindowOpen");
     }
     public void SetPauseMenuCanvasState(bool isOn)

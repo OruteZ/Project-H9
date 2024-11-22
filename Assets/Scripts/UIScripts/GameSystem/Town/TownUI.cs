@@ -213,22 +213,26 @@ public class TownUI : UISystem
             CloseUI();
             return;
         }
+        SoundManager.instance.PlaySFX("UI_EnterTown");
         UIManager.instance.SetUILayer(2);
         isTownUIOpened = true;
         switch (_currentBuildingType)
         {
             case Town.BuildingType.Ammunition:
                 {
+                    SoundManager.instance.PlaySFX("UI_Ammunition");
                     OpenAmmunitionWindow(_currentTownIndex);
                     break;
                 }
             case Town.BuildingType.Saloon:
                 {
+                    SoundManager.instance.PlaySFX("UI_Saloon");
                     OpenSaloonWindow(_currentTownIndex);
                     break;
                 }
             case Town.BuildingType.Sheriff:
                 {
+                    SoundManager.instance.PlaySFX("UI_Sheriff");
                     OpenSheriffWindow(_currentTownIndex);
                     break;
                 }

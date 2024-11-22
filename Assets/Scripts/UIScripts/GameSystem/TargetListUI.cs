@@ -32,6 +32,7 @@ public class TargetListUI : UISystem
     {
         if (_targetListWindow.activeSelf)
         {
+            UIManager.instance.SetUILayer(1);
             CloseUI();
         }
         else 

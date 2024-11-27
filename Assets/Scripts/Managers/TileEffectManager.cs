@@ -438,7 +438,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
 
             var targetUnit = FieldSystem.unitSystem.GetUnit(targetHexPos);
             var targetTObj = FieldSystem.tileSystem.GetAllTileObjects().Where(
-            obj => obj.hexPosition == targetHexPos && obj is IDamageable);
+            obj => obj.hexPosition == targetHexPos && obj is IDamageable && obj is not CoverableObj);
 
             //if ((targetUnit is null or Player) && targetTObj is null)
             //{

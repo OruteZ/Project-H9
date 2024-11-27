@@ -20,6 +20,7 @@ public class Barrel : TileObject, IDamageable
             fire = Instantiate(_firePrefab, transform.position, Quaternion.identity);
             fire.GetComponent<FireFloor>().SetUp(hexPosition, FIRE_RANGE, 20, 3);
             fire.SetActive(false);
+            fire.transform.SetParent(this.transform);
         }
     }
 
@@ -72,6 +73,7 @@ public class Barrel : TileObject, IDamageable
         {
             currentHp = 0;
 
+            CameraManager.instance.ShakeCamera(5, 1, 0.5f);
             if (objectType == TileObjectType.TNT_BARREL) Explode();
             else if (objectType == TileObjectType.OIL_BARREL) CatchFire();
 
@@ -115,7 +117,7 @@ public class Barrel : TileObject, IDamageable
         _onHitFlag = true;
     }
 
-    const int EXPLOSION_RANGE_BREAK = 1;
+    const int EXPLOSION_RANGE_BREAK = 2;
     public const int EXPLOSION_RANGE_50 = 1;
     public const int EXPLOSION_RANGE_25 = 2;
     private void Explode()
@@ -152,6 +154,7 @@ public class Barrel : TileObject, IDamageable
     private void CatchFire() 
     {
         fire.SetActive(true);
+        fire.transform.SetParent(this.transform.parent);
         fire.GetComponent<FireFloor>().Fire();
     }
 

@@ -126,4 +126,9 @@ public class HeinrichTrap : TileObject
 
         callback();
     }
+
+    public void Remove()
+    {
+        RemoveSelf();
+    }
 }

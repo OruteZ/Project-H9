@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6124971653560633147}
   - component: {fileID: 6124971653560633144}
   - component: {fileID: 6124971653560633145}
-  - component: {fileID: -5007859814582799427}
   - component: {fileID: 6124971653560633150}
   - component: {fileID: 6124971653560633151}
   - component: {fileID: 5249381193780053080}
@@ -74,11 +73,17 @@ MonoBehaviour:
     _additional: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     _multiplier: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
   passiveIndexList: 
+  isAimming: 0
+  vanishTrigger: 0
   infiniteActionPointTrigger: 0
   lightFootTrigger: 0
+  tacticalReloadChance: 0
   freeReloadTrigger: 0
+  goldenBulletChance: 0
   goldenBulletCount: 0
-  coverType: 2
+  isHitedByGoldenBulletThisTurn: 0
+  currentCoverables: []
+  coverObjDmgMultiplier: 1
   currentRound: 0
   onTurnStart:
     m_PersistentCalls:
@@ -122,6 +127,12 @@ MonoBehaviour:
   onFinishShoot:
     m_PersistentCalls:
       m_Calls: []
+  OnAimStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAimEnd:
+    m_PersistentCalls:
+      m_Calls: []
   onKill:
     m_PersistentCalls:
       m_Calls: []
@@ -153,23 +164,6 @@ MonoBehaviour:
   damage: 0
   rotationSpeed: 10
   moveSpeed: 4
---- !u!114 &-5007859814582799427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6124971653560633283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2533ba17d5b843218ac2fcfb25afd7e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cost: 0
-  ammoCost: 0
-  range: 1
-  radius: 0
-  damage: 0
 --- !u!114 &6124971653560633150
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -82,7 +82,7 @@ public abstract class TileObject : MonoBehaviour
         vision = value;
     }
 
-    protected internal virtual void RemoveSelf()
+    protected virtual void RemoveSelf()
     {
         FieldSystem.tileSystem.DeleteTileObject(this);
         tile.RemoveObject(this);

@@ -14,6 +14,7 @@ public class CoverableObj : TileObject, IDamageable
     [SerializeField] private CoverType coverType;
     [SerializeField] private Unit unit;
     [SerializeField] private Hex.Direction coverDirection;
+    [SerializeField] private CoverDisplayStatus _coverDisplayStatus;
 
     private static Material LightCoverMaterial => TileEffectManager.instance.combatFowMaterial;
     private bool _visible;
@@ -61,6 +62,7 @@ public class CoverableObj : TileObject, IDamageable
         newUnit.onHit.AddListener(OnHit);
         newUnit.onMoved.AddListener(OnUnitMoved);
         newUnit.AddCoverable(this);
+        newUnit.AddDisplayableEffect(_coverDisplayStatus);
     }
 
     private void OnHit(Damage context)
@@ -105,6 +107,7 @@ public class CoverableObj : TileObject, IDamageable
         u.onHit.RemoveListener(OnHit);
         u.onMoved.RemoveListener(OnUnitMoved);
         u.RemoveCoverable(this);
+        u.RemoveDisplayableEffect(_coverDisplayStatus);
         unit = null;
     }
 
@@ -119,6 +122,20 @@ public class CoverableObj : TileObject, IDamageable
             // remove obj
             RemoveSelf();
         }
+    }
+    
+    protected override void RemoveSelf()
+    {
+        Unit u = unit;
+        if (u != null)
+        {
+            u.onHit.RemoveListener(OnHit);
+            u.onMoved.RemoveListener(OnUnitMoved);
+            u.RemoveCoverable(this);
+            u.RemoveDisplayableEffect(_coverDisplayStatus);
+        }
+        
+        base.RemoveSelf();
     }
 
     public Vector3Int GetHex()

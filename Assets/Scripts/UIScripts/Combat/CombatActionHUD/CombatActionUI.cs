@@ -172,7 +172,7 @@ public class CombatActionUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
         if (player is null) return;
         List<IUnitAction> actions = new List<IUnitAction>(player.GetUnitActionArray());
-        ActionType[] baseActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload, ActionType.Cover, ActionType.Idle, ActionType.ItemUsing };
+        ActionType[] baseActionType = { ActionType.Move, ActionType.Attack, ActionType.Reload, ActionType.Idle, ActionType.ItemUsing };
 
         List<IUnitAction> ba = new List<IUnitAction>();
         for (int j = 0; j < baseActionType.Length; j++)
@@ -204,14 +204,17 @@ public class CombatActionUI : UISystem
             return;
         }
         _baseActions.Clear();
+        
         CombatActionType[] baseCombatActionType = { CombatActionType.Move, CombatActionType.Attack, CombatActionType.Reload};
         for (int i = 0; i < baseCombatActionType.Length; i++)
         {
             _baseActions.Add(baseCombatActionType[i], ba[i]);
             _baseActionBundle.transform.GetChild(i).GetComponent<CombatActionButtonElement>().SetCombatActionButton(baseCombatActionType[i], i, ba[i]);
+            
         }
-        _idleAction = ba[_baseActions.Count + 1];
-        _itemUsingAction = ba[_baseActions.Count + 2];
+        
+        _idleAction = ba[_baseActions.Count];
+        _itemUsingAction = ba[_baseActions.Count + 1];
 
         //skill action
         _skillActions.Clear();

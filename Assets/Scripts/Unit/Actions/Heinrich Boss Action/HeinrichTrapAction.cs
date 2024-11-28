@@ -111,7 +111,7 @@ public class HeinrichTrapAction : BaseAction
         if (_traps.Count > maxTrapCount)
         {
             HeinrichTrap oldestTrap = _traps.Dequeue();
-            oldestTrap.RemoveSelf();
+            oldestTrap.Remove();
         }
         
         FieldSystem.tileSystem.AddTileObject(trap);

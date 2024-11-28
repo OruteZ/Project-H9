@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PassiveSkill;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -40,18 +41,21 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
         _isPlayer = isPlayer;
         // buff image setting
         Sprite icon = null;
-        // lagecy code
-        if (effect is StatusEffect sEffect)
+        switch (effect)
         {
-            icon = UIManager.instance.combatUI.buffUI.GetDebuffIconSprite(sEffect.GetStatusEffectType());
-        }
-        else if (effect is PassiveSkill.BaseEffect)
-        {
-            icon = SkillManager.instance.GetSkill(effect.GetIndex()).skillInfo.icon;
-        }
-        else if (effect is ItemBuff item)
-        {
-            icon = GameManager.instance.itemDatabase.GetItemData(item.GetIndex()).icon;
+            // lagecy code
+            case StatusEffect sEffect:
+                icon = UIManager.instance.combatUI.buffUI.GetDebuffIconSprite(sEffect.GetStatusEffectType());
+                break;
+            case BaseEffect:
+                icon = SkillManager.instance.GetSkill(effect.GetIndex()).skillInfo.icon;
+                break;
+            case ItemBuff item:
+                icon = GameManager.instance.itemDatabase.GetItemData(item.GetIndex()).icon;
+                break;
+            default:
+                Debug.LogError("Unknown Effect Type : " + effect.GetType());
+                break;
         }
         _buffImage.GetComponent<Image>().sprite = icon;
         

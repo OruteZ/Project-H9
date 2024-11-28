@@ -108,9 +108,9 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             case ActionType.ItemUsing:
                 ItemTileEffect();
                 break;
-            case ActionType.Cover:
-                CoverEffect();
-                break;
+            // case ActionType.Cover:
+            //     CoverEffect();
+            //     break;
             default:
                 throw new ArgumentOutOfRangeException();
         }

@@ -93,7 +93,7 @@ public enum ActionType {
     Fanning,
     Hemostasis,
     ItemUsing,
-    Cover,
+    // Cover,
     
     //Linsdale Boss Action
     SpreadDynamite,

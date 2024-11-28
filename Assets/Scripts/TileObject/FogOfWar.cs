@@ -25,7 +25,7 @@ public class FogOfWar : TileObject
         }
     }
 
-    protected internal override void RemoveSelf()
+    protected override void RemoveSelf()
     {
         if (_isRemoving) return;
         

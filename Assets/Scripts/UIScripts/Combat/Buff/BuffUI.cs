@@ -62,7 +62,6 @@ public class BuffUI : UISystem
             if (effect is StatusEffect)
             {
                 _currentDebuffs.Add(effect);
-                
             }
             else
             {
@@ -107,6 +106,7 @@ public class BuffUI : UISystem
         bool isExistTooltipEffect = false;
         foreach (IDisplayableEffect effect in currentState)
         {
+            if (effect == null) continue;
             if (effect.CanDisplay())
             {
                 UI.transform.GetChild(buffCount++).GetComponent<BuffUIElement>().SetBuffUIElement(effect, isBuff, true);

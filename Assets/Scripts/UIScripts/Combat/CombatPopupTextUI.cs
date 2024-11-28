@@ -86,10 +86,10 @@ public class CombatPopupTextUI : UISystem
         {
             mainText = UIManager.instance.UILocalization[1106];
         }
-        else if (action is CoverAction)
-        {
-            mainText = UIManager.instance.UILocalization[1107];
-        }
+        // else if (action is CoverAction)
+        // {
+        //     mainText = UIManager.instance.UILocalization[1107];
+        // }
         else if (action is AttackAction)
         {
             mainText = UIManager.instance.UILocalization[1108];

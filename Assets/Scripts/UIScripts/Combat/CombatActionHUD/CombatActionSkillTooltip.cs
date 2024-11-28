@@ -41,14 +41,14 @@ public class CombatActionSkillTooltip : UIElement
         int btnIdx = btn.GetComponent<CombatActionButtonElement>().buttonIndex;
         IUnitAction action = btn.GetComponent<CombatActionButtonElement>().buttonAction;
 
-        if (action is MoveAction or AttackAction or ReloadAction or CoverAction)
+        if (action is MoveAction or AttackAction or ReloadAction)
         {
             int baseActionIndex = action switch
             {
                 MoveAction => 10001,
                 AttackAction => 10002,
                 ReloadAction => 10003,
-                CoverAction => 10004
+                // CoverAction => 10004
             };
             SetCombatBaseTooltip(action, baseActionIndex);
         }

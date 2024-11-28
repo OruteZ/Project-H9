@@ -310,10 +310,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public IDisplayableEffect[] GetDisplayableEffects()
     {
         //search passive that has displayable effect
-        var displayableEffects = new List<IDisplayableEffect>();
-        foreach (var passive in _passiveList)
+        List<IDisplayableEffect> displayableEffects = new List<IDisplayableEffect>();
+        foreach (Passive passive in _passiveList)
         {
-            if (passive.TryGetDisplayableEffect(out var displayableEffect))
+            if (passive.TryGetDisplayableEffect(out List<IDisplayableEffect> displayableEffect))
             {
                 displayableEffects.AddRange(displayableEffect);
             }

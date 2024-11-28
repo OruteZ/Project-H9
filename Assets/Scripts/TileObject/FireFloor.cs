@@ -171,7 +171,7 @@ public class FireFloor : TileObject
         yield return new WaitForSeconds(0.5f);
         target.TakeDamage(dmg);
     }
-    protected internal override void RemoveSelf()
+    protected override void RemoveSelf()
     {
         isDestorying = true;
         StartCoroutine(FadingFireFloor());

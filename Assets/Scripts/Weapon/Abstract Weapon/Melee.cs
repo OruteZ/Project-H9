@@ -28,7 +28,7 @@ public class Melee : Weapon
         throw new System.NotImplementedException();
     }
 
-    public override float GetDistancePenalty()
+    public override float CalculateDistancePenalty(IDamageable target)
     {
         throw new System.NotImplementedException();
     }

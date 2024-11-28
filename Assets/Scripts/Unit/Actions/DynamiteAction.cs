@@ -126,7 +126,7 @@ public class DynamiteAction : BaseAction
             int distance = Hex.Distance(_center, target.hexPosition);
             int calculatedDamage = damage - Mathf.RoundToInt(fallOff * (radius - distance));
             
-            Damage dmgContext = new(calculatedDamage, calculatedDamage, Damage.Type.DEFAULT, unit, target);
+            Damage dmgContext = new(calculatedDamage, calculatedDamage, Damage.Type.DEFAULT, unit, null, target);
             
             target.TakeDamage(dmgContext);
             if(target.HasDead()) continue;
@@ -141,7 +141,7 @@ public class DynamiteAction : BaseAction
             {
                 damage = Mathf.RoundToInt(damage * unit.coverObjDmgMultiplier);
             }
-            Damage dmgCtxt = new Damage(damage, damage, Damage.Type.DEFAULT, unit, damageableObject);
+            Damage dmgCtxt = new Damage(damage, damage, Damage.Type.DEFAULT, unit, null, damageableObject);
 
             damageableObject.TakeDamage(dmgCtxt);
         }

@@ -472,4 +472,9 @@ public class CombatActionUI : UISystem
             SetActionBundle(_activeActionBundle, null);
         }
     }
+
+    public bool IsDisplayed() 
+    {
+        return (_displayedActionBundle != null);
+    }
 }

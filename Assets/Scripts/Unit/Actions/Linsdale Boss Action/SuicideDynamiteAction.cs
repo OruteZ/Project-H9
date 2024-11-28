@@ -135,6 +135,7 @@ public class SuicideDisplayableEffect : IDisplayableEffect
             ushort.MaxValue,
             Damage.Type.DEFAULT, 
             _unit,
+            null,
             _target)
         );
     }

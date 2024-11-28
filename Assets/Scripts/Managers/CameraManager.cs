@@ -7,7 +7,7 @@ public class CameraManager : Singleton<CameraManager>
 {
     private Transform _cameraParentTransform => transform;
     private readonly Dictionary<Unit, UnitCamera> _unitCameras = new ();
-    private UnitCamera _currentUnitCamera;
+    [SerializeField] private UnitCamera _currentUnitCamera;
     [SerializeField] private CinemachineBrain _brain;
     
     public WorldCamera worldCamera;
@@ -108,6 +108,7 @@ public class CameraManager : Singleton<CameraManager>
     
     public void ShakeCamera(float amplitude, float frequency, float duration)
     {
+        //유닛 카메라일 때 흔들림이 안되는 것 같음
         if (_currentUnitCamera != null)
         {
             _currentUnitCamera.ShakeCamera(amplitude, frequency, duration);

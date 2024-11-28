@@ -355,6 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1843969269828312103}
   - component: {fileID: 1843969269828312102}
+  - component: {fileID: 704982226}
   m_Layer: 0
   m_Name: TileEffectManager
   m_TagString: Untagged
@@ -419,12 +420,40 @@ MonoBehaviour:
   aimEffectRectTsf: {fileID: 1843969269735109372}
   combatCanvas: {fileID: 1843969268906325107}
   aimEffect: {fileID: 1843969268467649097}
-  coverPosition: {fileID: 7055767354360999130, guid: ca0b6c45d1b291c4e96ad01398904372,
+  coverMainEffect: {fileID: 7055767354360999130, guid: 88634d05558077948a6061d44aa0677e,
     type: 3}
-  coverAvailable: {fileID: 8327600173450480239, guid: 746588fae85de95469ce22a43b2031c5,
+  coverSubEffect: {fileID: 7055767354360999130, guid: a6c729477b4ab0f45bac8f4b64ff7c8f,
     type: 3}
-  coverMaterial: {fileID: 2100000, guid: 99d9e0b561f6e4c40a39abcc4ce4d846, type: 2}
-  coverEffectRange: 5
+  coverObjMaterial: {fileID: 0}
+  barrelNearEffect: {fileID: 3528922589275931071, guid: 3eb3a3a0c25d01e4c95d7376dea5eb87,
+    type: 3}
+  barrelFarEffect: {fileID: 7055767354360999130, guid: 74f84b570cc79ee4fa66480bf599b263,
+    type: 3}
+  movableDelay: 0
+  coverEffectRange: 100
+  _fadeInOutAnimator: {fileID: 9100000, guid: c5fac9f2fb7ba694798e4a248483b5d4, type: 2}
+  _tileEffectAlpha: 0
+--- !u!95 &704982226
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843969269828312101}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8713377531277101679
 GameObject:
   m_ObjectHideFlags: 0

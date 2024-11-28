@@ -11,27 +11,28 @@ public readonly struct Damage
     public readonly int criticalAmount;
     public readonly Type type;
     public readonly Unit attacker;
+    public readonly TileObject effector;
     public readonly IDamageable target;
     
     // constructor
     public Damage(
         int amount, 
         int criticalAmount,
-        Type type, 
+        Type type,
         Unit attacker,
+        TileObject effector,
         IDamageable target
         )
-    
     {
         id = index++;
         this.amount = amount;
         this.criticalAmount = criticalAmount;
         this.type = type;
         this.attacker = attacker;
+        this.effector = effector;
         this.target = target;
     }
-    
-    
+
     public bool Contains(Type value)
     {
         return (type & value) == value;

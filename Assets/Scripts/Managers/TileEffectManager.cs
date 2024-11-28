@@ -55,11 +55,18 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     public RectTransform aimEffect;
 
     [field: Header("Cover Effect")] 
-    public GameObject coverPosition;
-    public GameObject coverAvailable;
-    public Material coverMaterial;
+    public GameObject coverMainEffect;
+    public GameObject coverSubEffect;
+    public Material coverObjMaterial;
     private List<CoverableObj> _coverableObjs;
-    
+    private Dictionary<Vector3Int, GameObject> _coverEffects;
+
+    [field: Header("Barrel Effect")]
+    public GameObject barrelNearEffect;
+    public GameObject barrelFarEffect;
+    private Dictionary<Vector3Int, GameObject> _barrelEffects;
+
+
     public void SetPlayer(Player p)
     {
         _player = p;
@@ -75,7 +82,75 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         });
     }
 
+    private List<CustomOutline> _outlines = new();
+    GameObject prevMouseOverObj = null;
+    public void SetCoverEffect(GameObject coverObj)
+    {
+        ClearEffect(_coverEffects);
+        ClearEffect(_barrelEffects);
+        if (coverObj == prevMouseOverObj) return;
+
+        if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
+        if (_player != FieldSystem.turnSystem.turnOwner) return;
+        if (coverObj != null)
+        {
+            Tile tile = FieldSystem.tileSystem.GetTile(coverObj.GetComponent<TileObject>().hexPosition);
+            CoverableObj[] coverObjects = tile.GetTileObjects<CoverableObj>();
+            CoverTileEffect(coverObj, coverMainEffect);
+            foreach (var obj in coverObjects)
+            {
+                if (obj.gameObject == coverObj) continue;
+                CoverTileEffect(obj.gameObject, coverSubEffect);
+            }
+        }
+        prevMouseOverObj = coverObj;
+    }
+    public void SetCoverableOutline(GameObject coverObj)
+    {
+        ClearOutlines();
+        if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
+        if (_player != FieldSystem.turnSystem.turnOwner) return;
+        if (coverObj != null)
+        {
+            Tile tile = FieldSystem.tileSystem.GetTile(coverObj.GetComponent<TileObject>().hexPosition);
+            CoverableObj[] coverObjects = tile.GetTileObjects<CoverableObj>();
+            SetTileObjectOutline(coverObj, new Color32(255, 217, 102, 255));
+            foreach (var obj in coverObjects)
+            {
+                if (obj.gameObject == coverObj) continue;
+                SetTileObjectOutline(obj.gameObject, new Color32(255, 242, 204, 128));
+            }
+
+            if (prevMouseOverObj != null && prevMouseOverObj != coverObj) SetCoverEffect(coverObj);
+        }
+    }
+    public void SetBarrelEffect(GameObject barrel)
+    {
+        ClearEffect(_coverEffects);
+        ClearEffect(_barrelEffects);
+        if (barrel == prevMouseOverObj) return;
+
+        if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
+        if (_player != FieldSystem.turnSystem.turnOwner) return;
+        if (barrel != null)
+        {
+            Tile tile = FieldSystem.tileSystem.GetTile(barrel.GetComponent<TileObject>().hexPosition);
+            BarrelTileEffect(barrel);
+        }
+        prevMouseOverObj = barrel;
+    }
+    public void SetTileObjectOutline(GameObject tileObject)
+    {
+        ClearOutlines();
+        if (_player.GetSelectedAction().GetActionType() != ActionType.Idle) return;
+        if (_player != FieldSystem.turnSystem.turnOwner) return;
+        if (tileObject != null)
+        {
+            SetTileObjectOutline(tileObject, new Color32(255, 0, 0, 255));
+        }
+    }
     #region PRIVATE
+
     private void TileEffectSet()
     {
         ClearEffect();
@@ -95,6 +170,8 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             case ActionType.Idle:
                 ClearEffect(_effectsBase);
                 ClearEffect(_effectsRelatedTarget);
+                ClearEffect(_coverEffects);
+                ClearEffect(_barrelEffects);
                 break;
             case ActionType.Reload:
                 break;
@@ -120,6 +197,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
 
     #region MOVE
 
+    [field: Header("Other Values")]
     [SerializeField] private float movableDelay;
     private float _movableEffectDelay;
     
@@ -249,42 +327,32 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
             tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
         IEnumerable<Unit> units = FieldSystem.unitSystem.units.Where(
             unit => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) && unit is not Player);
+        IEnumerable<TileObject> tObj = FieldSystem.tileSystem.GetAllTileObjects().Where(
+            obj => obj is not CoverableObj && FieldSystem.tileSystem.VisionCheck(_player.hexPosition, obj.hexPosition));
 
         //white range tile
         foreach (var tile in tiles)
         {
-            // condition 1 : no unit on tile
-            if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
-            
-            // condition 1 : in sight range
+            // condition 1 : no walkable tile
+            if (!tile.walkable) continue;
+
+            //// condition 1 : no unit on tile
+            //if (FieldSystem.unitSystem.GetUnit(tile.hexPosition) is not null) continue;
+
+            // condition 2 : in sight range
             if (Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
             
             SetEffectBase(tile.hexPosition, attackTileEffect);
         }
 
         //target range tile
-        foreach (Unit unit in units)
-        {
-            // condition 1 : raycheck true
-            // condition 2 : vision check true
-            // condition 3 : in sight range
-             
-            if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, unit.hexPosition) is false) continue;
-            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) is false) continue;
-            if (Hex.Distance(_player.hexPosition, unit.hexPosition) > _player.stat.sightRange) continue;
+        List<Vector3Int> unitPositions = new();
+        List<Vector3Int> tObjPositions = new();
+        foreach (Unit u in units) unitPositions.Add(u.hexPosition);
+        foreach (TileObject t in tObj) tObjPositions.Add(t.hexPosition);
+        AttackTargetTileEffect(unitPositions);
+        AttackTargetTileEffect(tObjPositions);
 
-            if (_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, unit.hexPosition))
-            {
-                SetEffectBase(unit.hexPosition, attackUnitEffect);
-            }
-            else
-            {
-                
-                if(_player.weapon.GetWeaponType() is not ItemType.Shotgun) 
-                    SetEffectBase(unit.hexPosition, attackOutOfRangeEffect);
-            }
-        }
-        
         //if weapon type is repeater && has sweet spot buff, show sweet spot
         if (_player.weapon is Repeater repeater && 
             _player.GetDisplayableEffects().Any(e => e is SweetSpotEffect))
@@ -326,43 +394,94 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
 
         _curCoroutine = StartCoroutine(AttackTargetEffectCoroutine());
     }
+    private void AttackTargetTileEffect(List<Vector3Int> targetHexPos)
+    {
+        for (int i = 0; i < targetHexPos.Count; i++) 
+        {
+            // condition 1 : raycheck true
+            // condition 2 : vision check true
+            // condition 3 : in sight range
+
+            if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, targetHexPos[i]) is false) continue;
+            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, targetHexPos[i]) is false) continue;
+            if (Hex.Distance(_player.hexPosition, targetHexPos[i]) > _player.stat.sightRange) continue;
+
+            if (_effectsBase.ContainsKey(targetHexPos[i]))
+            {
+                Destroy(_effectsBase[targetHexPos[i]]);
+                _effectsBase.Remove(targetHexPos[i]);
+            }
+
+            if (_player.weapon.GetRange() >= Hex.Distance(_player.hexPosition, targetHexPos[i]))
+            {
+                SetEffectBase(targetHexPos[i], attackUnitEffect);
+            }
+            else
+            {
+                if (_player.weapon.GetWeaponType() is not ItemType.Shotgun)
+                    SetEffectBase(targetHexPos[i], attackOutOfRangeEffect);
+            }
+        }
+    }
 
     private IEnumerator AttackTargetEffectCoroutine()
     {
-        Unit targetUnit = null;
+        Player player = FieldSystem.unitSystem.GetPlayer();
         while (true)
         {
-            if (Player.TryGetMouseOverTilePos(out var target) is false)
+            if (Player.TryGetMouseOverTilePos(out var targetHexPos) is false)
+            {
+                aimEffectRectTsf.gameObject.SetActive(false);
+                yield return null;
+                continue;
+            }
+
+            var targetUnit = FieldSystem.unitSystem.GetUnit(targetHexPos);
+            var targetTObj = FieldSystem.tileSystem.GetAllTileObjects().Where(
+            obj => obj.hexPosition == targetHexPos && obj is IDamageable && obj is not CoverableObj);
+
+            //if ((targetUnit is null or Player) && targetTObj is null)
+            //{
+            //    aimEffectRectTsf.gameObject.SetActive(false);
+            //    yield return null;
+            //    continue;
+            //}
+
+
+            IDamageable targetObj = null;
+            Transform targetTransform = null;
+            if (targetUnit is not null && targetUnit is not Player)
+            {
+                targetObj = (IDamageable)targetUnit;
+                targetTransform = targetUnit.transform;
+            }
+            else if (targetTObj is not null && targetTObj.Count() == 1 && player.GetSelectedAction() is AttackAction)
+            {
+                targetObj = (IDamageable)targetTObj.First();
+                targetTransform = targetTObj.First().transform;
+            }
+            else
+            {
+                aimEffectRectTsf.gameObject.SetActive(false);
+                yield return null;
+                continue;
+            }
+
+            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, targetHexPos) is false)
             {
                 aimEffectRectTsf.gameObject.SetActive(false);
                 yield return null;
                 continue;
             }
             
-            
-            var newTarget = FieldSystem.unitSystem.GetUnit(target);
-            if (newTarget is null or Player)
+            if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, targetHexPos) is false)
             {
                 aimEffectRectTsf.gameObject.SetActive(false);
                 yield return null;
                 continue;
             }
             
-            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, newTarget.hexPosition) is false)
-            {
-                aimEffectRectTsf.gameObject.SetActive(false);
-                yield return null;
-                continue;
-            }
-            
-            if (FieldSystem.tileSystem.RayThroughCheck(_player.hexPosition, newTarget.hexPosition) is false)
-            {
-                aimEffectRectTsf.gameObject.SetActive(false);
-                yield return null;
-                continue;
-            }
-            
-            if (Hex.Distance(_player.hexPosition, newTarget.hexPosition) > _player.weapon.GetRange()
+            if (Hex.Distance(_player.hexPosition, targetHexPos) > _player.weapon.GetRange()
                 && _player.weapon is Shotgun)
             {
                 aimEffectRectTsf.gameObject.SetActive(false);
@@ -370,10 +489,9 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 continue;
             }
 
-            targetUnit = newTarget;
             
             aimEffectRectTsf.gameObject.SetActive(true);
-            var hitRate = _player.weapon.GetFinalHitRate(targetUnit);
+            var hitRate = _player.weapon.GetFinalHitRate(targetObj);
             float offset = 0;
             if (_player.GetSelectedAction() is FanningAction f)
             {
@@ -394,9 +512,11 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 }
             }
             hitRate += offset;
-            
-            Vector2 viewportPosition = Camera.main.WorldToViewportPoint(Hex.Hex2World(targetUnit.hexPosition) + 
-                                                                        Vector3.up * (targetUnit.transform.localScale.y * 0.5f));
+            if (hitRate >= 100) hitRate = 100;
+            if (hitRate <= 0) hitRate = 0;
+
+            Vector2 viewportPosition = Camera.main.WorldToViewportPoint(Hex.Hex2World(targetHexPos) + 
+                                                                        Vector3.up * (targetTransform.localScale.y * 0.5f));
             var sizeDelta = combatCanvas.sizeDelta;
             
             Vector2 worldObjectScreenPosition = new Vector2(
@@ -532,103 +652,120 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         // ReSharper disable once IteratorNeverReturns
     }
     #endregion
-    
+
     #region COVER
 
     [Tooltip("The range of the cover effect")]
     [SerializeField] private int coverEffectRange;
-    private void CoverEffect()
+    const float DIFF = 31;
+    private void CoverTileEffect(GameObject coverObj, GameObject EffectObj)
     {
-        const int range = 1;
+        Tile tile = FieldSystem.tileSystem.GetTile(coverObj.GetComponent<TileObject>().hexPosition);
 
-        var tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, range).Where(
-            tile => tile.GetTileObject<CoverableObj>() is not null);
+        Hex.Direction dir = coverObj.GetComponent<CoverableObj>().GetCoverDirections();
+        float ang = 360.0f -(int)dir * 60.0f;
+        Vector2 coverDir = new Vector2(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
 
-        foreach (Tile tile in tiles)
+        var coverTiles = FieldSystem.tileSystem.GetTilesInRange(tile.hexPosition, coverEffectRange);
+        foreach (Vector3Int pos in coverTiles.Select(t => t.hexPosition))
         {
-            SetEffectBase(tile.hexPosition, TileEffectType.Friendly);
-            
-            CoverableObj coverable = tile.GetTileObject<CoverableObj>();
-            if (coverable is null) continue;
-            _coverableObjs.Add(coverable);
-
-            // find in children
-            Renderer meshRenderer = coverable.meshRenderer;
-            
-            List<Material> materialList = meshRenderer.materials.ToList();
-            
-            if(materialList.Count > 1) continue;
-            materialList.Add(coverMaterial);
-                
-            coverable.meshRenderer.materials = materialList.ToArray();
-            
-            // SetEffectBase(tile.hexPosition, TileEffectType.Normal);
+            if (pos == tile.hexPosition) continue;
+            Vector2 posDir = Hex.Hex2Orth(pos) - Hex.Hex2Orth(tile.hexPosition);
+            float angle = Vector2.SignedAngle(coverDir.normalized, posDir.normalized);
+            if (angle < DIFF && angle > -DIFF)
+            {
+                //Debug.LogError(angle + " degree/ " + tile.hexPosition + " to "+pos);
+                SetEffectTarget(pos, EffectObj, _coverEffects);
+            }
         }
-        
-        _curCoroutine = StartCoroutine(CoverEffectCoroutine());
     }
-    
-    private IEnumerator CoverEffectCoroutine()
+    private void SetTileObjectOutline(GameObject tileObj, Color color)
     {
-        const int RANGE = 2;
-        const float DIFF = 1;
+        tileObj.TryGetComponent(out CustomOutline outline);
+        if (outline is null)
+        {
+            outline = tileObj.gameObject.AddComponent<CustomOutline>();
+            _outlines.Add(outline);
+        }
+        outline.OutlineColor = color;
+        outline.OutlineMode = CustomOutline.Mode.OutlineAll;
+        outline.SetOutline();
+    }
+    private void ClearOutlines()
+    {
+        for (int i = _outlines.Count() - 1; i >= 0; i--)
+        {
+            if (_outlines[i] == null || _outlines[i].gameObject == null)
+            {
+                _outlines.Remove(_outlines[i]);
+                continue;
+            }
+            _outlines[i].ClearOutline();
+        }
+    }
+    #endregion
 
+    #region BARREL
+    [SerializeField] private RuntimeAnimatorController _fadeInOutAnimator;
+    private Animator _animator;
+    public float _tileEffectAlpha;
+    private void BarrelTileEffect(GameObject barrelObj)
+    {
+        if (!barrelObj.TryGetComponent<Barrel>(out var barrel)) return;
+
+        var tiles = FieldSystem.tileSystem.GetTilesInRange(barrel.hexPosition, Barrel.EXPLOSION_RANGE_25);
+            //.Where(tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
+
+        foreach (var tile in tiles)
+        {
+            //if (Hex.Distance(_player.hexPosition, tile.hexPosition) > _player.stat.sightRange) continue;
+            GameObject effectObj = null;
+
+            int distance = Hex.Distance(barrel.hexPosition, tile.hexPosition);
+            if (barrel.objectType == TileObjectType.TNT_BARREL && distance <= Barrel.EXPLOSION_RANGE_50)
+            {
+                effectObj = Instantiate(barrelNearEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
+            }
+            else if (distance <= Barrel.EXPLOSION_RANGE_25) 
+            {
+                effectObj = Instantiate(barrelFarEffect, Hex.Hex2World(tile.hexPosition), Quaternion.identity);
+            }
+            _barrelEffects.Add(tile.hexPosition, effectObj);
+        }
+        _curCoroutine = StartCoroutine(BarrelEffectCoroutine());
+    }
+
+    private IEnumerator BarrelEffectCoroutine()
+    {
+        _animator.runtimeAnimatorController = _fadeInOutAnimator;
+        _animator.enabled = true;
+        _animator.Rebind();
+        _animator.Play("Fade In & Out Tile Effect");
         while (true)
         {
-            
-            // 1. Set Mouse Overed Tile : Normal
             yield return null;
-            ClearEffect(_effectsRelatedTarget);
-            if (Player.TryGetMouseOverTilePos(out Vector3Int target) is false)
+            foreach (var eo in _barrelEffects.Values) 
             {
-                Debug.LogWarning("Tile is null");
-                continue;
-            }
-            // if (Hex.Distance(target, _player.hexPosition) > range)
-            // {
-            //     Debug.LogWarning("Tile is null");
-            //     continue;
-            // }
-            
-            Tile tile = FieldSystem.tileSystem.GetTile(target);
-            
-            if (tile.GetTileObject<CoverableObj>() is null)
-            {
-                continue;
-            }
-            
-            SetEffectTarget(target, coverPosition);
-            
-            
-            Vector2 coverDir = 
-                Hex.Hex2Orth(tile.hexPosition)
-                - Hex.Hex2Orth(_player.hexPosition);
-            
-            var coverTiles = FieldSystem.tileSystem.GetTilesInRange(target, coverEffectRange);
-            foreach (Vector3Int pos in coverTiles.Select(t => t.hexPosition))
-            {
-                // if (Hex.Distance(_player.hexPosition, pos) > _player.stat.sightRange) continue;
-                
-                Vector2 posDir = 
-                    Hex.Hex2Orth(pos)
-                    - Hex.Hex2Orth(target);
-
-                float angle = Vector3.SignedAngle(coverDir, posDir,Vector3.up);
-                if((angle is >= 0 - DIFF and <= 60 + DIFF) || 
-                   (angle is <= 360 + DIFF and >= 300 - DIFF))
-                    SetEffectTarget(pos, coverAvailable);
+                Color color = eo.GetComponent<Renderer>().material.color;
+                color.a = _tileEffectAlpha;
+                eo.GetComponent<Renderer>().material.color = color;
             }
         }
-        // ReSharper disable once IteratorNeverReturns
     }
     #endregion
     private new void Awake()
     {
+        _animator = GetComponent<Animator>();
+
         base.Awake();
 
         _effectsBase = new Dictionary<Vector3Int, GameObject>();
         _effectsRelatedTarget = new Dictionary<Vector3Int, GameObject>();
+        _coverEffects = new Dictionary<Vector3Int, GameObject>();
+        _barrelEffects = new Dictionary<Vector3Int, GameObject>();
+
         _coverableObjs = new List<CoverableObj>();
+
     }
 
     private void ClearEffect()
@@ -640,6 +777,10 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         
         ClearEffect(_effectsBase);
         ClearEffect(_effectsRelatedTarget);
+        ClearEffect(_coverEffects);
+        ClearEffect(_barrelEffects);
+
+        _animator.enabled = false;
 
         aimEffectRectTsf.gameObject.SetActive(false);
         
@@ -687,15 +828,15 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         }
     }
     
-    private void SetEffectTarget(Vector3Int position, GameObject effect)
+    private void SetEffectTarget(Vector3Int position, GameObject effect, Dictionary<Vector3Int, GameObject> effects)
     {
         Vector3 worldPosition = Hex.Hex2World(position);
         worldPosition.y += 0.03f;
 
-        if (_effectsRelatedTarget.ContainsKey(position) is false)
+        if (effects.ContainsKey(position) is false)
         {
             var gObject = Instantiate(effect, worldPosition, Quaternion.identity);
-            _effectsRelatedTarget.Add(position, gObject);
+            effects.Add(position, gObject);
         }
     }
     

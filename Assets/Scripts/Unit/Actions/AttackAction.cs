@@ -15,6 +15,38 @@ public class AttackAction : BaseAction, IShootingAction
     // private State _state;
     // private float _stateTimer;
 
+    public override bool CanExecute()
+    {
+        if (_target == null || _target is CoverableObj)
+        {
+            Debug.Log("Target is null, cant attack");
+            return false;
+        }
+
+        if (IsThereWallBetweenUnitAnd(_target.GetHex()))
+        {
+            Debug.Log("There is wall. cant attack");
+            return false;
+        }
+
+        if (weapon.GetWeaponType() == ItemType.Shotgun)
+        {
+            // if distance is greater than range, return false
+            if (Hex.Distance(unit.hexPosition, _target.GetHex()) > weapon.GetRange())
+            {
+                Debug.Log("Distance is greater than range, cant attack");
+                return false;
+            }
+        }
+
+        if (_target is Barrel && Hex.Distance(unit.hexPosition, _target.GetHex()) > weapon.GetRange())
+        {
+            Debug.Log("Distance is greater than range, cant attack");
+            return false;
+        }
+
+        return true;
+    }
     public override bool CanExecute(Vector3Int targetPos)
     {
         if (FieldSystem.GetDamageable(targetPos) is null)
@@ -81,33 +113,6 @@ public class AttackAction : BaseAction, IShootingAction
     public IDamageable GetTarget() 
     {
         return _target;
-    }
-
-    public override bool CanExecute()
-    {
-        if (_target == null)
-        {
-            Debug.Log("Target is null, cant attack");
-            return false;
-        }
-
-        if (IsThereWallBetweenUnitAnd(_target.GetHex()))
-        {
-            Debug.Log("There is wall. cant attack");
-            return false;
-        }
-
-        if (weapon.GetWeaponType() == ItemType.Shotgun)
-        {
-            // if distance is greater than range, return false
-            if (Hex.Distance(unit.hexPosition, _target.GetHex()) > weapon.GetRange())
-            {
-                Debug.Log("Distance is greater than range, cant attack");
-                return false;
-            }
-        }
-
-        return true;
     }
 
     private bool IsThereWallBetweenUnitAnd(Vector3Int targetPos)

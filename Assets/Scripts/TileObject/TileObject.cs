@@ -54,7 +54,7 @@ public abstract class TileObject : MonoBehaviour
         
         SetTile(tile);
         vision = IsVisible();
-        FieldSystem.tileSystem.AddTileObject(this);
+        //FieldSystem.tileSystem.AddTileObject(this);
     }
 
     protected virtual void SetTile(Tile t)
@@ -102,4 +102,9 @@ public enum TileObjectType
     DYNAMITE,
     HEINRICH_TRAP,
     NONE,
+    TNT_BARREL,
+    OIL_BARREL,
+    FIRE_FLOOR,
+    TRAP,
+    BEER
 }

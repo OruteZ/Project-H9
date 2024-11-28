@@ -78,6 +78,8 @@ public class UnitCamera : MonoBehaviour
         
         perlin.m_AmplitudeGain = amplitude;
         perlin.m_FrequencyGain = frequency;
+        //Debug.LogError($"Amplitude After Call: {perlin.m_AmplitudeGain}, Frequency After Call: {perlin.m_FrequencyGain}");
+
 
         StartCoroutine(StopShake(duration));
     }

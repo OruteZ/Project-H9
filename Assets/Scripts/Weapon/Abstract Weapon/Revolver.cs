@@ -12,7 +12,13 @@ public class Revolver : Weapon
     }
 
     public override ItemType GetWeaponType() => ItemType.Revolver;
-    public override float GetDistancePenalty() => 5;
+    public override float CalculateDistancePenalty(IDamageable target)
+    {
+        int distance = Hex.Distance(unit.hexPosition, target.GetHex());
+        int range = GetRange();
+
+        return (100 - distance * DISTANCE_PENALTY_SCALER * (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
+    }
     public override int GetRange()
     {
         return weaponRange + magazine.GetNextBullet().data.range + UnitStat.revolverAdditionalRange;
@@ -38,12 +44,7 @@ public class Revolver : Weapon
 
     public override float GetFinalHitRate(IDamageable target)
     {
-        int distance = Hex.Distance(unit.hexPosition, target.GetHex());
-        int range = GetRange();
-
-        float finalHitRate = (hitRate + +magazine.GetNextBullet().data.hitRate + UnitStat.concentration * (100 - distance * GetDistancePenalty() *
-            (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1)
-            )) * 0.01f;
+        float finalHitRate = (hitRate + magazine.GetNextBullet().data.hitRate + UnitStat.concentration * CalculateDistancePenalty(target)) * 0.01f;
 
         finalHitRate = Mathf.Round(10 * finalHitRate) * 0.1f;
         finalHitRate = Mathf.Clamp(finalHitRate, 0, 100);
@@ -53,15 +54,6 @@ public class Revolver : Weapon
         {
             finalHitRate += f.GetHitRateModifier();
         }
-
-
-#if UNITY_EDITOR
-        UIManager.instance.debugUI.SetDebugUI
-            (finalHitRate, unit, (Unit)target, distance, weaponRange,
-                UnitStat.revolverAdditionalRange,
-                GetDistancePenalty() *
-                (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
-#endif
 
         return finalHitRate;
     }

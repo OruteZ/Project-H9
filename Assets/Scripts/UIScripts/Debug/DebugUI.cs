@@ -54,7 +54,7 @@ public class DebugUI : UISystem
     /// <param name="wRange"></param>
     /// <param name="addRange"></param>
     /// <param name="penalty"></param>
-    public void SetDebugUI(float hitRate, Unit unit, Unit target, float dist, float wRange, float addRange, float penalty) 
+    public void SetDebugUI(float hitRate, Unit unit, IDamageable target, float dist, float wRange, float addRange, float penalty) 
     {
         UISystem ui = FindActiveDebugUI();
         if (ui is HitRateDebugWindow)

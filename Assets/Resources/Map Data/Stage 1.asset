@@ -1934,11 +1934,29 @@ MonoBehaviour:
     rayThroughable: 0
     gridVisible: 1
   tileObjectData:
+  - prefab: {fileID: 9126146097697344923, guid: 4e762bd1fa31c354c8d0d6c1be0be61f,
+      type: 3}
+    hexPosition: {x: -1, y: 15, z: -14}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+  - prefab: {fileID: 2523278600671176856, guid: 9c0323843edd64b44bbc543f7fd388e9,
+      type: 3}
+    hexPosition: {x: -3, y: 15, z: -12}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
   - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
       type: 3}
-    hexPosition: {x: 6, y: 3, z: -9}
+    hexPosition: {x: -2, y: 15, z: -13}
     rotation: 0.50000006
-    positionOffset: {x: 0, y: 0.4, z: 0}
+    positionOffset: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}
     arguments:
     - 1
@@ -1946,24 +1964,126 @@ MonoBehaviour:
     - UpRight
   - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
       type: 3}
-    hexPosition: {x: -1, y: -1, z: -1}
-    rotation: 0.8660254
-    positionOffset: {x: 0, y: 0.4, z: 0}
-    scale: {x: 1, y: 1, z: 1}
-    arguments:
-    - 1
-    - 1
-    - UpLeft
-  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
-      type: 3}
-    hexPosition: {x: 6, y: 3, z: -9}
+    hexPosition: {x: -2, y: 15, z: -13}
     rotation: 1
-    positionOffset: {x: 0, y: 0.4, z: 0}
+    positionOffset: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}
     arguments:
     - 1
     - 1
     - Left
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: -2, y: 15, z: -13}
+    rotation: 0.5
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - DownRight
+  - prefab: {fileID: 9126146097697344923, guid: 48808e81bb4c57b468bb612fb010aa42,
+      type: 3}
+    hexPosition: {x: -3, y: 13, z: -10}
+    rotation: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 20
+  - prefab: {fileID: 7756329116870450271, guid: 82ac9ac17729a6c4598c0c260dc95144,
+      type: 3}
+    hexPosition: {x: -4, y: 14, z: -10}
+    rotation: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 0.5, y: 0.5, z: 0.2}
+    arguments:
+    - 0
+    - 1
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: -2, y: 13, z: -11}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - UpRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 1, y: 13, z: -14}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - UpRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 1, y: 14, z: -15}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - UpRight
+  - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
+      type: 3}
+    hexPosition: {x: 0, y: 15, z: -15}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+    - UpRight
+  - prefab: {fileID: 7756329116870450271, guid: 82ac9ac17729a6c4598c0c260dc95144,
+      type: 3}
+    hexPosition: {x: 0, y: 14, z: -14}
+    rotation: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 0.5, y: 0.5, z: 0.2}
+    arguments:
+    - 0
+    - 1
+  - prefab: {fileID: 2523278600671176856, guid: 9c0323843edd64b44bbc543f7fd388e9,
+      type: 3}
+    hexPosition: {x: -3, y: 12, z: -9}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+  - prefab: {fileID: 9126146097697344923, guid: 4e762bd1fa31c354c8d0d6c1be0be61f,
+      type: 3}
+    hexPosition: {x: 3, y: 10, z: -13}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+  - prefab: {fileID: 9126146097697344923, guid: 4e762bd1fa31c354c8d0d6c1be0be61f,
+      type: 3}
+    hexPosition: {x: 3, y: 13, z: -16}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
+  - prefab: {fileID: 9126146097697344923, guid: 4e762bd1fa31c354c8d0d6c1be0be61f,
+      type: 3}
+    hexPosition: {x: 4, y: 11, z: -15}
+    rotation: 0.50000006
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    arguments:
+    - 1
+    - 1
   envData:
   - material: {fileID: 2100000, guid: e60302d84b6108e4a8e0d3b9ca1c8b5b, type: 2}
     mesh: {fileID: 4300000, guid: c4e4bbe9fa8709847a807d98ebc6857f, type: 3}
@@ -5325,11 +5445,6 @@ MonoBehaviour:
     position: {x: 0.8660254, y: -0.7, z: -22.5}
     rotation: 0
     scale: {x: 1.73, y: 15, z: 1.73}
-  goalInfo:
-    goalType: 0
-    targetPosition: {x: 0, y: 0, z: 0}
-    turnLimit: 100
-    targetEnemy: 0
   enemySpawnPoints:
   - {x: 20, y: 4, z: -24}
   - {x: 18, y: 4, z: -22}

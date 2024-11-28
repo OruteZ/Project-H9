@@ -523,8 +523,85 @@ public class TileSystem : MonoBehaviour
         return GetTile(targetPos);
     }
 
+    private GameObject prevMouseOverObj;
+    private float ignoreRadius = 110.0f;
+    private void Update()
+    {
+        if (!GameManager.instance.CompareState(GameState.COMBAT)) return;
+
+        if (!CheckMousePositionValidation())
+        {
+            TileEffectManager.instance.SetCoverEffect(null);
+            TileEffectManager.instance.SetCoverableOutline(null);
+            TileEffectManager.instance.SetBarrelEffect(null);
+            TileEffectManager.instance.SetTileObjectOutline(null);
+            return;
+        }
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            GameObject mouseOverObj = hit.collider.transform.parent.gameObject;
+
+            //coverable object
+            if (mouseOverObj.TryGetComponent<CoverableObj>(out var c))
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    TileEffectManager.instance.SetCoverEffect(mouseOverObj);
+                }
+
+                if (prevMouseOverObj != mouseOverObj)
+                {
+                    TileEffectManager.instance.SetCoverableOutline(mouseOverObj);
+                }
+            }
+            else if (prevMouseOverObj != null && prevMouseOverObj.TryGetComponent<CoverableObj>(out var _))
+            {
+                TileEffectManager.instance.SetCoverEffect(null);
+                TileEffectManager.instance.SetCoverableOutline(null);
+            }
+
+            //barrel
+            if (mouseOverObj.TryGetComponent<Barrel>(out var b) && b.IsVisible())
+            {
+                if (prevMouseOverObj != mouseOverObj)
+                {
+                    TileEffectManager.instance.SetBarrelEffect(mouseOverObj);
+                    TileEffectManager.instance.SetTileObjectOutline(mouseOverObj);
+                }
+            }
+            else if (prevMouseOverObj != null && prevMouseOverObj.TryGetComponent<Barrel>(out var _))
+            {
+                TileEffectManager.instance.SetBarrelEffect(null);
+                TileEffectManager.instance.SetTileObjectOutline(null);
+            }
+
+
+            //other objects
+
+
+            prevMouseOverObj = mouseOverObj;
+        }
+    }
+    private bool CheckMousePositionValidation()
+    {
+        if (!UIManager.instance.combatUI.combatActionUI.IsDisplayed()) return true;
+
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player == null) return false;
+        Vector3 playerChestPosition = player.transform.position;
+        if (!player.TryGetComponent(out CapsuleCollider var)) return true;
+
+        playerChestPosition.y += player.GetComponent<CapsuleCollider>().center.y;
+        Vector2 screenPos = Camera.main.WorldToScreenPoint(playerChestPosition);
+        //Debug.LogError(Vector2.Distance(Input.mousePosition, screenPos));
+        if (Vector2.Distance(Input.mousePosition, screenPos) < ignoreRadius * UIManager.instance.GetCanvasScale()) return false;
+
+        return true;
+    }
+
     //==========================Create World==================================
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     enum CreateType
     {
         RECT,

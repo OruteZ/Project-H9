@@ -61,6 +61,7 @@ public class HeinrichTrap : TileObject
             damage,
             Damage.Type.DEFAULT,
             owner,
+            this,
             other);
         
         // apply damage

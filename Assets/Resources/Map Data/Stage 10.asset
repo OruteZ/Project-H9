@@ -4504,14 +4504,6 @@ MonoBehaviour:
     position: {x: -16.454483, y: -0.7, z: -1.5}
     rotation: 0
     scale: {x: 1.73, y: 15, z: 1.73}
-  - material: {fileID: 2100000, guid: 6f3a909eabbed4042bc91d5f1fde5122, type: 2}
-    mesh: {fileID: 2156265809512432775, guid: 73f227a2d0f081041b6c2fc03954eec6, type: 3}
-    hexPositioned: 0
-    hexPosition: {x: 0, y: 0, z: 0}
-    height: -0.97
-    position: {x: 2.66, y: -0.97, z: -8.19}
-    rotation: 177.0025
-    scale: {x: 1.187248, y: 3.6976092, z: 2.398466}
   - material: {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
     mesh: {fileID: 4300000, guid: 596def0f98593374094399990f23110b, type: 3}
     hexPositioned: 1
@@ -5664,6 +5656,11 @@ MonoBehaviour:
     position: {x: -4.330127, y: 0, z: -13.5}
     rotation: 54.00495
     scale: {x: 1, y: 1, z: 1}
+  goalInfo:
+    goalType: 0
+    targetPosition: {x: 0, y: 0, z: 0}
+    turnLimit: 999
+    targetEnemy: 0
   enemySpawnPoints:
   - {x: 3, y: 5, z: -8}
   - {x: 2, y: 1, z: -3}

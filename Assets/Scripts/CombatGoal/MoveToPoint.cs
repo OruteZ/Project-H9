@@ -50,6 +50,7 @@ namespace CombatGoal
 
         public int GetStringIndex()
         {
+            // todo : 뭐 어딘가에는 게임 목표 string이 있겠지?
             return -130;
         }
 

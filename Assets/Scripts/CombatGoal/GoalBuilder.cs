@@ -14,17 +14,13 @@ public static class GoalBuilder
                 goal = new KillAll();
                 break;
             case GoalType.KILL_TARGET_ENEMY:
-                Debug.LogError($"아직 미구현 Goal인 {goalInfo.goalType}입니다. " +
-                               $"기본값인 Kill ALl로 설정됩니다.");
-                goal = new KillAll();
+                goal = new KillTargetEnemy();
                 break;
             case GoalType.SURVIVE:
                 goal = new Survive();
                 break;
             case GoalType.MOVE_TO_POINT:
-                Debug.LogError($"아직 미구현 Goal인 {goalInfo.goalType}입니다. " +
-                               $"기본값인 Kill ALl로 설정됩니다.");
-                goal = new KillAll();
+                goal = new MoveToPoint();
                 break;
             default:
                 goal = new KillAll();
@@ -37,7 +33,7 @@ public static class GoalBuilder
     }
 }
 
-[System.Serializable]
+[Serializable]
 public struct GoalInfo
 {
     public GoalType goalType;

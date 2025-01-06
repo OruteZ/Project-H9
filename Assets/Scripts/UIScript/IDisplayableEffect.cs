@@ -11,5 +11,6 @@ public interface IDisplayableEffect
     public int GetDuration();
 
     public bool CanDisplay();
+    
     // public int GetIconIndex();
 }

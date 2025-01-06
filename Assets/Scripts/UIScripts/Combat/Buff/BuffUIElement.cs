@@ -54,13 +54,18 @@ public class BuffUIElement : UIElement, IPointerEnterHandler, IPointerExitHandle
                 icon = GameManager.instance.itemDatabase.GetItemData(item.GetIndex()).icon;
                 break;
             default:
-                Debug.LogError("Unknown Effect Type : " + effect.GetType());
+                // 최신 코드 : icondb에서 읽어오기
+                icon = GetDB().GetIcon(effect.GetIndex());
+                if (icon == null)
+                {
+                    Debug.LogError("Unknown Effect Type : " + effect.GetType());
+                }
                 break;
         }
         _buffImage.GetComponent<Image>().sprite = icon;
         
         // 최신 코드 : icondb에서 읽어오기
-        // icon = GetDB().GetIcon(effect.GetIconIndex());
+        icon = GetDB().GetIcon(effect.GetIndex());
 
         //Outline Effect Setting
         if (isBuff)

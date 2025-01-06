@@ -24,10 +24,14 @@ public class CombatResultUI : UISystem
     private bool isPlayerWin;
     private int earnedExp;
 
-    public void Start()
+    public void Awake()
+    {
+        FieldSystem.onStageAwake.AddListener(OnStageAwake);
+    }
+
+    private void OnStageAwake()
     {
         FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
-        //UIManager.instance.onTSceneChanged.AddListener(null);
         this.gameObject.SetActive(false);
     }
 

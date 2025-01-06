@@ -3,7 +3,7 @@ public class CoverDisplayStatus : IDisplayableEffect
     public int GetIndex()
     {
         // todo : implement
-        return -1;
+        return 1557;
     }
 
     public int GetStack()

@@ -32,5 +32,6 @@ public class IncreaseStatByCondition : BaseEffect, IDisplayableEffect
         if (passive.GetConditionType()[0] is ConditionType.Null) return false;
         return enable;
     }
+
     #endregion
 }

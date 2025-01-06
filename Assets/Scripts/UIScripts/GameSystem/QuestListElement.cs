@@ -181,11 +181,31 @@ public class QuestListElement : UIElement, IPointerClickHandler
 
     public virtual void OnPointerClick(PointerEventData eventData)
     {
-        if (currentQuestInfo.Pin != null)
+        if (GameManager.instance.CompareState(GameState.WORLD) && currentQuestInfo.Pin != null)
         {
             Vector3Int pinPos = new Vector3Int(currentQuestInfo.Pin[0], currentQuestInfo.Pin[1], currentQuestInfo.Pin[2]);
             UIManager.instance.gameSystemUI.pinUI.SetPinUI(pinPos);
             UIManager.instance.gameSystemUI.pinUI.OnClickPin();
+        }
+        //need test
+        else if (GameManager.instance.CompareState(GameState.COMBAT)) 
+        {
+            GoalInfo gInfo = GameManager.instance.GetStageData().GetGoalInfo();
+            Debug.LogError(currentQuestInfo.GoalArg[0] + " / " + gInfo.targetEnemy);
+
+            if (currentQuestInfo.GOAL_TYPE == QuestInfo.QUEST_EVENT.KILL_LINK && currentQuestInfo.GoalArg[0] == gInfo.targetEnemy)
+            {
+                if (gInfo.goalType == GoalType.KILL_TARGET_ENEMY)
+                {
+                    Unit u = FieldSystem.unitSystem.units.Find(u => u.Index == gInfo.targetEnemy);
+                    CameraManager.instance.worldCamera.SetPosition(u.hexPosition);
+                }
+                else if (gInfo.goalType == GoalType.MOVE_TO_POINT)
+                {
+                    CameraManager.instance.worldCamera.SetPosition(gInfo.targetPosition);
+                }
+            }
+            
         }
     }
 }

@@ -235,7 +235,7 @@ MonoBehaviour:
     gridVisible: 1
   - hexPosition: {x: 1, y: 3, z: -4}
     visible: 1
-    walkable: 0
+    walkable: 1
     rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 2, y: 3, z: -5}
@@ -265,7 +265,7 @@ MonoBehaviour:
     gridVisible: 1
   - hexPosition: {x: 7, y: 3, z: -10}
     visible: 1
-    walkable: 0
+    walkable: 1
     rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 8, y: 3, z: -11}
@@ -644,35 +644,6 @@ MonoBehaviour:
     rayThroughable: 1
     gridVisible: 1
   tileObjectData:
-  - prefab: {fileID: 515775582126048608, guid: 529962513f9411e41be9dcff28ad41f3, type: 3}
-    hexPosition: {x: 3, y: 5, z: -8}
-    rotation: -0
-    positionOffset: {x: 0, y: -0.10546, z: 0}
-    scale: {x: 2.1251667, y: 2.9333677, z: 2.1251667}
-    arguments:
-    - 3
-    - 3
-    - Right
-  - prefab: {fileID: 8616358203792594756, guid: 13c15c8925b70ac4ab62a031e34061ae,
-      type: 3}
-    hexPosition: {x: 7, y: 3, z: -10}
-    rotation: -0
-    positionOffset: {x: 0, y: -0.24468, z: 0}
-    scale: {x: 2.2374, y: 3.1840441, z: 2.2374}
-    arguments:
-    - 3
-    - 3
-    - Right
-  - prefab: {fileID: 1141464491258737445, guid: 1b6ed9665124cef4f9ff8770ddcf0548,
-      type: 3}
-    hexPosition: {x: 1, y: 3, z: -4}
-    rotation: -0
-    positionOffset: {x: 0, y: -0.018, z: 0}
-    scale: {x: 1.8839136, y: 2.8435793, z: 1.8839136}
-    arguments:
-    - 3
-    - 3
-    - Right
   - prefab: {fileID: 5695714753306511506, guid: fd6de19ee160c4445a79cf8b4b7a7951,
       type: 3}
     hexPosition: {x: 1, y: 3, z: -4}
@@ -1870,6 +1841,11 @@ MonoBehaviour:
     position: {x: 23.382685, y: 0, z: -4.5}
     rotation: 79.470245
     scale: {x: 1, y: 1, z: 1}
+  goalInfo:
+    goalType: 0
+    targetPosition: {x: 0, y: 0, z: 0}
+    turnLimit: 999
+    targetEnemy: 0
   enemySpawnPoints:
   - {x: 13, y: 0, z: -13}
   - {x: 5, y: 5, z: -10}

@@ -484,9 +484,9 @@ MonoBehaviour:
     rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 8, y: 4, z: -12}
-    visible: 0
-    walkable: 0
-    rayThroughable: 0
+    visible: 1
+    walkable: 1
+    rayThroughable: 1
     gridVisible: 1
   - hexPosition: {x: 9, y: 4, z: -13}
     visible: 1
@@ -3976,6 +3976,11 @@ MonoBehaviour:
     position: {x: 0.8660254, y: 0, z: -16.5}
     rotation: 319.96234
     scale: {x: 1, y: 1, z: 1}
+  goalInfo:
+    goalType: 0
+    targetPosition: {x: 0, y: 0, z: 0}
+    turnLimit: 999
+    targetEnemy: 0
   enemySpawnPoints:
   - {x: 14, y: 10, z: -24}
   - {x: 13, y: 11, z: -24}

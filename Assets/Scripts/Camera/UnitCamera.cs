@@ -25,7 +25,7 @@ public class UnitCamera : MonoBehaviour
     public void SetOwner(Unit owner)
     {
         _unit = owner;
-        CatchTarget(owner.transform);
+        AddTarget(owner.transform);
         // _virtualCamera.Follow = owner.transform;
         
         owner.onDead.AddListener((u) =>
@@ -51,7 +51,7 @@ public class UnitCamera : MonoBehaviour
             _actionTargetTile = FieldSystem.tileSystem.GetTile(t);
             if (_actionTargetTile is null) return;
             
-            CatchTarget(_actionTargetTile.transform);
+            AddTarget(_actionTargetTile.transform);
         });
         
         owner.onFinishAction.AddListener((a) =>
@@ -89,7 +89,8 @@ public class UnitCamera : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
 
-        var perlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        CinemachineBasicMultiChannelPerlin perlin = 
+            _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         perlin.m_AmplitudeGain = 0;
         perlin.m_FrequencyGain = 0;
     }
@@ -100,7 +101,7 @@ public class UnitCamera : MonoBehaviour
         return _unit;
     }
 
-    private void CatchTarget(Transform target)
+    private void AddTarget(Transform target)
     {
         _targetGroup.AddMember(target, 1, unitRadius);
     }
@@ -112,6 +113,6 @@ public class UnitCamera : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(_targetGroup.gameObject);
+        if (_targetGroup != null) Destroy(_targetGroup.gameObject);
     }
 }

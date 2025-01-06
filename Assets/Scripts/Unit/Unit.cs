@@ -162,8 +162,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         }
 
         onFinishAction.AddListener((action) => onAnyUnitActionFinished.Invoke(this));
-        FieldSystem.onCombatFinish.AddListener(OnCombatFinish);
-        FieldSystem.onCombatEnter.AddListener(OnCombatFinish);
+        FieldSystem.onCombatFinish.AddListener(ClearPassiveAndStatusEffect);
+        FieldSystem.onCombatEnter.AddListener(ClearPassiveAndStatusEffect);
 
         _seController = new UnitStatusEffectController(this);
 
@@ -300,6 +300,15 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public void AddDisplayableEffect(IDisplayableEffect effect)
     {
         _displayableEffects.Add(effect);
+        
+        Debug.Log("Add Displayable Effect");
+        // print all displayable effects
+        foreach (var displayableEffect in _displayableEffects)
+        {
+            Debug.Log(displayableEffect.GetIndex());
+        }
+        
+        
     }
 
     public void RemoveDisplayableEffect(IDisplayableEffect effect)
@@ -656,7 +665,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     #region UNITY_EVENT
 
-    private void OnCombatFinish(bool playerWin)
+    private void ClearPassiveAndStatusEffect(bool playerWin)
     {
         // disable all status effect, and passive
         _seController.RemoveAllStatusEffect();

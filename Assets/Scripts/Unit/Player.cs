@@ -39,12 +39,12 @@ public class Player : Unit
         // if (HasStatusEffect(StatusEffectType.Stun)) EndTurn();
         bool wasAimmed = isAimming;
 
-        var isMouseOnTile = TryGetMouseOverTilePos(out Vector3Int onMouseTilePos);
+        bool isMouseOnTile = TryGetMouseOverTilePos(out Vector3Int onMouseTilePos);
 
         if (isMouseOnTile && GetSelectedAction().GetActionType() is
                 ActionType.Attack or ActionType.Fanning or ActionType.ItemUsing)
         {
-            var target = FieldSystem.unitSystem.GetUnit(onMouseTilePos);
+            Unit target = FieldSystem.unitSystem.GetUnit(onMouseTilePos);
             if (target is not Player and not null)
             {
                 transform.LookAt(Hex.Hex2World(onMouseTilePos), Vector3.up);

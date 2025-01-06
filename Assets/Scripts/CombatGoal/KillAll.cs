@@ -10,6 +10,7 @@ public class KillAll : IGoal
     private int _turnLimit;
 
     private bool _finishFlag = false;
+    private bool _completeActionInvoked = false;
     
     public bool HasSuccess()
     {
@@ -54,7 +55,6 @@ public class KillAll : IGoal
         OnInfoChanged = new UnityEvent();
         
         FieldSystem.unitSystem.onAnyUnitDead.AddListener(CheckGoal);
-        FieldSystem.unitSystem.GetPlayer().onDead.AddListener(none => PlayerDead());
         FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnEnd);
         
         _initialEnemyCount = FieldSystem.unitSystem.GetEnemyCount();
@@ -70,25 +70,37 @@ public class KillAll : IGoal
     
     private void CheckGoal(Unit none)
     {
-        if (FieldSystem.unitSystem.GetEnemyCount() == 0)
+        Debug.Log("CheckGoal");
+        
+        if (_completeActionInvoked) return;
+        
+        if (none == FieldSystem.unitSystem.GetPlayer())
         {
-            _onComplete.Invoke(true);
+            PlayerDead();
+        }
+        else
+        {
+            if (HasSuccess())
+            {
+                _onComplete.Invoke(true);
+                _completeActionInvoked = true;
+            }
         }
     }
 
     private void PlayerDead()
     {
+        Debug.Log("PlayerDead");
+        if (_completeActionInvoked) return;
+        
         _onComplete.Invoke(false);
+        _completeActionInvoked = true;
     }
     
     private void OnTurnEnd()
     {
-        OnInfoChanged.Invoke();
         
-        if (IsFinished())
-        {
-            _onComplete.Invoke(false);
-        }
+        OnInfoChanged.Invoke();
     }
     
     #endregion

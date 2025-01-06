@@ -538,50 +538,53 @@ public class TileSystem : MonoBehaviour
             return;
         }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (!Physics.Raycast(ray, out RaycastHit hit)) return;
+        GameObject hitObj = hit.collider.gameObject;
+        
+        if (hitObj == null) return;
+        if (hitObj.transform.parent == null) return;
+        GameObject mouseOverObj = hitObj.transform.parent.gameObject;
+            
+
+        //coverable object
+        if (mouseOverObj.TryGetComponent<CoverableObj>(out CoverableObj c))
         {
-            GameObject mouseOverObj = hit.collider.transform.parent.gameObject;
-
-            //coverable object
-            if (mouseOverObj.TryGetComponent<CoverableObj>(out var c))
+            if (Input.GetMouseButtonDown(0))
             {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    TileEffectManager.instance.SetCoverEffect(mouseOverObj);
-                }
-
-                if (prevMouseOverObj != mouseOverObj)
-                {
-                    TileEffectManager.instance.SetCoverableOutline(mouseOverObj);
-                }
-            }
-            else if (prevMouseOverObj != null && prevMouseOverObj.TryGetComponent<CoverableObj>(out var _))
-            {
-                TileEffectManager.instance.SetCoverEffect(null);
-                TileEffectManager.instance.SetCoverableOutline(null);
+                TileEffectManager.instance.SetCoverEffect(mouseOverObj);
             }
 
-            //barrel
-            if (mouseOverObj.TryGetComponent<Barrel>(out var b) && b.IsVisible())
+            if (prevMouseOverObj != mouseOverObj)
             {
-                if (prevMouseOverObj != mouseOverObj)
-                {
-                    TileEffectManager.instance.SetBarrelEffect(mouseOverObj);
-                    TileEffectManager.instance.SetTileObjectOutline(mouseOverObj);
-                }
+                TileEffectManager.instance.SetCoverableOutline(mouseOverObj);
             }
-            else if (prevMouseOverObj != null && prevMouseOverObj.TryGetComponent<Barrel>(out var _))
-            {
-                TileEffectManager.instance.SetBarrelEffect(null);
-                TileEffectManager.instance.SetTileObjectOutline(null);
-            }
-
-
-            //other objects
-
-
-            prevMouseOverObj = mouseOverObj;
         }
+        else if (prevMouseOverObj != null && prevMouseOverObj.TryGetComponent<CoverableObj>(out var _))
+        {
+            TileEffectManager.instance.SetCoverEffect(null);
+            TileEffectManager.instance.SetCoverableOutline(null);
+        }
+
+        //barrel
+        if (mouseOverObj.TryGetComponent<Barrel>(out var b) && b.IsVisible())
+        {
+            if (prevMouseOverObj != mouseOverObj)
+            {
+                TileEffectManager.instance.SetBarrelEffect(mouseOverObj);
+                TileEffectManager.instance.SetTileObjectOutline(mouseOverObj);
+            }
+        }
+        else if (prevMouseOverObj != null && prevMouseOverObj.TryGetComponent<Barrel>(out var _))
+        {
+            TileEffectManager.instance.SetBarrelEffect(null);
+            TileEffectManager.instance.SetTileObjectOutline(null);
+        }
+
+
+        //other objects
+
+
+        prevMouseOverObj = mouseOverObj;
     }
     private bool CheckMousePositionValidation()
     {

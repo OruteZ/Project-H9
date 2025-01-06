@@ -37,7 +37,7 @@ public class FieldSystem : MonoBehaviour
     private static UnityEvent<bool> _onCombatEnter;
     public static UnityEvent<bool> onCombatEnter => _onCombatEnter ??= new UnityEvent<bool>();
 
-
+    private bool _goalCompleteHandled = false;
     // Game Goal;
     private static IGoal _goal;
     
@@ -47,7 +47,9 @@ public class FieldSystem : MonoBehaviour
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();
         
-        
+        _onCombatFinish = new UnityEvent<bool>();
+        _onCombatEnter = new UnityEvent<bool>();
+        _goalCompleteHandled = false;
     }
 
     private void Start()
@@ -60,7 +62,12 @@ public class FieldSystem : MonoBehaviour
             ? null
             : GoalBuilder.BuildGoal(GameManager.instance.GetStageData().GetGoalInfo());
         
-        _goal?.AddListenerOnComplete(OnGameGoalComplete);
+        if (_goal is not null) _goal.AddListenerOnComplete(OnGameGoalComplete);
+        else
+        {
+            if(GameManager.instance.CompareState(GameState.COMBAT)) 
+                Debug.LogError("GameState is 'Combat' but Goal is null");
+        }
         
         StartCoroutine(StartSceneCoroutine());
     }
@@ -82,15 +89,18 @@ public class FieldSystem : MonoBehaviour
     
     private void OnGameGoalComplete(bool isWin)
     {
+        if (_goalCompleteHandled) return;  // 이미 처리된 경우 무시
+        _goalCompleteHandled = true;
+        
         if (isWin)
         {
             Debug.Log("Game Goal Complete");
-            onCombatFinish.Invoke(true);
+            _onCombatFinish.Invoke(true);
         }
         else
         {
             Debug.Log("Game Goal Failed");
-            onCombatFinish.Invoke(false);
+            _onCombatFinish.Invoke(false);
         }
     }
 

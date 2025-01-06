@@ -15,7 +15,7 @@ public class CoverableObj : TileObject, IDamageable
     [SerializeField] private CoverType coverType;
     [SerializeField] private Unit unit;
     [SerializeField] private Hex.Direction coverDirection;
-    [SerializeField] private CoverDisplayStatus _coverDisplayStatus;
+    [SerializeField] private readonly CoverDisplayStatus _coverDisplayStatus = new ();
 
     private static Material LightCoverMaterial => TileEffectManager.instance.combatFowMaterial;
     private bool _visible;
@@ -69,7 +69,8 @@ public class CoverableObj : TileObject, IDamageable
         unit = newUnit;
 
         newUnit.onHit.AddListener(OnHit);
-        newUnit.onMoved.AddListener(OnUnitMoved);
+        newUnit.onMoved.AddListener(RemoveThisFromUnit);
+        newUnit.onTurnStart.AddListener(RemoveThisFromUnit);
         newUnit.AddCoverable(this);
         newUnit.AddDisplayableEffect(_coverDisplayStatus);
     }
@@ -111,10 +112,11 @@ public class CoverableObj : TileObject, IDamageable
         TakeDamage(selfDamage);
     }
 
-    private void OnUnitMoved(Unit u)
+    private void RemoveThisFromUnit(Unit u)
     {
         u.onHit.RemoveListener(OnHit);
-        u.onMoved.RemoveListener(OnUnitMoved);
+        u.onMoved.RemoveListener(RemoveThisFromUnit);
+        u.onTurnStart.RemoveListener(RemoveThisFromUnit);
         u.RemoveCoverable(this);
         u.RemoveDisplayableEffect(_coverDisplayStatus);
         unit = null;
@@ -139,7 +141,7 @@ public class CoverableObj : TileObject, IDamageable
         if (u != null)
         {
             u.onHit.RemoveListener(OnHit);
-            u.onMoved.RemoveListener(OnUnitMoved);
+            u.onMoved.RemoveListener(RemoveThisFromUnit);
             u.RemoveCoverable(this);
             u.RemoveDisplayableEffect(_coverDisplayStatus);
         }
@@ -201,7 +203,7 @@ public class CoverableObj : TileObject, IDamageable
     
     [Space(10)]
     [SerializeField] private Vector3Int g_targetHex;
-    [SerializeField]private Vector3Int g_atkFromHex;
+    [SerializeField] private Vector3Int g_atkFromHex;
 
     public void OnDrawGizmosSelected()
     {
@@ -284,7 +286,7 @@ public class CoverableObj : TileObject, IDamageable
         _onHitFlag = true;
     }
 
-    #region transparent
+    #region Transparency
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.TryGetComponent<Player>(out var c)) return;

@@ -734,6 +734,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public virtual void TakeDamage(Damage damageContext)
     {
         if (gameObject == null) return;
+        if ((Unit)damageContext.target != this) return;
 
         stat.Consume(StatType.CurHp, damageContext.GetFinalAmount()); //for test
         UIManager.instance.onTakeDamaged.Invoke(this, damageContext.GetFinalAmount(), damageContext.type);

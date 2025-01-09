@@ -64,8 +64,9 @@ public class PinUI : UISystem
         _isTracking = true;
         _pinImage.SetActive(_isTracking);
     }
-    public void ClearPinUI()
+    public void ClearPinUI(Vector3Int dest)
     {
+        if(dest != _targetPos) 
         _targetPos = Vector3.zero;
         targetHexPos = Vector3Int.zero;
         _isTracking = false;

@@ -13,6 +13,8 @@ public class QuestListElement : UIElement, IPointerClickHandler
 
     public QuestInfo currentQuestInfo { get; protected set; }
 
+    private Vector3Int _currentPinPosition = Vector3Int.zero;
+
     protected bool _isDestroying = false;
 
     private string _resultText = "";
@@ -175,6 +177,11 @@ public class QuestListElement : UIElement, IPointerClickHandler
     }
     public override void CloseUI()
     {
+        if (_currentPinPosition != Vector3Int.zero)
+        {
+            UIManager.instance.gameSystemUI.pinUI.ClearPinUI(_currentPinPosition);
+            _currentPinPosition = Vector3Int.zero;
+        }
         PlayerEvents.OnProcessedWorldTurn.RemoveListener((t) => { ProgressTurnRemaining(); });
         base.CloseUI();
     }
@@ -183,8 +190,8 @@ public class QuestListElement : UIElement, IPointerClickHandler
     {
         if (GameManager.instance.CompareState(GameState.WORLD) && currentQuestInfo.Pin != null)
         {
-            Vector3Int pinPos = new Vector3Int(currentQuestInfo.Pin[0], currentQuestInfo.Pin[1], currentQuestInfo.Pin[2]);
-            UIManager.instance.gameSystemUI.pinUI.SetPinUI(pinPos);
+            _currentPinPosition = new Vector3Int(currentQuestInfo.Pin[0], currentQuestInfo.Pin[1], currentQuestInfo.Pin[2]);
+            UIManager.instance.gameSystemUI.pinUI.SetPinUI(_currentPinPosition);
             UIManager.instance.gameSystemUI.pinUI.OnClickPin();
         }
         //need test

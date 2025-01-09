@@ -213,8 +213,11 @@ public class EnemyStatUI : UISystem
         if (isSuccessRaycast)
         {
             Enemy enemy = hit.collider.GetComponent<Enemy>();
-            pos = enemy.hexPosition;
-            return true;
+            if (enemy.isVisible)
+            {
+                pos = enemy.hexPosition;
+                return true;
+            }
         }
 
         pos = Vector3Int.zero;

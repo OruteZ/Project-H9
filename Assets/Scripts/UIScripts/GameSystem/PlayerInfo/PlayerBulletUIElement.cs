@@ -35,6 +35,7 @@ public class PlayerBulletUIElement : UIElement
 
     public void Flick()
     {
+        _bulletFill.gameObject.SetActive(true);
         _bulletFill.GetComponent<Animator>().enabled = true;
         _bulletFill.GetComponent<Animator>().Rebind();
         _bulletFill.GetComponent<Animator>().Play("Fade In & Out Effect");

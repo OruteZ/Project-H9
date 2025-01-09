@@ -90,6 +90,8 @@ public class SkillUI : UISystem
         _skillRevoloverSectionButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[17];
         _skillRepeaterSectionButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[18];
         _skillShotgunSectionButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[19];
+
+        SetSkillSection(0);
     }
     private void Update()
     {

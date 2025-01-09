@@ -250,10 +250,10 @@ public class QuestInfo
         PlayerEvents.OnStartedQuest.Invoke(this);
         
         
-        if (_createLink is { Length: 5})
+        if (_createLink is { Length: 4})
         {
             int linkIdx = _createLink[0];
-            int combatMapIdx = _createLink[4];
+            int combatMapIdx = 0;
             Vector3Int linkHex = new Vector3Int(_createLink[1], _createLink[2], _createLink[3]);
             if (linkIdx <= 0)
             {
@@ -266,6 +266,17 @@ public class QuestInfo
                 GameManager.instance.runtimeWorldData.TryAddLink(linkHex, 0, linkIdx, combatMapIdx);
             }
             else FieldSystem.tileSystem.AddLink(linkHex, 180, linkIdx, combatMapIdx);
+        }
+        else
+        {
+            if (_createLink.Length > 0)
+            {
+                Debug.LogError("퀘스트 링크 생성 실패: 링크의 Arguments가 5개가 아닙니다.");
+                foreach (int i in _createLink)
+                {
+                    Debug.LogError(i);
+                }
+            }
         }
     }
 

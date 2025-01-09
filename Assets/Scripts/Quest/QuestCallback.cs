@@ -32,9 +32,8 @@ public class QuestCallback
             // 퀘스트 진척도에 따라 동기화함
             // "진행중인" 퀘스트가 아니더라도, "퀘스트를 진행하기 위한 조건"이 때문에 거의 모든 퀘스트가 동기화됨
             // 여기에 속하지 않는것은 "새로 생긴 퀘스트"
-            if (user.QuestProgress.ContainsKey(quest.Index))
+            if (user.QuestProgress.TryGetValue(quest.Index, out QuestSaveWrapper progress))
             {
-                var progress = user.QuestProgress[quest.Index];
                 quest.SetProgress(progress);
             }
 

@@ -225,10 +225,10 @@ public class GameManager : Generic.Singleton<GameManager>
         runtimeWorldData.TryAddDiscovered(tilePos);
     }
     
-    private new void Awake()
+    protected override void Awake()
     {
         base.Awake();
-        if(this == null) return;
+        if (this == null) return;
         Application.targetFrameRate = 90;
 
         // todo : Load World Data
@@ -304,15 +304,17 @@ public class GameManager : Generic.Singleton<GameManager>
         var qi = new QuestParser();
         FieldSystem.onStageAwake.AddListener(() =>
         {
-            if (!CompareState(GameState.EDITOR))
+            if (!CompareState(GameState.EDITOR) && test)
             {
                 Quests = qi.GetQuests();
+                test = false;
             }
         });
         watch.Stop();
         Debug.Log($"<color=blue>Quest parse time: {watch.ElapsedMilliseconds}</color>");
 
     }
+    static bool test = true;
 
     private void Start()
     {

@@ -341,6 +341,10 @@ public class UnitSystem : MonoBehaviour
     {
         return enemyDB.GetInfo(index);
     }
+    public LinkData GetLinkData(int index)
+    {
+        return linkDB.GetData(index);
+    }
 
     public bool IsEnemyExist()
     {

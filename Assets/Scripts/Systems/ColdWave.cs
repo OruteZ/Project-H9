@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class ColdWave : MonoBehaviour
@@ -66,7 +65,7 @@ public class ColdWave : MonoBehaviour
         Damage context = new (
             coldWaveDamage, 
             coldWaveDamage, 
-            Damage.Type.DEFAULT, 
+            Damage.Type.NONLETHAL, 
             null, 
             null, 
             player

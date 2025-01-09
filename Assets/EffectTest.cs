@@ -28,7 +28,8 @@ public class EffectTest : MonoBehaviour
     {
         //fade();
     }
-    void fade()
+
+    private void Fade()
     {
         cnt++;
         if (cnt <= 120) return;

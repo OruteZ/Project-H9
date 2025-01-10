@@ -76,6 +76,8 @@ public class Enemy : Unit
         if (TrySelectAction(result.action) && TryExecute(result.position))
         {
             //do nothing : Success Action
+            Debug.Log($"{gameObject.name} Success Action : {result.action}, {result.position}");
+            ClearBusy();
         }
         else
         {
@@ -98,6 +100,7 @@ public class Enemy : Unit
     public bool TrySelectAction(IUnitAction action)
     {
         if (action is null) return false;
+        if (action.GetUnit() != this) return false;
         if (action.IsSelectable() is false) return false;
         if (action.GetCost() > currentActionPoint)
         {  

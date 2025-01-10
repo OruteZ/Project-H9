@@ -207,7 +207,7 @@ public class UnitSystem : MonoBehaviour
 
                 string path = AI_PATH + "AI " + info.btIndex;
                 Debug.Log("AI Path : " + path);
-                ScriptableObject ai = Resources.Load<ScriptableObject>(path);
+                ScriptableObject ai = Instantiate(Resources.Load<ScriptableObject>(path));
                 if(ai is null)
                 {
                     Debug.LogError("AI is null, path : " + path);

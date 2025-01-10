@@ -66,7 +66,7 @@ public class ActiveDatabase : ScriptableObject
             }
         }
         
-        Debug.LogError("No Action");
+        Debug.LogError($"There is no action that index is {index} in active database");
     }
 
     public ActiveInfo GetActiveInfo(int index)

@@ -207,6 +207,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
         FieldSystem.turnSystem.EndTurn();
         isHitedByGoldenBulletThisTurn = false;
+        
+        Debug.Log($"({unitName}) End Turn");
     }
 
     private Unit _killer;

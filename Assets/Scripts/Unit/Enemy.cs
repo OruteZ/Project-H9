@@ -77,7 +77,6 @@ public class Enemy : Unit
         {
             //do nothing : Success Action
             Debug.Log($"{gameObject.name} Success Action : {result.action}, {result.position}");
-            ClearBusy();
         }
         else
         {

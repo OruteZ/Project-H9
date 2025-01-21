@@ -555,7 +555,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         if (activeUnitAction.CanExecuteImmediately())
         {
             if (activeUnitAction is not IdleAction) SetBusy();
-            var actionSuccess = TryExecuteUnitAction(Vector3Int.zero);
+            var actionSuccess = TryExecuteUnitAction(hexPosition);
             Debug.Log("actionSuccess: " + actionSuccess);
 
             if (actionSuccess is false) ClearBusy();

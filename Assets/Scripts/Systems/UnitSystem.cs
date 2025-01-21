@@ -18,6 +18,7 @@ public class UnitSystem : MonoBehaviour
     [SerializeField] private PassiveDatabase passiveDB;
     [SerializeField] private ActiveDatabase activeDB;
     [SerializeField] private LinkDatabase linkDB;
+    [SerializeField] private AIDatabase aiDatabase;
 
     private const string AI_PATH = "AI/";
     //---
@@ -205,23 +206,18 @@ public class UnitSystem : MonoBehaviour
                 );
                 // enemy.SetupAI();
 
-                string path = AI_PATH + "AI " + info.btIndex;
-                Debug.Log("AI Path : " + path);
-                ScriptableObject ai = Instantiate(Resources.Load<ScriptableObject>(path));
-                if(ai is null)
+                // string path = AI_PATH + "AI " + info.btIndex;
+                // Debug.Log("AI Path : " + path);
+                // ScriptableObject ai = Instantiate(Resources.Load<ScriptableObject>(path));
+                DecisionTree ai = aiDatabase.GetTree(info.btIndex).Clone();
+                if(ai == null)
                 {
-                    Debug.LogError("AI is null, path : " + path);
+                    Debug.LogError("AI is null, index : " + info.btIndex);
                     throw new Exception();
                 }
                 
                 Debug.Log("Found ScriptableObject : " + ai.name);
-                if(ai is DecisionTree dt) {
-                    enemy.SetupAI(dt);
-                }
-                else {
-                    Debug.LogError("AI is not DecisionTree");
-                    throw new Exception();
-                }
+                enemy.SetupAI(ai);
 
                 enemy.isVisible = false;
 

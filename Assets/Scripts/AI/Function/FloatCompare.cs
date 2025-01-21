@@ -22,6 +22,15 @@ public class FloatCompare : H9Function<bool>
         compareWith.Initialise(metaData);
     }
     
+    public override DecisionTreeEditorNodeBase Clone()
+    {
+        var c = Instantiate(this);
+        c.value = (H9Function<float>) value.Clone();
+        c.compareWith = (H9Function<float>) compareWith.Clone();
+        
+        return c;
+    }
+    
     public bool Decide()
     {
         return comparisonType switch

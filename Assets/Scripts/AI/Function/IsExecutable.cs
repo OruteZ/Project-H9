@@ -21,6 +21,15 @@ public class IsExecutable : H9Function<bool>
         targetPos.Initialise(metaData);
     }
     
+    public override DecisionTreeEditorNodeBase Clone()
+    {
+        var c = Instantiate(this);
+        c.action = (Function<IUnitAction>) action.Clone();
+        c.targetPos = (Function<Vector3Int>) targetPos.Clone();
+        
+        return c;
+    }
+    
     public override bool Invoke()
     {
         return action.Invoke().IsSelectable() && 

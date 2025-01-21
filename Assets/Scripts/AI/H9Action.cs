@@ -10,7 +10,7 @@ public abstract class H9Action : Action
     {
         base.Initialise(metaData);
         
-        Debug.Log("Initialising action" + name);
+        Debug.Log("Initialising action" + name + " with metadata " + metaData);
         ai = (metaData as EnemyAI);
     }
 

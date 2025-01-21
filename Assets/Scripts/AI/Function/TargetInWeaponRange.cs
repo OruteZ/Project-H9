@@ -16,6 +16,14 @@ public class TargetInWeaponRange : H9Function<bool>
         target.Initialise(metaData);
     }
     
+    public override DecisionTreeEditorNodeBase Clone()
+    {
+        var c = Instantiate(this);
+        c.target = (Function<Vector3Int>) target.Clone();
+        
+        return c;
+    }
+    
     
     public override bool Invoke()
     {

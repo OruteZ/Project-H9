@@ -21,6 +21,14 @@ public class OutOfSight : H9Function<bool>
         position.Initialise(metaData);
     }
     
+    public override DecisionTreeEditorNodeBase Clone()
+    {
+        var c = Instantiate(this);
+        c.position = (Function<Vector3Int>) position.Clone();
+        
+        return c;
+    }
+    
     private bool Evaluate()
     {
         if (FieldSystem.unitSystem.GetPlayer() is null) return true;

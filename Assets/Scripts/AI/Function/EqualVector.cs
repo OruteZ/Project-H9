@@ -24,7 +24,15 @@ public class EqualVector : H9Function<bool>
         a.Initialise(metaData);
         b.Initialise(metaData);
     }
-    
+
+    public override DecisionTreeEditorNodeBase Clone()
+    {
+        EqualVector clone = Instantiate(this);
+        clone.a = (Function<Vector3Int>)a.Clone();
+        clone.b = (Function<Vector3Int>)b.Clone();
+        return clone;
+    }
+
     public override string GetSummary(BaseNodeView nodeView)
     {
         return "Check if two values are equal";

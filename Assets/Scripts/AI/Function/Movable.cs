@@ -18,6 +18,14 @@ public class Movable : H9Function<bool>
         targetPos.Initialise(metaData);
     }
     
+    public override DecisionTreeEditorNodeBase Clone()
+    {
+        var c = Instantiate(this);
+        c.targetPos = (Function<Vector3Int>) targetPos.Clone();
+        
+        return c;
+    }
+    
     public override bool Invoke()
     {
         MoveAction action = ai.GetUnit().GetAction<MoveAction>();

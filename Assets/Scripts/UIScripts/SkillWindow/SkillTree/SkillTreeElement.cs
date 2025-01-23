@@ -11,6 +11,7 @@ public class SkillTreeElement : UIElement
     [SerializeField] private int skillIndex;
     [SerializeField] private List<GameObject> _postLine;
 
+    [SerializeField] private GameObject _learneadEffect;
     [SerializeField] private Image _learnableEffectImage;
     [SerializeField] private Image _activeEffectImage;
     [SerializeField] private Image _SkillImage;
@@ -26,7 +27,9 @@ public class SkillTreeElement : UIElement
     {
         ClearPostArrowList();
         effectSpeed = 10;
-
+        _learneadEffect.GetComponent<Animator>().enabled = false;
+        _learneadEffect.GetComponent<Image>().enabled = false;
+        _learneadEffect.GetComponent<Image>().color = new Color(1, 1, 1, 0.125f);
         _skillIcon = _SkillImage.GetComponent<SkillIcon>();
         _skillIcon.SetSkillIndex(skillIndex);
     }
@@ -71,7 +74,21 @@ public class SkillTreeElement : UIElement
         {
             yield return new WaitForSeconds(speed);
         }
+        if (state != LearnStatus.NotLearnable)
+        {
+            _learneadEffect.GetComponent<Image>().enabled = true;
+            _learneadEffect.GetComponent<Image>().color = new Color(1, 1, 1, 0.125f);
+
+            _learneadEffect.GetComponent<Animator>().enabled = (state == LearnStatus.Learnable);
+        }
+        else
+        {
+            _learneadEffect.GetComponent<Animator>().enabled = false;
+            _learneadEffect.GetComponent<Image>().enabled = false;
+            _learneadEffect.GetComponent<Image>().color = new Color(1, 1, 1, 0.125f);
+        }
         _learnableEffectImage.color = effectColor[(int)state];
+        _SkillImage.color = effectColor[(int)state];
         yield break;
     }
     /// <summary>

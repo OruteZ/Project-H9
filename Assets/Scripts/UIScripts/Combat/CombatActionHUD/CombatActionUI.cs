@@ -10,11 +10,10 @@ public enum CombatActionType
     Move =      1,
     Attack =    2,
     Reload =    3,
-    Cover =     4,
-    Skills =    5,
-    Items =     6,
-    Weapons =   7,
-    PlayerSkill = 8
+    Skills =    4,
+    Items =     5,
+    Weapons =   6,
+    PlayerSkill = 7
 }
 
 public class CombatActionUI : UISystem

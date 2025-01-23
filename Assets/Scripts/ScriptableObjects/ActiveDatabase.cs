@@ -62,7 +62,7 @@ public class ActiveDatabase : ScriptableObject
                 Debug.Log(action);
 
                 action?.SetData(info);
-                break;
+                return;
             }
         }
         

@@ -141,11 +141,7 @@ public class CombatPopupTextUI : UISystem
         Player player = FieldSystem.unitSystem.GetPlayer();
         string mainText = "";
 
-        if (actionType is CombatActionType.Cover)
-        {
-            mainText = UIManager.instance.UILocalization[1113];
-        }
-        else if (actionType is CombatActionType.Items)
+        if (actionType is CombatActionType.Items)
         {
             mainText = UIManager.instance.UILocalization[1114];
         }

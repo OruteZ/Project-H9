@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AlarmUI : UISystem
 {
@@ -193,9 +194,18 @@ public class AlarmUI : UISystem
     {
         _alarmTooltip.GetComponent<AlarmUITooltip>().SetAlarmTooltip(alarmInfo, pos);
     }
-
     internal void CloseAlarmTooltip()
     {
+        _alarmTooltip.GetComponent<AlarmUITooltip>().CloseUI();
+    }
+
+    internal void CloseAlarmElement(AlarmUIElement uIElement)
+    {
+        for (int i = 0; i < _alarmUIElements.transform.childCount; i++)
+        {
+            if (uIElement == _alarmUIElements.transform.GetChild(i).GetComponent<AlarmUIElement>()) continue;
+            _alarmUIElements.transform.GetChild(i).GetComponent<AlarmUIElement>().isSettingPosition = true;
+        }
         _alarmTooltip.GetComponent<AlarmUITooltip>().CloseUI();
     }
 }

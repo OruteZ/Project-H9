@@ -36,9 +36,9 @@ public static class UICustomColor
 
     public static readonly Color32 TextHighlightColor = yellowColor;
 
-    public static readonly Color32 SkillIconNotLearnedColor = new Color32(199, 94, 8, 255);     //brown
+    public static readonly Color32 SkillIconNotLearnedColor = new Color32(128, 128, 128, 255);     //gray
     public static readonly Color32 SkillIconLearnableColor = new Color32(255, 201, 18, 255);    //orange
-    public static readonly Color32 SkillIconLearnedColor = new Color32(72, 219, 18, 255);       //green
+    public static readonly Color32 SkillIconLearnedColor = new Color32(199, 94, 8, 255);       //brown
 
     public static readonly Color32 BuffColor = greenColor;
     public static readonly Color32 DebuffColor = redColor;

@@ -135,6 +135,11 @@ public class SkillTooltip : UIElement, IPointerEnterHandler, IPointerExitHandler
         if (_isButtonInteractable && _skillManager.LearnSkill(_currentSkillIndex))
         {
             UIManager.instance.skillUI.UpdateRelatedSkillNodes(_currentSkillIndex);
+            SoundManager.instance.PlaySFX("UI_LearnSkill");
+        }
+        else
+        {
+            SoundManager.instance.PlaySFX("UI_Denied");
         }
         SetSkillTooltip(_currentSkillIndex, GetComponent<RectTransform>().position);
     }

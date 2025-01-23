@@ -38,6 +38,8 @@ public class SkillUI : UISystem
     [SerializeField] private GameObject _skillRevoloverSection;
     [SerializeField] private GameObject _skillRepeaterSection;
     [SerializeField] private GameObject _skillShotgunSection;
+    private GameObject[] _contents;
+    private float[] _contentsXPosition = { 0, 1100, 2200, 3300 };
 
     [SerializeField] private GameObject _skillCharacterSectionButton;
     [SerializeField] private GameObject _skillRevoloverSectionButton;
@@ -50,7 +52,7 @@ public class SkillUI : UISystem
         Repeater,
         Shotgun
     }
-    private SkillSection skillSection = SkillSection.Character;
+    private SkillSection _currentSkillSection = SkillSection.Character;
     private List<GameObject> _skillRootNodes;
 
     [SerializeField] private GameObject _skillTreeScroll;
@@ -64,8 +66,8 @@ public class SkillUI : UISystem
         _skillShotgunSection.SetActive(true);
         _skillCharacterSection.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
         _skillRevoloverSection.GetComponent<RectTransform>().localPosition = new Vector3(_skillRevoloverSection.GetComponent<RectTransform>().sizeDelta.x, 0, 0);
-        _skillRepeaterSection.GetComponent<RectTransform>().localPosition = new Vector3(_skillRepeaterSection.GetComponent<RectTransform>().sizeDelta.x, 0, 0);
-        _skillShotgunSection.GetComponent<RectTransform>().localPosition = new Vector3(_skillShotgunSection.GetComponent<RectTransform>().sizeDelta.x, 0, 0);
+        _skillRepeaterSection.GetComponent<RectTransform>().localPosition = new Vector3(_skillRepeaterSection.GetComponent<RectTransform>().sizeDelta.x * 2, 0, 0);
+        _skillShotgunSection.GetComponent<RectTransform>().localPosition = new Vector3(_skillShotgunSection.GetComponent<RectTransform>().sizeDelta.x * 3, 0, 0);
 
         _skillRootNodes = new();
         for (int i = 0; i < _skillCharacterSection.transform.GetChild(1).childCount; i++)
@@ -77,6 +79,16 @@ public class SkillUI : UISystem
         }
 
         _skillTreeScroll.GetComponent<Scrollbar>().value = 1;
+
+
+        GameObject[] contents =
+        {
+            _skillCharacterSection,
+            _skillRevoloverSection,
+            _skillRepeaterSection,
+            _skillShotgunSection
+        };
+        _contents = contents;
     }
     void Start()
     {
@@ -95,7 +107,7 @@ public class SkillUI : UISystem
     }
     private void Update()
     {
-        while (!_isScrollInit && _skillTreeScroll.GetComponent<Scrollbar>().value != 1)
+        while (!_isScrollInit && _skillTree.GetComponent<ScrollRect>().content != null && _skillTreeScroll.GetComponent<Scrollbar>().value != 1)
         {
             _skillTreeScroll.GetComponent<Scrollbar>().value = 1;
             if (_skillTreeScroll.GetComponent<Scrollbar>().value == 1) _isScrollInit = true;
@@ -105,6 +117,20 @@ public class SkillUI : UISystem
             _skillManager.AddSkillPoint(1);
             UpdateSkillPointUI();
         }
+
+        float changeSpeed = 6;
+        //스킬 노드 위치 조정
+        for (int i = 0; i < _contents.Length; i++)
+        {
+            Vector3 p = _contents[i].GetComponent<RectTransform>().localPosition;
+            bool isMoving = LerpCalculation.CalculateLerpValue(ref p, new Vector3(_contentsXPosition[i], 0, 0), changeSpeed, 1);
+            _contents[i].GetComponent<RectTransform>().localPosition = p;
+            if (_contentsXPosition[i] == 0 && !isMoving)
+            {
+                _skillTree.GetComponent<ScrollRect>().content = _contents[i].GetComponent<RectTransform>();
+            }
+        }
+
     }
     public override void OpenUI()
     {
@@ -136,6 +162,8 @@ public class SkillUI : UISystem
     /// <param name="btnIndex"> 클릭된 skill의 고유번호 </param>
     public void ClickSkillUIButton(int btnIndex, Vector3 pos)
     {
+        if (_skillTree.GetComponent<ScrollRect>().content == null) return;
+        SoundManager.instance.PlaySFX("UI_ClickSkillNode");
         _currentKeywordIndex.Clear();
         pos.x += 10 * UIManager.instance.GetCanvasScale();
         pos.y -= 10 * UIManager.instance.GetCanvasScale();
@@ -155,16 +183,9 @@ public class SkillUI : UISystem
     public void UpdateAllSkillUINode()
     {
         UpdateSkillPointUI();
-        GameObject[] selections =
-            {
-                _skillCharacterSection,
-                _skillRevoloverSection,
-                _skillRepeaterSection,
-                _skillShotgunSection
-            };
-        for (int j = 0; j < selections.Length; j++)
+        for (int j = 0; j < _contents.Length; j++)
         {
-            Transform buttons = selections[j].transform.GetChild(1);
+            Transform buttons = _contents[j].transform.GetChild(1);
             for (int i = 0; i < buttons.childCount; i++)
             {
                 UpdateSkillUINode(buttons.GetChild(i).gameObject);
@@ -221,7 +242,7 @@ public class SkillUI : UISystem
 
     private void UpdateSkillPointUI()
     {
-        _skillPointText.GetComponent<TextMeshProUGUI>().text = "Skill Point: " + _skillManager.GetSkillPoint().ToString();
+        _skillPointText.GetComponent<TextMeshProUGUI>().text = _skillManager.GetSkillPoint().ToString();
     }
 
     public void OnCloseBtnClick()
@@ -243,17 +264,11 @@ public class SkillUI : UISystem
         }
     }
 
-    public void SetSkillSection(int s)
+    public void SetSkillSection(int section)
     {
-        SkillSection section = (SkillSection)s;
-        skillSection = section;
-        GameObject[] contents =
-        {
-            _skillCharacterSection,
-            _skillRevoloverSection,
-            _skillRepeaterSection,
-            _skillShotgunSection
-        };
+        SoundManager.instance.PlaySFX("UI_ButtonClick");
+
+        _currentSkillSection = (SkillSection)section;
         GameObject[] buttons =
         {
             _skillCharacterSectionButton,
@@ -262,27 +277,34 @@ public class SkillUI : UISystem
             _skillShotgunSectionButton
         };
 
-        for (int i = 0; i < contents.Length; i++)
+        //스킬 노드 위치 조정
+        for (int i = 0; i < _contents.Length; i++)
         {
-            contents[i].GetComponent<RectTransform>().localPosition = new Vector3(contents[i].GetComponent<RectTransform>().sizeDelta.x, 0, 0);
+            _contentsXPosition[i] = (_contents[i].GetComponent<RectTransform>().sizeDelta.x) * (i - section);
+        }
+
+        //버튼 색상 리셋
+        for (int i = 0; i < _contents.Length; i++)
+        {
             ColorBlock b = buttons[i].GetComponent<Button>().colors;
             b.normalColor = buttons[i].GetComponent<Button>().colors.pressedColor;
             buttons[i].GetComponent<Button>().colors = b;
         }
-        contents[(int)section].GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-        ColorBlock block = buttons[(int)section].GetComponent<Button>().colors;
-        block.normalColor = buttons[(int)section].GetComponent<Button>().colors.selectedColor;
-        buttons[(int)section].GetComponent<Button>().colors = block;
+        ColorBlock block = buttons[section].GetComponent<Button>().colors;
+        block.normalColor = buttons[section].GetComponent<Button>().colors.selectedColor;
+        buttons[section].GetComponent<Button>().colors = block;
 
-        _skillTree.GetComponent<ScrollRect>().content = contents[(int)section].GetComponent<RectTransform>();
+        //스크롤 상호작용 구역 리셋 (update 에서 재지정)
+        _skillTree.GetComponent<ScrollRect>().content = null;
+
+        //루트 노드 설정
         _skillRootNodes.Clear();
-
-        _skillUIButtons = contents[(int)section].transform.GetChild(1).gameObject;
+        _skillUIButtons = _contents[section].transform.GetChild(1).gameObject;
         for (int i = 0; i < _skillUIButtons.transform.childCount; i++)
         {
             if (_skillUIButtons.transform.GetChild(i).GetComponent<SkillTreeElement>().isRootNode) 
             {
-                _skillRootNodes.Add(contents[(int)section].transform.GetChild(1).GetChild(i).gameObject);
+                _skillRootNodes.Add(_contents[section].transform.GetChild(1).GetChild(i).gameObject);
             }
         }
         UpdateAllSkillUINode();

@@ -8,11 +8,33 @@ public class AlarmUIElement : UIElement, IPointerEnterHandler, IPointerExitHandl
 {
     [SerializeField] private GameObject _alarmIcon;
     private AlarmInfo _alarmInfo;
+    public bool isSettingPosition = false;
+    private Vector3 _curChildPosition= Vector3.zero;
+    private float _initX;
+
     public void SetAlarmUIElement(AlarmInfo info)
     {
         SoundManager.instance.PlaySFX("UI_Alarm");
         _alarmInfo = info;
         _alarmIcon.GetComponent<Image>().sprite = info.icon;
+
+        _initX = GetComponent<RectTransform>().position.x;
+        transform.GetChild(0).GetComponent<RectTransform>().position = GetComponent<RectTransform>().position - new Vector3(150, 0, 0);
+        isSettingPosition = true;
+    }
+
+    private void Update()
+    {
+        if (isSettingPosition)
+        {
+            if (_curChildPosition == Vector3.zero) _curChildPosition = transform.GetChild(0).GetComponent<RectTransform>().position;
+            LerpCalculation.CalculateLerpValue(ref _curChildPosition, GetComponent<RectTransform>().position, 5);
+            transform.GetChild(0).GetComponent<RectTransform>().position = _curChildPosition;
+        }
+        if (_curChildPosition.x <= _initX - 150)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -73,7 +95,12 @@ public class AlarmUIElement : UIElement, IPointerEnterHandler, IPointerExitHandl
     }
     public override void CloseUI()
     {
-        UIManager.instance.gameSystemUI.alarmUI.CloseAlarmTooltip();
-        Destroy(this.gameObject);
+        transform.SetParent(UIManager.instance.gameSystemUI.gameObject.transform);
+
+        isSettingPosition = true;
+        _curChildPosition = GetComponent<RectTransform>().position;
+        GetComponent<RectTransform>().position -= new Vector3(200, 0, 0);
+
+        UIManager.instance.gameSystemUI.alarmUI.CloseAlarmElement(this);
     }
 }

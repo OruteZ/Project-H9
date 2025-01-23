@@ -148,7 +148,7 @@ public class MoveAction : BaseAction
             if (_path != null)
             {
                 var targetTile = _path[_currentPositionIndex];
-                if (targetTile.inSight) unit.isVisible = true;
+                if (targetTile.inSight) unit.meshVisible = true;
             }
             else
             {

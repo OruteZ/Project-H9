@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Pitfall : FieldTrap
 {
-    public override void OnCollision(Unit other)
+    public override void OnHexCollisionEnter(Unit other)
     {
         StatusEffect stun = new Stun(duration, null);
         if (!other.TryAddStatus(stun))

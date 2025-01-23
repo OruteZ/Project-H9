@@ -69,7 +69,7 @@ public class EnemyStatUI : UISystem
             if (Input.GetMouseButtonDown(1))
             {
                 if (player.GetSelectedAction().GetActionType() is not ActionType.Idle) return;
-                if (enemy.isVisible)
+                if (enemy.meshVisible)
                 {
                     SetEnemyStatUI(enemy);
                 }
@@ -213,7 +213,7 @@ public class EnemyStatUI : UISystem
         if (isSuccessRaycast)
         {
             Enemy enemy = hit.collider.GetComponent<Enemy>();
-            if (enemy.isVisible)
+            if (enemy.meshVisible)
             {
                 pos = enemy.hexPosition;
                 return true;

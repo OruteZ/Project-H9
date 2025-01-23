@@ -456,18 +456,19 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// start 지점에서 target까지 Ray를 발사합니다. 가로막히는 벽의 기준은 ray-throughable 변수입니다.
     /// </summary>
-    /// <param name="start">시작점의 좌표</param>
-    /// <param name="target">목적지의 좌표</param>
+    /// <param name="from">시작점의 좌표</param>
+    /// <param name="to">목적지의 좌표</param>
     /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
-    public bool RayThroughCheck(Vector3Int start, Vector3Int target)
+    public bool RayThroughCheck(Vector3Int from, Vector3Int to)
     { 
-        var line1 = Hex.DrawLine1 (start, target);
-        var line2 = Hex.DrawLine2(start, target);
+        var line1 = Hex.DrawLine1(from, to);
+        var line2 = Hex.DrawLine2(from, to);
 
-        for (int i = 0; i < line1.Count; i++)
+        // bush에서 쳐다보는 케이스를 생각했을 때, 시작점을 제외해야 합니다.
+        for (int i = 1; i < line1.Count; i++)
         {
-            var ret1 = GetTile(line1[i]);
-            var ret2 = GetTile(line2[i]);
+            Tile ret1 = GetTile(line1[i]);
+            Tile ret2 = GetTile(line2[i]);
             if (ret1 is null || ret2 is null) continue;
             if (ret1.rayThroughable || ret2.rayThroughable) continue;
 
@@ -480,15 +481,20 @@ public class TileSystem : MonoBehaviour
     /// <summary>
     /// start 지점에서 target까지 Ray를 발사합니다. 가로막히는 타일의 기준은 visible 변수입니다.
     /// </summary>
-    /// <param name="start">시작점의 좌표</param>
-    /// <param name="target">목적지의 좌표</param>
+    /// <param name="from">시작점의 좌표</param>
+    /// <param name="to">목적지의 좌표</param>
+    /// <param name="lookInside">
+    /// 목적지를 포함할지 여부, 해당 타일 자체를 (부쉬, 벽 등) 쳐다볼때는 false로,
+    /// 해당 타일에 있는 개념의 무언가 (사람이나 템같은거)는 true로 설정해주세요.
+    /// </param>
     /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
-    public bool VisionCheck(Vector3Int start, Vector3Int target)
+    public bool VisionCheck(Vector3Int from, Vector3Int to, bool lookInside = false)
     { 
-        var line1 = Hex.DrawLine1(start, target);
-        var line2 = Hex.DrawLine2(start, target);
+        var line1 = Hex.DrawLine1(from, to);
+        var line2 = Hex.DrawLine2(from, to);
 
-        for (int i = 0; i < line1.Count - 1; i++)
+        // bush에서 쳐다보는 케이스를 생각했을 때, 시작점을 제외해야 합니다.
+        for (int i = 1; i < line1.Count - (lookInside ? 0 : 1); i++)
         {
             var ret1 = GetTile(line1[i]);
             var ret2 = GetTile(line2[i]);
@@ -566,7 +572,7 @@ public class TileSystem : MonoBehaviour
         }
 
         //barrel
-        if (mouseOverObj.TryGetComponent<Barrel>(out var b) && b.IsVisible())
+        if (mouseOverObj.TryGetComponent(out Barrel b) && b.IsVisible())
         {
             if (prevMouseOverObj != mouseOverObj)
             {
@@ -574,7 +580,7 @@ public class TileSystem : MonoBehaviour
                 TileEffectManager.instance.SetTileObjectOutline(mouseOverObj);
             }
         }
-        else if (prevMouseOverObj != null && prevMouseOverObj.TryGetComponent<Barrel>(out var _))
+        else if (prevMouseOverObj != null && prevMouseOverObj.TryGetComponent(out Barrel _))
         {
             TileEffectManager.instance.SetBarrelEffect(null);
             TileEffectManager.instance.SetTileObjectOutline(null);

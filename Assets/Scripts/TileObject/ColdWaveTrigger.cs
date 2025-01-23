@@ -4,7 +4,7 @@ public class ColdWaveTrigger : TileObject
 {
     [SerializeField] private bool enableTrigger = true;
     
-    public override void OnCollision(Unit unit)
+    public override void OnHexCollisionEnter(Unit unit)
     {
         if(unit is not Player) return;
 

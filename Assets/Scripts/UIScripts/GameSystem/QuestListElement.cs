@@ -206,7 +206,7 @@ public class QuestListElement : UIElement, IPointerClickHandler
                     List<Unit> units = FieldSystem.unitSystem.units.FindAll(u => u.Index == gInfo.targetEnemy);
                     if (units.Count > 1) Debug.LogError("목표 적 인덱스를 가진 적이 여러명입니다.");
 
-                    if (units.Count > 0 && units[0].isVisible)
+                    if (units.Count > 0 && units[0].meshVisible)
                     {
                         CameraManager.instance.worldCamera.LookAtHex(units[0].hexPosition);
                     }

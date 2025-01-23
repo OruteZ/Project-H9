@@ -29,7 +29,7 @@ public class CoverHpViewer : MonoBehaviour
     {
         Reload();
         ResetPosition();
-        FieldSystem.unitSystem.GetPlayer().onMoved.AddListener((n) => ChainVisible());
+        FieldSystem.unitSystem.GetPlayer().onMoved.AddListener((from, to, u) => ChainVisible());
     }
 
     private void OnHpChanged(int arg0, int arg1)

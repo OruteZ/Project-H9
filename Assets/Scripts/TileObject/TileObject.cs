@@ -63,7 +63,12 @@ public abstract class TileObject : MonoBehaviour
         tile = t;
     }
 
-    public virtual void OnCollision(Unit other)
+    public virtual void OnHexCollisionEnter(Unit other)
+    {
+        
+    }
+    
+    public virtual void OnHexCollisionExit(Unit other)
     {
         
     }
@@ -108,4 +113,6 @@ public enum TileObjectType
     TRAP,
     BEER,
     COLD_WAVE_TRIGGER,
+    BUSH,
+    
 }

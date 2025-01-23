@@ -176,8 +176,8 @@ public class UnitSystem : MonoBehaviour
                 
                 #endregion
 
-                var activeList = GameManager.instance.playerActiveIndexList;
-                foreach (var activeIdx in activeList)
+                List<int> activeList = GameManager.instance.playerActiveIndexList;
+                foreach (int activeIdx in activeList)
                 {
                     activeDB.AddAction(p, activeIdx);
                 }
@@ -219,7 +219,7 @@ public class UnitSystem : MonoBehaviour
                 Debug.Log("Found ScriptableObject : " + ai.name);
                 enemy.SetupAI(ai);
 
-                enemy.isVisible = false;
+                enemy.meshVisible = false;
 
                 _totalExp += info.rewardExp;
                 rewardHandler.AddGold(info.rewardGold);
@@ -311,7 +311,7 @@ public class UnitSystem : MonoBehaviour
         return GetUnitListInRange(positions);
     }
 
-    public void OnUnitMoved(Unit unit)
+    public void OnUnitMoved(Vector3Int from, Vector3Int to, Unit unit)
     {
         onAnyUnitMoved?.Invoke(unit);
     }

@@ -27,7 +27,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public Animator animator => _unitModel.animator;
 
-    public bool isVisible
+    public bool meshVisible
     {
         get => _unitModel.isVisible;
         set
@@ -104,7 +104,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     [HideInInspector] public UnityEvent<int, int> onAmmoChanged; // before, after
     [HideInInspector] public UnityEvent<int, int> onHpChanged; // before, after
     [HideInInspector] public UnityEvent<Weapon> onWeaponChange; // after
-    [HideInInspector] public UnityEvent<Unit> onMoved; // me
+    [HideInInspector] public UnityEvent<Vector3Int, Vector3Int, Unit> onMoved; // from, to, me
     [HideInInspector] public UnityEvent<Unit> onDead; //me
     [HideInInspector] public UnityEvent<Damage> onHit; // Damage Context
     [HideInInspector] public UnityEvent<IDamageable> onStartShoot; // target
@@ -231,9 +231,14 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         set
         {
             bool hasMoved = hexTransform.position != value;
+            
+            var fromPos = hexTransform.position;
             hexTransform.position = value;
 
-            if (hasMoved) onMoved?.Invoke(this);
+            if (hasMoved)
+            {
+                onMoved?.Invoke(fromPos, value, this);
+            }
         }
     }
 
@@ -426,7 +431,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
         activeUnitAction.SetTarget(targetPosition);
 
-        if (activeUnitAction.CanExecute() is not true)
+        if (activeUnitAction.CanExecute() is false)
         {
             Debug.Log("Can't Execute");
             return false;

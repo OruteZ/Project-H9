@@ -326,7 +326,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         IEnumerable<Tile> tiles = FieldSystem.tileSystem.GetTilesInRange(_player.hexPosition, _player.weapon.GetRange()).Where(
             tile => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, tile.hexPosition));
         IEnumerable<Unit> units = FieldSystem.unitSystem.units.Where(
-            unit => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition) && unit is not Player);
+            unit => FieldSystem.tileSystem.VisionCheck(_player.hexPosition, unit.hexPosition,true) && unit is not Player);
         IEnumerable<TileObject> tObj = FieldSystem.tileSystem.GetAllTileObjects().Where(
             obj => obj is not CoverableObj && FieldSystem.tileSystem.VisionCheck(_player.hexPosition, obj.hexPosition));
 
@@ -467,7 +467,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
                 continue;
             }
 
-            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, targetHexPos) is false)
+            if (FieldSystem.tileSystem.VisionCheck(_player.hexPosition, targetHexPos,true) is false)
             {
                 aimEffectRectTsf.gameObject.SetActive(false);
                 yield return null;

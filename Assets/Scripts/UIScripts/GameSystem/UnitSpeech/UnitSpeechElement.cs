@@ -49,7 +49,7 @@ public class UnitSpeechElement : UIElement
             return;
         }
         _prevUnitPos = unit.transform.position;
-        GetComponent<TextMeshProUGUI>().enabled = unit.isVisible;
+        GetComponent<TextMeshProUGUI>().enabled = unit.meshVisible;
         Vector3 unitPositionHeightCorrection = _prevUnitPos;
         unitPositionHeightCorrection.y += 1.8f;
         Vector3 uiPosition = Camera.main.WorldToScreenPoint(unitPositionHeightCorrection);

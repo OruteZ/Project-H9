@@ -53,7 +53,7 @@ public class EnemyHpUIElement : UIElement
         }
         else
         {
-            isUIVisible = enemy.isVisible;
+            isUIVisible = enemy.meshVisible;
         }
         _backHpBar.gameObject.SetActive(isUIVisible);
         _frontHpBar.gameObject.SetActive(isUIVisible);

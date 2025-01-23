@@ -35,7 +35,7 @@ public class OutOfSight : H9Function<bool>
         Unit enemy = ai.GetUnit();
         
         Vector3Int targetPos = position.Invoke();
-        if (FieldSystem.tileSystem.VisionCheck(enemy.hexPosition, targetPos) is false)
+        if (FieldSystem.tileSystem.VisionCheck(enemy.hexPosition, targetPos, lookInside:true) is false)
         {
             return true;
         }

@@ -26,7 +26,7 @@ public class Town : TileObject
         UIManager.instance.gameSystemUI.townUI.AddTownIcon(hexPosition, _buildingType);
     }
 
-    public override void OnCollision(Unit other)
+    public override void OnHexCollisionEnter(Unit other)
     {
         //Debug.Log($"플레이어 진입 : {_townIndex}번 마을의 {_buildingType} 건물");
         PlayerEvents.OnPlayerEnterTown.Invoke(hexPosition, _townIndex, _buildingType);

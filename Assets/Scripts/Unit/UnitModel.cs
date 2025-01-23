@@ -57,7 +57,7 @@ public class UnitModel : MonoBehaviour
         newUnit.onHit.AddListener(OnHit);
         newUnit.onTurnStart.AddListener(OnStartTurn);
         newUnit.onStatusEffectChanged.AddListener(OnStatusEffectChanged);
-        newUnit.onMoved.AddListener((a) => transform.localPosition = Vector3.zero);
+        newUnit.onMoved.AddListener((n,u,ll) => transform.localPosition = Vector3.zero);
         // newUnit.onCoverChanged.AddListener(SetCoverFlag);
 
         #endregion

@@ -95,7 +95,7 @@ public class EnemyAI : MonoBehaviour
             return;
         }
         
-        if (FieldSystem.tileSystem.VisionCheck(GetUnit().hexPosition, playerPos) is false)
+        if (FieldSystem.tileSystem.VisionCheck(GetUnit().hexPosition, playerPos, lookInside:true) is false)
         {
             return;
         }

@@ -49,6 +49,6 @@ public class AIMove : H9Action, IAiResult
         return new AIResult(
             ai.GetUnit().GetAction<MoveAction>(), 
             path[1].hexPosition
-            );
+        );
     }
 }

@@ -23,7 +23,7 @@ public class FieldTrap : TileObject
         duration = int.Parse(args[1]);
     }
 
-    public override void OnCollision(Unit other)
+    public override void OnHexCollisionEnter(Unit other)
     {
         Damage damageContext = new Damage(
             damage,

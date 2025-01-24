@@ -29,6 +29,8 @@ public class EnemyAI : MonoBehaviour
     public Vector3Int playerPosMemory;
     public Unit GetUnit()
     {
+        Debug.Log("AI : GetUnit, instanceID : " + name + ", unit : " + unit.name);
+        
         return unit;
     }
 
@@ -51,8 +53,9 @@ public class EnemyAI : MonoBehaviour
         });
         this.unit.onFinishAction.AddListener(OnFinishAction);
 
-        this.tree = Instantiate(tree);
+        this.tree = tree;
         this.tree.Initialise(this);
+        this.tree.name = unit.name + " Decision Tree";
     }
     
     /// <summary>
@@ -92,7 +95,7 @@ public class EnemyAI : MonoBehaviour
             return;
         }
         
-        if (FieldSystem.tileSystem.VisionCheck(GetUnit().hexPosition, playerPos) is false)
+        if (FieldSystem.tileSystem.VisionCheck(GetUnit().hexPosition, playerPos, lookInside:true) is false)
         {
             return;
         }

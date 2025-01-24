@@ -50,7 +50,7 @@ public class AttackActionEffect : BaseSelectingActionEffect
         int range = Mathf.Min(user.weapon.GetRange(), user.stat.sightRange);
         var tiles = FieldSystem.tileSystem.GetTilesInRange(user.hexPosition, range);
         var tilesInVisible = tiles.Where(
-            tile => FieldSystem.tileSystem.VisionCheck(tile.hexPosition, user.hexPosition)
+            tile => FieldSystem.tileSystem.VisionCheck(tile.hexPosition, user.hexPosition, true)
             ).ToList();
 
         foreach (Tile tile in tilesInVisible)
@@ -84,7 +84,7 @@ public class AttackActionEffect : BaseSelectingActionEffect
                                                Hex.Distance(user.hexPosition, target.GetHex());
 
         bool VisionCheck(IDamageable target) => 
-            FieldSystem.tileSystem.VisionCheck(user.hexPosition, target.GetHex());
+            FieldSystem.tileSystem.VisionCheck(user.hexPosition, target.GetHex(), true);
 
         bool RayCheck(IDamageable target) => 
             FieldSystem.tileSystem.RayThroughCheck(user.hexPosition, target.GetHex());
@@ -99,7 +99,7 @@ public class AttackActionEffect : BaseSelectingActionEffect
         foreach (Tile tile in tiles) if(tile.hexPosition != user.hexPosition)
         {
             // vision check
-            if(FieldSystem.tileSystem.VisionCheck(user.hexPosition, tile.hexPosition) is false) continue;
+            if(FieldSystem.tileSystem.VisionCheck(user.hexPosition, tile.hexPosition, true) is false) continue;
             // ray check
             if(FieldSystem.tileSystem.RayThroughCheck(user.hexPosition, tile.hexPosition) is false) continue;
             // sight range check

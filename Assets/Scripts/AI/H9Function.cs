@@ -8,8 +8,8 @@ public abstract class H9Function<T> : Function<T>
     {
         base.Initialise(metaData);
         
-        if(metaData is EnemyAI)
-            ai = metaData as EnemyAI;
+        if(metaData is EnemyAI data)
+            ai = data;
         else
             throw new System.Exception("MetaData is not EnemyAI");
     }

@@ -21,6 +21,15 @@ public class Distance : H9Function<int>
         posB.Initialise(metaData);
     }
 
+    public override DecisionTreeEditorNodeBase Clone()
+    {
+        var c = Instantiate(this);
+        c.posA = (Function<Vector3Int>) posA.Clone();
+        c.posB = (Function<Vector3Int>) posB.Clone();
+        
+        return c;
+    }
+
     public override int Invoke()
     {
         return Hex.Distance(posA.Invoke(), posB.Invoke());

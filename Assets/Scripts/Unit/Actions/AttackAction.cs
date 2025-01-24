@@ -28,6 +28,21 @@ public class AttackAction : BaseAction, IShootingAction
             Debug.Log("There is wall. cant attack");
             return false;
         }
+        
+        Debug.Log("Target : " + _target.GetHex());
+        Debug.Log("From : " + unit.GetHex());
+        Debug.Log("Distance : " + Hex.Distance(unit.hexPosition, _target.GetHex()));
+        Debug.Log("Range : " + weapon.GetRange());
+        Debug.Log("Weapon : " + weapon.GetWeaponType());
+        
+        //vision check
+        if (FieldSystem.tileSystem.VisionCheck(unit.GetHex(), _target.GetHex(), true) is false)
+        {
+            Debug.Log("Target is not in vision, cant attack");
+            return false;
+        }
+        
+        Debug.Log("Success to see ");
 
         if (weapon.GetWeaponType() == ItemType.Shotgun)
         {
@@ -47,6 +62,7 @@ public class AttackAction : BaseAction, IShootingAction
 
         return true;
     }
+    
     public override bool CanExecute(Vector3Int targetPos)
     {
         if (FieldSystem.GetDamageable(targetPos) is null)
@@ -62,7 +78,7 @@ public class AttackAction : BaseAction, IShootingAction
         }
         
         //vision check
-        if (FieldSystem.tileSystem.VisionCheck(targetPos, unit.hexPosition) is false)
+        if (FieldSystem.tileSystem.VisionCheck(unit.hexPosition, targetPos, true) is false)
         {
             Debug.Log("Target is not in vision, cant attack");
             return false;

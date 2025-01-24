@@ -196,29 +196,44 @@ public class Player : Unit
     {
         if(unit is not Player)
         {
-            unit.isVisible = FieldSystem.tileSystem.VisionCheck(hexPosition, unit.hexPosition) &&
+            unit.meshVisible = FieldSystem.tileSystem.VisionCheck(hexPosition, unit.hexPosition, true) &&
                              Hex.Distance(hexTransform.position, unit.hexPosition) <= stat.sightRange;
         }
     }
 
-    private void OnMoved(Unit unit)
+    private void OnMoved(Vector3Int from, Vector3Int to, Unit unit)
     {
         ReloadSight();
-        List<TileObject> objs = FieldSystem.tileSystem.GetTile(hexPosition).tileObjects;
-        for (int index = 0; index < objs.Count; index++)
+        
+        List<TileObject> fromObjs = FieldSystem.tileSystem.GetTile(from).tileObjects;
+        for (int index = 0; index < fromObjs.Count; index++)
         {
-            TileObject obj = objs[index];
-            obj.OnCollision(unit);
+            TileObject obj = fromObjs[index];
+            obj.OnHexCollisionExit(unit);
             
             // if obj destroyed, remove from list
             if (obj == null)
             {
-                objs.RemoveAt(index);
+                fromObjs.RemoveAt(index);
+                index--;
+            }
+        }
+        
+        List<TileObject> toObjs = FieldSystem.tileSystem.GetTile(to).tileObjects;
+        for (int index = 0; index < toObjs.Count; index++)
+        {
+            TileObject obj = toObjs[index];
+            obj.OnHexCollisionEnter(unit);
+            
+            // if obj destroyed, remove from list
+            if (obj == null)
+            {
+                toObjs.RemoveAt(index);
                 index--;
             }
         }
 
-        PlayerEvents.OnMovedPlayer?.Invoke(hexPosition);
+        PlayerEvents.OnMovedPlayer?.Invoke(to);
     }
 
     private void OnTurnChanged()

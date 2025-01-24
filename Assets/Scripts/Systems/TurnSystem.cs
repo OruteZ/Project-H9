@@ -60,7 +60,7 @@ public class TurnSystem : MonoBehaviour
        if (GameManager.instance.CompareState(GameState.WORLD))
        {
            Player player = FieldSystem.unitSystem.GetPlayer();
-           player.onMoved.AddListener((a) =>
+           player.onMoved.AddListener((from, to, a) =>
            {
                _worldTurnNumber++;
                onTurnChanged.Invoke();

@@ -18,6 +18,14 @@ public class AIMove : H9Action, IAiResult
         targetPos.Initialise(metaData);
     }
     
+    public override DecisionTreeEditorNodeBase Clone()
+    {
+        var c = Instantiate(this);
+        c.targetPos = (Function<Vector3Int>) targetPos.Clone();
+        
+        return c;
+    }
+    
     public override IEnumerator Execute()
     {
         Debug.Log("AI Move");
@@ -41,6 +49,6 @@ public class AIMove : H9Action, IAiResult
         return new AIResult(
             ai.GetUnit().GetAction<MoveAction>(), 
             path[1].hexPosition
-            );
+        );
     }
 }

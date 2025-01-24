@@ -46,7 +46,7 @@ public class Link : TileObject
         // if (isRepeatable) return lastTurn + 5 <= curTurn;
         // else return false;
     }
-    public override void OnCollision(Unit other)
+    public override void OnHexCollisionEnter(Unit other)
     {
         if (IsEncounterEnable() is false) return;
 

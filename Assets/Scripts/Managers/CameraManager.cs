@@ -145,7 +145,7 @@ public class CameraManager : Singleton<CameraManager>
         }
         
         var turnOwner = FieldSystem.turnSystem.turnOwner;
-        LookAt(turnOwner.isVisible ? turnOwner : FieldSystem.unitSystem.GetPlayer());
+        LookAt(turnOwner.meshVisible ? turnOwner : FieldSystem.unitSystem.GetPlayer());
     }
     private void OnCombatFinished(bool win)
     {

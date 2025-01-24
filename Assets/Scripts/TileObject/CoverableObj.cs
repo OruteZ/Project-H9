@@ -112,15 +112,17 @@ public class CoverableObj : TileObject, IDamageable
         TakeDamage(selfDamage);
     }
 
-    private void RemoveThisFromUnit(Unit u)
+    private void RemoveThisFromUnit(Vector3Int from, Vector3Int to, Unit u)
     {
         u.onHit.RemoveListener(OnHit);
         u.onMoved.RemoveListener(RemoveThisFromUnit);
         u.onTurnStart.RemoveListener(RemoveThisFromUnit);
+        
         u.RemoveCoverable(this);
         u.RemoveDisplayableEffect(_coverDisplayStatus);
         unit = null;
     }
+    private void RemoveThisFromUnit(Unit u) => RemoveThisFromUnit(Vector3Int.zero, Vector3Int.zero, u);
 
     #region IDamageable
     public void TakeDamage(Damage damage)

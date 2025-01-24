@@ -53,7 +53,7 @@ public class HeinrichTrap : TileObject
         return owner;
     }
 
-    public override void OnCollision(Unit other)
+    public override void OnHexCollisionEnter(Unit other)
     {
         // create damage context
         Damage damageContext = new Damage(

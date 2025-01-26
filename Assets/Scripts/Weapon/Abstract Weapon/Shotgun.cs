@@ -11,7 +11,12 @@ public class Shotgun : Weapon
     }
 
     public override ItemType GetWeaponType() => ItemType.Shotgun;
-    public override float CalculateDistancePenalty(IDamageable target) { return 0; }
+
+    public override float CalculateDistancePenalty(IDamageable target)
+    {
+        return 10;
+    }
+    
     public override int GetRange()
     {
         return weaponRange + magazine.GetNextBullet().data.range + UnitStat.shotgunAdditionalDamage;
@@ -27,14 +32,33 @@ public class Shotgun : Weapon
     public override int GetFinalDamage()
     {
         float baseDamage = (weaponDamage + magazine.GetNextBullet().data.damage + UnitStat.shotgunAdditionalDamage);
-
-        int range = GetRange();
-        int distance = Hex.Distance(unit.hexPosition, _targetHex);
-
-        int value = range - distance;
-        int damage = Mathf.RoundToInt(baseDamage * Mathf.Pow(2, value));
         
-        return damage;
+        // shotgun Requires target's reference.
+        // if there is not target ( ex. attack to empty hex ) return 0
+        IUnitAction action = unit.GetSelectedAction();
+        if (action is not AttackAction attackAction)
+        {
+            Debug.LogError(
+                "Action is not AttackAction. " +
+                "shotgun requires only AttackAction" +
+                "Current action is " + action.GetActionType()
+            );
+            
+            return 0;
+        }
+        
+        IDamageable target = attackAction.GetTarget();
+        int finalDamage = 0;
+        
+        for (int i = 0; i < baseDamage; i++)
+        {
+            if (Random.Range(0, 100) < GetEachHitRate(target))
+            {
+                finalDamage++;
+            }
+        }
+
+        return finalDamage;
     }
 
     public override int GetFinalCriticalDamage()
@@ -53,6 +77,22 @@ public class Shotgun : Weapon
         _targetHex = target.GetHex();
 
         float finalHitRate = distance <= range ? 100 : 0;
+
+        return finalHitRate;
+    }
+    
+    private float GetEachHitRate(IDamageable target)
+    {
+        float finalHitRate = (
+            hitRate +
+            magazine.GetNextBullet().data.hitRate +
+            UnitStat.concentration * 
+            CalculateDistancePenalty(target)
+        ) * 0.01f;
+
+        finalHitRate = Mathf.Round(10 * finalHitRate) * 0.1f;
+        finalHitRate = Mathf.Clamp(finalHitRate, 0, 100);
+        finalHitRate += target.GetHitRateModifier(unit);
 
         return finalHitRate;
     }

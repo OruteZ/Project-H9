@@ -77,6 +77,10 @@ public abstract class Weapon
     public abstract ItemType GetWeaponType();
     public abstract int GetFinalDamage();
     public abstract int GetFinalCriticalDamage();
+    public virtual KeyValuePair<int, int> GetFinalDamageAndCriticalDamage()
+    {
+        return new KeyValuePair<int, int>(GetFinalDamage(), GetFinalCriticalDamage());
+    }
     public abstract float GetFinalHitRate(IDamageable target);
     public abstract float CalculateDistancePenalty(IDamageable target);
     public abstract float GetFinalCriticalRate();

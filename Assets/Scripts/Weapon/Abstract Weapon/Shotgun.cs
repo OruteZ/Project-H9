@@ -13,8 +13,13 @@ public class Shotgun : Weapon
     public override ItemType GetWeaponType() => ItemType.Shotgun;
 
     public override float CalculateDistancePenalty(IDamageable target)
-    {
-        return 10;
+    {    
+        int distance = Hex.Distance(unit.hexPosition, target.GetHex());
+
+        return (100 - distance * 
+            // 다른 애들은 dist penalty가 5인데 얘는 10이라서 2 곱함    
+            DISTANCE_PENALTY_SCALER * 2
+            ) ;
     }
     
     public override int GetRange()
@@ -50,6 +55,8 @@ public class Shotgun : Weapon
         IDamageable target = attackAction.GetTarget();
         int finalDamage = 0;
         
+        Debug.Log("SHOTGUN_DEBUG : each hit rate is " + GetEachHitRate(target));
+        Debug.Log("SHOTGUN_DEBUG : damage is " + baseDamage);
         for (int i = 0; i < baseDamage; i++)
         {
             if (Random.Range(0, 100) < GetEachHitRate(target))
@@ -57,6 +64,7 @@ public class Shotgun : Weapon
                 finalDamage++;
             }
         }
+        Debug.Log("SHOTGUN_DEBUG : final damage is " + finalDamage);
 
         return finalDamage;
     }
@@ -67,6 +75,21 @@ public class Shotgun : Weapon
         dmg += dmg * ((UnitStat.shotgunCriticalDamage + criticalDamage + +magazine.GetNextBullet().data.criticalDamage) * 0.01f);
 
         return Mathf.RoundToInt(dmg);
+    }
+    
+    private int GetFinalCriticalDamage(int nonCriticalDamage)
+    {
+        float dmg = nonCriticalDamage;
+        dmg += dmg * ((UnitStat.shotgunCriticalDamage + criticalDamage + +magazine.GetNextBullet().data.criticalDamage) * 0.01f);
+
+        return Mathf.RoundToInt(dmg);
+    }
+    
+    public override KeyValuePair<int, int> GetFinalDamageAndCriticalDamage()
+    {
+        int nonCriticalDamage = GetFinalDamage();
+        
+        return new KeyValuePair<int, int>(nonCriticalDamage, GetFinalCriticalDamage(nonCriticalDamage));
     }
 
     public override float GetFinalHitRate(IDamageable target)

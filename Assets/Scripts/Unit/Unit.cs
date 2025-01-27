@@ -164,6 +164,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         onFinishAction.AddListener((action) => onAnyUnitActionFinished.Invoke(this));
         FieldSystem.onCombatFinish.AddListener(ClearPassiveAndStatusEffect);
         FieldSystem.onCombatEnter.AddListener(ClearPassiveAndStatusEffect);
+        onMoved.AddListener(OnMoved);
 
         _seController = new UnitStatusEffectController(this);
 
@@ -821,6 +822,42 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public void RemoveCoverable(CoverableObj obj)
     {
         currentCoverables?.Remove(obj);
+    }
+
+    
+    protected virtual void OnMoved(Vector3Int from, Vector3Int to, Unit unit)
+    {
+        // ReloadSight();
+        
+        List<TileObject> fromObjs = FieldSystem.tileSystem.GetTile(from).tileObjects;
+        for (int index = 0; index < fromObjs.Count; index++)
+        {
+            TileObject obj = fromObjs[index];
+            obj.OnHexCollisionExit(unit);
+            
+            // if obj destroyed, remove from list
+            if (obj == null)
+            {
+                fromObjs.RemoveAt(index);
+                index--;
+            }
+        }
+        
+        List<TileObject> toObjs = FieldSystem.tileSystem.GetTile(to).tileObjects;
+        for (int index = 0; index < toObjs.Count; index++)
+        {
+            TileObject obj = toObjs[index];
+            obj.OnHexCollisionEnter(unit);
+            
+            // if obj destroyed, remove from list
+            if (obj == null)
+            {
+                toObjs.RemoveAt(index);
+                index--;
+            }
+        }
+
+        // PlayerEvents.OnMovedPlayer?.Invoke(to);
     }
 }
 

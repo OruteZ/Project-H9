@@ -13,7 +13,6 @@ public class Player : Unit
     {
         base.SetUp(index, newName, unitStat, newWeapon, unitModel, passiveList);
         
-        onMoved.AddListener(OnMoved);
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnChanged);
         onSelectedChanged.AddListener(() => UIManager.instance.onActionChanged.Invoke());
@@ -201,38 +200,11 @@ public class Player : Unit
         }
     }
 
-    private void OnMoved(Vector3Int from, Vector3Int to, Unit unit)
+    protected override void OnMoved(Vector3Int from, Vector3Int to, Unit unit)
     {
+        base.OnMoved(from, to, unit);
+        
         ReloadSight();
-        
-        List<TileObject> fromObjs = FieldSystem.tileSystem.GetTile(from).tileObjects;
-        for (int index = 0; index < fromObjs.Count; index++)
-        {
-            TileObject obj = fromObjs[index];
-            obj.OnHexCollisionExit(unit);
-            
-            // if obj destroyed, remove from list
-            if (obj == null)
-            {
-                fromObjs.RemoveAt(index);
-                index--;
-            }
-        }
-        
-        List<TileObject> toObjs = FieldSystem.tileSystem.GetTile(to).tileObjects;
-        for (int index = 0; index < toObjs.Count; index++)
-        {
-            TileObject obj = toObjs[index];
-            obj.OnHexCollisionEnter(unit);
-            
-            // if obj destroyed, remove from list
-            if (obj == null)
-            {
-                toObjs.RemoveAt(index);
-                index--;
-            }
-        }
-
         PlayerEvents.OnMovedPlayer?.Invoke(to);
     }
 

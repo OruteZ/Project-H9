@@ -147,8 +147,13 @@ public class MoveAction : BaseAction
             //다음 움직임 타겟 타일 지정
             if (_path != null)
             {
+                // 안보이는 곳에서 걸어나올때 뿅 나오는게 아니라 걸어나오도록 느낌 내기 위해서 
+                // 목적지가 inSight일 때는 미리 True 선언
                 var targetTile = _path[_currentPositionIndex];
-                if (targetTile.inSight) unit.meshVisible = true;
+                if (targetTile.inSight)
+                {
+                    unit.SetMeshVisible(this, true);
+                }
             }
             else
             {

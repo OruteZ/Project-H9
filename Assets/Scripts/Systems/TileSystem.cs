@@ -337,9 +337,9 @@ public class TileSystem : MonoBehaviour
             return null;
         }
         
-        var visited = new HashSet<Vector3Int> { start };
-        var result = new List<Tile> { GetTile(start) };
-        var container = new Queue<Vector3Int>();
+        HashSet<Vector3Int> visited = new HashSet<Vector3Int> { start };
+        List<Tile> result = new List<Tile> { GetTile(start) };
+        Queue<Vector3Int> container = new Queue<Vector3Int>();
         container.Enqueue(start);
 
         for(int cnt = 0; cnt < maxLength; cnt++)

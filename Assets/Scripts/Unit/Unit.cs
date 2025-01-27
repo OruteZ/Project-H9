@@ -27,15 +27,33 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public Animator animator => _unitModel.animator;
 
-    public bool meshVisible
+    public bool meshVisible => _unitModel.isVisible;
+
+    /// <summary>
+    ///  해당 유닛의 Mesh를 설정합니다.
+    ///  mesh는 플레이어의 컴퓨터 화면을 기준으로 하기에,
+    ///  플레이어가 이 유닛을 볼수 있는지만이 기준이 됩니다.
+    ///  이 전제를 뒤엎을 기획은 없습니다. 아마도..
+    /// </summary>
+    /// <param name="source">
+    /// 이 함수를 호출하는 위치, 오직 UnitSystem과 Player만이 호출해야 합니다.
+    /// (예외 : MoveAction에서 움직이기 전에 미리 Meshvisible 세팅하는건 해줘야 할듯)
+    /// </param>
+    /// <param name="value">
+    ///     true: 보이게 함
+    /// </param>
+    public void SetMeshVisible(object source, bool value)
     {
-        get => _unitModel.isVisible;
-        set
-        {
-            if (vanishTrigger) _unitModel.isVisible = false;
-            else _unitModel.isVisible = value;
-        }
+        if (source is
+            not Player and 
+            not UnitSystem and
+            not MoveAction)
+            return;
+        
+        _unitModel.isVisible = value;
     }
+    
+    public bool GetVanishTrigger() => vanishTrigger;
 
     #endregion
 
@@ -857,7 +875,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             }
         }
 
-        // PlayerEvents.OnMovedPlayer?.Invoke(to);
+        FieldSystem.unitSystem.onAnyUnitMoved.Invoke(unit);
     }
 }
 

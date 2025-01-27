@@ -219,14 +219,13 @@ public class UnitSystem : MonoBehaviour
                 Debug.Log("Found ScriptableObject : " + ai.name);
                 enemy.SetupAI(ai);
 
-                enemy.meshVisible = false;
+                enemy.SetMeshVisible(this, false);
 
                 _totalExp += info.rewardExp;
                 rewardHandler.AddGold(info.rewardGold);
                 rewardHandler.AddItem(info.rewardItem);
             }
             unit.onDead.AddListener(OnUnitDead);
-            unit.onMoved.AddListener(OnUnitMoved);
             
             if(GameManager.instance.CompareState(GameState.COMBAT)) {
                 CameraManager.instance.CreateUnitCamera(unit);
@@ -309,11 +308,6 @@ public class UnitSystem : MonoBehaviour
     {
         var positions = Hex.GetCircleGridList(range, start);
         return GetUnitListInRange(positions);
-    }
-
-    public void OnUnitMoved(Vector3Int from, Vector3Int to, Unit unit)
-    {
-        onAnyUnitMoved?.Invoke(unit);
     }
 
     private void OnUnitDead(Unit unit)

@@ -57,9 +57,6 @@ public class Tile : MonoBehaviour, IEquatable<Tile>
             
             SetObjectsSight();
             SetEnvironmentsSight();
-
-            var unit = FieldSystem.unitSystem.GetUnit(hexPosition);
-            if (unit != null) unit.meshVisible = value;
         }
     }
 

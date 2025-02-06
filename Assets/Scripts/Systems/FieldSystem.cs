@@ -43,6 +43,8 @@ public class FieldSystem : MonoBehaviour
     
     private void Awake()
     {
+        var initializeBush = BushSystem.Instance;
+        
         tileSystem = GetComponent<TileSystem>();
         turnSystem = GetComponent<TurnSystem>();
         unitSystem = GetComponent<UnitSystem>();

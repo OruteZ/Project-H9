@@ -134,8 +134,14 @@ public class MapSaveAndLoader : MonoBehaviour
                 Debug.LogError("Prefab is null");
                 continue;
             }
+
+            if (Instantiate(tileObjectData.prefab).TryGetComponent(out TileObject tileObject) is false)
+            {
+                Debug.LogError("TileObject도 아닌걸 왜 여기에 집어넣었지?");
+                Debug.LogError(tileObjectData.prefab.name);
+                continue;
+            }
             
-            TileObject tileObject = Instantiate(tileObjectData.prefab).GetComponent<TileObject>();
             tileObject.transform.parent = tileObjParent.transform;
             tileObject.hexPosition = tileObjectData.hexPosition;
             tileObject.gameObject.transform.position += tileObjectData.positionOffset;

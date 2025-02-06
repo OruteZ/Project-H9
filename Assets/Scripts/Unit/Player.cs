@@ -13,7 +13,6 @@ public class Player : Unit
     {
         base.SetUp(index, newName, unitStat, newWeapon, unitModel, passiveList);
         
-        onMoved.AddListener(OnMoved);
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener(OnAnyUnitMoved);
         FieldSystem.turnSystem.onTurnChanged.AddListener(OnTurnChanged);
         onSelectedChanged.AddListener(() => UIManager.instance.onActionChanged.Invoke());
@@ -170,16 +169,11 @@ public class Player : Unit
             if(GameManager.instance.CompareState(GameState.WORLD) && tile.inSight) continue;
             bool isInVision = FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition);
             tile.inSight = isInVision && isInDistance;
-
-#if UNITY_EDITOR
-            Unit unitVision = FieldSystem.unitSystem.GetUnit(tile.hexPosition);
-            if (unitVision != null)
-            {
-                //Debug.Log("Unit : " + unitVision.gameObject.name);
-                //Debug.Log("Vision Check = " + FieldSystem.tileSystem.VisionCheck(hexTransform.position, tile.hexPosition));
-                //Debug.Log("Distance = " + Hex.Distance(hexTransform.position, tile.hexPosition));
-            }
-#endif
+        }
+        
+        foreach (var unit in FieldSystem.unitSystem.units)
+        {
+            CalculateUnitVision(unit);
         }
     }
 
@@ -191,48 +185,84 @@ public class Player : Unit
         GameManager.instance.user.Stat = stat;
     }
 
+    /// <summary>
+    /// 플레이어가 target Unit을 볼 수 있는지 체크합니다. unit의 meshVisible은 오직 이 함수를 통해서만 수정되어야 합니다.
+    /// </summary>
+    public void CalculateUnitVision(Unit target)
+    {
+        if (target is Player) return;
+        
+        // 1. 보스몬스터의 vanish trigger 고려
+        if (target.GetVanishTrigger())
+        {
+            target.SetMeshVisible(this, false);
+            return;
+        }
+        
+        // 2. 부쉬와 관련된 요소로 target을 볼 수 있는가?
+        if (CanSeeOverBush() is false)
+        {
+            target.SetMeshVisible(this, false);
+            return;
+        }
+        
+        
+        // 3. 플레이어의 vision Range 처리 고려
+        if(Hex.Distance(hexPosition, target.hexPosition) > stat.sightRange)
+        {
+            target.SetMeshVisible(this, false);
+            return;
+        }
+        
+        // 4. 플레이어의 visionCheck 처리 고려
+        // 비용이 가장 크기 때문에 마지막으로 미룸
+        bool visionCheck =
+            FieldSystem.tileSystem.VisionCheck
+                (hexPosition, target.hexPosition);
+        
+        target.SetMeshVisible(this, visionCheck);
+        return;
+
+        // 부쉬와 관련된 요소로 target을 볼 수 있는가?
+        bool CanSeeOverBush()
+        {
+            // 만약 쟤가 부쉬에 없다면 True
+            if (BushSystem.Instance.IsBush(target.hexPosition) is false)
+            {
+                return true;
+            }
+            
+            // 둘이 같은 Bush에 있다면 True
+            if (BushSystem.Instance.IsSameGroup(this, target))
+            {
+                return true;
+            }
+            
+            // 둘다 다른 부쉬에 있다는건데, Attak 같은 행동을 해서 보일 수 있는가?
+            if (BushSystem.Instance.IsNonHideUnit(target))
+            {
+                return true;
+            }
+            
+            // 어 못봐
+            return false;
+        }
+    }
+
     #region UNITY_EVENT
     private void OnAnyUnitMoved(Unit unit)
     {
         if(unit is not Player)
         {
-            unit.meshVisible = FieldSystem.tileSystem.VisionCheck(hexPosition, unit.hexPosition, true) &&
-                             Hex.Distance(hexTransform.position, unit.hexPosition) <= stat.sightRange;
+            CalculateUnitVision(unit);
         }
     }
 
-    private void OnMoved(Vector3Int from, Vector3Int to, Unit unit)
+    protected override void OnMoved(Vector3Int from, Vector3Int to, Unit unit)
     {
+        base.OnMoved(from, to, unit);
+        
         ReloadSight();
-        
-        List<TileObject> fromObjs = FieldSystem.tileSystem.GetTile(from).tileObjects;
-        for (int index = 0; index < fromObjs.Count; index++)
-        {
-            TileObject obj = fromObjs[index];
-            obj.OnHexCollisionExit(unit);
-            
-            // if obj destroyed, remove from list
-            if (obj == null)
-            {
-                fromObjs.RemoveAt(index);
-                index--;
-            }
-        }
-        
-        List<TileObject> toObjs = FieldSystem.tileSystem.GetTile(to).tileObjects;
-        for (int index = 0; index < toObjs.Count; index++)
-        {
-            TileObject obj = toObjs[index];
-            obj.OnHexCollisionEnter(unit);
-            
-            // if obj destroyed, remove from list
-            if (obj == null)
-            {
-                toObjs.RemoveAt(index);
-                index--;
-            }
-        }
-
         PlayerEvents.OnMovedPlayer?.Invoke(to);
     }
 

@@ -17,7 +17,10 @@ public class Revolver : Weapon
         int distance = Hex.Distance(unit.hexPosition, target.GetHex());
         int range = GetRange();
 
-        return (100 - distance * DISTANCE_PENALTY_SCALER * (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1));
+        return (100 - 
+                distance * DISTANCE_PENALTY_SCALER * 
+                (distance > range ? REVOLVER_OVER_RANGE_PENALTY : 1)
+                );
     }
     public override int GetRange()
     {
@@ -44,7 +47,13 @@ public class Revolver : Weapon
 
     public override float GetFinalHitRate(IDamageable target)
     {
-        float finalHitRate = (hitRate + magazine.GetNextBullet().data.hitRate + UnitStat.concentration * CalculateDistancePenalty(target)) * 0.01f;
+        float finalHitRate = (
+            hitRate + 
+            magazine.GetNextBullet().data.hitRate + 
+            UnitStat.concentration * 
+            CalculateDistancePenalty(target)
+            ) * 0.01f;
+        
 
         finalHitRate = Mathf.Round(10 * finalHitRate) * 0.1f;
         finalHitRate = Mathf.Clamp(finalHitRate, 0, 100);
@@ -56,17 +65,5 @@ public class Revolver : Weapon
         }
 
         return finalHitRate;
-    }
-
-    private void NonCriticalAttack(IDamageable target)
-    {
-        int damage = GetFinalDamage();
-        // target.TakeDamage(damage, unit);
-    }
-
-    private void CriticalAttack(IDamageable target)
-    {
-        int damage = GetFinalCriticalDamage();
-        // target.TakeDamage(damage, unit, Damage.Type.CRITICAL);
     }
 }

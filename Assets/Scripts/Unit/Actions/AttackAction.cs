@@ -42,7 +42,6 @@ public class AttackAction : BaseAction, IShootingAction
             return false;
         }
         
-        Debug.Log("Success to see ");
 
         if (weapon.GetWeaponType() == ItemType.Shotgun)
         {

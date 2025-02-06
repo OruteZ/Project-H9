@@ -20,8 +20,8 @@ public static class UICustomColor
     public static readonly Color32 EnemyColor = new Color32(0, 0, 0, 0);
     public static readonly Color32 NeutralColor = new Color32(0, 0, 0, 0);
 
-    public static readonly Color32 PlayerTurnColor = new Color32(64, 192, 224, 255);    //blue
-    public static readonly Color32 EnemyTurnColor = new Color32(160, 32, 64, 255);      //red'
+    public static readonly Color32 PlayerTurnColor = new Color32(255, 201, 18, 255);    //orange?
+    public static readonly Color32 EnemyTurnColor = new Color32(128, 32, 32, 255);      //red'
 
     public static readonly Color32 ActionAPColor = new Color32(0, 224, 128, 255);       //green'
     public static readonly Color32 ActionAmmoColor = new Color32(255, 128, 0, 255);     //orange'

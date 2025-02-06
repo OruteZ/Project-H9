@@ -55,6 +55,8 @@ public class InventoryInteractionUI : UIElement
                 }
         }
         _sellBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[41] + "(" + item.GetData().itemPrice + ")";
+        _sellBtn.SetActive(UIManager.instance.gameSystemUI.townUI.IsAmmuntionOpen());
+
         _removeBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[42];
 
         GetComponent<RectTransform>().position = pos;

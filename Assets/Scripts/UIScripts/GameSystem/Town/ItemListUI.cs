@@ -120,13 +120,15 @@ public class ItemListUI : UIElement
         }
     }
 
-    public void OnClickWeaponBtn() 
+    public void OnClickWeaponBtn()
     {
+        SoundManager.instance.PlaySFX("UI_ButtonClick");
         _itemType = ItemType.Revolver;
         SetItemListUI(_townIndex, _itemUI);
     }
     public void OnClickConsumableBtn()
     {
+        SoundManager.instance.PlaySFX("UI_ButtonClick");
         _itemType = ItemType.Heal;
         SetItemListUI(_townIndex, _itemUI);
     }

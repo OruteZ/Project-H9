@@ -67,7 +67,10 @@ public class TownUI : UISystem
     }
 
     #region Ammunition
-
+    public bool IsAmmuntionOpen() 
+    {
+        return _ammunitionWindow.activeSelf;
+    }
     #endregion
 
     #region Saloon

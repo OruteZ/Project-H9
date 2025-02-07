@@ -12,8 +12,11 @@ public class TownUI : UISystem
     [SerializeField] private GameObject _saloonText;
     [SerializeField] private GameObject _sheriffWindow;
     [SerializeField] private GameObject _sheriffText;
+    [SerializeField] private GameObject _stationWindow;
+    [SerializeField] private GameObject _stationText;
 
     private Vector3Int _currentInteractPosition = Vector3Int.zero;
+    private Vector3Int _currentIconPosition = Vector3Int.zero; 
     private int _currentTownIndex = 0;
     private Town.BuildingType _currentBuildingType = Town.BuildingType.NULL;
 
@@ -39,7 +42,7 @@ public class TownUI : UISystem
         _iconPool.Init("Prefab/Town Icon", _iconContainer.transform, 0);
         _doorIcon.SetActive(false);
 
-        PlayerEvents.OnPlayerEnterTown.AddListener((p, i, t) => { SetCurrentTownInfo(p, i, t); });
+        PlayerEvents.OnPlayerEnterTown.AddListener((p, ip, i, t) => { SetCurrentTownInfo(p, ip, i, t); });
         CloseUI();
     }
     private void Start()
@@ -64,6 +67,12 @@ public class TownUI : UISystem
         SetBountyUI(townIndex);
         _sheriffText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[1102];
         _sheriffWindow.SetActive(true);
+    }
+    public void OpenStationWindow(int townIndex)
+    {
+        SetBountyUI(townIndex);
+        _stationText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[1116];
+        _stationWindow.SetActive(true);
     }
 
     #region Ammunition
@@ -138,6 +147,22 @@ public class TownUI : UISystem
     }
     #endregion
 
+    #region Station
+    public void ClickBoardTrainButton()
+    {
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player == null)
+        {
+            Debug.Log("player가 존재하지 않습니다...이럴 일이 있나?");
+            CloseUI();
+            return;
+        }
+
+        //need train function
+        FieldSystem.turnSystem.EndTurn();
+        CloseUI();
+    }
+    #endregion
     //Invoke when player stop(start to move)
     private void CheckPlayerInTown()
     {
@@ -161,9 +186,10 @@ public class TownUI : UISystem
     }
 
     //Invoke when player collide with town tile
-    private void SetCurrentTownInfo(Vector3Int pos, int index, Town.BuildingType type) 
+    private void SetCurrentTownInfo(Vector3Int pos, Vector3Int iconPos, int index, Town.BuildingType type)
     {
         _currentInteractPosition = pos;
+        _currentIconPosition = iconPos;
         _currentTownIndex = index;
         _currentBuildingType = type;
     }
@@ -174,13 +200,12 @@ public class TownUI : UISystem
         _ammunitionWindow.SetActive(false);
         _saloonWindow.SetActive(false);
         _sheriffWindow.SetActive(false);
+        _stationWindow.SetActive(false);
         base.CloseUI();
     }
 
-    public void AddTownIcon(Vector3Int pos, Town.BuildingType type) 
+    public void AddTownIcon(Vector3Int iconHexPos, Town.BuildingType type) 
     {
-        Vector3Int iconHexPos = new Vector3Int(pos.x, pos.y - 2, pos.z + 2);
-
         if (_iconPool.Find(iconHexPos) != null) return;
         var target = _iconPool.Set();
         target.Init(iconHexPos, type);
@@ -194,11 +219,13 @@ public class TownUI : UISystem
 
         _iconPool.Update();
 
+        //door icon
         Tile townTile = FieldSystem.tileSystem.GetTile(_currentInteractPosition);
-        Vector3Int doorTileHexPos = new Vector3Int(_currentInteractPosition.x, _currentInteractPosition.y - 1, _currentInteractPosition.z + 1);
+        Vector3Int doorTileHexPos = _currentInteractPosition + _currentIconPosition;
         Tile doorTile = FieldSystem.tileSystem.GetTile(doorTileHexPos);
         if (townTile == null || doorTile == null) return;
         if (!townTile.inSight || !doorTile.inSight) return;
+
         Vector3 screenPos = Camera.main.WorldToScreenPoint((townTile.transform.position + doorTile.transform.position) / 2);
         _doorIcon.GetComponent<RectTransform>().position = screenPos;
     }
@@ -237,6 +264,12 @@ public class TownUI : UISystem
                 {
                     SoundManager.instance.PlaySFX("UI_Sheriff");
                     OpenSheriffWindow(_currentTownIndex);
+                    break;
+                }
+            case Town.BuildingType.Station:
+                {
+                    SoundManager.instance.PlaySFX("UI_Station");
+                    OpenStationWindow(_currentTownIndex);
                     break;
                 }
 

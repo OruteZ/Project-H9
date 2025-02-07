@@ -10,6 +10,8 @@ public class Train : MonoBehaviour
     public int _targetWaypoint = -1;
     private int _prevTargetWaypoint = -1;
 
+    //(40) -> 18 -> 1-18 -> ? -> 122-107 -> 18
+
     private Vector3 _targetForward;
 
 
@@ -34,6 +36,8 @@ public class Train : MonoBehaviour
         _sumOfDistances = 0;
         for (int i = 0; i < _wagonDistances.Length; i++) _sumOfDistances += _wagonDistances[i];
     }
+    float moveSpeed = 5;
+    float rotateSpeed = 10;
 
     void Update()
     {
@@ -70,8 +74,6 @@ public class Train : MonoBehaviour
         Vector3 curPosition = transform.position;
         Vector3 nextPosition = _waypoints.transform.GetChild(_nextWaypoint).transform.position;
         Vector3 moveDir = (nextPosition - curPosition).normalized;
-        float moveSpeed = 5;
-        float rotateSpeed = 10;
 
         curPosition += moveDir * moveSpeed * Time.deltaTime;
         transform.position = curPosition;
@@ -89,6 +91,7 @@ public class Train : MonoBehaviour
         Vector3 fd = transform.forward;
         LerpCalculation.CalculateLerpValue(ref fd, _targetForward, rotateSpeed);
         transform.forward = fd;
+
 
         //record transform
         _prevPositions.Insert(0, transform.position);
@@ -115,12 +118,9 @@ public class Train : MonoBehaviour
         }
 
         //rotate wheel
-        if (_currentWaypoint != _targetWaypoint)
+        for (int i = 0; i < trainWheels.Length; i++)
         {
-            for (int i = 0; i < trainWheels.Length; i++)
-            {
-                trainWheels[i].Rotate(new Vector3(2, 0, 0));
-            }
+            trainWheels[i].Rotate(new Vector3(2, 0, 0));
         }
     }
 }

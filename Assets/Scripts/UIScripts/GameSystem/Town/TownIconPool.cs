@@ -33,6 +33,11 @@ public class TownIcontWrapper : ObjectPoolWrapper<RectTransform>
                     Instance.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo("Town_Sheriff");
                     break;
                 }
+            case Town.BuildingType.Station:
+                {
+                    Instance.GetComponent<Image>().sprite = UIManager.instance.iconDB.GetIconInfo("Town_Station");
+                    break;
+                }
         }
         Instance.GetComponent<Image>().enabled = false;
     }
@@ -81,6 +86,7 @@ public class TownIconPool : ObjectPool<RectTransform, TownIcontWrapper>
         {
             var target = _working[i];
             Tile t = FieldSystem.tileSystem.GetTile(target.hexPosition);
+            //Debug.LogError(t);
             if (t == null) continue;
             if (!t.inSight) continue;
             target.Instance.GetComponent<Image>().enabled = true;

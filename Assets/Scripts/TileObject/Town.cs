@@ -8,11 +8,14 @@ public class Town : TileObject
         NULL,
         Ammunition,
         Saloon,
-        Sheriff
+        Sheriff,
+        Station
     }
     [SerializeField] private int _townIndex;
     [SerializeField] private BuildingType _buildingType;
+    [SerializeField] private Hex.Direction _buildingDirection = Hex.Direction.UpLeft;
 
+    Vector3Int _buildingIconHexPos = Vector3Int.zero;
     public int[] townItemIndexes;
     
     protected override void SetTile(Tile t)
@@ -23,13 +26,49 @@ public class Town : TileObject
         t.visible = true;
         t.rayThroughable = false;
 
-        UIManager.instance.gameSystemUI.townUI.AddTownIcon(hexPosition, _buildingType);
+        switch (_buildingDirection)
+        {
+            //31 7 -38
+            case Hex.Direction.Right:
+                {
+                    _buildingIconHexPos = new Vector3Int(1, 0, -1);
+                    break;
+                }
+            case Hex.Direction.DownRight:
+                {
+                    _buildingIconHexPos = new Vector3Int(0, 1, -1);
+                    break;
+                }
+            case Hex.Direction.DownLeft:
+                {
+                    _buildingIconHexPos = new Vector3Int(-1, 1, 0);
+                    break;
+                }
+            case Hex.Direction.Left:
+                {
+                    _buildingIconHexPos = new Vector3Int(-1, 0, 1);
+                    break;
+                }
+            case Hex.Direction.UpLeft:
+                {
+                    _buildingIconHexPos = new Vector3Int(0, -1, 1);
+                    break;
+                }
+            case Hex.Direction.UpRight:
+                {
+                    _buildingIconHexPos = new Vector3Int(1, -1, 0);
+                    break;
+                }
+        }
+
+        UIManager.instance.gameSystemUI.townUI.AddTownIcon(hexPosition + _buildingIconHexPos * 2, _buildingType);
     }
+    
 
     public override void OnHexCollisionEnter(Unit other)
     {
         //Debug.Log($"플레이어 진입 : {_townIndex}번 마을의 {_buildingType} 건물");
-        PlayerEvents.OnPlayerEnterTown.Invoke(hexPosition, _townIndex, _buildingType);
+        PlayerEvents.OnPlayerEnterTown.Invoke(hexPosition, _buildingIconHexPos, _townIndex, _buildingType);
     }
 
 
@@ -53,6 +92,7 @@ public class Town : TileObject
             {BuildingType.Ammunition,   TileEffectType.Ammunition },
             {BuildingType.Saloon,        TileEffectType.Saloon },
             {BuildingType.Sheriff,      TileEffectType.Sheriff },
+            {BuildingType.Station,      TileEffectType.Sheriff },
         };
         effect.TryGetValue(_buildingType, out TileEffectType effType);
         return effType;

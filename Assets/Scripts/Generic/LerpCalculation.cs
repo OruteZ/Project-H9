@@ -31,6 +31,20 @@ public static class LerpCalculation
             return true;
         }
     }
+    public static bool CalculateLerpValue(ref Quaternion currentValue, Quaternion targetValue, float speed = 1, float threshold = 0.01f)
+    {
+
+        if (Quaternion.Angle(currentValue, targetValue) < threshold)
+        {
+            currentValue = targetValue;
+            return false;
+        }
+        else
+        {
+            currentValue = Quaternion.Lerp(currentValue, targetValue, Time.deltaTime * speed);
+            return true;
+        }
+    }
     public static bool CalculateSLerpValue(ref Vector3 currentValue, Vector3 targetValue, float speed = 1, float threshold = 0.01f)
     {
 

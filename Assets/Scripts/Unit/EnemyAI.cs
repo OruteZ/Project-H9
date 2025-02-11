@@ -2,17 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using KieranCoppins.DecisionTrees;
 using PassiveSkill;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
-using Action = KieranCoppins.DecisionTrees.Action;
 
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField]
-    private DecisionTree tree;
+    AIModel model;
     
     [SerializeField]
     private Unit unit;
@@ -34,9 +32,10 @@ public class EnemyAI : MonoBehaviour
         return unit;
     }
 
-    public void Setup(Unit unit, DecisionTree tree)
+    public void Setup(Unit unit, AIModel tree)
     {
         this.unit = unit;
+        this.model = tree;
         playerPosMemory = FieldSystem.unitSystem.GetPlayer().hexPosition;
 
         FieldSystem.unitSystem.onAnyUnitMoved.AddListener((u) =>
@@ -52,10 +51,6 @@ public class EnemyAI : MonoBehaviour
             ReloadCounts();
         });
         this.unit.onFinishAction.AddListener(OnFinishAction);
-
-        this.tree = tree;
-        this.tree.Initialise(this);
-        this.tree.name = unit.name + " Decision Tree";
     }
     
     /// <summary>
@@ -64,29 +59,10 @@ public class EnemyAI : MonoBehaviour
     /// <returns></returns>
     public AIResult Think()
     {
-        var result = tree.Root.MakeDecision();
-        if (result is FinishTurn)
-        {
-            return new AIResult(null, Hex.none);
-        }
-        
-        if(result == null)
-        {
-            Debug.LogError("result is null");
-            return new AIResult(null, Hex.none);
-        }
-
-        if (result is not IAiResult ret)
-        {
-            Debug.LogError("result is not IAiResult");
-            return new AIResult(null, Hex.none);
-        }
-        
-        // StartCoroutine(ret.Execute());
-        return ret.GetResult();
+        return model.CalculateAction(this);
     }
 
-    private void ReloadPlayerPosMemory()
+    public void ReloadPlayerPosMemory()
     {
         Vector3Int playerPos = FieldSystem.unitSystem.GetPlayer().hexPosition;
 

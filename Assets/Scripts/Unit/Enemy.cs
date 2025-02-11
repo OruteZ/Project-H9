@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
-using KieranCoppins.DecisionTrees;
 using PassiveSkill;
 using UnityEditor;
 using UnityEngine;
@@ -30,7 +29,7 @@ public class Enemy : Unit
         base.SetUp(index, newName, unitStat, weapon, unitModel, passiveList);
     }
 
-    public void SetupAI(DecisionTree tree)
+    public void SetupAI(AIModel tree)
     {
         // null check : AI
         if (ai == null)
@@ -65,7 +64,7 @@ public class Enemy : Unit
         if (!IsMyTurn()) return;
         if (FieldSystem.IsCombatFinish(out bool none)) return;
         
-        var result = ai.Think();
+        AIResult result = ai.Think();
         if (result.action is null)
         {
             //end turn
@@ -80,6 +79,7 @@ public class Enemy : Unit
         }
         else
         {
+            Debug.Log($"{gameObject.name} Fail Action : {result.action}, {result.position}");
             EndTurn();
         }
     }

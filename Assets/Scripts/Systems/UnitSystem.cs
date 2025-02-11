@@ -7,7 +7,6 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using KieranCoppins.DecisionTrees;
 using UnityEngine.Serialization;
 
 public class UnitSystem : MonoBehaviour
@@ -209,12 +208,7 @@ public class UnitSystem : MonoBehaviour
                 // string path = AI_PATH + "AI " + info.btIndex;
                 // Debug.Log("AI Path : " + path);
                 // ScriptableObject ai = Instantiate(Resources.Load<ScriptableObject>(path));
-                DecisionTree ai = aiDatabase.GetTree(info.btIndex).Clone();
-                if(ai == null)
-                {
-                    Debug.LogError("AI is null, index : " + info.btIndex);
-                    throw new Exception();
-                }
+                AIModel ai = Instantiate(aiDatabase.GetTree(info.btIndex));
                 
                 Debug.Log("Found ScriptableObject : " + ai.name);
                 enemy.SetupAI(ai);

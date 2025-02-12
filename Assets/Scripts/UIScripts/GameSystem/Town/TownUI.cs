@@ -24,6 +24,8 @@ public class TownUI : UISystem
 
     [SerializeField] private GameObject _bountyUIElements;
     [SerializeField] private GameObject _storeItemListUI;
+
+    [SerializeField] private GameObject _train;
     private enum TownNameIndex 
     {
         Linsdale,
@@ -70,8 +72,12 @@ public class TownUI : UISystem
     }
     public void OpenStationWindow(int townIndex)
     {
-        SetBountyUI(townIndex);
-        _stationText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[1116];
+        _currentRoute = 0;
+        if (_currentInteractPosition == _route1StartPosition) _currentRoute = 0;
+        if (_currentInteractPosition == _route1EndPosition) _currentRoute = 1;
+        if (_currentInteractPosition == _route2StartPosition) _currentRoute = 2;
+        if (_currentInteractPosition == _route2EndPosition) _currentRoute = 3;
+        _stationText.GetComponent<TextMeshProUGUI>().text = UIManager.instance.UILocalization[1116] + '\n' + UIManager.instance.UILocalization[1117 + _currentRoute];
         _stationWindow.SetActive(true);
     }
 
@@ -148,6 +154,14 @@ public class TownUI : UISystem
     #endregion
 
     #region Station
+    private int _currentRoute = 0;
+    private int[] _routeDestinations = { 0, 70, 207, 27 };
+    private Vector3Int _tmpPosition = new Vector3Int(0, 0, 0);
+    private Vector3Int _route1StartPosition = new Vector3Int(31, 6, -37);
+    private Vector3Int _route1EndPosition = new Vector3Int(38, -12, -26);
+    private Vector3Int _route2StartPosition = new Vector3Int(31, 7, -38);
+    private Vector3Int _route2EndPosition = new Vector3Int(76, 6, -82);
+
     public void ClickBoardTrainButton()
     {
         Player player = FieldSystem.unitSystem.GetPlayer();
@@ -157,11 +171,44 @@ public class TownUI : UISystem
             CloseUI();
             return;
         }
+        BoardTrain();
 
-        //need train function
         FieldSystem.turnSystem.EndTurn();
         CloseUI();
     }
+    private void BoardTrain() 
+    {
+        if (_train == null) _train = FieldSystem.tileSystem.train;
+        _train.GetComponent<Train>().SetTrainDestination(_routeDestinations[_currentRoute]);
+
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        player.SetMeshVisible(player, false);
+        player.hexPosition = _tmpPosition;
+    }
+    public void GetOffTrain()
+    {
+        Vector3Int destStationPosition = Vector3Int.zero;
+        switch (_currentRoute)
+        {
+            case 0:
+                destStationPosition = _route1EndPosition;
+                break;
+            case 1:
+                destStationPosition = _route1StartPosition;
+                break;
+            case 2:
+                destStationPosition = _route2EndPosition;
+                break;
+            case 3:
+                destStationPosition = _route2StartPosition;
+                break;
+        }
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        player.hexPosition = destStationPosition;
+        player.SetMeshVisible(player, true);
+        CameraManager.instance.worldCamera.SetPosition(player.transform.position);
+    }
+
     #endregion
     //Invoke when player stop(start to move)
     private void CheckPlayerInTown()

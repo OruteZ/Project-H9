@@ -203,7 +203,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     
     private void MovableTileEffect()
     {
-        
+        if (_player.meshVisible == false) return;
         //if world state, get sight range, else get action po
         int range = 0;
         if(GameManager.instance.CompareState(GameState.COMBAT))
@@ -244,7 +244,6 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
     
     private IEnumerator MovableTileEffectCoroutine()
     {
-        
         int range = 0;
         if(GameManager.instance.CompareState(GameState.COMBAT))
             range = _player.stat.curActionPoint / _player.GetAction<MoveAction>().GetCost();
@@ -254,7 +253,7 @@ public class TileEffectManager : Generic.Singleton<TileEffectManager>
         int prevRouteLength = -1;
         while (true)
         {
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
             ClearEffect(_effectsRelatedTarget);
 
             // check movable

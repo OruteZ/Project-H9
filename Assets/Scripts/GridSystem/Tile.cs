@@ -65,6 +65,7 @@ public class Tile : MonoBehaviour, IEquatable<Tile>
         for (var index = 0; index < tileObjects.Count; index++)
         {
             var obj = tileObjects[index];
+            if (obj == null) continue;
             if (obj is FogOfWar fow)
             {
                 fow.SetVisible(_inSight);

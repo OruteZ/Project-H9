@@ -51,7 +51,7 @@ public class SpreadDynamiteAction : BaseAction
         euler.z = 0;
         unit.transform.eulerAngles = euler;
         
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
     }
 
     /// <summary>

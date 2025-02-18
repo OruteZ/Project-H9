@@ -51,6 +51,8 @@ public class EnemyAI : MonoBehaviour
             ReloadCounts();
         });
         this.unit.onFinishAction.AddListener(OnFinishAction);
+
+        tree.Setup(this);
     }
     
     /// <summary>

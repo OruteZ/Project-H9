@@ -276,4 +276,13 @@ public static class Hex
         UpLeft,
         UpRight,
     }
+
+    public static Vector3Int Lerp(Vector3Int start, Vector3Int target, int dist)
+    {
+        // start에서 target으로 직선 그리기
+        List<Vector3Int> route = DrawLine1(start, target);
+
+        // dist만큼 이동
+        return route.Count > dist ? route[dist] : route[^1];
+    }
 }

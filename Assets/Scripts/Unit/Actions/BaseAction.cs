@@ -91,6 +91,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
                 unit.animator.ResetTrigger(SHOOT);
                 break;
             case ActionType.Dynamite:
+            case ActionType.SpreadDynamite:
                 unit.animator.ResetTrigger(DYNAMITE);
                 break;
             case ActionType.Idle:
@@ -108,6 +109,8 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
             case ActionType.HeinrichTrap:
                 break;
             case ActionType.HeinrichVanish:
+                break;
+            case ActionType.SuicideDynamite:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

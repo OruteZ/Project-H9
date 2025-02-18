@@ -1,14 +1,13 @@
 ﻿
 using System.Collections.Generic;
-using KieranCoppins.DecisionTrees;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BTDatabase", menuName = "ScriptableObjects/BTDatabase", order = 1)]
 public class AIDatabase : ScriptableObject
 {
-    [SerializeField] private List<DecisionTree> btList;
+    [SerializeField] private List<AIModel> btList;
 
-    public DecisionTree GetTree(int index)
+    public AIModel GetTree(int index)
     {
         return btList[index - 1];
     }

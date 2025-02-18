@@ -95,7 +95,7 @@ public enum ActionType {
     ItemUsing,
     // Cover,
     
-    //Linsdale Boss Action
+    //Aden Boss Action
     SpreadDynamite,
     SuicideDynamite,
     

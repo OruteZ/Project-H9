@@ -13,6 +13,9 @@ public class SuicideDynamiteAction : BaseAction
 
     private List<Vector3Int> _targetPos;
     
+    public int ExecutableHp => executableHp;
+    public int ExplosionRange => explosionRange;
+    
     public override void SetUp(Unit unit)
     {
         base.SetUp(unit);

@@ -23,6 +23,12 @@ public class KillAll : IGoal
     {
         if (HasSuccess()) return true;
         
+        
+        if (FieldSystem.unitSystem.GetPlayer() == null)
+        {
+            return true;
+        }
+        
         if (FieldSystem.unitSystem.GetPlayer().HasDead())
         {
             return true;

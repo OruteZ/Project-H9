@@ -20,6 +20,8 @@ public class PlayerPortraitUI : UIElement
     }
     public void ClickPortrait()
     {
-        CameraManager.instance.worldCamera.SetPosition(FieldSystem.unitSystem.GetPlayer().transform.position);
+        Player player = FieldSystem.unitSystem.GetPlayer();
+        if (player.hexPosition == Vector3Int.zero) return;
+        CameraManager.instance.worldCamera.SetPosition(player.transform.position);
     }
 }

@@ -40,12 +40,15 @@ public class TileSystem : MonoBehaviour
     /// 모든 환경요소를 자식으로 가지는 오브젝트입니다.
     /// </summary>
     public Transform environments;
-    
+
+    public GameObject train;
+
     private Dictionary<Vector3Int, Tile> _tiles = new();
     private readonly List<TileObject> _tileObjects = new();
     
     private HexGridLayout _gridLayout;
     private HexGridLayout gridLayout => _gridLayout ??= tileParent.GetComponent<HexGridLayout>();
+
 
     /// <summary>
     /// 현재 존재하는 모든 타일의 reference를 반환합니다.

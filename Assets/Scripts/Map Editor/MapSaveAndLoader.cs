@@ -161,7 +161,7 @@ public class MapSaveAndLoader : MonoBehaviour
             //paste data
             envObj.transform.position = new Vector3(0, envData.height, 0);
             
-            if (envData.tr)
+            if (saveData.ContainsOnlyYRotation() is false)
                 envObj.transform.localEulerAngles = envData.threeRotation;
             else
                 envObj.transform.localRotation = Quaternion.Euler(0, envData.rotation, 0);

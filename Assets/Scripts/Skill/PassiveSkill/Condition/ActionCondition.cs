@@ -35,12 +35,12 @@ namespace PassiveSkill
         }
         protected void StartAction(IUnitAction unitAction, Vector3Int pos)
         {
-            Debug.LogError("add: " + unitAction);
+            //Debug.LogError("add: " + unitAction);
             if (unitAction is Action) passive.FullfillCondition(this);
         }
         protected void EndAction(IUnitAction unitAction)
         {
-            Debug.LogError("cancel: "+ unitAction);
+            //Debug.LogError("cancel: "+ unitAction);
             if (unitAction is Action) passive.NotFullfillCondition(this);
         }
     }

@@ -67,6 +67,7 @@ public class Town : TileObject
 
     public override void OnHexCollisionEnter(Unit other)
     {
+        if (!gameObject.activeSelf) return;
         //Debug.Log($"플레이어 진입 : {_townIndex}번 마을의 {_buildingType} 건물");
         PlayerEvents.OnPlayerEnterTown.Invoke(hexPosition, _buildingIconHexPos, _townIndex, _buildingType);
     }

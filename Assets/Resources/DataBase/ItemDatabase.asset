@@ -203,7 +203,7 @@ MonoBehaviour:
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
+    itemPrice: 50
     weaponDamage: 1
     weaponAmmo: 6
     weaponHitRate: 0
@@ -224,13 +224,13 @@ MonoBehaviour:
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 1
+    itemPrice: 100
+    weaponDamage: 2
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
     weaponCriticalDamage: 0
-    weaponSkill: 11005
+    weaponSkill: 0
     itemTooltip: 303
     icon: {fileID: 21300000, guid: bb64cf2a14c1fba4ea91916ceb54a356, type: 3}
     itemModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
@@ -245,8 +245,8 @@ MonoBehaviour:
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 2
+    itemPrice: 150
+    weaponDamage: 3
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
@@ -266,8 +266,8 @@ MonoBehaviour:
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 3
+    itemPrice: 200
+    weaponDamage: 5
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
@@ -278,25 +278,25 @@ MonoBehaviour:
     itemModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
       type: 3}
     damageType: 2
-  - id: 401
-    nameIdx: 401
-    itemType: 4
+  - id: 306
+    nameIdx: 306
+    itemType: 3
     itemMaxStorage: 1
-    itemRange: 5
-    sweetSpot: 4
+    itemRange: 4
+    sweetSpot: 0
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 1
+    itemPrice: 250
+    weaponDamage: 7
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
     weaponCriticalDamage: 0
     weaponSkill: 0
-    itemTooltip: 401
-    icon: {fileID: 21300000, guid: 528d38b164703d34cb7b1d66ff84ba42, type: 3}
-    itemModel: {fileID: 6516096886141431931, guid: a6974077d11936a408ec2119273df417,
+    itemTooltip: 306
+    icon: {fileID: 21300000, guid: e2ff8e2b6d13a354ba9261d17a7480b4, type: 3}
+    itemModel: {fileID: 5610185880250016912, guid: a6da0b0ac59038744a78c8bd6c0623e4,
       type: 3}
     damageType: 2
   - id: 402
@@ -308,8 +308,8 @@ MonoBehaviour:
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 2
+    itemPrice: 250
+    weaponDamage: 3
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
@@ -329,8 +329,8 @@ MonoBehaviour:
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 3
+    itemPrice: 150
+    weaponDamage: 4
     weaponAmmo: 6
     weaponHitRate: 0
     weaponCriticalChance: 0
@@ -350,8 +350,8 @@ MonoBehaviour:
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 3
+    itemPrice: 250
+    weaponDamage: 25
     weaponAmmo: 1
     weaponHitRate: 0
     weaponCriticalChance: 0
@@ -371,8 +371,8 @@ MonoBehaviour:
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 4
+    itemPrice: 200
+    weaponDamage: 5
     weaponAmmo: 5
     weaponHitRate: 0
     weaponCriticalChance: 0
@@ -387,13 +387,13 @@ MonoBehaviour:
     nameIdx: 501
     itemType: 5
     itemMaxStorage: 1
-    itemRange: 2
+    itemRange: 3
     sweetSpot: 0
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 1
+    itemPrice: 200
+    weaponDamage: 20
     weaponAmmo: 2
     weaponHitRate: 0
     weaponCriticalChance: 0
@@ -405,28 +405,7 @@ MonoBehaviour:
       type: 3}
     damageType: 2
   - id: 502
-    nameIdx: 501
-    itemType: 5
-    itemMaxStorage: 1
-    itemRange: 2
-    sweetSpot: 0
-    itemEffect: 0
-    itemEffectAmount: 0
-    itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 1
-    weaponAmmo: 2
-    weaponHitRate: 0
-    weaponCriticalChance: 0
-    weaponCriticalDamage: 0
-    weaponSkill: 11005
-    itemTooltip: 501
-    icon: {fileID: 21300000, guid: defb1265f5963de44940dfa73dea9e17, type: 3}
-    itemModel: {fileID: 1650634644910848, guid: a321cbafe3451414da51bb54be7cb20f,
-      type: 3}
-    damageType: 2
-  - id: 503
-    nameIdx: 501
+    nameIdx: 502
     itemType: 5
     itemMaxStorage: 1
     itemRange: 3
@@ -434,14 +413,35 @@ MonoBehaviour:
     itemEffect: 0
     itemEffectAmount: 0
     itemEffectDuration: 0
-    itemPrice: 0
-    weaponDamage: 1
+    itemPrice: 200
+    weaponDamage: 10
+    weaponAmmo: 5
+    weaponHitRate: 0
+    weaponCriticalChance: 0
+    weaponCriticalDamage: 0
+    weaponSkill: 0
+    itemTooltip: 502
+    icon: {fileID: 21300000, guid: defb1265f5963de44940dfa73dea9e17, type: 3}
+    itemModel: {fileID: 1650634644910848, guid: a321cbafe3451414da51bb54be7cb20f,
+      type: 3}
+    damageType: 2
+  - id: 503
+    nameIdx: 503
+    itemType: 5
+    itemMaxStorage: 1
+    itemRange: 2
+    sweetSpot: 0
+    itemEffect: 0
+    itemEffectAmount: 0
+    itemEffectDuration: 0
+    itemPrice: 200
+    weaponDamage: 30
     weaponAmmo: 2
     weaponHitRate: 0
     weaponCriticalChance: 0
     weaponCriticalDamage: 0
     weaponSkill: 0
-    itemTooltip: 501
+    itemTooltip: 503
     icon: {fileID: 21300000, guid: defb1265f5963de44940dfa73dea9e17, type: 3}
     itemModel: {fileID: 1650634644910848, guid: a321cbafe3451414da51bb54be7cb20f,
       type: 3}
@@ -770,6 +770,9 @@ MonoBehaviour:
     _itemName: "\uD53C\uC2A4\uBA54\uC774\uCEE4"
     _itemDescription: "\uACAC\uACE0\uD558\uACE0 \uC2E0\uB8B0\uC131\uC774 \uC88B\uC740
       \uB9AC\uBCFC\uBC84"
+  - _itemIndex: 306
+    _itemName: "\uCF54\uC2A4\uD2F0\uAC74 \uB9AC\uBCFC\uBC84"
+    _itemDescription: "\uC7AD \uCF54\uC2A4\uD2F0\uAC74\uC758 \uB9AC\uBCFC\uBC84"
   - _itemIndex: 401
     _itemName: "\uD5E8\uB9AC \uC18C\uCD1D"
     _itemDescription: 
@@ -786,8 +789,15 @@ MonoBehaviour:
     _itemName: "\uBCFC\uD2B8\uC561\uC158 \uC18C\uCD1D"
     _itemDescription: 
   - _itemIndex: 501
-    _itemName: "\uB354\uBE14\uBC30\uB7F4 \uC0B0\uD0C4\uCD1D"
+    _itemName: "\uB354\uBE14 \uBC30\uB7F4 \uC0F7\uAC74"
     _itemDescription: 
+  - _itemIndex: 502
+    _itemName: "\uD38C\uD504 \uC561\uC158 \uC0F7\uAC74"
+    _itemDescription: 
+  - _itemIndex: 503
+    _itemName: "\uC18C\uB4DC\uC624\uD504 \uC0F7\uAC74"
+    _itemDescription: "\uCD1D\uC2E0\uC744 \uC798\uB77C \uC0AC\uAC70\uB9AC\uAC00 \uC9E7\uC9C0\uB9CC
+      \uAC15\uB825\uD55C \uC0F7\uAC74"
   - _itemIndex: 602
     _itemName: "\uC218\uD1B5"
     _itemDescription: "\uCCB4\uB825 <itemEffectAmount> \uD68C\uBCF5"

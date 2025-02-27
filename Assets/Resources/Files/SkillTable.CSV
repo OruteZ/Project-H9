@@ -2,7 +2,11 @@
 10001,0,2,10001,10001,,
 10002,0,2,10002,10002,,
 10003,0,2,10003,10003,,
-10004,0,2,10004,10004,,
+10004,0,1,10004,10004,Cover,
+10005,0,1,10005,10005,Skill_ActionPointUp1,
+10006,0,1,10006,10005,Skill_ActionPointUp2,
+10007,0,1,10007,10005,Skill_ActionPointUp3,
+10008,0,1,10008,10005,Skill_ActionPointUp4,
 11001,1,1,1,1,Skill_Confidence,
 11002,1,1,4,3,Skill_FineSight,11001
 11003,1,1,5,4,Skill_Deadeye,11002
@@ -15,6 +19,7 @@
 11010,1,1,15,9,Skill_Heart5,11009
 11011,1,1,16,10,Skill_TwoShots,11004
 11012,1,1,30,34,Skill_Demolish,12001
+11013,1,1,35,39,Skill_Bleed,11001
 12001,1,2,6,5,Skill_Dynamite,11001
 12002,1,2,7,6,Skill_Bandage,
 22001,2,2,2,2,Skill_Fanning,
@@ -35,3 +40,8 @@
 31004,3,1,28,22,Skill_SharpShooter,31003
 31005,3,1,29,23,Skill_Binoculars,
 31006,3,1,34,38,Skill_PositionExpect,
+41001,4,1,36,40,Skill_ReadyToHunt,
+41002,4,1,37,41,Skill_Hunter2,41001
+41003,4,1,38,42,Skill_Reverse,41002
+41004,4,1,39,43,Skill_CornerdCat,41001
+41005,4,1,40,44,Skill_NearShot,41004

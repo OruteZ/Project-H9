@@ -78,7 +78,7 @@ public class MoveActionEffect : BaseSelectingActionEffect
             
             // todo : refactor UI Manager
             // check routePath
-            if (prevRouteLength != route.Count)
+            if (prevRouteLength != route.Count && GameManager.instance.CompareState(GameState.COMBAT))
             {
                 UIManager.instance.gameSystemUI.playerInfoUI.summaryStatusUI.expectedApUsage = route.Count - 1;
                 UIManager.instance.onPlayerStatChanged.Invoke();

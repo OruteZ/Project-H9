@@ -64,6 +64,11 @@ public class SkillManager : Generic.Singleton<SkillManager>
     private void LoadLearnedSkills()
     {
         List<int> learnedSkills = GameManager.instance.user.learnedSkills;
+#if UNITY_EDITOR
+        learnedSkills.AddRange(GameManager.instance.playerPassiveIndexList);
+        learnedSkills.AddRange(GameManager.instance.playerActiveIndexList);
+        learnedSkills = learnedSkills.Distinct().ToList();
+#endif
 
         for (int i = 0; i < learnedSkills.Count; i++)
         {

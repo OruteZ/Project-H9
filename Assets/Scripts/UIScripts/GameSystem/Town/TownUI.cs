@@ -155,7 +155,7 @@ public class TownUI : UISystem
 
     #region Station
     private int _currentRoute = 0;
-    private int[] _routeDestinations = { 0, 70, 207, 27 };
+    private int[] _routeDestinations = { 0, 207, 27 };
     private Vector3Int _tmpPosition = new Vector3Int(0, 0, 0);
     private Vector3Int _route1StartPosition = new Vector3Int(31, 6, -37);
     private Vector3Int _route1EndPosition = new Vector3Int(38, -12, -26);

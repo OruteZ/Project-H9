@@ -42,6 +42,8 @@ public class TileSystem : MonoBehaviour
     public Transform environments;
 
     public GameObject train;
+    public List<GameObject> trainStations;
+    public List<int> stationOpenQuestIndex;
 
     private Dictionary<Vector3Int, Tile> _tiles = new();
     private readonly List<TileObject> _tileObjects = new();
@@ -163,6 +165,8 @@ public class TileSystem : MonoBehaviour
         }
         
         _gridLayout.LayoutGrid();
+
+        PlayerEvents.OnStartedQuest.AddListener((q) => { SetTrainStationEnable(q); });
     }
 
     /// <summary>
@@ -610,6 +614,18 @@ public class TileSystem : MonoBehaviour
         if (Vector2.Distance(Input.mousePosition, screenPos) < ignoreRadius * UIManager.instance.GetCanvasScale()) return false;
 
         return true;
+    }
+    private void SetTrainStationEnable(QuestInfo qi) 
+    {
+        if (trainStations.Count != stationOpenQuestIndex.Count) 
+        {
+            Debug.LogError("Wrong station quest index count");
+        }
+        for (int i = 0; i < trainStations.Count; i++)
+        {
+            if (trainStations[i] == null) continue;
+            trainStations[i].SetActive(stationOpenQuestIndex[i] == qi.Index);
+        }
     }
 
     //==========================Create World==================================

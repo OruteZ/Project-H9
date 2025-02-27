@@ -54,8 +54,8 @@ namespace PassiveSkill
                     //
                     //
                     //
-                    //
-                    //
+                    ConditionType.HighSpeed => new HighSpeedCondition(amount[i]),
+                    ConditionType.LowSpeed => new LowSpeedCondition(amount[i]),
                     //
                     ConditionType.MovedThisTurn => new MovedThisTurnCondition(amount[i]),
                     ConditionType.Moving => new MovedThisTurnCondition(amount[i]),
@@ -106,7 +106,7 @@ namespace PassiveSkill
                     //
                     PassiveEffectType.DoubleShootPoint => new DoubleShootPoint(stat[i], amount[i]),
                     PassiveEffectType.InfinityShootPoint =>             new InfinityShootPoint(stat[i], amount[i]),
-                    //
+                    PassiveEffectType.Bleed => new IncreaseBleedingEffectChance(stat[i], amount[i]),
                     //
                     //
                     PassiveEffectType.LightFootStep =>                  new LightFootStep(stat[i], amount[i]),
@@ -180,7 +180,7 @@ _ => throw new ArgumentOutOfRangeException(nameof(type), type[i], null)
         }
         public void Disable()
         {
-            Debug.LogError("Effect Off: " + index);
+            //Debug.LogError("Effect Off: " + index);
             foreach (IEffect effect in _effect)
             {
                 effect.OnConditionDisable();

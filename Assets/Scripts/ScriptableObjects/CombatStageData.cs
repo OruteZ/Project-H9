@@ -258,6 +258,9 @@ public struct EnvironmentData
     public Vector3 position;
     public float rotation;
     public Vector3 scale;
+    public Vector3 threeRotation;
+
+    public bool tr;
     
     public EnvironmentData(GameObject env)
     {
@@ -279,11 +282,15 @@ public struct EnvironmentData
             hexPosition = Hex.zero;
             hexPositioned = false;
         }
+
+        Quaternion localRotation = env.transform.localRotation;
+        rotation = localRotation.eulerAngles.y;
+        threeRotation = localRotation.eulerAngles;
         
-        rotation = env.transform.localRotation.eulerAngles.y;
         scale = env.transform.localScale;
 
         height = position.y;
+        tr = false;
     }
 }
 

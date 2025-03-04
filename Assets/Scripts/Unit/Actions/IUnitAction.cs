@@ -101,5 +101,9 @@ public enum ActionType {
     
     //Heinrich Boss Action
     HeinrichTrap,
-    HeinrichVanish
+    HeinrichVanish,
+    
+    //Jackson Boss Action
+    SickleAttack,
+    SickleGrab,
 }

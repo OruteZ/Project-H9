@@ -74,11 +74,11 @@ public class BushSystem : MonoBehaviour
         return _bushes.ContainsKey(position);
     }
     
-    private int GroupNumber(Bush bush)
+    private int GetGroupNumber(Bush bush)
     {
         return _bushesGroup[bush];
     }
-    private int GroupNumber(Vector3Int position)
+    public int GetGroupNumber(Vector3Int position)
     {
         if (!_bushes.ContainsKey(position))
         {
@@ -91,11 +91,11 @@ public class BushSystem : MonoBehaviour
     
     public bool IsSameGroup(Bush a, Bush b)
     {
-        return GroupNumber(a) == GroupNumber(b);
+        return GetGroupNumber(a) == GetGroupNumber(b);
     }
     public bool IsSameGroup(Vector3Int a, Vector3Int b)
     {
-        return GroupNumber(a) == GroupNumber(b);
+        return GetGroupNumber(a) == GetGroupNumber(b);
     }
     public bool IsSameGroup(Unit a, Unit b) => IsSameGroup(a.hexPosition, b.hexPosition);
 

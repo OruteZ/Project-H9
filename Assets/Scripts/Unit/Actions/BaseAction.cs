@@ -8,6 +8,7 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
 {
     protected static readonly int MOVE = Animator.StringToHash("Move");
     protected static readonly int SHOOT = Animator.StringToHash("Shoot");
+    protected static readonly int MELEE = Animator.StringToHash("Melee");
     protected static readonly int IDLE = Animator.StringToHash("Idle");
     protected static readonly int FANNING = Animator.StringToHash("Fanning");
     protected static readonly int FANNING_FIRE = Animator.StringToHash("FanningFire");
@@ -111,6 +112,10 @@ public abstract class BaseAction : MonoBehaviour, IUnitAction
             case ActionType.HeinrichVanish:
                 break;
             case ActionType.SuicideDynamite:
+                break;
+            case ActionType.SickleAttack:
+            case ActionType.SickleGrab:
+                unit.animator.ResetTrigger(DYNAMITE);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

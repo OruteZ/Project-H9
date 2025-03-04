@@ -496,17 +496,25 @@ public class TileSystem : MonoBehaviour
     /// </param>
     /// <returns>두 지점 사이 장애물이 없으면 true를 반환합니다. </returns>
     public bool VisionCheck(Vector3Int from, Vector3Int to, bool lookInside = false)
-    { 
+    {
         var line1 = Hex.DrawLine1(from, to);
         var line2 = Hex.DrawLine2(from, to);
+        var bSystem = BushSystem.Instance;
 
         // bush에서 쳐다보는 케이스를 생각했을 때, 시작점을 제외해야 합니다.
         for (int i = 1; i < line1.Count - (lookInside ? 0 : 1); i++)
         {
-            var ret1 = GetTile(line1[i]);
-            var ret2 = GetTile(line2[i]);
+            Tile ret1 = GetTile(line1[i]);
+            Tile ret2 = GetTile(line2[i]);
             if (ret1 is null || ret2 is null) continue;
+            
+            // 둘 중 쳐다볼 수 있는 경로가 있는가?
             if (ret1.visible || ret2.visible) continue;
+            
+            // 부쉬 테스트 : Exception으로, Bush위에 다른 뭔가가 있어서 visible이 false인 경우르 따로 처리하지 않고 보인다고 판단함.
+            if (bSystem.IsBush(line1[i]) && bSystem.IsSameGroup(line1[i], from)) continue;
+            if (bSystem.IsBush(line2[i]) && bSystem.IsSameGroup(line2[i], from)) continue;
+            
             return false;
         }
 

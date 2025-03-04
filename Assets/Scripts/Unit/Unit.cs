@@ -496,7 +496,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         return activeUnitAction;
     }
 
-    public void TryAttack(IDamageable target)
+    public void TryAttack(
+        IDamageable target, 
+        float multiplier = 1.0f,
+        Damage.Type additionalType = Damage.Type.NONE)
     {
         onStartShoot.Invoke(target);
 
@@ -523,6 +526,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         Damage.Type type = hit ? Damage.Type.DEFAULT : Damage.Type.MISS;
         if (hit)
         {
+            
             float criticalRate = weapon.GetFinalCriticalRate();
             bool isCriticalHit = criticalRate >= Random.value * 100;
             
@@ -530,9 +534,13 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             {
                 type |= Damage.Type.CRITICAL;
             }
+            
+            type |= additionalType;
         }
         Damage context = 
-            new (weapon.GetFinalDamage(), weapon.GetFinalCriticalDamage(), type, this, null, target);
+            new ((int)(weapon.GetFinalDamage() * multiplier), 
+                (int)(weapon.GetFinalCriticalDamage()* multiplier), 
+                type, this, null, target);
         //================================================================
 
         if (hit)

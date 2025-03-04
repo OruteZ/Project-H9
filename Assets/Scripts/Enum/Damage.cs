@@ -66,6 +66,7 @@ public readonly struct Damage
     /// </comment>
     [System.Flags]
     public enum Type { 
+        NONE = 0,
         MISS = 1 << 0,
         DEFAULT = 1 << 1,
         CRITICAL = 1 << 2,

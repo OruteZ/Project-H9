@@ -150,8 +150,20 @@ public class SickleGrabAction : BaseAction
         Vector3 spawnPosition = unit.hand.position;
         
         // todo : grab effect spawn
+        SickleGrabEffect effect = Instantiate(grabSicklePrefab, spawnPosition, Quaternion.identity)
+            .GetComponent<SickleGrabEffect>();
+        // check null
+        if (effect == null)
+        {
+            Debug.LogError("Effect is null");
+            return;
+        }
         
-        _finishGrabTrigger = true;
+        effect.ExtendRetractChain(_target.transform.position, () =>
+        {
+            _finishGrabTrigger = true;
+            Destroy(effect.gameObject);
+        });
     }
 
     public override void TossAnimationEvent(string args)

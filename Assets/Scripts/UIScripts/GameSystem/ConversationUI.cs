@@ -28,7 +28,7 @@ public class ConversationUI : UISystem
         List<List<string>> conversationTable = FileRead.Read("ConversationTable", out var column);
         if (conversationTable == null)
         {
-            Debug.LogError("´ëÈ­ Å×ÀÌºíÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("ï¿½ï¿½È­ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             return;
         }
         _conversationQueue = new();
@@ -115,10 +115,10 @@ public class ConversationUI : UISystem
         }
         else
         {
-            // todo : ÀÓ½Ã ¿£µù Ãß°¡¸¦ À§ÇÑ ÄÚµåÀÔ´Ï´Ù. Â÷ÈÄ »èÁ¦ÇØ¾ß ÇÕ´Ï´Ù.
-            if (_conversationQueue[0].Item1 is { Index: 13 })
+            // todo : ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Õ´Ï´ï¿½.
+            if (_conversationQueue[0].Item1 is { Index: 31 })
             {
-                Debug.LogError("¿£µù ¾ÀÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.");
+                Debug.LogError("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Õ´Ï´ï¿½.");
                 SceneManager.LoadScene("EndingScene");
             }
             UIManager.instance.gameSystemUI.questUI.DeleteQuestListUI(_conversationQueue[0].Item1);

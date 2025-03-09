@@ -45,14 +45,14 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public void SetMeshVisible(object source, bool value)
     {
         if (source is
-            not Player and 
+            not Player and
             not UnitSystem and
             not MoveAction)
             return;
-        
+
         _unitModel.isVisible = value;
     }
-    
+
     public bool GetVanishTrigger() => vanishTrigger;
 
     #endregion
@@ -71,7 +71,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     public List<int> passiveIndexList;
 
     #region Skill_Effects
-    private readonly List<int> _shootCntList = new(){1};
+    private readonly List<int> _shootCntList = new() { 1 };
     public int maximumShootCountInTurn
     {
         get => _shootCntList.Max();
@@ -83,7 +83,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
                 _shootCntList.Remove(value);
                 return;
             }
-            
+
             if (_shootCntList.Contains(value)) return;
             _shootCntList.Add(value);
         }
@@ -91,7 +91,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public bool isAimming = false;
     public bool vanishTrigger = false;
-    
+
     public bool infiniteActionPointTrigger = false;
     public bool lightFootTrigger = false;
 
@@ -105,6 +105,21 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
 
     public List<CoverableObj> currentCoverables;
     public float coverObjDmgMultiplier = 1;
+
+    public Dictionary<StatusEffectType, float> statusEffectChances = new Dictionary<StatusEffectType, float>()
+    {
+        {StatusEffectType.None, 0.0f},
+        {StatusEffectType.Burning, 0.0f},
+        {StatusEffectType.Bleeding, 0.0f},
+        {StatusEffectType.Stun, 0.0f},
+        {StatusEffectType.UnArmed, 0.0f},
+        {StatusEffectType.Taunted, 0.0f},
+        {StatusEffectType.Concussion, 0.0f},
+        {StatusEffectType.Fracture, 0.0f},
+        {StatusEffectType.Blind, 0.0f},
+        {StatusEffectType.Recoil, 0.0f},
+        {StatusEffectType.Rooted, 0.0f},
+    };
     #endregion
 
     public int currentRound;
@@ -187,6 +202,9 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         _seController = new UnitStatusEffectController(this);
 
         goldenBulletEffect.criticalChance = 100;
+
+        stat.OnChangedStat.AddListener((a) => { onHpChanged.Invoke(0, hp); });  //for passive trigger
+       
     }
 
     public virtual void StartTurn()
@@ -350,7 +368,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         {
             if (passive.TryGetDisplayableEffect(out List<IDisplayableEffect> displayableEffect))
             {
-                displayableEffects.AddRange(displayableEffect);
+                displayableEffects.Add(displayableEffect[0]);
+                //displayableEffects.AddRange(displayableEffect);
             }
         }
 
@@ -477,7 +496,10 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         return activeUnitAction;
     }
 
-    public void TryAttack(IDamageable target)
+    public void TryAttack(
+        IDamageable target, 
+        float multiplier = 1.0f,
+        Damage.Type additionalType = Damage.Type.NONE)
     {
         onStartShoot.Invoke(target);
 
@@ -504,6 +526,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         Damage.Type type = hit ? Damage.Type.DEFAULT : Damage.Type.MISS;
         if (hit)
         {
+            
             float criticalRate = weapon.GetFinalCriticalRate();
             bool isCriticalHit = criticalRate >= Random.value * 100;
             
@@ -511,9 +534,13 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
             {
                 type |= Damage.Type.CRITICAL;
             }
+            
+            type |= additionalType;
         }
         Damage context = 
-            new (weapon.GetFinalDamage(), weapon.GetFinalCriticalDamage(), type, this, null, target);
+            new ((int)(weapon.GetFinalDamage() * multiplier), 
+                (int)(weapon.GetFinalCriticalDamage()* multiplier), 
+                type, this, null, target);
         //================================================================
 
         if (hit)
@@ -534,6 +561,27 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
         target.TakeDamage(context);
         weapon.CurrentAmmo--;
         UIManager.instance.onPlayerStatChanged.Invoke();
+
+        //Add Status Effect by Skill
+        if (target is Unit u)
+        {
+            foreach (var chances in statusEffectChances)
+            {
+                if (chances.Value > Random.value * 100)
+                {
+                    switch (chances.Key)
+                    {
+                        case StatusEffectType.None:
+                            break;
+                        case StatusEffectType.Bleeding:
+                            u.TryAddStatus(new Bleeding(1, this));
+                            break;
+                        default:
+                            continue;
+                    }
+                }
+            }
+        }
 
         onFinishShoot.Invoke(context);
     }
@@ -761,6 +809,7 @@ public abstract class Unit : MonoBehaviour, IUnit, IDamageable
     {
         if (gameObject == null) return;
         if ((Unit)damageContext.target != this) return;
+        int beforeHp = stat.curHp;
 
         stat.Consume(StatType.CurHp, damageContext.GetFinalAmount()); //for test
         UIManager.instance.onTakeDamaged.Invoke(this, damageContext.GetFinalAmount(), damageContext.type);

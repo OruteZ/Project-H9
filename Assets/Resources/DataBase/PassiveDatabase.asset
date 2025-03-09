@@ -13,6 +13,41 @@ MonoBehaviour:
   m_Name: PassiveDatabase
   m_EditorClassIdentifier: 
   infos:
+  - index: 10004
+    condition: 32000000
+    conditionAmount:
+    - 0
+    effect: 14000000
+    effectStat: 00000000
+    effectAmount: 1e000000
+  - index: 10005
+    condition: 00000000
+    conditionAmount:
+    - 0
+    effect: 01000000
+    effectStat: 06000000
+    effectAmount: 01000000
+  - index: 10006
+    condition: 00000000
+    conditionAmount:
+    - 0
+    effect: 01000000
+    effectStat: 06000000
+    effectAmount: 01000000
+  - index: 10007
+    condition: 00000000
+    conditionAmount:
+    - 0
+    effect: 01000000
+    effectStat: 06000000
+    effectAmount: 01000000
+  - index: 10008
+    condition: 00000000
+    conditionAmount:
+    - 0
+    effect: 01000000
+    effectStat: 06000000
+    effectAmount: 01000000
   - index: 11001
     condition: 01000000
     conditionAmount:
@@ -97,6 +132,13 @@ MonoBehaviour:
     effect: 13000000
     effectStat: 00000000
     effectAmount: 2c010000
+  - index: 11013
+    condition: 2c000000
+    conditionAmount:
+    - 0
+    effect: 0c000000
+    effectStat: 00000000
+    effectAmount: 0a000000
   - index: 21001
     condition: 0700000038000000
     conditionAmount:
@@ -221,3 +263,43 @@ MonoBehaviour:
     effect: 01000000
     effectStat: 09000000
     effectAmount: 32000000
+  - index: 41001
+    condition: 10000000
+    conditionAmount:
+    - 0
+    effect: 01000000
+    effectStat: 01000000
+    effectAmount: 0a000000
+  - index: 41002
+    condition: 10000000
+    conditionAmount:
+    - 0
+    effect: 0100000001000000
+    effectStat: 0500000013000000
+    effectAmount: ecffffff05000000
+  - index: 41003
+    condition: 100000002c00000026000000
+    conditionAmount:
+    - 0
+    - 0
+    - 0
+    effect: 02000000
+    effectStat: 15000000
+    effectAmount: 32000000
+  - index: 41004
+    condition: 100000000b000000
+    conditionAmount:
+    - 0
+    - 10
+    effect: 01000000
+    effectStat: 13000000
+    effectAmount: 05000000
+  - index: 41005
+    condition: 100000002c0000000a000000
+    conditionAmount:
+    - 0
+    - 0
+    - 1
+    effect: 01000000
+    effectStat: 13000000
+    effectAmount: 05000000

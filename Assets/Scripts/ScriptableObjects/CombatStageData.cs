@@ -21,6 +21,7 @@ public class CombatStageData : ScriptableObject
     [SerializeField] private TileObjectData[] tileObjectData;
     [SerializeField] private EnvironmentData[] envData;
     [SerializeField] private GoalInfo goalInfo;
+    [SerializeField] private bool containsOnlyYRotation;
     
     [SerializeField]
     private List<Vector3Int> enemySpawnPoints;
@@ -94,6 +95,11 @@ public class CombatStageData : ScriptableObject
         #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
         #endif
+    }
+    
+    public bool ContainsOnlyYRotation()
+    {
+        return containsOnlyYRotation;
     }
 
     public bool TryGetEnemyPoints(LinkData linkData, out Vector3Int[] points)
@@ -248,16 +254,20 @@ public struct TileObjectData
 [System.Serializable]
 public struct EnvironmentData
 {
+    [Header("Environment Data")]
     public Material material;
     public Mesh mesh;
-    public bool hexPositioned;
     
+    [Header("Position Data")]
     public Vector3Int hexPosition;
     public float height;
+    public bool hexPositioned;
     
+    [Header("Transform Data")]
     public Vector3 position;
     public float rotation;
     public Vector3 scale;
+    public Vector3 threeRotation;
     
     public EnvironmentData(GameObject env)
     {
@@ -279,8 +289,11 @@ public struct EnvironmentData
             hexPosition = Hex.zero;
             hexPositioned = false;
         }
+
+        Quaternion localRotation = env.transform.localRotation;
+        rotation = localRotation.eulerAngles.y;
+        threeRotation = localRotation.eulerAngles;
         
-        rotation = env.transform.localRotation.eulerAngles.y;
         scale = env.transform.localScale;
 
         height = position.y;

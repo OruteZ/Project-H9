@@ -160,7 +160,12 @@ public class MapSaveAndLoader : MonoBehaviour
 
             //paste data
             envObj.transform.position = new Vector3(0, envData.height, 0);
-            envObj.transform.localRotation = Quaternion.Euler(0, envData.rotation, 0);
+            
+            if (saveData.ContainsOnlyYRotation() is false)
+                envObj.transform.localEulerAngles = envData.threeRotation;
+            else
+                envObj.transform.localRotation = Quaternion.Euler(0, envData.rotation, 0);
+            
             envObj.transform.localScale = envData.scale;
             meshRenderer.material = envData.material;
             meshFilter.mesh = envData.mesh;
@@ -168,7 +173,7 @@ public class MapSaveAndLoader : MonoBehaviour
             //if hexPositioned, add HexTransform
             if (envData.hexPositioned)
             {
-                var hexTransform = envObj.AddComponent<HexTransform>();
+                HexTransform hexTransform = envObj.AddComponent<HexTransform>();
                 hexTransform.position = envData.hexPosition;
             }
             else

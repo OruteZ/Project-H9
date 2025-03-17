@@ -42,6 +42,12 @@ public class CharacterUI : UISystem
     {
         itemUI.ClosePopupWindow();
     }
+    public void OnCloseBtnClick()
+    {
+        UIManager.instance.SetCharacterCanvasState(false);
+        UIManager.instance.SetSkillCanvasState(false);
+        UIManager.instance.SetPauseMenuCanvasState(false);
+    }
 
     /// <summary>
     /// 플레이어의 소지금을 UI로 표시합니다.

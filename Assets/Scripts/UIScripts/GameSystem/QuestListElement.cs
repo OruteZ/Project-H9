@@ -13,7 +13,7 @@ public class QuestListElement : UIElement, IPointerClickHandler
 
     public QuestInfo currentQuestInfo { get; protected set; }
 
-    private Vector3Int _currentPinPosition = Vector3Int.zero;
+    private Vector3Int _questPinPosition = Vector3Int.zero;
 
     protected bool _isDestroying = false;
 
@@ -124,6 +124,8 @@ public class QuestListElement : UIElement, IPointerClickHandler
         if (rewardTexts[3] != "") _displayText = _displayText.Replace(rewardTexts[3], UICustomColor.ChangeTextColor(rewardTexts[3], UICustomColor.SkillTextColor));
         _questRewardText.GetComponent<TextMeshProUGUI>().text = _displayText;
 
+        _questPinPosition = new Vector3Int(currentQuestInfo.Pin[0], currentQuestInfo.Pin[1], currentQuestInfo.Pin[2]);
+
         OpenUI();
     }
     private void ProgressTurnRemaining()
@@ -177,10 +179,10 @@ public class QuestListElement : UIElement, IPointerClickHandler
     }
     public override void CloseUI()
     {
-        if (_currentPinPosition != Vector3Int.zero)
+        if (_questPinPosition != Vector3Int.zero)
         {
-            UIManager.instance.gameSystemUI.pinUI.ClearPinUI(_currentPinPosition);
-            _currentPinPosition = Vector3Int.zero;
+            UIManager.instance.gameSystemUI.pinUI.ClearPinUI(_questPinPosition);
+            _questPinPosition = Vector3Int.zero;
         }
         PlayerEvents.OnProcessedWorldTurn.RemoveListener((t) => { ProgressTurnRemaining(); });
         base.CloseUI();
@@ -190,8 +192,7 @@ public class QuestListElement : UIElement, IPointerClickHandler
     {
         if (GameManager.instance.CompareState(GameState.WORLD) && currentQuestInfo.Pin != null)
         {
-            _currentPinPosition = new Vector3Int(currentQuestInfo.Pin[0], currentQuestInfo.Pin[1], currentQuestInfo.Pin[2]);
-            UIManager.instance.gameSystemUI.pinUI.SetPinUI(_currentPinPosition);
+            UIManager.instance.gameSystemUI.pinUI.SetPinUI(_questPinPosition);
             UIManager.instance.gameSystemUI.pinUI.OnClickPin();
         }
         //need test

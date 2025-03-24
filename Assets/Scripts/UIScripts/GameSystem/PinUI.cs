@@ -66,10 +66,20 @@ public class PinUI : UISystem
     }
     public void ClearPinUI(Vector3Int dest)
     {
-        if(dest != _targetPos) 
-        _targetPos = Vector3.zero;
-        targetHexPos = Vector3Int.zero;
-        _isTracking = false;
+        if (dest != _targetPos)
+        {
+            List<QuestInfo> qinfo = UIManager.instance.gameSystemUI.questUI.GetCurrentProgressingQuests;
+            if (qinfo == null || qinfo.Count == 0)
+            {
+                _targetPos = Vector3.zero;
+                targetHexPos = Vector3Int.zero;
+                _isTracking = false;
+            }
+            else 
+            {
+                SetPinUI(new Vector3Int(qinfo[0].Pin[0], qinfo[0].Pin[1], qinfo[0].Pin[2]));
+            }
+        }
         _pinImage.SetActive(_isTracking);
     }
 
